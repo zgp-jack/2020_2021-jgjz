@@ -20,7 +20,7 @@
                     </block>
                 </block>
                 <view bindtap="anonymousFunc4">
-                    <at-badge compid="{{$compid__90}}">
+                    <at-badge compid="{{$compid__54}}">
                         <image src="{{IMGCDNURL + 'cloud.png'}}" class="heard-right"></image>
                     </at-badge>
                 </view>
@@ -98,7 +98,7 @@
             <block wx:if="{{type === 1 && list.length > 0 && !busy}}">
                 <view>
                     <scroll-view class="content-list-box" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc11">
-                        <view wx:key="$loopState__temp2" class="content-list" wx:for="{{loopArray72}}" wx:for-item="v" wx:for-index="i">
+                        <view wx:key="$loopState__temp2" class="content-list" wx:for="{{loopArray51}}" wx:for-item="v" wx:for-index="i">
                             <view>
                                 <view class="content-list-flex">
                                     <view>{{v.$original.workername}}</view>
@@ -113,7 +113,7 @@
             <block wx:if="{{type === 2 && list.length > 0 && !busy}}">
                 <view>
                     <scroll-view class="recruit-lists-containerbox" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc12">
-                        <view wx:key="$loopState__temp4" class="content-list" wx:for="{{loopArray73}}" wx:for-item="v" wx:for-index="i">
+                        <view wx:key="$loopState__temp4" class="content-list" wx:for="{{loopArray52}}" wx:for-item="v" wx:for-index="i">
                             <view class="content-list-flex">
                                 <view>{{v.$original.workername}}</view>
                                 <view class="orgion">¥{{v.$original.money}}</view>
@@ -148,7 +148,7 @@
                 </view>
             </view>
         </view>
-        <at-modal compid="{{$compid__91}}">
+        <at-modal compid="{{$compid__55}}">
             <view class="AtModal">
                 <view class="AtModal-top">当前是<text class="atModal-name">【班组长】</text>身份</view>
                 <view class="mtList">与上一次记工身份不一致，是否<text class="atModal-change">切换?</text>
@@ -158,7 +158,7 @@
                 <view class="atModal-list" bindtap="anonymousFunc17">不再提醒</view>
             </view>
         </at-modal>
-        <at-modal compid="{{$compid__92}}">
+        <at-modal compid="{{$compid__56}}">
             <view class="useAtModal">
                 <view class="useAtModal-title">请根据需要选择您的身份</view>
                 <view class="useAtModal-tips">温馨提示：选对身份，才能使用想要的功能哦</view>
@@ -182,6 +182,6 @@
                 </view>
             </view>
         </at-modal>
-        <auth compid="{{$compid__93}}"></auth>
+        <auth compid="{{$compid__57}}"></auth>
     </view>
 </block>

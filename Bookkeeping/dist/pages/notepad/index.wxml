@@ -2,7 +2,7 @@
     <block>
         <view class="notepad">
             <view class="searchBar">
-                <at-search-bar compid="{{$compid__39}}"></at-search-bar>
+                <at-search-bar compid="{{$compid__40}}"></at-search-bar>
             </view>
             <block wx:if="{{data.length === 0}}">
                 <view class="content">
@@ -20,7 +20,7 @@
             </block>
             <block wx:if="{{data.length > 0 && !busy}}">
                 <view class="dataMT">
-                    <view class="dataContent" wx:key="id" bindtap="anonymousFunc2" wx:for="{{loopArray33}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                    <view class="dataContent" wx:key="id" bindtap="anonymousFunc2" wx:for="{{loopArray34}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                         <view class="timeTop">
                             <view class="timeTop-time">{{v.$original.time}}</view>
                             <view class="timeTop-week">{{v.$original.week}}</view>
