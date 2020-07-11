@@ -1,0 +1,17 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="notepadDetails">
+        <view class="time">{{data.creatTime}}</view>
+        <view class="content">{{data.note}}</view>
+        <view class="imageList">
+            <view class="image" wx:for="{{data.view_images}}" wx:for-item="v" wx:for-index="_anonIdx2">
+                <image class="image-image" src="{{v.httpurl}}"></image>
+            </view>
+        </view>
+        <view class="footer">
+            <view class="footer-box">
+                <view class="footer-del" bindtap="anonymousFunc0">删除</view>
+                <view class="footer-btn" bindtap="anonymousFunc1">修改</view>
+            </view>
+        </view>
+    </view>
+</block>

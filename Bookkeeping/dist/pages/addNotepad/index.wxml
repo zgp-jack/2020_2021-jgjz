@@ -1,0 +1,24 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="addnotepad">
+        <block wx:if="{{id}}">
+            <view class="time">{{model && model.time}}</view>
+        </block>
+        <view class="notepad-textarea">
+            <textarea bindinput="anonymousFunc0" class="{{id ? 'editTextarea' : 'textarea'}}" value="{{model && model.note}}" placeholder="在这里记事" placeholder-style="color:#BEBEBE"></textarea>
+        </view>
+        <view>
+            <view class="image">
+                <image-view compid="{{$compid__41}}"></image-view>
+            </view>
+        </view>
+        <view class="footer">
+            <view class="footer-box">
+                <view class="footer-box-left" bindtap="anonymousFunc1">
+                    <view class="footer-box-left-img">
+                        <image class="footer-box-left-img-img" src="{{IMGCDNURL + 'image.png'}}"></image>
+                    </view>添加图片</view>
+                <view class="footer-box-right" bindtap="anonymousFunc2">保存</view>
+            </view>
+        </view>
+    </view>
+</block>

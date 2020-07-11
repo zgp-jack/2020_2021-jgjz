@@ -1,0 +1,104 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="content">
+        <block wx:if="{{businessType == 2 && type === 1}}">
+            <view class="publish-recruit-card">
+                <view class="publish-list-item" bindtap="anonymousFunc0"><text class="pulish-list-title">包工类型</text>
+                    <input class="publish-list-input" type="text" disabled="{{true}}" placeholder="请选择包工类型" value="{{typeName}}" />
+                </view>
+            </view>
+        </block>
+        <view class="publish-recruit-card">
+            <view class="publish-list-item" bindtap="anonymousFunc1"><text class="pulish-list-title">项目名称</text>
+                <input class="publish-list-input" type="text" disabled="{{true}}" placeholder="请选择项目名称" value="{{val.name}}" />
+            </view>
+        </view>
+        <block wx:if="{{identity === 2}}">
+            <view class="publish-recruit-card">
+                <view class="publish-list-item" bindtap="anonymousFunc2"><text class="pulish-list-title">班组长</text>
+                    <input class="publish-list-input" type="text" disabled="{{true}}" placeholder="请选择班组长" value="{{val.leaderName}}" />
+                </view>
+            </view>
+        </block>
+        <block wx:if="{{identity === 1}}">
+            <view class="publish-recruit-card">
+                <view class="publish-list-item" bindtap="anonymousFunc3"><text class="pulish-list-title">工人</text>
+                    <input class="publish-list-input" type="text" disabled="{{true}}" placeholder="请选择工人" value="{{val.workername}}" />
+                </view>
+            </view>
+        </block>
+        <block wx:if="{{businessType === 2 && type === 2}}">
+            <view>
+                <view class="publish-recruit-card">
+                    <view class="publish-list-item"><text class="pulish-list-title">工程量</text>:
+                        <input class="publish-list-input-amount" type="number" placeholder="请填写工程量" bindinput="anonymousFunc4" value="{{val.unitNum}}" />
+                        <view class="amountType" bindtap="anonymousFunc5">{{unit}}</view>
+                    </view>
+                </view>
+                <view class="publish-recruit-card">
+                    <view class="publish-list-item"><text class="pulish-list-title">单价</text>:
+                        <input class="publish-list-input" type="number" placeholder="请填写单价" bindinput="anonymousFunc6" value="{{val.unitPrice}}" />
+                    </view>
+                </view>
+                <view class="publish-recruit-card">
+                    <view class="publish-list-item"><text class="pulish-list-title">工钱</text>:
+                        <input class="publish-list-input" type="number" bindinput="anonymousFunc7" placeholder="工程量和单价未知时，可直接填写" value="{{val.money}}" />
+                    </view>
+                </view>
+            </view>
+        </block>
+        <block wx:if="{{businessType === 3}}">
+            <view class="borrowing">
+                <view class="publish-recruit-card">
+                    <view class="publish-list-item"><text class="pulish-list-title">本次借支</text>:
+                        <input class="publish-list-input" type="number" bindinput="anonymousFunc8" placeholder="请输入本次借支金额" value="{{val.money}}" />
+                    </view>
+                </view>
+                <view class="publish-recruit-card">
+                    <view class="borrowing-publish-list-item"><text class="borrowing-pulish-list-title">本次借支属于(可不选)</text>
+                    </view>
+                    <view>
+                        <radio-group class="borrowing-Radio">
+                            <radio bindtap="anonymousFunc9" class="borrowing-Radio-list" color="#0099FF" checked="{{v.$original.click}}" wx:key="id" wx:for="{{loopArray65}}" wx:for-item="v" wx:for-index="__index9" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</radio>
+                        </radio-group>
+                    </view>
+                </view>
+            </view>
+        </block>
+        <block wx:if="{{businessType === 1 || businessType === 2 && type === 1}}">
+            <view>
+                <view class="publish-recruit-card">
+                    <view class="publish-list-item"><text class="pulish-list-title">日期</text>
+                        <input class="publish-list-input" type="text" disabled="{{true}}" placeholder="请选择日期" value="{{val.time}}" />
+                    </view>
+                </view>
+                <view class="publish-recruit-card" bindtap="anonymousFunc10">
+                    <view class="publish-list-item"><text class="pulish-list-title">上班时长</text>
+                        <input class="publish-list-input" type="text" disabled="{{true}}" placeholder="请选择上班时长" value="{{val.duration}}" />
+                    </view>
+                </view>
+                <view class="publish-recruit-card" bindtap="anonymousFunc11">
+                    <view class="publish-list-item-money">
+                        <view class="pulish-list-title-money">
+                            <view>工人工钱
+                                <view class="mt10">(自动计算)</view>
+                            </view>
+                        </view>
+                        <input class="publish-list-input" type="text" disabled="{{true}}" placeholder="请选择工钱" value="{{val.wages}}" />
+                    </view>
+                </view>
+            </view>
+        </block>
+        <view class="publish-recruit-card">
+            <view class="publish-list-textTarea-item" bindtap="anonymousFunc12"><text class="pulish-list-textTarea-title">备注</text>
+                <textarea value="{{val.note}}" placeholder="请填写备注..." bindinput="anonymousFunc13" maxlength="{{500}}"></textarea>
+                <image-view compid="{{$compid__74}}"></image-view>
+            </view>
+        </view>
+        <view class="footer">
+            <view class="footerBtn" bindtap="anonymousFunc14">保存</view>
+        </view>
+        <wage-standard compid="{{$compid__75}}"></wage-standard>
+        <work-overtime compid="{{$compid__76}}"></work-overtime>
+        <working-hours compid="{{$compid__77}}"></working-hours>
+    </view>
+</block>

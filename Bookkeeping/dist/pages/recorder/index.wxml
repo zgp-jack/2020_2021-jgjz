@@ -1,0 +1,5 @@
+<block wx:if="{{$taroCompReady}}">
+    <view>
+        <foreman></foreman>
+    </view>
+</block>

@@ -1,0 +1,16 @@
+<block wx:if="{{$taroCompReady}}">
+    <view>
+        <block wx:if="{{display}}">
+            <view class="tabber-complaintModal">
+                <view class="tabber-complaintModal-content">
+                    <view class="tabber-complaintModal-content-title ">保存成功!</view>
+                    <view class="tabber-complaintModal-content-box">记工数据仅自己可见随时查看，方便快捷</view>
+                    <view class="tabber-complaintModal-content-footer">
+                        <view class="tabber-complaintModal-content-footer-left" bindtap="anonymousFunc0">取消</view>
+                        <view class="tabber-complaintModal-content-footer-right" bindtap="anonymousFunc1">查看考勤表</view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</block>

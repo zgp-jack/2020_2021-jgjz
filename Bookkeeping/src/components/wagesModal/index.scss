@@ -1,0 +1,332 @@
+.wagesModal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.wagesModal-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 10rpx 10rpx 5rpx 5rpx;
+  box-shadow: #e7e6e4 0 0 10rpx;
+  // height: 800rpx;
+  // overflow-y: scroll
+}
+
+.wagesModal-content-close{
+  position: absolute;
+  right: 20rpx;
+  top: 0;
+}
+.wagesModal-content-heard{
+  position: relative;
+  height: 97rpx;
+  line-height: 97rpx;
+  background: #fff;
+}
+
+.worker{
+  background: #fff;
+}
+.worker-title{
+  display: flex;
+  justify-content: space-between;
+  font-size: 29rpx;
+  color: rgba(47, 53, 65, 1);
+  padding:30rpx;
+  padding-bottom: 0rpx;
+}
+.allChange{
+  color: rgba(0, 153, 255, 1);
+  border: 1rpx solid rgba(0, 153, 255, 1);
+  width:96rpx;
+  height:42rpx;
+  line-height: 42rpx;
+  background:rgba(0, 153, 255, 0);
+  border:1rpx solid rgba(0, 153, 255, 1);
+  border-radius:3rpx;
+  text-align: center;
+}
+.change{
+  color: rgba(150, 149, 149, 1);
+  font-size: 24rpx;
+}
+.wagesModal-personnel{
+  display: flex;
+  flex-wrap: wrap;
+}
+.wagesModal-personnel-box-list {
+  width:60rpx;
+  height:60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  background:rgba(254, 246, 246, 0.8);
+  border:1rpx solid rgba(253, 69, 33, 1);
+  border-radius:3rpx;
+  font-size: 24rpx;
+  margin: 0 auto;
+  margin-top: 10rpx;
+}
+.wagesModal-personnel-box-list-click {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  // background: red;
+  background: url(../../assets/images/click.png) no-repeat no-repeat;
+  background-size: contain;
+  // border: 1rpx solid rgba(253, 69, 33, 1);
+  border-radius: 3rpx;
+  font-size: 24rpx;
+  margin: 0 auto;
+  margin-top: 10rpx;
+  color: #fff;
+}
+.wagesModal-personnel-box-list-set {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  background: red;
+  color: #fff;
+  border-radius: 3rpx;
+  font-size: 24rpx;
+  margin: 0 auto;
+  margin-top: 10rpx;
+}
+.wagesModal-personnel-box {
+  position: relative;
+  margin-bottom: 39rpx;
+  text-align: center;
+  color: rgba(75, 74, 74, 1);
+  font-size: 26rpx;
+}
+.wagesModal-personnel-box-set{
+  background: green;
+  margin-bottom: 39rpx;
+  text-align: center;
+  color: rgba(75, 74, 74, 1);
+  font-size: 26rpx;
+}
+.wagesModal-personnel-box-list-open{
+  color: rgba(0, 153, 255, 1);
+  font-size: 26rpx;
+}
+.tips{
+  text-align: center;
+  color: rgba(75, 74, 74, 1);
+  font-size: 26rpx;
+  padding-bottom: 20rpx;
+}
+.wagesModal-standard{
+  background: rgba(243, 242, 242, 1);
+  padding-bottom: 20rpx;
+}
+.wagesModal-standard-flex{
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  color: rgba(47, 53, 65, 1);
+  font-size: 29rpx;
+}
+.wagesModal-standard-flex-add{
+  width:242rpx;
+  height:49rpx;
+  line-height: 49rpx;
+  text-align: center;
+  color: rgba(47, 53, 65, 1);
+  font-size: 29rpx;
+  background:rgba(255, 255, 255, 1);
+  border:1rpx solid rgba(175, 182, 196, 1);
+  border-radius:5rpx;
+}
+.wagesModal-standard-box-list{
+  height: 167rpx;
+  background: #fff;
+  width: 95%;
+  margin: 0 auto;
+  margin-bottom: 20rpx;
+}
+.wagesModal-standard-box-list:last-child{
+  margin-bottom: 0rpx;
+}
+.wagesModal-standard-box-list-flex{
+  display: flex;
+  color: rgba(47, 53, 65, 1);
+  font-size: 26rpx;
+}
+.checkbox{
+  transform: scale(0.6, 0.6);
+  margin-top: 10rpx;
+}
+.wagesModal-standard-box-list-edit {
+  width:79rpx;
+  height:33rpx;
+  line-height: 33rpx;
+  text-align: center;
+  background:rgba(255, 255, 255, 1);
+  border:1rpx solid rgba(175, 182, 196, 1);
+  border-radius:5rpx;
+  margin-top: 10rpx;
+  margin-left: 28rpx;
+}
+.wagesModal-standard-box-list-title{
+  font-size: 29rpx;
+  color: rgba(47, 53, 65, 1);
+  padding: 20rpx 30rpx;
+}
+.wagesModal-standard-box-list-flex-middle{
+  border-right: 1rpx solid rgba(229, 226, 226, 1);
+  padding-right: 20rpx;
+}
+.wagesModal-standard-box-list-flex-left{
+  padding-right: 20rpx;
+  border-right: 1rpx solid rgba(229, 226, 226, 1);
+}
+.wagesModal-footer{
+  width: 100%;
+}
+
+.wagesModal-footer-btn{
+  width:95%;
+  height:79rpx;
+  line-height: 79rpx;
+  color: #fff;
+  text-align: center;
+  background:rgba(0, 153, 255, 1);
+  border-radius:10rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.tab{
+  display: flex;
+  margin-left: 300rpx;
+  padding-top: 20rpx;
+}
+.setWages{
+  position: absolute;
+  left:-200rpx;
+  top: 0;
+  width:236rpx;
+  height:65rpx;
+  line-height: 65rpx;
+  color: #fff;
+  text-align: center;
+  background:rgba(0, 153, 255, 1);
+  border-radius:33rpx;
+}
+.lookWages{
+  position: relative;
+  width:260rpx;
+  height:65rpx;
+  line-height: 65rpx;
+  color: rgba(152, 150, 150, 1);
+  text-align: center;
+  background:rgba(235, 232, 232, 1);
+  border-radius:33rpx;
+  padding-left: 20rpx;
+}
+.lookWagesClick{
+  position: absolute;
+  left:-200rpx;
+  top: 0;
+  width:236rpx;
+  height:65rpx;
+  line-height: 65rpx;
+  text-align: center;
+  border-radius:33rpx;
+  color: rgba(152, 150, 150, 1);
+  background:rgba(235, 232, 232, 1);
+}
+.setWagesClick{
+  position: relative;
+  width:260rpx;
+  height:65rpx;
+  line-height: 65rpx;
+  text-align: center;
+  color: #fff;
+  background:rgba(0, 153, 255, 1);
+  border-radius:33rpx;
+  padding-left: 20rpx;
+}
+.wagesModal-standard-box-list-look-title{
+  color: rgba(47, 53, 65, 1);
+  font-size: 29rpx;
+  padding: 20rpx 24rpx 10rpx 20rpx;
+}
+.wagesModal-standard-box-list-flex-look-left{
+  padding-left: 18rpx;
+  flex: 1;
+  border-right: 1rpx solid rgba(229, 226, 226, 1);
+  font-size: 29rpx;
+}
+.wagesModal-standard-box-list-look-edit-box{
+  width: 136rpx;
+  margin-top: 10rpx;
+}
+.wagesModal-standard-box-look{
+  min-height: 200rpx;
+  max-height: 800rpx;
+  overflow-y: scroll;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  background: rgba(243, 242, 242, 1);
+}
+.noData{
+  height: 200rpx;
+  text-align: center;
+  background: #fff;
+}
+.noData-no{
+  padding-top: 90rpx;
+}
+.wagesModal-standard-box-list-flex-look-left-list{
+  color: rgba(157, 155, 155, 1);
+  font-size: 29rpx;
+}
+.wagesModal-standard-box-list-flex-look-left-list-color{
+  color: rgba(47, 53, 65, 1);
+}
+.red{
+  color: rgba(254, 23, 71, 1);
+}
+.background {
+  height: 110rpx;
+  width: 84rpx;
+  // background: rgba(0, 153, 255, 1);
+  margin-left: 30rpx;
+  // margin-right: 30rpx;
+  margin-bottom: 8rpx;
+  
+}
+.names{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.list-icon {
+  height: 23rpx;
+  width: 23rpx;
+  position: absolute;
+  top: 0rpx;
+  right: -10rpx;
+  display: inline-block;
+  background: url(../../assets/images/mark.png) no-repeat no-repeat;
+  background-size: contain;
+}
+.content{
+  // height: 500rpx;
+  overflow: scroll;
+}

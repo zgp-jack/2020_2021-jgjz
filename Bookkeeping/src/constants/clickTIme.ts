@@ -1,0 +1,2 @@
+export const SETCLICKTIME = 'SETCLICKTIME'
+export const GETCLICKTIME = 'GETCLICKTIME'

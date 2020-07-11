@@ -1,0 +1,72 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="flowingWaterDetails">
+        <view class="top">
+            <block wx:if="{{obj.business_type === '1'}}">
+                <view class="top-name">点工工钱</view>
+            </block>
+            <block wx:if="{{obj.business_type === '2' && obj.type === '1'}}">
+                <view class="top-name">包工(按天记)工钱</view>
+            </block>
+            <block wx:if="{{obj.business_type === '2' && obj.type === '2'}}">
+                <view class="top-name">包工(按量记)工钱</view>
+            </block>
+            <block wx:if="{{obj.business_type === '3'}}">
+                <view class="top-name">本次借支</view>
+            </block>
+            <view class="top-money">¥{{obj.money}}</view>
+            <view class="top-time">{{time}}<text>{{week}}</text>
+            </view>
+        </view>
+        <view class="list-content">
+            <at-list compid="{{$compid__42}}">
+                <view class="list-itme"><text class="list-itme-title">工人</text>:<text class="list-itme-content">{{obj.workername || '-'}}</text>
+                </view>
+                <view class="list-itme"><text class="list-itme-title">项目名称</text>:<text class="list-itme-content">{{obj.group_info || '-'}}</text>
+                </view>
+                <block wx:if="{{obj.business_type === '3'}}">
+                    <view class="list-itme"><text class="list-itme-title">借支属于</text>:<text class="list-itme-content">{{obj.typeDes}}</text>
+                    </view>
+                </block>
+                <block>
+                    <block wx:if="{{obj.business_type === '2' && obj.type === '1'}}">{{obj.business_type === '2' && obj.type === '1'}}</block>
+                    <block wx:else>
+                        <block wx:if="{{obj.business_type === '1'}}">
+                            <view>
+                                <view class="list-itme"><text class="list-itme-title">上班时长</text>:<text class="list-itme-content">{{obj.work_time}}个工（{{obj.worktime_define}}小时）</text>
+                                </view>
+                                <view class="list-itme"><text class="list-itme-title">加班时长</text>:<text class="list-itme-content">0.25个工（1.5小时</text>
+                                </view>
+                                <view class="wages">
+                                    <view class="wages-title">工资标准</view>
+                                    <view class="wages-list">上班：{{obj.work_time}}小时算1个工<text class="wages-list-blued">{{obj.money}}</text>元/个工</view>
+                                    <view class="wages-list">加班：{{obj.overtime_type === '1' ? '按小时算' : '按天算'}}6小时算1个工<text class="wages-list-blued">{{obj.overtime_money}}</text>元/小时</view>
+                                </view>
+                            </view>
+                        </block>
+                    </block>
+                </block>
+                <block wx:if="{{obj.business_type === '2' && obj.type === '2'}}">
+                    <view>
+                        <view class="list-itme"><text class="list-itme-title">工程量</text>:<text class="list-itme-content">{{obj.unit_num}}{{obj.unit}}</text>
+                        </view>
+                        <view class="list-itme"><text class="list-itme-title">单价</text>:<text class="list-itme-content">{{obj.unit_price}}</text>
+                        </view>
+                    </view>
+                </block>
+                <view class="remarks">
+                    <view>备注</view>
+                    <view class="remarks-details">{{obj.note}}</view>
+                    <view class="list-img-box">
+                        <view class="list-img" wx:for="{{obj.view_images}}" wx:for-item="v" wx:for-index="_anonIdx2">
+                            <image src="{{v.httpurl}}" class="list-img-img"></image>
+                        </view>
+                    </view>
+                </view>
+            </at-list>
+        </view>
+        <view class="footer-box">
+            <view class="footer-box-del" bindtap="anonymousFunc0">删除</view>
+            <view class="footer-box-edit">修改</view>
+        </view>
+    </view>
+</block>

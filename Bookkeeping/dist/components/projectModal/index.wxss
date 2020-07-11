@@ -1,0 +1,85 @@
+.tabber-complaintModal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.tabber-complaintModal-content {
+  position: absolute;
+  position: relative;
+  width: 80%;
+  background: white;
+  border-radius: 10rpx 10rpx 5rpx 5rpx;
+  padding-top: 20rpx;
+  -webkit-box-shadow: #e7e6e4 0 0 10rpx;
+          box-shadow: #e7e6e4 0 0 10rpx;
+}
+.tabber-complaintModal-content-title {
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333333;
+}
+.tabber-complaintModal-content-tips {
+  color: #666;
+  font-size: 34rpx;
+  margin-top: 10rpx;
+  margin-left: 50rpx;
+}
+.tabber-complaintModal-content-textareaBox {
+  border: 1rpx solid #eeeeee;
+  padding: 20rpx;
+  margin: 20rpx;
+  border-radius: 4rpx;
+  margin-left: 49rpx;
+}
+.tabber-complaintModal-content-textarea {
+  width: 100%;
+  font-size: 28rpx;
+  max-height: 200rpx;
+}
+.tabber-complaintModal-content-blued {
+  margin-left: 49rpx;
+  color: #0099ff;
+  font-size: 24rpx;
+  margin-bottom: 47rpx;
+}
+.tabber-complaintModal-footer {
+  width: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 80rpx;
+  line-height: 80rpx;
+  padding-bottom: 48rpx;
+}
+.tabber-complaintModal-footer-btn {
+  width: 500rpx;
+  height: 84rpx;
+  background: #0099ff;
+  border-radius: 4rpx;
+  color: #fff;
+  margin: 0 auto;
+  text-align: center;
+}
+.tabber-complaintModal-footer-cancel {
+  text-align: center;
+}
+.tabber-complaintModal-footer-cancel:first-child {
+  border-right: 1rpx solid #f2f2f2;
+}

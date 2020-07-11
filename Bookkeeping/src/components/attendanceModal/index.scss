@@ -1,0 +1,70 @@
+.calendarModal{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.calendarModal-content{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 10rpx 10rpx 5rpx 5rpx;
+  box-shadow: #e7e6e4 0 0 10rpx;
+}
+.footer-box{
+  margin:  0 auto;
+  background: #fff;
+  height: 227rpx;
+  // line-height: 227rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: rgba(38, 38, 38, 1);
+  font-size: 30rpx;
+}
+.weChat{
+  height: 75rpx;
+  width: 75rpx;
+  background-size: contain;
+  margin:auto;
+  margin-bottom: 27rpx;
+}
+.weChat-img{
+  height: 75rpx;
+  width: 75rpx;
+  background-size: contain;
+}
+.download{
+  height: 75rpx;
+  width: 75rpx;
+  background-size: contain;
+  margin:auto;
+  margin-bottom: 27rpx;
+}
+.download-img{
+  height: 75rpx;
+  width: 75rpx;
+  background-size: contain;
+}
+.close{
+  background: #fff;
+  text-align: center;
+  height: 106rpx;
+  line-height: 106rpx;
+  margin-top: 12rpx;
+  width: 100%;
+  color: rgba(38, 38, 38, 1);
+  font-size: 30rpx;
+  border-radius:10px;
+}
+.btn{
+  border: none;
+}

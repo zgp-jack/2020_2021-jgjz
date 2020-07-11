@@ -1,0 +1,98 @@
+.feedback{
+  height: 100vh;
+  // background: #cccc;
+}
+.heard{
+  background: rgba(255, 255, 255, 1);
+  padding: 18rpx 30rpx;
+  font-size: 26rpx;
+  color: rgba(127, 126, 126, 1);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18rpx;
+}
+.blued{
+  color: rgba(0, 153, 255, 1)
+}
+.heard-title{
+  font-size: 26rpx;
+}
+.copy{
+  width:134rpx;
+  height:44rpx;
+  line-height: 44rpx;
+  background:rgba(0, 153, 255, 1);
+  box-shadow:0rpx 5rpx 5rpx 0rpx rgba(80, 159, 255, 0.3);
+  border-radius:6rpx;
+  color: #ffffff;
+  text-align: center;
+}
+.evaluate{
+  background: #fff;
+  height: 214rpx;
+  font-size: 26rpx;
+  padding: 20rpx 30rpx;
+  color: rgba(128, 128, 128, 1);
+  margin-bottom: 18rpx;
+}
+.evaluateRadio{
+  display: flex;
+  margin-top: 48rpx;
+}
+.RadioGroup{
+  width: 100%;
+}
+.evaluateRadioList{
+  width: 25%;
+  margin:  0 auto;
+  margin-bottom: 48rpx;
+  text-align: center;
+  transform: scale(0.8, 0.8);
+  font-size: 28rpx !important;
+}
+.opinion{
+  height: 644rpx;
+  background: #fff;
+  padding: 23rpx 20rpx;
+}
+.opinionTextarea{
+  height: 360rpx;
+  width: 690rpx;
+  margin-bottom: 10rpx;
+  border: 1rpx solid rgba(230, 230, 230, 1);
+  padding-top: 20rpx;
+  padding-left: 16rpx;
+  font-size: 26rpx;
+}
+.tips{
+  font-size:26rpx;
+  color:rgba(254, 99, 43, 1);
+  margin-bottom: 30rpx;
+}
+.image{
+  display: block;
+}
+.submitBtnBox{
+  margin-top: 45rpx;
+  width: 100%;
+  margin-bottom: 45rpx;
+}
+.submitBtn{
+  width:690rpx;
+  height:80rpx;
+  line-height: 80rpx;
+  background:rgba(0, 153, 255, 1);
+  border-radius:40rpx;
+  color: #fff;
+  text-align: center;
+  margin: 0 auto;
+}
+.clear {
+  clear: both;
+}
+.addImage{
+  color: rgba(153, 153, 153, 1);
+  font-size: 24rpx;
+  margin-left: 20rpx;
+  margin-bottom: 20rpx;
+}

@@ -1,0 +1,19 @@
+<block wx:if="{{$taroCompReady}}">
+    <view>
+        <block wx:if="{{display}}">
+            <view class="tabber-complaintModal">
+                <view class="tabber-complaintModal-content">
+                    <view class="tabber-complaintModal-content-title">填写班组</view>
+                    <view class="tabber-complaintModal-content-tips">班组名称:</view>
+                    <view class="tabber-complaintModal-content-textareaBox">
+                        <input class="tabber-complaintModal-content-textarea" placeholder="请输入班组名称" value="{{teamName}}" bindinput="anonymousFunc0" />
+                    </view>
+                    <view class="tabber-complaintModal-content-blued">注：填写您当前项目下需要记工的班组名称</view>
+                    <view class="tabber-complaintModal-footer">
+                        <view class="tabber-complaintModal-footer-btn" bindtap="funPrivategczzz">确定创建</view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</block>

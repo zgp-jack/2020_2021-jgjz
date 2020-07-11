@@ -1,0 +1,25 @@
+<block wx:if="{{$taroCompReady}}">
+    <view>
+        <block wx:if="{{display}}">
+            <view class="createProject-complaintModal">
+                <view class="createProject-complaintModal-content">
+                    <view class="createProject-complaintModal-content-title">
+                        <view>修改项目/班组名称</view>
+                        <view class="createProject-complaintModal-content-colse" bindtap="funPrivateigzzz">x</view>
+                    </view>
+                    <view class="createProject-complaintModal-content-tips">项目名称:</view>
+                    <view class="createProject-complaintModal-content-textareaBox">
+                        <input class="createProject-complaintModal-content-textarea" placeholder="请输入项目名称" value="{{data.group_name}}" bindinput="anonymousFunc0" />
+                    </view>
+                    <view class="createProject-complaintModal-content-tips">班组名称:</view>
+                    <view class="createProject-complaintModal-content-textareaBox">
+                        <input class="createProject-complaintModal-content-textarea" placeholder="请输入班组名称" value="{{data.team_name}}" bindinput="anonymousFunc1" />
+                    </view>
+                    <view class="createProject-complaintModal-footer">
+                        <view class="createProject-complaintModal-footer-btn" bindtap="funPrivateihzzz">确认修改</view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</block>

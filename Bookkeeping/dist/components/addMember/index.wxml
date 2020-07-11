@@ -1,0 +1,23 @@
+<block wx:if="{{$taroCompReady}}">
+    <view>
+        <block wx:if="{{display}}">
+            <view class="addMember">
+                <view class="addMember-content">
+                    <view class="addMember-content-heard">添加成员<text class="addMember-content-heard-close" bindtap="funPrivatehgzzz">x</text>
+                    </view>
+                    <view class="addMember-content-listBox">
+                        <view class="addMember-content-listBox-list">
+                            <view>姓名(必填)</view>
+                            <input class="addMember-content-listBox-list-input" placeholder="请输入姓名" bindinput="anonymousFunc0" />
+                        </view>
+                        <view class="addMember-content-listBox-list">
+                            <view>电话号码(可不填)</view>
+                            <input placeholder="请输入对方电话号码" type="number" class="addMember-content-listBox-list-input" bindinput="anonymousFunc1" />
+                        </view>
+                    </view>
+                    <view class="addMember-content-footer" bindtap="anonymousFunc2">确定创建</view>
+                </view>
+            </view>
+        </block>
+    </view>
+</block>

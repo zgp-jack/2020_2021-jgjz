@@ -1,0 +1,540 @@
+import Taro from '@tarojs/taro'
+import Msg from '../msg'
+import { UserInfo,Type } from '../../config/store'
+import { User } from '../../reducers/user'
+import * as api from '../api'
+import * as Inter from './index.d'
+import { AuthData } from '../../components/auth';
+import { useSelector } from '@tarojs/redux'
+
+// 头部可传参数
+interface RequestHeader {
+  'content-type'?: string
+  mid?: number,
+  token?: string,
+  time?: number,
+  uuid?: string,
+  version?: string,
+  type?:number,
+  identity?:number,
+}
+// 默认请求参数
+interface RequestBase {
+  url: string,
+  method: 'GET' | 'POST',
+  header: RequestHeader,
+  data: any,
+  failToast: boolean,
+  loading: boolean,
+  title: string
+}
+// 请求失败提示信息
+function requestShowToast(show: boolean): void {
+  if (show) {
+    setTimeout(() => {
+      Msg('网络错误，请求失败')
+    }, 200)
+  }
+}
+
+type Request = {
+  [K in keyof RequestBase]?: RequestBase[K]
+}
+
+
+// 获取header请求头信息
+function getRequestHeaderInfo(): RequestHeader {
+  // 获取用户信息
+  let userInfo: User = Taro.getStorageSync(UserInfo);
+  const requestHeader: RequestHeader = userInfo.login ? {
+    'content-type': 'application/x-www-form-urlencoded',
+    mid: userInfo.userId,
+    token: userInfo.token,
+    time: userInfo.tokenTime,
+    uuid: userInfo.uuid,
+  } : {
+      'content-type': 'application/x-www-form-urlencoded',
+    }
+  return requestHeader
+}
+
+// 配置默认请求参数
+const defaultRequestData: RequestBase = {
+  url: '',
+  method: 'GET',
+  header: getRequestHeaderInfo(),
+  data: {},
+  loading: true,
+  title: '数据加载中...',
+  failToast: true
+}
+
+// 全局通用请求方法
+export function doRequestAction(reqData: Request): Promise<any> {
+  let req: RequestBase = { ...defaultRequestData, ...reqData }
+  if (req.loading) {
+    Taro.showLoading({
+      title: req.title
+    })
+  }
+  let data = { ...req.data, wechat_token: 'jigong' }
+  // 获取用户信息
+  let userInfo: User = Taro.getStorageSync(UserInfo)
+  // 获取存入的公用内容
+  let type: User = Taro.getStorageSync(Type)
+  // const useSelectorItem = useSelector<any, any>(state => state)
+  console.log(userInfo,'userInfo')
+  if (userInfo) {
+  if (req.method === 'POST' && userInfo.login) {
+    data.userId = userInfo.userId
+    data.token = userInfo.token
+    data.tokenTime = userInfo.tokenTime
+    data.identity = type
+  }else{
+    data.userId = userInfo.userId
+    data.token = userInfo.token
+    data.tokenTime = userInfo.tokenTime
+    data.identity = type
+  }
+  }
+  return new Promise((resolve, reject) => {
+    Taro.request({
+      url: /^http(s?):\/\//.test(req.url) ? req.url : req.url,
+      method: req.method,
+      header: req.header,
+      data: data,
+      success: (res) => {
+        //console.log(res)
+        if (res.statusCode === 200) {
+          resolve(res.data)
+        } else {
+          requestShowToast(req.failToast)
+          reject(res)
+        }
+      },
+      fail: (e) => {
+        // todo requestShowToast(req.failToast)
+        requestShowToast(req.failToast)
+        reject(e)
+      },
+      complete: function () {
+        if (req.loading) {
+          Taro.hideLoading()
+        }
+      }
+    })
+  })
+}
+
+
+// 测试
+export function resumesComplainAction(data): Promise<Inter.Result> {
+  return doRequestAction({
+    url: api.jobRecommendListUrl,
+    data: data
+  })
+}
+
+// 用户授权-获取session_key
+export function getUserSessionKeyAction(code: string): Promise<Inter.SessionKey> {
+  return doRequestAction({
+    url: api.GetUserSessionKey + '?code=' + code +'&wechat_token=jigong',
+    method: 'POST',
+    data: {
+      code: code
+    }
+  })
+}
+// 获取登陆账户
+export function GetUserInfoAction(data: AuthData): Promise<Inter.InitUserInfo> {
+  return doRequestAction({
+    url: api.GetUserInfo,
+    data: data
+  })
+}
+
+
+// 首页
+export function bkIndexAction(data): Promise<Inter.bkIndexType> {
+  let userInfo: User = Taro.getStorageSync(UserInfo)
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkIndexUrl,
+    header: {
+      'content-type': 'application/json',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+      uuid: userInfo.uuid
+    },
+    data: data
+  })
+}
+
+// 授权时token验证并创建用户
+export function bkMemberAuthAction(data): Promise<Inter.bkMemberAuth> {
+  return doRequestAction({
+    url: api.bkMemberAuthUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+//添加意见反馈
+export function bkAddFeedbackAction(data): Promise<Inter.Result> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkAddFeedbackUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+
+// 新增记事本
+export function bkAddNotepadAction(data): Promise<Inter.Result> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkAddNotepadUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+// 获取记事本记录
+export function bkGetNotePadAction(data): Promise<Inter.bkGetNotePadType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkGetNotePadUrl,
+    data: data
+  })
+}
+
+// 删除记事本
+export function bkDeleteNotePadAction(data): Promise<Inter.bkGetNotePadType> {
+  const { id } = data;
+  // const ids = JSON.stringify(id)
+  // 获取用户信息
+  let userInfo: User = Taro.getStorageSync(UserInfo)
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkDeleteNotePadUrl + '?' + 'ids' + '=' + id,
+    method: 'POST',
+    header:{
+      'content-type':'application/json',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+      uuid: userInfo.uuid
+    },
+    data: data
+  })
+}
+
+
+// 修改记事本
+export function bkUpdateNotePadAction(data): Promise<Inter.bkGetNotePadType> {
+  const { id } = data;
+  // 获取用户信息
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkUpdateNotePadUrl + '?id' + '=' + id,
+    method: 'POST',
+    data: data
+  })
+}
+
+// 流水
+export function bkBusinessAction(data): Promise<Inter.bkBusinessType> {
+  let userInfo: User = Taro.getStorageSync(UserInfo)
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkBusinessUrl,
+    header: {
+      'content-type': 'application/json',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+      uuid: userInfo.uuid
+    },
+    data: data
+  })
+}
+
+// 记工项目列表
+export function bkGetProjectTeamAction(data): Promise<Inter.bkGetProjectTeam> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkGetProjectTeamUrl,
+    data: data
+  })
+}
+
+// 添加项目班组
+export function bkAddProjectTeamAction(data): Promise<Inter.bkAddProjectTeam> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkAddProjectTeamUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+// 添加工人
+export function bkAddWorkerActiion(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkAddWorkerUrl,
+    method: 'POST',
+    data: data
+  })
+}
+// 工人列表
+export function bkGetWorkerAction(data): Promise<Inter.bkGetWorker> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkGetWorkerUrl,
+    data: data
+  })
+}
+
+// 删除
+export function bkDeleteRroupWorkerAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkDeleteRroupWorkerUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+// excel数据
+export function bkgetExcelDataAction(data): Promise<Inter.bkgetExcelData> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkgetExcelDataUrl,
+    data: data
+  })
+}
+
+// 导出excel数据
+export function bkShareExcelAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkShareExcelurl,
+    data: data
+  })
+}
+
+// 记工记点
+export function bkAddBusinessAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkAddBusinessUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+// 记工按量包工
+// export function bkDeleteGroupWorkerAction(data): Promise<Inter.bkBusinessType> {
+//   let userInfo: User = Taro.getStorageSync(UserInfo)
+//   data.identity = userInfo.type;
+//   return doRequestAction({
+//     url: api.bkDeleteGroupWorkerUrl,
+//     data: data
+//   })
+// }
+
+
+// 工资标准
+export function bkWageStandGetWageAction(data): Promise<Inter.bkWageStandGetWage> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkWageStandGetWageUrl,
+    data: data
+  })
+}
+
+// 添加工资标准
+export function bkAddWageAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkAddWageUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+// 已设置工资
+export function bkGetWorkerWageAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkGetWorkerWageUrl,
+    data: data
+  })
+}
+
+// 流水删除
+export function bkDeleteBusinessAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkDeleteBusinessUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+// 修改工资工资标准
+export function bkUpdateWorkerAction(data): Promise<Inter.bkBusinessType> {
+  const { id } =data;
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkUpdateWorkerUrl +'?id='+id,
+    method: 'POST',
+    data: data
+  })
+}
+
+
+// 删除项目组
+export function bkDeleteprojectTeamAction(data): Promise < Inter.bkBusinessType > {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkDeleteprojectTeamUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+
+// 修改项目
+export function bkUpdateProjectTeamAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkUpdateProjectTeamUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+
+// 给工人设置工资标准
+export function bkSetWorkerMoneyByWageAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkSetWorkerMoneyByWageUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+// 修改工资标准
+export function bkupdateWageAction(data): Promise < Inter.bkBusinessType > {
+  const { id } = data;
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkupdateWageUrl +'?id='+id,
+    method: 'POST',
+    data: data
+  })
+}
+
+
+// 获取单个流水
+export function bkBusinessOneAction(data): Promise<Inter.bkBusinessOneType> {
+  const { id } = data;
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkBusinessOneUrl + '?id=' + id,
+    data: data
+  })
+}
+
+
+// 修改记工
+export function updateBusinessAction(data): Promise<Inter.bkBusinessType> {
+  const { id } = data;
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.updateBusinessUrl + '?id=' + id,
+    method: 'POST',
+    data: data
+  })
+}
+
+// 给组里添加工人
+export function bkAddWorkerInGroupAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  return doRequestAction({
+    url: api.bkAddWorkerInGroupUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+
+// 分享获取考勤表
+export function bkGetShareExcelDataAction(data): Promise<Inter.bkBusinessType> {
+  let type = Taro.getStorageSync(Type)
+  data.identity = type
+  const { id } = data;
+  return doRequestAction({
+    url: api.bkGetShareExcelDataUrl+'/id='+id,
+    data: data
+  })
+}
+
+// 验证码
+export function bkGetCodeAction(data): Promise<Inter.bkGetCode> {
+  return doRequestAction({
+    url: api.bkGetCodeUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+// 设置班组长
+export function bkSetGroupLeaderAction(data): Promise<Inter.bkGetCode> {
+  return doRequestAction({
+    url: api.bkSetGroupLeaderUrl,
+    method: 'POST',
+    data: data
+  })
+}
+
+//  云彩
+export function bkUpdateBusinessNewAction(data): Promise<Inter.bkGetCode> {
+  return doRequestAction({
+    url: api.bkUpdateBusinessNewUrl,
+    method: 'POST',
+    data: data
+  })
+}

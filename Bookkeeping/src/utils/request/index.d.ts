@@ -1,0 +1,219 @@
+export interface Result {
+  code: number,
+  msg: string
+}
+
+export interface ResultData<T> extends Result {
+  data: T
+}
+// 获取code
+export interface SessionKey {
+  openid: string,
+  session_key: string,
+  unionid: string
+}
+// 获取用户信息
+export interface InitUserInfo extends Result{
+  data: InitUserInfoData,
+  errcode:string,
+  errmsg:string,
+}
+
+export interface InitUserInfoData {
+  id: number,
+  headimgurl: string,
+  nickname: string,
+  username: string,
+  uuid: string,
+  sign: InitUserInfoSign
+}
+
+interface InitUserInfoSign {
+  token: string,
+  time: number
+}
+
+// 首页
+export interface bkIndexType extends Result {
+  data: bkIndexTypeData,
+}
+export interface bkIndexTypeData {
+  amount: { type: number }
+  borrow: string,
+  business_list: bkIndexTypeDataList,
+  money: string
+  overtime: number
+  work_time: number,
+  count_is_new:string,
+}
+
+export interface bkIndexTypeDataList {
+  code: number,
+  msg: string,
+  data: any
+}
+
+// 记事本列表
+export interface bkGetNotePadType extends Result{
+  data: bkGetNotePadTypeData[]
+}
+export interface bkGetNotePadTypeData{
+  id: string
+  note: string,
+  created_by: string,
+  created_time: number,
+  updated_time: string,
+  img: string,
+  time?:any,
+  week?:string,
+  creatTime?:string,
+  click?:boolean
+}
+
+// 流水列表
+export interface bkBusinessType extends Result {
+  data: bkBusinessTypeDataItem
+}
+export interface bkBusinessTypeDataItem {
+  data: bkBusinessTypeData[]
+}
+export interface bkBusinessTypeData {
+  click:boolean,
+  arr: bkBusinessTypeDataList[],
+  time:string,
+  week:string,
+  month: string,
+  day: string,
+  total_borrow:number,
+  total_money:number,
+}
+export interface bkBusinessTypeDataList {
+  id: string,
+  business_type: string
+  created_by: string
+  created_time: string
+  group_info: string
+  group_leader: string
+  identity: string
+  img_url: string
+  is_deleted: string
+  money: string
+  note: string
+  overtime: string
+  str_created_time: string
+  time: string
+  type: string
+  work_time: string
+  worker_id: string
+}
+
+// 授权时token验证返沪数据
+export interface bkMemberAuth extends Result {
+  data: any
+}
+
+
+// 项目列表
+export interface bkGetProjectTeam extends Result {
+  data: bkGetProjectTeamData[]
+}
+export interface bkGetProjectTeamData {
+  child: bkGetProjectTeamDataChild[],
+  created_by: string
+  created_time: string
+  group_leader: string
+  id: string
+  is_deleted: string
+  name: string
+  pid: string
+}
+export interface bkGetProjectTeamDataChild{
+  created_by: string
+  created_time: string
+  group_leader: string
+  id: string
+  is_deleted:  string
+  name: string
+  pid: string
+}
+
+// 新增项目
+export interface bkAddProjectTeam extends Result {
+  data:string
+}
+
+// 考勤表
+export interface bkgetExcelDataType extends Result {
+  data:any[]
+}
+
+// 流水详情
+export interface bkBusinessOneType extends Result{
+  data:{
+    business_type:string
+    created_by: string
+    created_time: string
+    group_info: string
+    group_leader: string
+    id: string
+    identity: string
+    img_url: string
+    is_deleted: string
+    money: string
+    note: string
+    overtime: string
+    time: string
+    type: string
+    unit: string
+    unit_num: string
+    unit_price: string
+    updated_time: string
+    wage_standard_id: string
+    work_time: string
+    worker_id: string,
+    view_images:any[],
+    group_info_name:string,
+    worktime_define: string,
+    overtime_type: string,
+    overtime_money: string,
+    worker_money: string,
+    workername: string,
+    leaderName: string,
+    worker_overtime:string,
+  }
+}
+
+//工资标准模板
+export interface bkWageStandGetWage extends Result{
+  data:any[]
+}
+
+// 人员
+export interface bkGetWorker extends Result{
+  data:any[];
+}
+
+// 考勤表
+export interface bkgetExcelData extends Result{
+  data: bkgetExcelDataList[]
+}
+interface bkgetExcelDataList {
+  amount: bkgetExcelDataListArr[],
+  borrow: bkgetExcelDataListArr[],
+  hour: bkgetExcelDataListArr[],
+  id:number,
+  name:string,
+  work: bkgetExcelDataListArr[]
+}
+interface bkgetExcelDataListArr {
+  date:string,
+  total:any,
+  date_num:string,
+  list:any[]
+}
+// 验证码
+export interface bkGetCode extends Result {
+  errcode: string,
+  errmsg: string,
+  refresh: number
+}

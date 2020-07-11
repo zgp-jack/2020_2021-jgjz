@@ -1,0 +1,25 @@
+<block wx:if="{{$taroCompReady}}">
+    <view>
+        <block wx:if="{{display}}">
+            <view class="calendarModal">
+                <view class="calendarModal-content">
+                    <view class="footer-box">
+                        <view>
+                            <view class="weChat">
+                                <image class="weChat-img" src="{{IMGCDNURL + 'weChat.png'}}"></image>
+                            </view>
+                            <button class="btn" open-type="share">分享给微信好友</button>
+                        </view>
+                        <view>
+                            <view class="download" bindtap="anonymousFunc0">
+                                <image class="download-img" src="{{IMGCDNURL + 'downLoad.png'}}"></image>
+                            </view>
+                            <button class="btn">下载到本地</button>
+                        </view>
+                    </view>
+                    <view class="close" bindtap="funPrivateifzzz">取消</view>
+                </view>
+            </view>
+        </block>
+    </view>
+</block>

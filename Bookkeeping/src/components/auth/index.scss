@@ -1,0 +1,65 @@
+.btn{
+  width: 100%;
+}
+.sign{
+  margin: 0 auto;
+  width: 95%;
+  background: rgba(58, 178, 4, 1);
+  text-align: center;
+  color: #fff;
+  height: 92rpx;
+  line-height: 92rpx;
+  border-radius:5rpx;
+  margin-top: 40rpx;
+}
+.close{
+  margin: 0 auto;
+  width: 95%;
+  background: #fff;
+  text-align: center;
+  color: rgba(36, 36, 36, 1);
+  height: 92rpx;
+  line-height: 92rpx;
+  margin-top: 20rpx;
+  border:1rpx solid rgba(223, 223, 223, 1);
+  border-radius:5rpx;
+}
+.text{
+  font-size: 29rpx;
+  color: rgba(166, 164, 164, 1);
+  padding-left: 100rpx;
+  padding-right: 100rpx;
+  text-align: center;
+}
+.name{
+  color: rgba(69, 69, 76, 1);
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-bottom: 32rpx;
+  text-align: center;
+}
+.img{
+  height: 220rpx;
+  width: 220rpx;
+  margin: 0 auto;
+  margin-top: 100rpx;
+  margin-bottom: 100rpx;
+  // background: url(../../assets/images/logo.png) no-repeat no-repeat;
+  background-size: contain;
+}
+.imgBox{
+
+}
+
+.content{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  left: 0;
+  top: 0;
+}
+.img-img{
+  height: 220rpx;
+  width: 220rpx;
+}

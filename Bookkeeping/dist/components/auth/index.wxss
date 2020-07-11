@@ -1,0 +1,60 @@
+.btn {
+  width: 100%;
+}
+.sign {
+  margin: 0 auto;
+  width: 95%;
+  background: #3ab204;
+  text-align: center;
+  color: #fff;
+  height: 92rpx;
+  line-height: 92rpx;
+  border-radius: 5rpx;
+  margin-top: 40rpx;
+}
+.close {
+  margin: 0 auto;
+  width: 95%;
+  background: #fff;
+  text-align: center;
+  color: #242424;
+  height: 92rpx;
+  line-height: 92rpx;
+  margin-top: 20rpx;
+  border: 1rpx solid #dfdfdf;
+  border-radius: 5rpx;
+}
+.text {
+  font-size: 29rpx;
+  color: #a6a4a4;
+  padding-left: 100rpx;
+  padding-right: 100rpx;
+  text-align: center;
+}
+.name {
+  color: #45454c;
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-bottom: 32rpx;
+  text-align: center;
+}
+.img {
+  height: 220rpx;
+  width: 220rpx;
+  margin: 0 auto;
+  margin-top: 100rpx;
+  margin-bottom: 100rpx;
+  background-size: contain;
+}
+.content {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  left: 0;
+  top: 0;
+}
+.img-img {
+  height: 220rpx;
+  width: 220rpx;
+}

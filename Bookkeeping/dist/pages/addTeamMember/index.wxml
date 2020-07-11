@@ -1,0 +1,38 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="content">
+        <view>
+            <at-search-bar compid="{{$compid__52}}"></at-search-bar>
+        </view>
+        <view id="box">
+            <block wx:if="{{data}}">
+                <view wx:key="$loopState__temp2" wx:for="{{loopArray49}}" wx:for-item="val" wx:for-index="i">
+                    <view class="list-title">{{val.$original.name_py}}</view>
+                    <view class="list-flex-test" bindtap="anonymousFunc2" wx:for="{{val.$anonymousCallee__10}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                        <block wx:if="{{type !== '2'}}">
+                            <view>
+                                <checkbox checked="{{v.$original.click}}" value="{{v.$original.click}}" class="Checkbox" bindtap="anonymousFunc3" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}"></checkbox>
+                            </view>
+                        </block>
+                        <view>
+                            <view class="image"></view>
+                        </view>
+                        <view>
+                            <view class="name">{{v.$original.name}}</view>
+                            <view class="phone">{{v.$original.phone}}</view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+        </view>
+        <view class="add" bindtap="anonymousFunc4">添加</view>
+        <view class="letter">
+            <view class="letter-list" id="{{'' + v.$original.name}}" bindtap="anonymousFunc5" wx:key="id" wx:for="{{loopArray50}}" wx:for-item="v" wx:for-index="__index5" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey3}}">{{v.$original.name}}</view>
+        </view>
+        <block wx:if="{{type !== '2'}}">
+            <view class="footer">
+                <view class="footer-btn" bindtap="anonymousFunc6">开始记工</view>
+            </view>
+        </block>
+        <add-member compid="{{$compid__53}}"></add-member>
+    </view>
+</block>

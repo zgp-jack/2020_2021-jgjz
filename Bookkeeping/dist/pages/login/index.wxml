@@ -1,0 +1,19 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="content">
+        <view class="title">您好</view>
+        <view class="welCome">欢迎来到记工记账</view>
+        <view class="from">
+            <view>
+                <at-input compid="{{$compid__43}}"></at-input>
+            </view>
+            <view>
+                <at-input compid="{{$compid__44}}">
+                    <view bindtap="anonymousFunc2" class="code">{{liked ? '获取验证码' : time + '秒后重发'}}</view>
+                </at-input>
+            </view>
+        </view>
+        <view class="footer" bindtap="anonymousFunc3">
+            <view class="footerBtn">注册/登录</view>
+        </view>
+    </view>
+</block>

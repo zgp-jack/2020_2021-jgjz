@@ -1,0 +1,1 @@
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([["pages/notepad/index"],[],[["./src/pages/notepad/index.tsx","runtime","taro","vendors","common"]]]);

@@ -1,0 +1,22 @@
+<block wx:if="{{$taroCompReady}}">
+    <view>
+        <block wx:if="{{display}}">
+            <view class="createProject-complaintModal">
+                <view class="createProject-complaintModal-content">
+                    <view class="createProject-complaintModal-content-title">
+                        <view>创建项目 开始记工</view>
+                        <view class="createProject-complaintModal-content-colse" bindtap="funPrivatehbzzz">x</view>
+                    </view>
+                    <view class="createProject-complaintModal-content-tips">项目名称:</view>
+                    <view class="createProject-complaintModal-content-textareaBox">
+                        <input class="createProject-complaintModal-content-textarea" placeholder="请输入项目名称" value="{{val}}" bindinput="anonymousFunc0" />
+                    </view>
+                    <view class="createProject-complaintModal-content-blued">提示：填写您要记工的工程项目名称</view>
+                    <view class="createProject-complaintModal-footer">
+                        <view class="createProject-complaintModal-footer-btn" bindtap="funPrivatehczzz">下一步</view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</block>

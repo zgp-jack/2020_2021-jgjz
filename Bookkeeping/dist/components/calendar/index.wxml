@@ -1,0 +1,51 @@
+<block wx:if="{{$taroCompReady}}">
+    <view>
+        <block wx:if="{{display}}">
+            <view class="calendarModal-complaintModal">
+                <view class="calendarModal-complaintModal-content">
+                    <view class="icon-left"></view>
+                    <view class="icon-right"></view>
+                    <view class="calendarModal-complaintModal-content-top">
+                        <view class="content-top-close" bindtap="funPrivatebaazz">取消</view>
+                        <view class="content-top-title">选择日期(可选择多天)</view>
+                        <view class="content-top-change" bindtap="anonymousFunc0">确定</view>
+                    </view>
+                    <view class="content-tips">
+                        <view class="content-tips-time">{{time.year}}
+                            <view class="leftIcon" bindtap="anonymousFunc1"></view>{{time.monent}}
+                            <view class="righticon" bindtap="anonymousFunc2"></view>
+                        </view>
+                        <view><text class="content-tips-box"></text>表示当天已有记工</view>
+                    </view>
+                    <view class="content-times">
+                        <scroll-view class="scrollView" scroll-x="{{true}}" scroll-with-animation="{{true}}" upper-threshold="{{50}}" lower-threshold="{{50}}" bindscrolltoupper="anonymousFunc3" bindscrolltolower="anonymousFunc4">
+                            <view class="scrollView-content">
+                                <view class="content-weekes">
+                                    <view wx:key="id" class="content-weekes-week" wx:for="{{weeks}}" wx:for-item="v" wx:for-index="_anonIdx2">{{v.name}}</view>
+                                </view>
+                                <view class="content-days">
+                                    <view wx:key="$loopState__temp2" bindtap="anonymousFunc5" class="{{v.$loopState__temp4}}" wx:for="{{loopArray59}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                                        <view>{{v.$original.date}}</view>
+                                        <view class="lunarCalendarItem">{{v.$original.lunarCalendarItem}}</view>
+                                        <block wx:if="{{recorderType === 3}}">
+                                            <view class="noCheckbox"></view>
+                                        </block>
+                                        <block wx:if="{{recorderType !== 3}}">
+                                            <view>
+                                                <block wx:if="{{!v.$original.next && !v.$original.up}}">
+                                                    <view>
+                                                        <checkbox class="{{v.$loopState__temp6}}" checked="{{v.$original.click}}" value="{{v.$original.value}}" color="rgba(253, 120, 13, 1)"></checkbox>
+                                                    </view>
+                                                </block>
+                                            </view>
+                                        </block>
+                                    </view>
+                                </view>
+                            </view>
+                        </scroll-view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</block>

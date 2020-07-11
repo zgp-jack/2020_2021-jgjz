@@ -1,0 +1,93 @@
+.content{
+  padding-bottom: 200rpx;
+}
+.seach{
+  background: #fff;
+  height: 104rpx;
+}
+.at-indexes__menu{
+  top:20% 
+}
+.image{
+  height: 68rpx;
+  width: 68rpx;
+  background: red;
+  margin-right: 51rpx;
+}
+.list-flex-test{
+  display: flex;
+  background: #fff;
+  padding: 20rpx 28rpx;
+  border-bottom: 1rpx solid #ccc;
+  margin-top: 20rpx;
+}
+.list-flex{
+  display: flex;
+  background: #fff;
+  padding: 20rpx 28rpx;
+  border-bottom: 1rpx solid #ccc;
+}
+.list-flex:last-child {
+  border-bottom: none
+}
+.list-title{
+  height: 27rpx;
+  font-size: 20rpx;
+  padding: 10rpx;
+  padding-left: 28rpx;
+}
+.name{
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, 1);
+}
+.phone{
+  font-size: 26rpx;
+  color: rgba(153, 153, 153, 1);
+}
+.letter{
+  position: fixed;
+  right: 20rpx;
+  top: 13%
+}
+.letter-list{
+  font-size: 20rpx;
+  color: rgba(153, 153, 153, 1);
+}
+.add{
+  position: fixed;
+  right: 0rpx;
+  bottom: 200rpx;
+  width:82rpx;
+  height:82rpx;
+  line-height: 82rpx;
+  text-align: center;
+  background:rgba(41, 187, 243, 1);
+  box-shadow:0rpx 10rpx 15rpx 0rpx rgba(41, 187, 243, 0.45);
+  border-radius:50%;
+  font-size: 24rpx;
+  color: #fff;
+}
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  height: 135rpx;
+  line-height: 135rpx;
+}
+.footer-btn{
+  width: 90%;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  margin: auto;
+  margin-top: 20rpx;
+  background: rgba(0, 153, 255, 1);
+  color: #fff;
+  border-radius:10px;
+}
+.Checkbox{
+  transform: scale(0.6, 0.6);
+  margin-top: 10rpx;
+}
