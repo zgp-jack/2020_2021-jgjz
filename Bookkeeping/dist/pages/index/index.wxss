@@ -43,10 +43,8 @@
   background-size: cover;
 }
 .heard-right {
-  height: 36rpx;
+  height: 44rpx;
   width: 44rpx;
-  margin: auto 0;
-  margin-right: 36rpx;
   background-size: cover;
 }
 .heard-right-image {
@@ -444,6 +442,9 @@
   background-size: contain;
 }
 .cloud {
-  height: 200rpx;
-  width: 200rpx;
+  width: 100rpx;
+  margin-top: 20rpx;
+}
+.AtBadge {
+  margin-top: 40rpx;
 }

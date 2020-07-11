@@ -163,7 +163,14 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                   uuid: res.data.uuid,
                   login: true
                 };
-                console.log(user, 'user');
+                var midParams = {
+                  mid: res.data.id
+                };
+                (0, _index.bkMemberAuthAction)(midParams).then(function (res) {
+                  if (res.code !== 200) {
+                    (0, _index3.default)(res.msg);
+                  }
+                });
                 _taroWeapp2.default.setStorageSync(_store.UserInfo, user);
                 // dispatch(setUserInfo(user))
                 callback && callback();

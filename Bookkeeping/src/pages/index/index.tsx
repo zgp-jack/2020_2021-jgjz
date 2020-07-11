@@ -189,6 +189,11 @@ export default function Index() {
   }
   // 点击提示
   const handelTps = ()=>{
+    bkUpdateBusinessNewAction('').then(res=>{
+      if(res.code === 200){
+        
+      }
+    })
     Msg(`您完成了[ ${num} ]条记工信息的备份，数据安全不丢失~`);
   }
   // 切换角色
@@ -287,8 +292,8 @@ export default function Index() {
           {type === 1 ? 
             <View className='heard-middle'>我是班组长<Text className='switch' onClick={() => { handelChange(2) }}><Text className='test'/>切换 </Text></View> : 
             <View className='heard-middle'>我是工人<Text className='switch' onClick={() => { handelChange(1) }}><Text className='test'/>切换</Text></View>}
-          <View onClick={handelTps}>
-          <AtBadge value={num} maxValue={99}>
+          <View onClick={handelTps} className='cloud'>
+          <AtBadge value={num} maxValue={99} className='AtBadge'>
             <Image src={`${IMGCDNURL}cloud.png`} className='heard-right'/>
           </AtBadge>
           </View>

@@ -121,7 +121,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "hizzz" + __index2;
+        var _$indexKey = "hgzzz" + __index2;
 
         _this2.anonymousFunc2Map[_$indexKey] = function () {
           return handleWageStandardRadio(v.$original);
@@ -176,13 +176,13 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: "funPrivatehgzzz",
-    value: function funPrivatehgzzz() {
+    key: "funPrivatehezzz",
+    value: function funPrivatehezzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
-    key: "funPrivatehhzzz",
-    value: function funPrivatehhzzz() {
+    key: "funPrivatehfzzz",
+    value: function funPrivatehfzzz() {
       return this.props.handleAddWage.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -221,7 +221,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return WageStandard;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehgzzz", "funPrivatehhzzz", "anonymousFunc2"], _class.$$componentPath = "components/wageStandard/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehezzz", "funPrivatehfzzz", "anonymousFunc2"], _class.$$componentPath = "components/wageStandard/index", _temp2);
 exports.default = WageStandard;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(WageStandard));

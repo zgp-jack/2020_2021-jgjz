@@ -557,7 +557,9 @@ export default function Foreman() {
             ))}
           </View>
           <View className='atDrawer-footer'>
-              <View className='atDrawer-footer-btn' onClick={() => { setCreateProjectDisplay(true), setShow(false) }}><Image src={`${IMGCDNURL}add.png`} className='addIcon'/>  创建项目</View>
+              <View className='atDrawer-footer-btn' onClick={() => { setCreateProjectDisplay(true), setShow(false) }}>
+                {/* <Image src={`${IMGCDNURL}add.png`} className='addIcon'/>  */}
+                创建项目</View>
           </View> 
         </View>
         </AtDrawer>

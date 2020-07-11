@@ -1,6 +1,6 @@
 import Taro, { useState, useEffect, useShareAppMessage  } from '@tarojs/taro'
 import { View, Button, Image } from '@tarojs/components'
-import { getUserSessionKeyAction, GetUserInfoAction  } from '../../utils/request/index'
+import { getUserSessionKeyAction, GetUserInfoAction, bkMemberAuthAction  } from '../../utils/request/index'
 import Msg from '../../utils/msg'
 import { UserInfo } from '../../config/store';
 import { IMGCDNURL } from '../../config'
@@ -106,7 +106,14 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
               uuid: res.data.uuid,
               login: true
             }
-            console.log(user,'user')
+            let midParams = {
+              mid: res.data.id
+            }
+            bkMemberAuthAction(midParams).then(res=>{
+              if (res.code !== 200) {
+                Msg(res.msg)
+              }
+            })
             Taro.setStorageSync(UserInfo, user)
             // dispatch(setUserInfo(user))
             callback && callback()

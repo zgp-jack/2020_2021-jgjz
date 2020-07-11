@@ -50,7 +50,7 @@ var WorkingHours = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WorkingHours.__proto__ || Object.getPrototypeOf(WorkingHours)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray41", "display", "data", "handleWorkingHoursClose", "handleWorkingHours", "type", "__fn_onClick"], _this.anonymousFunc0Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WorkingHours.__proto__ || Object.getPrototypeOf(WorkingHours)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray43", "display", "data", "handleWorkingHoursClose", "handleWorkingHours", "type", "__fn_onClick"], _this.anonymousFunc0Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(WorkingHours, [{
@@ -81,12 +81,12 @@ var WorkingHours = (_temp2 = _class = function (_Taro$Component) {
           data = _useState2[0],
           setData = _useState2[1];
 
-      var loopArray41 = display ? data.map(function (v, __index0) {
+      var loopArray43 = display ? data.map(function (v, __index0) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "gjzzz" + __index0;
+        var _$indexKey = "hdzzz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           return handleWorkingHours(type, v.$original);
@@ -98,15 +98,15 @@ var WorkingHours = (_temp2 = _class = function (_Taro$Component) {
         };
       }) : [];
       Object.assign(this.__state, {
-        loopArray41: loopArray41,
+        loopArray43: loopArray43,
         display: display,
         data: data
       });
       return this.__state;
     }
   }, {
-    key: "funPrivategizzz",
-    value: function funPrivategizzz() {
+    key: "funPrivatehczzz",
+    value: function funPrivatehczzz() {
       return this.props.handleWorkingHoursClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -125,7 +125,7 @@ var WorkingHours = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return WorkingHours;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivategizzz", "anonymousFunc0"], _class.$$componentPath = "components/workingHours/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehczzz", "anonymousFunc0"], _class.$$componentPath = "components/workingHours/index", _temp2);
 
 
 WorkingHours.options = {
