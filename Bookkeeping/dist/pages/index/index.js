@@ -281,7 +281,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         // 判断有没有用户信息没有就显示
         // 获取缓存信息
         var type = _taroWeapp2.default.getStorageSync(_store.Type);
-        console.log(type, 'type ');
         // Taro.setStorageSync(Type, e);
         setType(type);
         var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
@@ -307,10 +306,16 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         var midParams = {
           mid: userInfo.userId
         };
+        console.log(midParams, 'midParams');
         (0, _index.bkMemberAuthAction)(midParams).then(function (res) {
           if (res.code !== 200) {
             (0, _index4.default)(res.msg);
           } else {
+            var _userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
+            console.log(res, 'midata');
+            res.data.sign.token = _userInfo.token;
+            res.data.sign.time = res.data.created_time;
+            res.data.uuid = _userInfo.uuid;
             _taroWeapp2.default.setStorageSync(_store.MidData, res.data);
           }
         });
@@ -320,7 +325,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       var getData = function getData() {
         // const
         var type = _taroWeapp2.default.getStorageSync(_store.Type);
-        console.log(type, 'sss');
         if (!type) {
           setIdentity(true);
           return;
@@ -342,7 +346,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         };
         (0, _index.bkIndexAction)(params).then(function (res) {
           if (res.code === 200) {
-            console.log(res.data);
             setItme(res.data);
             setNum(res.data.count_is_new);
             if (Array.isArray(res.data.business_list.data)) {
@@ -365,7 +368,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       };
       // 选择时间
       var handleChangeTime = function handleChangeTime(e) {
-        console.log(e);
         setVal(e.detail.value);
         setTime(time);
         setRepeat(true);
@@ -373,7 +375,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       // 点击提示
       var handelTps = function handelTps() {
         (0, _index.bkUpdateBusinessNewAction)('').then(function (res) {
-          console.log(res, 'res');
           if (res.code === 200) {}
         });
         (0, _index4.default)('\u60A8\u5B8C\u6210\u4E86[ ' + num + ' ]\u6761\u8BB0\u5DE5\u4FE1\u606F\u7684\u5907\u4EFD\uFF0C\u6570\u636E\u5B89\u5168\u4E0D\u4E22\u5931~');
@@ -402,7 +403,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         } else if (state === 2) {}
         setTips(false);
       };
-      console.log(item);
       var handleGoback = function handleGoback() {
         _taroWeapp2.default.navigateBackMiniProgram({
           // appId:'',
@@ -412,7 +412,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       };
       // 点击图片
       var hanleImage = function hanleImage(v) {
-        console.log(v);
         var url = void 0;
         if (v !== Images[Images.length - 1].url) {
           for (var i = 0; i < Images.length; i++) {
@@ -426,7 +425,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           // 并开启选择身份
           getData();
         }
-        console.log(url, 'url');
         setImage(url);
       };
       // 关闭授权
@@ -440,14 +438,11 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       };
       //身份
       var handleChangeRole = function handleChangeRole(e) {
-        console.log(e, 'aaasdasdsadas');
         setType(e);
         setIdentity(false);
         _taroWeapp2.default.setStorageSync(_store.Type, e);
         getData();
       };
-      console.log(list, 'lsit');
-      console.log(!busy, 'busy');
 
       this.anonymousFunc0 = function () {
         hanleImage(image);

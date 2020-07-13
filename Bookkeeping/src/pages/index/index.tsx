@@ -98,7 +98,6 @@ export default function Index() {
     // 判断有没有用户信息没有就显示
     // 获取缓存信息
     let type = Taro.getStorageSync(Type);
-    console.log(type,'type ')
     // Taro.setStorageSync(Type, e);
     setType(type)
     let userInfo = Taro.getStorageSync(UserInfo);
@@ -124,10 +123,16 @@ export default function Index() {
     let midParams={
       mid: userInfo.userId,
     }
+    console.log(midParams,'midParams')
     bkMemberAuthAction(midParams).then(res=>{
       if(res.code !== 200){
         Msg(res.msg)
       }else{
+        let userInfo = Taro.getStorageSync(UserInfo)
+        console.log(res,'midata')
+        res.data.sign.token = userInfo.token;
+        res.data.sign.time = res.data.created_time;
+        res.data.uuid = userInfo.uuid;
         Taro.setStorageSync(MidData, res.data)
       }
     })
@@ -137,7 +142,6 @@ export default function Index() {
   const getData = ()=>{
     // const
     let type = Taro.getStorageSync(Type);
-    console.log(type,'sss')
     if(!type){
       setIdentity(true)
       return
@@ -159,7 +163,6 @@ export default function Index() {
     }
     bkIndexAction(params).then(res => {
       if (res.code === 200) {
-        console.log(res.data);
         setItme(res.data);
         setNum(res.data.count_is_new);
         if (Array.isArray(res.data.business_list.data)){
@@ -182,7 +185,6 @@ export default function Index() {
   }
   // 选择时间
   const handleChangeTime = (e)=>{
-    console.log(e);
     setVal(e.detail.value)
     setTime(time);
     setRepeat(true);
@@ -190,7 +192,6 @@ export default function Index() {
   // 点击提示
   const handelTps = ()=>{
     bkUpdateBusinessNewAction('').then(res=>{
-      console.log(res,'res')
       if(res.code === 200){
         
       }
@@ -223,7 +224,6 @@ export default function Index() {
     }
     setTips(false)
   }
-  console.log(item)
   const handleGoback = ()=>{
     Taro.navigateBackMiniProgram({
       // appId:'',
@@ -233,7 +233,6 @@ export default function Index() {
   }
   // 点击图片
   const hanleImage = (v:any)=>{
-    console.log(v);
     let url;
     if (v !== Images[Images.length-1].url){
       for(let i =0;i<Images.length;i++){
@@ -247,7 +246,6 @@ export default function Index() {
       // 并开启选择身份
       getData();
     }
-    console.log(url,'url')
     setImage(url)
   }
   // 关闭授权
@@ -261,14 +259,11 @@ export default function Index() {
   }
   //身份
   const handleChangeRole = (e:any)=>{
-    console.log(e,'aaasdasdsadas');
     setType(e);
     setIdentity(false)
     Taro.setStorageSync(Type,e);
     getData();
   }
-  console.log(list,'lsit')
-  console.log(!busy,'busy')
   return (
     <View className='index-content'>
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>

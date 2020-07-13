@@ -24,8 +24,6 @@ interface PROPS {
   handleAllClick:()=>void,
 }
 export default function WagesModal({ display, handleClose, data, handleAddStandard, standard, moneyList, handleEditWages, tab, handleAtSwitch, handleSetWagesModal, handleWagesList, handleCheckboxStandard, clickModalNum, handleAllClick }: PROPS) {
-  console.log(clickModalNum,'data')  
-  console.log(data,'aaaadata')
   return(
     <View>
       {display && 

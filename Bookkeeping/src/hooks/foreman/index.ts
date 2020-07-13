@@ -262,7 +262,6 @@ export default function userForeman() {
           arrList[i].click = false;
         }
       }
-      console.log(arrList,'arrxxxx')
       setWorkerItem([objs, ...arrList])
     }
   })
@@ -696,7 +695,6 @@ export default function userForeman() {
           }
           bkDeleteRroupWorkerAction(params).then(res=>{
             if(res.code === 200){
-              console.log(workerItem);
               const data = JSON.parse(JSON.stringify(workerItem));
               data.splice(data.indexOf(v.id), 1);
               setWorkerItem(data)
@@ -717,7 +715,6 @@ export default function userForeman() {
   // 打开工资标准
   const handleOpenWagesModal = ()=>{
     setWagesModalDisplay(true);
-    console.log(workerItem,'打开工资标准')
     //把工资标准的内容设置为新的s
     const data = JSON.parse(JSON.stringify(workerItem));
     let setData:any=[],NoSetData:any=[];
@@ -805,7 +802,6 @@ export default function userForeman() {
         tabData = v;
       }
     })
-    console.log(workerItem,'xxx')
     // 获取ID
     let workers:number[] = [];
     if(identity === 1){
@@ -964,6 +960,7 @@ export default function userForeman() {
           setForemanTitle('');
           setModel(data);
         }
+        Taro.navigateBack();
         dispatch(setWorker([]))
       }else{
         Msg(res.msg);
@@ -1424,7 +1421,6 @@ export default function userForeman() {
     }
     setContractorArr({ item: data });
   }
-  console.log(workerItem,'workerItem')
   return {
     model,
     project, 

@@ -66,7 +66,6 @@ export default function Notepad() {
             res.data[i].click = false
           }
         }
-        console.log(res.data,'xxxxxxxx')
         // 给子页面存值
         dispatch(setNotepad(res))
         setData(res.data)

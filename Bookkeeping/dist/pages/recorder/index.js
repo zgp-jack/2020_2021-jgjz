@@ -78,7 +78,6 @@ var Recorder = (_temp2 = _class = function (_Taro$Component) {
       (0, _taroWeapp.useEffect)(function () {
         // let userInfo = Taro.getStorageSync(UserInfo)
         var type = _taroWeapp2.default.getStorageSync(_store.Type);
-        console.log(type, 'type');
         // console.log(userInfo,'userInfouserInfo')
         // console.log(typeof userInfo.type,'xxxx')
         // 有type就是班长 1 

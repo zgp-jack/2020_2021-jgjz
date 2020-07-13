@@ -546,7 +546,6 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       console.log(identity, 'identity');
       var handleworkOvertime = function handleworkOvertime(type, val) {
         setTimeType(type);
-        console.log(type, 'xxxx');
         if (type === 1) {
           if (val.id === 4) {
             var arr = timeArr.map(function (v) {

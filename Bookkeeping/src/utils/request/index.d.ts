@@ -26,6 +26,7 @@ export interface InitUserInfoData {
   username: string,
   uuid: string,
   sign: InitUserInfoSign
+  yupao_id?:any
 }
 
 interface InitUserInfoSign {

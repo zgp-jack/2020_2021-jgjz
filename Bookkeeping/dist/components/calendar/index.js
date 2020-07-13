@@ -514,7 +514,6 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         }
         return num;
       };
-      console.log(calendarDays, '只');
       this.anonymousFunc0 = handleCalendarSub;
 
       this.anonymousFunc1 = function () {

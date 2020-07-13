@@ -401,7 +401,6 @@ export default function EditDetails() {
   console.log(identity,'identity')
   const handleworkOvertime = (type: number, val: any) => {
     setTimeType(type)
-    console.log(type,'xxxx')
     if (type === 1) {
       if (val.id === 4) {
         const arr = timeArr.map(v => {

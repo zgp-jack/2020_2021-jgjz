@@ -12,7 +12,6 @@ export default function Recorder() {
   useEffect(()=>{
     // let userInfo = Taro.getStorageSync(UserInfo)
     const type = Taro.getStorageSync(Type)
-    console.log(type,'type')
     // console.log(userInfo,'userInfouserInfo')
     // console.log(typeof userInfo.type,'xxxx')
     // 有type就是班长 1 

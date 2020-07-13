@@ -10,7 +10,6 @@ interface PROPS {
   handleEditProjectData: (type: string, e: any) => void,
 }
 export default function EditProject({ display, handleClose, data, handleEditProjectData, handleSubmit }: PROPS) {
-  console.log(data,'xxxxxdata')
   return (
     <View>
       {display &&

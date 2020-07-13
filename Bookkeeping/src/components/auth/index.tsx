@@ -2,7 +2,7 @@ import Taro, { useState, useEffect, useShareAppMessage  } from '@tarojs/taro'
 import { View, Button, Image } from '@tarojs/components'
 import { getUserSessionKeyAction, GetUserInfoAction, bkMemberAuthAction  } from '../../utils/request/index'
 import Msg from '../../utils/msg'
-import { UserInfo } from '../../config/store';
+import { UserInfo, MidData } from '../../config/store';
 import { IMGCDNURL } from '../../config'
 import './index.scss'
 
@@ -106,6 +106,13 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
               uuid: res.data.uuid,
               login: true
             }
+            console.log(res,'resMid')
+            // let midDatas = Taro.getStorageSync(MidData);
+            // const midData = JSON.parse(JSON.stringify(midDatas))
+            // console.log(midData,'midDatamidDatamidDatamidData')
+            // midData.yupao_id = res.data.id;
+            res.data.yupao_id = res.data.id;
+            Taro.setStorageSync(MidData, res.data)
             let midParams = {
               mid: res.data.id
             }
@@ -140,7 +147,6 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
     // 需要判断有没有手机号
     userRouteJump(`/pages/login/index`)
   }
-  console.log(warrant,'warrant')
   return(
     <View>
       { display && 

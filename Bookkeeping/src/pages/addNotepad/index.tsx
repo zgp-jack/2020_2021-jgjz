@@ -66,7 +66,6 @@ export default function AddNotepad() {
       return;
     }
   }
-  console.log(image,'xxxx')
   return (
     <View className='addnotepad'>
       {id && <View className='time'>{model && model.time}</View>}

@@ -163,6 +163,13 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                   uuid: res.data.uuid,
                   login: true
                 };
+                console.log(res, 'resMid');
+                // let midDatas = Taro.getStorageSync(MidData);
+                // const midData = JSON.parse(JSON.stringify(midDatas))
+                // console.log(midData,'midDatamidDatamidDatamidData')
+                // midData.yupao_id = res.data.id;
+                res.data.yupao_id = res.data.id;
+                _taroWeapp2.default.setStorageSync(_store.MidData, res.data);
                 var midParams = {
                   mid: res.data.id
                 };
@@ -197,7 +204,6 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
         // 需要判断有没有手机号
         userRouteJump("/pages/login/index");
       };
-      console.log(warrant, 'warrant');
 
       this.anonymousFunc0 = function (e) {
         return userAuthAction(e);

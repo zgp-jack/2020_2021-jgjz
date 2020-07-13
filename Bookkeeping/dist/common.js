@@ -159,7 +159,6 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
                 res.data.data[i].day = day;
               }
             }
-            console.log(res.data, 'xxxxxxx');
             setData({ item: res.data.data });
             dispatch((0, _flowingWater.setFlowingWater)(res.data));
           } else {
@@ -274,7 +273,6 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         setmon(e.detail.value.slice(6, 8) + '月');
         getList(e.detail.value, lastM);
       };
-      console.log(data.item, 'xxxx');
       // 全选
       var handleAllCheck = function handleAllCheck() {
         if (!allcheck) {
@@ -638,7 +636,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Notepad.__proto__ || Object.getPrototypeOf(Notepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["loopArray34", "$compid__41", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray34", "$compid__40", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Notepad, [{
@@ -659,10 +657,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__41"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__40"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__41 = _genCompid2[0],
-          $compid__41 = _genCompid2[1];
+          $prevCompid__40 = _genCompid2[0],
+          $compid__40 = _genCompid2[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 输入框
@@ -750,7 +748,6 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
                 res.data[i].click = false;
               }
             }
-            console.log(res.data, 'xxxxxxxx');
             // 给子页面存值
             dispatch((0, _notepad.setNotepad)(res));
             setData(res.data);
@@ -881,10 +878,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
         "value": val,
         "onChange": this.anonymousFunc0,
         "onActionClick": this.anonymousFunc1
-      }, $compid__41, $prevCompid__41);
+      }, $compid__40, $prevCompid__40);
       Object.assign(this.__state, {
         loopArray34: loopArray34,
-        $compid__41: $compid__41,
+        $compid__40: $compid__40,
         data: data,
         busy: busy,
         del: del,
@@ -1731,7 +1728,6 @@ function userForeman() {
           arrList[_i].click = false;
         }
       }
-      console.log(arrList, 'arrxxxx');
       setWorkerItem([objs].concat(_toConsumableArray(arrList)));
     }
   });
@@ -2167,7 +2163,6 @@ function userForeman() {
           };
           (0, _index.bkDeleteRroupWorkerAction)(params).then(function (res) {
             if (res.code === 200) {
-              console.log(workerItem);
               var data = JSON.parse(JSON.stringify(workerItem));
               data.splice(data.indexOf(v.id), 1);
               setWorkerItem(data);
@@ -2188,7 +2183,6 @@ function userForeman() {
   // 打开工资标准
   var handleOpenWagesModal = function handleOpenWagesModal() {
     setWagesModalDisplay(true);
-    console.log(workerItem, '打开工资标准');
     //把工资标准的内容设置为新的s
     var data = JSON.parse(JSON.stringify(workerItem));
     var setData = [],
@@ -2279,7 +2273,6 @@ function userForeman() {
         tabData = v;
       }
     });
-    console.log(workerItem, 'xxx');
     // 获取ID
     var workers = [];
     if (identity === 1) {
@@ -2440,6 +2433,7 @@ function userForeman() {
           setForemanTitle('');
           setModel(_data5);
         }
+        _taroWeapp2.default.navigateBack();
         dispatch((0, _workerList.setWorker)([]));
       } else {
         (0, _index3.default)(res.msg);
@@ -2897,7 +2891,6 @@ function userForeman() {
     }
     setContractorArr({ item: data });
   };
-  console.log(workerItem, 'workerItem');
   return {
     model: model,
     project: project,
@@ -3391,15 +3384,20 @@ function requestShowToast(show) {
 function getRequestHeaderInfo() {
   // 获取用户信息
   var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
-  var requestHeader = userInfo.login ? {
+  console.log(userInfo, 'userInfoaaaa');
+  var requestHeader =
+  // userInfo.login ? 
+  {
     'content-type': 'application/x-www-form-urlencoded',
     mid: userInfo.userId,
     token: userInfo.token,
     time: userInfo.tokenTime,
     uuid: userInfo.uuid
-  } : {
-    'content-type': 'application/x-www-form-urlencoded'
   };
+  // : {
+  //     'content-type': 'application/x-www-form-urlencoded',
+  //   }
+  console.log(requestHeader, 'requestHeaderrequestHeaderrequestHeader');
   return requestHeader;
 }
 // 配置默认请求参数
@@ -3426,7 +3424,6 @@ function doRequestAction(reqData) {
   // 获取存入的公用内容
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   // const useSelectorItem = useSelector<any, any>(state => state)
-  console.log(userInfo, 'userInfo');
   if (userInfo) {
     if (req.method === 'POST' && userInfo.login) {
       data.userId = userInfo.userId;
@@ -3511,19 +3508,35 @@ function bkIndexAction(data) {
 }
 // 授权时token验证并创建用户
 function bkMemberAuthAction(data) {
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkMemberAuthUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 //添加意见反馈
 function bkAddFeedbackAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkAddFeedbackUrl,
     method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3531,18 +3544,41 @@ function bkAddFeedbackAction(data) {
 function bkAddNotepadAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkAddNotepadUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 // 获取记事本记录
 function bkGetNotePadAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkGetNotePadUrl,
+    // header:{
+    //   mid: midData.yupao_id,
+    //   token: midData.sign.token,
+    //   time: midData.sign.time,
+    //   uuid: midData.uuid,
+    // },
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3555,15 +3591,23 @@ function bkDeleteNotePadAction(data) {
   var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkDeleteNotePadUrl + '?' + 'ids' + '=' + id,
     method: 'POST',
+    // header:{
+    //   'content-type':'application/json',
+    //   mid: userInfo.userId,
+    //   token: userInfo.token,
+    //   time: userInfo.tokenTime,
+    //   uuid: userInfo.uuid
+    // },
     header: {
       'content-type': 'application/json',
-      mid: userInfo.userId,
-      token: userInfo.token,
-      time: userInfo.tokenTime,
-      uuid: userInfo.uuid
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
     },
     data: data
   });
@@ -3574,10 +3618,19 @@ function bkUpdateNotePadAction(data) {
   // 获取用户信息
 
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkUpdateNotePadUrl + '?id' + '=' + id,
     method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3585,15 +3638,23 @@ function bkUpdateNotePadAction(data) {
 function bkBusinessAction(data) {
   var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkBusinessUrl,
+    // header: {
+    //   'content-type': 'application/json',
+    //   mid: userInfo.userId,
+    //   token: userInfo.token,
+    //   time: userInfo.tokenTime,
+    //   uuid: userInfo.uuid
+    // },
     header: {
       'content-type': 'application/json',
-      mid: userInfo.userId,
-      token: userInfo.token,
-      time: userInfo.tokenTime,
-      uuid: userInfo.uuid
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
     },
     data: data
   });
@@ -3602,8 +3663,16 @@ function bkBusinessAction(data) {
 function bkGetProjectTeamAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkGetProjectTeamUrl,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3611,9 +3680,17 @@ function bkGetProjectTeamAction(data) {
 function bkAddProjectTeamAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkAddProjectTeamUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3621,9 +3698,17 @@ function bkAddProjectTeamAction(data) {
 function bkAddWorkerActiion(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkAddWorkerUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3631,8 +3716,16 @@ function bkAddWorkerActiion(data) {
 function bkGetWorkerAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkGetWorkerUrl,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3640,9 +3733,17 @@ function bkGetWorkerAction(data) {
 function bkDeleteRroupWorkerAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkDeleteRroupWorkerUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3650,17 +3751,33 @@ function bkDeleteRroupWorkerAction(data) {
 function bkgetExcelDataAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkgetExcelDataUrl,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 // 导出excel数据
 function bkShareExcelAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkShareExcelurl,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3668,9 +3785,17 @@ function bkShareExcelAction(data) {
 function bkAddBusinessAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkAddBusinessUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3687,27 +3812,51 @@ function bkAddBusinessAction(data) {
 function bkWageStandGetWageAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkWageStandGetWageUrl,
-    data: data
+    data: data,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    }
   });
 }
 // 添加工资标准
 function bkAddWageAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkAddWageUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 // 已设置工资
 function bkGetWorkerWageAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkGetWorkerWageUrl,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3715,9 +3864,17 @@ function bkGetWorkerWageAction(data) {
 function bkDeleteBusinessAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkDeleteBusinessUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3725,11 +3882,19 @@ function bkDeleteBusinessAction(data) {
 function bkUpdateWorkerAction(data) {
   var id = data.id;
 
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
   return doRequestAction({
     url: api.bkUpdateWorkerUrl + '?id=' + id,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3737,29 +3902,53 @@ function bkUpdateWorkerAction(data) {
 function bkDeleteprojectTeamAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkDeleteprojectTeamUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 // 修改项目
 function bkUpdateProjectTeamAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkUpdateProjectTeamUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 // 给工人设置工资标准
 function bkSetWorkerMoneyByWageAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkSetWorkerMoneyByWageUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3768,10 +3957,18 @@ function bkupdateWageAction(data) {
   var id = data.id;
 
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkupdateWageUrl + '?id=' + id,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3781,8 +3978,16 @@ function bkBusinessOneAction(data) {
 
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkBusinessOneUrl + '?id=' + id,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
@@ -3790,56 +3995,104 @@ function bkBusinessOneAction(data) {
 function updateBusinessAction(data) {
   var id = data.id;
 
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
   return doRequestAction({
     url: api.updateBusinessUrl + '?id=' + id,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 // 给组里添加工人
 function bkAddWorkerInGroupAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   return doRequestAction({
     url: api.bkAddWorkerInGroupUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 // 分享获取考勤表
 function bkGetShareExcelDataAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   data.identity = type;
   var id = data.id;
 
   return doRequestAction({
     url: api.bkGetShareExcelDataUrl + '/id=' + id,
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 // 验证码
 function bkGetCodeAction(data) {
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkGetCodeUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 // 设置班组长
 function bkSetGroupLeaderAction(data) {
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkSetGroupLeaderUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }
 //  云彩
 function bkUpdateBusinessNewAction(data) {
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkUpdateBusinessNewUrl,
     method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
     data: data
   });
 }

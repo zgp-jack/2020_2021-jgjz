@@ -74,8 +74,6 @@ var EditProject = (_temp2 = _class = function (_Taro$Component) {
           handleSubmit = _props.handleSubmit;
 
 
-      console.log(data, 'xxxxxdata');
-
       this.anonymousFunc0 = function (e) {
         return handleEditProjectData('group_name', e);
       };

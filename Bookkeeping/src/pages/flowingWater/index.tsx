@@ -59,7 +59,6 @@ export default function FlowingWater() {
             res.data.data[i].day = day;
           }
         }
-        console.log(res.data,'xxxxxxx')
         setData({item:res.data.data})
         dispatch(setFlowingWater(res.data))
       }else{
@@ -168,7 +167,6 @@ export default function FlowingWater() {
     setmon(e.detail.value.slice(6, 8)+'月')
     getList(e.detail.value, lastM)
   }
-  console.log(data.item,'xxxx')
   // 全选
   const handleAllCheck = ()=>{
     if(!allcheck){

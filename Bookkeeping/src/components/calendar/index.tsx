@@ -450,7 +450,6 @@ export default function CalendarModal({ display, handleClose, handleCalendar, se
     }
     return num;
   }
-  console.log(calendarDays,'只')
   return(
     <View>
     {display &&
