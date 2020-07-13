@@ -290,6 +290,7 @@ export default function userForeman() {
   const bkGetProjectTeam = ()=>{
     bkGetProjectTeamAction({}).then(res => {
       if(res.code === 200){
+        console.log(res.data,'项目名称')
         setProjectArr(res.data);
       }
     })
@@ -335,7 +336,8 @@ export default function userForeman() {
   // 工人列表
   const bkGetWorker = (groupInfo, data?:any)=>{
     // console.log(groupInfo,'group_info')
-    bkGetWorkerAction({ group_info: groupInfo}).then(res=>{
+    // 不传group_info获取通讯录里的所有人
+    bkGetWorkerAction({}).then(res=>{
       if(res.code === 200){
         const data = JSON.parse(JSON.stringify(workerItem));
         console.log(data,'工人列表');
@@ -404,6 +406,7 @@ export default function userForeman() {
     bkAddProjectTeamAction(params).then(res=>{
       if(res.code === 200){
         setIds(res.data);
+        bkGetProjectTeam();
       }else{
         Msg(res.msg);
         return;
@@ -823,7 +826,6 @@ export default function userForeman() {
       const midData = Taro.getStorageSync(MidData);
       workers = midData.worker_id;
     }
-    console.log(workers,'workers');
     // 图片
     let img_url: string[] = image.item.map(item => item.url);
     // 记工
@@ -975,11 +977,11 @@ export default function userForeman() {
     data.name = v.name;
     let groupInfo = v.child[0].pid + ',' + v.child[0].id;
     if(identity === 2){
-      console.log(2,'2222')
-      console.log(v,'cccc')
       if(v.child.length>0){
         if (v.child[0].leader_name){
           setForemanTitle(v.child[0].leader_name)
+        }else{
+          setForemanTitle('')
         }
       }
     }

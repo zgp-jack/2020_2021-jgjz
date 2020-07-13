@@ -203,6 +203,7 @@ export function bkAddFeedbackAction(data): Promise<Inter.Result> {
     method: 'POST',
     header: {
       // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
       mid: midData.yupao_id,
       token: midData.sign.token,
       time: midData.sign.time,

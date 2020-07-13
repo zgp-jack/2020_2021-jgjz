@@ -1,8 +1,10 @@
 import Taro, { useEffect,useState } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
-import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction } from '../../utils/request/index';
+import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
 import { bkIndexTypeData  } from '../../utils/request/index.d'
 import { useDispatch } from '@tarojs/redux'
+import CreateProject from '../../components/createProject';
+import ProjectModal from '../../components/projectModal'
 import { UserInfo, MidData, Type } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
@@ -36,6 +38,11 @@ const Images = [
 ]
 export default function Index() {
   const dispatch = useDispatch()
+  // 弹框内容
+  const [model,setModel]= useState<any>({
+    groupName:'',
+    teamName:'',
+  })
   // 授权
   const [display,setDisplay] = useState<boolean>(true)
   const[vals,setVal] = useState<string>('')
@@ -71,6 +78,10 @@ export default function Index() {
   const [image, setImage] = useState<any>(Images[0].url)
   // 设置不是第一次获取数据
   const [repeat, setRepeat] = useState<boolean>(false)
+  // 班组长创建项目
+  const [createProjectDisplay, setCreateProjectDisplay] = useState<boolean>(false)
+  // 项目班组
+  const [project,setProject] =useState<boolean>(false)
   // 关闭图片
   const [closeImage, setCloseImage] = useState<boolean>(true);
   const getDate = ()=>{
@@ -98,7 +109,6 @@ export default function Index() {
     // 判断有没有用户信息没有就显示
     // 获取缓存信息
     let type = Taro.getStorageSync(Type);
-    // Taro.setStorageSync(Type, e);
     setType(type)
     let userInfo = Taro.getStorageSync(UserInfo);
     if(!userInfo){
@@ -108,36 +118,38 @@ export default function Index() {
       setDisplay(false)
     }
     dispatch(setTypes(type))
-    // Taro.setStorageSync(Type, type)
-    // 每个请求都要传type直接存缓存
-    // const user = {
-    //   userId: '20000261',
-    //   token: '0d4bbd7cd1f5b4e3b69f60dc8d1b0158',
-    //   tokenTime: 1592394794,
-    //   uuid: '1592304868741974',
-    //   login:1,
-    //   type,
-    // }
-    // Taro.setStorageSync(UserInfo, user)
-    // bkMemberAuthAction
     let midParams={
       mid: userInfo.userId,
     }
-    console.log(midParams,'midParams')
-    bkMemberAuthAction(midParams).then(res=>{
-      if(res.code !== 200){
-        Msg(res.msg)
-      }else{
-        let userInfo = Taro.getStorageSync(UserInfo)
-        console.log(res,'midata')
-        res.data.sign.token = userInfo.token;
-        res.data.sign.time = res.data.created_time;
-        res.data.uuid = userInfo.uuid;
-        Taro.setStorageSync(MidData, res.data)
-      }
-    })
+    let midData = Taro.getStorageSync(MidData);
+    if (!midData){
+      bkMemberAuthAction(midParams).then(res=>{
+        if(res.code !== 200){
+          Msg(res.msg)
+        }else{
+          console.log(res,'ressssssssssss')
+          let userInfo = Taro.getStorageSync(UserInfo)
+          res.data.sign={}
+          res.data.sign.token = userInfo.token;
+          res.data.sign.time = res.data.created_time;
+          res.data.uuid = userInfo.uuid;
+          // res.data.worker_id = res.data.worker_id;
+          Taro.setStorageSync(MidData, res.data)
+        }
+      })
+    }
     getData();
   },[])
+  // 获取项目名称
+  const bkGetProjectTeam = ()=>{
+    bkGetProjectTeamAction({}).then(res=>{
+      console.log(res,'resssss');
+      // 判断为0就出现新增弹框
+      if(res.data.length === 0){
+        setCreateProjectDisplay(true)
+      }
+    })
+  }
   // 获取首页数据
   const getData = ()=>{
     // const
@@ -178,6 +190,8 @@ export default function Index() {
             setList([])
           }
         }
+        // 获取信息
+        bkGetProjectTeam()
       } else {
         Msg(res.msg);
       }
@@ -263,6 +277,32 @@ export default function Index() {
     setIdentity(false)
     Taro.setStorageSync(Type,e);
     getData();
+  }
+  // 关闭创建项目
+  const handleCreateProjectClose = ()=>{
+    setCreateProjectDisplay(false)
+  }
+  // 弹框输入
+  const handleInput = (type: string, e)=>{
+    let data = JSON.parse(JSON.stringify(model));
+    data[type] = e.detail.value;
+    setModel(data);
+  }
+  // 确认弹框
+  const handleAddProject = ()=>{
+    let params = {
+      group_name: model.groupName,
+      team_name: model.teamName,
+    }
+    bkAddProjectTeamAction(params).then(res => {
+      if (res.code === 200) {
+        setProject(false);
+        bkGetProjectTeam()
+      } else {
+        Msg(res.msg);
+        return;
+      }
+    })
   }
   return (
     <View className='index-content'>
@@ -443,6 +483,10 @@ export default function Index() {
       </AtModal>
       {/* 授权 */}
       <Auth display={display} handleClose={handleClose} callback={handleCallback}/>
+      {/* 创建项目 */}
+      <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
+      {/* 填写班组 */}
+      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} />
     </View>
   )
 }

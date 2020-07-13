@@ -193,6 +193,7 @@ export default function Foreman() {
     bkGetWorker(groupInfo);
     userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`) 
   }
+  console.log(projectArr,'projectArr')
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -232,7 +233,7 @@ export default function Foreman() {
       </View>
       <View className='projectName'>
         <View className='publish-recruit-card'>
-          <View className='publish-list-item' onClick={()=>setShow(true)}>
+            <View className='publish-list-item' onClick={() => {bkGetProjectTeam(),setShow(true)}}>
             <Text className='pulish-list-title'>项目名称</Text>
             :<Input
               className='publish-list-input'

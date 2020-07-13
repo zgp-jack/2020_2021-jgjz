@@ -1756,6 +1756,7 @@ function userForeman() {
   var bkGetProjectTeam = function bkGetProjectTeam() {
     (0, _index.bkGetProjectTeamAction)({}).then(function (res) {
       if (res.code === 200) {
+        console.log(res.data, '项目名称');
         setProjectArr(res.data);
       }
     });
@@ -1801,7 +1802,8 @@ function userForeman() {
   // 工人列表
   var bkGetWorker = function bkGetWorker(groupInfo, data) {
     // console.log(groupInfo,'group_info')
-    (0, _index.bkGetWorkerAction)({ group_info: groupInfo }).then(function (res) {
+    // 不传group_info获取通讯录里的所有人
+    (0, _index.bkGetWorkerAction)({}).then(function (res) {
       if (res.code === 200) {
         var _data = JSON.parse(JSON.stringify(workerItem));
         console.log(_data, '工人列表');
@@ -1870,6 +1872,7 @@ function userForeman() {
     (0, _index.bkAddProjectTeamAction)(params).then(function (res) {
       if (res.code === 200) {
         setIds(res.data);
+        bkGetProjectTeam();
       } else {
         (0, _index3.default)(res.msg);
         return;
@@ -2294,7 +2297,6 @@ function userForeman() {
       var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
       workers = midData.worker_id;
     }
-    console.log(workers, 'workers');
     // 图片
     var img_url = image.item.map(function (item) {
       return item.url;
@@ -2447,11 +2449,11 @@ function userForeman() {
     data.name = v.name;
     var groupInfo = v.child[0].pid + ',' + v.child[0].id;
     if (identity === 2) {
-      console.log(2, '2222');
-      console.log(v, 'cccc');
       if (v.child.length > 0) {
         if (v.child[0].leader_name) {
           setForemanTitle(v.child[0].leader_name);
+        } else {
+          setForemanTitle('');
         }
       }
     }
@@ -3532,6 +3534,7 @@ function bkAddFeedbackAction(data) {
     method: 'POST',
     header: {
       // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
       mid: midData.yupao_id,
       token: midData.sign.token,
       time: midData.sign.time,

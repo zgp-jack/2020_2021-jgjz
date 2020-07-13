@@ -116,9 +116,14 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             let midParams = {
               mid: res.data.id
             }
-            bkMemberAuthAction(midParams).then(res=>{
-              if (res.code !== 200) {
-                Msg(res.msg)
+            // let worker_id;
+            bkMemberAuthAction(midParams).then(resItem=>{
+              if (resItem.code !== 200) {
+                Msg(resItem.msg)
+              }else{
+                // worker_id = resItem.data.worker_id;
+                res.data.worker_id = resItem.data.worker_id;
+                Taro.setStorageSync(MidData, res.data)
               }
             })
             Taro.setStorageSync(UserInfo, user)

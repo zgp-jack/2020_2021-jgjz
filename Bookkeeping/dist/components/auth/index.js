@@ -173,9 +173,14 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 var midParams = {
                   mid: res.data.id
                 };
-                (0, _index.bkMemberAuthAction)(midParams).then(function (res) {
-                  if (res.code !== 200) {
-                    (0, _index3.default)(res.msg);
+                // let worker_id;
+                (0, _index.bkMemberAuthAction)(midParams).then(function (resItem) {
+                  if (resItem.code !== 200) {
+                    (0, _index3.default)(resItem.msg);
+                  } else {
+                    // worker_id = resItem.data.worker_id;
+                    res.data.worker_id = resItem.data.worker_id;
+                    _taroWeapp2.default.setStorageSync(_store.MidData, res.data);
                   }
                 });
                 _taroWeapp2.default.setStorageSync(_store.UserInfo, user);
