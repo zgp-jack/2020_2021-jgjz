@@ -72,4 +72,4 @@ export const bkGetCodeUrl = REQUESTURL + 'index/get-code/'
 // 设置班组长
 export const bkSetGroupLeaderUrl = REQUESTURL +'/bk-project-team/set-group-leader/'
 // 云彩
-export const bkUpdateBusinessNewUrl = 'bk-bookkeeping/update-business-new/'
+export const bkUpdateBusinessNewUrl = REQUESTURL +'/bk-bookkeeping/update-business-new/'

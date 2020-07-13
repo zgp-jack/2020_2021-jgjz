@@ -638,7 +638,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Notepad.__proto__ || Object.getPrototypeOf(Notepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["loopArray34", "$compid__40", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray34", "$compid__41", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Notepad, [{
@@ -659,10 +659,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__40"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__41"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__40 = _genCompid2[0],
-          $compid__40 = _genCompid2[1];
+          $prevCompid__41 = _genCompid2[0],
+          $compid__41 = _genCompid2[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 输入框
@@ -881,10 +881,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
         "value": val,
         "onChange": this.anonymousFunc0,
         "onActionClick": this.anonymousFunc1
-      }, $compid__40, $prevCompid__40);
+      }, $compid__41, $prevCompid__41);
       Object.assign(this.__state, {
         loopArray34: loopArray34,
-        $compid__40: $compid__40,
+        $compid__41: $compid__41,
         data: data,
         busy: busy,
         del: del,
@@ -1759,7 +1759,9 @@ function userForeman() {
   // 获取项目名称
   var bkGetProjectTeam = function bkGetProjectTeam() {
     (0, _index.bkGetProjectTeamAction)({}).then(function (res) {
-      setProjectArr(res.data);
+      if (res.code === 200) {
+        setProjectArr(res.data);
+      }
     });
   };
   // 已设置工资标准标准
@@ -1786,16 +1788,18 @@ function userForeman() {
   // 工资标准
   var bkWageStandGetWage = function bkWageStandGetWage() {
     (0, _index.bkWageStandGetWageAction)({}).then(function (res) {
-      for (var i = 0; i < res.data.length; i++) {
-        if (i === 0) {
-          res.data[i].click = true;
-          setTemplateId(res.data[i].id);
-        } else {
-          res.data[i].click = false;
+      if (res.code === 200) {
+        for (var i = 0; i < res.data.length; i++) {
+          if (i === 0) {
+            res.data[i].click = true;
+            setTemplateId(res.data[i].id);
+          } else {
+            res.data[i].click = false;
+          }
         }
+        console.log(res.data, 'res.data');
+        setStandard(res.data);
       }
-      console.log(res.data, 'res.data');
-      setStandard(res.data);
     });
   };
   // 工人列表
@@ -2106,7 +2110,7 @@ function userForeman() {
     // bkGetWorker(id, true);
     dispatch((0, _mailList.setmailList)([]));
     setAddMemberDisplay(false);
-    return;
+    // return;
     (0, _index.bkAddWorkerActiion)(params).then(function (res) {
       if (res.code === 200) {
         // 叫后台返回id 姓名 电话
@@ -3211,7 +3215,7 @@ var bkGetCodeUrl = exports.bkGetCodeUrl = _index.REQUESTURL + 'index/get-code/';
 // 设置班组长
 var bkSetGroupLeaderUrl = exports.bkSetGroupLeaderUrl = _index.REQUESTURL + '/bk-project-team/set-group-leader/';
 // 云彩
-var bkUpdateBusinessNewUrl = exports.bkUpdateBusinessNewUrl = 'bk-bookkeeping/update-business-new/';
+var bkUpdateBusinessNewUrl = exports.bkUpdateBusinessNewUrl = _index.REQUESTURL + '/bk-bookkeeping/update-business-new/';
 
 /***/ }),
 

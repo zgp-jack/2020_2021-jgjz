@@ -290,7 +290,9 @@ export default function userForeman() {
   // 获取项目名称
   const bkGetProjectTeam = ()=>{
     bkGetProjectTeamAction({}).then(res => {
-      setProjectArr(res.data);
+      if(res.code === 200){
+        setProjectArr(res.data);
+      }
     })
   }
   // 已设置工资标准标准
@@ -317,16 +319,18 @@ export default function userForeman() {
   // 工资标准
   const bkWageStandGetWage = ()=>{
     bkWageStandGetWageAction({}).then(res=>{
-      for(let i =0;i<res.data.length;i++){
-        if(i === 0 ){
-          res.data[i].click = true;
-          setTemplateId(res.data[i].id)
-        }else{
-          res.data[i].click = false;
+      if(res.code === 200){
+        for(let i =0;i<res.data.length;i++){
+          if(i === 0 ){
+            res.data[i].click = true;
+            setTemplateId(res.data[i].id)
+          }else{
+            res.data[i].click = false;
+          }
         }
+        console.log(res.data,'res.data')
+        setStandard(res.data);
       }
-      console.log(res.data,'res.data')
-      setStandard(res.data);
     })
   }
   // 工人列表
@@ -635,7 +639,7 @@ export default function userForeman() {
     // bkGetWorker(id, true);
     dispatch(setmailList([]));
     setAddMemberDisplay(false)
-    return;
+    // return;
     bkAddWorkerActiion(params).then(res=>{
       if(res.code === 200){
         // 叫后台返回id 姓名 电话

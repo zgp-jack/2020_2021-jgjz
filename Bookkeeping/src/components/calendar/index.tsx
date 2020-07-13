@@ -3,6 +3,7 @@ import { View, Image, Text, Input, Checkbox, Picker,ScrollView } from '@tarojs/c
 import classnames from 'classnames'
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setClickTIme } from '../../actions/clickTIme'
+import {IMGCDNURL} from '../../config'
 import './index.scss'
 import Msg from '../../utils/msg';
 
@@ -455,8 +456,8 @@ export default function CalendarModal({ display, handleClose, handleCalendar, se
     {display &&
     <View className='calendarModal-complaintModal'>
       <View className='calendarModal-complaintModal-content'>
-        <View className='icon-left'></View>
-        <View className='icon-right'></View>
+          <View className='icon-left'><Image src={`${IMGCDNURL}rili.png`} className='icon-left-image'/></View>
+          <View className='icon-right'><Image src={`${IMGCDNURL}rili.png`} className='icon-right-image'/></View>
         <View className='calendarModal-complaintModal-content-top'>
             <View className='content-top-close' onClick={handleClose}>取消</View>
             <View className='content-top-title'>选择日期(可选择多天)</View>

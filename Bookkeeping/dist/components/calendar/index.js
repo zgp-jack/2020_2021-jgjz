@@ -36,11 +36,13 @@ var _redux = __webpack_require__(/*! @tarojs/redux */ "./node_modules/@tarojs/re
 
 var _clickTIme = __webpack_require__(/*! ../../actions/clickTIme */ "./src/actions/clickTIme.ts");
 
+var _index = __webpack_require__(/*! ../../config/index */ "./src/config/index.ts");
+
 __webpack_require__(/*! ./index.scss */ "./src/components/calendar/index.scss");
 
-var _index = __webpack_require__(/*! ../../utils/msg/index */ "./src/utils/msg/index.ts");
+var _index2 = __webpack_require__(/*! ../../utils/msg/index */ "./src/utils/msg/index.ts");
 
-var _index2 = _interopRequireDefault(_index);
+var _index3 = _interopRequireDefault(_index2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -64,7 +66,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarModal.__proto__ || Object.getPrototypeOf(CalendarModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray59", "display", "weeks", "calendarDays", "recorderType", "time", "handleClose", "handleCalendar", "setModel", "model", "setCalendarModalDisplay", "setTimeData", "__fn_onClick"], _this.anonymousFunc5Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarModal.__proto__ || Object.getPrototypeOf(CalendarModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray57", "display", "IMGCDNURL", "weeks", "calendarDays", "recorderType", "time", "handleClose", "handleCalendar", "setModel", "model", "setCalendarModalDisplay", "setTimeData", "__fn_onClick"], _this.anonymousFunc5Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(CalendarModal, [{
@@ -376,7 +378,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         var dates = new Date(date).valueOf();
         var newDate = new Date().valueOf();
         if (newDate < dates) {
-          (0, _index2.default)('请设置今天之前的日期');
+          (0, _index3.default)('请设置今天之前的日期');
           return;
         }
         var calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
@@ -525,7 +527,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
 
       this.anonymousFunc3 = onScrollToUpper;
       this.anonymousFunc4 = onScrollToLower;
-      var loopArray59 = display ? calendarDays.map(function (v, i) {
+      var loopArray57 = display ? calendarDays.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
@@ -556,8 +558,9 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         };
       }) : [];
       Object.assign(this.__state, {
-        loopArray59: loopArray59,
+        loopArray57: loopArray57,
         display: display,
+        IMGCDNURL: _index.IMGCDNURL,
         weeks: weeks,
         calendarDays: calendarDays,
         recorderType: recorderType,

@@ -179,7 +179,12 @@
   position: absolute;
   left: 15%;
   top:-30rpx;
-  background: url(../../assets/images/rili.png) no-repeat no-repeat;
+  // background: url(../../assets/images/rili.png) no-repeat no-repeat;
+  // background-size: contain;
+  height: 44rpx;
+  width: 120rpx;
+}
+.icon-left-image{
   background-size: contain;
   height: 44rpx;
   width: 120rpx;
@@ -188,7 +193,12 @@
   position: absolute;
   right: 15%;
   top: -30rpx;
-  background: url(../../assets/images/rili.png) no-repeat no-repeat;
+  // background: url(../../assets/images/rili.png) no-repeat no-repeat;
+  // background-size: contain;
+  height: 44rpx;
+  width: 120rpx;
+}
+.icon-right-image {
   background-size: contain;
   height: 44rpx;
   width: 120rpx;

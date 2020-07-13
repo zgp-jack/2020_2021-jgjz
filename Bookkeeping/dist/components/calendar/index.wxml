@@ -3,8 +3,12 @@
         <block wx:if="{{display}}">
             <view class="calendarModal-complaintModal">
                 <view class="calendarModal-complaintModal-content">
-                    <view class="icon-left"></view>
-                    <view class="icon-right"></view>
+                    <view class="icon-left">
+                        <image src="{{IMGCDNURL + 'rili.png'}}" class="icon-left-image"></image>
+                    </view>
+                    <view class="icon-right">
+                        <image src="{{IMGCDNURL + 'rili.png'}}" class="icon-right-image"></image>
+                    </view>
                     <view class="calendarModal-complaintModal-content-top">
                         <view class="content-top-close" bindtap="funPrivatebaazz">取消</view>
                         <view class="content-top-title">选择日期(可选择多天)</view>
@@ -24,7 +28,7 @@
                                     <view wx:key="id" class="content-weekes-week" wx:for="{{weeks}}" wx:for-item="v" wx:for-index="_anonIdx2">{{v.name}}</view>
                                 </view>
                                 <view class="content-days">
-                                    <view wx:key="$loopState__temp2" bindtap="anonymousFunc5" class="{{v.$loopState__temp4}}" wx:for="{{loopArray59}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                                    <view wx:key="$loopState__temp2" bindtap="anonymousFunc5" class="{{v.$loopState__temp4}}" wx:for="{{loopArray57}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                                         <view>{{v.$original.date}}</view>
                                         <view class="lunarCalendarItem">{{v.$original.lunarCalendarItem}}</view>
                                         <block wx:if="{{recorderType === 3}}">

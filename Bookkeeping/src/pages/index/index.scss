@@ -5,8 +5,17 @@
   position: relative;
   height:517rpx;
   color: #fff;
-  background: url('../../assets/images/background.png') no-repeat center center;
+  // background: url('../../assets/images/background.png') no-repeat center center;
   background-size: cover;
+}
+.top_img {
+  position: absolute;
+  height: 517rpx;
+  // color: #fff;
+  // background: url('../../assets/images/background.png') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  z-index: -999;
 }
 .heard{
   height: 130rpx;
@@ -41,6 +50,7 @@
   background-size: cover;
 }
 .heard-right {
+  position: relative;
   height: 44rpx;
   width: 44rpx;
   background-size: cover;
@@ -421,5 +431,13 @@
   margin-top: 20rpx;
 }
 .AtBadge{
-  margin-top: 40rpx;
+  .at-badge__num{
+    position: absolute;
+    right: -6rpx;
+    top: 6rpx
+  }
+  // position: absolute;
+  // right: 10rpx;
+  // top: 0rpx
+  // margin-top: 40rpx;
 }

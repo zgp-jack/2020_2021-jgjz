@@ -190,6 +190,7 @@ export default function Index() {
   // 点击提示
   const handelTps = ()=>{
     bkUpdateBusinessNewAction('').then(res=>{
+      console.log(res,'res')
       if(res.code === 200){
         
       }
@@ -273,6 +274,7 @@ export default function Index() {
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
       {/* 头部 */}
       <View className='top'>
+        <Image src={`${IMGCDNURL}background.png`} className='top_img'/>
         <View className='heard'>
           <View className='heard-left'>
             <Picker
@@ -293,9 +295,9 @@ export default function Index() {
             <View className='heard-middle'>我是班组长<Text className='switch' onClick={() => { handelChange(2) }}><Text className='test'/>切换 </Text></View> : 
             <View className='heard-middle'>我是工人<Text className='switch' onClick={() => { handelChange(1) }}><Text className='test'/>切换</Text></View>}
           <View onClick={handelTps} className='cloud'>
-          <AtBadge value={num} maxValue={99} className='AtBadge'>
-            <Image src={`${IMGCDNURL}cloud.png`} className='heard-right'/>
-          </AtBadge>
+            <Image src={`${IMGCDNURL}cloud.png`} className='heard-right'>
+              <AtBadge value={num} maxValue={99} className='AtBadge'/>
+            </Image>
           </View>
         </View>
         <View className='moneyList'>
