@@ -74,4 +74,4 @@ export const bkSetGroupLeaderUrl = REQUESTURL +'/bk-project-team/set-group-leade
 // 云彩
 export const bkUpdateBusinessNewUrl = REQUESTURL +'/bk-bookkeeping/update-business-new/'
 // 工人身份设置自己的工资标准
-export const bkSetWorkerIdentityWageUrl = REQUESTURL +'set-worker-identity-wage/'
+export const bkSetWorkerIdentityWageUrl = REQUESTURL +'bk-worker/set-worker-identity-wage/'

@@ -2124,7 +2124,8 @@ function userForeman() {
         overtime_type: wageStandards.type,
         overtime_money: wageStandards.dayAddWork,
         money: wageStandards.money,
-        overtime: wageStandards.day
+        overtime: wageStandards.day,
+        group_info: groupInfo
       };
       (0, _index.bkSetWorkerIdentityWageAction)(params).then(function (res) {
         if (res.code !== 200) {
@@ -2246,7 +2247,7 @@ function userForeman() {
                     console.log(312);
                     console.log(workerListArr[i].list);
                     console.log(workerListArr[i].list[z]);
-                    workerListArr[i].list.splice((workerListArr[i].list[z], 1));
+                    workerListArr[i].list.splice(z, 1);
                   }
                 }
               }
@@ -2672,12 +2673,27 @@ function userForeman() {
         total = moneyNum / workNum * time + moneyNum / dayNum * addTime;
       }
       var _num2 = total.toFixed(2);
+      // 给工人自己设置工资标准
+      var params = {
+        identity: identity,
+        worktime_define: data.work,
+        overtime_type: data.type,
+        overtime_money: data.dayAddWork,
+        money: data.money,
+        overtime: data.day,
+        group_info: groupInfo
+      };
+      (0, _index.bkSetWorkerIdentityWageAction)(params).then(function (res) {
+        if (res.code !== 200) {
+          (0, _index3.default)(res.msg);
+        }
+      });
       setModel(_extends({}, model, { workersWages: _num2 }));
       setWageStandardDisplay(false);
       return;
     }
     if (addStandard === 1) {
-      var params = {
+      var _params = {
         name: '',
         worktime_define: data.work,
         overtime_type: data.type,
@@ -2685,7 +2701,7 @@ function userForeman() {
         money: data.money,
         overtime: data.day
       };
-      (0, _index.bkAddWageAction)(params).then(function (res) {
+      (0, _index.bkAddWageAction)(_params).then(function (res) {
         if (res.code === 200) {
           bkWageStandGetWage();
           setWagesModalDisplay(true);
@@ -2698,7 +2714,7 @@ function userForeman() {
     }
     // 修改已设置的
     if (state === 1) {
-      var _params = {
+      var _params2 = {
         id: data.id,
         group_info: groupInfo,
         worktime_define: data.work,
@@ -2708,7 +2724,7 @@ function userForeman() {
         money: data.money,
         type: 'wage' //后端说修改type传这个
       };
-      (0, _index.bkUpdateWorkerAction)(_params).then(function (res) {
+      (0, _index.bkUpdateWorkerAction)(_params2).then(function (res) {
         if (res.code === 200) {
           bkGetWorkerWage();
           setWagesModalDisplay(true);
@@ -2718,7 +2734,7 @@ function userForeman() {
         }
       });
     } else {
-      var _params2 = {
+      var _params3 = {
         // name:'',
         worktime_define: data.work,
         overtime_type: data.type,
@@ -2728,7 +2744,7 @@ function userForeman() {
         id: data.id
         // type: 'wage'//后端说修改type传这个
       };
-      (0, _index.bkupdateWageAction)(_params2).then(function (res) {
+      (0, _index.bkupdateWageAction)(_params3).then(function (res) {
         if (res.code === 200) {
           bkWageStandGetWage();
         } else {
@@ -3316,7 +3332,7 @@ var bkSetGroupLeaderUrl = exports.bkSetGroupLeaderUrl = _index.REQUESTURL + '/bk
 // 云彩
 var bkUpdateBusinessNewUrl = exports.bkUpdateBusinessNewUrl = _index.REQUESTURL + '/bk-bookkeeping/update-business-new/';
 // 工人身份设置自己的工资标准
-var bkSetWorkerIdentityWageUrl = exports.bkSetWorkerIdentityWageUrl = _index.REQUESTURL + 'set-worker-identity-wage/';
+var bkSetWorkerIdentityWageUrl = exports.bkSetWorkerIdentityWageUrl = _index.REQUESTURL + 'bk-worker/set-worker-identity-wage/';
 
 /***/ }),
 

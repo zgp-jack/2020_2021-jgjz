@@ -637,6 +637,7 @@ export default function userForeman() {
           overtime_money: wageStandards.dayAddWork,
           money: wageStandards.money,
           overtime: wageStandards.day,
+          group_info:groupInfo
         }
       bkSetWorkerIdentityWageAction(params).then(res=>{
         if(res.code !== 200){
@@ -759,7 +760,7 @@ export default function userForeman() {
                     console.log(312)
                     console.log(workerListArr[i].list)
                     console.log(workerListArr[i].list[z])
-                    workerListArr[i].list.splice((workerListArr[i].list[z],1))
+                    workerListArr[i].list.splice(z,1)
                   }
                 }
               }
@@ -1182,8 +1183,24 @@ export default function userForeman() {
         total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);    
       }
       const num = total.toFixed(2);
+      // 给工人自己设置工资标准
+      let params ={
+        identity: identity,
+        worktime_define: data.work,
+        overtime_type: data.type,
+        overtime_money: data.dayAddWork,
+        money: data.money,
+        overtime: data.day,
+        group_info: groupInfo
+      }
+      bkSetWorkerIdentityWageAction(params).then(res=>{
+        if(res.code !== 200){
+          Msg(res.msg)
+        }
+      })
       setModel({ ...model, workersWages:num});
       setWageStandardDisplay(false);
+      
       return;
     }
     if (addStandard === 1){
