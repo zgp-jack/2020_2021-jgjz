@@ -56,7 +56,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AttendanceSheet.__proto__ || Object.getPrototypeOf(AttendanceSheet)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '考勤表'
-    }, _this.$usedState = ["$compid__553", "fixedTab", "tebArr", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__659", "fixedTab", "tebArr", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AttendanceSheet, [{
@@ -75,10 +75,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__553"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__659"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__553 = _genCompid2[0],
-          $compid__553 = _genCompid2[1];
+          $prevCompid__659 = _genCompid2[0],
+          $compid__659 = _genCompid2[1];
 
       // 月份
 
@@ -596,8 +596,8 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                 unit_name: unitNameSum
               },
               borrow: borrowSum,
-              hour: { work_time: hourWorkTimeSum, overtime: hourOverTimeSum },
-              work: { work_time: workWorkTimeSum, overtime: workOverTimeSum }
+              hour: { work_time: hourWorkTimeSum, over_time: hourOverTimeSum },
+              work: { work_time: workWorkTimeSum, over_time: workOverTimeSum }
             }
           };
           obj.list.push(sumObj);
@@ -753,9 +753,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose
-      }, $compid__553, $prevCompid__553);
+      }, $compid__659, $prevCompid__659);
       Object.assign(this.__state, {
-        $compid__553: $compid__553,
+        $compid__659: $compid__659,
         fixedTab: fixedTab,
         tebArr: tebArr,
         year: year,

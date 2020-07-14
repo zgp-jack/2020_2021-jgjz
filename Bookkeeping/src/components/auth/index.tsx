@@ -127,9 +127,11 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
               }
             })
             Taro.setStorageSync(UserInfo, user)
+            setWarrant(true);
             // dispatch(setUserInfo(user))
             callback && callback()
             // if (page) pageBack()
+            
           } else {
             Msg(res.msg||res.errmsg)
           }
@@ -167,7 +169,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           <View className='btn'>
             {/* <View className='sign' onClick={handleAuthorize}>授权登录</View> */}
             {!warrant &&<Button className='sign' openType='getUserInfo' onGetUserInfo={(e) => userAuthAction(e)}>微信授权登录</Button>}
-            {warrant && <Button className='sign' onClick={handleLogin} >微信快捷登陆</Button>}
+            {warrant && <Button className='sign' open-type='getPhoneNumber' >微信快捷登陆</Button>}
             {!warrant && <View className='close' onClick={() => handleClose(false)}>取消</View>}
             {warrant && <View className='close' onClick={() => { userRouteJump(`/pages/login/index`)}}>手机号登陆</View>}
           </View>

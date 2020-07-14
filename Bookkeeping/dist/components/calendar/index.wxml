@@ -10,7 +10,7 @@
                         <image src="{{IMGCDNURL + 'rili.png'}}" class="icon-right-image"></image>
                     </view>
                     <view class="calendarModal-complaintModal-content-top">
-                        <view class="content-top-close" bindtap="funPrivatebaazz">取消</view>
+                        <view class="content-top-close" bindtap="funPrivatebaezz">取消</view>
                         <view class="content-top-title">选择日期(可选择多天)</view>
                         <view class="content-top-change" bindtap="anonymousFunc0">确定</view>
                     </view>

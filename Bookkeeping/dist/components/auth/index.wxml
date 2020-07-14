@@ -13,13 +13,13 @@
                             <button class="sign" open-type="getUserInfo" bindgetuserinfo="anonymousFunc0">微信授权登录</button>
                         </block>
                         <block wx:if="{{warrant}}">
-                            <button class="sign" bindtap="anonymousFunc1">微信快捷登陆</button>
+                            <button class="sign" open-type="getPhoneNumber">微信快捷登陆</button>
                         </block>
                         <block wx:if="{{!warrant}}">
-                            <view class="close" bindtap="anonymousFunc2">取消</view>
+                            <view class="close" bindtap="anonymousFunc1">取消</view>
                         </block>
                         <block wx:if="{{warrant}}">
-                            <view class="close" bindtap="anonymousFunc3">手机号登陆</view>
+                            <view class="close" bindtap="anonymousFunc2">手机号登陆</view>
                         </block>
                     </view>
                 </view>

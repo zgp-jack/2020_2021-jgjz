@@ -531,7 +531,7 @@ export function bkAddWageAction(data): Promise<Inter.bkBusinessType> {
 }
 
 // 已设置工资
-export function bkGetWorkerWageAction(data): Promise<Inter.bkBusinessType> {
+export function bkGetWorkerWageAction(data): Promise<Inter.bkMemberAuth> {
   let type = Taro.getStorageSync(Type)
   let midData = Taro.getStorageSync(MidData);
   data.identity = type
@@ -782,7 +782,7 @@ export function bkSetGroupLeaderAction(data): Promise<Inter.bkGetCode> {
 }
 
 //  云彩
-export function bkUpdateBusinessNewAction(data): Promise<Inter.bkGetCode> {
+export function bkUpdateBusinessNewAction(data): Promise<Inter.bkAddProjectTeam> {
   let midData = Taro.getStorageSync(MidData);
   return doRequestAction({
     url: api.bkUpdateBusinessNewUrl,

@@ -532,7 +532,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         };
         var $loopState__temp2 = display ? i + i : null;
 
-        var _$indexKey = "babzz" + i;
+        var _$indexKey = "bafzz" + i;
 
         _this2.anonymousFunc5Map[_$indexKey] = function () {
           handleClick(v.$original);
@@ -568,8 +568,8 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: 'funPrivatebaazz',
-    value: function funPrivatebaazz() {
+    key: 'funPrivatebaezz',
+    value: function funPrivatebaezz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -613,7 +613,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return CalendarModal;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatebaazz", "anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5"], _class.$$componentPath = "components/calendar/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatebaezz", "anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5"], _class.$$componentPath = "components/calendar/index", _temp2);
 exports.default = CalendarModal;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(CalendarModal));

@@ -47,6 +47,8 @@ export default function Index() {
   const[vals,setVal] = useState<string>('')
   //获取当前时间
   const [time,setTime]= useState<string>('')
+  // 当前月份
+  const [newMonth, setNewMonth] = useState<string>('')
   //显示月份
   const [month, setMonth] = useState<string>('')
   // 记工时间
@@ -83,18 +85,22 @@ export default function Index() {
   const [project,setProject] =useState<boolean>(false)
   // 关闭图片
   const [closeImage, setCloseImage] = useState<boolean>(true);
+  // 是否显示云朵
+  const [show,setShow] =useState<boolean>(false)
   const getDate = ()=>{
     const date = new Date().getDay();
     const time = new Date();
     const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
     const week = weeks[date];
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDay());
+    const newMonth = time.getFullYear() + '-' + addZero(time.getMonth() + 1) ;
     // + '-' + addZero(time.getDate())
     console.log(newTime,'time')
     setTime(newTime);
+    setNewMonth(newMonth)
     setMonth(addZero(time.getMonth() + 1))
     // 先写死
-    setStart(newTime)
+    // setStart(newTime)
     setWeek(week);
     return newTime;
   }
@@ -175,6 +181,11 @@ export default function Index() {
       if (res.code === 200) {
         setItme(res.data);
         setNum(res.data.count_is_new);
+        if (parseInt(res.data.count_is_new) == 0){
+          setShow(true)
+        }
+        // 设置时间
+        setStart(res.data.earliest_month)
         if (Array.isArray(res.data.business_list.data)){
           if (res.data.business_list.data){
             setList(res.data.business_list.data)
@@ -209,10 +220,12 @@ export default function Index() {
   const handelTps = ()=>{
     bkUpdateBusinessNewAction('').then(res=>{
       if(res.code === 200){
-        
+        Msg(`您完成了[ ${res.data} ]条记工信息的备份，数据安全不丢失~`);
+        setShow(true)
+      }else{
+        Msg('放心使用，免费记工，数据永远不会丢失哟')
       }
     })
-    Msg(`您完成了[ ${num} ]条记工信息的备份，数据安全不丢失~`);
   }
   // 切换角色
   const handelChange = (e)=>{
@@ -269,6 +282,8 @@ export default function Index() {
     setDisplay(e);
   }
   const handleCallback = ()=>{
+    // userRouteJump(`/pages/login/index`)
+    // return;
     // 打开新手指引
     setCloseImage(false);
     setDisplay(false)
@@ -311,6 +326,7 @@ export default function Index() {
     setProject(false)
     setCreateProjectDisplay(true)
   }
+  console.log(num,'xxx')
   return (
     <View className='index-content'>
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
@@ -321,7 +337,7 @@ export default function Index() {
           <View className='heard-left'>
             <Picker
               start={start}
-              end={time}
+              // end={time}
               mode='date'
               fields='month'
               onChange={(e) => handleChangeTime(e)}
@@ -329,7 +345,8 @@ export default function Index() {
               // range={timeList}
               // onColumnChange={(e) => handlebindcolumnchange(e)}
             >
-              <Image src={`${IMGCDNURL}left.png`} className='leftIcon' />{month}月<Image className='righticon' src={`${IMGCDNURL}right.png`}/>
+              {newMonth > start && <Image src={`${IMGCDNURL}left.png`} className='leftIcon' />}
+              {month}月{newMonth < start && <Image className='righticon' src={`${IMGCDNURL}right.png`}/>}
             </Picker>
           </View>
           {/* <Image src={`${IMGCDNURL}user.png`}/> */}
@@ -337,8 +354,8 @@ export default function Index() {
             <View className='heard-middle'>我是班组长<Text className='switch' onClick={() => { handelChange(2) }}><Text className='test'/>切换 </Text></View> : 
             <View className='heard-middle'>我是工人<Text className='switch' onClick={() => { handelChange(1) }}><Text className='test'/>切换</Text></View>}
           <View onClick={handelTps} className='cloud'>
+            {!show &&<AtBadge value={num} maxValue={99} className='AtBadge'/>}
             <Image src={`${IMGCDNURL}cloud.png`} className='heard-right'>
-              <AtBadge value={num} maxValue={99} className='AtBadge'/>
             </Image>
           </View>
         </View>
@@ -355,7 +372,9 @@ export default function Index() {
           <View>上班<Text className='num'>{item && item.work_time || 0}</Text></View>
           <View>加班<Text className='num'>{item && item.overtime || 0}个工</Text></View>
           <View>按量记
-            {measureType === 0 ? <Text className='num'>3笔</Text> : <Text className='num'>1000平方米</Text>}
+            {item.amount.type === 0 && <Text className='num'>0笔</Text> }
+            {item.amount.type === 1 && <Text className='num'>{item.amount.unit_num}{item.amount.unit}</Text>}
+            {item.amount.type === 2 && <Text className='num'>{item.amount.count}</Text>}
           </View>
         </View>
         </View>
@@ -432,7 +451,7 @@ export default function Index() {
                     <View>{v.workername}</View>
                     <View className='orgion'>¥{v.money}</View>
                   </View>
-                  <View className='details'>我在[x ]项目组对Ta记了-笔包工</View>
+                <View className='details'>我在[{v.group_info}]项目组对Ta记了-笔包工</View>
                 </View>
               ))}
             </ScrollView>

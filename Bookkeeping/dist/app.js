@@ -1484,6 +1484,10 @@ var _type = __webpack_require__(/*! ./type */ "./src/reducers/type.ts");
 
 var _type2 = _interopRequireDefault(_type);
 
+var _userList = __webpack_require__(/*! ./userList */ "./src/reducers/userList.ts");
+
+var _userList2 = _interopRequireDefault(_userList);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = (0, _redux.combineReducers)({
@@ -1495,6 +1499,7 @@ exports.default = (0, _redux.combineReducers)({
   workerList: _workerList2.default,
   clickTIme: _clickTIme2.default,
   mailList: _mailList2.default,
+  userList: _userList2.default,
   type: _type2.default
 });
 
@@ -1704,6 +1709,44 @@ function User() {
         if (_userInfo) return _userInfo;
       }
       return state;
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./src/reducers/userList.ts":
+/*!**********************************!*\
+  !*** ./src/reducers/userList.ts ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = userList;
+
+var _userList = __webpack_require__(/*! ../constants/userList */ "./src/constants/userList.ts");
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var DEFAULT_STATE = {
+  data: []
+};
+function userList() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _userList.GETUSERLSIT:
+      return state;
+    case _userList.SETUSERLIST:
+      return [].concat(_toConsumableArray(action.data));
     default:
       return state;
   }

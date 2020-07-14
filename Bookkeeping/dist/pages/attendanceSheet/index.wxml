@@ -92,16 +92,11 @@
                                                         <block wx:if="{{val.type.hour.num}}">
                                                             <view>{{val.type.hour.num}}</view>
                                                         </block>
-                                                        <block>
-                                                            <block wx:if="{{val.type.hour.work_time}}">{{val.type.hour.work_time}}</block>
-                                                            <block wx:else>
-                                                                <block wx:if="{{val.type.hour.overtime}}">
-                                                                    <view>
-                                                                        <view>{{val.type.hour.work_time}}个工</view>
-                                                                        <view>{{val.type.hour.overtime}}小时</view>
-                                                                    </view>
-                                                                </block>
-                                                            </block>
+                                                        <block wx:if="{{val.type.hour.work_time || val.type.hour.over_time}}">
+                                                            <view>
+                                                                <view>{{val.type.hour.work_time}}个工</view>
+                                                                <view>{{val.type.hour.over_time}}小时</view>
+                                                            </view>
                                                         </block>
                                                     </view>
                                                 </block>
@@ -110,16 +105,11 @@
                                                         <block wx:if="{{val.type.work.num}}">
                                                             <view>{{val.type.work.num}}</view>
                                                         </block>
-                                                        <block>
-                                                            <block wx:if="{{val.type.work.work_time}}">{{val.type.work.work_time}}</block>
-                                                            <block wx:else>
-                                                                <block wx:if="{{val.type.work.overtime}}">
-                                                                    <view>
-                                                                        <view>{{val.type.work.work_time}}个工</view>
-                                                                        <view>{{val.type.work.overtime}}小时</view>
-                                                                    </view>
-                                                                </block>
-                                                            </block>
+                                                        <block wx:if="{{val.type.work.work_time || val.type.work.over_time}}">
+                                                            <view>
+                                                                <view>{{val.type.work.work_time}}个工</view>
+                                                                <view>{{val.type.work.over_time}}小时</view>
+                                                            </view>
                                                         </block>
                                                     </view>
                                                 </block>
@@ -128,20 +118,15 @@
                                                         <block wx:if="{{val.type.amount.num}}">
                                                             <view>{{val.type.amount.num}}</view>
                                                         </block>
-                                                        <block>
-                                                            <block wx:if="{{val.type.work.work_time}}">{{val.type.work.work_time}}</block>
-                                                            <block wx:else>
-                                                                <block wx:if="{{val.type.work.overtime}}">
-                                                                    <view>
-                                                                        <block wx:if="{{val.type.amount.sum}}">
-                                                                            <view>{{val.type.amount.sum}}</view>
-                                                                        </block>
-                                                                        <block wx:if="{{val.type.amount.unit_name}}">
-                                                                            <view>{{val.type.amount.unit_name}}</view>
-                                                                        </block>
-                                                                    </view>
+                                                        <block wx:if="{{val.type.amount.sum || val.type.amount.unit_name}}">
+                                                            <view>
+                                                                <block wx:if="{{val.type.amount.sum}}">
+                                                                    <view>{{val.type.amount.sum}}</view>
                                                                 </block>
-                                                            </block>
+                                                                <block wx:if="{{val.type.amount.unit_name}}">
+                                                                    <view>{{val.type.amount.unit_name}}</view>
+                                                                </block>
+                                                            </view>
                                                         </block>
                                                     </view>
                                                 </block>
@@ -170,6 +155,6 @@
                 </view>
             </view>
         </view>
-        <calendar-modal compid="{{$compid__553}}"></calendar-modal>
+        <calendar-modal compid="{{$compid__659}}"></calendar-modal>
     </view>
 </block>

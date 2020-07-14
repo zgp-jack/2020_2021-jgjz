@@ -5,6 +5,7 @@ import { bkGetProjectTeamData } from '../../utils/request/index.d'
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setWorker } from '../../actions/workerList'
 import { setmailList } from '../../actions/mailList'
+import { setUserList } from '../../actions/userList';
 import Msg from '../../utils/msg';
 export interface BorrowingType {
   item: DataType[]
@@ -229,6 +230,7 @@ export default function userForeman() {
   // 刷新
   const [refresh,setRefresh] = useState<boolean>(false)
   useDidShow(() => {
+    console.log(refresh,'refresh')
     if (refresh){
       setRefresh(false)
       return;
@@ -243,14 +245,15 @@ export default function userForeman() {
         return;
       }
       //  ======= 需要修改，等获取到本人信息后
-      const objs = JSON.parse(JSON.stringify(obj));
+      let objs = JSON.parse(JSON.stringify(obj));
       const data = JSON.parse(JSON.stringify(moneyList));
       const arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
+      console.log(data,'data')
       if(data.length>0){
         for(let j = 0;j<data.length;j++){
           for (let i = 0; i <arrList.length;i++){
             arrList[i].click = false;
-            if (data[j].id === arrList[i].id){
+            if (data[j].worker_id === arrList[i].id){
               arrList[i].set = true
             }
           }
@@ -262,6 +265,7 @@ export default function userForeman() {
       }
       for(let i =0;i<arrList.length;i++){
         if(arrList[i].id === objs.id){
+          objs = arrList[i];
           arrList.splice(i,1)
         }
       }
@@ -275,12 +279,20 @@ export default function userForeman() {
     // 获取用户信息
     let midData = Taro.getStorageSync(MidData)
     const objs = JSON.parse(JSON.stringify(obj))
-    const workerItemData = JSON.parse(JSON.stringify(workerItem));
     objs.name = midData.nickname||'未命名';
     objs.id = midData.worker_id;
     setObj(objs);
-    workerItemData.push(objs);
-    setWorkerItem(workerItemData)
+    // 获取通讯里信息
+    const workerItemData = JSON.parse(JSON.stringify(workerItem));
+    // 获取设置员工信息
+    // console.log(useSelectorItem,'useSelectorItem')
+    // if (useSelectorItem.userList.length) {
+    //   useSelectorItem.userList.push(objs);
+    //   setWorkerItem(useSelectorItem.userList)
+    // }else{
+      workerItemData.push(objs);
+      setWorkerItem(workerItemData)
+    // }
     // 获取项目名称
     bkGetProjectTeam();
     // 获取工人列表
@@ -343,7 +355,19 @@ export default function userForeman() {
     }
     bkGetWorkerWageAction(prams).then(res=>{
       if(res.code === 200){
-        setMoneyList(res.data)
+        setMoneyList(res.data);
+        // 判断页面上的是否设置工资标准
+        if(identity ===1 ){
+          const data = JSON.parse(JSON.stringify(workerItem))
+          for(let i =0;i<data.length;i++){
+            for(let j=0;j<res.data.length;j++){
+              if (res.data[j].worker_id === data[i].id){
+                data[i].set = true;
+              }
+            }
+          }
+          setWorkerItem(data)
+        }
       }else{
         Msg(res.msg)
       }
@@ -366,9 +390,17 @@ export default function userForeman() {
     })
   }
   // 工人列表
-  const bkGetWorker = (groupInfo, data?:any)=>{
+  const bkGetWorker = (groupInfos?:any, data?:any)=>{
     // 不传group_info获取通讯录里的所有人
-    bkGetWorkerAction({}).then(res=>{
+    let params;
+    if (groupInfos){
+      params = {
+        group_info:groupInfos
+      }
+    }else{
+      params = {}
+    }
+    bkGetWorkerAction(params).then(res=>{
       if(res.code === 200){
         const data = JSON.parse(JSON.stringify(workerItem));
         // return;
@@ -384,29 +416,13 @@ export default function userForeman() {
             }
           }
         }
+        console.log(arr,'arr')
         for(let i = 0;i<arr.length;i++){
           if(arr[i].id == obj.id){
             arr.splice(i,1);
           }
         }
-        setWorkerItem([obj, ...arr])
-        // for(let i =0;i<res.data.l)
         if(data){
-          // res.data[0].list.push({
-          //   created_by: "8",
-          //   created_time: "1594179739",
-          //   group_info: "1,2",
-          //   id: "99",
-          //   is_deleted: "0",
-          //   money: null,
-          //   name: "34",
-          //   name_py: "#",
-          //   overtime: null,
-          //   overtime_money: null,
-          //   overtime_type: null,
-          //   worker_id: "25",
-          //   worktime_define: null,
-          // })
           // 根据姓名判断在那个位置push进去
           for(let i= 0;i<res.data.length;i++){
             if (data.name_py === res.data[i].name_py){
@@ -414,8 +430,14 @@ export default function userForeman() {
             }
           }
         }
-        console.log(res.data,'存reducer');
-        dispatch(setmailList(res.data))
+        // 判断有就不存了存通讯录redux
+        // 么有groupInfos就不修改
+        if (!groupInfos){
+          dispatch(setmailList(res.data))
+          // setWorkerItem([obj, ...arr])
+        }
+        // 存员工redux
+        dispatch(setUserList(res.data))
         setWorkerList(res.data);
       }else{
         Msg(res.msg);
@@ -764,6 +786,12 @@ export default function userForeman() {
                   }
                 }
               }
+              //存数据
+              dispatch(setUserList(workerListArr))
+              // setWorkerItem
+              // console.log(workerListArr,'workerListArr')
+              // setWorkerItem(workerListArr)
+              
               console.log(workerListArr, 'workerListArr');
             }else{
               Msg(res.msg);
@@ -1082,11 +1110,11 @@ export default function userForeman() {
       }
     }
     setProjectArr(arr)
+    // 获取工人列表
+    bkGetWorker(groupInfo)
     // 选择项目的时候先获取设置工资标准员工
     bkGetWorkerWage(groupInfo);
     setGroupInfo(groupInfo)
-    // 获取工人列表
-    bkGetWorker(groupInfo)
     setShow(false)
     setModel(data)
   }
@@ -1524,6 +1552,22 @@ export default function userForeman() {
     }
     setContractorArr({ item: data });
   }
+  // 跳转
+  const userRouteJump = (url: string) => {
+    Taro.navigateTo({
+      url: url
+    })
+  }
+  // 选择工人添加，没有选择项目无法选择
+  const handleAdd = ()=>{
+    if (!model.name) {
+      Msg('请选择项目')
+      return
+    }
+    bkGetWorker();
+    // setRefresh(true)
+    userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`) 
+  }
   return {
     model,
     project, 
@@ -1626,5 +1670,6 @@ export default function userForeman() {
     setContractor,
     handleRadio,
     contractor,
+    handleAdd
   }
 }

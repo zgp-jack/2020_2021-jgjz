@@ -43,7 +43,7 @@ export default function Foreman() {
     tab, handleAtSwitch, handleDelProject, editProjectDisplay, setEditProjectDisplay, handleEditProject, handleEditProjectModal, editProjectData,
     handleEditProjectData, handleSetWagesModal, handleWagesList, setWorkList, handleCheckboxStandard, groupInfo, image, setImage, bkGetWorker,
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
-    setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor
+    setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -70,10 +70,10 @@ export default function Foreman() {
     group_name:'',
   })
   // 获取数据
-  useEffect(()=>{
-    // 获取项目列表
-    // bkGetProjectTeam();
-  },[])
+  // useEffect(()=>{
+  //   // 获取项目列表
+  //   // bkGetProjectTeam();
+  // },[])
   // 获取项目列表
   const bkGetProjectTeam = ()=>{
     let params={}
@@ -188,15 +188,15 @@ export default function Foreman() {
     memberList: memberList,
     setMemberList: (e) => setMemberList(e),
   }
-  // 选择工人添加，没有选择项目无法选择
-  const handleAdd = ()=>{
-    if (!model.name){
-      Msg('请选择项目')
-      return
-    }
-    bkGetWorker(groupInfo);
-    userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`) 
-  }
+  // // 选择工人添加，没有选择项目无法选择
+  // const handleAdd = ()=>{
+  //   if (!model.name){
+  //     Msg('请选择项目')
+  //     return
+  //   }
+  //   bkGetWorker(groupInfo);
+  //   userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`) 
+  // }
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -250,7 +250,7 @@ export default function Foreman() {
         {/* ===== */}
         {identity === 2 && 
         <View className='publish-recruit-card'>
-            <View className='publish-list-item' onClick={() => { bkGetWorker(groupInfo), userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}&type=2`)}}>
+            <View className='publish-list-item' onClick={() => { bkGetWorker(), userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}&type=2`)}}>
             <Text className='pulish-list-title'>班组长</Text>
             :<Input
               className='publish-list-input'

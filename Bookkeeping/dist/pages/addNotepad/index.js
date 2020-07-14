@@ -70,7 +70,7 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddNotepad.__proto__ || Object.getPrototypeOf(AddNotepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["$compid__153", "id", "model", "IMGCDNURL"], _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__43", "id", "model", "IMGCDNURL"], _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AddNotepad, [{
@@ -89,10 +89,10 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__153"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__43"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__153 = _genCompid2[0],
-          $compid__153 = _genCompid2[1];
+          $prevCompid__43 = _genCompid2[0],
+          $compid__43 = _genCompid2[1];
 
       // 传递过来的值
 
@@ -163,9 +163,9 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
         "notepad": true,
         "userUploadImg": userUploadImg,
         "userDelImg": userDelImg
-      }, $compid__153, $prevCompid__153);
+      }, $compid__43, $prevCompid__43);
       Object.assign(this.__state, {
-        $compid__153: $compid__153,
+        $compid__43: $compid__43,
         id: id,
         model: model,
         IMGCDNURL: _index7.IMGCDNURL

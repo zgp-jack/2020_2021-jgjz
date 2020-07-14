@@ -494,8 +494,8 @@ export default function AttendanceSheet() {
             unit_name:unitNameSum
           },
           borrow: borrowSum,
-          hour: { work_time: hourWorkTimeSum, overtime: hourOverTimeSum },
-          work: { work_time: workWorkTimeSum, overtime: workOverTimeSum }
+          hour: { work_time: hourWorkTimeSum, over_time: hourOverTimeSum },
+          work: { work_time: workWorkTimeSum, over_time: workOverTimeSum }
         }
       }
       obj.list.push(sumObj);
@@ -713,25 +713,25 @@ export default function AttendanceSheet() {
                           <View className='box-list-type'>
                             {val.type.hour && <View className='box-list-bao'>
                               {val.type.hour.num && <View>{val.type.hour.num}</View>}
-                              {val.type.hour.work_time || val.type.hour.overtime &&
+                              {(val.type.hour.work_time || val.type.hour.over_time) &&
                               <View >
                                 <View>{val.type.hour.work_time}个工</View>
-                                <View>{val.type.hour.overtime}小时</View>
+                                <View>{val.type.hour.over_time}小时</View>
                               </View>
                               }
                             </View>}
                             {val.type.work && <View className='box-list-bao'>
                               {val.type.work.num && <View>{val.type.work.num}</View>}
-                              {val.type.work.work_time || val.type.work.overtime &&
+                              {(val.type.work.work_time || val.type.work.over_time) &&
                                 <View>
                                   <View>{val.type.work.work_time}个工</View>
-                                  <View>{val.type.work.overtime}小时</View>
+                                  <View>{val.type.work.over_time}小时</View>
                                 </View>
                               }
                             </View>}
                             {val.type.amount &&<View className='box-list-bao'>
                               {val.type.amount.num && <View>{val.type.amount.num}</View>}
-                              {val.type.work.work_time || val.type.work.overtime && <View>
+                              {(val.type.amount.sum || val.type.amount.unit_name) && <View>
                                 {val.type.amount.sum &&<View >{val.type.amount.sum}</View>}
                                 {val.type.amount.unit_name && <View >{val.type.amount.unit_name}</View>}
                               </View>}

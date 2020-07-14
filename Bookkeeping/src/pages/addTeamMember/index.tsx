@@ -200,6 +200,7 @@ export default function AddTeamMember() {
           }
         }
       }
+      console.log(clickArr);
       dispatch(setWorker(clickArr))
       Taro.navigateBack({ delta: 1 })
   }

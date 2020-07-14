@@ -296,7 +296,7 @@
   margin-top: 10rpx;
 }
 .wagesModal-standard-box-look {
-  min-height: 200rpx;
+  min-height: 500rpx;
   max-height: 800rpx;
   overflow-y: scroll;
   padding-top: 20rpx;

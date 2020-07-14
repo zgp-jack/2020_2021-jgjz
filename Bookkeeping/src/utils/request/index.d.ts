@@ -47,6 +47,7 @@ export interface bkIndexTypeData {
   overtime: number
   work_time: number,
   count_is_new:string,
+  earliest_month:string,
 }
 
 export interface bkIndexTypeDataList {

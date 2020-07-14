@@ -184,6 +184,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                   }
                 });
                 _taroWeapp2.default.setStorageSync(_store.UserInfo, user);
+                setWarrant(true);
                 // dispatch(setUserInfo(user))
                 callback && callback();
                 // if (page) pageBack()
@@ -214,13 +215,11 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
         return userAuthAction(e);
       };
 
-      this.anonymousFunc1 = handleLogin;
-
-      this.anonymousFunc2 = function () {
+      this.anonymousFunc1 = function () {
         return handleClose(false);
       };
 
-      this.anonymousFunc3 = function () {
+      this.anonymousFunc2 = function () {
         userRouteJump("/pages/login/index");
       };
 
@@ -246,15 +245,10 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
     value: function anonymousFunc2(e) {
       ;
     }
-  }, {
-    key: "anonymousFunc3",
-    value: function anonymousFunc3(e) {
-      ;
-    }
   }]);
 
   return Auth;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3"], _class.$$componentPath = "components/auth/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "components/auth/index", _temp2);
 exports.default = Auth;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(Auth));
