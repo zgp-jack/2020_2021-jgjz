@@ -30,6 +30,7 @@
           box-shadow: #e7e6e4 0 0 10rpx;
 }
 .tabber-complaintModal-content-title {
+  position: relative;
   text-align: center;
   font-size: 36rpx;
   font-weight: 500;
@@ -61,16 +62,12 @@
 }
 .tabber-complaintModal-footer {
   width: 100%;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  height: 80rpx;
-  line-height: 80rpx;
   padding-bottom: 48rpx;
 }
 .tabber-complaintModal-footer-btn {
   width: 500rpx;
   height: 84rpx;
+  line-height: 84rpx;
   background: #0099ff;
   border-radius: 4rpx;
   color: #fff;
@@ -82,4 +79,26 @@
 }
 .tabber-complaintModal-footer-cancel:first-child {
   border-right: 1rpx solid #f2f2f2;
+}
+.tabber-complaintModal-footer-btn-next {
+  width: 500rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+  background: #fff;
+  border-radius: 4rpx;
+  color: #333;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 10rpx;
+  border: 1rpx solid #ccc;
+}
+.close {
+  position: absolute;
+  right: 30rpx;
+  top: 0;
+}
+.close-img {
+  height: 20rpx;
+  width: 20rpx;
+  background-size: contain;
 }

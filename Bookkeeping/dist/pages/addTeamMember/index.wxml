@@ -1,7 +1,7 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="content">
         <view>
-            <at-search-bar compid="{{$compid__43}}"></at-search-bar>
+            <at-search-bar compid="{{$compid__45}}"></at-search-bar>
         </view>
         <view id="box">
             <block wx:if="{{data}}">
@@ -33,6 +33,6 @@
                 <view class="footer-btn" bindtap="anonymousFunc6">开始记工</view>
             </view>
         </block>
-        <add-member compid="{{$compid__44}}"></add-member>
+        <add-member compid="{{$compid__46}}"></add-member>
     </view>
 </block>

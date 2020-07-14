@@ -631,6 +631,12 @@ export default function AttendanceSheet() {
     setMonth(e.detail.value.slice(5, 8));
     getList(time);
   }
+  // 跳转
+  const userRouteJump = (url: string) => {
+    Taro.navigateTo({
+      url: url
+    })
+  }
   console.log(tebArr,'tebArr')
   return (
     <View>
@@ -748,7 +754,7 @@ export default function AttendanceSheet() {
             <View>一键对工</View>
             <View className='footer-btn-box-left-title'>发送到工人微信群快速对工</View>
           </View>
-          <View className='footer-btn-box-right'>
+          <View className='footer-btn-box-right' onClick={() => userRouteJump(`/pages/recorder/index`)}>
             <View>记工</View>
             <View className='footer-btn-box-right-title'>(点工 包工 借支)</View>
           </View>

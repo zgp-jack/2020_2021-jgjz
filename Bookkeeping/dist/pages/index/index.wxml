@@ -22,32 +22,34 @@
                 </block>
                 <view bindtap="anonymousFunc4" class="cloud">
                     <image src="{{IMGCDNURL + 'cloud.png'}}" class="heard-right">
-                        <at-badge compid="{{$compid__452}}"></at-badge>
+                        <at-badge compid="{{$compid__572}}"></at-badge>
                     </image>
                 </view>
             </view>
-            <view class="moneyList">
-                <view>
-                    <image class="moneyIcon" src="{{IMGCDNURL + 'money.png'}}"></image>工钱</view>
-                <view>
-                    <image class="moneyIconPay" src="{{IMGCDNURL + 'money1.png'}}"></image>借支</view>
-            </view>
-            <view class="money">
-                <view>{{item && item.money || 0}}</view>
-                <view>{{item && item.borrow || 0}}</view>
-            </view>
-            <view class="typeList">
-                <view>上班<text class="num">{{item && item.work_time || 0}}</text>
+            <view bindtap="anonymousFunc5">
+                <view class="moneyList">
+                    <view>
+                        <image class="moneyIcon" src="{{IMGCDNURL + 'money.png'}}"></image>工钱</view>
+                    <view>
+                        <image class="moneyIconPay" src="{{IMGCDNURL + 'money1.png'}}"></image>借支</view>
                 </view>
-                <view>加班<text class="num">{{item && item.overtime || 0}}个工</text>
+                <view class="money">
+                    <view>{{item && item.money || 0}}</view>
+                    <view>{{item && item.borrow || 0}}</view>
                 </view>
-                <view>按量记
-                    <block>
-                        <block wx:if="{{measureType === 0}}"><text class="num">3笔</text>
+                <view class="typeList">
+                    <view>上班<text class="num">{{item && item.work_time || 0}}</text>
+                    </view>
+                    <view>加班<text class="num">{{item && item.overtime || 0}}个工</text>
+                    </view>
+                    <view>按量记
+                        <block>
+                            <block wx:if="{{measureType === 0}}"><text class="num">3笔</text>
+                            </block>
+                            <block wx:else><text class="num">1000平方米</text>
+                            </block>
                         </block>
-                        <block wx:else><text class="num">1000平方米</text>
-                        </block>
-                    </block>
+                    </view>
                 </view>
             </view>
             <view class="yun">
@@ -55,13 +57,13 @@
             </view>
             <view class="recordBox">
                 <view class="eventList">
-                    <view class="eventList-left" bindtap="anonymousFunc5">
+                    <view class="eventList-left" bindtap="anonymousFunc6">
                         <view class="eventList-icon">
                             <image class="eventList-icon-image" src="{{IMGCDNURL + 'recorder.png'}}"></image>
                         </view>
                         <view>记工流水</view>
                     </view>
-                    <view class="" bindtap="anonymousFunc6">
+                    <view class="" bindtap="anonymousFunc7">
                         <view class="eventList-icon-attendance">
                             <image class="eventList-icon-attendance-image" src="{{IMGCDNURL + 'attendance.png'}}"></image>
                         </view>
@@ -71,9 +73,9 @@
                 <view class="btnBox">
                     <view class="btn">
                         <block>
-                            <block wx:if="{{item && item.business_list.data.length === 0}}"><text bindtap="anonymousFunc7"> 记工<text class="btn-title">(点工 包工 借支)</text></text>
+                            <block wx:if="{{item && item.business_list.data.length === 0}}"><text bindtap="anonymousFunc8"> 记工<text class="btn-title">(点工 包工 借支)</text></text>
                             </block>
-                            <block wx:else><text bindtap="anonymousFunc8"> 再记一笔<text class="btn-title" bindtap="anonymousFunc9">(点工 包工 借支)</text></text>
+                            <block wx:else><text bindtap="anonymousFunc9"> 再记一笔<text class="btn-title" bindtap="anonymousFunc10">(点工 包工 借支)</text></text>
                             </block>
                         </block>
                     </view>
@@ -81,7 +83,7 @@
                         <view class="notepad-Icon">
                             <image class="notepad-Icon-iamge" src="{{IMGCDNURL + 'notepad.png'}}"></image>
                         </view>
-                        <view bindtap="anonymousFunc10">记事本</view>
+                        <view bindtap="anonymousFunc11">记事本</view>
                     </view>
                 </view>
             </view>
@@ -98,8 +100,8 @@
             </block>
             <block wx:if="{{type === 1 && list.length > 0 && !busy}}">
                 <view>
-                    <scroll-view class="content-list-box" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc11">
-                        <view wx:key="$loopState__temp2" class="content-list" wx:for="{{loopArray192}}" wx:for-item="v" wx:for-index="i">
+                    <scroll-view class="content-list-box" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc12">
+                        <view wx:key="$loopState__temp2" class="content-list" wx:for="{{loopArray236}}" wx:for-item="v" wx:for-index="i">
                             <view>
                                 <view class="content-list-flex">
                                     <view>{{v.$original.workername}}</view>
@@ -113,8 +115,8 @@
             </block>
             <block wx:if="{{type === 2 && list.length > 0 && !busy}}">
                 <view>
-                    <scroll-view class="recruit-lists-containerbox" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc12">
-                        <view wx:key="$loopState__temp4" class="content-list" wx:for="{{loopArray193}}" wx:for-item="v" wx:for-index="i">
+                    <scroll-view class="recruit-lists-containerbox" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc13">
+                        <view wx:key="$loopState__temp4" class="content-list" wx:for="{{loopArray237}}" wx:for-item="v" wx:for-index="i">
                             <view class="content-list-flex">
                                 <view>{{v.$original.workername}}</view>
                                 <view class="orgion">¥{{v.$original.money}}</view>
@@ -132,7 +134,7 @@
             </block>
         </view>
         <view class="jumpBox">
-            <view class="jumpItem" bindtap="anonymousFunc13">
+            <view class="jumpItem" bindtap="anonymousFunc14">
                 <view class="ptBox">
                     <view class="jumpItem-icon">
                         <image class="jumpItem-icon-image" src="{{IMGCDNURL + 'work.png'}}"></image>
@@ -145,26 +147,26 @@
                     <view class="jumpItem-icon-goback">
                         <image class="jumpItem-icon-goback-image" src="{{IMGCDNURL + 'goBack.png'}}"></image>
                     </view>
-                    <view class="jumpItem-title" bindtap="anonymousFunc14">鱼泡网</view>
+                    <view class="jumpItem-title" bindtap="anonymousFunc15">鱼泡网</view>
                 </view>
             </view>
         </view>
-        <at-modal compid="{{$compid__453}}">
+        <at-modal compid="{{$compid__573}}">
             <view class="AtModal">
                 <view class="AtModal-top">当前是<text class="atModal-name">【班组长】</text>身份</view>
                 <view class="mtList">与上一次记工身份不一致，是否<text class="atModal-change">切换?</text>
                 </view>
-                <view class="atModal-list" bindtap="anonymousFunc15">不切换</view>
-                <view class="atModal-list" bindtap="anonymousFunc16">切换成【工人】</view>
-                <view class="atModal-list" bindtap="anonymousFunc17">不再提醒</view>
+                <view class="atModal-list" bindtap="anonymousFunc16">不切换</view>
+                <view class="atModal-list" bindtap="anonymousFunc17">切换成【工人】</view>
+                <view class="atModal-list" bindtap="anonymousFunc18">不再提醒</view>
             </view>
         </at-modal>
-        <at-modal compid="{{$compid__454}}">
+        <at-modal compid="{{$compid__574}}">
             <view class="useAtModal">
                 <view class="useAtModal-title">请根据需要选择您的身份</view>
                 <view class="useAtModal-tips">温馨提示：选对身份，才能使用想要的功能哦</view>
                 <view class="useAtModal-box">
-                    <view bindtap="anonymousFunc18">
+                    <view bindtap="anonymousFunc19">
                         <view class="useAtModal-monitor">
                             <image class="useAtModal-monitor-img" src="{{IMGCDNURL + 'banzhu.png'}}"></image>
                         </view>
@@ -172,7 +174,7 @@
                         <view>对工人记工</view>
                         <view class="useAtModal-look">查看工人的考勤表</view>
                     </view>
-                    <view bindtap="anonymousFunc19">
+                    <view bindtap="anonymousFunc20">
                         <view class="useAtModal-worker">
                             <image class="useAtModal-worker-img" src="{{IMGCDNURL + 'gongren.png'}}"></image>
                         </view>
@@ -183,8 +185,8 @@
                 </view>
             </view>
         </at-modal>
-        <auth compid="{{$compid__455}}"></auth>
-        <create-project compid="{{$compid__456}}"></create-project>
-        <project-modal compid="{{$compid__457}}"></project-modal>
+        <auth compid="{{$compid__575}}"></auth>
+        <create-project compid="{{$compid__576}}"></create-project>
+        <project-modal compid="{{$compid__577}}"></project-modal>
     </view>
 </block>

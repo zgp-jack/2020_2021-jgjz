@@ -43,7 +43,6 @@ export default function Share() {
     setDate(newTime);
     getList(newTime);
   }, [])
-  console.log(tebArr, 'tebArr')
   // 获取数据
   const getList = (newTime: string) => {
     let params = {
@@ -61,7 +60,6 @@ export default function Share() {
     /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
     curDate.setDate(0);
     const day = curDate.getDate();
-    console.log(day, 'daty');
     // 设置第一列的天数
     const dayArr: any[] = [];
     for (var k = 1; k <= day; k++) {
@@ -90,7 +88,6 @@ export default function Share() {
     }
     fixedTabList.push(fixedTabObj);
     bkgetExcelDataAction(params).then(res => {
-      console.log(res);
       const data = res.data;
       let leftData: any = [];
       let rightData: any = [];
@@ -274,7 +271,6 @@ export default function Share() {
                     unitMap[item.unit_name] = +item.sum
                   }
                 })
-                console.log(unitMap, 'unitMapunitMap')
                 rightObj.type.amount = [unitMap];
               }
             }
@@ -333,7 +329,6 @@ export default function Share() {
     setMonth(e.detail.value.slice(5, 8));
     getList(time);
   }
-  console.log(tebArr, 'fixedTabfixedTab')
   return (
     <View className='content'>
       {/* <View className='top'>

@@ -51,6 +51,29 @@ export default function userCode(InitParams) {
         setImage({item:obj.view_images})
         setModel(params);
       }
+    }else{
+      // 获取当前时间
+      // let lastM = JSON.stringify(new Date(new Date().setMonth(new Date().getMonth() + 1))).slice(1, 11)
+      // console.log(lastM,'xxx')
+      const date = new Date();
+      const seperator1 = "-";
+
+      const year = date.getFullYear();
+      let month:any = date.getMonth() + 1;
+      const hour = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+      let strDate:any = date.getDate();
+
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      const currentdate = year + seperator1 + month + seperator1 + strDate + "  " + hour + ":" + minutes + ":" + seconds;
+      const data = JSON.parse(JSON.stringify(model))
+      setModel({ ...data, time: currentdate})
     }
   },[])
   // 提交

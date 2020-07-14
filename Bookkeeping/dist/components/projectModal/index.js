@@ -48,7 +48,7 @@ var ProjectModal = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ProjectModal.__proto__ || Object.getPrototypeOf(ProjectModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["display", "teamName", "handleSubmit", "handleInput", "__fn_onClick"], _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ProjectModal.__proto__ || Object.getPrototypeOf(ProjectModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["display", "teamName", "handleSubmit", "handleInput", "handleBack", "handleClose", "__fn_onClick"], _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(ProjectModal, [{
@@ -70,7 +70,9 @@ var ProjectModal = (_temp2 = _class = function (_Taro$Component) {
           display = _props.display,
           teamName = _props.teamName,
           handleSubmit = _props.handleSubmit,
-          handleInput = _props.handleInput;
+          handleInput = _props.handleInput,
+          handleBack = _props.handleBack,
+          handleClose = _props.handleClose;
 
 
       this.anonymousFunc0 = function (e) {
@@ -84,19 +86,29 @@ var ProjectModal = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
+    key: "funPrivatecbhzz",
+    value: function funPrivatecbhzz() {
+      return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
+    }
+  }, {
     key: "anonymousFunc0",
     value: function anonymousFunc0(e) {
       ;
     }
   }, {
-    key: "funPrivategfzzz",
-    value: function funPrivategfzzz() {
+    key: "funPrivatecbizz",
+    value: function funPrivatecbizz() {
+      return this.props.handleBack.apply(undefined, Array.prototype.slice.call(arguments, 1));
+    }
+  }, {
+    key: "funPrivatecbjzz",
+    value: function funPrivatecbjzz() {
       return this.props.handleSubmit.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }]);
 
   return ProjectModal;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "funPrivategfzzz"], _class.$$componentPath = "components/projectModal/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatecbhzz", "anonymousFunc0", "funPrivatecbizz", "funPrivatecbjzz"], _class.$$componentPath = "components/projectModal/index", _temp2);
 
 
 ProjectModal.options = {

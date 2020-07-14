@@ -18,7 +18,7 @@
             </view>
         </view>
         <view class="list-content">
-            <at-list compid="{{$compid__42}}">
+            <at-list compid="{{$compid__44}}">
                 <view class="list-itme"><text class="list-itme-title">工人</text>:<text class="list-itme-content">{{obj.workername || '-'}}</text>
                 </view>
                 <view class="list-itme"><text class="list-itme-title">项目名称</text>:<text class="list-itme-content">{{obj.group_info || '-'}}</text>

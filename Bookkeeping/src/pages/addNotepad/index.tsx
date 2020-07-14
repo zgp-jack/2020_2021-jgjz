@@ -17,18 +17,6 @@ export default function AddNotepad() {
   const { id } = router.params;
   const InitParams: InitRecruitView = { id}
   const { model, setModel, handleSubmit, image, setImage } = userCode(InitParams);
-  // // 图片
-  // const [image, setImage] = useState<ImageDataType>({
-  //   item: [],
-  // })
-  useEffect(()=>{
-    // if(id){
-    //   let modelInfo: ModalType = JSON.parse(JSON.stringify(model));
-    //   console.log(modelInfo,'modelInfo')
-    //   modelInfo.id = id;
-    //   setModel(modelInfo);
-    // }
-  },[])
   // 多选框
   const handleContent = (e)=>{
     let modelInfo: ModalType = JSON.parse(JSON.stringify(model))
@@ -68,9 +56,14 @@ export default function AddNotepad() {
   }
   return (
     <View className='addnotepad'>
-      {id && <View className='time'>{model && model.time}</View>}
+      <View className='time'>{model && model.time}</View>
       <View className='notepad-textarea'>
         <Textarea 
+          id='textarea'
+          focus
+          autoFocus
+          auto-focus
+          cursor={0}
           onInput={(e) => handleContent(e)}
           className={id ? 'editTextarea' : 'textarea'} 
           value={model && model.note } 
@@ -78,7 +71,7 @@ export default function AddNotepad() {
           placeholder-style='color:#BEBEBE'/>
       </View>
       <View>
-        <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} /></View>
+        <View className='image'><ImageView images={image.item} max={4} notepad userUploadImg={userUploadImg} userDelImg={userDelImg} /></View>
       </View>
       <View className='footer'>
         <View className='footer-box'>

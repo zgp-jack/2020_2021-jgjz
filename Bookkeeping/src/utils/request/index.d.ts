@@ -127,7 +127,8 @@ export interface bkGetProjectTeamData {
   id: string
   is_deleted: string
   name: string
-  pid: string
+  pid: string,
+  click:boolean
 }
 export interface bkGetProjectTeamDataChild{
   created_by: string
@@ -137,6 +138,7 @@ export interface bkGetProjectTeamDataChild{
   is_deleted:  string
   name: string
   pid: string
+  leader_name:string,
 }
 
 // 新增项目

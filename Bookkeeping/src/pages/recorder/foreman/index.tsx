@@ -43,7 +43,7 @@ export default function Foreman() {
     tab, handleAtSwitch, handleDelProject, editProjectDisplay, setEditProjectDisplay, handleEditProject, handleEditProjectModal, editProjectData,
     handleEditProjectData, handleSetWagesModal, handleWagesList, setWorkList, handleCheckboxStandard, groupInfo, image, setImage, bkGetWorker,
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
-    setRefresh, handleLongClick, identity, foremanTitle, handleAllClick,setContractor,handleRadio,contractor,
+    setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -119,7 +119,6 @@ export default function Foreman() {
     bakModel.splice(i, 1)
     setImage({ item: bakModel })
   }
- 
   // 点击保存成功弹窗
   const handleRecorderPopup = (type:number)=>{
     // 跳转
@@ -172,6 +171,11 @@ export default function Foreman() {
       setEdit(false)
     }
   }
+  // 上一步
+  const handleBack = () => {
+    setProject(false)
+    setCreateProjectDisplay(true)
+  }
    // 跳转
   const userRouteJump = (url: string) => {
     Taro.navigateTo({
@@ -193,7 +197,6 @@ export default function Foreman() {
     bkGetWorker(groupInfo);
     userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`) 
   }
-  console.log(projectArr,'projectArr')
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -359,7 +362,7 @@ export default function Foreman() {
           <View className='publish-recruit-card-money' onClick={() => { setWageStandardDisplay(true) }}>
           <View className='publish-list-item-money'>
             <View className='pulish-list-title-money'>
-              <View>我的工钱
+              <View>我的工钱(点击设置自己的工资标准)
               <View className='mt10'>(自动计算)</View>
               </View>
             </View>
@@ -382,7 +385,7 @@ export default function Foreman() {
               <Text className='pulish-list-title'>工程量</Text>
               :<Input
                 className='publish-list-input-amount'
-                type='number'
+                type='digit'
                 placeholder='请填写工程量'
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
@@ -395,7 +398,7 @@ export default function Foreman() {
               <Text className='pulish-list-title'>单价</Text>
               :<Input
                 className='publish-list-input'
-                type='number'
+                type='digit'
                 placeholder='请填写单价'
                 onInput={(e) => handleInput('price', e)}
                 value={model && model.price}
@@ -407,7 +410,7 @@ export default function Foreman() {
               <Text className='pulish-list-title'>工钱</Text>
               :<Input
                 className='publish-list-input'
-                type='number'
+                type='digit'
                 onInput={(e) => handleInput('wages', e)}
                 placeholder='工程量和单价未知时，可直接填写'
                 value={model && model.wages}
@@ -424,7 +427,7 @@ export default function Foreman() {
               <Text className='pulish-list-title'>本次借支</Text>
               :<Input
                 className='publish-list-input'
-                type='number'
+                type='digit'
                 // disabled
                 onInput={(e) => handleInput('borrowing', e)}
                 placeholder='请输入本次借支金额'
@@ -484,7 +487,7 @@ export default function Foreman() {
               placeholder='请填写备注...'
               value={model && model.details}
               onInput={(e) => handleInput('details',e)}
-              maxlength={500}
+              maxlength={400}
             />
           </View>
           <View>
@@ -499,7 +502,7 @@ export default function Foreman() {
         <View className='footer-right' onClick={()=>handlePreservation(0)}>保存</View>
       </View>
       {/* 填写班组 */}
-      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName}/>
+        <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={()=>setProject(false)}/>
       {/* 成功弹窗 */}
       <RecorderPopup display={display} handleRecorderPopup={handleRecorderPopup}/>
       {/* 工程量选择单位 */}
@@ -540,14 +543,14 @@ export default function Foreman() {
             {projectArr.map(v=>(
               <View className='atDrawer-list' onClick={()=>handleProject(v)}>
                 <View className='atDrawer-list-title'>{
-                  v.child.map(val=>(
+                  // v.child.map(val=>(
                     <Text>{v.name}</Text>
-                  ))
+                  // ))
                 }</View>
                 <View className='atDrawer-list-flex'>
-                  <View></View>
+                  <View>{identity === 1 && <View>{v.child[0].leader_name||'-'}</View>}</View>
                   <View>
-                    {!edit && <View><Checkbox className='checkbox' color='#0099FF' value='' onClick={(e)=>e.stopPropagation()}/></View>}
+                    {!edit && <View><Checkbox checked={v.click} className='checkbox' color='#0099FF' value={''} onClick={(e)=>e.stopPropagation()}/></View>}
                     {edit && <View className='atDrawer-list-flex'>
                       <View className='atDrawer-list-flex-btn' onClick={(e)=>{e.stopPropagation(),handleEditProjectModal(v)}}>修改</View>
                       <View className='atDrawer-list-flex-btn' onClick={(e)=>{e.stopPropagation(),handleDelProject(v.id)}}>删除</View>

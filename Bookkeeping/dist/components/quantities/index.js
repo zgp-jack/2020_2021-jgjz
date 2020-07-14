@@ -79,7 +79,7 @@ var Quantities = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "ghzzz" + __index0;
+        var _$indexKey = "gjzzz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           return handleQuantities(v.$original);
@@ -98,8 +98,8 @@ var Quantities = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: "funPrivateggzzz",
-    value: function funPrivateggzzz() {
+    key: "funPrivategizzz",
+    value: function funPrivategizzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -118,7 +118,7 @@ var Quantities = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return Quantities;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivateggzzz", "anonymousFunc0"], _class.$$componentPath = "components/quantities/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivategizzz", "anonymousFunc0"], _class.$$componentPath = "components/quantities/index", _temp2);
 
 
 Quantities.options = {

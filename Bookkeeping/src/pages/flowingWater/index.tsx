@@ -5,6 +5,7 @@ import Msg from '../../utils/msg'
 import { AtSwipeAction } from "taro-ui"
 import { useDispatch } from '@tarojs/redux'
 import { IMGCDNURL } from '../../config';
+import { Type } from '../../config/store'
 import { setFlowingWater } from '../../actions/flowingWater';
 import { bkBusinessTypeDataItem } from '../../utils/request/index.d'
 import './index.scss'
@@ -25,6 +26,8 @@ export default function FlowingWater() {
   const [lastTime, setLastTime] = useState<string>()
   const [year,setYear] = useState<string>()
   const [mon,setmon] =useState<string>()
+  // 多选
+  const [isCheckOut, setIsCheckOut] = useState<boolean>(false)
   // 全选内容
   const [allcheck, setAllcheck] = useState<boolean>(false)
   // 获取数据
@@ -38,36 +41,49 @@ export default function FlowingWater() {
     setLastTime(lastM);
     getList(times, lastM);
   })
+  const type = Taro.getStorageSync(Type);
   const getList = (times, lastM)=>{
     let params = {
-      identity: 1,
+      identity: type,
       start_date: times,
       end_date: lastM,
     }
     bkBusinessAction(params).then(res=>{
-      if(res.code === 400 && res.data || res.code === 200){
-        console.log(res.data)
+      if(res.code === 200){
         if (res.data.data && res.data.data.length>0){
           for(let i =0 ;i<res.data.data.length;i++){
             const month = res.data.data[i].time.slice(0, 4) + '年' + res.data.data[i].time.slice(5, 7)+'月';
             const day = res.data.data[i].time.slice(8,10) + '日';
-            const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+            const weeks = new Array("周日", "周一", "周二", "周三", "周四", "周五", "周六");
             const date = new Date(res.data.data[i].time).getDay();
             const week = weeks[date];
             res.data.data[i].week = week;
             res.data.data[i].month = month;
             res.data.data[i].day = day;
           }
+          // 设置今天的自动打开
+          const newData = new Date();
+          const newTime = newData.getFullYear() + '-' + addZero(newData.getMonth() + 1) + '-' + addZero(newData.getDate());
+          for (let i = 0; i < res.data.data.length;i++){
+            if (res.data.data[i].time == newTime){
+              res.data.data[i].click = true;
+            }
+          }
+          setData({item:res.data.data})
+          dispatch(setFlowingWater(res.data))
         }
-        setData({item:res.data.data})
-        dispatch(setFlowingWater(res.data))
       }else{
         Msg(res.msg)
       }
     })
   }
-  // 多选
-  const [isCheckOut, setIsCheckOut] = useState<boolean>(false)
+  // 时间小于10增加0
+  const addZero = (num) => {
+    if (parseInt(num) < 10) {
+      num = '0' + num;
+    }
+    return num;
+  }
   // 关闭打开
   const handleClick = (e)=>{
     const dataItem = JSON.parse(JSON.stringify(data.item));
@@ -106,7 +122,6 @@ export default function FlowingWater() {
     }else{
       setIsCheckOut(false)
     }
-    console.log(321312)
   }
   // 点击滑动
   const handleAtSwipeAction = (e,v)=>{
@@ -169,15 +184,18 @@ export default function FlowingWater() {
   }
   // 全选
   const handleAllCheck = ()=>{
+    console.log(allcheck,'全选')
     if(!allcheck){
-      const arr = JSON.parse(JSON.stringify(data.item));
-      const list = arr.map(v=>{
+      const dataItem = JSON.parse(JSON.stringify(data.item));
+      const list = dataItem.map(v=>{
         v.arr.map(val=>{
           val.checkClick = true
           return val;
         })
+        v.click = true;
         return v; 
       })
+      console.log(list,'list')
       setData({ item: list})
       setAllcheck(true);
     }else{
@@ -219,6 +237,7 @@ export default function FlowingWater() {
       }
     })
   }
+  console.log(data,'data')
   return(
     <context.Provider value={value}>
     <View className='flowingWater'>
@@ -231,12 +250,13 @@ export default function FlowingWater() {
         // range={timeList}
         // onColumnChange={(e) => handlebindcolumnchange(e)}
         >
-          <Text className='time-color'>{year}{mon}</Text>
+            {/* <Text className='time-color'>{year}<View><Image className='leftIcon' src={`${IMGCDNURL}left.png`} /></View>{mon}<View><Image className='rightIcon' src={`${IMGCDNURL}right.png`}/></View></Text> */}
+            <View className='time-color'>{year}<Image src={`${IMGCDNURL}leftIcon.png`} className='leftIcon' />{mon}<Image className='righticon' src={`${IMGCDNURL}rightIcon.png`} /></View>
         </Picker>
       </View>
       <View className='content'>
         <View>
-          {data.item && data.item.map((v,i)=>(
+            {data.item && data.item.length>0 && data.item.map((v,i)=>(
             <View key={i+i} onClick={()=>handleClick(v)}>
               <View className='content-list'>
                 <View className='content-list-left'>
@@ -283,7 +303,7 @@ export default function FlowingWater() {
                     >
                     <View key={val.id} className='content-list-subclass' onClick={(e)=>handleJump(e,v,val.id)}>
                       <View className='content-list-subclass-left'>
-                            {isCheckOut && <View><Checkbox className='checkbox' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} checked={v.checkClick} /></View>}
+                            {isCheckOut && <View><Checkbox checked={val.checkClick} className='checkbox' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
                         <View className=''>
                           <View>{val.workername||'-'}</View>
                               <View className='content-list-subclass-left-title'>我在{val.group_info}对{val.workername||'-'}记了1笔包工</View>
@@ -299,7 +319,7 @@ export default function FlowingWater() {
             </View>
           ))}
         </View>
-        {data.item.length === 0 || !data.item &&
+        {data.item.length === 0 &&
         <View className='noData-box'>
           <View className='noData'>
             <View>本月您还没有记工哦~</View>

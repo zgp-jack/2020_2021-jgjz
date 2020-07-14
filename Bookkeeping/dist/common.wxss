@@ -500,3 +500,18 @@
   border-radius: 5rpx;
 }
 
+.leftIcon {
+  margin-right: 26rpx;
+  height: 22rpx;
+  width: 22rpx;
+  background-size: cover;
+}
+
+.righticon {
+  margin-left: 3rpx;
+  height: 20rpx;
+  width: 24rpx;
+  display: inline-block;
+  background-size: cover;
+}
+

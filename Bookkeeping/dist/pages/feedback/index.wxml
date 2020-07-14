@@ -19,7 +19,7 @@
         <view class="opinion">
             <textarea class="opinionTextarea" bindinput="anonymousFunc2" placeholder="请留下您的意见或建议" placeholder-style="color:rgba(167, 167, 167, 1)"></textarea>
             <view class="image">
-                <image-view compid="{{$compid__39}}"></image-view>
+                <image-view compid="{{$compid__41}}"></image-view>
             </view>
             <view class="clear"></view>
             <block wx:if="{{image.item.length === 0}}">

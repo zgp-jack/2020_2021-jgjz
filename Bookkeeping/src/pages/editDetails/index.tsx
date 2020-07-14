@@ -591,7 +591,7 @@ export default function EditDetails() {
           <View className='publish-list-item' onClick={() => { }}>
             <Text className='pulish-list-title'>包工类型</Text>
             <Input
-              className='publish-list-input'
+              className='publish-list-input-disabled'
               type='text'
               disabled
               placeholder='请选择包工类型'
@@ -604,7 +604,7 @@ export default function EditDetails() {
         <View className='publish-list-item' onClick={() =>{}}>
           <Text className='pulish-list-title'>项目名称</Text>
           <Input
-            className='publish-list-input'
+            className='publish-list-input-disabled'
             type='text'
             disabled
             placeholder='请选择项目名称'
@@ -617,7 +617,7 @@ export default function EditDetails() {
           <View className='publish-list-item' onClick={() => { }}>
             <Text className='pulish-list-title'>班组长</Text>
             <Input
-              className='publish-list-input'
+              className='publish-list-input-disabled'
               type='text'
               disabled
               placeholder='请选择班组长'
@@ -631,7 +631,7 @@ export default function EditDetails() {
         <View className='publish-list-item' onClick={() => { }}>
           <Text className='pulish-list-title'>工人</Text>
           <Input
-            className='publish-list-input'
+            className='publish-list-input-disabled'
             type='text'
             disabled
             placeholder='请选择工人'
@@ -647,7 +647,7 @@ export default function EditDetails() {
             <Text className='pulish-list-title'>工程量</Text>
             :<Input
               className='publish-list-input-amount'
-              type='number'
+              type='digit'
               placeholder='请填写工程量'
               onInput={(e) => { handleInput('unitNum',e)}}
               value={val.unitNum}
@@ -660,7 +660,7 @@ export default function EditDetails() {
             <Text className='pulish-list-title'>单价</Text>
             :<Input
               className='publish-list-input'
-              type='number'
+              type='digit'
               placeholder='请填写单价'
               onInput={(e) => { handleInput('unitPrice', e) }}
               value={val.unitPrice}
@@ -672,7 +672,7 @@ export default function EditDetails() {
             <Text className='pulish-list-title'>工钱</Text>
             :<Input
               className='publish-list-input'
-              type='number'
+              type='digit'
               onInput={(e) => { handleInput('money', e) }}
               placeholder='工程量和单价未知时，可直接填写'
               value={val.money}
@@ -688,7 +688,7 @@ export default function EditDetails() {
               <Text className='pulish-list-title'>本次借支</Text>
               :<Input
                 className='publish-list-input'
-                type='number'
+                type='digit'
                 // disabled
                 onInput={(e) => { handleInput('money', e) }}
                 placeholder='请输入本次借支金额'
@@ -716,7 +716,7 @@ export default function EditDetails() {
           <View className='publish-list-item'>
             <Text className='pulish-list-title'>日期</Text>
             <Input
-              className='publish-list-input'
+              className='publish-list-input-disabled'
               type='text'
               disabled
               placeholder='请选择日期'

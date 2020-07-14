@@ -164,12 +164,12 @@
                     <view>一键对工</view>
                     <view class="footer-btn-box-left-title">发送到工人微信群快速对工</view>
                 </view>
-                <view class="footer-btn-box-right">
+                <view class="footer-btn-box-right" bindtap="anonymousFunc2">
                     <view>记工</view>
                     <view class="footer-btn-box-right-title">(点工 包工 借支)</view>
                 </view>
             </view>
         </view>
-        <calendar-modal compid="{{$compid__59}}"></calendar-modal>
+        <calendar-modal compid="{{$compid__553}}"></calendar-modal>
     </view>
 </block>

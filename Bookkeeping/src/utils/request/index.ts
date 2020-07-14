@@ -46,7 +46,6 @@ type Request = {
 function getRequestHeaderInfo(): RequestHeader {
   // 获取用户信息
   let userInfo: User = Taro.getStorageSync(UserInfo);
-  console.log(userInfo,'userInfoaaaa');
   const requestHeader: RequestHeader = 
   // userInfo.login ? 
   {
@@ -59,7 +58,6 @@ function getRequestHeaderInfo(): RequestHeader {
   // : {
   //     'content-type': 'application/x-www-form-urlencoded',
   //   }
-  console.log(requestHeader,'requestHeaderrequestHeaderrequestHeader')
   return requestHeader
 }
 
@@ -788,6 +786,24 @@ export function bkUpdateBusinessNewAction(data): Promise<Inter.bkGetCode> {
   let midData = Taro.getStorageSync(MidData);
   return doRequestAction({
     url: api.bkUpdateBusinessNewUrl,
+    method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
+    data: data
+  })
+}
+
+
+// 工人身份设置自己的工资标准
+export function bkSetWorkerIdentityWageAction(data): Promise<Inter.bkGetCode> {
+  let midData = Taro.getStorageSync(MidData);
+  return doRequestAction({
+    url: api.bkSetWorkerIdentityWageUrl,
     method: 'POST',
     header: {
       'content-type': 'application/x-www-form-urlencoded',

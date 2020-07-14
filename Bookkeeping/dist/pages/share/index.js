@@ -142,7 +142,6 @@ var Share = (_temp2 = _class = function (_Taro$Component) {
         setDate(newTime);
         getList(newTime);
       }, []);
-      console.log(tebArr, 'tebArr');
       // 获取数据
       var getList = function getList(newTime) {
         var params = {
@@ -160,7 +159,6 @@ var Share = (_temp2 = _class = function (_Taro$Component) {
         /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
         curDate.setDate(0);
         var day = curDate.getDate();
-        console.log(day, 'daty');
         // 设置第一列的天数
         var dayArr = [];
         for (var k = 1; k <= day; k++) {
@@ -186,7 +184,6 @@ var Share = (_temp2 = _class = function (_Taro$Component) {
         };
         fixedTabList.push(fixedTabObj);
         (0, _index.bkgetExcelDataAction)(params).then(function (res) {
-          console.log(res);
           var data = res.data;
           var leftData = [];
           var rightData = [];
@@ -371,7 +368,6 @@ var Share = (_temp2 = _class = function (_Taro$Component) {
                           unitMap[item.unit_name] = +item.sum;
                         }
                       });
-                      console.log(unitMap, 'unitMapunitMap');
                       rightObj.type.amount = [unitMap];
                     })();
                   }
@@ -431,7 +427,6 @@ var Share = (_temp2 = _class = function (_Taro$Component) {
         setMonth(e.detail.value.slice(5, 8));
         getList(time);
       };
-      console.log(tebArr, 'fixedTabfixedTab');
       Object.assign(this.__state, {
         fixedTab: fixedTab,
         tebArr: tebArr

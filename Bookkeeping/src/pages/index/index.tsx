@@ -1,7 +1,6 @@
 import Taro, { useEffect,useState } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
-import { bkIndexTypeData  } from '../../utils/request/index.d'
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
@@ -89,7 +88,7 @@ export default function Index() {
     const time = new Date();
     const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
     const week = weeks[date];
-    const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) 
+    const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDay());
     // + '-' + addZero(time.getDate())
     console.log(newTime,'time')
     setTime(newTime);
@@ -143,8 +142,7 @@ export default function Index() {
   // 获取项目名称
   const bkGetProjectTeam = ()=>{
     bkGetProjectTeamAction({}).then(res=>{
-      console.log(res,'resssss');
-      // 判断为0就出现新增弹框
+      // 判断为0就出现新增弹  框
       if(res.data.length === 0){
         setCreateProjectDisplay(true)
       }
@@ -191,7 +189,11 @@ export default function Index() {
           }
         }
         // 获取信息
-        bkGetProjectTeam()
+        // 判断是班组长的时候出现弹框
+        console.log(type,'typetypetypetypetypetypetype')
+        if(type === 1){
+          bkGetProjectTeam()
+        }
       } else {
         Msg(res.msg);
       }
@@ -304,6 +306,11 @@ export default function Index() {
       }
     })
   }
+  // 填写项目返回上一步
+  const handleBack = ()=>{
+    setProject(false)
+    setCreateProjectDisplay(true)
+  }
   return (
     <View className='index-content'>
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
@@ -335,6 +342,7 @@ export default function Index() {
             </Image>
           </View>
         </View>
+        <View onClick={() => userRouteJump('/pages/flowingWater/index')}>
         <View className='moneyList'>
           <View><Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱</View>
           <View><Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`}/>借支</View>
@@ -349,6 +357,7 @@ export default function Index() {
           <View>按量记
             {measureType === 0 ? <Text className='num'>3笔</Text> : <Text className='num'>1000平方米</Text>}
           </View>
+        </View>
         </View>
         <View className='yun'><Image className='yun-img' src={`${IMGCDNURL}backgroundCloud.png`}/></View>
         <View className='recordBox'>
@@ -486,7 +495,7 @@ export default function Index() {
       {/* 创建项目 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
       {/* 填写班组 */}
-      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} />
+      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={()=>setProject(false)} />
     </View>
   )
 }

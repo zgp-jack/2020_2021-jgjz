@@ -3,7 +3,7 @@
         <block wx:if="{{display}}">
             <view class="workOvertime-complaintModal">
                 <view class="workOvertime-complaintModal-content">
-                    <view class="workOvertime-complaintModal-content-title"><text class="close" bindtap="funPrivatehazzz">取消</text><text class="title">选择加班时长</text><text bindtap="funPrivatehbzzz" class="workOvertime-complaintModal-content-close">确定</text>
+                    <view class="workOvertime-complaintModal-content-title"><text class="close" bindtap="funPrivatehczzz">取消</text><text class="title">选择加班时长</text><text bindtap="funPrivatehdzzz" class="workOvertime-complaintModal-content-close">确定</text>
                     </view>
                     <view class="workOvertime-complaintModal-content-timeBox">
                         <view class="workOvertime-complaintModal-content-tips">{{model.duration}}</view>

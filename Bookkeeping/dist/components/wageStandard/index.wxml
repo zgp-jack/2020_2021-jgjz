@@ -13,13 +13,13 @@
                             <view class="wageStandard-content-listBox-list">
                                 <view class="wageStandard-content-listBox-list-left"><text class="wageStandard-content-listBox-list-title">上班标准:</text> {{wageStandard.work}}小时算一个工</view>
                                 <view>
-                                    <at-input-number compid="{{$compid__47}}"></at-input-number>
+                                    <at-input-number compid="{{$compid__49}}"></at-input-number>
                                 </view>
                             </view>
                             <view class="wageStandard-content-listBox-list">
                                 <view class="wageStandard-content-listBox-list-left"><text class="wageStandard-content-listBox-list-title">每个工多少钱:</text> {{wageStandard.money}}/个工</view>
                                 <view>
-                                    <at-input-number compid="{{$compid__48}}"></at-input-number>
+                                    <at-input-number compid="{{$compid__50}}"></at-input-number>
                                 </view>
                             </view>
                         </view>
@@ -35,7 +35,7 @@
                             <view class="workList">
                                 <view class="workList-title">加班{{wageStandard.addWork}}元/小时</view>
                                 <view class="workList-add">
-                                    <at-input-number compid="{{$compid__49}}"></at-input-number>
+                                    <at-input-number compid="{{$compid__51}}"></at-input-number>
                                 </view>
                             </view>
                         </block>
@@ -44,7 +44,7 @@
                                 <view class="workList">
                                     <view class="workList-title">加班{{wageStandard.day}}小时算一个工</view>
                                     <view class="workList-add">
-                                        <at-input-number compid="{{$compid__50}}"></at-input-number>
+                                        <at-input-number compid="{{$compid__52}}"></at-input-number>
                                     </view>
                                 </view>
                                 <view class="workList">

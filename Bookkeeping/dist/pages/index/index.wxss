@@ -77,8 +77,8 @@
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-left: 60rpx;
-  margin-right: 61rpx;
+  margin-left: 84rpx;
+  margin-right: 84rpx;
   font-size: 48rpx;
   text-align: center;
 }
@@ -282,6 +282,10 @@
   text-align: left;
   margin-top: 21rpx;
   margin-bottom: 21rpx;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .content-list-flex-title {
   color: #8b8b8b;

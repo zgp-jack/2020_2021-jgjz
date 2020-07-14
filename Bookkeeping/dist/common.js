@@ -39,6 +39,8 @@ var _redux = __webpack_require__(/*! @tarojs/redux */ "./node_modules/@tarojs/re
 
 var _index4 = __webpack_require__(/*! ../../config/index */ "./src/config/index.ts");
 
+var _store = __webpack_require__(/*! ../../config/store */ "./src/config/store.ts");
+
 var _flowingWater = __webpack_require__(/*! ../../actions/flowingWater */ "./src/actions/flowingWater.ts");
 
 __webpack_require__(/*! ./index.scss */ "./src/pages/flowingWater/index.scss");
@@ -69,7 +71,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWater.__proto__ || Object.getPrototypeOf(FlowingWater)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记工流水'
-    }, _this.$usedState = ["data", "loopArray53", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["data", "loopArray399", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWater, [{
@@ -118,13 +120,20 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           _useState10 = _slicedToArray(_useState9, 2),
           mon = _useState10[0],
           setmon = _useState10[1];
-      // 全选内容
+      // 多选
 
 
       var _useState11 = (0, _taroWeapp.useState)(false),
           _useState12 = _slicedToArray(_useState11, 2),
-          allcheck = _useState12[0],
-          setAllcheck = _useState12[1];
+          isCheckOut = _useState12[0],
+          setIsCheckOut = _useState12[1];
+      // 全选内容
+
+
+      var _useState13 = (0, _taroWeapp.useState)(false),
+          _useState14 = _slicedToArray(_useState13, 2),
+          allcheck = _useState14[0],
+          setAllcheck = _useState14[1];
       // 获取数据
 
 
@@ -138,43 +147,50 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         setLastTime(lastM);
         getList(times, lastM);
       });
+      var type = _taroWeapp2.default.getStorageSync(_store.Type);
       var getList = function getList(times, lastM) {
         var params = {
-          identity: 1,
+          identity: type,
           start_date: times,
           end_date: lastM
         };
         (0, _index.bkBusinessAction)(params).then(function (res) {
-          if (res.code === 400 && res.data || res.code === 200) {
-            console.log(res.data);
+          if (res.code === 200) {
             if (res.data.data && res.data.data.length > 0) {
               for (var i = 0; i < res.data.data.length; i++) {
                 var month = res.data.data[i].time.slice(0, 4) + '年' + res.data.data[i].time.slice(5, 7) + '月';
                 var day = res.data.data[i].time.slice(8, 10) + '日';
-                var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+                var weeks = new Array("周日", "周一", "周二", "周三", "周四", "周五", "周六");
                 var date = new Date(res.data.data[i].time).getDay();
                 var week = weeks[date];
                 res.data.data[i].week = week;
                 res.data.data[i].month = month;
                 res.data.data[i].day = day;
               }
+              // 设置今天的自动打开
+              var newData = new Date();
+              var newTime = newData.getFullYear() + '-' + addZero(newData.getMonth() + 1) + '-' + addZero(newData.getDate());
+              for (var _i = 0; _i < res.data.data.length; _i++) {
+                if (res.data.data[_i].time == newTime) {
+                  res.data.data[_i].click = true;
+                }
+              }
+              setData({ item: res.data.data });
+              dispatch((0, _flowingWater.setFlowingWater)(res.data));
             }
-            setData({ item: res.data.data });
-            dispatch((0, _flowingWater.setFlowingWater)(res.data));
           } else {
             (0, _index3.default)(res.msg);
           }
         });
       };
-      // 多选
-
-      var _useState13 = (0, _taroWeapp.useState)(false),
-          _useState14 = _slicedToArray(_useState13, 2),
-          isCheckOut = _useState14[0],
-          setIsCheckOut = _useState14[1];
+      // 时间小于10增加0
+      var addZero = function addZero(num) {
+        if (parseInt(num) < 10) {
+          num = '0' + num;
+        }
+        return num;
+      };
       // 关闭打开
-
-
       var handleClick = function handleClick(e) {
         var dataItem = JSON.parse(JSON.stringify(data.item));
         var dataClick = dataItem.map(function (v) {
@@ -212,7 +228,6 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         } else {
           setIsCheckOut(false);
         }
-        console.log(321312);
       };
       // 点击滑动
       var handleAtSwipeAction = function handleAtSwipeAction(e, v) {
@@ -275,20 +290,23 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
       };
       // 全选
       var handleAllCheck = function handleAllCheck() {
+        console.log(allcheck, '全选');
         if (!allcheck) {
-          var arr = JSON.parse(JSON.stringify(data.item));
-          var list = arr.map(function (v) {
+          var dataItem = JSON.parse(JSON.stringify(data.item));
+          var list = dataItem.map(function (v) {
             v.arr.map(function (val) {
               val.checkClick = true;
               return val;
             });
+            v.click = true;
             return v;
           });
+          console.log(list, 'list');
           setData({ item: list });
           setAllcheck(true);
         } else {
-          var _arr = JSON.parse(JSON.stringify(data.item));
-          var _list = _arr.map(function (v) {
+          var arr = JSON.parse(JSON.stringify(data.item));
+          var _list = arr.map(function (v) {
             v.arr.map(function (val) {
               val.checkClick = false;
               return val;
@@ -325,6 +343,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           }
         });
       };
+      console.log(data, 'data');
       context.Provider(value);
 
       this.anonymousFunc0 = function (e) {
@@ -346,37 +365,37 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         return handleCheckboxBtn(1);
       };
 
-      var loopArray53 = data.item ? data.item.map(function (v, i) {
+      var loopArray399 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
-        var $loopState__temp2 = data.item ? i + i : null;
+        var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "jdzzz" + i;
+        var _$indexKey = "bbhbz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
         };
 
-        var $loopState__temp4 = data.item ? v.$original.total_borrow && v.$original.total_borrow.toFixed(2) : null;
-        var $loopState__temp6 = data.item ? v.$original.total_money && v.$original.total_money.toFixed(2) : null;
-        var $anonymousCallee__11 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
+        var $loopState__temp4 = data.item && data.item.length > 0 ? v.$original.total_borrow && v.$original.total_borrow.toFixed(2) : null;
+        var $loopState__temp6 = data.item && data.item.length > 0 ? v.$original.total_money && v.$original.total_money.toFixed(2) : null;
+        var $anonymousCallee__129 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "jezzz" + i + "-" + __index2;
+          var _$indexKey2 = "bbhcz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "jfzzz" + i + "-" + __index2;
+          var _$indexKey3 = "bbhdz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "jgzzz" + i + "-" + __index2;
+          var _$indexKey4 = "bbhez" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -393,29 +412,29 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "jhzzz" + i + "-" + __index2;
+          var _$indexKey5 = "bbhfz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "jizzz" + i + "-" + __index2;
+          var _$indexKey6 = "bbhgz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "jjzzzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bbhhzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
-              $prevCompid__58 = _genCompid2[0],
-              $compid__58 = _genCompid2[1];
+              $prevCompid__901 = _genCompid2[0],
+              $compid__901 = _genCompid2[1];
 
           v.$original.click && _taroWeapp.propsManager.set({
             "autoClose": false,
             "onOpened": _this2.anonymousFunc3.bind(_this2, _$indexKey3),
             "onClick": _this2.anonymousFunc4.bind(_this2, _$indexKey4),
             "options": $loopState__temp8
-          }, $compid__58, $prevCompid__58);
+          }, $compid__901, $prevCompid__901);
           return {
             _$indexKey2: _$indexKey2,
             _$indexKey3: _$indexKey3,
@@ -423,7 +442,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
             $loopState__temp8: $loopState__temp8,
             _$indexKey5: _$indexKey5,
             _$indexKey6: _$indexKey6,
-            $compid__58: $compid__58,
+            $compid__901: $compid__901,
             $original: val.$original
           };
         }) : [];
@@ -432,13 +451,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey: _$indexKey,
           $loopState__temp4: $loopState__temp4,
           $loopState__temp6: $loopState__temp6,
-          $anonymousCallee__11: $anonymousCallee__11,
+          $anonymousCallee__129: $anonymousCallee__129,
           $original: v.$original
         };
       }) : [];
       Object.assign(this.__state, {
         data: data,
-        loopArray53: loopArray53,
+        loopArray399: loopArray399,
         IMGCDNURL: _index4.IMGCDNURL,
         isCheckOut: isCheckOut,
         allcheck: allcheck,
@@ -636,7 +655,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Notepad.__proto__ || Object.getPrototypeOf(Notepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["loopArray34", "$compid__40", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray34", "$compid__42", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Notepad, [{
@@ -657,10 +676,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__40"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__42"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__40 = _genCompid2[0],
-          $compid__40 = _genCompid2[1];
+          $prevCompid__42 = _genCompid2[0],
+          $compid__42 = _genCompid2[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 输入框
@@ -878,10 +897,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
         "value": val,
         "onChange": this.anonymousFunc0,
         "onActionClick": this.anonymousFunc1
-      }, $compid__40, $prevCompid__40);
+      }, $compid__42, $prevCompid__42);
       Object.assign(this.__state, {
         loopArray34: loopArray34,
-        $compid__40: $compid__40,
+        $compid__42: $compid__42,
         data: data,
         busy: busy,
         del: del,
@@ -1712,11 +1731,9 @@ function userForeman() {
       var objs = JSON.parse(JSON.stringify(obj));
       var data = JSON.parse(JSON.stringify(moneyList));
       var arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
-      console.log(data, 'dataAA');
       if (data.length > 0) {
         for (var j = 0; j < data.length; j++) {
           for (var i = 0; i < arrList.length; i++) {
-            console.log(arrList[i], 'iiii');
             arrList[i].click = false;
             if (data[j].id === arrList[i].id) {
               arrList[i].set = true;
@@ -1728,6 +1745,11 @@ function userForeman() {
           arrList[_i].click = false;
         }
       }
+      for (var _i2 = 0; _i2 < arrList.length; _i2++) {
+        if (arrList[_i2].id === objs.id) {
+          arrList.splice(_i2, 1);
+        }
+      }
       setWorkerItem([objs].concat(_toConsumableArray(arrList)));
     }
   });
@@ -1737,11 +1759,10 @@ function userForeman() {
     setIdentity(type);
     // 获取用户信息
     var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
-    console.log(midData, 'midData');
     var objs = JSON.parse(JSON.stringify(obj));
     var workerItemData = JSON.parse(JSON.stringify(workerItem));
     objs.name = midData.nickname || '未命名';
-    objs.id = 1;
+    objs.id = midData.worker_id;
     setObj(objs);
     workerItemData.push(objs);
     setWorkerItem(workerItemData);
@@ -1753,11 +1774,43 @@ function userForeman() {
     bkWageStandGetWage();
   }, []);
   // 获取项目名称
-  var bkGetProjectTeam = function bkGetProjectTeam() {
+  var bkGetProjectTeam = function bkGetProjectTeam(groupName) {
     (0, _index.bkGetProjectTeamAction)({}).then(function (res) {
       if (res.code === 200) {
-        console.log(res.data, '项目名称');
-        setProjectArr(res.data);
+        // 如果是工人的话默认选中第一条有数据
+        // 多条选中最近一条
+        // 工人
+        var modalObj = JSON.parse(JSON.stringify(model));
+        var _identity = _taroWeapp2.default.getStorageSync(_store.Type);
+        if (_identity === 2) {
+          if (!model.groupName) {
+            var _groupInfo = void 0;
+            if (res.data && res.data.length > 0) {
+              for (var i = 0; i < res.data.length; i++) {
+                res.data[0].click = true;
+                _groupInfo = res.data[0].child[0].pid + ',' + res.data[0].child[0].id;
+                if (res.data[0].child[0].leader_name) {
+                  setForemanTitle(res.data[0].child[0].leader_name);
+                }
+              }
+            }
+            setGroupInfo(_groupInfo);
+            setModel(_extends({}, modalObj, { name: res.data[0].name }));
+            setProjectArr(res.data);
+          } else {
+            if (res.data && res.data.length > 0) {
+              for (var _i3 = 0; _i3 < res.data.length; _i3++) {
+                // res.data[0].click = true;
+                if (groupName === res.data[_i3].name) {
+                  res.data[_i3].click = true;
+                }
+              }
+              setProjectArr(res.data);
+            }
+          }
+        } else {
+          setProjectArr(res.data);
+        }
       }
     });
   };
@@ -1773,7 +1826,6 @@ function userForeman() {
         group_info: groupInfo
       };
     }
-    console.log(groupInfo, 'groupInfogroupInfogroupInfo');
     (0, _index.bkGetWorkerWageAction)(prams).then(function (res) {
       if (res.code === 200) {
         setMoneyList(res.data);
@@ -1794,19 +1846,17 @@ function userForeman() {
             res.data[i].click = false;
           }
         }
-        console.log(res.data, 'res.data');
         setStandard(res.data);
       }
     });
   };
   // 工人列表
   var bkGetWorker = function bkGetWorker(groupInfo, data) {
-    // console.log(groupInfo,'group_info')
     // 不传group_info获取通讯录里的所有人
     (0, _index.bkGetWorkerAction)({}).then(function (res) {
       if (res.code === 200) {
         var _data = JSON.parse(JSON.stringify(workerItem));
-        console.log(_data, '工人列表');
+        // return;
         var arr = [];
         for (var i = 0; i < res.data.length; i++) {
           if (res.data[i].list) {
@@ -1819,7 +1869,11 @@ function userForeman() {
             }
           }
         }
-        // console.log(arr,'arrarrarr');
+        for (var _i4 = 0; _i4 < arr.length; _i4++) {
+          if (arr[_i4].id == obj.id) {
+            arr.splice(_i4, 1);
+          }
+        }
         setWorkerItem([obj].concat(arr));
         // for(let i =0;i<res.data.l)
         if (_data) {
@@ -1839,13 +1893,13 @@ function userForeman() {
           //   worktime_define: null,
           // })
           // 根据姓名判断在那个位置push进去
-          for (var _i2 = 0; _i2 < res.data.length; _i2++) {
-            if (_data.name_py === res.data[_i2].name_py) {
-              res.data[_i2].list.push(_data);
+          for (var _i5 = 0; _i5 < res.data.length; _i5++) {
+            if (_data.name_py === res.data[_i5].name_py) {
+              res.data[_i5].list.push(_data);
             }
           }
         }
-        console.log(res.data[0]);
+        console.log(res.data, '存reducer');
         dispatch((0, _mailList.setmailList)(res.data));
         setWorkerList(res.data);
       } else {
@@ -1872,7 +1926,7 @@ function userForeman() {
     (0, _index.bkAddProjectTeamAction)(params).then(function (res) {
       if (res.code === 200) {
         setIds(res.data);
-        bkGetProjectTeam();
+        bkGetProjectTeam(model.groupName);
       } else {
         (0, _index3.default)(res.msg);
         return;
@@ -2046,24 +2100,37 @@ function userForeman() {
           // time = timeArrs[i].num;
         }
       }
-      console.log(time, 'time');
       // 加班时间
       var addTime = 0;
-      for (var _i3 = 0; _i3 < addWorkArrs.length; _i3++) {
-        if (addWorkArrs[_i3].click) {
-          addTime = addWorkArrs[_i3].num;
+      for (var _i6 = 0; _i6 < addWorkArrs.length; _i6++) {
+        if (addWorkArrs[_i6].click) {
+          addTime = addWorkArrs[_i6].num;
         }
       }
       var total = void 0;
       if (_data3.type === 1) {
         // 按小时算 加班小时* 模板加班金额
-        console.log(addWorkNum * addTime, 'addWorkNum * addTime');
         total = moneyNum / workNum * time + addWorkNum * addTime;
       } else {
         // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
         total = moneyNum / workNum * time + moneyNum / dayNum * addTime;
       }
       var _num = total.toFixed(2);
+      //给工人自己设置工资标准
+      var wageStandards = JSON.parse(JSON.stringify(wageStandard));
+      var params = {
+        identity: identity,
+        worktime_define: wageStandards.work,
+        overtime_type: wageStandards.type,
+        overtime_money: wageStandards.dayAddWork,
+        money: wageStandards.money,
+        overtime: wageStandards.day
+      };
+      (0, _index.bkSetWorkerIdentityWageAction)(params).then(function (res) {
+        if (res.code !== 200) {
+          (0, _index3.default)(res.msg);
+        }
+      });
       setModel(_extends({}, model, { workersWages: _num, duration: title }));
       setWorkOvertimeDisplay(false);
       return;
@@ -2089,14 +2156,12 @@ function userForeman() {
   };
   // 支借Radio
   var handleRadioBorrowing = function handleRadioBorrowing(v) {
-    console.log(v);
     var data = JSON.parse(JSON.stringify(borrowing.item));
     for (var i = 0; i < data.length; i++) {
       if (data[i].id === v.id) {
         data[i].click = true;
       }
     }
-    console.log(data, 'xxx');
     setBorrowing({ item: data });
   };
   // 添加成员
@@ -2169,6 +2234,23 @@ function userForeman() {
               var data = JSON.parse(JSON.stringify(workerItem));
               data.splice(data.indexOf(v.id), 1);
               setWorkerItem(data);
+              // 获取工人列表
+              var workerListArr = JSON.parse(JSON.stringify(workerList));
+              console.log(data, '删除后内容');
+              for (var i = 0; i < workerListArr.length; i++) {
+                for (var z = 0; z < workerListArr[i].list.length; z++) {
+                  console.log(workerListArr[i].list[z]);
+                  console.log(v.id, 'id');
+                  if (workerListArr[i].list[z].id == v.id) {
+                    // ==============
+                    console.log(312);
+                    console.log(workerListArr[i].list);
+                    console.log(workerListArr[i].list[z]);
+                    workerListArr[i].list.splice((workerListArr[i].list[z], 1));
+                  }
+                }
+              }
+              console.log(workerListArr, 'workerListArr');
             } else {
               (0, _index3.default)(res.msg);
             }
@@ -2229,6 +2311,7 @@ function userForeman() {
   var handlePreservation = function handlePreservation(type) {
     // 获取工资标准
     var data = JSON.parse(JSON.stringify(wageStandard));
+    var item = JSON.parse(JSON.stringify(model));
     // 时间
     var work_time = 0;
     timeArr.map(function (v) {
@@ -2248,10 +2331,8 @@ function userForeman() {
         }
       }
     });
-    console.log(addWorkArr, 'addWorkArr');
     // 借支radio类型
     var radioType = void 0;
-    console.log(borrowing.item, 'borrowing.item');
     borrowing.item.map(function (v) {
       if (v.click) {
         radioType = v.id;
@@ -2268,7 +2349,6 @@ function userForeman() {
     var time = timeItem.map(function (item) {
       return item.year + '-' + item.month + '-' + item.date;
     });
-    var item = JSON.parse(JSON.stringify(model));
     // type 1 再来一笔 0 保存
     var tabData = void 0;
     recorderTypeArr.item.map(function (v) {
@@ -2286,8 +2366,8 @@ function userForeman() {
       }
     } else {
       if (foreman.length > 0) {
-        for (var _i4 = 0; _i4 < foreman.length; _i4++) {
-          workers.push(foreman[_i4].id);
+        for (var _i7 = 0; _i7 < foreman.length; _i7++) {
+          workers.push(foreman[_i7].id);
         }
       }
     }
@@ -2301,6 +2381,18 @@ function userForeman() {
     var img_url = image.item.map(function (item) {
       return item.url;
     });
+    // 工人记工的时候，没有选择项目名称，为他默认一个
+    if (projectArr.length === 0) {
+      var _item2 = {
+        group_name: '其他项目',
+        team_name: '其他班组'
+      };
+      (0, _index.bkAddProjectTeamAction)(_item2).then(function (res) {
+        if (res.code === 200) {
+          bkGetProjectTeam();
+        }
+      });
+    }
     // 记工
     var params = {};
     if (tabData.id == 1) {
@@ -2328,12 +2420,11 @@ function userForeman() {
     } else if (tabData.id == 2) {
       // 按量
       var itemType = void 0;
-      for (var _i5 = 0; _i5 < contractorArr.item.length; _i5++) {
-        if (contractorArr.item[_i5].click) {
-          itemType = contractorArr.item[_i5].id;
+      for (var _i8 = 0; _i8 < contractorArr.item.length; _i8++) {
+        if (contractorArr.item[_i8].click) {
+          itemType = contractorArr.item[_i8].id;
         }
       }
-      console.log(itemType, 'itemType');
       // 按量
       if (itemType === 1) {
         params = {
@@ -2409,8 +2500,22 @@ function userForeman() {
         money: item.borrowing
       };
     }
-    console.log(params, 'parmas');
-    console.log(tabData);
+    // 工人的时候要先设置工资标准
+    var foremanTitles = JSON.parse(JSON.stringify(foremanTitle));
+    if (identity === 2) {
+      if (!item.name) {
+        (0, _index3.default)('请选择项目');
+        return;
+      }
+      if (!foremanTitles) {
+        (0, _index3.default)('请选择班组长');
+        return;
+      }
+      if (!time) {
+        (0, _index3.default)('请选择日期');
+        return;
+      }
+    }
     // 记工(包工按量)
     (0, _index.bkAddBusinessAction)(params).then(function (res) {
       // 清除reducer
@@ -2446,6 +2551,7 @@ function userForeman() {
   // 点击项目
   var handleProject = function handleProject(v) {
     var data = JSON.parse(JSON.stringify(model));
+    var arr = JSON.parse(JSON.stringify(projectArr));
     data.name = v.name;
     var groupInfo = v.child[0].pid + ',' + v.child[0].id;
     if (identity === 2) {
@@ -2457,6 +2563,15 @@ function userForeman() {
         }
       }
     }
+    // 设置选择框
+    for (var i = 0; i < arr.length; i++) {
+      if (v.id === arr[i].id) {
+        arr[i].click = true;
+      } else {
+        arr[i].click = false;
+      }
+    }
+    setProjectArr(arr);
     // 选择项目的时候先获取设置工资标准员工
     bkGetWorkerWage(groupInfo);
     setGroupInfo(groupInfo);
@@ -2484,7 +2599,6 @@ function userForeman() {
   };
   // 开始记工
   var handleStart = function handleStart() {
-    console.log(111);
     var workerItemList = JSON.parse(JSON.stringify(workerItem));
     var storagelistItem = JSON.parse(JSON.stringify(storagelist));
     var arrList = [];
@@ -2497,8 +2611,6 @@ function userForeman() {
         }
       }
     }
-    console.log(arrList, 'cccc');
-    console.log([].concat(_toConsumableArray(workerItemList), arrList), 'ssssss');
     setWorkerItem([].concat(_toConsumableArray(workerItemList), arrList));
     dispatch((0, _workerList.setWorker)([].concat(_toConsumableArray(workerItemList), arrList)));
     _taroWeapp2.default.navigateBack({ delta: 1 });
@@ -2541,12 +2653,11 @@ function userForeman() {
         }
       }
     }
-    console.log(time, 'time');
     // 加班时间
     var addTime = 0;
-    for (var _i6 = 0; _i6 < addWorkArrs.length; _i6++) {
-      if (addWorkArrs[_i6].click) {
-        addTime = addWorkArrs[_i6].num;
+    for (var _i9 = 0; _i9 < addWorkArrs.length; _i9++) {
+      if (addWorkArrs[_i9].click) {
+        addTime = addWorkArrs[_i9].num;
       }
     }
     // 获取
@@ -2555,13 +2666,11 @@ function userForeman() {
       var total = void 0;
       if (data.type === 1) {
         // 按小时算 加班小时* 模板加班金额
-        console.log(addWorkNum * addTime, 'addWorkNum * addTime');
         total = moneyNum / workNum * time + addWorkNum * addTime;
       } else {
         // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
         total = moneyNum / workNum * time + moneyNum / dayNum * addTime;
       }
-      console.log(total, 'xxx');
       var _num2 = total.toFixed(2);
       setModel(_extends({}, model, { workersWages: _num2 }));
       setWageStandardDisplay(false);
@@ -2778,13 +2887,11 @@ function userForeman() {
       if (res.code === 200) {
         // // 给设置模板的设置为已经设置模板
         var data = JSON.parse(JSON.stringify(workerItem));
-        for (var _i7 = 0; _i7 < data.length; _i7++) {
+        for (var _i10 = 0; _i10 < data.length; _i10++) {
           for (var j = 0; j < worker_ids.length; j++) {
-            console.log(worker_ids[j]);
-            console.log(data[_i7].id);
-            if (data[_i7].id == worker_ids[j]) {
-              data[_i7].set = true;
-              data[_i7].del = false;
+            if (data[_i10].id == worker_ids[j]) {
+              data[_i10].set = true;
+              data[_i10].del = false;
             }
           }
         }
@@ -2805,14 +2912,12 @@ function userForeman() {
         data[i].click = !data[i].click;
       }
     }
-    console.log(data, 'data11111');
     var clickData = [];
-    for (var _i8 = 0; _i8 < data.length; _i8++) {
-      if (data[_i8].click) {
-        clickData.push(data[_i8]);
+    for (var _i11 = 0; _i11 < data.length; _i11++) {
+      if (data[_i11].click) {
+        clickData.push(data[_i11]);
       }
     }
-    console.log(clickData.length);
     setClickModalNum(clickData.length);
     setSetWorkList(data);
   };
@@ -2842,13 +2947,12 @@ function userForeman() {
       }
     }
     var numData = [];
-    for (var _i9 = 0; _i9 < data.length; _i9++) {
-      if (data[_i9].click) {
-        numData.push(data[_i9]);
+    for (var _i12 = 0; _i12 < data.length; _i12++) {
+      if (data[_i12].click) {
+        numData.push(data[_i12]);
       }
     }
     setClickNum(numData.length);
-    console.log(data, 'ddrtaas');
     setWorkerItem(data);
   };
   // 成员全选
@@ -3135,7 +3239,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.bkUpdateBusinessNewUrl = exports.bkSetGroupLeaderUrl = exports.bkGetCodeUrl = exports.bkGetShareExcelDataUrl = exports.bkAddWorkerInGroupUrl = exports.updateBusinessUrl = exports.bkBusinessOneUrl = exports.bkupdateWageUrl = exports.bkSetWorkerMoneyByWageUrl = exports.bkUpdateProjectTeamUrl = exports.bkDeleteprojectTeamUrl = exports.bkUpdateWorkerUrl = exports.bkDeleteBusinessUrl = exports.bkGetWorkerWageUrl = exports.bkAddWageUrl = exports.bkWageStandGetWageUrl = exports.bkAddBusinessUrl = exports.bkShareExcelurl = exports.bkgetExcelDataUrl = exports.bkDeleteRroupWorkerUrl = exports.bkGetWorkerUrl = exports.bkAddWorkerUrl = exports.bkAddProjectTeamUrl = exports.bkGetProjectTeamUrl = exports.bkBusinessUrl = exports.bkUpdateNotePadUrl = exports.bkDeleteNotePadUrl = exports.bkGetNotePadUrl = exports.bkAddNotepadUrl = exports.bkAddFeedbackUrl = exports.bkMemberAuthUrl = exports.bkIndexUrl = exports.GetUserInfo = exports.GetUserSessionKey = exports.jobRecommendListUrl = undefined;
+exports.bkSetWorkerIdentityWageUrl = exports.bkUpdateBusinessNewUrl = exports.bkSetGroupLeaderUrl = exports.bkGetCodeUrl = exports.bkGetShareExcelDataUrl = exports.bkAddWorkerInGroupUrl = exports.updateBusinessUrl = exports.bkBusinessOneUrl = exports.bkupdateWageUrl = exports.bkSetWorkerMoneyByWageUrl = exports.bkUpdateProjectTeamUrl = exports.bkDeleteprojectTeamUrl = exports.bkUpdateWorkerUrl = exports.bkDeleteBusinessUrl = exports.bkGetWorkerWageUrl = exports.bkAddWageUrl = exports.bkWageStandGetWageUrl = exports.bkAddBusinessUrl = exports.bkShareExcelurl = exports.bkgetExcelDataUrl = exports.bkDeleteRroupWorkerUrl = exports.bkGetWorkerUrl = exports.bkAddWorkerUrl = exports.bkAddProjectTeamUrl = exports.bkGetProjectTeamUrl = exports.bkBusinessUrl = exports.bkUpdateNotePadUrl = exports.bkDeleteNotePadUrl = exports.bkGetNotePadUrl = exports.bkAddNotepadUrl = exports.bkAddFeedbackUrl = exports.bkMemberAuthUrl = exports.bkIndexUrl = exports.GetUserInfo = exports.GetUserSessionKey = exports.jobRecommendListUrl = undefined;
 
 var _index = __webpack_require__(/*! ../../config/index */ "./src/config/index.ts");
 
@@ -3211,6 +3315,8 @@ var bkGetCodeUrl = exports.bkGetCodeUrl = _index.REQUESTURL + 'index/get-code/';
 var bkSetGroupLeaderUrl = exports.bkSetGroupLeaderUrl = _index.REQUESTURL + '/bk-project-team/set-group-leader/';
 // 云彩
 var bkUpdateBusinessNewUrl = exports.bkUpdateBusinessNewUrl = _index.REQUESTURL + '/bk-bookkeeping/update-business-new/';
+// 工人身份设置自己的工资标准
+var bkSetWorkerIdentityWageUrl = exports.bkSetWorkerIdentityWageUrl = _index.REQUESTURL + 'set-worker-identity-wage/';
 
 /***/ }),
 
@@ -3355,6 +3461,7 @@ exports.bkGetShareExcelDataAction = bkGetShareExcelDataAction;
 exports.bkGetCodeAction = bkGetCodeAction;
 exports.bkSetGroupLeaderAction = bkSetGroupLeaderAction;
 exports.bkUpdateBusinessNewAction = bkUpdateBusinessNewAction;
+exports.bkSetWorkerIdentityWageAction = bkSetWorkerIdentityWageAction;
 
 var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js");
 
@@ -3386,7 +3493,6 @@ function requestShowToast(show) {
 function getRequestHeaderInfo() {
   // 获取用户信息
   var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
-  console.log(userInfo, 'userInfoaaaa');
   var requestHeader =
   // userInfo.login ? 
   {
@@ -3399,7 +3505,6 @@ function getRequestHeaderInfo() {
   // : {
   //     'content-type': 'application/x-www-form-urlencoded',
   //   }
-  console.log(requestHeader, 'requestHeaderrequestHeaderrequestHeader');
   return requestHeader;
 }
 // 配置默认请求参数
@@ -4088,6 +4193,22 @@ function bkUpdateBusinessNewAction(data) {
   var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkUpdateBusinessNewUrl,
+    method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
+    data: data
+  });
+}
+// 工人身份设置自己的工资标准
+function bkSetWorkerIdentityWageAction(data) {
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+  return doRequestAction({
+    url: api.bkSetWorkerIdentityWageUrl,
     method: 'POST',
     header: {
       'content-type': 'application/x-www-form-urlencoded',

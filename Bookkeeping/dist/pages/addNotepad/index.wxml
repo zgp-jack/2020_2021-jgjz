@@ -1,14 +1,12 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="addnotepad">
-        <block wx:if="{{id}}">
-            <view class="time">{{model && model.time}}</view>
-        </block>
+        <view class="time">{{model && model.time}}</view>
         <view class="notepad-textarea">
-            <textarea bindinput="anonymousFunc0" class="{{id ? 'editTextarea' : 'textarea'}}" value="{{model && model.note}}" placeholder="在这里记事" placeholder-style="color:#BEBEBE"></textarea>
+            <textarea id="textarea" focus="{{true}}" auto-focus="{{true}}" cursor="{{0}}" bindinput="anonymousFunc0" class="{{id ? 'editTextarea' : 'textarea'}}" value="{{model && model.note}}" placeholder="在这里记事" placeholder-style="color:#BEBEBE"></textarea>
         </view>
         <view>
             <view class="image">
-                <image-view compid="{{$compid__41}}"></image-view>
+                <image-view compid="{{$compid__153}}"></image-view>
             </view>
         </view>
         <view class="footer">

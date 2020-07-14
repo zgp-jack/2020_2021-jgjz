@@ -3,7 +3,7 @@
         <view class="foreman">
             <view>
                 <view class="tabber">
-                    <view class="tabber-list" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray81}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                    <view class="tabber-list" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray415}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                         <view class="{{v.$original.click ? 'tabber-list-box' : ''}}">
                             <view class="{{v.$loopState__temp2}}">
                                 <block wx:if="{{v.$original.id === 1}}">
@@ -25,7 +25,7 @@
                         <view>包工类型</view>
                         <view class="radioList">
                             <radio-group>
-                                <radio color="#0099FF" class="borrowing-Radio-list" checked="{{v.$original.click}}" wx:key="id" bindtap="anonymousFunc1" wx:for="{{loopArray82}}" wx:for-item="v" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}">{{v.$original.name}}</radio>
+                                <radio color="#0099FF" class="borrowing-Radio-list" checked="{{v.$original.click}}" wx:key="id" bindtap="anonymousFunc1" wx:for="{{loopArray416}}" wx:for-item="v" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}">{{v.$original.name}}</radio>
                             </radio-group>
                         </view>
                     </view>
@@ -63,7 +63,7 @@
                             <view>(已选{{clickNum}}人)</view>
                         </view>
                         <view class="workerItem">
-                            <view class="listPosition" bindtap="anonymousFunc5" wx:for="{{loopArray83}}" wx:for-item="v" wx:for-index="__index5" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey3}}">
+                            <view class="listPosition" bindtap="anonymousFunc5" wx:for="{{loopArray417}}" wx:for-item="v" wx:for-index="__index5" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey3}}">
                                 <block wx:if="{{v.$original.id === 1}}">
                                     <view>
                                         <view class="{{v.$original.click ? 'workerItem-list-first-click' : 'workerItem-list-first'}}">{{v.$loopState__temp4}}</view>
@@ -125,7 +125,7 @@
                     <view class="publish-recruit-card-money" bindtap="anonymousFunc13">
                         <view class="publish-list-item-money">
                             <view class="pulish-list-title-money">
-                                <view>我的工钱
+                                <view>我的工钱(点击设置自己的工资标准)
                                     <view class="mt10">(自动计算)</view>
                                 </view>
                             </view>
@@ -138,18 +138,18 @@
                 <view class="measure">
                     <view class="publish-recruit-card">
                         <view class="publish-list-item"><text class="pulish-list-title">工程量</text>:
-                            <input class="publish-list-input-amount" type="number" placeholder="请填写工程量" bindinput="anonymousFunc14" value="{{model && model.amount}}" />
+                            <input class="publish-list-input-amount" type="digit" placeholder="请填写工程量" bindinput="anonymousFunc14" value="{{model && model.amount}}" />
                             <view class="amountType" bindtap="anonymousFunc15">{{unit}}</view>
                         </view>
                     </view>
                     <view class="publish-recruit-card">
                         <view class="publish-list-item"><text class="pulish-list-title">单价</text>:
-                            <input class="publish-list-input" type="number" placeholder="请填写单价" bindinput="anonymousFunc16" value="{{model && model.price}}" />
+                            <input class="publish-list-input" type="digit" placeholder="请填写单价" bindinput="anonymousFunc16" value="{{model && model.price}}" />
                         </view>
                     </view>
                     <view class="publish-recruit-card">
                         <view class="publish-list-item"><text class="pulish-list-title">工钱</text>:
-                            <input class="publish-list-input" type="number" bindinput="anonymousFunc17" placeholder="工程量和单价未知时，可直接填写" value="{{model && model.wages}}" />
+                            <input class="publish-list-input" type="digit" bindinput="anonymousFunc17" placeholder="工程量和单价未知时，可直接填写" value="{{model && model.wages}}" />
                         </view>
                     </view>
                 </view>
@@ -158,7 +158,7 @@
                 <view class="borrowing">
                     <view class="publish-recruit-card">
                         <view class="publish-list-item"><text class="pulish-list-title">本次借支</text>:
-                            <input class="publish-list-input" type="number" bindinput="anonymousFunc18" placeholder="请输入本次借支金额" value="{{model && model.borrowing}}" />
+                            <input class="publish-list-input" type="digit" bindinput="anonymousFunc18" placeholder="请输入本次借支金额" value="{{model && model.borrowing}}" />
                         </view>
                     </view>
                     <view class="publish-recruit-card">
@@ -166,7 +166,7 @@
                         </view>
                         <view>
                             <radio-group class="borrowing-Radio">
-                                <radio bindtap="anonymousFunc19" class="borrowing-Radio-list" color="#0099FF" checked="{{v.$original.click}}" wx:key="id" wx:for="{{loopArray84}}" wx:for-item="v" wx:for-index="__index19" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey7}}">{{v.$original.name}}</radio>
+                                <radio bindtap="anonymousFunc19" class="borrowing-Radio-list" color="#0099FF" checked="{{v.$original.click}}" wx:key="id" wx:for="{{loopArray418}}" wx:for-item="v" wx:for-index="__index19" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey7}}">{{v.$original.name}}</radio>
                             </radio-group>
                         </view>
                     </view>
@@ -183,14 +183,14 @@
                 <view class="publish-recruit-card">
                     <view class="publish-list-ditals">
                         <view>备注</view>
-                        <textarea class="textarea" placeholder="请填写备注..." value="{{model && model.details}}" bindinput="anonymousFunc22" maxlength="{{500}}"></textarea>
+                        <textarea class="textarea" placeholder="请填写备注..." value="{{model && model.details}}" bindinput="anonymousFunc22" maxlength="{{400}}"></textarea>
                     </view>
                     <view>
-                        <words-total compid="{{$compid__120}}"></words-total>
+                        <words-total compid="{{$compid__944}}"></words-total>
                     </view>
                 </view>
                 <view class="image">
-                    <image-view compid="{{$compid__121}}"></image-view>
+                    <image-view compid="{{$compid__945}}"></image-view>
                 </view>
             </view>
             <view class="clear"></view>
@@ -198,18 +198,18 @@
                 <view class="footer-left" bindtap="anonymousFunc23">保存再记录一笔</view>
                 <view class="footer-right" bindtap="anonymousFunc24">保存</view>
             </view>
-            <project-modal compid="{{$compid__122}}"></project-modal>
-            <recorder-popup compid="{{$compid__123}}"></recorder-popup>
-            <quantities compid="{{$compid__124}}"></quantities>
-            <work-overtime compid="{{$compid__125}}"></work-overtime>
-            <working-hours compid="{{$compid__126}}"></working-hours>
-            <create-project compid="{{$compid__127}}"></create-project>
-            <calendar-modal compid="{{$compid__128}}"></calendar-modal>
-            <wage-standard compid="{{$compid__129}}"></wage-standard>
-            <add-member compid="{{$compid__130}}"></add-member>
-            <wages-modal compid="{{$compid__131}}"></wages-modal>
-            <edit-project compid="{{$compid__132}}"></edit-project>
-            <at-drawer compid="{{$compid__133}}">
+            <project-modal compid="{{$compid__946}}"></project-modal>
+            <recorder-popup compid="{{$compid__947}}"></recorder-popup>
+            <quantities compid="{{$compid__948}}"></quantities>
+            <work-overtime compid="{{$compid__949}}"></work-overtime>
+            <working-hours compid="{{$compid__950}}"></working-hours>
+            <create-project compid="{{$compid__951}}"></create-project>
+            <calendar-modal compid="{{$compid__952}}"></calendar-modal>
+            <wage-standard compid="{{$compid__953}}"></wage-standard>
+            <add-member compid="{{$compid__954}}"></add-member>
+            <wages-modal compid="{{$compid__955}}"></wages-modal>
+            <edit-project compid="{{$compid__956}}"></edit-project>
+            <at-drawer compid="{{$compid__957}}">
                 <view class="atDrawer-box">
                     <view class="atDrawer-heard">
                         <view bindtap="anonymousFunc26">
@@ -224,15 +224,19 @@
                         </block>
                     </view>
                     <view class="atDrawer-heard-content">
-                        <view class="atDrawer-list" bindtap="anonymousFunc29" wx:for="{{loopArray85}}" wx:for-item="v" wx:for-index="__index29" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey8}}">
-                            <view class="atDrawer-list-title"><text wx:for="{{v.$original.child}}" wx:for-item="val" wx:for-index="_anonIdx2">{{v.$original.name}}</text>
+                        <view class="atDrawer-list" bindtap="anonymousFunc29" wx:for="{{loopArray419}}" wx:for-item="v" wx:for-index="__index29" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey8}}">
+                            <view class="atDrawer-list-title"><text>{{v.$original.name}}</text>
                             </view>
                             <view class="atDrawer-list-flex">
-                                <view></view>
+                                <view>
+                                    <block wx:if="{{identity === 1}}">
+                                        <view>{{v.$original.child[0].leader_name || '-'}}</view>
+                                    </block>
+                                </view>
                                 <view>
                                     <block wx:if="{{!edit}}">
                                         <view>
-                                            <checkbox class="checkbox" color="#0099FF" value="" catchtap="anonymousFunc30" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey9}}"></checkbox>
+                                            <checkbox checked="{{v.$original.click}}" class="checkbox" color="#0099FF" value="" catchtap="anonymousFunc30" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey9}}"></checkbox>
                                         </view>
                                     </block>
                                     <block wx:if="{{edit}}">

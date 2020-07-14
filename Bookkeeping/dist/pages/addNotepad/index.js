@@ -70,7 +70,7 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddNotepad.__proto__ || Object.getPrototypeOf(AddNotepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["$compid__41", "id", "model", "IMGCDNURL"], _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__153", "id", "model", "IMGCDNURL"], _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AddNotepad, [{
@@ -89,10 +89,10 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__41"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__153"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__41 = _genCompid2[0],
-          $compid__41 = _genCompid2[1];
+          $prevCompid__153 = _genCompid2[0],
+          $compid__153 = _genCompid2[1];
 
       // 传递过来的值
 
@@ -108,21 +108,9 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
           handleSubmit = _userCode.handleSubmit,
           image = _userCode.image,
           setImage = _userCode.setImage;
-      // // 图片
-      // const [image, setImage] = useState<ImageDataType>({
-      //   item: [],
-      // })
-
-
-      (0, _taroWeapp.useEffect)(function () {
-        // if(id){
-        //   let modelInfo: ModalType = JSON.parse(JSON.stringify(model));
-        //   console.log(modelInfo,'modelInfo')
-        //   modelInfo.id = id;
-        //   setModel(modelInfo);
-        // }
-      }, []);
       // 多选框
+
+
       var handleContent = function handleContent(e) {
         var modelInfo = JSON.parse(JSON.stringify(model));
         console.log(modelInfo, 'modelInfo');
@@ -172,11 +160,12 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
       _taroWeapp.propsManager.set({
         "images": image.item,
         "max": 4,
+        "notepad": true,
         "userUploadImg": userUploadImg,
         "userDelImg": userDelImg
-      }, $compid__41, $prevCompid__41);
+      }, $compid__153, $prevCompid__153);
       Object.assign(this.__state, {
-        $compid__41: $compid__41,
+        $compid__153: $compid__153,
         id: id,
         model: model,
         IMGCDNURL: _index7.IMGCDNURL
@@ -235,6 +224,8 @@ module.exports = __webpack_require__.p + "pages/addNotepad/index.wxml";
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -301,6 +292,27 @@ function userCode(InitParams) {
         setImage({ item: obj.view_images });
         setModel(params);
       }
+    } else {
+      // 获取当前时间
+      // let lastM = JSON.stringify(new Date(new Date().setMonth(new Date().getMonth() + 1))).slice(1, 11)
+      // console.log(lastM,'xxx')
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var hour = date.getHours();
+      var minutes = date.getMinutes();
+      var seconds = date.getSeconds();
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate + "  " + hour + ":" + minutes + ":" + seconds;
+      var data = JSON.parse(JSON.stringify(model));
+      setModel(_extends({}, data, { time: currentdate }));
     }
   }, []);
   // 提交

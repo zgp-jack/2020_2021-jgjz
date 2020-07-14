@@ -70,7 +70,7 @@ var AtSwipeAction = (_temp2 = _class = function (_AtComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtSwipeAction.__proto__ || Object.getPrototypeOf(AtSwipeAction)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp9", "loopArray50", "$compid__53", "componentId", "rootClass", "options", "offsetSize", "_isOpened", "className", "disabled", "autoClose", "isOpened", "children"], _this.computeTransform = function (value) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtSwipeAction.__proto__ || Object.getPrototypeOf(AtSwipeAction)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp9", "loopArray50", "$compid__55", "componentId", "rootClass", "options", "offsetSize", "_isOpened", "className", "disabled", "autoClose", "isOpened", "children"], _this.computeTransform = function (value) {
       return (
         // if (Taro.getEnv() === Taro.ENV_TYPE.ALIPAY) {
         //   return !_isNil(value) ? `translate3d(${value}px,0,0)` : null
@@ -255,10 +255,10 @@ var AtSwipeAction = (_temp2 = _class = function (_AtComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__53"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__55"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__53 = _genCompid2[0],
-          $compid__53 = _genCompid2[1];
+          $prevCompid__55 = _genCompid2[0],
+          $compid__55 = _genCompid2[1];
 
       var _state = this.__state,
           offsetSize = _state.offsetSize,
@@ -299,13 +299,13 @@ var AtSwipeAction = (_temp2 = _class = function (_AtComponent) {
         "options": options,
         "componentId": componentId,
         "onQueryedDom": this.handleDomInfo
-      }, $compid__53, $prevCompid__53);
+      }, $compid__55, $prevCompid__55);
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
         anonymousState__temp2: anonymousState__temp2,
         anonymousState__temp9: anonymousState__temp9,
         loopArray50: loopArray50,
-        $compid__53: $compid__53,
+        $compid__55: $compid__55,
         rootClass: rootClass,
         options: options
       });

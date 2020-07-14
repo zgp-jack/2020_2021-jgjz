@@ -193,3 +193,22 @@
       -ms-transform: scale(0.8, 0.8);
           transform: scale(0.8, 0.8);
 }
+.publish-list-input-disabled {
+  position: relative;
+  width: 100%;
+  height: 125rpx;
+  line-height: 125rpx;
+  display: block;
+  font-size: 30rpx;
+  margin-left: 30rpx;
+  text-align: right;
+  color: #8c8c8c;
+}
+.publish-list-input-disabled .publish-input-list {
+  position: relative;
+  display: inline-block;
+  margin-right: 20rpx;
+}
+.publish-list-input-disabled .publish-input-list:nth-last-child(1) {
+  margin-right: 0;
+}
