@@ -71,7 +71,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWater.__proto__ || Object.getPrototypeOf(FlowingWater)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记工流水'
-    }, _this.$usedState = ["data", "loopArray49", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["data", "loopArray51", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWater, [{
@@ -365,13 +365,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         return handleCheckboxBtn(1);
       };
 
-      var loopArray49 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
+      var loopArray51 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "jfzzz" + i;
+        var _$indexKey = "jhzzz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -383,19 +383,19 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "jgzzz" + i + "-" + __index2;
+          var _$indexKey2 = "jizzz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "jhzzz" + i + "-" + __index2;
+          var _$indexKey3 = "jjzzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "jizzz" + i + "-" + __index2;
+          var _$indexKey4 = "baazz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -412,29 +412,29 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "jjzzz" + i + "-" + __index2;
+          var _$indexKey5 = "babzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "baazz" + i + "-" + __index2;
+          var _$indexKey6 = "baczz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "babzzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "badzzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
-              $prevCompid__53 = _genCompid2[0],
-              $compid__53 = _genCompid2[1];
+              $prevCompid__56 = _genCompid2[0],
+              $compid__56 = _genCompid2[1];
 
           v.$original.click && _taroWeapp.propsManager.set({
             "autoClose": false,
             "onOpened": _this2.anonymousFunc3.bind(_this2, _$indexKey3),
             "onClick": _this2.anonymousFunc4.bind(_this2, _$indexKey4),
             "options": $loopState__temp8
-          }, $compid__53, $prevCompid__53);
+          }, $compid__56, $prevCompid__56);
           return {
             _$indexKey2: _$indexKey2,
             _$indexKey3: _$indexKey3,
@@ -442,7 +442,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
             $loopState__temp8: $loopState__temp8,
             _$indexKey5: _$indexKey5,
             _$indexKey6: _$indexKey6,
-            $compid__53: $compid__53,
+            $compid__56: $compid__56,
             $original: val.$original
           };
         }) : [];
@@ -457,7 +457,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
       }) : [];
       Object.assign(this.__state, {
         data: data,
-        loopArray49: loopArray49,
+        loopArray51: loopArray51,
         IMGCDNURL: _index4.IMGCDNURL,
         isCheckOut: isCheckOut,
         allcheck: allcheck,
