@@ -194,7 +194,7 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "fjzzz" + __index1;
+        var _$indexKey = "fizzz" + __index1;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return setRadio(v.$original.id);

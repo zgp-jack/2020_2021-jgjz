@@ -232,7 +232,6 @@ export default function userForeman() {
   // 刷新
   const [refresh,setRefresh] = useState<boolean>(false)
   useDidShow(() => {
-    console.log(refresh,'refresh')
     if (refresh){
       setRefresh(false)
       return;
@@ -250,7 +249,6 @@ export default function userForeman() {
       let objs = JSON.parse(JSON.stringify(obj));
       const data = JSON.parse(JSON.stringify(moneyList));
       const arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
-      console.log(data,'data')
       if(data.length>0){
         for(let j = 0;j<data.length;j++){
           for (let i = 0; i <arrList.length;i++){
@@ -418,7 +416,6 @@ export default function userForeman() {
             }
           }
         }
-        console.log(arr,'arr')
         for(let i = 0;i<arr.length;i++){
           if(arr[i].id == obj.id){
             arr.splice(i,1);
@@ -444,7 +441,6 @@ export default function userForeman() {
         let arrDate:any[]=[];
         for(let i=0;i<res.data.length;i++){
           for(let j=0;j<res.data[i].list.length;j++){
-            console.log(res.data[i].list[j])
             arrDate.push(res.data[i].list[j]);
           }
         }
@@ -785,16 +781,9 @@ export default function userForeman() {
               setWorkerItem(data)
               // 获取工人列表
               const workerListArr = JSON.parse(JSON.stringify(workerList));
-              console.log(data,'删除后内容')
               for(let i = 0;i<workerListArr.length;i++){
                 for (let z = 0; z < workerListArr[i].list.length;z++){
-                  console.log(workerListArr[i].list[z])
-                  console.log(v.id,'id')
                   if (workerListArr[i].list[z].id == v.id){
-                    // ==============
-                    console.log(312)
-                    console.log(workerListArr[i].list)
-                    console.log(workerListArr[i].list[z])
                     workerListArr[i].list.splice(z,1)
                   }
                 }
@@ -805,7 +794,6 @@ export default function userForeman() {
               // console.log(workerListArr,'workerListArr')
               // setWorkerItem(workerListArr)
               
-              console.log(workerListArr, 'workerListArr');
             }else{
               Msg(res.msg);
             }
@@ -1091,7 +1079,7 @@ export default function userForeman() {
           setModel(data);
         }
         Taro.navigateBack();
-        
+
         dispatch(setWorker([]))
       }else{
         Msg(res.msg);
@@ -1513,7 +1501,6 @@ export default function userForeman() {
     }
     const data = JSON.parse(JSON.stringify(workerItem));
     // 借支对时候全部都可以点
-    console.log(recorderType,'recorderType')
     if (recorderType === 3){
       for (let i = 0; i < data.length; i++) {
         if (v.id === data[i].id) {

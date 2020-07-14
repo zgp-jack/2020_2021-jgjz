@@ -124,14 +124,14 @@ export default function CalendarModal({ display, handleCalendar, setModel, model
         'day': new Date(year, month - 1, i).getDay(),
         'current': true,
         'lunarCalendarItem': lunarCalendarItem.lunarDay,
-        'selected': i == date // 判断当前日期
+        'selected': i == date, // 判断当前日期
+        'stop':i>date
       })
     }
     // 下个月显示的天数及日期
     for (let i = 1; i < 7 - lastDay; i++) {
       let date = new Date(year, month, i)
       const lunarCalendarItem = sloarToLunar(date.getFullYear(), date.getMonth() + 1, date.getDate());
-      //console.log(date, date.getMonth() + 1)
       calendarDaysArr.push({
         'year': date.getFullYear(),
         'month': date.getMonth() + 1,
@@ -149,16 +149,13 @@ export default function CalendarModal({ display, handleCalendar, setModel, model
       if(data.length>0){
         for (let i = 0; i < calendarDaysArr.length;i++){
           for(let j=0;j<data[0].length;j++){
-            console.log(data[0],'data[0]')
             if (calendarDaysArr[i].year == data[0][j].year && calendarDaysArr[i].month == data[0][j].month && calendarDaysArr[i].day == data[0][j].day && calendarDaysArr[i].lunarCalendarItem == data[0][j].lunarCalendarItem){
-              console.log(calendarDaysArr[i],'1111111')
               calendarDaysArr[i].click = true
             }
           }
         }
       }
     }
-    console.log(calendarDaysArr,'内容')
     setCalendarDays(calendarDaysArr)
   }
   // 公历转农历函数
@@ -329,24 +326,18 @@ export default function CalendarModal({ display, handleCalendar, setModel, model
         setCalendarDays(calendarDaysArr);
         return;
       }else{
-        console.log(3213213123)
-        console.log(arrList,'setArr([])')
         for (let i = 0; i < arrList.length; i++) {
-          console.log(arrList[i])
           if (v.date == arrList[i].date && v.month == arrList[i].month && v.year == arrList[i].year) {
-            console.log(111111)
             for (let j = 0; j < calendarDaysArr.length; j++) {
                 calendarDaysArr[j].click = false;
             }
             setCalendarDays(calendarDaysArr);
             setArr([])
           }else{
-            console.log(222)
             for (let i = 0; i < calendarDaysArr.length; i++) {
               calendarDaysArr[i].click = false;
               if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year) {
                 calendarDaysArr[i].click = true
-                console.log
                 setArr([calendarDaysArr[i]])
               }
             }
@@ -426,17 +417,14 @@ export default function CalendarModal({ display, handleCalendar, setModel, model
   const handleCalendarSub = ()=>{
     if (recorderType === 3){
       const data = JSON.parse(JSON.stringify(arr));
-      console.log(data);
       let time ;
       if(data.length>0){
         time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date);
       }
-      console.log(time);
       setModel({ ...model, time: time });
       setCalendarModalDisplay(false);
     }else{
       const data = JSON.parse(JSON.stringify(clickData));
-      console.log(data,'datatatata');
       const time = data.length +'天';
       setModel({ ...model, time: time});
       setCalendarModalDisplay(false);
@@ -516,6 +504,7 @@ export default function CalendarModal({ display, handleCalendar, setModel, model
                     'checkbox': !v.click,
                     'checkbox-click': v.click,
                   })} 
+                    disabled={v.stop}
                     checked={v.click}
                     value={v.value}
                     color='rgba(253, 120, 13, 1)'

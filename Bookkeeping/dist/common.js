@@ -371,7 +371,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "jezzz" + i;
+        var _$indexKey = "jdzzz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -383,19 +383,19 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "jfzzz" + i + "-" + __index2;
+          var _$indexKey2 = "jezzz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "jgzzz" + i + "-" + __index2;
+          var _$indexKey3 = "jfzzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "jhzzz" + i + "-" + __index2;
+          var _$indexKey4 = "jgzzz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -412,19 +412,19 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "jizzz" + i + "-" + __index2;
+          var _$indexKey5 = "jhzzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "jjzzz" + i + "-" + __index2;
+          var _$indexKey6 = "jizzz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "baazzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "jjzzzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
               $prevCompid__54 = _genCompid2[0],
               $compid__54 = _genCompid2[1];
@@ -874,13 +874,13 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "gazzz" + __index2;
+        var _$indexKey = "fjzzz" + __index2;
 
         _this2.anonymousFunc2Map[_$indexKey] = function () {
           return userRouteJump("/pages/notepadDetails/index?id=" + v.$original.id);
         };
 
-        var _$indexKey2 = "gbzzz" + __index2;
+        var _$indexKey2 = "gazzz" + __index2;
 
         _this2.anonymousFunc3Map[_$indexKey2] = function (e) {
           e.stopPropagation();handleCheckbox(v.$original);
@@ -1773,7 +1773,6 @@ function userForeman() {
       setRefresh = _useState94[1];
 
   (0, _taroWeapp.useDidShow)(function () {
-    console.log(refresh, 'refresh');
     if (refresh) {
       setRefresh(false);
       return;
@@ -1791,7 +1790,6 @@ function userForeman() {
       var objs = JSON.parse(JSON.stringify(obj));
       var data = JSON.parse(JSON.stringify(moneyList));
       var arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
-      console.log(data, 'data');
       if (data.length > 0) {
         for (var j = 0; j < data.length; j++) {
           for (var i = 0; i < arrList.length; i++) {
@@ -1959,7 +1957,6 @@ function userForeman() {
             }
           }
         }
-        console.log(arr, 'arr');
         for (var _i4 = 0; _i4 < arr.length; _i4++) {
           if (arr[_i4].id == obj.id) {
             arr.splice(_i4, 1);
@@ -1985,7 +1982,6 @@ function userForeman() {
         var arrDate = [];
         for (var _i6 = 0; _i6 < res.data.length; _i6++) {
           for (var _j = 0; _j < res.data[_i6].list.length; _j++) {
-            console.log(res.data[_i6].list[_j]);
             arrDate.push(res.data[_i6].list[_j]);
           }
         }
@@ -2328,16 +2324,9 @@ function userForeman() {
               setWorkerItem(data);
               // 获取工人列表
               var workerListArr = JSON.parse(JSON.stringify(workerList));
-              console.log(data, '删除后内容');
               for (var i = 0; i < workerListArr.length; i++) {
                 for (var z = 0; z < workerListArr[i].list.length; z++) {
-                  console.log(workerListArr[i].list[z]);
-                  console.log(v.id, 'id');
                   if (workerListArr[i].list[z].id == v.id) {
-                    // ==============
-                    console.log(312);
-                    console.log(workerListArr[i].list);
-                    console.log(workerListArr[i].list[z]);
                     workerListArr[i].list.splice(z, 1);
                   }
                 }
@@ -2347,7 +2336,6 @@ function userForeman() {
               // setWorkerItem
               // console.log(workerListArr,'workerListArr')
               // setWorkerItem(workerListArr)
-              console.log(workerListArr, 'workerListArr');
             } else {
               (0, _index3.default)(res.msg);
             }
@@ -3056,7 +3044,6 @@ function userForeman() {
     }
     var data = JSON.parse(JSON.stringify(workerItem));
     // 借支对时候全部都可以点
-    console.log(recorderType, 'recorderType');
     if (recorderType === 3) {
       for (var i = 0; i < data.length; i++) {
         if (v.id === data[i].id) {

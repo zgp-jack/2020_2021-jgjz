@@ -86,8 +86,8 @@ var ProjectModal = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: "funPrivategezzz",
-    value: function funPrivategezzz() {
+    key: "funPrivategdzzz",
+    value: function funPrivategdzzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -96,19 +96,19 @@ var ProjectModal = (_temp2 = _class = function (_Taro$Component) {
       ;
     }
   }, {
-    key: "funPrivategfzzz",
-    value: function funPrivategfzzz() {
+    key: "funPrivategezzz",
+    value: function funPrivategezzz() {
       return this.props.handleBack.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
-    key: "funPrivateggzzz",
-    value: function funPrivateggzzz() {
+    key: "funPrivategfzzz",
+    value: function funPrivategfzzz() {
       return this.props.handleSubmit.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }]);
 
   return ProjectModal;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivategezzz", "anonymousFunc0", "funPrivategfzzz", "funPrivateggzzz"], _class.$$componentPath = "components/projectModal/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivategdzzz", "anonymousFunc0", "funPrivategezzz", "funPrivategfzzz"], _class.$$componentPath = "components/projectModal/index", _temp2);
 
 
 ProjectModal.options = {

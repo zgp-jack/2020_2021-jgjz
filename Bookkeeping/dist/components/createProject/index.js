@@ -85,8 +85,8 @@ var CreateProject = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: "funPrivategczzz",
-    value: function funPrivategczzz() {
+    key: "funPrivategbzzz",
+    value: function funPrivategbzzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -95,14 +95,14 @@ var CreateProject = (_temp2 = _class = function (_Taro$Component) {
       ;
     }
   }, {
-    key: "funPrivategdzzz",
-    value: function funPrivategdzzz() {
+    key: "funPrivategczzz",
+    value: function funPrivategczzz() {
       return this.props.handleSubmit.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }]);
 
   return CreateProject;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivategczzz", "anonymousFunc0", "funPrivategdzzz"], _class.$$componentPath = "components/createProject/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivategbzzz", "anonymousFunc0", "funPrivategczzz"], _class.$$componentPath = "components/createProject/index", _temp2);
 
 
 CreateProject.options = {

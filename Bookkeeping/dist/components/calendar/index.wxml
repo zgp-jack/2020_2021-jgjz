@@ -28,7 +28,7 @@
                                     <view wx:key="id" class="content-weekes-week" wx:for="{{weeks}}" wx:for-item="v" wx:for-index="_anonIdx2">{{v.name}}</view>
                                 </view>
                                 <view class="content-days">
-                                    <view wx:key="$loopState__temp2" bindtap="anonymousFunc6" class="{{v.$loopState__temp4}}" wx:for="{{loopArray101}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                                    <view wx:key="$loopState__temp2" bindtap="anonymousFunc6" class="{{v.$loopState__temp4}}" wx:for="{{loopArray121}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                                         <view>{{v.$original.date}}</view>
                                         <view class="lunarCalendarItem">{{v.$original.lunarCalendarItem}}</view>
                                         <block wx:if="{{recorderType === 3}}">
@@ -38,7 +38,7 @@
                                             <view>
                                                 <block wx:if="{{!v.$original.next && !v.$original.up}}">
                                                     <view>
-                                                        <checkbox class="{{v.$loopState__temp6}}" checked="{{v.$original.click}}" value="{{v.$original.value}}" color="rgba(253, 120, 13, 1)"></checkbox>
+                                                        <checkbox class="{{v.$loopState__temp6}}" disabled="{{v.$original.stop}}" checked="{{v.$original.click}}" value="{{v.$original.value}}" color="rgba(253, 120, 13, 1)"></checkbox>
                                                     </view>
                                                 </block>
                                             </view>

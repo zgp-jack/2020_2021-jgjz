@@ -66,7 +66,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarModal.__proto__ || Object.getPrototypeOf(CalendarModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray101", "display", "IMGCDNURL", "weeks", "calendarDays", "recorderType", "time", "handleCalendar", "setModel", "model", "setCalendarModalDisplay", "setTimeData"], _this.anonymousFunc6Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarModal.__proto__ || Object.getPrototypeOf(CalendarModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray121", "display", "IMGCDNURL", "weeks", "calendarDays", "recorderType", "time", "handleCalendar", "setModel", "model", "setCalendarModalDisplay", "setTimeData"], _this.anonymousFunc6Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(CalendarModal, [{
@@ -201,14 +201,14 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
             'day': new Date(year, month - 1, _i).getDay(),
             'current': true,
             'lunarCalendarItem': _lunarCalendarItem.lunarDay,
-            'selected': _i == date // 判断当前日期
+            'selected': _i == date,
+            'stop': _i > date
           });
         }
         // 下个月显示的天数及日期
         for (var _i2 = 1; _i2 < 7 - lastDay; _i2++) {
           var _date2 = new Date(year, month, _i2);
           var _lunarCalendarItem2 = sloarToLunar(_date2.getFullYear(), _date2.getMonth() + 1, _date2.getDate());
-          //console.log(date, date.getMonth() + 1)
           calendarDaysArr.push({
             'year': _date2.getFullYear(),
             'month': _date2.getMonth() + 1,
@@ -225,16 +225,13 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
           if (data.length > 0) {
             for (var _i3 = 0; _i3 < calendarDaysArr.length; _i3++) {
               for (var j = 0; j < data[0].length; j++) {
-                console.log(data[0], 'data[0]');
                 if (calendarDaysArr[_i3].year == data[0][j].year && calendarDaysArr[_i3].month == data[0][j].month && calendarDaysArr[_i3].day == data[0][j].day && calendarDaysArr[_i3].lunarCalendarItem == data[0][j].lunarCalendarItem) {
-                  console.log(calendarDaysArr[_i3], '1111111');
                   calendarDaysArr[_i3].click = true;
                 }
               }
             }
           }
         }
-        console.log(calendarDaysArr, '内容');
         setCalendarDays(calendarDaysArr);
       };
       // 公历转农历函数
@@ -394,24 +391,18 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
             setCalendarDays(calendarDaysArr);
             return;
           } else {
-            console.log(3213213123);
-            console.log(arrList, 'setArr([])');
             for (var _i4 = 0; _i4 < arrList.length; _i4++) {
-              console.log(arrList[_i4]);
               if (v.date == arrList[_i4].date && v.month == arrList[_i4].month && v.year == arrList[_i4].year) {
-                console.log(111111);
                 for (var j = 0; j < calendarDaysArr.length; j++) {
                   calendarDaysArr[j].click = false;
                 }
                 setCalendarDays(calendarDaysArr);
                 setArr([]);
               } else {
-                console.log(222);
                 for (var _i5 = 0; _i5 < calendarDaysArr.length; _i5++) {
                   calendarDaysArr[_i5].click = false;
                   if (v.date == calendarDaysArr[_i5].date && v.month == calendarDaysArr[_i5].month && v.year == calendarDaysArr[_i5].year) {
                     calendarDaysArr[_i5].click = true;
-                    console.log;
                     setArr([calendarDaysArr[_i5]]);
                   }
                 }
@@ -489,17 +480,14 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       var handleCalendarSub = function handleCalendarSub() {
         if (recorderType === 3) {
           var data = JSON.parse(JSON.stringify(arr));
-          console.log(data);
           var _time = undefined;
           if (data.length > 0) {
             _time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date);
           }
-          console.log(_time);
           setModel(_extends({}, model, { time: _time }));
           setCalendarModalDisplay(false);
         } else {
           var _data = JSON.parse(JSON.stringify(clickData));
-          console.log(_data, 'datatatata');
           var _time2 = _data.length + '天';
           setModel(_extends({}, model, { time: _time2 }));
           setCalendarModalDisplay(false);
@@ -537,13 +525,13 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
 
       this.anonymousFunc4 = onScrollToUpper;
       this.anonymousFunc5 = onScrollToLower;
-      var loopArray101 = display ? calendarDays.map(function (v, i) {
+      var loopArray121 = display ? calendarDays.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = display ? i + i : null;
 
-        var _$indexKey = "bgjzz" + i;
+        var _$indexKey = "bedzz" + i;
 
         _this2.anonymousFunc6Map[_$indexKey] = function () {
           handleClick(v.$original);
@@ -568,7 +556,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         };
       }) : [];
       Object.assign(this.__state, {
-        loopArray101: loopArray101,
+        loopArray121: loopArray121,
         display: display,
         IMGCDNURL: _index.IMGCDNURL,
         weeks: weeks,
