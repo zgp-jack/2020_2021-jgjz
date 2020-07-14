@@ -66,7 +66,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarModal.__proto__ || Object.getPrototypeOf(CalendarModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray57", "display", "IMGCDNURL", "weeks", "calendarDays", "recorderType", "time", "handleClose", "handleCalendar", "setModel", "model", "setCalendarModalDisplay", "setTimeData", "__fn_onClick"], _this.anonymousFunc5Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarModal.__proto__ || Object.getPrototypeOf(CalendarModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray101", "display", "IMGCDNURL", "weeks", "calendarDays", "recorderType", "time", "handleCalendar", "setModel", "model", "setCalendarModalDisplay", "setTimeData"], _this.anonymousFunc6Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(CalendarModal, [{
@@ -88,7 +88,6 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       ;
       var _props = this.__props,
           display = _props.display,
-          handleClose = _props.handleClose,
           handleCalendar = _props.handleCalendar,
           setModel = _props.setModel,
           model = _props.model,
@@ -514,27 +513,39 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         }
         return num;
       };
-      this.anonymousFunc0 = handleCalendarSub;
+      var handleClose = function handleClose() {
+        setCalendarModalDisplay(false);
+        // 并清空
+        setTimeData([]);
+        var calendar = JSON.parse(JSON.stringify(calendarDays));
+        for (var i = 0; i < calendar.length; i++) {
+          calendar[i].click = false;
+        }
+        setCalendarDays(calendar);
+        setClickData([]);
+      };
+      this.anonymousFunc0 = handleClose;
+      this.anonymousFunc1 = handleCalendarSub;
 
-      this.anonymousFunc1 = function () {
+      this.anonymousFunc2 = function () {
         return handleChangeTime(0);
       };
 
-      this.anonymousFunc2 = function () {
+      this.anonymousFunc3 = function () {
         return handleChangeTime(1);
       };
 
-      this.anonymousFunc3 = onScrollToUpper;
-      this.anonymousFunc4 = onScrollToLower;
-      var loopArray57 = display ? calendarDays.map(function (v, i) {
+      this.anonymousFunc4 = onScrollToUpper;
+      this.anonymousFunc5 = onScrollToLower;
+      var loopArray101 = display ? calendarDays.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = display ? i + i : null;
 
-        var _$indexKey = "bafzz" + i;
+        var _$indexKey = "bgjzz" + i;
 
-        _this2.anonymousFunc5Map[_$indexKey] = function () {
+        _this2.anonymousFunc6Map[_$indexKey] = function () {
           handleClick(v.$original);
         };
 
@@ -557,7 +568,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         };
       }) : [];
       Object.assign(this.__state, {
-        loopArray57: loopArray57,
+        loopArray101: loopArray101,
         display: display,
         IMGCDNURL: _index.IMGCDNURL,
         weeks: weeks,
@@ -566,11 +577,6 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         time: time
       });
       return this.__state;
-    }
-  }, {
-    key: 'funPrivatebaezz',
-    value: function funPrivatebaezz() {
-      return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
     key: 'anonymousFunc0',
@@ -599,8 +605,13 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
     }
   }, {
     key: 'anonymousFunc5',
-    value: function anonymousFunc5(_$indexKey) {
-      var _anonymousFunc5Map;
+    value: function anonymousFunc5(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc6',
+    value: function anonymousFunc6(_$indexKey) {
+      var _anonymousFunc6Map;
 
       ;
 
@@ -608,12 +619,12 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         e[_key2 - 1] = arguments[_key2];
       }
 
-      return this.anonymousFunc5Map[_$indexKey] && (_anonymousFunc5Map = this.anonymousFunc5Map)[_$indexKey].apply(_anonymousFunc5Map, e);
+      return this.anonymousFunc6Map[_$indexKey] && (_anonymousFunc6Map = this.anonymousFunc6Map)[_$indexKey].apply(_anonymousFunc6Map, e);
     }
   }]);
 
   return CalendarModal;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatebaezz", "anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5"], _class.$$componentPath = "components/calendar/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5", "anonymousFunc6"], _class.$$componentPath = "components/calendar/index", _temp2);
 exports.default = CalendarModal;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(CalendarModal));

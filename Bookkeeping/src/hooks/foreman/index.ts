@@ -1091,6 +1091,7 @@ export default function userForeman() {
           setModel(data);
         }
         Taro.navigateBack();
+        
         dispatch(setWorker([]))
       }else{
         Msg(res.msg);

@@ -147,7 +147,9 @@ export default function Foreman() {
   }
   // 关闭日历
   const handleCalendarModalDisplayClose = ()=>{
-    setCalendarModalDisplay(false)
+    setCalendarModalDisplay(false);
+    // 并清空
+    setTimeData([])
   }
   // 关闭工资标准
   const handleWageStandardClose = ()=>{
@@ -512,7 +514,7 @@ export default function Foreman() {
       {/* 创建项目引导 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true)}} handleInput={handleInput}/>
       {/* 日历 */}
-        <CalendarModal display={calendarModalDisplay} handleClose={handleCalendarModalDisplayClose} handleCalendar={handleCalendar} model={model} setModel={setModel} setCalendarModalDisplay={setCalendarModalDisplay} setTimeData={setTimeData} recorderType={recorderType} />
+        <CalendarModal display={calendarModalDisplay} handleCalendar={handleCalendar} model={model} setModel={setModel} setCalendarModalDisplay={setCalendarModalDisplay} setTimeData={setTimeData} recorderType={recorderType} />
       {/* 设置工资标准 */}
         <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardClose} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio}/>
       {/* 添加成员 */}

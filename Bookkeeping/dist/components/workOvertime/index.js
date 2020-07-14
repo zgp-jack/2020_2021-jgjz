@@ -48,7 +48,7 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WorkOvertime.__proto__ || Object.getPrototypeOf(WorkOvertime)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray40", "loopArray41", "display", "data", "dataArr", "model", "handleWorkOvertimeClose", "handleworkOvertime", "handleWorkOvertimeOk", "__fn_onClick"], _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WorkOvertime.__proto__ || Object.getPrototypeOf(WorkOvertime)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray39", "loopArray40", "display", "data", "dataArr", "model", "handleWorkOvertimeClose", "handleworkOvertime", "handleWorkOvertimeOk", "__fn_onClick"], _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(WorkOvertime, [{
@@ -77,12 +77,12 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
           handleWorkOvertimeOk = _props.handleWorkOvertimeOk,
           model = _props.model;
 
-      var loopArray40 = display ? data.map(function (v, __index0) {
+      var loopArray39 = display ? data.map(function (v, __index0) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "hezzz" + __index0;
+        var _$indexKey = "hdzzz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           handleworkOvertime(1, v.$original);
@@ -93,12 +93,12 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray41 = display ? dataArr.map(function (v, __index1) {
+      var loopArray40 = display ? dataArr.map(function (v, __index1) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey2 = "hfzzz" + __index1;
+        var _$indexKey2 = "hezzz" + __index1;
 
         _this2.anonymousFunc1Map[_$indexKey2] = function () {
           handleworkOvertime(0, v.$original);
@@ -110,8 +110,8 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
         };
       }) : [];
       Object.assign(this.__state, {
+        loopArray39: loopArray39,
         loopArray40: loopArray40,
-        loopArray41: loopArray41,
         display: display,
         data: data,
         dataArr: dataArr,
@@ -120,13 +120,13 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: "funPrivatehczzz",
-    value: function funPrivatehczzz() {
+    key: "funPrivatehbzzz",
+    value: function funPrivatehbzzz() {
       return this.props.handleWorkOvertimeClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
-    key: "funPrivatehdzzz",
-    value: function funPrivatehdzzz() {
+    key: "funPrivatehczzz",
+    value: function funPrivatehczzz() {
       return this.props.handleWorkOvertimeOk.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -158,7 +158,7 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return WorkOvertime;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehczzz", "funPrivatehdzzz", "anonymousFunc0", "anonymousFunc1"], _class.$$componentPath = "components/workOvertime/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehbzzz", "funPrivatehczzz", "anonymousFunc0", "anonymousFunc1"], _class.$$componentPath = "components/workOvertime/index", _temp2);
 
 
 WorkOvertime.options = {

@@ -9,7 +9,7 @@ import Msg from '../../utils/msg';
 
 interface PROPS {
   display: boolean //是否跳转到页面授权
-  handleClose: () => void,
+  // handleClose: () => void,
   handleCalendar:(v)=>void,
   setModel:(v)=>void,
   model:any,
@@ -22,7 +22,7 @@ interface TimeType{
   monent:string,
 }
 
-export default function CalendarModal({ display, handleClose, handleCalendar, setModel, model, setCalendarModalDisplay, setTimeData, recorderType}: PROPS) {
+export default function CalendarModal({ display, handleCalendar, setModel, model, setCalendarModalDisplay, setTimeData, recorderType}: PROPS) {
   // 储存点击天数
   // 获取存入的公用内容
   const useSelectorItem = useSelector<any, any>(state => state)
@@ -449,6 +449,17 @@ export default function CalendarModal({ display, handleClose, handleCalendar, se
       num = '0' + num;
     }
     return num;
+  }
+  const handleClose = ()=>{
+    setCalendarModalDisplay(false);
+    // 并清空
+    setTimeData([]);
+    const calendar = JSON.parse(JSON.stringify(calendarDays));
+    for(let i=0;i<calendar.length;i++){
+      calendar[i].click = false
+    }
+    setCalendarDays(calendar);
+    setClickData([]);
   }
   return(
     <View>
