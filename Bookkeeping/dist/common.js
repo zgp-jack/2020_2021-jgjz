@@ -3030,6 +3030,11 @@ function userForeman() {
   };
   // 选择工人
   var handleWorkerItem = function handleWorkerItem(v) {
+    var modelData = JSON.parse(JSON.stringify(model));
+    if (!modelData.name) {
+      (0, _index3.default)('请先选择项目');
+      return;
+    }
     var data = JSON.parse(JSON.stringify(workerItem));
     for (var i = 0; i < data.length; i++) {
       if (v.id === data[i].id) {

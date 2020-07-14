@@ -1491,6 +1491,11 @@ export default function userForeman() {
   }
   // 选择工人
   const handleWorkerItem = (v)=>{
+    const modelData = JSON.parse(JSON.stringify(model));
+    if (!modelData.name){
+      Msg('请先选择项目')
+      return
+    }
     const data = JSON.parse(JSON.stringify(workerItem));
     for(let i=0;i<data.length;i++){
       if(v.id === data[i].id){

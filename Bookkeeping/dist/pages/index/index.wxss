@@ -458,6 +458,6 @@
 }
 .AtBadge .at-badge__num {
   position: absolute;
-  right: -65rpx;
+  right: -60rpx;
   top: -50rpx;
 }
