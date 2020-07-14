@@ -195,7 +195,7 @@ export interface bkWageStandGetWage extends Result{
 
 // 人员
 export interface bkGetWorker extends Result{
-  data:any[];
+  data:any;
 }
 
 // 考勤表

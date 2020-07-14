@@ -92,16 +92,16 @@ export default function Index() {
     const time = new Date();
     const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
     const week = weeks[date];
-    const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDay());
+    const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate());
     const newMonth = time.getFullYear() + '-' + addZero(time.getMonth() + 1) ;
-    // + '-' + addZero(time.getDate())
-    console.log(newTime,'time')
+    console.log(new Date(),'xxx')
     setTime(newTime);
     setNewMonth(newMonth)
     setMonth(addZero(time.getMonth() + 1))
     // 先写死
     // setStart(newTime)
     setWeek(week);
+    console.log(newTime,'newTime')
     return newTime;
   }
   const addZero = (num) => {
@@ -236,7 +236,8 @@ export default function Index() {
     getData();
   }
   const getNextPageData = ()=>{
-    console.log(31231)
+    // console.log(31231)
+    userRouteJump(`/pages/flowingWater/index`)
   }
   // 跳转
   const userRouteJump = (url:string)=>{
@@ -354,7 +355,7 @@ export default function Index() {
             <View className='heard-middle'>我是班组长<Text className='switch' onClick={() => { handelChange(2) }}><Text className='test'/>切换 </Text></View> : 
             <View className='heard-middle'>我是工人<Text className='switch' onClick={() => { handelChange(1) }}><Text className='test'/>切换</Text></View>}
           <View onClick={handelTps} className='cloud'>
-            {!show &&<AtBadge value={num} maxValue={99} className='AtBadge'/>}
+            {item &&!show &&<AtBadge value={num} maxValue={99} className='AtBadge'/>}
             <Image src={`${IMGCDNURL}cloud.png`} className='heard-right'>
             </Image>
           </View>

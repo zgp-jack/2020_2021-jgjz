@@ -460,4 +460,5 @@
   position: absolute;
   right: -60rpx;
   top: -50rpx;
+  z-index: 1;
 }

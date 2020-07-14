@@ -5,7 +5,7 @@ import userForeman from '../../hooks/foreman';
 import AddMember from '../../components/addMember';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { setWorker } from '../../actions/workerList';
-import { bkSetGroupLeaderAction } from '../../utils/request/index'
+import { bkSetGroupLeaderAction, bkAddWorkerInGroupAction } from '../../utils/request/index'
 import { Type } from '../../config/store';
 import './index.scss'
 
@@ -29,31 +29,31 @@ export default function AddTeamMember() {
   const handleAddMemberClose = () => {
     setAddMemberDisplay(false)
   }
-  const handleCheckbox = (e)=>{
-    console.log('checkout')
-    const arr = JSON.parse(JSON.stringify(clickData));
-    let dataArr = JSON.parse(JSON.stringify(data));
-    console.log(e);
-    // let arr = JSON.parse(JSON.stringify(storagelist));
-    // let dataArr = JSON.parse(JSON.stringify(workerList));
-    if (arr.length === 0 ){
-      arr.push(e);
-    }else{
-      if (arr.indexOf(e.id) === -1) {
-        arr.push(e)
-      } else {
-        arr.splice(arr.indexOf(e.id), 1)
-      }
-    }
-    const list= dataArr.map(v=>{
-      if(v.id === e.id){
-        v.click = !v.click;
-      }
-      return v;
-    })
-    setClickData(arr);
-    setData(list)
-  }
+  // const handleCheckbox = (e)=>{
+  //   console.log('checkout')
+  //   const arr = JSON.parse(JSON.stringify(clickData));
+  //   let dataArr = JSON.parse(JSON.stringify(data));
+  //   console.log(e);
+  //   // let arr = JSON.parse(JSON.stringify(storagelist));
+  //   // let dataArr = JSON.parse(JSON.stringify(workerList));
+  //   if (arr.length === 0 ){
+  //     arr.push(e);
+  //   }else{
+  //     if (arr.indexOf(e.id) === -1) {
+  //       arr.push(e)
+  //     } else {
+  //       arr.splice(arr.indexOf(e.id), 1)
+  //     }
+  //   }
+  //   const list= dataArr.map(v=>{
+  //     if(v.id === e.id){
+  //       v.click = !v.click;
+  //     }
+  //     return v;
+  //   })
+  //   setClickData(arr);
+  //   setData(list)
+  // }
   useEffect(()=>{
     console.log(useSelectorItem.mailList,'useSelectorItem.mailList')
     if (useSelectorItem.mailList) {
@@ -200,9 +200,17 @@ export default function AddTeamMember() {
           }
         }
       }
-      console.log(clickArr);
-      dispatch(setWorker(clickArr))
-      Taro.navigateBack({ delta: 1 })
+      let ids: string[] = clickArr.map(item => item.id);
+      let params = {
+        worker_id: ids,
+        group_info:groupInfo,
+      }
+      bkAddWorkerInGroupAction(params).then(res=>{
+        if(res.code === 200){
+          dispatch(setWorker(clickArr))
+          Taro.navigateBack({ delta: 1 })
+        }
+      })
   }
   return(
     <View className='content'>

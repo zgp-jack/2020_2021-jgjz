@@ -1,13 +1,13 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="content">
         <view>
-            <at-search-bar compid="{{$compid__44}}"></at-search-bar>
+            <at-search-bar compid="{{$compid__322}}"></at-search-bar>
         </view>
         <view id="box">
             <block wx:if="{{data}}">
-                <view wx:key="$loopState__temp2" wx:for="{{loopArray36}}" wx:for-item="val" wx:for-index="i">
+                <view wx:key="$loopState__temp2" wx:for="{{loopArray162}}" wx:for-item="val" wx:for-index="i">
                     <view class="list-title">{{val.$original.name_py}}</view>
-                    <view class="list-flex-test" bindtap="anonymousFunc2" wx:for="{{val.$anonymousCallee__9}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                    <view class="list-flex-test" bindtap="anonymousFunc2" wx:for="{{val.$anonymousCallee__29}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                         <block wx:if="{{type !== '2'}}">
                             <view>
                                 <checkbox checked="{{v.$original.click}}" value="{{v.$original.click}}" class="Checkbox" bindtap="anonymousFunc3" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}"></checkbox>
@@ -26,13 +26,13 @@
         </view>
         <view class="add" bindtap="anonymousFunc4">添加</view>
         <view class="letter">
-            <view class="letter-list" id="{{'' + v.$original.name}}" bindtap="anonymousFunc5" wx:key="id" wx:for="{{loopArray37}}" wx:for-item="v" wx:for-index="__index5" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey3}}">{{v.$original.name}}</view>
+            <view class="letter-list" id="{{'' + v.$original.name}}" bindtap="anonymousFunc5" wx:key="id" wx:for="{{loopArray163}}" wx:for-item="v" wx:for-index="__index5" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey3}}">{{v.$original.name}}</view>
         </view>
         <block wx:if="{{type !== '2'}}">
             <view class="footer">
                 <view class="footer-btn" bindtap="anonymousFunc6">开始记工</view>
             </view>
         </block>
-        <add-member compid="{{$compid__45}}"></add-member>
+        <add-member compid="{{$compid__323}}"></add-member>
     </view>
 </block>

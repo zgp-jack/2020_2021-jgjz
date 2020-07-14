@@ -280,7 +280,7 @@ var AtSwipeAction = (_temp2 = _class = function (_AtComponent) {
         var $loopState__temp4 = Array.isArray(options) && options.length > 0 ? item.$original.text + "-" + key : null;
         var $loopState__temp6 = Array.isArray(options) && options.length > 0 ? (0, _taroWeapp.internal_inline_style)(item.$original.style) : null;
 
-        var _$indexKey = "jdzzz" + key;
+        var _$indexKey = "jgzzz" + key;
 
         _this4.anonymousFunc0Map[_$indexKey] = function (e) {
           return _this4.handleClick(item.$original, key, e);

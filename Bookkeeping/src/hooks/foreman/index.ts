@@ -139,6 +139,8 @@ export default function userForeman() {
     group_info:'',
     id:'',
   })
+  // 选择记工类型012
+  const [recorderType, setRecorderType] = useState<number>(1)
   const [num, setNum] = useState<number>(0)
   // 班组长信息
   const [foreman, setForeman] = useState<any>([])
@@ -357,17 +359,17 @@ export default function userForeman() {
       if(res.code === 200){
         setMoneyList(res.data);
         // 判断页面上的是否设置工资标准
-        if(identity ===1 ){
-          const data = JSON.parse(JSON.stringify(workerItem))
-          for(let i =0;i<data.length;i++){
-            for(let j=0;j<res.data.length;j++){
-              if (res.data[j].worker_id === data[i].id){
-                data[i].set = true;
-              }
-            }
-          }
-          setWorkerItem(data)
-        }
+        // if(identity ===1 ){
+        //   const data = JSON.parse(JSON.stringify(workerItem))
+        //   for(let i =0;i<data.length;i++){
+        //     for(let j=0;j<res.data.length;j++){
+        //       if (res.data[j].worker_id === data[i].id){
+        //         data[i].set = true;
+        //       }
+        //     }
+        //   }
+        //   setWorkerItem(data)
+        // }
       }else{
         Msg(res.msg)
       }
@@ -434,9 +436,20 @@ export default function userForeman() {
         // 么有groupInfos就不修改
         if (!groupInfos){
           dispatch(setmailList(res.data))
-          // setWorkerItem([obj, ...arr])
+        }else{
+          setWorkerItem([obj, ...arr])
         }
         // 存员工redux
+        // 设置员工
+        let arrDate:any[]=[];
+        for(let i=0;i<res.data.length;i++){
+          for(let j=0;j<res.data[i].list.length;j++){
+            console.log(res.data[i].list[j])
+            arrDate.push(res.data[i].list[j]);
+          }
+        }
+        // setWorkerItem(arr);
+        // console.log(arrDate,'xxxx31321onon')
         dispatch(setUserList(res.data))
         setWorkerList(res.data);
       }else{
@@ -1110,13 +1123,14 @@ export default function userForeman() {
       }
     }
     setProjectArr(arr)
-    // 获取工人列表
-    bkGetWorker(groupInfo)
-    // 选择项目的时候先获取设置工资标准员工
-    bkGetWorkerWage(groupInfo);
-    setGroupInfo(groupInfo)
     setShow(false)
     setModel(data)
+    setGroupInfo(groupInfo)
+    // 获取工人列表
+    bkGetWorker(groupInfo)
+    // return;
+    // 选择项目的时候先获取设置工资标准员工
+    bkGetWorkerWage(groupInfo);
   }
   // 添加班组成员选择
   const handleCheckbox = (e)=>{
@@ -1497,6 +1511,24 @@ export default function userForeman() {
       return
     }
     const data = JSON.parse(JSON.stringify(workerItem));
+    // 借支对时候全部都可以点
+    console.log(recorderType,'recorderType')
+    if (recorderType === 3){
+      for (let i = 0; i < data.length; i++) {
+        if (v.id === data[i].id) {
+            data[i].click = !data[i].click
+        }
+      }
+      let numData: any[] = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].click) {
+          numData.push(data[i])
+        }
+      }
+      setClickNum(numData.length);
+      setWorkerItem(data);
+      return;
+    }
     for(let i=0;i<data.length;i++){
       if(v.id === data[i].id){
         if(v.set){
@@ -1518,16 +1550,23 @@ export default function userForeman() {
   // 成员全选
   const handleAllChange = ()=>{
     const data = JSON.parse(JSON.stringify(workerItem));
+    const recorderTypes = JSON.parse(JSON.stringify(recorderType))
     let Itme:any[] =[];
-    for(let i =0;i<data.length;i++){
-      if(data[i].set){
-        Itme.push(data[i]);
-        data[i].click = true;
-      }else{
-        Msg('还有人未设置工资标准')
+    if (recorderTypes === 3){
+      for (let i = 0; i < data.length; i++) {
+          Itme.push(data[i]);
+          data[i].click = true;
+      }
+    }else{
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].set) {
+          Itme.push(data[i]);
+          data[i].click = true;
+        } else {
+          Msg('还有人未设置工资标准')
+        }
       }
     }
-    
     setWorkerItem(data);
     setClickNum(Itme.length);
   }
@@ -1675,6 +1714,8 @@ export default function userForeman() {
     setContractor,
     handleRadio,
     contractor,
-    handleAdd
+    handleAdd,
+    recorderType,
+    setRecorderType
   }
 }

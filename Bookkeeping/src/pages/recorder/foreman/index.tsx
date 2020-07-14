@@ -43,12 +43,10 @@ export default function Foreman() {
     tab, handleAtSwitch, handleDelProject, editProjectDisplay, setEditProjectDisplay, handleEditProject, handleEditProjectModal, editProjectData,
     handleEditProjectData, handleSetWagesModal, handleWagesList, setWorkList, handleCheckboxStandard, groupInfo, image, setImage, bkGetWorker,
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
-    setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd
+    setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
-  // 选择记工类型012
-  const [recorderType, setRecorderType] = useState<number>(1)
   // 成功弹窗
   const [display, setDisplay] = useState<boolean>(false)
   // 创建项目引导
