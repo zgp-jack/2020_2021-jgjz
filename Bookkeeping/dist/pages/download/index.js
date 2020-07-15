@@ -87,20 +87,52 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
       }, []);
       // 查看
       var handleLook = function handleLook(url) {
-        _taroWeapp2.default.openDocument({
-          filePath: "http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/",
+        // Taro.openDocument({
+        //   filePath: `http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/`,
+        //   fileType: 'xlsx',
+        //   success: function (res) {
+        //     console.log("打开文档成功")
+        //     console.log(res);
+        //   },
+        //   fail: function (res) {
+        //     console.log("fail");
+        //     console.log(res)
+        //   },
+        //   complete: function (res) {
+        //     console.log("complete");
+        //     console.log(res)
+        //   }
+        // })
+        var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
+        _taroWeapp2.default.downloadFile({
+          url: "http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/",
+          header: {
+            mid: userInfo.userId,
+            token: userInfo.token,
+            time: userInfo.tokenTime,
+            uuid: userInfo.uuid
+          },
           success: function success(res) {
-            console.log("打开文档成功");
-            console.log(res);
+            var filePath = res.tempFilePath;
+            console.log(filePath);
+            _taroWeapp2.default.openDocument({
+              filePath: filePath,
+              fileType: 'xlsx',
+              success: function success(res) {
+                console.log('打开文档成功');
+              },
+              fail: function fail(res) {
+                console.log(res);
+              },
+              complete: function complete(res) {
+                console.log(res);
+              }
+            });
           },
           fail: function fail(res) {
-            console.log("fail");
-            console.log(res);
+            console.log('文件下载失败');
           },
-          complete: function complete(res) {
-            console.log("complete");
-            console.log(res);
-          }
+          complete: function complete(res) {}
         });
       };
       // 下载
@@ -122,6 +154,7 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
             console.log(filePath);
             _taroWeapp2.default.openDocument({
               filePath: filePath,
+              fileType: 'xlsx',
               success: function success(res) {
                 console.log('打开文档成功');
               },

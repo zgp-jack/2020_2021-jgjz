@@ -4,7 +4,7 @@
             <view class="img">
                 <image class="img-img" src="{{IMGCDNURL + 'excel.png'}}"></image>
             </view>
-            <view class="title">{{name}}的考勤表202006031365.xlsx</view>
+            <view class="title">{{name}}的考勤表.xlsx</view>
         </view>
         <view class="footer">
             <view class="footer-box">

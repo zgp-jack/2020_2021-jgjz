@@ -16,20 +16,52 @@ export default function Download() {
   },[])
   // 查看
   const handleLook = (url)=>{
-    Taro.openDocument({
-      filePath: `http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/`,
+    // Taro.openDocument({
+    //   filePath: `http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/`,
+    //   fileType: 'xlsx',
+    //   success: function (res) {
+    //     console.log("打开文档成功")
+    //     console.log(res);
+    //   },
+    //   fail: function (res) {
+    //     console.log("fail");
+    //     console.log(res)
+    //   },
+    //   complete: function (res) {
+    //     console.log("complete");
+    //     console.log(res)
+    //   }
+    // })
+    let userInfo = Taro.getStorageSync(UserInfo);
+    Taro.downloadFile({
+      url: `http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/`,
+      header: {
+        mid: userInfo.userId,
+        token: userInfo.token,
+        time: userInfo.tokenTime,
+        uuid: userInfo.uuid,
+      },
       success: function (res) {
-        console.log("打开文档成功")
-        console.log(res);
+        var filePath = res.tempFilePath;
+        console.log(filePath);
+        Taro.openDocument({
+          filePath: filePath,
+          fileType: 'xlsx',
+          success: function (res) {
+            console.log('打开文档成功')
+          },
+          fail: function (res) {
+            console.log(res);
+          },
+          complete: function (res) {
+            console.log(res);
+          }
+        })
       },
       fail: function (res) {
-        console.log("fail");
-        console.log(res)
+        console.log('文件下载失败');
       },
-      complete: function (res) {
-        console.log("complete");
-        console.log(res)
-      }
+      complete: function (res) { },
     })
   }
   // 下载
@@ -51,6 +83,7 @@ export default function Download() {
             console.log(filePath);
             Taro.openDocument({
               filePath: filePath,
+              fileType:'xlsx',
               success: function (res) {
                 console.log('打开文档成功')
               },
@@ -78,7 +111,7 @@ export default function Download() {
     <View>
       <View className='content'>
         <View className='img'><Image className='img-img' src={`${IMGCDNURL}excel.png`}/></View>
-        <View className='title'>{name}的考勤表202006031365.xlsx</View>
+        <View className='title'>{name}的考勤表.xlsx</View>
       </View>
       <View className='footer'>
         <View className='footer-box'>

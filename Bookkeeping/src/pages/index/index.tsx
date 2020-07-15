@@ -75,6 +75,7 @@ export default function Index() {
   const [list,setList] = useState<any[]>([])
   // 云朵
   const [num,setNum] = useState<string>('0');  
+  const [newTime,setNewTime] = useState<string>()
   // 数据
   const [item,setItme] = useState<any>()
   const [image, setImage] = useState<any>(Images[0].url)
@@ -96,6 +97,7 @@ export default function Index() {
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate());
     const newMonth = time.getFullYear() + '-' + addZero(time.getMonth() + 1) ;
     // setTime(newTime);
+    setNewTime(newTime)
     setNewMonth(newMonth)
     setMonth(addZero(time.getMonth() + 1))
     // 先写死
@@ -445,7 +447,7 @@ export default function Index() {
       </View>
       <View className='content'>
         <View className='backgroundCloud'></View>
-        <View className='content-title'>今日 <Text className='content-time'>{time} {week}</Text></View>
+        <View className='content-title'>今日 <Text className='content-time'>{newTime} {week}</Text></View>
         {busy && 
           <View className='busyBox'>
             <View>系统繁忙，刷新试试</View>
