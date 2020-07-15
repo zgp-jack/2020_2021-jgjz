@@ -484,8 +484,6 @@ export default function AttendanceSheet() {
           }
         }
       }
-      console.log(sumSum,'sumSum')
-      console.log(unitNameSum,'unitNameSum')
       let obj:any = {};
       obj.list = [];
       let sumObj = {
@@ -510,13 +508,13 @@ export default function AttendanceSheet() {
         objItem[next.date_num] ? '' : objItem[next.date_num] = true && item.push(next);
         return item;
       }, []);
-      console.log(jigongSums,'objItem')
       // 按量
       let dayObj = {};
       const daySums = daySum.reduce(function (item, next) {
         dayObj[next.date_num] ? '' : dayObj[next.date_num] = true && item.push(next);
         return item;
       }, []);
+      console.log(daySums, 'borrowNumSums')
       // 按天
       let workObj = {};
       const workSums = workSum.reduce(function (item, next) {
@@ -573,11 +571,12 @@ export default function AttendanceSheet() {
           }
         }
       }
-      //按量 daySums
+      // 按量 daySums
       for (let i = 0; i < daySums.length; i++) {
         for (let j = 0; j < daySums.length; j++) {
-          if (daySums[i].date_num === borrowNumSums[j].date_num) {
-            daySums[j].total.borrow += (+daySums[i].total.money);
+          if (daySum[i].date_num === daySums[j].date_num) {
+            daySum[j].total.sum += (+daySums[i].total.sum);
+            daySum[j].total.unit_name = daySums[i].total.unit_name;
           }
         }
       }
@@ -595,6 +594,10 @@ export default function AttendanceSheet() {
             work:{
               over_time: '',
               work_time: '',
+            },
+            amount:{
+              sum:'',
+              unit_name:'',
             }
           }
         };
@@ -618,7 +621,6 @@ export default function AttendanceSheet() {
             // dayArrItme[i] = obj;
           }
         }
-        console.log(obj,'objobjobjobj')
         // 按天
         for (let j = 0; j < workSums.length; j++) {
           if (dayArrItme[i].name === workSums[j].date_num) {
@@ -634,13 +636,20 @@ export default function AttendanceSheet() {
               obj.type.borrow.money = borrowNumSums[j].total.borrow;
           }
         }
+        // 按量
+        for (let j = 0; j < daySums.length; j++) {
+          if (dayArrItme[i].name === daySums[j].date_num) {
+            console.log(daySums[j].total.borrow, '312312312')
+            obj.name = daySums[j].date_num,
+              obj.type.amount.sum = (parseInt(workSums[j].total.sum));
+            obj.type.amount.unit_name = (parseInt(workSums[j].total.unit_name));
+          }
+        }
         dayArrItme[i] = obj;
       }
       setFixedTab([...fixedTabList, ...leftData, ...tatalArr]);
-      console.log(obj,'obj')
       obj.list.push(...dayArrItme);
       rightData.push(obj)
-      console.log(rightData,'rightData')
       setTabArr([...tebArrList, ...rightData]);
     })
   }

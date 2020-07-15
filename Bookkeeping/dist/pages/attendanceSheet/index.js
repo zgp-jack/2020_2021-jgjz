@@ -56,7 +56,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AttendanceSheet.__proto__ || Object.getPrototypeOf(AttendanceSheet)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '考勤表'
-    }, _this.$usedState = ["$compid__253", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__103", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AttendanceSheet, [{
@@ -75,10 +75,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__253"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__103"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__253 = _genCompid2[0],
-          $compid__253 = _genCompid2[1];
+          $prevCompid__103 = _genCompid2[0],
+          $compid__103 = _genCompid2[1];
 
       // 月份
 
@@ -586,8 +586,6 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
               }
             }
           }
-          console.log(sumSum, 'sumSum');
-          console.log(unitNameSum, 'unitNameSum');
           var obj = {};
           obj.list = [];
           var sumObj = {
@@ -612,13 +610,13 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
             objItem[next.date_num] ? '' : objItem[next.date_num] = item.push(next);
             return item;
           }, []);
-          console.log(jigongSums, 'objItem');
           // 按量
           var dayObj = {};
           var daySums = daySum.reduce(function (item, next) {
             dayObj[next.date_num] ? '' : dayObj[next.date_num] = item.push(next);
             return item;
           }, []);
+          console.log(daySums, 'borrowNumSums');
           // 按天
           var workObj = {};
           var workSums = workSum.reduce(function (item, next) {
@@ -675,11 +673,12 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
               }
             }
           }
-          //按量 daySums
+          // 按量 daySums
           for (var _i5 = 0; _i5 < daySums.length; _i5++) {
             for (var _j4 = 0; _j4 < daySums.length; _j4++) {
-              if (daySums[_i5].date_num === borrowNumSums[_j4].date_num) {
-                daySums[_j4].total.borrow += +daySums[_i5].total.money;
+              if (daySum[_i5].date_num === daySums[_j4].date_num) {
+                daySum[_j4].total.sum += +daySums[_i5].total.sum;
+                daySum[_j4].total.unit_name = daySums[_i5].total.unit_name;
               }
             }
           }
@@ -697,6 +696,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                 work: {
                   over_time: '',
                   work_time: ''
+                },
+                amount: {
+                  sum: '',
+                  unit_name: ''
                 }
               }
             };
@@ -720,7 +723,6 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                 // dayArrItme[i] = obj;
               }
             }
-            console.log(_obj2, 'objobjobjobj');
             // 按天
             for (var _j6 = 0; _j6 < workSums.length; _j6++) {
               if (dayArrItme[_i6].name === workSums[_j6].date_num) {
@@ -735,13 +737,19 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                 _obj2.name = borrowNumSums[_j7].date_num, _obj2.type.borrow.money = borrowNumSums[_j7].total.borrow;
               }
             }
+            // 按量
+            for (var _j8 = 0; _j8 < daySums.length; _j8++) {
+              if (dayArrItme[_i6].name === daySums[_j8].date_num) {
+                console.log(daySums[_j8].total.borrow, '312312312');
+                _obj2.name = daySums[_j8].date_num, _obj2.type.amount.sum = parseInt(workSums[_j8].total.sum);
+                _obj2.type.amount.unit_name = parseInt(workSums[_j8].total.unit_name);
+              }
+            }
             dayArrItme[_i6] = _obj2;
           }
           setFixedTab([].concat(_toConsumableArray(fixedTabList), leftData, tatalArr));
-          console.log(obj, 'obj');
           (_obj$list = obj.list).push.apply(_obj$list, _toConsumableArray(dayArrItme));
           rightData.push(obj);
-          console.log(rightData, 'rightData');
           setTabArr([].concat(_toConsumableArray(tebArrList), rightData));
         });
       };
@@ -777,9 +785,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose
-      }, $compid__253, $prevCompid__253);
+      }, $compid__103, $prevCompid__103);
       Object.assign(this.__state, {
-        $compid__253: $compid__253,
+        $compid__103: $compid__103,
         tebArr: tebArr,
         fixedTab: fixedTab,
         year: year,
