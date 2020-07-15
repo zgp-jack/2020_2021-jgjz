@@ -70,7 +70,7 @@ var AtSwipeAction = (_temp2 = _class = function (_AtComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtSwipeAction.__proto__ || Object.getPrototypeOf(AtSwipeAction)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp9", "loopArray48", "$compid__53", "componentId", "rootClass", "options", "offsetSize", "_isOpened", "className", "disabled", "autoClose", "isOpened", "children"], _this.computeTransform = function (value) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AtSwipeAction.__proto__ || Object.getPrototypeOf(AtSwipeAction)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp", "anonymousState__temp2", "anonymousState__temp9", "loopArray51", "$compid__56", "componentId", "rootClass", "options", "offsetSize", "_isOpened", "className", "disabled", "autoClose", "isOpened", "children"], _this.computeTransform = function (value) {
       return (
         // if (Taro.getEnv() === Taro.ENV_TYPE.ALIPAY) {
         //   return !_isNil(value) ? `translate3d(${value}px,0,0)` : null
@@ -255,10 +255,10 @@ var AtSwipeAction = (_temp2 = _class = function (_AtComponent) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__53"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__56"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__53 = _genCompid2[0],
-          $compid__53 = _genCompid2[1];
+          $prevCompid__56 = _genCompid2[0],
+          $compid__56 = _genCompid2[1];
 
       var _state = this.__state,
           offsetSize = _state.offsetSize,
@@ -273,14 +273,14 @@ var AtSwipeAction = (_temp2 = _class = function (_AtComponent) {
       });
       var anonymousState__temp2 = (0, _taroWeapp.internal_inline_style)(transformStyle);
       var anonymousState__temp9 = Array.isArray(options) && options.length > 0;
-      var loopArray48 = anonymousState__temp9 ? options.map(function (item, key) {
+      var loopArray51 = anonymousState__temp9 ? options.map(function (item, key) {
         item = {
           $original: (0, _taroWeapp.internal_get_original)(item)
         };
         var $loopState__temp4 = Array.isArray(options) && options.length > 0 ? item.$original.text + "-" + key : null;
         var $loopState__temp6 = Array.isArray(options) && options.length > 0 ? (0, _taroWeapp.internal_inline_style)(item.$original.style) : null;
 
-        var _$indexKey = "jgzzz" + key;
+        var _$indexKey = "baizz" + key;
 
         _this4.anonymousFunc0Map[_$indexKey] = function (e) {
           return _this4.handleClick(item.$original, key, e);
@@ -299,13 +299,13 @@ var AtSwipeAction = (_temp2 = _class = function (_AtComponent) {
         "options": options,
         "componentId": componentId,
         "onQueryedDom": this.handleDomInfo
-      }, $compid__53, $prevCompid__53);
+      }, $compid__56, $prevCompid__56);
       Object.assign(this.__state, {
         anonymousState__temp: anonymousState__temp,
         anonymousState__temp2: anonymousState__temp2,
         anonymousState__temp9: anonymousState__temp9,
-        loopArray48: loopArray48,
-        $compid__53: $compid__53,
+        loopArray51: loopArray51,
+        $compid__56: $compid__56,
         rootClass: rootClass,
         options: options
       });

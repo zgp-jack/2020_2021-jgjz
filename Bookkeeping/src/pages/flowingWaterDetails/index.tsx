@@ -60,10 +60,10 @@ export default function FlowingWaterDetails() {
     let addTime = 0;
     if (parseInt(data.worker_overtime) && parseInt(data.worker_overtime)>0){
       if (parseInt(data.overtime) && parseInt(data.overtime)>0){
-        addTime = (parseInt(data.worker_overtime) / parseInt(data.overtime))
+        addTime = (parseInt(data.overtime) / parseInt(data.worker_overtime))
       }
     }
-    data.addTime = addTime;
+    data.addTime = addTime.toFixed(2);
     console.log(data);
     setObj(data)
     // if (useSelectorItem.flowingWater.data){

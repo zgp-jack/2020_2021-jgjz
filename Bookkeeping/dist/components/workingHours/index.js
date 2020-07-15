@@ -86,7 +86,7 @@ var WorkingHours = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "iazzz" + __index0;
+        var _$indexKey = "ibzzz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           return handleWorkingHours(type, v.$original);
@@ -105,8 +105,8 @@ var WorkingHours = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: "funPrivatehjzzz",
-    value: function funPrivatehjzzz() {
+    key: "funPrivateiazzz",
+    value: function funPrivateiazzz() {
       return this.props.handleWorkingHoursClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -125,7 +125,7 @@ var WorkingHours = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return WorkingHours;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehjzzz", "anonymousFunc0"], _class.$$componentPath = "components/workingHours/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivateiazzz", "anonymousFunc0"], _class.$$componentPath = "components/workingHours/index", _temp2);
 
 
 WorkingHours.options = {
