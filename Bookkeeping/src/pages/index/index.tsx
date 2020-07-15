@@ -1,4 +1,4 @@
-import Taro, { useEffect,useState } from '@tarojs/taro'
+import Taro, { useEffect,useState,useDidShow } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
 import { useDispatch } from '@tarojs/redux'
@@ -10,6 +10,7 @@ import { IMGCDNURL } from '../../config'
 import Auth from '../../components/auth';
 import { AtModal, AtBadge } from "taro-ui"
 import Msg from '../../utils/msg'
+import { setClickTIme } from '../../actions/clickTIme'
 import './index.scss'
 
   // 设置新手指引图片
@@ -110,31 +111,33 @@ export default function Index() {
     }
     return num;
   }
-  useEffect(()=>{
+  useDidShow(()=>{
+    // 清楚日历缓存
+    dispatch(setClickTIme([]))
     // 判断有没有用户信息没有就显示
     // 获取缓存信息
     let type = Taro.getStorageSync(Type);
     setType(type)
     let userInfo = Taro.getStorageSync(UserInfo);
-    if(!userInfo){
+    if (!userInfo) {
       setDisplay(true);
       return
-    }else{
+    } else {
       setDisplay(false)
     }
     dispatch(setTypes(type))
-    let midParams={
+    let midParams = {
       mid: userInfo.userId,
     }
     let midData = Taro.getStorageSync(MidData);
-    if (!midData){
-      bkMemberAuthAction(midParams).then(res=>{
-        if(res.code !== 200){
+    if (!midData) {
+      bkMemberAuthAction(midParams).then(res => {
+        if (res.code !== 200) {
           Msg(res.msg)
-        }else{
-          console.log(res,'ressssssssssss')
+        } else {
+          console.log(res, 'ressssssssssss')
           let userInfo = Taro.getStorageSync(UserInfo)
-          res.data.sign={}
+          res.data.sign = {}
           res.data.sign.token = userInfo.token;
           res.data.sign.time = res.data.created_time;
           res.data.uuid = userInfo.uuid;
@@ -144,7 +147,42 @@ export default function Index() {
       })
     }
     getData();
-  },[])
+  })
+  // useEffect(()=>{
+  //   // 判断有没有用户信息没有就显示
+  //   // 获取缓存信息
+  //   let type = Taro.getStorageSync(Type);
+  //   setType(type)
+  //   let userInfo = Taro.getStorageSync(UserInfo);
+  //   if(!userInfo){
+  //     setDisplay(true);
+  //     return
+  //   }else{
+  //     setDisplay(false)
+  //   }
+  //   dispatch(setTypes(type))
+  //   let midParams={
+  //     mid: userInfo.userId,
+  //   }
+  //   let midData = Taro.getStorageSync(MidData);
+  //   if (!midData){
+  //     bkMemberAuthAction(midParams).then(res=>{
+  //       if(res.code !== 200){
+  //         Msg(res.msg)
+  //       }else{
+  //         console.log(res,'ressssssssssss')
+  //         let userInfo = Taro.getStorageSync(UserInfo)
+  //         res.data.sign={}
+  //         res.data.sign.token = userInfo.token;
+  //         res.data.sign.time = res.data.created_time;
+  //         res.data.uuid = userInfo.uuid;
+  //         // res.data.worker_id = res.data.worker_id;
+  //         Taro.setStorageSync(MidData, res.data)
+  //       }
+  //     })
+  //   }
+  //   getData();
+  // },[])
   // 获取项目名称
   const bkGetProjectTeam = ()=>{
     bkGetProjectTeamAction({}).then(res=>{

@@ -40,6 +40,8 @@ var _index3 = __webpack_require__(/*! ../../utils/msg/index */ "./src/utils/msg/
 
 var _index4 = _interopRequireDefault(_index3);
 
+var _clickTIme = __webpack_require__(/*! ../../actions/clickTIme */ "./src/actions/clickTIme.ts");
+
 __webpack_require__(/*! ./index.scss */ "./src/pages/index/index.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -327,7 +329,9 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         }
         return num;
       };
-      (0, _taroWeapp.useEffect)(function () {
+      (0, _taroWeapp.useDidShow)(function () {
+        // 清楚日历缓存
+        dispatch((0, _clickTIme.setClickTIme)([]));
         // 判断有没有用户信息没有就显示
         // 获取缓存信息
         var type = _taroWeapp2.default.getStorageSync(_store.Type);
@@ -361,7 +365,42 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           });
         }
         getData();
-      }, []);
+      });
+      // useEffect(()=>{
+      //   // 判断有没有用户信息没有就显示
+      //   // 获取缓存信息
+      //   let type = Taro.getStorageSync(Type);
+      //   setType(type)
+      //   let userInfo = Taro.getStorageSync(UserInfo);
+      //   if(!userInfo){
+      //     setDisplay(true);
+      //     return
+      //   }else{
+      //     setDisplay(false)
+      //   }
+      //   dispatch(setTypes(type))
+      //   let midParams={
+      //     mid: userInfo.userId,
+      //   }
+      //   let midData = Taro.getStorageSync(MidData);
+      //   if (!midData){
+      //     bkMemberAuthAction(midParams).then(res=>{
+      //       if(res.code !== 200){
+      //         Msg(res.msg)
+      //       }else{
+      //         console.log(res,'ressssssssssss')
+      //         let userInfo = Taro.getStorageSync(UserInfo)
+      //         res.data.sign={}
+      //         res.data.sign.token = userInfo.token;
+      //         res.data.sign.time = res.data.created_time;
+      //         res.data.uuid = userInfo.uuid;
+      //         // res.data.worker_id = res.data.worker_id;
+      //         Taro.setStorageSync(MidData, res.data)
+      //       }
+      //     })
+      //   }
+      //   getData();
+      // },[])
       // 获取项目名称
       var bkGetProjectTeam = function bkGetProjectTeam() {
         (0, _index.bkGetProjectTeamAction)({}).then(function (res) {

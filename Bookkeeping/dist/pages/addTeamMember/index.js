@@ -321,13 +321,13 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
           v = {
             $original: (0, _taroWeapp.internal_get_original)(v)
           };
-          var _$indexKey = "baazz" + i + "-" + __index2;
+          var _$indexKey = "baezz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey] = function () {
             return handleForeman(val.$original.name_py, v.$original);
           };
 
-          var _$indexKey2 = "babzz" + i + "-" + __index2;
+          var _$indexKey2 = "bafzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey2] = function () {
             return handleForeman(val.$original.name_py, v.$original);
@@ -350,7 +350,7 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey3 = "baczz" + __index5;
+        var _$indexKey3 = "bagzz" + __index5;
 
         _this2.anonymousFunc5Map[_$indexKey3] = function () {
           return handleLetter(v.$original);

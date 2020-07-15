@@ -19,6 +19,7 @@ import { AtDrawer } from 'taro-ui'
 import { useDispatch, useSelector } from '@tarojs/redux'
 import EditProject from '../../../components/editProject';
 import { setDataList } from '../../../actions/list'
+import { setClickTIme } from '../../../actions/clickTIme'
 import { IMGCDNURL } from '../../../config'
 import classnames from 'classnames'
 import Msg from '../../../utils/msg';
@@ -43,7 +44,8 @@ export default function Foreman() {
     tab, handleAtSwitch, handleDelProject, editProjectDisplay, setEditProjectDisplay, handleEditProject, handleEditProjectModal, editProjectData,
     handleEditProjectData, handleSetWagesModal, handleWagesList, setWorkList, handleCheckboxStandard, groupInfo, image, setImage, bkGetWorker,
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
-    setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType
+    setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
+    handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower,
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -51,8 +53,6 @@ export default function Foreman() {
   const [display, setDisplay] = useState<boolean>(false)
   // 创建项目引导
   const [createProjectDisplay, setCreateProjectDisplay] = useState<boolean>(false)
-  // 日历
-  const [calendarModalDisplay, setCalendarModalDisplay]= useState<boolean>(false)
   // 项目列表取消，删除/修改
   const [edit,setEdit] = useState<boolean>(false)
   // 项目名称
@@ -87,6 +87,10 @@ export default function Foreman() {
       if (val.id === v.id) {
         val.click = true
         setRecorderType(val.id)
+        // if(v.id===3){
+          // 设置日历rudux为空
+          dispatch(setClickTIme([]))
+        // }
       } else {
         val.click = false
       }
@@ -147,7 +151,7 @@ export default function Foreman() {
   }
   // 关闭日历
   const handleCalendarModalDisplayClose = ()=>{
-    setCalendarModalDisplay(false);
+    // setCalendarModalDisplay(false);
     // 并清空
     setTimeData([])
   }
@@ -514,7 +518,9 @@ export default function Foreman() {
       {/* 创建项目引导 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true)}} handleInput={handleInput}/>
       {/* 日历 */}
-        <CalendarModal display={calendarModalDisplay} handleCalendar={handleCalendar} model={model} setModel={setModel} setCalendarModalDisplay={setCalendarModalDisplay} setTimeData={setTimeData} recorderType={recorderType} />
+        <CalendarModal display={calendarModalDisplay} handleCalendar={handleCalendar} model={model} setModel={setModel} setTimeData={setTimeData} recorderType={recorderType} handleClickCalendar={handleClickCalendar} time={time}
+          getMonthDaysCurrent={getMonthDaysCurrent} arr={arr} clickData={clickData} handleCalendarClose={handleCalendarClose} handleChangeTime={handleChangeTime} handleCalendarSub={handleCalendarSub} onScrollToLower={onScrollToLower} onScrollToUpper={onScrollToUpper} calendarDays={calendarDays}
+        />
       {/* 设置工资标准 */}
         <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardClose} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio}/>
       {/* 添加成员 */}

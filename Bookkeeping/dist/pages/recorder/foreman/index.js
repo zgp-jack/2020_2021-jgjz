@@ -43,6 +43,8 @@ var _index5 = _interopRequireDefault(_index4);
 
 var _redux = __webpack_require__(/*! @tarojs/redux */ "./node_modules/@tarojs/redux/index.js");
 
+var _clickTIme = __webpack_require__(/*! ../../../actions/clickTIme */ "./src/actions/clickTIme.ts");
+
 var _index6 = __webpack_require__(/*! ../../../config/index */ "./src/config/index.ts");
 
 var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
@@ -77,7 +79,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Foreman.__proto__ || Object.getPrototypeOf(Foreman)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "recorderTypeArr", "contractorArr", "borrowing", "loopArray61", "loopArray62", "loopArray63", "loopArray64", "loopArray65", "$compid__68", "$compid__69", "$compid__70", "$compid__71", "$compid__72", "$compid__73", "$compid__74", "$compid__75", "$compid__76", "$compid__77", "$compid__78", "$compid__79", "$compid__80", "$compid__81", "IMGCDNURL", "recorderType", "model", "identity", "foremanTitle", "workerItem", "delType", "contractor", "edit", "projectArr", "clickNum", "unit"], _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.anonymousFunc7Map = {}, _this.anonymousFunc8Map = {}, _this.anonymousFunc19Map = {}, _this.anonymousFunc29Map = {}, _this.anonymousFunc30Map = {}, _this.anonymousFunc31Map = {}, _this.anonymousFunc32Map = {}, _this.customComponents = ["WordsTotal", "ImageView", "ProjectModal", "RecorderPopup", "Quantities", "WorkOvertime", "WorkingHours", "CreateProject", "CalendarModal", "WageStandard", "AddMember", "WagesModal", "EditProject", "AtDrawer"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Foreman.__proto__ || Object.getPrototypeOf(Foreman)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "recorderTypeArr", "contractorArr", "borrowing", "loopArray61", "loopArray62", "loopArray63", "loopArray64", "loopArray65", "$compid__68", "$compid__69", "$compid__70", "$compid__71", "$compid__72", "$compid__73", "$compid__74", "$compid__75", "$compid__76", "$compid__77", "$compid__78", "$compid__79", "$compid__80", "$compid__81", "IMGCDNURL", "recorderType", "model", "identity", "foremanTitle", "workerItem", "delType", "contractor", "edit", "projectArr", "clickNum", "unit"], _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.anonymousFunc7Map = {}, _this.anonymousFunc8Map = {}, _this.anonymousFunc19Map = {}, _this.anonymousFunc31Map = {}, _this.anonymousFunc32Map = {}, _this.anonymousFunc33Map = {}, _this.anonymousFunc34Map = {}, _this.customComponents = ["WordsTotal", "ImageView", "ProjectModal", "RecorderPopup", "Quantities", "WorkOvertime", "WorkingHours", "CreateProject", "CalendarModal", "WageStandard", "AddMember", "WagesModal", "EditProject", "AtDrawer"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Foreman, [{
@@ -272,7 +274,22 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           contractor = _userForeman.contractor,
           handleAdd = _userForeman.handleAdd,
           recorderType = _userForeman.recorderType,
-          setRecorderType = _userForeman.setRecorderType;
+          setRecorderType = _userForeman.setRecorderType,
+          calendarDays = _userForeman.calendarDays,
+          setCalendarDays = _userForeman.setCalendarDays,
+          clickData = _userForeman.clickData,
+          setClickData = _userForeman.setClickData,
+          handleClickCalendar = _userForeman.handleClickCalendar,
+          time = _userForeman.time,
+          getMonthDaysCurrent = _userForeman.getMonthDaysCurrent,
+          arr = _userForeman.arr,
+          handleCalendarClose = _userForeman.handleCalendarClose,
+          handleChangeTime = _userForeman.handleChangeTime,
+          calendarModalDisplay = _userForeman.calendarModalDisplay,
+          handleCalendarSub = _userForeman.handleCalendarSub,
+          setCalendarModalDisplay = _userForeman.setCalendarModalDisplay,
+          onScrollToUpper = _userForeman.onScrollToUpper,
+          onScrollToLower = _userForeman.onScrollToLower;
       // const [contractor, setContractor] = useState<number>(0)
       // 成功弹窗
 
@@ -288,27 +305,20 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           _useState4 = _slicedToArray(_useState3, 2),
           createProjectDisplay = _useState4[0],
           setCreateProjectDisplay = _useState4[1];
-      // 日历
+      // 项目列表取消，删除/修改
 
 
       var _useState5 = (0, _taroWeapp.useState)(false),
           _useState6 = _slicedToArray(_useState5, 2),
-          calendarModalDisplay = _useState6[0],
-          setCalendarModalDisplay = _useState6[1];
-      // 项目列表取消，删除/修改
-
-
-      var _useState7 = (0, _taroWeapp.useState)(false),
-          _useState8 = _slicedToArray(_useState7, 2),
-          edit = _useState8[0],
-          setEdit = _useState8[1];
+          edit = _useState6[0],
+          setEdit = _useState6[1];
       // 项目名称
 
 
-      var _useState9 = (0, _taroWeapp.useState)([{}, {}]),
-          _useState10 = _slicedToArray(_useState9, 2),
-          projectList = _useState10[0],
-          setProjectList = _useState10[1];
+      var _useState7 = (0, _taroWeapp.useState)([{}, {}]),
+          _useState8 = _slicedToArray(_useState7, 2),
+          projectList = _useState8[0],
+          setProjectList = _useState8[1];
       // useDidShow(()=>{
       //   if (useSelectorItem.workerList.length>0){
       //     setWorkerItem(useSelectorItem.workerList)
@@ -316,14 +326,14 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       // })
 
 
-      var _useState11 = (0, _taroWeapp.useState)({
+      var _useState9 = (0, _taroWeapp.useState)({
         group_info: '',
         team_name: '',
         group_name: ''
       }),
-          _useState12 = _slicedToArray(_useState11, 2),
-          editProject = _useState12[0],
-          setEditProject = _useState12[1];
+          _useState10 = _slicedToArray(_useState9, 2),
+          editProject = _useState10[0],
+          setEditProject = _useState10[1];
       // 获取数据
       // useEffect(()=>{
       //   // 获取项目列表
@@ -346,6 +356,10 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           if (val.id === v.id) {
             val.click = true;
             setRecorderType(val.id);
+            // if(v.id===3){
+            // 设置日历rudux为空
+            dispatch((0, _clickTIme.setClickTIme)([]));
+            // }
           } else {
             val.click = false;
           }
@@ -407,7 +421,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       };
       // 关闭日历
       var handleCalendarModalDisplayClose = function handleCalendarModalDisplayClose() {
-        setCalendarModalDisplay(false);
+        // setCalendarModalDisplay(false);
         // 并清空
         setTimeData([]);
       };
@@ -541,27 +555,30 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         setCreateProjectDisplay(false), setProject(true);
       };
 
+      this.anonymousFunc25 = onScrollToLower;
+      this.anonymousFunc26 = onScrollToUpper;
+
       var anonymousState__temp7 = function anonymousState__temp7() {
         return setEditProjectDisplay(false);
       };
 
-      this.anonymousFunc25 = function () {
-        setShow(false);
-      };
-
-      this.anonymousFunc26 = function () {
-        setShow(false);
-      };
-
       this.anonymousFunc27 = function () {
-        return handleEdit(0);
+        setShow(false);
       };
 
       this.anonymousFunc28 = function () {
+        setShow(false);
+      };
+
+      this.anonymousFunc29 = function () {
+        return handleEdit(0);
+      };
+
+      this.anonymousFunc30 = function () {
         return handleEdit(1);
       };
 
-      this.anonymousFunc33 = function () {
+      this.anonymousFunc35 = function () {
         setCreateProjectDisplay(true), setShow(false);
       };
 
@@ -570,7 +587,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "bafzz" + __index0;
+        var _$indexKey = "bbdzz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           return handleClckTabber(v.$original);
@@ -592,7 +609,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey2 = "bagzz" + __index1;
+        var _$indexKey2 = "bbezz" + __index1;
 
         _this2.anonymousFunc1Map[_$indexKey2] = function () {
           return handleRadio(v.$original);
@@ -608,7 +625,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey3 = "bahzz" + __index5;
+        var _$indexKey3 = "bbfzz" + __index5;
 
         _this2.anonymousFunc5Map[_$indexKey3] = function () {
           return handleWorkerItem(v.$original);
@@ -616,17 +633,17 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
 
         var $loopState__temp4 = v.$original.id === 1 ? v.$original.name.slice(0, 2) : null;
 
-        var _$indexKey4 = "baizz" + __index5;
+        var _$indexKey4 = "bbgzz" + __index5;
 
         _this2.anonymousFunc6Map[_$indexKey4] = handleLongClick;
 
-        var _$indexKey5 = "bajzz" + __index5;
+        var _$indexKey5 = "bbhzz" + __index5;
 
         _this2.anonymousFunc7Map[_$indexKey5] = function (e) {
           e.stopPropagation(), handleOpenWagesModal();
         };
 
-        var _$indexKey6 = "bbazz" + __index5;
+        var _$indexKey6 = "bbizz" + __index5;
 
         _this2.anonymousFunc8Map[_$indexKey6] = function (e) {
           e.stopPropagation(), handleDelList(v.$original);
@@ -646,7 +663,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey7 = "bbbzz" + __index19;
+        var _$indexKey7 = "bbjzz" + __index19;
 
         _this2.anonymousFunc19Map[_$indexKey7] = function () {
           return handleRadioBorrowing(v.$original);
@@ -657,32 +674,32 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray65 = projectArr.map(function (v, __index29) {
+      var loopArray65 = projectArr.map(function (v, __index31) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey8 = "bbczz" + __index29;
+        var _$indexKey8 = "bcazz" + __index31;
 
-        _this2.anonymousFunc29Map[_$indexKey8] = function () {
+        _this2.anonymousFunc31Map[_$indexKey8] = function () {
           return handleProject(v.$original);
         };
 
-        var _$indexKey9 = "bbdzz" + __index29;
+        var _$indexKey9 = "bcbzz" + __index31;
 
-        _this2.anonymousFunc30Map[_$indexKey9] = function (e) {
+        _this2.anonymousFunc32Map[_$indexKey9] = function (e) {
           return e.stopPropagation();
         };
 
-        var _$indexKey10 = "bbezz" + __index29;
+        var _$indexKey10 = "bcczz" + __index31;
 
-        _this2.anonymousFunc31Map[_$indexKey10] = function (e) {
+        _this2.anonymousFunc33Map[_$indexKey10] = function (e) {
           e.stopPropagation(), handleEditProjectModal(v.$original);
         };
 
-        var _$indexKey11 = "bbfzz" + __index29;
+        var _$indexKey11 = "bcdzz" + __index31;
 
-        _this2.anonymousFunc32Map[_$indexKey11] = function (e) {
+        _this2.anonymousFunc34Map[_$indexKey11] = function (e) {
           e.stopPropagation(), handleDelProject(v.$original.id);
         };
 
@@ -748,9 +765,19 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         "handleCalendar": handleCalendar,
         "model": model,
         "setModel": setModel,
-        "setCalendarModalDisplay": setCalendarModalDisplay,
         "setTimeData": setTimeData,
-        "recorderType": recorderType
+        "recorderType": recorderType,
+        "handleClickCalendar": handleClickCalendar,
+        "time": time,
+        "getMonthDaysCurrent": getMonthDaysCurrent,
+        "arr": arr,
+        "clickData": clickData,
+        "handleCalendarClose": handleCalendarClose,
+        "handleChangeTime": handleChangeTime,
+        "handleCalendarSub": handleCalendarSub,
+        "onScrollToLower": this.anonymousFunc25,
+        "onScrollToUpper": this.anonymousFunc26,
+        "calendarDays": calendarDays
       }, $compid__76, $prevCompid__76);
       _taroWeapp.propsManager.set({
         "display": wageStandardDisplay,
@@ -795,7 +822,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         "right": true,
         "mask": true,
         "className": "atDrawer",
-        "onClose": this.anonymousFunc25
+        "onClose": this.anonymousFunc27
       }, $compid__81, $prevCompid__81);
       Object.assign(this.__state, {
         anonymousState__temp5: anonymousState__temp5,
@@ -1039,8 +1066,18 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
     }
   }, {
     key: "anonymousFunc29",
-    value: function anonymousFunc29(_$indexKey8) {
-      var _anonymousFunc29Map;
+    value: function anonymousFunc29(e) {
+      ;
+    }
+  }, {
+    key: "anonymousFunc30",
+    value: function anonymousFunc30(e) {
+      ;
+    }
+  }, {
+    key: "anonymousFunc31",
+    value: function anonymousFunc31(_$indexKey8) {
+      var _anonymousFunc31Map;
 
       ;
 
@@ -1048,53 +1085,53 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         e[_key9 - 1] = arguments[_key9];
       }
 
-      return this.anonymousFunc29Map[_$indexKey8] && (_anonymousFunc29Map = this.anonymousFunc29Map)[_$indexKey8].apply(_anonymousFunc29Map, e);
+      return this.anonymousFunc31Map[_$indexKey8] && (_anonymousFunc31Map = this.anonymousFunc31Map)[_$indexKey8].apply(_anonymousFunc31Map, e);
     }
   }, {
-    key: "anonymousFunc30",
-    value: function anonymousFunc30(_$indexKey9) {
-      var _anonymousFunc30Map;
+    key: "anonymousFunc32",
+    value: function anonymousFunc32(_$indexKey9) {
+      var _anonymousFunc32Map;
 
       for (var _len10 = arguments.length, e = Array(_len10 > 1 ? _len10 - 1 : 0), _key10 = 1; _key10 < _len10; _key10++) {
         e[_key10 - 1] = arguments[_key10];
       }
 
       (typeof e === "undefined" ? "undefined" : _typeof(e)) === 'object' && e.stopPropagation && e.stopPropagation();
-      return this.anonymousFunc30Map[_$indexKey9] && (_anonymousFunc30Map = this.anonymousFunc30Map)[_$indexKey9].apply(_anonymousFunc30Map, e);
+      return this.anonymousFunc32Map[_$indexKey9] && (_anonymousFunc32Map = this.anonymousFunc32Map)[_$indexKey9].apply(_anonymousFunc32Map, e);
     }
   }, {
-    key: "anonymousFunc31",
-    value: function anonymousFunc31(_$indexKey10) {
-      var _anonymousFunc31Map;
+    key: "anonymousFunc33",
+    value: function anonymousFunc33(_$indexKey10) {
+      var _anonymousFunc33Map;
 
       for (var _len11 = arguments.length, e = Array(_len11 > 1 ? _len11 - 1 : 0), _key11 = 1; _key11 < _len11; _key11++) {
         e[_key11 - 1] = arguments[_key11];
       }
 
       (typeof e === "undefined" ? "undefined" : _typeof(e)) === 'object' && e.stopPropagation && e.stopPropagation();
-      return this.anonymousFunc31Map[_$indexKey10] && (_anonymousFunc31Map = this.anonymousFunc31Map)[_$indexKey10].apply(_anonymousFunc31Map, e);
+      return this.anonymousFunc33Map[_$indexKey10] && (_anonymousFunc33Map = this.anonymousFunc33Map)[_$indexKey10].apply(_anonymousFunc33Map, e);
     }
   }, {
-    key: "anonymousFunc32",
-    value: function anonymousFunc32(_$indexKey11) {
-      var _anonymousFunc32Map;
+    key: "anonymousFunc34",
+    value: function anonymousFunc34(_$indexKey11) {
+      var _anonymousFunc34Map;
 
       for (var _len12 = arguments.length, e = Array(_len12 > 1 ? _len12 - 1 : 0), _key12 = 1; _key12 < _len12; _key12++) {
         e[_key12 - 1] = arguments[_key12];
       }
 
       (typeof e === "undefined" ? "undefined" : _typeof(e)) === 'object' && e.stopPropagation && e.stopPropagation();
-      return this.anonymousFunc32Map[_$indexKey11] && (_anonymousFunc32Map = this.anonymousFunc32Map)[_$indexKey11].apply(_anonymousFunc32Map, e);
+      return this.anonymousFunc34Map[_$indexKey11] && (_anonymousFunc34Map = this.anonymousFunc34Map)[_$indexKey11].apply(_anonymousFunc34Map, e);
     }
   }, {
-    key: "anonymousFunc33",
-    value: function anonymousFunc33(e) {
+    key: "anonymousFunc35",
+    value: function anonymousFunc35(e) {
       ;
     }
   }]);
 
   return Foreman;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5", "anonymousFunc6", "anonymousFunc7", "anonymousFunc8", "anonymousFunc9", "anonymousFunc10", "anonymousFunc11", "anonymousFunc12", "anonymousFunc13", "anonymousFunc14", "anonymousFunc15", "anonymousFunc16", "anonymousFunc17", "anonymousFunc18", "anonymousFunc19", "anonymousFunc20", "anonymousFunc21", "anonymousFunc22", "anonymousFunc23", "anonymousFunc24", "anonymousFunc26", "anonymousFunc27", "anonymousFunc28", "anonymousFunc29", "anonymousFunc30", "anonymousFunc31", "anonymousFunc32", "anonymousFunc33"], _class.$$componentPath = "pages/recorder/foreman/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5", "anonymousFunc6", "anonymousFunc7", "anonymousFunc8", "anonymousFunc9", "anonymousFunc10", "anonymousFunc11", "anonymousFunc12", "anonymousFunc13", "anonymousFunc14", "anonymousFunc15", "anonymousFunc16", "anonymousFunc17", "anonymousFunc18", "anonymousFunc19", "anonymousFunc20", "anonymousFunc21", "anonymousFunc22", "anonymousFunc23", "anonymousFunc24", "anonymousFunc28", "anonymousFunc29", "anonymousFunc30", "anonymousFunc31", "anonymousFunc32", "anonymousFunc33", "anonymousFunc34", "anonymousFunc35"], _class.$$componentPath = "pages/recorder/foreman/index", _temp2);
 exports.default = Foreman;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(Foreman));

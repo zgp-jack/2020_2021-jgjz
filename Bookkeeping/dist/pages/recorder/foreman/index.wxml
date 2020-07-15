@@ -212,19 +212,19 @@
             <at-drawer compid="{{$compid__81}}">
                 <view class="atDrawer-box">
                     <view class="atDrawer-heard">
-                        <view bindtap="anonymousFunc26">
+                        <view bindtap="anonymousFunc28">
                             <image src="{{IMGCDNURL + 'projectLeft.png'}}" class="addIcon"></image>
                         </view>
                         <view>项目名称</view>
                         <block wx:if="{{!edit}}">
-                            <view class="atDrawer-heard-edit" bindtap="anonymousFunc27">修改/删除</view>
+                            <view class="atDrawer-heard-edit" bindtap="anonymousFunc29">修改/删除</view>
                         </block>
                         <block wx:if="{{edit}}">
-                            <view class="atDrawer-heard-edit" bindtap="anonymousFunc28">取消</view>
+                            <view class="atDrawer-heard-edit" bindtap="anonymousFunc30">取消</view>
                         </block>
                     </view>
                     <view class="atDrawer-heard-content">
-                        <view class="atDrawer-list" bindtap="anonymousFunc29" wx:for="{{loopArray65}}" wx:for-item="v" wx:for-index="__index29" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey8}}">
+                        <view class="atDrawer-list" bindtap="anonymousFunc31" wx:for="{{loopArray65}}" wx:for-item="v" wx:for-index="__index31" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey8}}">
                             <view class="atDrawer-list-title"><text>{{v.$original.name}}</text>
                             </view>
                             <view class="atDrawer-list-flex">
@@ -236,13 +236,13 @@
                                 <view>
                                     <block wx:if="{{!edit}}">
                                         <view>
-                                            <checkbox checked="{{v.$original.click}}" class="checkbox" color="#0099FF" value="" catchtap="anonymousFunc30" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey9}}"></checkbox>
+                                            <checkbox checked="{{v.$original.click}}" class="checkbox" color="#0099FF" value="" catchtap="anonymousFunc32" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey9}}"></checkbox>
                                         </view>
                                     </block>
                                     <block wx:if="{{edit}}">
                                         <view class="atDrawer-list-flex">
-                                            <view class="atDrawer-list-flex-btn" catchtap="anonymousFunc31" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey10}}">修改</view>
-                                            <view class="atDrawer-list-flex-btn" catchtap="anonymousFunc32" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey11}}">删除</view>
+                                            <view class="atDrawer-list-flex-btn" catchtap="anonymousFunc33" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey10}}">修改</view>
+                                            <view class="atDrawer-list-flex-btn" catchtap="anonymousFunc34" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey11}}">删除</view>
                                         </view>
                                     </block>
                                 </view>
@@ -250,7 +250,7 @@
                         </view>
                     </view>
                     <view class="atDrawer-footer">
-                        <view class="atDrawer-footer-btn" bindtap="anonymousFunc33">创建项目</view>
+                        <view class="atDrawer-footer-btn" bindtap="anonymousFunc35">创建项目</view>
                     </view>
                 </view>
             </at-drawer>
