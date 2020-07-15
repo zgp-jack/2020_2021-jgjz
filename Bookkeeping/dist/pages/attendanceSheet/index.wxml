@@ -7,154 +7,169 @@
             </view>
             <view>以下是你的记工，点击可查看详情</view>
         </view>
-        <view class="box">
-            <view>
-                <view class="box-left" wx:for="{{fixedTab}}" wx:for-item="v" wx:for-index="_anonIdx4">
-                    <view class="box-border" wx:for="{{v.list}}" wx:for-item="val" wx:for-index="_anonIdx2">
-                        <block wx:if="{{!val.type}}">
-                            <view class="{{val.default ? 'box-list-default' : 'box-list'}}">
-                                <view class="name">{{val.name}}</view>
-                                <block wx:if="{{!val.default}}">
-                                    <view class="blued">微信对工 ></view>
-                                </block>
-                            </view>
-                        </block>
-                        <block wx:if="{{val.type}}">
-                            <view class="box-list-type">
-                                <block wx:if="{{val.type.hour}}">
-                                    <view class="box-list">点工</view>
-                                </block>
-                                <block wx:if="{{val.type.work}}">
-                                    <view class="box-list-bao">包工
-                                        <view>（按天记）</view>
-                                    </view>
-                                </block>
-                                <block wx:if="{{val.type.amount}}">
-                                    <view class="box-list-bao">包工
-                                        <view>（按量记）</view>
-                                    </view>
-                                </block>
-                                <block wx:if="{{val.type.borrow}}">
-                                    <view class="box-list">借支</view>
-                                </block>
-                            </view>
-                        </block>
-                    </view>
-                </view>
-            </view>
-            <view class="box-scroll">
-                <view wx:for="{{tebArr}}" wx:for-item="v" wx:for-index="_anonIdx8">
-                    <view class="box-right">
-                        <view class="box-border" wx:for="{{v.list}}" wx:for-item="val" wx:for-index="_anonIdx6">
+        <block wx:if="{{tebArr.length > 2}}">
+            <view class="box">
+                <view>
+                    <view class="box-left" wx:for="{{fixedTab}}" wx:for-item="v" wx:for-index="_anonIdx4">
+                        <view class="box-border" wx:for="{{v.list}}" wx:for-item="val" wx:for-index="_anonIdx2">
                             <block wx:if="{{!val.type}}">
-                                <view class="{{val.default ? 'box-list-default' : 'box-list'}}">{{val.name}}</view>
+                                <view class="{{val.default ? 'box-list-default' : 'box-list'}}">
+                                    <view class="name">{{val.name}}</view>
+                                    <block wx:if="{{!val.default}}">
+                                        <view class="blued">微信对工 ></view>
+                                    </block>
+                                </view>
                             </block>
                             <block wx:if="{{val.type}}">
-                                <view>
-                                    <block wx:if="{{val.name == 0}}">
-                                        <view>
-                                            <block wx:if="{{val.type.hour && val.type.hour.work_time}}">
-                                                <view class="box-list-bao">
-                                                    <block wx:if="{{val.type.hour.work_time}}">
-                                                        <view>{{val.type.hour.work_time}}个工</view>
-                                                    </block>
-                                                    <block wx:if="{{val.type.hour.over_time}}">
-                                                        <view>{{val.type.hour.over_time}}小时</view>
-                                                    </block>
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{val.type.work && val.type.work.work_time}}">
-                                                <view class="box-list-bao">
-                                                    <block wx:if="{{val.type.work.work_time}}">
-                                                        <view>{{val.type.work.work_time}}个工</view>
-                                                    </block>
-                                                    <block wx:if="{{val.type.work.over_time}}">
-                                                        <view>{{val.type.work.over_time}}小时</view>
-                                                    </block>
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{val.type.amount}}">
-                                                <view class="box-list-bao">
-                                                    <view>{{val.type.amount.sum}}</view>
-                                                    <view>{{val.type.amount.unit_name}}</view>
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{val.type.borrow}}">
-                                                <view class="box-list-money">{{val.type.borrow}}</view>
-                                            </block>
+                                <view class="box-list-type">
+                                    <block wx:if="{{val.type.hour}}">
+                                        <view class="box-list">点工</view>
+                                    </block>
+                                    <block wx:if="{{val.type.work}}">
+                                        <view class="box-list-bao">包工
+                                            <view>（按天记）</view>
                                         </view>
                                     </block>
-                                    <block wx:if="{{val.name != 0}}">
-                                        <view>
-                                            <view class="box-list-type">
-                                                <block wx:if="{{val.type.hour}}">
-                                                    <view class="box-list-bao">
-                                                        <block wx:if="{{val.type.hour.num}}">
-                                                            <view>{{val.type.hour.num}}</view>
-                                                        </block>
-                                                        <block wx:if="{{val.type.hour.work_time || val.type.hour.over_time}}">
-                                                            <view>
-                                                                <view>{{val.type.hour.work_time}}个工</view>
-                                                                <view>{{val.type.hour.over_time}}小时</view>
-                                                            </view>
-                                                        </block>
-                                                    </view>
-                                                </block>
-                                                <block wx:if="{{val.type.work}}">
-                                                    <view class="box-list-bao">
-                                                        <block wx:if="{{val.type.work.num}}">
-                                                            <view>{{val.type.work.num}}</view>
-                                                        </block>
-                                                        <block wx:if="{{val.type.work.work_time || val.type.work.overtime}}">
-                                                            <view>
-                                                                <view>{{val.type.work.work_time}}个工</view>
-                                                                <view>{{val.type.work.over_time}}小时</view>
-                                                            </view>
-                                                        </block>
-                                                    </view>
-                                                </block>
-                                                <block wx:if="{{val.type.amount}}">
-                                                    <view class="box-list-bao">
-                                                        <block wx:if="{{val.type.amount.num}}">
-                                                            <view>{{val.type.amount.num}}</view>
-                                                        </block>
-                                                        <block wx:if="{{val.type.amount.sum || val.type.amount.unit_name}}">
-                                                            <view>
-                                                                <block wx:if="{{val.type.amount.sum}}">
-                                                                    <view>{{val.type.amount.sum}}</view>
-                                                                </block>
-                                                                <block wx:if="{{val.type.amount.unit_name}}">
-                                                                    <view>{{val.type.amount.unit_name}}</view>
-                                                                </block>
-                                                            </view>
-                                                        </block>
-                                                    </view>
-                                                </block>
-                                                <block wx:if="{{val.type.borrow}}">
-                                                    <view class="box-list-bao">{{val.type.borrow.money}}</view>
-                                                </block>
-                                            </view>
+                                    <block wx:if="{{val.type.amount}}">
+                                        <view class="box-list-bao">包工
+                                            <view>（按量记）</view>
                                         </view>
+                                    </block>
+                                    <block wx:if="{{val.type.borrow}}">
+                                        <view class="box-list">借支</view>
                                     </block>
                                 </view>
                             </block>
                         </view>
                     </view>
                 </view>
-            </view>
-        </view>
-        <view class="footer-btn">
-            <view class="footer-btn-box">
-                <view class="footer-btn-box-left" bindtap="anonymousFunc1">
-                    <view>一键对工</view>
-                    <view class="footer-btn-box-left-title">发送到工人微信群快速对工</view>
+                <view class="box-scroll">
+                    <view wx:for="{{tebArr}}" wx:for-item="v" wx:for-index="_anonIdx8">
+                        <view class="box-right">
+                            <view class="box-border" wx:for="{{v.list}}" wx:for-item="val" wx:for-index="_anonIdx6">
+                                <block wx:if="{{!val.type}}">
+                                    <view class="{{val.default ? 'box-list-default' : 'box-list'}}">{{val.name}}</view>
+                                </block>
+                                <block wx:if="{{val.type}}">
+                                    <view>
+                                        <block wx:if="{{val.name == 0}}">
+                                            <view>
+                                                <block wx:if="{{val.type.hour && val.type.hour.work_time}}">
+                                                    <view class="box-list-bao">
+                                                        <block wx:if="{{val.type.hour.work_time}}">
+                                                            <view>{{val.type.hour.work_time}}个工</view>
+                                                        </block>
+                                                        <block wx:if="{{val.type.hour.over_time}}">
+                                                            <view>{{val.type.hour.over_time}}小时</view>
+                                                        </block>
+                                                    </view>
+                                                </block>
+                                                <block wx:if="{{val.type.work && val.type.work.work_time}}">
+                                                    <view class="box-list-bao">
+                                                        <block wx:if="{{val.type.work.work_time}}">
+                                                            <view>{{val.type.work.work_time}}个工</view>
+                                                        </block>
+                                                        <block wx:if="{{val.type.work.over_time}}">
+                                                            <view>{{val.type.work.over_time}}小时</view>
+                                                        </block>
+                                                    </view>
+                                                </block>
+                                                <block wx:if="{{val.type.amount}}">
+                                                    <view class="box-list-bao">
+                                                        <view>{{val.type.amount.sum}}</view>
+                                                        <view>{{val.type.amount.unit_name}}</view>
+                                                    </view>
+                                                </block>
+                                                <block wx:if="{{val.type.borrow}}">
+                                                    <view class="box-list-money">{{val.type.borrow}}</view>
+                                                </block>
+                                            </view>
+                                        </block>
+                                        <block wx:if="{{val.name != 0}}">
+                                            <view>
+                                                <view class="box-list-type">
+                                                    <block wx:if="{{val.type.hour}}">
+                                                        <view class="box-list-bao">
+                                                            <block wx:if="{{val.type.hour.num}}">
+                                                                <view>{{val.type.hour.num}}</view>
+                                                            </block>
+                                                            <block wx:if="{{val.type.hour.work_time || val.type.hour.over_time}}">
+                                                                <view>
+                                                                    <view>{{val.type.hour.work_time}}个工</view>
+                                                                    <view>{{val.type.hour.over_time}}小时</view>
+                                                                </view>
+                                                            </block>
+                                                        </view>
+                                                    </block>
+                                                    <block wx:if="{{val.type.work}}">
+                                                        <view class="box-list-bao">
+                                                            <block wx:if="{{val.type.work.num}}">
+                                                                <view>{{val.type.work.num}}</view>
+                                                            </block>
+                                                            <block wx:if="{{val.type.work.work_time || val.type.work.over_time}}">
+                                                                <view>
+                                                                    <view>{{val.type.work.work_time}}个工</view>
+                                                                    <view>{{val.type.work.over_time}}小时</view>
+                                                                </view>
+                                                            </block>
+                                                        </view>
+                                                    </block>
+                                                    <block wx:if="{{val.type.amount}}">
+                                                        <view class="box-list-bao">
+                                                            <block wx:if="{{val.type.amount.num}}">
+                                                                <view>{{val.type.amount.num}}</view>
+                                                            </block>
+                                                            <block wx:if="{{val.type.amount.sum || val.type.amount.unit_name}}">
+                                                                <view>
+                                                                    <block wx:if="{{val.type.amount.sum}}">
+                                                                        <view>{{val.type.amount.sum}}</view>
+                                                                    </block>
+                                                                    <block wx:if="{{val.type.amount.unit_name}}">
+                                                                        <view>{{val.type.amount.unit_name}}</view>
+                                                                    </block>
+                                                                </view>
+                                                            </block>
+                                                        </view>
+                                                    </block>
+                                                    <block wx:if="{{val.type.borrow}}">
+                                                        <view class="box-list-bao">{{val.type.borrow.money}}</view>
+                                                    </block>
+                                                </view>
+                                            </view>
+                                        </block>
+                                    </view>
+                                </block>
+                            </view>
+                        </view>
+                    </view>
                 </view>
-                <view class="footer-btn-box-right" bindtap="anonymousFunc2">
-                    <view>记工</view>
-                    <view class="footer-btn-box-right-title">(点工 包工 借支)</view>
+            </view>
+        </block>
+        <block wx:if="{{tebArr.length <= 2}}">
+            <view class="noData">暂无数据哦～</view>
+        </block>
+        <block wx:if="{{tebArr.length > 2}}">
+            <view class="footer-btn">
+                <view class="footer-btn-box">
+                    <view class="footer-btn-box-left" bindtap="anonymousFunc1">
+                        <view>一键对工</view>
+                        <view class="footer-btn-box-left-title">发送到工人微信群快速对工</view>
+                    </view>
+                    <view class="footer-btn-box-right" bindtap="anonymousFunc2">
+                        <view>记工</view>
+                        <view class="footer-btn-box-right-title">(点工 包工 借支)</view>
+                    </view>
                 </view>
             </view>
-        </view>
-        <calendar-modal compid="{{$compid__137}}"></calendar-modal>
+        </block>
+        <block wx:if="{{tebArr.length <= 2}}">
+            <view class="btnBox">
+                <view class="btn" bindtap="anonymousFunc3">
+                    <view>记工<text class="title">(点工 包工 借支)</text>
+                    </view>
+                </view>
+            </view>
+        </block>
+        <calendar-modal compid="{{$compid__211}}"></calendar-modal>
     </view>
 </block>

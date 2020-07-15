@@ -60,7 +60,7 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWaterDetails.__proto__ || Object.getPrototypeOf(FlowingWaterDetails)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '包工'
-    }, _this.$usedState = ["obj", "$compid__133", "time", "week"], _this.customComponents = ["AtList"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["obj", "$compid__44", "time", "week"], _this.customComponents = ["AtList"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWaterDetails, [{
@@ -79,10 +79,10 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__133"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__44"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__133 = _genCompid2[0],
-          $compid__133 = _genCompid2[1];
+          $prevCompid__44 = _genCompid2[0],
+          $compid__44 = _genCompid2[1];
 
       var router = (0, _taroWeapp.useRouter)();
       var _router$params = router.params,
@@ -188,10 +188,10 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
       this.anonymousFunc0 = handleDel;
       _taroWeapp.propsManager.set({
         "className": "list"
-      }, $compid__133, $prevCompid__133);
+      }, $compid__44, $prevCompid__44);
       Object.assign(this.__state, {
         obj: obj,
-        $compid__133: $compid__133,
+        $compid__44: $compid__44,
         time: time,
         week: week
       });

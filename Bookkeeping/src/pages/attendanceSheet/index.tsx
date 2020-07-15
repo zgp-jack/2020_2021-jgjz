@@ -189,7 +189,7 @@ export default function AttendanceSheet() {
                       if (data[i].hour[k].list.length == 1) {
                         let hourData = {
                           work_time: data[i].hour[k].list[0].work_time,
-                          overtime: data[i].hour[k].list[0].overtime
+                          over_time: data[i].hour[k].list[0].overtime
                         }
                         dayArrs[j].type.hour = hourData;
                       } else if (data[i].hour[k].list.length > 1) {
@@ -230,7 +230,7 @@ export default function AttendanceSheet() {
                       if (data[i].work[k].list.length == 1) {
                         let hourData = {
                           work_time: data[i].work[k].list[0].work_time,
-                          overtime: data[i].work[k].list[0].overftime
+                          over_time: data[i].work[k].list[0].over_time
                         }
                         dayArrs[j].type.work = hourData;
                       } else if (data[i].work[k].list.length > 1) {
@@ -496,8 +496,8 @@ export default function AttendanceSheet() {
           borrow: {
             money: borrowSum
           },
-          hour: { work_time: hourWorkTimeSum.toFixed(2), over_time: hourOverTimeSum },
-          work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum }
+          hour: { work_time: hourWorkTimeSum.toFixed(2), over_time: hourOverTimeSum.toFixed(2) },
+          work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum.toFixed(2) }
         }
       }
       obj.list.push(sumObj);
@@ -508,6 +508,7 @@ export default function AttendanceSheet() {
         objItem[next.date_num] ? '' : objItem[next.date_num] = true && item.push(next);
         return item;
       }, []);
+      console.log(jigongSums,'objItem')
       // 按量
       let dayObj = {};
       const daySums = daySum.reduce(function (item, next) {
@@ -528,30 +529,34 @@ export default function AttendanceSheet() {
       }, []);
       // 有的天数的内容设置为空方便相加
       // 记工
-      for (let i = 0; i < jigongSums.length;i++){
-        jigongSums[i].total.over_time = 0;
-        jigongSums[i].total.work_time =0;
-      }
+      // for (let i = 0; i < jigongSums.length;i++){
+      //   jigongSums[i].total.over_time = 0;
+      //   jigongSums[i].total.work_time =0;
+      // }
       // 按天
-      for (let i = 0; i < workSums.length; i++) {
-        workSums[i].total.over_time = 0;
-        workSums[i].total.work_time = 0;
-      }
+      // for (let i = 0; i < workSums.length; i++) {
+      //   workSums[i].total.over_time = 0;
+      //   workSums[i].total.work_time = 0;
+      // }
       // 按量
       // 借支
-      for (let i = 0; i < borrowNumSums.length; i++) {
-        borrowNumSums[i].total.borrow = 0;
-      }
+      // for (let i = 0; i < borrowNumSums.length; i++) {
+      //   borrowNumSums[i].total.borrow = 0;
+      // }
       // 循环相加
       // 记工
+      console.log(jigongSum,'jigongSum');
+      console.log(jigongSums,'jigongSums')
       for (let i = 0; i < jigongSum.length;i++){
         for (let j = 0; j < jigongSums.length;j++){
           if (jigongSum[i].date_num === jigongSums[j].date_num){
-            jigongSums[j].total.work_time += (+jigongSum[i].total.work_time);
-            jigongSums[j].total.over_time += (+jigongSum[i].total.over_time);
+            console.log(jigongSum[i],' jigongSums[j]')
+            jigongSums[j].total.work_time += (parseInt(jigongSum[i].total.work_time));
+            jigongSums[j].total.over_time += (parseInt(jigongSum[i].total.over_time));
           }
         }
       }
+      console.log(jigongSums,'312321312')
       // 按天
       for (let i = 0; i < workSum.length; i++) {
         for (let j = 0; j < workSums.length; j++) {
@@ -575,14 +580,14 @@ export default function AttendanceSheet() {
         let obj:any = {
           type:{
             hour:{
-              overtime:'',
+              over_time:'',
               work_time:'',
             },
             borrow:{
               money:'',
             },
             work:{
-              overtime: '',
+              over_time: '',
               work_time: '',
             }
           }
@@ -590,6 +595,7 @@ export default function AttendanceSheet() {
         // 记工
         for (let j = 0; j < jigongSums.length;j++){
           if (dayArrItme[i].name === jigongSums[j].date_num){
+            console.log(jigongSums,'jigongSums')
             // obj ={
             //   name: jigongSums[j].date_num,
             //   type:{
@@ -599,16 +605,19 @@ export default function AttendanceSheet() {
             //     }
             //   }
             // }
-            obj.type.hour.overtime= jigongSums[j].total.over_time;
-            obj.type.hour.work_time = jigongSums[j].total.work_time;
+            console.log(jigongSums[j].total.work_time)
+            console.log(dayArrItme[i],'dayArrItme[i]dayArrItme[i]')
+            obj.type.hour.over_time = (parseInt(jigongSums[j].total.over_time)).toFixed(2);
+            obj.type.hour.work_time = (parseInt(jigongSums[j].total.work_time)).toFixed(2);
             // dayArrItme[i] = obj;
           }
         }
+        console.log(obj.type.hour,' obj.type.hour')
         // 按天
         for (let j = 0; j < workSums.length; j++) {
           if (dayArrItme[i].name === workSums[j].date_num) {
-            obj.type.work.overtime = workSums[j].total.over_time;
-            obj.type.work.work_time = workSums[j].total.work_time;
+            obj.type.work.over_time = (parseInt(workSums[j].total.over_time)).toFixed(2);
+            obj.type.work.work_time = (parseInt(workSums[j].total.work_time)).toFixed(2);
           }
         }
         // 借支
@@ -642,7 +651,7 @@ export default function AttendanceSheet() {
       url: url
     })
   }
-  console.log(tebArr,'tebArr')
+  console.log(tebArr.length,'tebArr')
   return (
     <View>
       <View className='top'>
@@ -658,6 +667,7 @@ export default function AttendanceSheet() {
         </View>
         <View>以下是你的记工，点击可查看详情</View>
       </View>
+      {tebArr.length>2&&
       <View className='box'>
         {/* 左边固定 */}
         <View>
@@ -727,7 +737,7 @@ export default function AttendanceSheet() {
                             </View>}
                             {val.type.work && <View className='box-list-bao'>
                               {val.type.work.num && <View>{val.type.work.num}</View>}
-                              {(val.type.work.work_time || val.type.work.overtime) &&
+                            {(val.type.work.work_time || val.type.work.over_time) &&
                                 <View>
                                   <View>{val.type.work.work_time}个工</View>
                                   <View>{val.type.work.over_time}小时</View>
@@ -753,18 +763,31 @@ export default function AttendanceSheet() {
           ))}
         </View>
       </View>
-      <View className='footer-btn'>
-        <View className='footer-btn-box'>
-          <View className='footer-btn-box-left' onClick={handleShare}>
-            <View>一键对工</View>
-            <View className='footer-btn-box-left-title'>发送到工人微信群快速对工</View>
-          </View>
-          <View className='footer-btn-box-right' onClick={() => userRouteJump(`/pages/recorder/index`)}>
-            <View>记工</View>
-            <View className='footer-btn-box-right-title'>(点工 包工 借支)</View>
+      }
+      {
+        tebArr.length<=2&&<View className='noData'>暂无数据哦～</View>
+      }
+      {tebArr.length > 2 &&
+        <View className='footer-btn'>
+          <View className='footer-btn-box'>
+            <View className='footer-btn-box-left' onClick={handleShare}>
+              <View>一键对工</View>
+              <View className='footer-btn-box-left-title'>发送到工人微信群快速对工</View>
+            </View>
+            <View className='footer-btn-box-right' onClick={() => userRouteJump(`/pages/recorder/index`)}>
+              <View>记工</View>
+              <View className='footer-btn-box-right-title'>(点工 包工 借支)</View>
+            </View>
           </View>
         </View>
-      </View>
+      }
+      {
+        tebArr.length <= 2 && <View className='btnBox'>
+          <View className='btn' onClick={() => userRouteJump(`/pages/recorder/index`)}>
+            <View>记工<Text className='title'>(点工 包工 借支)</Text></View>
+          </View>
+        </View>
+      }
       <CalendarModal display={display} handleClose={handleClose} />
     </View>
   )

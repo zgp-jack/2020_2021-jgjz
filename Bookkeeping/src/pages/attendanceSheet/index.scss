@@ -233,3 +233,30 @@
   text-overflow:ellipsis;
   white-space: nowrap;
 }
+.noData{
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: 40%;
+  font-size:30rpx;
+  color:rgba(175, 175, 175, 1);
+}
+.btnBox {
+  position: fixed;
+  left: 0;
+  bottom: 10rpx;
+  width: 100%;
+}
+.btn{
+  width:95%;
+  height:80rpx;
+  background:rgba(0, 153, 255, 1);
+  border-radius:10rpx;
+  color: #fff;
+  line-height: 80rpx;
+  text-align: center;
+  margin: 0 auto;
+}
+.title{
+  font-size: 30rpx;
+}

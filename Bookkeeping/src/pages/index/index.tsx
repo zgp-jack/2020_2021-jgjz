@@ -474,7 +474,7 @@ export default function Index() {
                       <View>{v.workername}</View>
                       <View className='orgion'>¥{v.money}</View>
                     </View>
-                      <View className='details'>我在[{v.group_info}]项目组对{v.workername}记了-笔包工</View>
+                  <View className='details'>我在[{v.group_info}]项目组对{v.workername}记了-笔{v.business_type == '1' ? '记工' : (v.business_type=='2'?'包工':'借支')}</View>
                     </View>
                   {/* // ))} */}
                 </View>
@@ -494,7 +494,7 @@ export default function Index() {
             {list.map((v, i) => (
               <View key={i + i} className='content-list-type' onClick={getNextPageData}>
                   <View className='content-list-flex'>
-                  <View className='details'>我在[{v.group_info}]项目组对Ta记了-笔包工</View>
+                  <View className='details'>我在[{v.group_info}]项目组对Ta记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
                     {/* <View></View> */}
                     <View className='orgion-type'>¥{v.money}</View>
                   </View>
