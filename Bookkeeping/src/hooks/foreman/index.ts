@@ -349,7 +349,6 @@ export default function userForeman() {
     if (useSelectorItem.clickTIme.length > 0) {
       setReduxTime(useSelectorItem.clickTIme);
     }
-    console.log()
   }, [])
   // 关闭清空时间
   useDidHide(()=>{
@@ -501,10 +500,6 @@ export default function userForeman() {
       const years = new Date().getFullYear();
       const months = new Date().getMonth() + 1;
       const dates = new Date().getDate();
-      console.log(i);
-      console.log(date)
-      console.log(i == date,'i == date')
-      console.log(dates)
       calendarDaysArr.push({
         'year': year,
         'month': month,
@@ -730,7 +725,7 @@ export default function userForeman() {
     })
   }
   // 已设置工资标准标准
-  const bkGetWorkerWage = (id?:string)=>{
+  const bkGetWorkerWage = (id?:string,Item?:any)=>{
     let prams;
     if(id){
       prams = {
@@ -741,23 +736,36 @@ export default function userForeman() {
         group_info: groupInfo
       }
     }
+    // return;
     bkGetWorkerWageAction(prams).then(res=>{
       if(res.code === 200){
         setMoneyList(res.data);
         // 判断页面上的是否设置工资标准
         if(identity ===1 ){
           const data = JSON.parse(JSON.stringify(workerItem))
-          console.log(data,'data')
-          console.log(res.data,'res.data')
-          for(let i =0;i<data.length;i++){
-            for(let j=0;j<res.data.length;j++){
-              if (res.data[j].worker_id === data[i].id){
-                data[i].set = true;
+          console.log(data,'datadsadsa')
+          // console.log(res.data,'res.data')
+          // 获取工人传过来数据，判断是否设置工资标准
+          if (Item){
+            console.log(Item);
+            for (let i = 0; i < Item.length; i++) {
+              for (let j = 0; j < res.data.length; j++) {
+                if (res.data[j].worker_id === Item[i].id) {
+                  Item[i].set = true;
+                }
               }
             }
+            console.log(Item);
+            setWorkerItem(Item)
+            return;
           }
-          
-          console.log(data,'data')
+          // for(let i =0;i<data.length;i++){
+          //   for(let j=0;j<res.data.length;j++){
+          //     if (res.data[j].worker_id === data[i].id){
+          //       data[i].set = true;
+          //     }
+          //   }
+          // }
           // setWorkerItem(data)
         }
       }else{
@@ -782,7 +790,7 @@ export default function userForeman() {
     })
   }
   // 工人列表
-  const bkGetWorker = (groupInfos?:any, data?:any)=>{
+  const bkGetWorker = (groupInfos?:any, val?:any)=>{
     // 不传group_info获取通讯录里的所有人
     let params;
     if (groupInfos){
@@ -795,7 +803,6 @@ export default function userForeman() {
     bkGetWorkerAction(params).then(res=>{
       if(res.code === 200){
         const data = JSON.parse(JSON.stringify(workerItem));
-        // return;
         let arr:any[] = [];
         for(let i =0;i<res.data.length;i++){
           if(res.data[i].list){
@@ -808,11 +815,15 @@ export default function userForeman() {
             }
           }
         }
-        for(let i = 0;i<arr.length;i++){
-          if(arr[i].id == obj.id){
-            arr.splice(i,1);
-          }
+        // 有自己
+        if (val){
+          for(let i = 0;i<arr.length;i++){
+            if (arr[i].id == obj.id){
+              arr.splice(i,1);
+            }
+            bkGetWorkerWage(groupInfos, [obj,...arr]);
         }
+      }
         if(data){
           // 根据姓名判断在那个位置push进去
           for(let i= 0;i<res.data.length;i++){
@@ -821,13 +832,16 @@ export default function userForeman() {
             }
           }
         }
+        dispatch(setUserList(res.data))
+        setWorkerList(res.data);
         // 判断有就不存了存通讯录redux
         // 么有groupInfos就不修改
         if (!groupInfos){
           dispatch(setmailList(res.data))
-        }else{
-          setWorkerItem([obj, ...arr])
         }
+        // // else{
+        //   setWorkerItem([obj, ...arr])
+        // }
         // 存员工redux
         // 设置员工
         let arrDate:any[]=[];
@@ -1514,9 +1528,9 @@ export default function userForeman() {
     setModel(data)
     setGroupInfo(groupInfo)
     // 选择项目的时候先获取设置工资标准员工
-    bkGetWorkerWage(groupInfo);
+    bkGetWorker(groupInfo,true)
+    // bkGetWorkerWage(groupInfo,true);
     // 获取工人列表
-    bkGetWorker(groupInfo)
     // return;
   }
   // 添加班组成员选择

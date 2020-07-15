@@ -17,7 +17,7 @@
                                     </view>
                                 </block>
                             </view>
-                            <view bindtap="funPrivateiezzz" class="wagesModal-content-close">X</view>
+                            <view bindtap="funPrivateihzzz" class="wagesModal-content-close">X</view>
                         </view>
                     </view>
                     <view class="content">
@@ -27,7 +27,7 @@
                                     <view class="worker-title">
                                         <view>选择工人(已选择[{{clickModalNum}}]人)</view>
                                         <view>
-                                            <view class="allChange" bindtap="funPrivateifzzz">全选</view>
+                                            <view class="allChange" bindtap="funPrivateiizzz">全选</view>
                                             <view class="change">(已选{{clickModalNum}}人)</view>
                                         </view>
                                     </view>
@@ -58,7 +58,7 @@
                                 <view class="wagesModal-standard">
                                     <view class="wagesModal-standard-flex">
                                         <view>工资标准</view>
-                                        <view class="wagesModal-standard-flex-add" bindtap="funPrivateihzzz">+添加其他标准</view>
+                                        <view class="wagesModal-standard-flex-add" bindtap="funPrivatejazzz">+添加其他标准</view>
                                     </view>
                                     <view class="wagesModal-standard-box">
                                         <view class="wagesModal-standard-box-list" wx:for="{{loopArray45}}" wx:for-item="v" wx:for-index="i">
@@ -78,7 +78,7 @@
                                         </view>
                                     </view>
                                     <view class="wagesModal-footer">
-                                        <view class="wagesModal-footer-btn" bindtap="funPrivatejazzz">确定设置({{clickModalNum}}人)</view>
+                                        <view class="wagesModal-footer-btn" bindtap="funPrivatejdzzz">确定设置({{clickModalNum}}人)</view>
                                     </view>
                                 </view>
                             </view>

@@ -71,7 +71,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWater.__proto__ || Object.getPrototypeOf(FlowingWater)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记工流水'
-    }, _this.$usedState = ["data", "loopArray79", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["data", "loopArray49", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWater, [{
@@ -365,13 +365,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         return handleCheckboxBtn(1);
       };
 
-      var loopArray79 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
+      var loopArray49 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "bdbzz" + i;
+        var _$indexKey = "jhzzz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -379,23 +379,23 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
         var $loopState__temp4 = data.item && data.item.length > 0 ? v.$original.total_borrow && v.$original.total_borrow.toFixed(2) : null;
         var $loopState__temp6 = data.item && data.item.length > 0 ? v.$original.total_money && v.$original.total_money.toFixed(2) : null;
-        var $anonymousCallee__17 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
+        var $anonymousCallee__9 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "bdczz" + i + "-" + __index2;
+          var _$indexKey2 = "jizzz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "bddzz" + i + "-" + __index2;
+          var _$indexKey3 = "jjzzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "bdezz" + i + "-" + __index2;
+          var _$indexKey4 = "baazz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -412,29 +412,29 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "bdfzz" + i + "-" + __index2;
+          var _$indexKey5 = "babzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "bdgzz" + i + "-" + __index2;
+          var _$indexKey6 = "baczz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bdhzzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "badzzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
-              $prevCompid__95 = _genCompid2[0],
-              $compid__95 = _genCompid2[1];
+              $prevCompid__54 = _genCompid2[0],
+              $compid__54 = _genCompid2[1];
 
           v.$original.click && _taroWeapp.propsManager.set({
             "autoClose": false,
             "onOpened": _this2.anonymousFunc3.bind(_this2, _$indexKey3),
             "onClick": _this2.anonymousFunc4.bind(_this2, _$indexKey4),
             "options": $loopState__temp8
-          }, $compid__95, $prevCompid__95);
+          }, $compid__54, $prevCompid__54);
           return {
             _$indexKey2: _$indexKey2,
             _$indexKey3: _$indexKey3,
@@ -442,7 +442,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
             $loopState__temp8: $loopState__temp8,
             _$indexKey5: _$indexKey5,
             _$indexKey6: _$indexKey6,
-            $compid__95: $compid__95,
+            $compid__54: $compid__54,
             $original: val.$original
           };
         }) : [];
@@ -451,13 +451,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey: _$indexKey,
           $loopState__temp4: $loopState__temp4,
           $loopState__temp6: $loopState__temp6,
-          $anonymousCallee__17: $anonymousCallee__17,
+          $anonymousCallee__9: $anonymousCallee__9,
           $original: v.$original
         };
       }) : [];
       Object.assign(this.__state, {
         data: data,
-        loopArray79: loopArray79,
+        loopArray49: loopArray49,
         IMGCDNURL: _index4.IMGCDNURL,
         isCheckOut: isCheckOut,
         allcheck: allcheck,
@@ -655,7 +655,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Notepad.__proto__ || Object.getPrototypeOf(Notepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["loopArray34", "$compid__43", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray34", "$compid__42", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Notepad, [{
@@ -676,10 +676,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__43"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__42"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__43 = _genCompid2[0],
-          $compid__43 = _genCompid2[1];
+          $prevCompid__42 = _genCompid2[0],
+          $compid__42 = _genCompid2[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 输入框
@@ -897,10 +897,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
         "value": val,
         "onChange": this.anonymousFunc0,
         "onActionClick": this.anonymousFunc1
-      }, $compid__43, $prevCompid__43);
+      }, $compid__42, $prevCompid__42);
       Object.assign(this.__state, {
         loopArray34: loopArray34,
-        $compid__43: $compid__43,
+        $compid__42: $compid__42,
         data: data,
         busy: busy,
         del: del,
@@ -1931,7 +1931,6 @@ function userForeman() {
     if (useSelectorItem.clickTIme.length > 0) {
       setReduxTime(useSelectorItem.clickTIme);
     }
-    console.log();
   }, []);
   // 关闭清空时间
   (0, _taroWeapp.useDidHide)(function () {
@@ -2081,10 +2080,6 @@ function userForeman() {
       var years = new Date().getFullYear();
       var months = new Date().getMonth() + 1;
       var dates = new Date().getDate();
-      console.log(_i8);
-      console.log(date);
-      console.log(_i8 == date, 'i == date');
-      console.log(dates);
       calendarDaysArr.push({
         'year': year,
         'month': month,
@@ -2299,7 +2294,7 @@ function userForeman() {
     });
   };
   // 已设置工资标准标准
-  var bkGetWorkerWage = function bkGetWorkerWage(id) {
+  var bkGetWorkerWage = function bkGetWorkerWage(id, Item) {
     var prams = void 0;
     if (id) {
       prams = {
@@ -2310,22 +2305,36 @@ function userForeman() {
         group_info: groupInfo
       };
     }
+    // return;
     (0, _index.bkGetWorkerWageAction)(prams).then(function (res) {
       if (res.code === 200) {
         setMoneyList(res.data);
         // 判断页面上的是否设置工资标准
         if (identity === 1) {
           var data = JSON.parse(JSON.stringify(workerItem));
-          console.log(data, 'data');
-          console.log(res.data, 'res.data');
-          for (var i = 0; i < data.length; i++) {
-            for (var j = 0; j < res.data.length; j++) {
-              if (res.data[j].worker_id === data[i].id) {
-                data[i].set = true;
+          console.log(data, 'datadsadsa');
+          // console.log(res.data,'res.data')
+          // 获取工人传过来数据，判断是否设置工资标准
+          if (Item) {
+            console.log(Item);
+            for (var i = 0; i < Item.length; i++) {
+              for (var j = 0; j < res.data.length; j++) {
+                if (res.data[j].worker_id === Item[i].id) {
+                  Item[i].set = true;
+                }
               }
             }
+            console.log(Item);
+            setWorkerItem(Item);
+            return;
           }
-          console.log(data, 'data');
+          // for(let i =0;i<data.length;i++){
+          //   for(let j=0;j<res.data.length;j++){
+          //     if (res.data[j].worker_id === data[i].id){
+          //       data[i].set = true;
+          //     }
+          //   }
+          // }
           // setWorkerItem(data)
         }
       } else {
@@ -2350,7 +2359,7 @@ function userForeman() {
     });
   };
   // 工人列表
-  var bkGetWorker = function bkGetWorker(groupInfos, data) {
+  var bkGetWorker = function bkGetWorker(groupInfos, val) {
     // 不传group_info获取通讯录里的所有人
     var params = void 0;
     if (groupInfos) {
@@ -2362,8 +2371,7 @@ function userForeman() {
     }
     (0, _index.bkGetWorkerAction)(params).then(function (res) {
       if (res.code === 200) {
-        var _data = JSON.parse(JSON.stringify(workerItem));
-        // return;
+        var data = JSON.parse(JSON.stringify(workerItem));
         var _arr = [];
         for (var i = 0; i < res.data.length; i++) {
           if (res.data[i].list) {
@@ -2376,26 +2384,33 @@ function userForeman() {
             }
           }
         }
-        for (var _i12 = 0; _i12 < _arr.length; _i12++) {
-          if (_arr[_i12].id == obj.id) {
-            _arr.splice(_i12, 1);
+        // 有自己
+        if (val) {
+          for (var _i12 = 0; _i12 < _arr.length; _i12++) {
+            if (_arr[_i12].id == obj.id) {
+              _arr.splice(_i12, 1);
+            }
+            bkGetWorkerWage(groupInfos, [obj].concat(_arr));
           }
         }
-        if (_data) {
+        if (data) {
           // 根据姓名判断在那个位置push进去
           for (var _i13 = 0; _i13 < res.data.length; _i13++) {
-            if (_data.name_py === res.data[_i13].name_py) {
-              res.data[_i13].list.push(_data);
+            if (data.name_py === res.data[_i13].name_py) {
+              res.data[_i13].list.push(data);
             }
           }
         }
+        dispatch((0, _userList.setUserList)(res.data));
+        setWorkerList(res.data);
         // 判断有就不存了存通讯录redux
         // 么有groupInfos就不修改
         if (!groupInfos) {
           dispatch((0, _mailList.setmailList)(res.data));
-        } else {
-          setWorkerItem([obj].concat(_arr));
         }
+        // // else{
+        //   setWorkerItem([obj, ...arr])
+        // }
         // 存员工redux
         // 设置员工
         var arrDate = [];
@@ -2518,7 +2533,7 @@ function userForeman() {
       });
       setTimeArr(data);
     } else {
-      var _data2 = addWorkArr.map(function (v) {
+      var _data = addWorkArr.map(function (v) {
         if (v.id === 2) {
           v.name = e.name;
           v.click = true;
@@ -2526,7 +2541,7 @@ function userForeman() {
         }
         return v;
       });
-      setAddWorkArr(_data2);
+      setAddWorkArr(_data);
     }
     setWorkingHoursDisplay(false);
     setWorkOvertimeDisplay(true);
@@ -2570,19 +2585,19 @@ function userForeman() {
       }
     }
     if (identity === 2) {
-      var _data3 = JSON.parse(JSON.stringify(wageStandard));
+      var _data2 = JSON.parse(JSON.stringify(wageStandard));
       // 获取上班时长
       var timeArrs = JSON.parse(JSON.stringify(timeArr));
       // 获取加班时长
       var addWorkArrs = JSON.parse(JSON.stringify(addWorkArr));
       //模板金额 
-      var moneyNum = _data3.money;
+      var moneyNum = _data2.money;
       // 模板时间
-      var workNum = _data3.work;
+      var workNum = _data2.work;
       //加班金钱
-      var addWorkNum = _data3.addWork;
+      var addWorkNum = _data2.addWork;
       // 加班时间
-      var dayNum = _data3.day;
+      var dayNum = _data2.day;
       // 上班时间
       var _time = 0;
       for (var i = 0; i < timeArrs.length; i++) {
@@ -2614,7 +2629,7 @@ function userForeman() {
         }
       }
       var total = void 0;
-      if (_data3.type === 1) {
+      if (_data2.type === 1) {
         // 按小时算 加班小时* 模板加班金额
         total = moneyNum / workNum * _time + addWorkNum * addTime;
       } else {
@@ -2685,9 +2700,9 @@ function userForeman() {
     (0, _index.bkAddWorkerActiion)(params).then(function (res) {
       if (res.code === 200) {
         // 叫后台返回id 姓名 电话
-        var _data4 = res.data;
+        var _data3 = res.data;
         // 添加成功后重新获取设置数据
-        bkGetWorker(id, _data4);
+        bkGetWorker(id, _data3);
         // ======= 测试无法测试
         // const data = JSON.parse(JSON.stringify(workerItem));
         // params.id = Math.random();
@@ -3030,7 +3045,7 @@ function userForeman() {
       // 清除reducer
       if (res.code === 200) {
         if (type === 1) {
-          var _data5 = {
+          var _data4 = {
             groupName: '',
             teamName: '',
             name: '',
@@ -3047,7 +3062,7 @@ function userForeman() {
             workersWages: '0'
           };
           setForemanTitle('');
-          setModel(_data5);
+          setModel(_data4);
         }
         _taroWeapp2.default.navigateBack();
         dispatch((0, _workerList.setWorker)([]));
@@ -3085,9 +3100,9 @@ function userForeman() {
     setModel(data);
     setGroupInfo(groupInfo);
     // 选择项目的时候先获取设置工资标准员工
-    bkGetWorkerWage(groupInfo);
+    bkGetWorker(groupInfo, true);
+    // bkGetWorkerWage(groupInfo,true);
     // 获取工人列表
-    bkGetWorker(groupInfo);
     // return;
   };
   // 添加班组成员选择
@@ -3603,11 +3618,11 @@ function userForeman() {
       setModel(_extends({}, model, { time: _time2 }));
       setCalendarModalDisplay(false);
     } else {
-      var _data6 = JSON.parse(JSON.stringify(clickData));
-      var _time3 = _data6.length + '天';
+      var _data5 = JSON.parse(JSON.stringify(clickData));
+      var _time3 = _data5.length + '天';
       setModel(_extends({}, model, { time: _time3 }));
       setCalendarModalDisplay(false);
-      setTimeData(_data6);
+      setTimeData(_data5);
     }
   };
   // 左
