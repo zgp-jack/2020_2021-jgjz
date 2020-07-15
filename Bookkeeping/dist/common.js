@@ -2372,7 +2372,7 @@ function userForeman() {
     });
   };
   // 工人列表
-  var bkGetWorker = function bkGetWorker(groupInfos, val) {
+  var bkGetWorker = function bkGetWorker(groupInfos, val, dataItem) {
     // 不传group_info获取通讯录里的所有人
     var params = void 0;
     if (groupInfos) {
@@ -2399,18 +2399,22 @@ function userForeman() {
         }
         // 有自己
         if (val) {
-          for (var _i12 = 0; _i12 < _arr.length; _i12++) {
-            if (_arr[_i12].id == obj.id) {
-              _arr.splice(_i12, 1);
+          if (val === 1) {
+            if (dataItem) {
+              // 根据姓名判断在那个位置push进去
+              for (var _i12 = 0; _i12 < res.data.length; _i12++) {
+                if (data.name_py === res.data[_i12].name_py) {
+                  res.data[_i12].list.push(data);
+                }
+              }
             }
-            bkGetWorkerWage(groupInfos, [obj].concat(_arr));
-          }
-        }
-        if (data) {
-          // 根据姓名判断在那个位置push进去
-          for (var _i13 = 0; _i13 < res.data.length; _i13++) {
-            if (data.name_py === res.data[_i13].name_py) {
-              res.data[_i13].list.push(data);
+            dispatch((0, _mailList.setmailList)(res.data));
+          } else {
+            for (var _i13 = 0; _i13 < _arr.length; _i13++) {
+              if (_arr[_i13].id == obj.id) {
+                _arr.splice(_i13, 1);
+              }
+              bkGetWorkerWage(groupInfos, [obj].concat(_arr));
             }
           }
         }
@@ -2707,15 +2711,15 @@ function userForeman() {
       tel: data.phone
     };
     // bkGetWorker(id, true);
-    dispatch((0, _mailList.setmailList)([]));
-    setAddMemberDisplay(false);
+    // dispatch(setmailList([]));
+    // setAddMemberDisplay(false)
     // return;
     (0, _index.bkAddWorkerActiion)(params).then(function (res) {
       if (res.code === 200) {
         // 叫后台返回id 姓名 电话
         var _data3 = res.data;
         // 添加成功后重新获取设置数据
-        bkGetWorker(id, _data3);
+        bkGetWorker('', 1, _data3);
         // ======= 测试无法测试
         // const data = JSON.parse(JSON.stringify(workerItem));
         // params.id = Math.random();

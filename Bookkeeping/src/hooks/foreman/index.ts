@@ -794,7 +794,7 @@ export default function userForeman() {
     })
   }
   // 工人列表
-  const bkGetWorker = (groupInfos?:any, val?:any)=>{
+  const bkGetWorker = (groupInfos?:any, val?:any,dataItem?:any)=>{
     // 不传group_info获取通讯录里的所有人
     let params;
     if (groupInfos){
@@ -821,21 +821,25 @@ export default function userForeman() {
         }
         // 有自己
         if (val){
-          for(let i = 0;i<arr.length;i++){
-            if (arr[i].id == obj.id){
-              arr.splice(i,1);
+          if(val ===1){
+            if (dataItem) {
+              // 根据姓名判断在那个位置push进去
+              for (let i = 0; i < res.data.length; i++) {
+                if (data.name_py === res.data[i].name_py) {
+                  res.data[i].list.push(data);
+                }
+              }
             }
-            bkGetWorkerWage(groupInfos, [obj,...arr]);
-        }
-      }
-        if(data){
-          // 根据姓名判断在那个位置push进去
-          for(let i= 0;i<res.data.length;i++){
-            if (data.name_py === res.data[i].name_py){
-              res.data[i].list.push(data);
-            }
+            dispatch(setmailList(res.data))
+          }else{
+            for(let i = 0;i<arr.length;i++){
+              if (arr[i].id == obj.id){
+                arr.splice(i,1);
+              }
+              bkGetWorkerWage(groupInfos, [obj,...arr]);
           }
         }
+      }
         dispatch(setUserList(res.data))
         setWorkerList(res.data);
         // 判断有就不存了存通讯录redux
@@ -1127,15 +1131,15 @@ export default function userForeman() {
       // group_info: id,
     }
     // bkGetWorker(id, true);
-    dispatch(setmailList([]));
-    setAddMemberDisplay(false)
+    // dispatch(setmailList([]));
+    // setAddMemberDisplay(false)
     // return;
     bkAddWorkerActiion(params).then(res=>{
       if(res.code === 200){
         // 叫后台返回id 姓名 电话
         const data = res.data;
         // 添加成功后重新获取设置数据
-        bkGetWorker(id, data);
+        bkGetWorker('',1,data);
         // ======= 测试无法测试
         // const data = JSON.parse(JSON.stringify(workerItem));
         // params.id = Math.random();

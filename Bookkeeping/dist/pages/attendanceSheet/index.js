@@ -56,7 +56,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AttendanceSheet.__proto__ || Object.getPrototypeOf(AttendanceSheet)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '考勤表'
-    }, _this.$usedState = ["$compid__211", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__253", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AttendanceSheet, [{
@@ -75,10 +75,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__211"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__253"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__211 = _genCompid2[0],
-          $compid__211 = _genCompid2[1];
+          $prevCompid__253 = _genCompid2[0],
+          $compid__253 = _genCompid2[1];
 
       // 月份
 
@@ -333,7 +333,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                           if (data[i].work[_k2].list.length == 1) {
                             var _hourData2 = {
                               work_time: data[i].work[_k2].list[0].work_time,
-                              over_time: data[i].work[_k2].list[0].over_time
+                              over_time: data[i].work[_k2].list[0].overtime
                             };
                             dayArrs[j].type.work = _hourData2;
                           } else if (data[i].work[_k2].list.length > 1) {
@@ -586,6 +586,8 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
               }
             }
           }
+          console.log(sumSum, 'sumSum');
+          console.log(unitNameSum, 'unitNameSum');
           var obj = {};
           obj.list = [];
           var sumObj = {
@@ -647,24 +649,20 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
           // }
           // 循环相加
           // 记工
-          console.log(jigongSum, 'jigongSum');
-          console.log(jigongSums, 'jigongSums');
           for (var _i2 = 0; _i2 < jigongSum.length; _i2++) {
             for (var _j = 0; _j < jigongSums.length; _j++) {
               if (jigongSum[_i2].date_num === jigongSums[_j].date_num) {
-                console.log(jigongSum[_i2], ' jigongSums[j]');
                 jigongSums[_j].total.work_time += parseInt(jigongSum[_i2].total.work_time);
                 jigongSums[_j].total.over_time += parseInt(jigongSum[_i2].total.over_time);
               }
             }
           }
-          console.log(jigongSums, '312321312');
           // 按天
           for (var _i3 = 0; _i3 < workSum.length; _i3++) {
             for (var _j2 = 0; _j2 < workSums.length; _j2++) {
               if (workSum[_i3].date_num === workSums[_j2].date_num) {
-                workSums[_j2].total.work_time += +workSum[_i3].total.work_time;
-                workSums[_j2].total.over_time += +workSum[_i3].total.over_time;
+                workSums[_j2].total.work_time += parseInt(workSum[_i3].total.work_time);
+                workSums[_j2].total.over_time += parseInt(workSum[_i3].total.over_time);
               }
             }
           }
@@ -677,8 +675,16 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
               }
             }
           }
+          //按量 daySums
+          for (var _i5 = 0; _i5 < daySums.length; _i5++) {
+            for (var _j4 = 0; _j4 < daySums.length; _j4++) {
+              if (daySums[_i5].date_num === borrowNumSums[_j4].date_num) {
+                daySums[_j4].total.borrow += +daySums[_i5].total.money;
+              }
+            }
+          }
           var dayArrItme = JSON.parse(JSON.stringify(dayArr));
-          for (var _i5 = 0; _i5 < dayArrItme.length; _i5++) {
+          for (var _i6 = 0; _i6 < dayArrItme.length; _i6++) {
             var _obj2 = {
               type: {
                 hour: {
@@ -695,9 +701,8 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
               }
             };
             // 记工
-            for (var _j4 = 0; _j4 < jigongSums.length; _j4++) {
-              if (dayArrItme[_i5].name === jigongSums[_j4].date_num) {
-                console.log(jigongSums, 'jigongSums');
+            for (var _j5 = 0; _j5 < jigongSums.length; _j5++) {
+              if (dayArrItme[_i6].name === jigongSums[_j5].date_num) {
                 // obj ={
                 //   name: jigongSums[j].date_num,
                 //   type:{
@@ -707,29 +712,30 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                 //     }
                 //   }
                 // }
-                console.log(jigongSums[_j4].total.work_time);
-                console.log(dayArrItme[_i5], 'dayArrItme[i]dayArrItme[i]');
-                _obj2.type.hour.over_time = parseInt(jigongSums[_j4].total.over_time).toFixed(2);
-                _obj2.type.hour.work_time = parseInt(jigongSums[_j4].total.work_time).toFixed(2);
+                // dayArrItme[i] = jigongSums[j];
+                // dayArrItme[i].type.hour.over_time = jigongSums[j].total.over_time
+                console.log(dayArrItme[_i6], 'dayArrItme[i]dayArrItme[i]');
+                _obj2.type.hour.over_time = parseInt(jigongSums[_j5].total.over_time).toFixed(2);
+                _obj2.type.hour.work_time = parseInt(jigongSums[_j5].total.work_time).toFixed(2);
                 // dayArrItme[i] = obj;
               }
             }
-            console.log(_obj2.type.hour, ' obj.type.hour');
+            console.log(_obj2, 'objobjobjobj');
             // 按天
-            for (var _j5 = 0; _j5 < workSums.length; _j5++) {
-              if (dayArrItme[_i5].name === workSums[_j5].date_num) {
-                _obj2.type.work.over_time = parseInt(workSums[_j5].total.over_time).toFixed(2);
-                _obj2.type.work.work_time = parseInt(workSums[_j5].total.work_time).toFixed(2);
+            for (var _j6 = 0; _j6 < workSums.length; _j6++) {
+              if (dayArrItme[_i6].name === workSums[_j6].date_num) {
+                _obj2.type.work.over_time = parseInt(workSums[_j6].total.over_time).toFixed(2);
+                _obj2.type.work.work_time = parseInt(workSums[_j6].total.work_time).toFixed(2);
               }
             }
             // 借支
-            for (var _j6 = 0; _j6 < borrowNumSums.length; _j6++) {
-              if (dayArrItme[_i5].name === borrowNumSums[_j6].date_num) {
-                console.log(borrowNumSums[_j6].total.borrow, '312312312');
-                _obj2.name = borrowNumSums[_j6].date_num, _obj2.type.borrow.money = borrowNumSums[_j6].total.borrow;
+            for (var _j7 = 0; _j7 < borrowNumSums.length; _j7++) {
+              if (dayArrItme[_i6].name === borrowNumSums[_j7].date_num) {
+                console.log(borrowNumSums[_j7].total.borrow, '312312312');
+                _obj2.name = borrowNumSums[_j7].date_num, _obj2.type.borrow.money = borrowNumSums[_j7].total.borrow;
               }
             }
-            dayArrItme[_i5] = _obj2;
+            dayArrItme[_i6] = _obj2;
           }
           setFixedTab([].concat(_toConsumableArray(fixedTabList), leftData, tatalArr));
           console.log(obj, 'obj');
@@ -771,9 +777,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose
-      }, $compid__211, $prevCompid__211);
+      }, $compid__253, $prevCompid__253);
       Object.assign(this.__state, {
-        $compid__211: $compid__211,
+        $compid__253: $compid__253,
         tebArr: tebArr,
         fixedTab: fixedTab,
         year: year,

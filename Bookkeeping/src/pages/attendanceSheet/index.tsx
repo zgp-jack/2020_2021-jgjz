@@ -230,7 +230,7 @@ export default function AttendanceSheet() {
                       if (data[i].work[k].list.length == 1) {
                         let hourData = {
                           work_time: data[i].work[k].list[0].work_time,
-                          over_time: data[i].work[k].list[0].over_time
+                          over_time: data[i].work[k].list[0].overtime
                         }
                         dayArrs[j].type.work = hourData;
                       } else if (data[i].work[k].list.length > 1) {
@@ -484,6 +484,8 @@ export default function AttendanceSheet() {
           }
         }
       }
+      console.log(sumSum,'sumSum')
+      console.log(unitNameSum,'unitNameSum')
       let obj:any = {};
       obj.list = [];
       let sumObj = {
@@ -545,24 +547,20 @@ export default function AttendanceSheet() {
       // }
       // 循环相加
       // 记工
-      console.log(jigongSum,'jigongSum');
-      console.log(jigongSums,'jigongSums')
       for (let i = 0; i < jigongSum.length;i++){
         for (let j = 0; j < jigongSums.length;j++){
           if (jigongSum[i].date_num === jigongSums[j].date_num){
-            console.log(jigongSum[i],' jigongSums[j]')
             jigongSums[j].total.work_time += (parseInt(jigongSum[i].total.work_time));
             jigongSums[j].total.over_time += (parseInt(jigongSum[i].total.over_time));
           }
         }
       }
-      console.log(jigongSums,'312321312')
       // 按天
       for (let i = 0; i < workSum.length; i++) {
         for (let j = 0; j < workSums.length; j++) {
           if (workSum[i].date_num === workSums[j].date_num) {
-            workSums[j].total.work_time += (+workSum[i].total.work_time);
-            workSums[j].total.over_time += (+workSum[i].total.over_time);
+            workSums[j].total.work_time += (parseInt(workSum[i].total.work_time));
+            workSums[j].total.over_time += (parseInt(workSum[i].total.over_time));
           }
         }
       }
@@ -572,6 +570,14 @@ export default function AttendanceSheet() {
           if (borrowNumSum[i].date_num === borrowNumSums[j].date_num) {
             // console.log(borrowNumSum[i].total.money,'borrowNumSum[i].total.money')
             borrowNumSums[j].total.borrow += (+borrowNumSum[i].total.money);
+          }
+        }
+      }
+      //按量 daySums
+      for (let i = 0; i < daySums.length; i++) {
+        for (let j = 0; j < daySums.length; j++) {
+          if (daySums[i].date_num === borrowNumSums[j].date_num) {
+            daySums[j].total.borrow += (+daySums[i].total.money);
           }
         }
       }
@@ -595,7 +601,6 @@ export default function AttendanceSheet() {
         // 记工
         for (let j = 0; j < jigongSums.length;j++){
           if (dayArrItme[i].name === jigongSums[j].date_num){
-            console.log(jigongSums,'jigongSums')
             // obj ={
             //   name: jigongSums[j].date_num,
             //   type:{
@@ -605,14 +610,15 @@ export default function AttendanceSheet() {
             //     }
             //   }
             // }
-            console.log(jigongSums[j].total.work_time)
+            // dayArrItme[i] = jigongSums[j];
+            // dayArrItme[i].type.hour.over_time = jigongSums[j].total.over_time
             console.log(dayArrItme[i],'dayArrItme[i]dayArrItme[i]')
             obj.type.hour.over_time = (parseInt(jigongSums[j].total.over_time)).toFixed(2);
             obj.type.hour.work_time = (parseInt(jigongSums[j].total.work_time)).toFixed(2);
             // dayArrItme[i] = obj;
           }
         }
-        console.log(obj.type.hour,' obj.type.hour')
+        console.log(obj,'objobjobjobj')
         // 按天
         for (let j = 0; j < workSums.length; j++) {
           if (dayArrItme[i].name === workSums[j].date_num) {
@@ -708,13 +714,21 @@ export default function AttendanceSheet() {
                       <View >
                         {val.name == 0 && <View>
                         {val.type.hour && val.type.hour.work_time && <View className='box-list-bao'>
-                          {val.type.hour.work_time && <View>{val.type.hour.work_time}个工</View>}
-                          {val.type.hour.over_time && <View>{val.type.hour.over_time}小时</View>}
+                          {/* {val.type.hour.work_time && */}
+                            <View>{val.type.hour.work_time}个工</View>
+                             {/* } */}
+                          {/* {val.type.hour.over_time && */}
+                            <View>{val.type.hour.over_time}小时</View>
+                             {/* } */}
                           </View>
                         }
                         {val.type.work && val.type.work.work_time && <View className='box-list-bao'>
-                          {val.type.work.work_time && <View>{val.type.work.work_time}个工</View>}
-                          {val.type.work.over_time && <View>{val.type.work.over_time}小时</View>}
+                          {/* {val.type.work.work_time &&  */}
+                          <View>{val.type.work.work_time}个工</View>
+                          {/* } */}
+                          {/* {val.type.work.over_time &&  */}
+                          <View>{val.type.work.over_time}小时</View>
+                          {/* } */}
                         </View>
                         }
                         {val.type.amount && <View className='box-list-bao'>
@@ -747,8 +761,12 @@ export default function AttendanceSheet() {
                             {val.type.amount &&<View className='box-list-bao'>
                               {val.type.amount.num && <View>{val.type.amount.num}</View>}
                               {(val.type.amount.sum || val.type.amount.unit_name) && <View>
-                                {val.type.amount.sum &&<View >{val.type.amount.sum}</View>}
-                                {val.type.amount.unit_name && <View >{val.type.amount.unit_name}</View>}
+                                {/* {val.type.amount.sum && */}
+                                <View >{val.type.amount.sum}</View>
+                                {/* // } */}
+                                {/* {val.type.amount.unit_name &&  */}
+                                <View >{val.type.amount.unit_name}</View>
+                                {/* } */}
                               </View>}
                             </View>}
                           {val.type.borrow && <View className='box-list-bao'>{val.type.borrow.money}</View>}

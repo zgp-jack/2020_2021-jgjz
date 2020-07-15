@@ -43,6 +43,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             getUserSessionKeyAction(res.code).then(res => {
               var sessionKey: string = res.session_key
               decodeSessionKey(sessionKey)
+              // callback && callback()
             })
           } else {
             Msg(`授权失败`)

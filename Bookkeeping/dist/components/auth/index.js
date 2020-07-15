@@ -100,6 +100,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 (0, _index.getUserSessionKeyAction)(res.code).then(function (res) {
                   var sessionKey = res.session_key;
                   decodeSessionKey(sessionKey);
+                  // callback && callback()
                 });
               } else {
                 (0, _index3.default)("\u6388\u6743\u5931\u8D25");
