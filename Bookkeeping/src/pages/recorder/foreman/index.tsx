@@ -289,7 +289,7 @@ export default function Foreman() {
                   // onClick={()=>{}}
                     // onTouchEnd={onTouchEnd}
                     // onTouchStart={onTouchStart}
-                    onLongPress={() =>(setWagesModalDisplay(true))}
+                    onLongPress={() => (handleOpenWagesModal(),setWagesModalDisplay(true))}
                     onClick={()=>handleWorkerItem(v)}
                     // onTouchStart={() => handleWorkerItem(v)} onLongPress={handleLongClick}
                   >

@@ -36,6 +36,7 @@ export default function Download() {
     Taro.downloadFile({
       url: `http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/`,
       header: {
+        'content-type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
         mid: userInfo.userId,
         token: userInfo.token,
         time: userInfo.tokenTime,
@@ -73,6 +74,7 @@ export default function Download() {
         Taro.downloadFile({
           url: `http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/`,
           header: {
+            'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
             mid: userInfo.userId,
             token: userInfo.token,
             time: userInfo.tokenTime,

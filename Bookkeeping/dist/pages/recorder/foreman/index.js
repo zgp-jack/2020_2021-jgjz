@@ -631,7 +631,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         var _$indexKey3 = "bbjzz" + __index5;
 
         _this2.anonymousFunc5Map[_$indexKey3] = function () {
-          return setWagesModalDisplay(true);
+          return handleOpenWagesModal(), setWagesModalDisplay(true);
         };
 
         var _$indexKey4 = "bcazz" + __index5;

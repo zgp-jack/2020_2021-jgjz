@@ -1232,6 +1232,7 @@ export default function userForeman() {
         NoSetData.push(data[i]);   
       }
     }
+    console.log([...NoSetData, ...setData],'[...NoSetData, ...setData][...NoSetData, ...setData]')
     // 设置人员
     setSetWorkList([...NoSetData, ...setData])
      // 一设置工资标准标准

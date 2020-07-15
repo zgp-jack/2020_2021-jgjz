@@ -107,6 +107,7 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
         _taroWeapp2.default.downloadFile({
           url: "http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/",
           header: {
+            'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
             mid: userInfo.userId,
             token: userInfo.token,
             time: userInfo.tokenTime,
@@ -144,6 +145,7 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
         _taroWeapp2.default.downloadFile({
           url: "http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/",
           header: {
+            'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
             mid: userInfo.userId,
             token: userInfo.token,
             time: userInfo.tokenTime,
