@@ -71,7 +71,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWater.__proto__ || Object.getPrototypeOf(FlowingWater)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记工流水'
-    }, _this.$usedState = ["data", "loopArray49", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["data", "loopArray79", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWater, [{
@@ -365,13 +365,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         return handleCheckboxBtn(1);
       };
 
-      var loopArray49 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
+      var loopArray79 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "jhzzz" + i;
+        var _$indexKey = "bdbzz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -379,23 +379,23 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
         var $loopState__temp4 = data.item && data.item.length > 0 ? v.$original.total_borrow && v.$original.total_borrow.toFixed(2) : null;
         var $loopState__temp6 = data.item && data.item.length > 0 ? v.$original.total_money && v.$original.total_money.toFixed(2) : null;
-        var $anonymousCallee__9 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
+        var $anonymousCallee__17 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "jizzz" + i + "-" + __index2;
+          var _$indexKey2 = "bdczz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "jjzzz" + i + "-" + __index2;
+          var _$indexKey3 = "bddzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "baazz" + i + "-" + __index2;
+          var _$indexKey4 = "bdezz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -412,29 +412,29 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "babzz" + i + "-" + __index2;
+          var _$indexKey5 = "bdfzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "baczz" + i + "-" + __index2;
+          var _$indexKey6 = "bdgzz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "badzzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bdhzzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
-              $prevCompid__54 = _genCompid2[0],
-              $compid__54 = _genCompid2[1];
+              $prevCompid__95 = _genCompid2[0],
+              $compid__95 = _genCompid2[1];
 
           v.$original.click && _taroWeapp.propsManager.set({
             "autoClose": false,
             "onOpened": _this2.anonymousFunc3.bind(_this2, _$indexKey3),
             "onClick": _this2.anonymousFunc4.bind(_this2, _$indexKey4),
             "options": $loopState__temp8
-          }, $compid__54, $prevCompid__54);
+          }, $compid__95, $prevCompid__95);
           return {
             _$indexKey2: _$indexKey2,
             _$indexKey3: _$indexKey3,
@@ -442,7 +442,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
             $loopState__temp8: $loopState__temp8,
             _$indexKey5: _$indexKey5,
             _$indexKey6: _$indexKey6,
-            $compid__54: $compid__54,
+            $compid__95: $compid__95,
             $original: val.$original
           };
         }) : [];
@@ -451,13 +451,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey: _$indexKey,
           $loopState__temp4: $loopState__temp4,
           $loopState__temp6: $loopState__temp6,
-          $anonymousCallee__9: $anonymousCallee__9,
+          $anonymousCallee__17: $anonymousCallee__17,
           $original: v.$original
         };
       }) : [];
       Object.assign(this.__state, {
         data: data,
-        loopArray49: loopArray49,
+        loopArray79: loopArray79,
         IMGCDNURL: _index4.IMGCDNURL,
         isCheckOut: isCheckOut,
         allcheck: allcheck,
@@ -2314,17 +2314,20 @@ function userForeman() {
       if (res.code === 200) {
         setMoneyList(res.data);
         // 判断页面上的是否设置工资标准
-        // if(identity ===1 ){
-        //   const data = JSON.parse(JSON.stringify(workerItem))
-        //   for(let i =0;i<data.length;i++){
-        //     for(let j=0;j<res.data.length;j++){
-        //       if (res.data[j].worker_id === data[i].id){
-        //         data[i].set = true;
-        //       }
-        //     }
-        //   }
-        //   setWorkerItem(data)
-        // }
+        if (identity === 1) {
+          var data = JSON.parse(JSON.stringify(workerItem));
+          console.log(data, 'data');
+          console.log(res.data, 'res.data');
+          for (var i = 0; i < data.length; i++) {
+            for (var j = 0; j < res.data.length; j++) {
+              if (res.data[j].worker_id === data[i].id) {
+                data[i].set = true;
+              }
+            }
+          }
+          console.log(data, 'data');
+          // setWorkerItem(data)
+        }
       } else {
         (0, _index3.default)(res.msg);
       }
@@ -2814,15 +2817,19 @@ function userForeman() {
     var data = JSON.parse(JSON.stringify(wageStandard));
     var item = JSON.parse(JSON.stringify(model));
     // 时间
-    var work_time = 0;
+    var times = 0;
     timeArr.map(function (v) {
       if (v.click) {
         if (v.num) {
-          work_time = v.num;
+          if (v.id !== 4) {
+            times = v.num;
+          } else {
+            times = 1 / data.work * v.num;
+          }
         }
       }
     });
-    var times = 1 / data.work * work_time;
+    // const times = 1/data.work * work_time;
     // 加班时间
     var overtime = 0;
     addWorkArr.map(function (v) {
@@ -3017,6 +3024,7 @@ function userForeman() {
         return;
       }
     }
+    console.log(params);
     // 记工(包工按量)
     (0, _index.bkAddBusinessAction)(params).then(function (res) {
       // 清除reducer
@@ -3076,11 +3084,11 @@ function userForeman() {
     setShow(false);
     setModel(data);
     setGroupInfo(groupInfo);
+    // 选择项目的时候先获取设置工资标准员工
+    bkGetWorkerWage(groupInfo);
     // 获取工人列表
     bkGetWorker(groupInfo);
     // return;
-    // 选择项目的时候先获取设置工资标准员工
-    bkGetWorkerWage(groupInfo);
   };
   // 添加班组成员选择
   var handleCheckbox = function handleCheckbox(e) {

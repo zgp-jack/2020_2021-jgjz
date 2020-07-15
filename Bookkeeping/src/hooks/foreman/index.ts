@@ -745,17 +745,21 @@ export default function userForeman() {
       if(res.code === 200){
         setMoneyList(res.data);
         // 判断页面上的是否设置工资标准
-        // if(identity ===1 ){
-        //   const data = JSON.parse(JSON.stringify(workerItem))
-        //   for(let i =0;i<data.length;i++){
-        //     for(let j=0;j<res.data.length;j++){
-        //       if (res.data[j].worker_id === data[i].id){
-        //         data[i].set = true;
-        //       }
-        //     }
-        //   }
-        //   setWorkerItem(data)
-        // }
+        if(identity ===1 ){
+          const data = JSON.parse(JSON.stringify(workerItem))
+          console.log(data,'data')
+          console.log(res.data,'res.data')
+          for(let i =0;i<data.length;i++){
+            for(let j=0;j<res.data.length;j++){
+              if (res.data[j].worker_id === data[i].id){
+                data[i].set = true;
+              }
+            }
+          }
+          
+          console.log(data,'data')
+          // setWorkerItem(data)
+        }
       }else{
         Msg(res.msg)
       }
@@ -1243,15 +1247,20 @@ export default function userForeman() {
     const data = JSON.parse(JSON.stringify(wageStandard));
     const item = JSON.parse(JSON.stringify(model));
     // 时间
-    let work_time:number=0;
+    let times:number=0;
     timeArr.map(v=>{
       if(v.click){
         if (v.num){
-          work_time = v.num;
+          if(v.id!==4){
+            times = v.num;
+            
+          }else{
+            times = 1 / data.work * v.num;
+          }
         }
       }
     })
-    const times = 1/data.work * work_time;
+    // const times = 1/data.work * work_time;
     // 加班时间
     let overtime:number=0;
     addWorkArr.map(v => {
@@ -1442,6 +1451,7 @@ export default function userForeman() {
         return
       }
     }
+    console.log(params)
     // 记工(包工按量)
     bkAddBusinessAction(params).then(res=>{
       // 清除reducer
@@ -1503,11 +1513,11 @@ export default function userForeman() {
     setShow(false)
     setModel(data)
     setGroupInfo(groupInfo)
+    // 选择项目的时候先获取设置工资标准员工
+    bkGetWorkerWage(groupInfo);
     // 获取工人列表
     bkGetWorker(groupInfo)
     // return;
-    // 选择项目的时候先获取设置工资标准员工
-    bkGetWorkerWage(groupInfo);
   }
   // 添加班组成员选择
   const handleCheckbox = (e)=>{

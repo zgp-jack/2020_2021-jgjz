@@ -27,6 +27,7 @@ export default function FlowingWaterDetails() {
         }
       })
     }
+    console.log(data,'datadata')
     let title;
     if (data.business_type === '1'){
       title ='点工'
@@ -89,13 +90,14 @@ export default function FlowingWaterDetails() {
     })
     
   }
+  console.log(obj,'obj')
   return(
     <View className='flowingWaterDetails'>
       <View className='top'>
-        {obj.business_type === '1' && <View className='top-name'>点工工钱</View>}
-        {obj.business_type === '2' && obj.type === '1'&& <View className='top-name'>包工(按天记)工钱</View>}
-        {obj.business_type === '2' && obj.type === '2' && <View className='top-name'>包工(按量记)工钱</View>}
-        {obj.business_type === '3' && <View className='top-name'>本次借支</View>}
+        {obj.business_type &&obj.business_type === '1' && <View className='top-name'>点工工钱</View>}
+        {obj.business_type && obj.business_type === '2' && obj.type === '1'&& <View className='top-name'>包工(按天记)工钱</View>}
+        {obj.business_type && obj.business_type === '2' && obj.type === '2' && <View className='top-name'>包工(按量记)工钱</View>}
+        {obj.business_type &&obj.business_type === '3' && <View className='top-name'>本次借支</View>}
         <View className='top-money'>¥{obj.money}</View>
         <View className='top-time'>{time}<Text>{week}</Text></View>
       </View>
@@ -105,7 +107,7 @@ export default function FlowingWaterDetails() {
           <View className='list-itme'><Text className='list-itme-title'>项目名称</Text>:<Text className='list-itme-content'>{obj.group_info||'-'}</Text></View>
           {obj.business_type === '3' && <View className='list-itme'><Text className='list-itme-title'>借支属于</Text>:<Text className='list-itme-content'>{obj.typeDes}</Text></View>}
           {/* 按天\点工 */}
-          {(obj.business_type === '2' && obj.type ==='1') || obj.business_type === '1' && 
+          {(obj.business_type === '2' && obj.type ==='1') || obj.business_type == '1' && 
           <View>
             <View className='list-itme'><Text className='list-itme-title'>上班时长</Text>:<Text className='list-itme-content'>{obj.work_time}个工（{obj.work_time*obj.worktime_define}小时）</Text></View>
             <View className='list-itme'><Text className='list-itme-title'>加班时长</Text>:<Text className='list-itme-content'>{(obj.worker_overtime/obj.overtime).toFixed(2) ||0}个工（{obj.overtime}小时)</Text></View>

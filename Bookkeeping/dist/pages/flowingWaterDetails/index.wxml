@@ -1,16 +1,16 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="flowingWaterDetails">
         <view class="top">
-            <block wx:if="{{obj.business_type === '1'}}">
+            <block wx:if="{{obj.business_type && obj.business_type === '1'}}">
                 <view class="top-name">点工工钱</view>
             </block>
-            <block wx:if="{{obj.business_type === '2' && obj.type === '1'}}">
+            <block wx:if="{{obj.business_type && obj.business_type === '2' && obj.type === '1'}}">
                 <view class="top-name">包工(按天记)工钱</view>
             </block>
-            <block wx:if="{{obj.business_type === '2' && obj.type === '2'}}">
+            <block wx:if="{{obj.business_type && obj.business_type === '2' && obj.type === '2'}}">
                 <view class="top-name">包工(按量记)工钱</view>
             </block>
-            <block wx:if="{{obj.business_type === '3'}}">
+            <block wx:if="{{obj.business_type && obj.business_type === '3'}}">
                 <view class="top-name">本次借支</view>
             </block>
             <view class="top-money">¥{{obj.money}}</view>
@@ -18,7 +18,7 @@
             </view>
         </view>
         <view class="list-content">
-            <at-list compid="{{$compid__44}}">
+            <at-list compid="{{$compid__93}}">
                 <view class="list-itme"><text class="list-itme-title">工人</text>:<text class="list-itme-content">{{obj.workername || '-'}}</text>
                 </view>
                 <view class="list-itme"><text class="list-itme-title">项目名称</text>:<text class="list-itme-content">{{obj.group_info || '-'}}</text>
@@ -30,7 +30,7 @@
                 <block>
                     <block wx:if="{{obj.business_type === '2' && obj.type === '1'}}">{{obj.business_type === '2' && obj.type === '1'}}</block>
                     <block wx:else>
-                        <block wx:if="{{obj.business_type === '1'}}">
+                        <block wx:if="{{obj.business_type == '1'}}">
                             <view>
                                 <view class="list-itme"><text class="list-itme-title">上班时长</text>:<text class="list-itme-content">{{obj.work_time}}个工（{{obj.work_time * obj.worktime_define}}小时）</text>
                                 </view>

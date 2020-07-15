@@ -306,7 +306,9 @@ export default function FlowingWater() {
                             {isCheckOut && <View><Checkbox checked={val.checkClick} className='checkbox' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
                         <View className=''>
                           <View>{val.workername||'-'}</View>
-                              <View className='content-list-subclass-left-title'>我在{val.group_info}对{val.workername||'-'}记了1笔包工</View>
+                              <View className='content-list-subclass-left-title'>我在{val.group_info}对{val.workername || '-'}记了1笔
+                              {val.business_type == '1' ? '记工' : (val.business_type == '2'?'包工':'借支') }
+                              </View>
                         </View>
                       </View>
                       <View className='content-list-subclass-money'>¥{val.money}></View>
