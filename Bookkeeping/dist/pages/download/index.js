@@ -119,11 +119,17 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
               success: function success(res) {
                 var savedFilePath = res.savedFilePath;
                 console.log(savedFilePath, 'savedFilePath');
+                // Taro.navigateTo({
+                //   url: `https://view.officeapps.live.com/op/view.aspx?src=${savedFilePath}`
+                // })
                 _taroWeapp2.default.openDocument({
                   filePath: savedFilePath,
                   fileType: 'xlsx',
                   success: function success(res) {
                     console.log('打开文档成功');
+                    _taroWeapp2.default.navigateTo({
+                      url: "/pages/url/index?url=" + savedFilePath
+                    });
                   },
                   fail: function fail(res) {
                     console.log(res);
@@ -172,21 +178,6 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
             uuid: userInfo.uuid
           },
           success: function success(res) {
-            // var filePath = res.tempFilePath;
-            // console.log(filePath);
-            // Taro.openDocument({
-            //   filePath: filePath,
-            //   fileType:'xlsx',
-            //   success: function (res) {
-            //     console.log('打开文档成功')
-            //   },
-            //   fail: function (res) {
-            //     console.log(res);
-            //   },
-            //   complete: function (res) {
-            //     console.log(res);
-            //   }
-            // })
             _taroWeapp2.default.saveFile({
               tempFilePath: res.tempFilePath,
               success: function success(res) {
@@ -194,8 +185,11 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
                 _taroWeapp2.default.openDocument({
                   filePath: savedFilePath,
                   fileType: 'xlsx',
-                  success: function success(res) {
+                  success: function success(val) {
                     console.log('打开文档成功');
+                    _taroWeapp2.default.navigateTo({
+                      url: "/pages/url/index?url=" + savedFilePath
+                    });
                   },
                   fail: function fail(res) {
                     console.log(res);

@@ -17,7 +17,7 @@
                                     </view>
                                 </block>
                             </view>
-                            <view bindtap="funPrivateidzzz" class="wagesModal-content-close">X</view>
+                            <view bindtap="funPrivateigzzz" class="wagesModal-content-close">X</view>
                         </view>
                     </view>
                     <view class="content">
@@ -27,13 +27,13 @@
                                     <view class="worker-title">
                                         <view>选择工人(已选择[{{clickModalNum}}]人)</view>
                                         <view>
-                                            <view class="allChange" bindtap="funPrivateiezzz">全选</view>
+                                            <view class="allChange" bindtap="funPrivateihzzz">全选</view>
                                             <view class="change">(已选{{clickModalNum}}人)</view>
                                         </view>
                                     </view>
                                     <block wx:if="{{data && data.length <= 12}}">
                                         <view class="wagesModal-personnel">
-                                            <view class="wagesModal-personnel-box" wx:key="id" bindtap="anonymousFunc4" wx:for="{{loopArray42}}" wx:for-item="v" wx:for-index="__index4" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                                            <view class="wagesModal-personnel-box" wx:key="id" bindtap="anonymousFunc4" wx:for="{{loopArray43}}" wx:for-item="v" wx:for-index="__index4" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                                                 <view class="background">
                                                     <view class="{{v.$loopState__temp2}}">{{v.$loopState__temp4}}</view>
                                                     <view class="names">{{v.$original.name}}</view>
@@ -45,7 +45,7 @@
                                     <block wx:if="{{data && data.length > 12}}">
                                         <view>
                                             <view class="wagesModal-personnel">
-                                                <view class="wagesModal-personnel-box" wx:key="id" wx:for="{{loopArray43}}" wx:for-item="v" wx:for-index="_anonIdx2">
+                                                <view class="wagesModal-personnel-box" wx:key="id" wx:for="{{loopArray44}}" wx:for-item="v" wx:for-index="_anonIdx2">
                                                     <view class="wagesModal-personnel-box-list">{{v.$loopState__temp6}}</view>
                                                     <view>{{v.$original.name}}</view>
                                                 </view>
@@ -58,10 +58,10 @@
                                 <view class="wagesModal-standard">
                                     <view class="wagesModal-standard-flex">
                                         <view>工资标准</view>
-                                        <view class="wagesModal-standard-flex-add" bindtap="funPrivateigzzz">+添加其他标准</view>
+                                        <view class="wagesModal-standard-flex-add" bindtap="funPrivateijzzz">+添加其他标准</view>
                                     </view>
                                     <view class="wagesModal-standard-box">
-                                        <view class="wagesModal-standard-box-list" wx:for="{{loopArray44}}" wx:for-item="v" wx:for-index="i">
+                                        <view class="wagesModal-standard-box-list" wx:for="{{loopArray45}}" wx:for-item="v" wx:for-index="i">
                                             <view class="wagesModal-standard-box-list-title">{{i == 0 ? '默认工资模板1' : '默认工资模板2'}}</view>
                                             <view class="wagesModal-standard-box-list-flex">
                                                 <view>
@@ -78,7 +78,7 @@
                                         </view>
                                     </view>
                                     <view class="wagesModal-footer">
-                                        <view class="wagesModal-footer-btn" bindtap="funPrivateijzzz">确定设置({{clickModalNum}}人)</view>
+                                        <view class="wagesModal-footer-btn" bindtap="funPrivatejczzz">确定设置({{clickModalNum}}人)</view>
                                     </view>
                                 </view>
                             </view>
@@ -90,7 +90,7 @@
                                         <view class="noData-no">暂未设置工资标准</view>
                                     </view>
                                 </block>
-                                <view class="wagesModal-standard-box-list" wx:key="id" wx:for="{{loopArray45}}" wx:for-item="v" wx:for-index="__index7">
+                                <view class="wagesModal-standard-box-list" wx:key="id" wx:for="{{loopArray46}}" wx:for-item="v" wx:for-index="__index7">
                                     <view class="wagesModal-standard-box-list-look-title">{{v.$original.worker_name}}</view>
                                     <view class="wagesModal-standard-box-list-flex">
                                         <view class="wagesModal-standard-box-list-flex-look-left">

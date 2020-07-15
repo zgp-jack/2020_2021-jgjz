@@ -48,11 +48,17 @@ export default function Download() {
           success: function (res) {
             const savedFilePath:any = res.savedFilePath;
             console.log(savedFilePath,'savedFilePath')
+            // Taro.navigateTo({
+            //   url: `https://view.officeapps.live.com/op/view.aspx?src=${savedFilePath}`
+            // })
             Taro.openDocument({
             filePath: savedFilePath,
             fileType: 'xlsx',
             success: function (res) {
               console.log('打开文档成功')
+              Taro.navigateTo({
+                url:`/pages/url/index?url=${savedFilePath}`
+              })
             },
             fail: function (res) {
               console.log(res);
@@ -101,21 +107,6 @@ export default function Download() {
             uuid: userInfo.uuid,
           },
           success: function (res) {
-            // var filePath = res.tempFilePath;
-            // console.log(filePath);
-            // Taro.openDocument({
-            //   filePath: filePath,
-            //   fileType:'xlsx',
-            //   success: function (res) {
-            //     console.log('打开文档成功')
-            //   },
-            //   fail: function (res) {
-            //     console.log(res);
-            //   },
-            //   complete: function (res) {
-            //     console.log(res);
-            //   }
-            // })
             Taro.saveFile({
               tempFilePath: res.tempFilePath,
               success: function (res) {
@@ -123,8 +114,11 @@ export default function Download() {
                 Taro.openDocument({
                   filePath: savedFilePath,
                   fileType: 'xlsx',
-                  success: function (res) {
+                  success: function (val) {
                     console.log('打开文档成功')
+                    Taro.navigateTo({
+                      url: `/pages/url/index?url=${savedFilePath}`
+                    })
                   },
                   fail: function (res) {
                     console.log(res);

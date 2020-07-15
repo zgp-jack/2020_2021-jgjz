@@ -655,7 +655,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Notepad.__proto__ || Object.getPrototypeOf(Notepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["loopArray34", "$compid__43", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray34", "$compid__42", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Notepad, [{
@@ -676,10 +676,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__43"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__42"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__43 = _genCompid2[0],
-          $compid__43 = _genCompid2[1];
+          $prevCompid__42 = _genCompid2[0],
+          $compid__42 = _genCompid2[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 输入框
@@ -874,13 +874,13 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "gfzzz" + __index2;
+        var _$indexKey = "gezzz" + __index2;
 
         _this2.anonymousFunc2Map[_$indexKey] = function () {
           return userRouteJump("/pages/notepadDetails/index?id=" + v.$original.id);
         };
 
-        var _$indexKey2 = "ggzzz" + __index2;
+        var _$indexKey2 = "gfzzz" + __index2;
 
         _this2.anonymousFunc3Map[_$indexKey2] = function (e) {
           e.stopPropagation();handleCheckbox(v.$original);
@@ -897,10 +897,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
         "value": val,
         "onChange": this.anonymousFunc0,
         "onActionClick": this.anonymousFunc1
-      }, $compid__43, $prevCompid__43);
+      }, $compid__42, $prevCompid__42);
       Object.assign(this.__state, {
         loopArray34: loopArray34,
-        $compid__43: $compid__43,
+        $compid__42: $compid__42,
         data: data,
         busy: busy,
         del: del,
