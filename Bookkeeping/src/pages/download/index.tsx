@@ -43,21 +43,40 @@ export default function Download() {
         uuid: userInfo.uuid,
       },
       success: function (res) {
-        var filePath = res.tempFilePath;
-        console.log(filePath);
-        Taro.openDocument({
-          filePath: filePath,
-          fileType: 'xlsx',
+        Taro.saveFile({
+          tempFilePath: res.tempFilePath,
           success: function (res) {
-            console.log('打开文档成功')
-          },
-          fail: function (res) {
-            console.log(res);
-          },
-          complete: function (res) {
-            console.log(res);
+            const savedFilePath:any = res.savedFilePath;
+            Taro.openDocument({
+            filePath: savedFilePath,
+            fileType: 'xlsx',
+            success: function (res) {
+              console.log('打开文档成功')
+            },
+            fail: function (res) {
+              console.log(res);
+            },
+            complete: function (res) {
+              console.log(res);
+            }
+            })
           }
         })
+        // var filePath = res.tempFilePath;
+        // console.log(filePath);
+        // Taro.openDocument({
+        //   filePath: filePath,
+        //   fileType: 'xlsx',
+        //   success: function (res) {
+        //     console.log('打开文档成功')
+        //   },
+        //   fail: function (res) {
+        //     console.log(res);
+        //   },
+        //   complete: function (res) {
+        //     console.log(res);
+        //   }
+        // })
       },
       fail: function (res) {
         console.log('文件下载失败');
@@ -81,19 +100,38 @@ export default function Download() {
             uuid: userInfo.uuid,
           },
           success: function (res) {
-            var filePath = res.tempFilePath;
-            console.log(filePath);
-            Taro.openDocument({
-              filePath: filePath,
-              fileType:'xlsx',
+            // var filePath = res.tempFilePath;
+            // console.log(filePath);
+            // Taro.openDocument({
+            //   filePath: filePath,
+            //   fileType:'xlsx',
+            //   success: function (res) {
+            //     console.log('打开文档成功')
+            //   },
+            //   fail: function (res) {
+            //     console.log(res);
+            //   },
+            //   complete: function (res) {
+            //     console.log(res);
+            //   }
+            // })
+            Taro.saveFile({
+              tempFilePath: res.tempFilePath,
               success: function (res) {
-                console.log('打开文档成功')
-              },
-              fail: function (res) {
-                console.log(res);
-              },
-              complete: function (res) {
-                console.log(res);
+                const savedFilePath: any = res.savedFilePath;
+                Taro.openDocument({
+                  filePath: savedFilePath,
+                  fileType: 'xlsx',
+                  success: function (res) {
+                    console.log('打开文档成功')
+                  },
+                  fail: function (res) {
+                    console.log(res);
+                  },
+                  complete: function (res) {
+                    console.log(res);
+                  }
+                })
               }
             })
           },

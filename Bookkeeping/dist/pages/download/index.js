@@ -114,21 +114,40 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
             uuid: userInfo.uuid
           },
           success: function success(res) {
-            var filePath = res.tempFilePath;
-            console.log(filePath);
-            _taroWeapp2.default.openDocument({
-              filePath: filePath,
-              fileType: 'xlsx',
+            _taroWeapp2.default.saveFile({
+              tempFilePath: res.tempFilePath,
               success: function success(res) {
-                console.log('打开文档成功');
-              },
-              fail: function fail(res) {
-                console.log(res);
-              },
-              complete: function complete(res) {
-                console.log(res);
+                var savedFilePath = res.savedFilePath;
+                _taroWeapp2.default.openDocument({
+                  filePath: savedFilePath,
+                  fileType: 'xlsx',
+                  success: function success(res) {
+                    console.log('打开文档成功');
+                  },
+                  fail: function fail(res) {
+                    console.log(res);
+                  },
+                  complete: function complete(res) {
+                    console.log(res);
+                  }
+                });
               }
             });
+            // var filePath = res.tempFilePath;
+            // console.log(filePath);
+            // Taro.openDocument({
+            //   filePath: filePath,
+            //   fileType: 'xlsx',
+            //   success: function (res) {
+            //     console.log('打开文档成功')
+            //   },
+            //   fail: function (res) {
+            //     console.log(res);
+            //   },
+            //   complete: function (res) {
+            //     console.log(res);
+            //   }
+            // })
           },
           fail: function fail(res) {
             console.log('文件下载失败');
@@ -152,19 +171,38 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
             uuid: userInfo.uuid
           },
           success: function success(res) {
-            var filePath = res.tempFilePath;
-            console.log(filePath);
-            _taroWeapp2.default.openDocument({
-              filePath: filePath,
-              fileType: 'xlsx',
+            // var filePath = res.tempFilePath;
+            // console.log(filePath);
+            // Taro.openDocument({
+            //   filePath: filePath,
+            //   fileType:'xlsx',
+            //   success: function (res) {
+            //     console.log('打开文档成功')
+            //   },
+            //   fail: function (res) {
+            //     console.log(res);
+            //   },
+            //   complete: function (res) {
+            //     console.log(res);
+            //   }
+            // })
+            _taroWeapp2.default.saveFile({
+              tempFilePath: res.tempFilePath,
               success: function success(res) {
-                console.log('打开文档成功');
-              },
-              fail: function fail(res) {
-                console.log(res);
-              },
-              complete: function complete(res) {
-                console.log(res);
+                var savedFilePath = res.savedFilePath;
+                _taroWeapp2.default.openDocument({
+                  filePath: savedFilePath,
+                  fileType: 'xlsx',
+                  success: function success(res) {
+                    console.log('打开文档成功');
+                  },
+                  fail: function fail(res) {
+                    console.log(res);
+                  },
+                  complete: function complete(res) {
+                    console.log(res);
+                  }
+                });
               }
             });
           },

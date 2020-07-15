@@ -655,7 +655,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Notepad.__proto__ || Object.getPrototypeOf(Notepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["loopArray34", "$compid__43", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray35", "$compid__43", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Notepad, [{
@@ -869,7 +869,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
       this.anonymousFunc6 = handleAllCheckbox;
       this.anonymousFunc7 = bkDeleteNotePad;
       this.anonymousFunc8 = handleClose;
-      var loopArray34 = data.length > 0 && !busy ? data.map(function (v, __index2) {
+      var loopArray35 = data.length > 0 && !busy ? data.map(function (v, __index2) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
@@ -899,7 +899,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
         "onActionClick": this.anonymousFunc1
       }, $compid__43, $prevCompid__43);
       Object.assign(this.__state, {
-        loopArray34: loopArray34,
+        loopArray35: loopArray35,
         $compid__43: $compid__43,
         data: data,
         busy: busy,
