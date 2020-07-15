@@ -118,6 +118,7 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
               tempFilePath: res.tempFilePath,
               success: function success(res) {
                 var savedFilePath = res.savedFilePath;
+                console.log(savedFilePath, 'savedFilePath');
                 _taroWeapp2.default.openDocument({
                   filePath: savedFilePath,
                   fileType: 'xlsx',

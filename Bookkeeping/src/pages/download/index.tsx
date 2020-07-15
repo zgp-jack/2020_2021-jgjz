@@ -47,6 +47,7 @@ export default function Download() {
           tempFilePath: res.tempFilePath,
           success: function (res) {
             const savedFilePath:any = res.savedFilePath;
+            console.log(savedFilePath,'savedFilePath')
             Taro.openDocument({
             filePath: savedFilePath,
             fileType: 'xlsx',

@@ -260,7 +260,10 @@ export default function Index() {
   }
   // 点击提示
   const handelTps = ()=>{
-    bkUpdateBusinessNewAction('').then(res=>{
+    let params = {
+      identity: type
+    }
+    bkUpdateBusinessNewAction(params).then(res=>{
       if(res.code === 200){
         Msg(`您完成了[ ${res.data} ]条记工信息的备份，数据安全不丢失~`);
         setShow(true)
