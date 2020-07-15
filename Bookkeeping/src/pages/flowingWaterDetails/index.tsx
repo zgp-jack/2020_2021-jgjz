@@ -117,7 +117,7 @@ export default function FlowingWaterDetails() {
           {/* 按天\点工 */}
           {((obj.business_type == '2' && obj.type ==='1') || obj.business_type == '1') && 
           <View>
-            <View className='list-itme'><Text className='list-itme-title'>上班时长</Text>:<Text className='list-itme-content'>{obj.work_time}个工（{obj.work_time*obj.worktime_define}小时）</Text></View>
+            <View className='list-itme'><Text className='list-itme-title'>上班时长</Text>:<Text className='list-itme-content'>{obj.work_time}个工（{obj.work_time_hour}小时）</Text></View>
             <View className='list-itme'><Text className='list-itme-title'>加班时长</Text>:<Text className='list-itme-content'>{obj.addTime}个工（{obj.overtime}小时)</Text></View>
             <View className='wages'>
               <View className='wages-title'>工资标准</View>

@@ -874,13 +874,13 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "gezzz" + __index2;
+        var _$indexKey = "gfzzz" + __index2;
 
         _this2.anonymousFunc2Map[_$indexKey] = function () {
           return userRouteJump("/pages/notepadDetails/index?id=" + v.$original.id);
         };
 
-        var _$indexKey2 = "gfzzz" + __index2;
+        var _$indexKey2 = "ggzzz" + __index2;
 
         _this2.anonymousFunc3Map[_$indexKey2] = function (e) {
           e.stopPropagation();handleCheckbox(v.$original);
@@ -2846,14 +2846,17 @@ function userForeman() {
     var data = JSON.parse(JSON.stringify(wageStandard));
     var item = JSON.parse(JSON.stringify(model));
     // 时间
-    var times = 0;
+    var times = 0,
+        work_time_hour = 0;
     timeArr.map(function (v) {
       if (v.click) {
         if (v.num) {
           if (v.id !== 4) {
             times = v.num;
+            work_time_hour = data.work * v.num;
           } else {
             times = 1 / data.work * v.num;
+            work_time_hour = v.num;
           }
         }
       }
@@ -2952,7 +2955,8 @@ function userForeman() {
         // 工人id
         workers: workers,
         overtime: overtime,
-        money: item.workersWages
+        money: item.workersWages,
+        work_time_hour: work_time_hour
       };
     } else if (tabData.id == 2) {
       // 按量
@@ -2986,7 +2990,8 @@ function userForeman() {
           unit: unit,
           unit_num: item.amount,
           unit_price: item.price,
-          money: item.wages
+          money: item.wages,
+          work_time_hour: work_time_hour
         };
       } else {
         // 按天
@@ -3011,7 +3016,8 @@ function userForeman() {
           type: 1,
           money: '',
           work_time: times,
-          overtime: overtime
+          overtime: overtime,
+          work_time_hour: work_time_hour
         };
       }
     } else if (tabData.id === 3) {
@@ -3034,7 +3040,8 @@ function userForeman() {
         // 工人id
         workers: workers,
         type: radioType,
-        money: item.borrowing
+        money: item.borrowing,
+        work_time_hour: work_time_hour
       };
     }
     // 工人的时候要先设置工资标准

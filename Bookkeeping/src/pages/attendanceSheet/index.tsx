@@ -493,7 +493,9 @@ export default function AttendanceSheet() {
             sum: sumSum,
             unit_name:unitNameSum
           },
-          borrow: borrowSum,
+          borrow: {
+            money: borrowSum
+          },
           hour: { work_time: hourWorkTimeSum.toFixed(2), over_time: hourOverTimeSum },
           work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum }
         }
@@ -573,12 +575,14 @@ export default function AttendanceSheet() {
         let obj:any = {
           type:{
             hour:{
-              over_time:'',
+              overtime:'',
               work_time:'',
             },
-            borrow:'',
+            borrow:{
+              money:'',
+            },
             work:{
-              over_time: '',
+              overtime: '',
               work_time: '',
             }
           }
@@ -595,7 +599,7 @@ export default function AttendanceSheet() {
             //     }
             //   }
             // }
-            obj.type.hour.over_time= jigongSums[j].total.over_time;
+            obj.type.hour.overtime= jigongSums[j].total.over_time;
             obj.type.hour.work_time = jigongSums[j].total.work_time;
             // dayArrItme[i] = obj;
           }
@@ -603,15 +607,16 @@ export default function AttendanceSheet() {
         // 按天
         for (let j = 0; j < workSums.length; j++) {
           if (dayArrItme[i].name === workSums[j].date_num) {
-            obj.type.work.over_time = workSums[j].total.over_time;
+            obj.type.work.overtime = workSums[j].total.over_time;
             obj.type.work.work_time = workSums[j].total.work_time;
           }
         }
         // 借支
         for (let j = 0; j < borrowNumSums.length; j++) {
           if (dayArrItme[i].name === borrowNumSums[j].date_num) {
+            console.log(borrowNumSums[j].total.borrow,'312312312')
             obj.name= borrowNumSums[j].date_num,
-            obj.type.borrow = borrowNumSums[j].total.borrow;
+              obj.type.borrow.money = borrowNumSums[j].total.borrow;
           }
         }
         dayArrItme[i] = obj;
@@ -722,7 +727,7 @@ export default function AttendanceSheet() {
                             </View>}
                             {val.type.work && <View className='box-list-bao'>
                               {val.type.work.num && <View>{val.type.work.num}</View>}
-                              {(val.type.work.work_time || val.type.work.over_time) &&
+                              {(val.type.work.work_time || val.type.work.overtime) &&
                                 <View>
                                   <View>{val.type.work.work_time}个工</View>
                                   <View>{val.type.work.over_time}小时</View>

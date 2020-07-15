@@ -1266,19 +1266,21 @@ export default function userForeman() {
     const data = JSON.parse(JSON.stringify(wageStandard));
     const item = JSON.parse(JSON.stringify(model));
     // 时间
-    let times:number=0;
+    let times: number = 0, work_time_hour=0;
     timeArr.map(v=>{
       if(v.click){
         if (v.num){
           if(v.id!==4){
             times = v.num;
-            
+            work_time_hour = data.work * v.num;
           }else{
             times = 1 / data.work * v.num;
+            work_time_hour= v.num;
           }
         }
       }
     })
+    
     // const times = 1/data.work * work_time;
     // 加班时间
     let overtime:number=0;
@@ -1370,6 +1372,7 @@ export default function userForeman() {
         workers,
         overtime,
         money: item.workersWages,
+        work_time_hour,
       }
     } else if (tabData.id == 2){
       // 按量
@@ -1404,6 +1407,7 @@ export default function userForeman() {
           unit_num: item.amount,
           unit_price: item.price,
           money: item.wages,
+          work_time_hour,
         }
       }else{
         // 按天
@@ -1429,6 +1433,7 @@ export default function userForeman() {
           money: '',
           work_time: times,
           overtime,
+          work_time_hour,
         }
       }
     }else if(tabData.id === 3){
@@ -1452,6 +1457,7 @@ export default function userForeman() {
         workers,
         type: radioType,
         money: item.borrowing,
+        work_time_hour
       }
     }
     // 工人的时候要先设置工资标准

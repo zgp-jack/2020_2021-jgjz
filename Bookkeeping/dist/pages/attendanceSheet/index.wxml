@@ -105,7 +105,7 @@
                                                         <block wx:if="{{val.type.work.num}}">
                                                             <view>{{val.type.work.num}}</view>
                                                         </block>
-                                                        <block wx:if="{{val.type.work.work_time || val.type.work.over_time}}">
+                                                        <block wx:if="{{val.type.work.work_time || val.type.work.overtime}}">
                                                             <view>
                                                                 <view>{{val.type.work.work_time}}个工</view>
                                                                 <view>{{val.type.work.over_time}}小时</view>
@@ -155,6 +155,6 @@
                 </view>
             </view>
         </view>
-        <calendar-modal compid="{{$compid__67}}"></calendar-modal>
+        <calendar-modal compid="{{$compid__137}}"></calendar-modal>
     </view>
 </block>

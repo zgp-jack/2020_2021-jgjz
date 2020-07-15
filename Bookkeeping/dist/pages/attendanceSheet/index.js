@@ -56,7 +56,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AttendanceSheet.__proto__ || Object.getPrototypeOf(AttendanceSheet)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '考勤表'
-    }, _this.$usedState = ["$compid__67", "fixedTab", "tebArr", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__137", "fixedTab", "tebArr", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AttendanceSheet, [{
@@ -75,10 +75,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__67"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__137"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__67 = _genCompid2[0],
-          $compid__67 = _genCompid2[1];
+          $prevCompid__137 = _genCompid2[0],
+          $compid__137 = _genCompid2[1];
 
       // 月份
 
@@ -595,7 +595,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                 sum: sumSum,
                 unit_name: unitNameSum
               },
-              borrow: borrowSum,
+              borrow: {
+                money: borrowSum
+              },
               hour: { work_time: hourWorkTimeSum.toFixed(2), over_time: hourOverTimeSum },
               work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum }
             }
@@ -675,12 +677,14 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
             var _obj2 = {
               type: {
                 hour: {
-                  over_time: '',
+                  overtime: '',
                   work_time: ''
                 },
-                borrow: '',
+                borrow: {
+                  money: ''
+                },
                 work: {
-                  over_time: '',
+                  overtime: '',
                   work_time: ''
                 }
               }
@@ -697,7 +701,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                 //     }
                 //   }
                 // }
-                _obj2.type.hour.over_time = jigongSums[_j4].total.over_time;
+                _obj2.type.hour.overtime = jigongSums[_j4].total.over_time;
                 _obj2.type.hour.work_time = jigongSums[_j4].total.work_time;
                 // dayArrItme[i] = obj;
               }
@@ -705,14 +709,15 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
             // 按天
             for (var _j5 = 0; _j5 < workSums.length; _j5++) {
               if (dayArrItme[_i8].name === workSums[_j5].date_num) {
-                _obj2.type.work.over_time = workSums[_j5].total.over_time;
+                _obj2.type.work.overtime = workSums[_j5].total.over_time;
                 _obj2.type.work.work_time = workSums[_j5].total.work_time;
               }
             }
             // 借支
             for (var _j6 = 0; _j6 < borrowNumSums.length; _j6++) {
               if (dayArrItme[_i8].name === borrowNumSums[_j6].date_num) {
-                _obj2.name = borrowNumSums[_j6].date_num, _obj2.type.borrow = borrowNumSums[_j6].total.borrow;
+                console.log(borrowNumSums[_j6].total.borrow, '312312312');
+                _obj2.name = borrowNumSums[_j6].date_num, _obj2.type.borrow.money = borrowNumSums[_j6].total.borrow;
               }
             }
             dayArrItme[_i8] = _obj2;
@@ -753,9 +758,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose
-      }, $compid__67, $prevCompid__67);
+      }, $compid__137, $prevCompid__137);
       Object.assign(this.__state, {
-        $compid__67: $compid__67,
+        $compid__137: $compid__137,
         fixedTab: fixedTab,
         tebArr: tebArr,
         year: year,
