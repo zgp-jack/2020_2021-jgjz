@@ -494,8 +494,8 @@ export default function AttendanceSheet() {
             unit_name:unitNameSum
           },
           borrow: borrowSum,
-          hour: { work_time: hourWorkTimeSum, over_time: hourOverTimeSum },
-          work: { work_time: workWorkTimeSum, over_time: workOverTimeSum }
+          hour: { work_time: hourWorkTimeSum.toFixed(2), over_time: hourOverTimeSum },
+          work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum }
         }
       }
       obj.list.push(sumObj);
@@ -692,7 +692,7 @@ export default function AttendanceSheet() {
                     {val.type &&
                       <View >
                         {val.name == 0 && <View>
-                        {val.type.hour && <View className='box-list-bao'>
+                        {val.type.hour && val.type.hour.work_time && <View className='box-list-bao'>
                           {val.type.hour.work_time && <View>{val.type.hour.work_time}个工</View>}
                           {val.type.hour.over_time && <View>{val.type.hour.over_time}小时</View>}
                           </View>

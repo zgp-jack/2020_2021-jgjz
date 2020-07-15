@@ -237,6 +237,9 @@ export default function userForeman() {
   const [clickModalNum, setClickModalNum] = useState<number>(0)
   // 刷新
   const [refresh,setRefresh] = useState<boolean>(false)
+  // 触摸时间设置
+  const [endTime, setEndTime] = useState<number>();
+  const [startTime,setStartTime] = useState<number>()
   // 日历
   // 日历
   const [calendarModalDisplay, setCalendarModalDisplay] = useState<boolean>(false)
@@ -286,6 +289,7 @@ export default function userForeman() {
     // 判断选择回来 
     if (useSelectorItem.workerList.length > 0) {
       if (identity === 2){
+        console.log(useSelectorItem.workerList,'返回')
         setForeman(useSelectorItem.workerList);
         setForemanTitle(useSelectorItem.workerList[0].name);
         return;
@@ -1913,7 +1917,8 @@ export default function userForeman() {
     }
     const data = JSON.parse(JSON.stringify(workerItem));
     // 借支对时候全部都可以点
-    if (recorderType === 3){
+    const id = JSON.parse(JSON.stringify(contractor));
+    if (recorderType === 3 || (recorderType === 2 && id ===1 )){
       for (let i = 0; i < data.length; i++) {
         if (v.id === data[i].id) {
             data[i].click = !data[i].click
@@ -1927,25 +1932,26 @@ export default function userForeman() {
       }
       setClickNum(numData.length);
       setWorkerItem(data);
-      return;
-    }
-    for(let i=0;i<data.length;i++){
-      if(v.id === data[i].id){
-        if(v.set){
-          data[i].click = !data[i].click
-        }else{
-          handleOpenWagesModal();
+      // return;
+    }else{
+      for(let i=0;i<data.length;i++){
+        if(v.id === data[i].id){
+          if(v.set){
+            data[i].click = !data[i].click
+          }else{
+            handleOpenWagesModal();
+          }
         }
       }
-    }
-    let numData:any[]=[];
-    for(let i =0;i<data.length;i++){
-      if(data[i].click){
-        numData.push(data[i])
+      let numData:any[]=[];
+      for(let i =0;i<data.length;i++){
+        if(data[i].click){
+          numData.push(data[i])
+        }
       }
+      setClickNum(numData.length);
+      setWorkerItem(data);
     }
-    setClickNum(numData.length);
-    setWorkerItem(data);
   }
   // 成员全选
   const handleAllChange = ()=>{
@@ -1972,6 +1978,7 @@ export default function userForeman() {
   }
   // 长按
   const handleLongClick = ()=>{
+    console.log(3221321,'sss')
     setWageStandardDisplay(true)
   }
   // 全选
@@ -2063,6 +2070,23 @@ export default function userForeman() {
   const onScrollToLower = ()=>{
     let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
     getMonthDaysCurrent(date);
+  }
+  // 触摸结束
+  const onTouchEnd = (e)=>{
+    console.log(e,231)
+    const endTime = e.timeStamp;
+    setEndTime(endTime)
+  }
+  // 触摸开始
+  const onTouchStart= (e)=>{
+    console.log(e,1);
+    const startTime = e.timeStamp;
+    setStartTime(startTime)
+  }
+  // 工人长按
+  const onLongPress = ()=>{
+    console.log(23123)
+    setWageStandardDisplay(true)
   }
   return {
     model,
@@ -2184,5 +2208,8 @@ export default function userForeman() {
     setCalendarModalDisplay,
     onScrollToUpper,
     onScrollToLower,
+    onTouchEnd,
+    onTouchStart,
+    onLongPress
   }
 }

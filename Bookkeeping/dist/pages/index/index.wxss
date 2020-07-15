@@ -212,6 +212,13 @@
 }
 .content-list {
   height: 114rpx;
+  padding-left: 60rpx;
+  padding-right: 60rpx;
+  border-bottom: 1rpx solid #eeeeee;
+}
+.content-list-type {
+  padding-left: 60rpx;
+  padding-right: 60rpx;
   border-bottom: 1rpx solid #eeeeee;
 }
 .content-noList {
@@ -258,10 +265,6 @@
   width: 30rpx;
   background-size: cover;
 }
-.content-list {
-  padding-left: 60rpx;
-  padding-right: 60rpx;
-}
 .content-list-flex {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -275,6 +278,11 @@
 .orgion {
   color: #fe632b;
   font-size: 26rpx;
+}
+.orgion-type {
+  color: #fe632b;
+  font-size: 26rpx;
+  margin-top: 21rpx;
 }
 .details {
   color: #8b8b8b;

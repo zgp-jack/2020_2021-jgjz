@@ -60,7 +60,7 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWaterDetails.__proto__ || Object.getPrototypeOf(FlowingWaterDetails)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '包工'
-    }, _this.$usedState = ["anonymousState__temp", "obj", "$compid__44", "time", "week"], _this.customComponents = ["AtList"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["obj", "$compid__777", "time", "week"], _this.customComponents = ["AtList"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWaterDetails, [{
@@ -79,10 +79,10 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__44"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__777"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__44 = _genCompid2[0],
-          $compid__44 = _genCompid2[1];
+          $prevCompid__777 = _genCompid2[0],
+          $compid__777 = _genCompid2[1];
 
       var router = (0, _taroWeapp.useRouter)();
       var _router$params = router.params,
@@ -143,6 +143,14 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
           typeDes = '其他';
         }
         data.typeDes = typeDes;
+        // 加班时长
+        var addTime = 0;
+        if (parseInt(data.worker_overtime) && parseInt(data.worker_overtime) > 0) {
+          if (parseInt(data.overtime) && parseInt(data.overtime) > 0) {
+            addTime = parseInt(data.worker_overtime) / parseInt(data.overtime);
+          }
+        }
+        data.addTime = addTime;
         console.log(data);
         setObj(data);
         // if (useSelectorItem.flowingWater.data){
@@ -177,15 +185,13 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
         });
       };
       console.log(obj, 'obj');
-      var anonymousState__temp = obj.business_type == '1' ? (obj.worker_overtime / obj.overtime).toFixed(2) || 0 : null;
       this.anonymousFunc0 = handleDel;
       _taroWeapp.propsManager.set({
         "className": "list"
-      }, $compid__44, $prevCompid__44);
+      }, $compid__777, $prevCompid__777);
       Object.assign(this.__state, {
-        anonymousState__temp: anonymousState__temp,
         obj: obj,
-        $compid__44: $compid__44,
+        $compid__777: $compid__777,
         time: time,
         week: week
       });

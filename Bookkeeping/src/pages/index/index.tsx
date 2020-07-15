@@ -95,15 +95,13 @@ export default function Index() {
     const week = weeks[date];
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate());
     const newMonth = time.getFullYear() + '-' + addZero(time.getMonth() + 1) ;
-    console.log(new Date(),'xxx')
-    setTime(newTime);
+    // setTime(newTime);
     setNewMonth(newMonth)
     setMonth(addZero(time.getMonth() + 1))
     // 先写死
     // setStart(newTime)
     setWeek(week);
-    console.log(newTime,'newTime')
-    return newTime;
+    return newMonth;
   }
   const addZero = (num) => {
     if (parseInt(num) < 10) {
@@ -211,6 +209,7 @@ export default function Index() {
     }else{
       changeTime = time;
     }
+    console.log(changeTime,'changeTimechangeTime')
     let params = {
       time: changeTime,
       identity: type,
@@ -221,6 +220,8 @@ export default function Index() {
         setNum(res.data.count_is_new);
         if (parseInt(res.data.count_is_new) == 0){
           setShow(true)
+        }else{
+          setShow(false)
         }
         // 设置时间
         setStart(res.data.earliest_month)
@@ -251,8 +252,9 @@ export default function Index() {
   // 选择时间
   const handleChangeTime = (e)=>{
     setVal(e.detail.value)
-    setTime(time);
+    setTime(e.detail.value);
     setRepeat(true);
+    getData();
   }
   // 点击提示
   const handelTps = ()=>{
@@ -460,7 +462,7 @@ export default function Index() {
               onScrollToLower={() => getNextPageData()}
             >
             {list.map((v,i)=>(
-                <View key={i+i} className='content-list'>
+              <View key={i + i} className='content-list' onClick={getNextPageData}>
                   {/* {v.arr.map(val=>( */}
                     <View>
                     <View className='content-list-flex'>
@@ -478,19 +480,19 @@ export default function Index() {
         {type === 2 && list.length>0 && !busy && 
           <View>
             <ScrollView
-              className='recruit-lists-containerbox'
+              className='content-list-box'
               scrollY
               refresherEnabled
               lowerThreshold={200}
               onScrollToLower={() => getNextPageData()}
             >
             {list.map((v, i) => (
-                <View key={i + i} className='content-list'>
+              <View key={i + i} className='content-list-type' onClick={getNextPageData}>
                   <View className='content-list-flex'>
-                    <View>{v.workername}</View>
-                    <View className='orgion'>¥{v.money}</View>
+                  <View className='details'>我在[{v.group_info}]项目组对Ta记了-笔包工</View>
+                    {/* <View></View> */}
+                    <View className='orgion-type'>¥{v.money}</View>
                   </View>
-                <View className='details'>我在[{v.group_info}]项目组对Ta记了-笔包工</View>
                 </View>
               ))}
             </ScrollView>

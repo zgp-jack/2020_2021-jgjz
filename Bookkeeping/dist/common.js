@@ -655,7 +655,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Notepad.__proto__ || Object.getPrototypeOf(Notepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["loopArray34", "$compid__42", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray34", "$compid__43", "data", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Notepad, [{
@@ -676,10 +676,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__42"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__43"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__42 = _genCompid2[0],
-          $compid__42 = _genCompid2[1];
+          $prevCompid__43 = _genCompid2[0],
+          $compid__43 = _genCompid2[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 输入框
@@ -897,10 +897,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
         "value": val,
         "onChange": this.anonymousFunc0,
         "onActionClick": this.anonymousFunc1
-      }, $compid__42, $prevCompid__42);
+      }, $compid__43, $prevCompid__43);
       Object.assign(this.__state, {
         loopArray34: loopArray34,
-        $compid__42: $compid__42,
+        $compid__43: $compid__43,
         data: data,
         busy: busy,
         del: del,
@@ -1805,33 +1805,45 @@ function userForeman() {
       _useState94 = _slicedToArray(_useState93, 2),
       refresh = _useState94[0],
       setRefresh = _useState94[1];
-  // 日历
-  // 日历
+  // 触摸时间设置
 
 
-  var _useState95 = (0, _taroWeapp.useState)(false),
+  var _useState95 = (0, _taroWeapp.useState)(),
       _useState96 = _slicedToArray(_useState95, 2),
-      calendarModalDisplay = _useState96[0],
-      setCalendarModalDisplay = _useState96[1];
+      endTime = _useState96[0],
+      setEndTime = _useState96[1];
+
+  var _useState97 = (0, _taroWeapp.useState)(),
+      _useState98 = _slicedToArray(_useState97, 2),
+      startTime = _useState98[0],
+      setStartTime = _useState98[1];
+  // 日历
+  // 日历
+
+
+  var _useState99 = (0, _taroWeapp.useState)(false),
+      _useState100 = _slicedToArray(_useState99, 2),
+      calendarModalDisplay = _useState100[0],
+      setCalendarModalDisplay = _useState100[1];
   // 获取当月天数
 
 
-  var _useState97 = (0, _taroWeapp.useState)([]),
-      _useState98 = _slicedToArray(_useState97, 2),
-      calendarDays = _useState98[0],
-      setCalendarDays = _useState98[1];
+  var _useState101 = (0, _taroWeapp.useState)([]),
+      _useState102 = _slicedToArray(_useState101, 2),
+      calendarDays = _useState102[0],
+      setCalendarDays = _useState102[1];
   // 设置点击了的日历
 
 
-  var _useState99 = (0, _taroWeapp.useState)([]),
-      _useState100 = _slicedToArray(_useState99, 2),
-      clickData = _useState100[0],
-      setClickData = _useState100[1];
+  var _useState103 = (0, _taroWeapp.useState)([]),
+      _useState104 = _slicedToArray(_useState103, 2),
+      clickData = _useState104[0],
+      setClickData = _useState104[1];
 
-  var _useState101 = (0, _taroWeapp.useState)([]),
-      _useState102 = _slicedToArray(_useState101, 2),
-      arr = _useState102[0],
-      setArr = _useState102[1];
+  var _useState105 = (0, _taroWeapp.useState)([]),
+      _useState106 = _slicedToArray(_useState105, 2),
+      arr = _useState106[0],
+      setArr = _useState106[1];
   //农历1949-2100年查询表
 
 
@@ -1843,20 +1855,20 @@ function userForeman() {
   var diZhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
   // 左边时间
 
-  var _useState103 = (0, _taroWeapp.useState)({
+  var _useState107 = (0, _taroWeapp.useState)({
     year: '',
     monent: ''
   }),
-      _useState104 = _slicedToArray(_useState103, 2),
-      time = _useState104[0],
-      setTime = _useState104[1];
+      _useState108 = _slicedToArray(_useState107, 2),
+      time = _useState108[0],
+      setTime = _useState108[1];
   // 设置存redux的日期
 
 
-  var _useState105 = (0, _taroWeapp.useState)([]),
-      _useState106 = _slicedToArray(_useState105, 2),
-      reduxTime = _useState106[0],
-      setReduxTime = _useState106[1];
+  var _useState109 = (0, _taroWeapp.useState)([]),
+      _useState110 = _slicedToArray(_useState109, 2),
+      reduxTime = _useState110[0],
+      setReduxTime = _useState110[1];
 
   (0, _taroWeapp.useDidShow)(function () {
     if (refresh) {
@@ -1868,6 +1880,7 @@ function userForeman() {
     // 判断选择回来 
     if (useSelectorItem.workerList.length > 0) {
       if (identity === 2) {
+        console.log(useSelectorItem.workerList, '返回');
         setForeman(useSelectorItem.workerList);
         setForemanTitle(useSelectorItem.workerList[0].name);
         return;
@@ -3483,39 +3496,41 @@ function userForeman() {
     }
     var data = JSON.parse(JSON.stringify(workerItem));
     // 借支对时候全部都可以点
-    if (recorderType === 3) {
+    var id = JSON.parse(JSON.stringify(contractor));
+    if (recorderType === 3 || recorderType === 2 && id === 1) {
       for (var i = 0; i < data.length; i++) {
         if (v.id === data[i].id) {
           data[i].click = !data[i].click;
         }
       }
-      var _numData = [];
+      var numData = [];
       for (var _i21 = 0; _i21 < data.length; _i21++) {
         if (data[_i21].click) {
-          _numData.push(data[_i21]);
+          numData.push(data[_i21]);
+        }
+      }
+      setClickNum(numData.length);
+      setWorkerItem(data);
+      // return;
+    } else {
+      for (var _i22 = 0; _i22 < data.length; _i22++) {
+        if (v.id === data[_i22].id) {
+          if (v.set) {
+            data[_i22].click = !data[_i22].click;
+          } else {
+            handleOpenWagesModal();
+          }
+        }
+      }
+      var _numData = [];
+      for (var _i23 = 0; _i23 < data.length; _i23++) {
+        if (data[_i23].click) {
+          _numData.push(data[_i23]);
         }
       }
       setClickNum(_numData.length);
       setWorkerItem(data);
-      return;
     }
-    for (var _i22 = 0; _i22 < data.length; _i22++) {
-      if (v.id === data[_i22].id) {
-        if (v.set) {
-          data[_i22].click = !data[_i22].click;
-        } else {
-          handleOpenWagesModal();
-        }
-      }
-    }
-    var numData = [];
-    for (var _i23 = 0; _i23 < data.length; _i23++) {
-      if (data[_i23].click) {
-        numData.push(data[_i23]);
-      }
-    }
-    setClickNum(numData.length);
-    setWorkerItem(data);
   };
   // 成员全选
   var handleAllChange = function handleAllChange() {
@@ -3542,6 +3557,7 @@ function userForeman() {
   };
   // 长按
   var handleLongClick = function handleLongClick() {
+    console.log(3221321, 'sss');
     setWageStandardDisplay(true);
   };
   // 全选
@@ -3634,6 +3650,23 @@ function userForeman() {
   var onScrollToLower = function onScrollToLower() {
     var date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1);
     getMonthDaysCurrent(date);
+  };
+  // 触摸结束
+  var onTouchEnd = function onTouchEnd(e) {
+    console.log(e, 231);
+    var endTime = e.timeStamp;
+    setEndTime(endTime);
+  };
+  // 触摸开始
+  var onTouchStart = function onTouchStart(e) {
+    console.log(e, 1);
+    var startTime = e.timeStamp;
+    setStartTime(startTime);
+  };
+  // 工人长按
+  var onLongPress = function onLongPress() {
+    console.log(23123);
+    setWageStandardDisplay(true);
   };
   return {
     model: model,
@@ -3754,7 +3787,10 @@ function userForeman() {
     calendarModalDisplay: calendarModalDisplay,
     setCalendarModalDisplay: setCalendarModalDisplay,
     onScrollToUpper: onScrollToUpper,
-    onScrollToLower: onScrollToLower
+    onScrollToLower: onScrollToLower,
+    onTouchEnd: onTouchEnd,
+    onTouchStart: onTouchStart,
+    onLongPress: onLongPress
   };
 }
 

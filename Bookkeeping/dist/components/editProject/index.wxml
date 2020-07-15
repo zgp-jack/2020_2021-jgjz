@@ -5,7 +5,7 @@
                 <view class="createProject-complaintModal-content">
                     <view class="createProject-complaintModal-content-title">
                         <view>修改项目/班组名称</view>
-                        <view class="createProject-complaintModal-content-colse" bindtap="funPrivateiezzz">x</view>
+                        <view class="createProject-complaintModal-content-colse" bindtap="funPrivatejdzzz">x</view>
                     </view>
                     <view class="createProject-complaintModal-content-tips">项目名称:</view>
                     <view class="createProject-complaintModal-content-textareaBox">
@@ -16,7 +16,7 @@
                         <input class="createProject-complaintModal-content-textarea" placeholder="请输入班组名称" value="{{data.team_name}}" bindinput="anonymousFunc1" />
                     </view>
                     <view class="createProject-complaintModal-footer">
-                        <view class="createProject-complaintModal-footer-btn" bindtap="funPrivateifzzz">确认修改</view>
+                        <view class="createProject-complaintModal-footer-btn" bindtap="funPrivatejezzz">确认修改</view>
                     </view>
                 </view>
             </view>

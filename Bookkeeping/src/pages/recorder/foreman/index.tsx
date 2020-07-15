@@ -45,7 +45,7 @@ export default function Foreman() {
     handleEditProjectData, handleSetWagesModal, handleWagesList, setWorkList, handleCheckboxStandard, groupInfo, image, setImage, bkGetWorker,
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
-    handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower,
+    handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, onLongPress
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -285,9 +285,16 @@ export default function Foreman() {
               </View>
               <View className='workerItem'>
                 {workerItem.map(v => (
-                  <View className='listPosition' onClick={() => handleWorkerItem(v)}>
+                  <View className='listPosition' 
+                  // onClick={()=>{}}
+                    // onTouchEnd={onTouchEnd}
+                    // onTouchStart={onTouchStart}
+                    onLongPress={() =>(setWagesModalDisplay(true))}
+                    onClick={()=>handleWorkerItem(v)}
+                    // onTouchStart={() => handleWorkerItem(v)} onLongPress={handleLongClick}
+                  >
                     {v.id === 1 &&
-                      <View>
+                      <View >
                         <View className={v.click ? 'workerItem-list-first-click' : 'workerItem-list-first'}>
                           {v.name.slice(0, 2)}
                         </View>
@@ -295,7 +302,7 @@ export default function Foreman() {
                       </View>
                     }
                     {v.id !== 1 &&
-                      <View onLongClick={handleLongClick} >
+                      <View>
                         <View className={v.click ? 'workerItem-list-click' : 'workerItem-list'}>
                           {v.name}
                         </View>

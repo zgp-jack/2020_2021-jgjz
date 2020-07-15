@@ -56,6 +56,14 @@ export default function FlowingWaterDetails() {
       typeDes = '其他'
     }
     data.typeDes = typeDes;
+    // 加班时长
+    let addTime = 0;
+    if (parseInt(data.worker_overtime) && parseInt(data.worker_overtime)>0){
+      if (parseInt(data.overtime) && parseInt(data.overtime)>0){
+        addTime = (parseInt(data.worker_overtime) / parseInt(data.overtime))
+      }
+    }
+    data.addTime = addTime;
     console.log(data);
     setObj(data)
     // if (useSelectorItem.flowingWater.data){
@@ -107,10 +115,10 @@ export default function FlowingWaterDetails() {
           <View className='list-itme'><Text className='list-itme-title'>项目名称</Text>:<Text className='list-itme-content'>{obj.group_info||'-'}</Text></View>
           {obj.business_type === '3' && <View className='list-itme'><Text className='list-itme-title'>借支属于</Text>:<Text className='list-itme-content'>{obj.typeDes}</Text></View>}
           {/* 按天\点工 */}
-          {(obj.business_type === '2' && obj.type ==='1') || obj.business_type == '1' && 
+          {((obj.business_type == '2' && obj.type ==='1') || obj.business_type == '1') && 
           <View>
             <View className='list-itme'><Text className='list-itme-title'>上班时长</Text>:<Text className='list-itme-content'>{obj.work_time}个工（{obj.work_time*obj.worktime_define}小时）</Text></View>
-            <View className='list-itme'><Text className='list-itme-title'>加班时长</Text>:<Text className='list-itme-content'>{(obj.worker_overtime/obj.overtime).toFixed(2) ||0}个工（{obj.overtime}小时)</Text></View>
+            <View className='list-itme'><Text className='list-itme-title'>加班时长</Text>:<Text className='list-itme-content'>{obj.addTime}个工（{obj.overtime}小时)</Text></View>
             <View className='wages'>
               <View className='wages-title'>工资标准</View>
               <View className='wages-list'>上班：{obj.worktime_define}小时算1个工<Text className='wages-list-blued'>{obj.worker_money}</Text>元/个工</View>

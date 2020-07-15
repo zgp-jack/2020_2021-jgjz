@@ -84,7 +84,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray52", "loopArray53", "$compid__57", "$compid__58", "$compid__59", "$compid__60", "$compid__61", "$compid__62", "image", "closeImage", "IMGCDNURL", "start", "vals", "newMonth", "type", "item", "show", "busy", "list", "month", "time", "week"], _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray328", "loopArray329", "$compid__784", "$compid__785", "$compid__786", "$compid__787", "$compid__788", "$compid__789", "image", "closeImage", "IMGCDNURL", "start", "vals", "newMonth", "type", "item", "show", "busy", "list", "month", "time", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Index, [{
@@ -97,41 +97,43 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
   }, {
     key: '_createData',
     value: function _createData() {
+      var _this2 = this;
+
       this.__state = arguments[0] || this.state || {};
       this.__props = arguments[1] || this.props || {};
       var __isRunloopRef = arguments[2];
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__57"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__784"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__57 = _genCompid2[0],
-          $compid__57 = _genCompid2[1];
+          $prevCompid__784 = _genCompid2[0],
+          $compid__784 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__58"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__785"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__58 = _genCompid4[0],
-          $compid__58 = _genCompid4[1];
+          $prevCompid__785 = _genCompid4[0],
+          $compid__785 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__59"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__786"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__59 = _genCompid6[0],
-          $compid__59 = _genCompid6[1];
+          $prevCompid__786 = _genCompid6[0],
+          $compid__786 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__60"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__787"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__60 = _genCompid8[0],
-          $compid__60 = _genCompid8[1];
+          $prevCompid__787 = _genCompid8[0],
+          $compid__787 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__61"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__788"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__61 = _genCompid10[0],
-          $compid__61 = _genCompid10[1];
+          $prevCompid__788 = _genCompid10[0],
+          $compid__788 = _genCompid10[1];
 
-      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__62"),
+      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__789"),
           _genCompid12 = _slicedToArray(_genCompid11, 2),
-          $prevCompid__62 = _genCompid12[0],
-          $compid__62 = _genCompid12[1];
+          $prevCompid__789 = _genCompid12[0],
+          $compid__789 = _genCompid12[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 弹框内容
@@ -313,15 +315,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         var week = weeks[date];
         var newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate());
         var newMonth = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
-        console.log(new Date(), 'xxx');
-        setTime(newTime);
+        // setTime(newTime);
         setNewMonth(newMonth);
         setMonth(addZero(time.getMonth() + 1));
         // 先写死
         // setStart(newTime)
         setWeek(week);
-        console.log(newTime, 'newTime');
-        return newTime;
+        return newMonth;
       };
       var addZero = function addZero(num) {
         if (parseInt(num) < 10) {
@@ -429,6 +429,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         } else {
           changeTime = time;
         }
+        console.log(changeTime, 'changeTimechangeTime');
         var params = {
           time: changeTime,
           identity: type
@@ -439,6 +440,8 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
             setNum(res.data.count_is_new);
             if (parseInt(res.data.count_is_new) == 0) {
               setShow(true);
+            } else {
+              setShow(false);
             }
             // 设置时间
             setStart(res.data.earliest_month);
@@ -469,8 +472,9 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       // 选择时间
       var handleChangeTime = function handleChangeTime(e) {
         setVal(e.detail.value);
-        setTime(time);
+        setTime(e.detail.value);
         setRepeat(true);
+        getData();
       };
       // 点击提示
       var handelTps = function handelTps() {
@@ -633,33 +637,33 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         return getNextPageData();
       };
 
-      this.anonymousFunc13 = function () {
+      this.anonymousFunc14 = function () {
         return getNextPageData();
       };
 
-      this.anonymousFunc14 = function () {
+      this.anonymousFunc16 = function () {
         return userRouteJump('/pages/feedback/index');
       };
 
-      this.anonymousFunc15 = handleGoback;
+      this.anonymousFunc17 = handleGoback;
 
-      this.anonymousFunc16 = function () {
+      this.anonymousFunc18 = function () {
         return handleType(0);
       };
 
-      this.anonymousFunc17 = function () {
+      this.anonymousFunc19 = function () {
         return handleType(1);
       };
 
-      this.anonymousFunc18 = function () {
+      this.anonymousFunc20 = function () {
         return handleType(2);
       };
 
-      this.anonymousFunc19 = function () {
+      this.anonymousFunc21 = function () {
         return handleChangeRole(1);
       };
 
-      this.anonymousFunc20 = function () {
+      this.anonymousFunc22 = function () {
         return handleChangeRole(2);
       };
 
@@ -671,23 +675,33 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         return setProject(false);
       };
 
-      var loopArray52 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray328 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = type === 1 && list.length > 0 && !busy ? i + i : null;
+
+        var _$indexKey = "ejczz" + i;
+
+        _this2.anonymousFunc13Map[_$indexKey] = getNextPageData;
         return {
           $loopState__temp2: $loopState__temp2,
+          _$indexKey: _$indexKey,
           $original: v.$original
         };
       }) : [];
-      var loopArray53 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray329 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp4 = type === 2 && list.length > 0 && !busy ? i + i : null;
+
+        var _$indexKey2 = "ejdzz" + i;
+
+        _this2.anonymousFunc15Map[_$indexKey2] = getNextPageData;
         return {
           $loopState__temp4: $loopState__temp4,
+          _$indexKey2: _$indexKey2,
           $original: v.$original
         };
       }) : [];
@@ -695,25 +709,25 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "value": num,
         "maxValue": 99,
         "className": "AtBadge"
-      }, $compid__57, $prevCompid__57);
+      }, $compid__784, $prevCompid__784);
       _taroWeapp.propsManager.set({
         "isOpened": tips
-      }, $compid__58, $prevCompid__58);
+      }, $compid__785, $prevCompid__785);
       _taroWeapp.propsManager.set({
         "isOpened": identity
-      }, $compid__59, $prevCompid__59);
+      }, $compid__786, $prevCompid__786);
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose,
         "callback": handleCallback
-      }, $compid__60, $prevCompid__60);
+      }, $compid__787, $prevCompid__787);
       _taroWeapp.propsManager.set({
         "display": createProjectDisplay,
         "handleClose": handleCreateProjectClose,
         "val": model && model.groupName,
         "handleSubmit": anonymousState__temp5,
         "handleInput": handleInput
-      }, $compid__61, $prevCompid__61);
+      }, $compid__788, $prevCompid__788);
       _taroWeapp.propsManager.set({
         "display": project,
         "handleSubmit": handleAddProject,
@@ -721,18 +735,18 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "teamName": model && model.teamName,
         "handleBack": handleBack,
         "handleClose": anonymousState__temp6
-      }, $compid__62, $prevCompid__62);
+      }, $compid__789, $prevCompid__789);
       Object.assign(this.__state, {
         anonymousState__temp5: anonymousState__temp5,
         anonymousState__temp6: anonymousState__temp6,
-        loopArray52: loopArray52,
-        loopArray53: loopArray53,
-        $compid__57: $compid__57,
-        $compid__58: $compid__58,
-        $compid__59: $compid__59,
-        $compid__60: $compid__60,
-        $compid__61: $compid__61,
-        $compid__62: $compid__62,
+        loopArray328: loopArray328,
+        loopArray329: loopArray329,
+        $compid__784: $compid__784,
+        $compid__785: $compid__785,
+        $compid__786: $compid__786,
+        $compid__787: $compid__787,
+        $compid__788: $compid__788,
+        $compid__789: $compid__789,
         image: image,
         closeImage: closeImage,
         IMGCDNURL: _index2.IMGCDNURL,
@@ -817,8 +831,16 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
     }
   }, {
     key: 'anonymousFunc13',
-    value: function anonymousFunc13(e) {
+    value: function anonymousFunc13(_$indexKey) {
+      var _anonymousFunc13Map;
+
       ;
+
+      for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        e[_key2 - 1] = arguments[_key2];
+      }
+
+      return this.anonymousFunc13Map[_$indexKey] && (_anonymousFunc13Map = this.anonymousFunc13Map)[_$indexKey].apply(_anonymousFunc13Map, e);
     }
   }, {
     key: 'anonymousFunc14',
@@ -827,8 +849,16 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
     }
   }, {
     key: 'anonymousFunc15',
-    value: function anonymousFunc15(e) {
+    value: function anonymousFunc15(_$indexKey2) {
+      var _anonymousFunc15Map;
+
       ;
+
+      for (var _len3 = arguments.length, e = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        e[_key3 - 1] = arguments[_key3];
+      }
+
+      return this.anonymousFunc15Map[_$indexKey2] && (_anonymousFunc15Map = this.anonymousFunc15Map)[_$indexKey2].apply(_anonymousFunc15Map, e);
     }
   }, {
     key: 'anonymousFunc16',
@@ -855,10 +885,20 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
     value: function anonymousFunc20(e) {
       ;
     }
+  }, {
+    key: 'anonymousFunc21',
+    value: function anonymousFunc21(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc22',
+    value: function anonymousFunc22(e) {
+      ;
+    }
   }]);
 
   return Index;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5", "anonymousFunc6", "anonymousFunc7", "anonymousFunc8", "anonymousFunc9", "anonymousFunc10", "anonymousFunc11", "anonymousFunc12", "anonymousFunc13", "anonymousFunc14", "anonymousFunc15", "anonymousFunc16", "anonymousFunc17", "anonymousFunc18", "anonymousFunc19", "anonymousFunc20"], _class.$$componentPath = "pages/index/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5", "anonymousFunc6", "anonymousFunc7", "anonymousFunc8", "anonymousFunc9", "anonymousFunc10", "anonymousFunc11", "anonymousFunc12", "anonymousFunc13", "anonymousFunc14", "anonymousFunc15", "anonymousFunc16", "anonymousFunc17", "anonymousFunc18", "anonymousFunc19", "anonymousFunc20", "anonymousFunc21", "anonymousFunc22"], _class.$$componentPath = "pages/index/index", _temp2);
 // Index.config = {
 //   navigationBarTitleText: '首页',
 // } as Config
