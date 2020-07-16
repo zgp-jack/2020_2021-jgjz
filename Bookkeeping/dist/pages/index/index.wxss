@@ -470,3 +470,19 @@
   top: -50rpx;
   z-index: 1;
 }
+.flex {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.num1 {
+  display: inline-block;
+  width: 90rpx;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 15rpx;
+  font-size: 28rpx;
+  margin-top: 4rpx;
+}

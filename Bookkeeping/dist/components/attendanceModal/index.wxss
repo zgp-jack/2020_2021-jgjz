@@ -19,6 +19,34 @@
       -ms-flex-align: center;
           align-items: center;
 }
+.calendarModal button {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14rpx;
+  padding-right: 14rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  line-height: 2.55555556;
+  border-radius: 5rpx;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  color: #000000;
+  font-size: 30rpx;
+  background-color: #F8F8F8;
+}
+.calendarModal button::after {
+  border: none;
+}
+.calendarModal button {
+  background-color: #fff;
+}
+.calendarModal button {
+  border-radius: 0;
+}
 .calendarModal-content {
   position: absolute;
   bottom: 0;

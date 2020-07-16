@@ -1,5 +1,5 @@
-import Taro, { Config, useEffect, useState, useRouter } from '@tarojs/taro'
-import { View, Text, Picker } from '@tarojs/components'
+import Taro, { Config, useEffect, useState, useRouter, useShareAppMessage } from '@tarojs/taro'
+import { View, Text, Picker, Button } from '@tarojs/components'
 import CalendarModal from '../../components/attendanceModal';
 import { bkgetExcelDataAction } from '../../utils/request/index';
 import Msg from '../../utils/msg';
@@ -514,7 +514,6 @@ export default function AttendanceSheet() {
         dayObj[next.date_num] ? '' : dayObj[next.date_num] = true && item.push(next);
         return item;
       }, []);
-      console.log(daySums, 'borrowNumSums')
       // 按天
       let workObj = {};
       const workSums = workSum.reduce(function (item, next) {
@@ -572,14 +571,16 @@ export default function AttendanceSheet() {
         }
       }
       // 按量 daySums
-      for (let i = 0; i < daySums.length; i++) {
+      for (let i = 0; i < daySum.length; i++) {
         for (let j = 0; j < daySums.length; j++) {
           if (daySum[i].date_num === daySums[j].date_num) {
-            daySum[j].total.sum += (+daySums[i].total.sum);
-            daySum[j].total.unit_name = daySums[i].total.unit_name;
+            console.log(daySums[j],'xx')
+            daySums[j].total[0].sum += (+daySum[i].total[0].sum);
+            daySums[j].total[0].unit_name = daySum[i].total[0].unit_name;
           }
         }
       }
+      console.log(daySums,'daySumdaySumdaySum')
       const dayArrItme = JSON.parse(JSON.stringify(dayArr));
       for (let i = 0; i < dayArrItme.length;i++){
         let obj:any = {
@@ -615,7 +616,6 @@ export default function AttendanceSheet() {
             // }
             // dayArrItme[i] = jigongSums[j];
             // dayArrItme[i].type.hour.over_time = jigongSums[j].total.over_time
-            console.log(dayArrItme[i],'dayArrItme[i]dayArrItme[i]')
             obj.type.hour.over_time = (parseInt(jigongSums[j].total.over_time)).toFixed(2);
             obj.type.hour.work_time = (parseInt(jigongSums[j].total.work_time)).toFixed(2);
             // dayArrItme[i] = obj;
@@ -631,22 +631,23 @@ export default function AttendanceSheet() {
         // 借支
         for (let j = 0; j < borrowNumSums.length; j++) {
           if (dayArrItme[i].name === borrowNumSums[j].date_num) {
-            console.log(borrowNumSums[j].total.borrow,'312312312')
             obj.name= borrowNumSums[j].date_num,
-              obj.type.borrow.money = borrowNumSums[j].total.borrow;
+              obj.type.borrow.money = borrowNumSums[j].total.money;
           }
         }
         // 按量
         for (let j = 0; j < daySums.length; j++) {
           if (dayArrItme[i].name === daySums[j].date_num) {
-            console.log(daySums[j].total.borrow, '312312312')
             obj.name = daySums[j].date_num,
-              obj.type.amount.sum = (parseInt(workSums[j].total.sum));
-            obj.type.amount.unit_name = (parseInt(workSums[j].total.unit_name));
+              console.log(daySums[j].total[0].unit_name,'daySums[j]')
+            obj.type.amount.sum = (parseInt(daySums[j].total[0].sum));
+            obj.type.amount.unit_name = (daySums[j].total[0].unit_name);
           }
         }
+        console.log()
         dayArrItme[i] = obj;
       }
+      console.log(dayArrItme,'dayArrItme')
       setFixedTab([...fixedTabList, ...leftData, ...tatalArr]);
       obj.list.push(...dayArrItme);
       rightData.push(obj)
@@ -667,8 +668,16 @@ export default function AttendanceSheet() {
     })
   }
   console.log(tebArr.length,'tebArr')
+  useShareAppMessage(() => {
+    return {
+      title: '微信小程序联盟',
+      desc: '最具人气的小程序开发联盟!',
+      path: '/pages/share/index'
+    }
+  })
+  // 分享
   return (
-    <View>
+    <View className='AttendanceSheetContent'>
       <View className='top'>
         <View className='top-time'>
           <Picker
@@ -693,8 +702,10 @@ export default function AttendanceSheet() {
                   {!val.type && <View className={val.default ? 'box-list-default' :'box-list'}>
                     <View className='name'>{val.name}</View>
                     {!val.default && 
-                    <View className='blued'>
-                      微信对工 >
+                      <View open-type="share">
+                      <Button className='blued'  open-type="share">
+                        微信对工
+                      </Button>
                     </View>
                     }
                   </View>}

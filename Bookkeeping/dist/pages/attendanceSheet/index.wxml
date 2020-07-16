@@ -1,5 +1,5 @@
 <block wx:if="{{$taroCompReady}}">
-    <view>
+    <view class="AttendanceSheetContent">
         <view class="top">
             <view class="top-time">
                 <picker mode="date" fields="month" bindchange="anonymousFunc0" value=""><text>{{year}}年<text>{{month}}</text></text>
@@ -16,7 +16,9 @@
                                 <view class="{{val.default ? 'box-list-default' : 'box-list'}}">
                                     <view class="name">{{val.name}}</view>
                                     <block wx:if="{{!val.default}}">
-                                        <view class="blued">微信对工 ></view>
+                                        <view open-type="share">
+                                            <button class="blued" open-type="share">微信对工</button>
+                                        </view>
                                     </block>
                                 </view>
                             </block>
@@ -158,6 +160,6 @@
                 </view>
             </view>
         </block>
-        <calendar-modal compid="{{$compid__103}}"></calendar-modal>
+        <calendar-modal compid="{{$compid__389}}"></calendar-modal>
     </view>
 </block>

@@ -371,7 +371,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "baazz" + i;
+        var _$indexKey = "jjzzz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -379,23 +379,23 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
         var $loopState__temp4 = data.item && data.item.length > 0 ? v.$original.total_borrow && v.$original.total_borrow.toFixed(2) : null;
         var $loopState__temp6 = data.item && data.item.length > 0 ? v.$original.total_money && v.$original.total_money.toFixed(2) : null;
-        var $anonymousCallee__10 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
+        var $anonymousCallee__9 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "babzz" + i + "-" + __index2;
+          var _$indexKey2 = "baazz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "baczz" + i + "-" + __index2;
+          var _$indexKey3 = "babzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "badzz" + i + "-" + __index2;
+          var _$indexKey4 = "baczz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -412,29 +412,29 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "baezz" + i + "-" + __index2;
+          var _$indexKey5 = "badzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "bafzz" + i + "-" + __index2;
+          var _$indexKey6 = "baezz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bagzzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bafzzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
-              $prevCompid__53 = _genCompid2[0],
-              $compid__53 = _genCompid2[1];
+              $prevCompid__54 = _genCompid2[0],
+              $compid__54 = _genCompid2[1];
 
           v.$original.click && _taroWeapp.propsManager.set({
             "autoClose": false,
             "onOpened": _this2.anonymousFunc3.bind(_this2, _$indexKey3),
             "onClick": _this2.anonymousFunc4.bind(_this2, _$indexKey4),
             "options": $loopState__temp8
-          }, $compid__53, $prevCompid__53);
+          }, $compid__54, $prevCompid__54);
           return {
             _$indexKey2: _$indexKey2,
             _$indexKey3: _$indexKey3,
@@ -442,7 +442,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
             $loopState__temp8: $loopState__temp8,
             _$indexKey5: _$indexKey5,
             _$indexKey6: _$indexKey6,
-            $compid__53: $compid__53,
+            $compid__54: $compid__54,
             $original: val.$original
           };
         }) : [];
@@ -451,7 +451,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey: _$indexKey,
           $loopState__temp4: $loopState__temp4,
           $loopState__temp6: $loopState__temp6,
-          $anonymousCallee__10: $anonymousCallee__10,
+          $anonymousCallee__9: $anonymousCallee__9,
           $original: v.$original
         };
       }) : [];
@@ -2287,9 +2287,19 @@ function userForeman() {
               }
             }
             setGroupInfo(_groupInfo);
-            setModel(_extends({}, modalObj, { name: res.data[0].name }));
+            // 有名字才加
+            var name = '';
+            if (res.data.length > 0) {
+              if (res.data[0].name) {
+                name = res.data[0].name;
+              } else {
+                name = '';
+              }
+            }
+            setModel(_extends({}, modalObj, { name: name }));
             setProjectArr(res.data);
           } else {
+            console.log(res.data, '撒到你家三');
             if (res.data && res.data.length > 0) {
               for (var _i11 = 0; _i11 < res.data.length; _i11++) {
                 // res.data[0].click = true;
@@ -2297,10 +2307,16 @@ function userForeman() {
                   res.data[_i11].click = true;
                 }
               }
-              setProjectArr(res.data);
+            } else {
+              console.log(321321);
+              //  清空名字班组长
+              setModel(_extends({}, modalObj, { name: '', groupName: '', teamName: '' }));
+              setForemanTitle('');
             }
+            setProjectArr(res.data);
           }
         } else {
+          console.log('最后');
           setProjectArr(res.data);
         }
       }
@@ -2473,7 +2489,7 @@ function userForeman() {
       var data = JSON.parse(JSON.stringify(model));
       data.name = model.groupName;
       setGroupInfo(res.data);
-      setModel(data);
+      setModel(_extends({}, data, { groupName: '', teamName: '' }));
     });
   };
   // 选择加班时长
@@ -2849,6 +2865,8 @@ function userForeman() {
     // 获取工资标准
     var data = JSON.parse(JSON.stringify(wageStandard));
     var item = JSON.parse(JSON.stringify(model));
+    var workerItemArr = JSON.parse(JSON.stringify(workerItem));
+    console.log(workerItemArr, 'workerListArr');
     // 时间
     var times = 0,
         work_time_hour = 0;
@@ -3073,7 +3091,7 @@ function userForeman() {
           var _data4 = {
             groupName: '',
             teamName: '',
-            name: '',
+            name: item.name,
             time: '',
             details: '',
             duration: '',
@@ -3086,10 +3104,30 @@ function userForeman() {
             phone: '',
             workersWages: '0'
           };
+          // 上班时长
+          var itemArr = [{ id: 1, name: '一个工', click: false, num: 1, whole: true }, { id: 2, name: '半个工', click: false, num: 0.5, whole: true }, { id: 3, name: '休息', click: false, num: 0 }, { id: 4, name: '0.0小时', click: false, num: 0 }];
+          // 加班时长
+          var addItmeArr = [{ id: 1, name: '无加班', click: false, num: 0 }, { id: 2, name: '0.0小时', click: false, num: 0 }];
+          // 日历
+          var calendar = JSON.parse(JSON.stringify(calendarDays));
+          for (var _i18 = 0; _i18 < calendar.length; _i18++) {
+            calendar[_i18].click = false;
+          }
+          for (var _i19 = 0; _i19 < workerItemArr.length; _i19++) {
+            workerItemArr[_i19].click = false;
+          }
+          setWorkerItem(workerItemArr);
+          setAddWorkArr(addItmeArr);
+          setTimeData([]);
+          setCalendarDays(calendar);
+          setClickData([]);
+          setTimeArr(itemArr);
           setForemanTitle('');
+          setImage({ item: [] });
           setModel(_data4);
+        } else {
+          _taroWeapp2.default.navigateBack();
         }
-        _taroWeapp2.default.navigateBack();
         dispatch((0, _workerList.setWorker)([]));
       } else {
         (0, _index3.default)(res.msg);
@@ -3205,9 +3243,9 @@ function userForeman() {
     }
     // 加班时间
     var addTime = 0;
-    for (var _i18 = 0; _i18 < addWorkArrs.length; _i18++) {
-      if (addWorkArrs[_i18].click) {
-        addTime = addWorkArrs[_i18].num;
+    for (var _i20 = 0; _i20 < addWorkArrs.length; _i20++) {
+      if (addWorkArrs[_i20].click) {
+        addTime = addWorkArrs[_i20].num;
       }
     }
     // 获取
@@ -3452,11 +3490,11 @@ function userForeman() {
       if (res.code === 200) {
         // // 给设置模板的设置为已经设置模板
         var data = JSON.parse(JSON.stringify(workerItem));
-        for (var _i19 = 0; _i19 < data.length; _i19++) {
+        for (var _i21 = 0; _i21 < data.length; _i21++) {
           for (var j = 0; j < worker_ids.length; j++) {
-            if (data[_i19].id == worker_ids[j]) {
-              data[_i19].set = true;
-              data[_i19].del = false;
+            if (data[_i21].id == worker_ids[j]) {
+              data[_i21].set = true;
+              data[_i21].del = false;
             }
           }
         }
@@ -3478,9 +3516,9 @@ function userForeman() {
       }
     }
     var clickData = [];
-    for (var _i20 = 0; _i20 < data.length; _i20++) {
-      if (data[_i20].click) {
-        clickData.push(data[_i20]);
+    for (var _i22 = 0; _i22 < data.length; _i22++) {
+      if (data[_i22].click) {
+        clickData.push(data[_i22]);
       }
     }
     setClickModalNum(clickData.length);
@@ -3516,28 +3554,28 @@ function userForeman() {
         }
       }
       var numData = [];
-      for (var _i21 = 0; _i21 < data.length; _i21++) {
-        if (data[_i21].click) {
-          numData.push(data[_i21]);
+      for (var _i23 = 0; _i23 < data.length; _i23++) {
+        if (data[_i23].click) {
+          numData.push(data[_i23]);
         }
       }
       setClickNum(numData.length);
       setWorkerItem(data);
       // return;
     } else {
-      for (var _i22 = 0; _i22 < data.length; _i22++) {
-        if (v.id === data[_i22].id) {
+      for (var _i24 = 0; _i24 < data.length; _i24++) {
+        if (v.id === data[_i24].id) {
           if (v.set) {
-            data[_i22].click = !data[_i22].click;
+            data[_i24].click = !data[_i24].click;
           } else {
             handleOpenWagesModal();
           }
         }
       }
       var _numData = [];
-      for (var _i23 = 0; _i23 < data.length; _i23++) {
-        if (data[_i23].click) {
-          _numData.push(data[_i23]);
+      for (var _i25 = 0; _i25 < data.length; _i25++) {
+        if (data[_i25].click) {
+          _numData.push(data[_i25]);
         }
       }
       setClickNum(_numData.length);
@@ -3549,16 +3587,17 @@ function userForeman() {
     var data = JSON.parse(JSON.stringify(workerItem));
     var recorderTypes = JSON.parse(JSON.stringify(recorderType));
     var Itme = [];
-    if (recorderTypes === 3) {
+    // 借支和按量记
+    if (recorderTypes === 3 || recorderTypes === 2 && contractor == 1) {
       for (var i = 0; i < data.length; i++) {
         Itme.push(data[i]);
         data[i].click = true;
       }
     } else {
-      for (var _i24 = 0; _i24 < data.length; _i24++) {
-        if (data[_i24].set) {
-          Itme.push(data[_i24]);
-          data[_i24].click = true;
+      for (var _i26 = 0; _i26 < data.length; _i26++) {
+        if (data[_i26].set) {
+          Itme.push(data[_i26]);
+          data[_i26].click = true;
         } else {
           (0, _index3.default)('还有人未设置工资标准');
         }

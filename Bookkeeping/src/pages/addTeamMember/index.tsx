@@ -223,7 +223,7 @@ export default function AddTeamMember() {
         />
       </View>
       <View id='box'>
-        {data && data.map((val,i)=>(
+        {data && data.length>0 && data.map((val,i)=>(
           <View key={i+i}>
             <View className='list-title'>{val.name_py}</View>
             {val.list.map((v=>(

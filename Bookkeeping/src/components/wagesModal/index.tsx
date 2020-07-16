@@ -58,7 +58,8 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                   <View className='change'>(已选{clickModalNum}人)</View>
                 </View>
               </View>
-                {data && data.length<=12 && 
+                {/* {data && data.length<=12 &&  */}
+                  { data && data.length > 0 && 
                   <View className='wagesModal-personnel'>
                     {data.map((v)=>(
                       <View className='wagesModal-personnel-box' key={v.id} onClick={()=>handleWagesList(v)}>
@@ -75,7 +76,7 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                     ))}
                   </View>
                 }
-                {data && data.length > 12 &&
+                {/* {data && data.length > 12 &&
                   <View>
                     <View className='wagesModal-personnel'>
                       {data.map((v) => (
@@ -87,7 +88,7 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                     </View>
                     <View className='tips'>共14条 <Text className='wagesModal-personnel-box-list-open'>展开 >></Text></View>
                   </View>
-                }
+                } */}
             </View>
             <View className='wagesModal-standard'>
               <View className='wagesModal-standard-flex'>

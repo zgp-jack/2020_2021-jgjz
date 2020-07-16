@@ -31,14 +31,15 @@ export default function CalendarModal({ display, handleClose }: PROPS) {
         <View className='calendarModal-content'>
           <View className='footer-box'>
             <View>
+              <Button className='btn' open-type="share">
               <View className='weChat'><Image className='weChat-img' src={`${IMGCDNURL}weChat.png`}/></View>
-              <Button className='btn' open-type="share">分享给微信好友</Button>
+                分享给微信好友</Button>
             </View>
-            <View>
-              <View className='download' onClick={() => userRouteJump('/pages/download/index')}>
+            <View onClick={() => userRouteJump('/pages/download/index')}>
+              <View className='download' >
                 <Image className='download-img' src={`${IMGCDNURL}downLoad.png`}/>
               </View>
-              <Button className='btn'>下载到本地</Button>
+                <Button className='btn'>下载到本地</Button>
             </View>
           </View>
           <View className='close' onClick={handleClose}>取消</View>

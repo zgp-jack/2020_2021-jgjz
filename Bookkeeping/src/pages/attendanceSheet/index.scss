@@ -1,3 +1,36 @@
+.AttendanceSheetContent{
+button {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 !important;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  line-height: 2.55555556;
+  border-radius: 0rpx;
+  border: none;
+  color: rgba(0, 153, 255, 1);
+  font-size: 20rpx;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  font-size: 20rpx;
+  background-color: #f7f6f9;
+}
+
+button::after {
+  border: none !important;
+}
+
+button {
+  background-color: #f7f6f9;
+}
+
+button {
+  border-radius: 0;
+}
+}
 .top{
   display: flex;
   justify-content: space-between;
@@ -226,8 +259,11 @@
 
 .blued{
   color: rgba(0, 153, 255, 1);
-  font-size: 20rpx
+  font-size: 20rpx;
+  // border: none;
+  // border-radius: 0rpx;
 }
+
 .name{
   overflow: hidden;
   text-overflow:ellipsis;

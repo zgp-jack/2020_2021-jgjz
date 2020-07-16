@@ -56,7 +56,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AttendanceSheet.__proto__ || Object.getPrototypeOf(AttendanceSheet)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '考勤表'
-    }, _this.$usedState = ["$compid__103", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__389", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AttendanceSheet, [{
@@ -75,10 +75,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__103"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__389"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__103 = _genCompid2[0],
-          $compid__103 = _genCompid2[1];
+          $prevCompid__389 = _genCompid2[0],
+          $compid__389 = _genCompid2[1];
 
       // 月份
 
@@ -616,7 +616,6 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
             dayObj[next.date_num] ? '' : dayObj[next.date_num] = item.push(next);
             return item;
           }, []);
-          console.log(daySums, 'borrowNumSums');
           // 按天
           var workObj = {};
           var workSums = workSum.reduce(function (item, next) {
@@ -674,14 +673,16 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
             }
           }
           // 按量 daySums
-          for (var _i5 = 0; _i5 < daySums.length; _i5++) {
+          for (var _i5 = 0; _i5 < daySum.length; _i5++) {
             for (var _j4 = 0; _j4 < daySums.length; _j4++) {
               if (daySum[_i5].date_num === daySums[_j4].date_num) {
-                daySum[_j4].total.sum += +daySums[_i5].total.sum;
-                daySum[_j4].total.unit_name = daySums[_i5].total.unit_name;
+                console.log(daySums[_j4], 'xx');
+                daySums[_j4].total[0].sum += +daySum[_i5].total[0].sum;
+                daySums[_j4].total[0].unit_name = daySum[_i5].total[0].unit_name;
               }
             }
           }
+          console.log(daySums, 'daySumdaySumdaySum');
           var dayArrItme = JSON.parse(JSON.stringify(dayArr));
           for (var _i6 = 0; _i6 < dayArrItme.length; _i6++) {
             var _obj2 = {
@@ -717,7 +718,6 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                 // }
                 // dayArrItme[i] = jigongSums[j];
                 // dayArrItme[i].type.hour.over_time = jigongSums[j].total.over_time
-                console.log(dayArrItme[_i6], 'dayArrItme[i]dayArrItme[i]');
                 _obj2.type.hour.over_time = parseInt(jigongSums[_j5].total.over_time).toFixed(2);
                 _obj2.type.hour.work_time = parseInt(jigongSums[_j5].total.work_time).toFixed(2);
                 // dayArrItme[i] = obj;
@@ -733,20 +733,21 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
             // 借支
             for (var _j7 = 0; _j7 < borrowNumSums.length; _j7++) {
               if (dayArrItme[_i6].name === borrowNumSums[_j7].date_num) {
-                console.log(borrowNumSums[_j7].total.borrow, '312312312');
-                _obj2.name = borrowNumSums[_j7].date_num, _obj2.type.borrow.money = borrowNumSums[_j7].total.borrow;
+                _obj2.name = borrowNumSums[_j7].date_num, _obj2.type.borrow.money = borrowNumSums[_j7].total.money;
               }
             }
             // 按量
             for (var _j8 = 0; _j8 < daySums.length; _j8++) {
               if (dayArrItme[_i6].name === daySums[_j8].date_num) {
-                console.log(daySums[_j8].total.borrow, '312312312');
-                _obj2.name = daySums[_j8].date_num, _obj2.type.amount.sum = parseInt(workSums[_j8].total.sum);
-                _obj2.type.amount.unit_name = parseInt(workSums[_j8].total.unit_name);
+                _obj2.name = daySums[_j8].date_num, console.log(daySums[_j8].total[0].unit_name, 'daySums[j]');
+                _obj2.type.amount.sum = parseInt(daySums[_j8].total[0].sum);
+                _obj2.type.amount.unit_name = daySums[_j8].total[0].unit_name;
               }
             }
+            console.log();
             dayArrItme[_i6] = _obj2;
           }
+          console.log(dayArrItme, 'dayArrItme');
           setFixedTab([].concat(_toConsumableArray(fixedTabList), leftData, tatalArr));
           (_obj$list = obj.list).push.apply(_obj$list, _toConsumableArray(dayArrItme));
           rightData.push(obj);
@@ -767,6 +768,14 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
         });
       };
       console.log(tebArr.length, 'tebArr');
+      (0, _taroWeapp.useShareAppMessage)(function () {
+        return {
+          title: '微信小程序联盟',
+          desc: '最具人气的小程序开发联盟!',
+          path: '/pages/share/index'
+        };
+      });
+      // 分享
 
       this.anonymousFunc0 = function (e) {
         return handleTime(e);
@@ -785,9 +794,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose
-      }, $compid__103, $prevCompid__103);
+      }, $compid__389, $prevCompid__389);
       Object.assign(this.__state, {
-        $compid__103: $compid__103,
+        $compid__389: $compid__389,
         tebArr: tebArr,
         fixedTab: fixedTab,
         year: year,

@@ -87,6 +87,9 @@
 .num{
   margin-left: 15rpx;
   font-size: 28rpx;
+  // display: inline-block;
+  // width: 100rpx;
+  // overflow: hidden;
 }
 .recordBox{
   position: absolute;
@@ -454,4 +457,17 @@
   // right: 10rpx;
   // top: 0rpx
   // margin-top: 40rpx;
+}
+.flex{
+  display: flex;
+}
+.num1{
+  display: inline-block;
+  width: 90rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  margin-left: 15rpx;
+  font-size: 28rpx;
+  margin-top: 4rpx;
 }

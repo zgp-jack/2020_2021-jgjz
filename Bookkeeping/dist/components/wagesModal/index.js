@@ -52,7 +52,7 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WagesModal.__proto__ || Object.getPrototypeOf(WagesModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray43", "loopArray44", "loopArray45", "loopArray46", "display", "tab", "data", "standard", "moneyList", "clickModalNum", "handleClose", "handleAddStandard", "handleEditWages", "handleAtSwitch", "handleSetWagesModal", "handleWagesList", "handleCheckboxStandard", "handleAllClick", "__fn_onClick"], _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.anonymousFunc7Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WagesModal.__proto__ || Object.getPrototypeOf(WagesModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray213", "loopArray214", "loopArray215", "display", "tab", "data", "standard", "moneyList", "clickModalNum", "handleClose", "handleAddStandard", "handleEditWages", "handleAtSwitch", "handleSetWagesModal", "handleWagesList", "handleCheckboxStandard", "handleAllClick", "__fn_onClick"], _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.anonymousFunc7Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(WagesModal, [{
@@ -105,22 +105,22 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
         handleAtSwitch(0);
       };
 
-      var loopArray43 = data && data.length <= 12 ? data.map(function (v, __index4) {
+      var loopArray213 = data && data.length > 0 ? data.map(function (v, __index4) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "ihzzz" + __index4;
+        var _$indexKey = "cfizz" + __index4;
 
         _this2.anonymousFunc4Map[_$indexKey] = function () {
           return handleWagesList(v.$original);
         };
 
-        var $loopState__temp2 = data && data.length <= 12 ? (0, _classnames2.default)({
+        var $loopState__temp2 = data && data.length > 0 ? (0, _classnames2.default)({
           'wagesModal-personnel-box-list': v.$original,
           'wagesModal-personnel-box-list-click': v.$original.click
         }) : null;
-        var $loopState__temp4 = data && data.length <= 12 ? v.$original.name.slice(0, 2) : null;
+        var $loopState__temp4 = data && data.length > 0 ? v.$original.name.slice(0, 2) : null;
         return {
           _$indexKey: _$indexKey,
           $loopState__temp2: $loopState__temp2,
@@ -128,28 +128,18 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray44 = data && data.length > 12 ? data.map(function (v, _anonIdx) {
-        v = {
-          $original: (0, _taroWeapp.internal_get_original)(v)
-        };
-        var $loopState__temp6 = data && data.length > 12 ? v.$original.name.slice(0, 2) : null;
-        return {
-          $loopState__temp6: $loopState__temp6,
-          $original: v.$original
-        };
-      }) : [];
-      var loopArray45 = tab === 0 ? standard.map(function (v, i) {
+      var loopArray214 = tab === 0 ? standard.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey2 = "ijzzz" + i;
+        var _$indexKey2 = "cgazz" + i;
 
         _this2.anonymousFunc5Map[_$indexKey2] = function () {
           return handleCheckboxStandard(v.$original);
         };
 
-        var _$indexKey3 = "jazzz" + i;
+        var _$indexKey3 = "cgbzz" + i;
 
         _this2.anonymousFunc6Map[_$indexKey3] = function () {
           return handleEditWages(v.$original, 0);
@@ -161,12 +151,12 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray46 = tab === 1 ? moneyList.map(function (v, __index7) {
+      var loopArray215 = tab === 1 ? moneyList.map(function (v, __index7) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey4 = "jczzz" + __index7;
+        var _$indexKey4 = "cgdzz" + __index7;
 
         _this2.anonymousFunc7Map[_$indexKey4] = function () {
           return handleEditWages(v.$original, 1);
@@ -178,10 +168,9 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
         };
       }) : [];
       Object.assign(this.__state, {
-        loopArray43: loopArray43,
-        loopArray44: loopArray44,
-        loopArray45: loopArray45,
-        loopArray46: loopArray46,
+        loopArray213: loopArray213,
+        loopArray214: loopArray214,
+        loopArray215: loopArray215,
         display: display,
         tab: tab,
         data: data,
@@ -212,13 +201,13 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
       ;
     }
   }, {
-    key: 'funPrivateifzzz',
-    value: function funPrivateifzzz() {
+    key: 'funPrivatecfgzz',
+    value: function funPrivatecfgzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
-    key: 'funPrivateigzzz',
-    value: function funPrivateigzzz() {
+    key: 'funPrivatecfhzz',
+    value: function funPrivatecfhzz() {
       return this.props.handleAllClick.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -235,8 +224,8 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
       return this.anonymousFunc4Map[_$indexKey] && (_anonymousFunc4Map = this.anonymousFunc4Map)[_$indexKey].apply(_anonymousFunc4Map, e);
     }
   }, {
-    key: 'funPrivateiizzz',
-    value: function funPrivateiizzz() {
+    key: 'funPrivatecfjzz',
+    value: function funPrivatecfjzz() {
       return this.props.handleAddStandard.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -266,8 +255,8 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
       return this.anonymousFunc6Map[_$indexKey3] && (_anonymousFunc6Map = this.anonymousFunc6Map)[_$indexKey3].apply(_anonymousFunc6Map, e);
     }
   }, {
-    key: 'funPrivatejbzzz',
-    value: function funPrivatejbzzz() {
+    key: 'funPrivatecgczz',
+    value: function funPrivatecgczz() {
       return this.props.handleSetWagesModal.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -286,7 +275,7 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return WagesModal;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "funPrivateifzzz", "funPrivateigzzz", "anonymousFunc4", "funPrivateiizzz", "anonymousFunc5", "anonymousFunc6", "funPrivatejbzzz", "anonymousFunc7"], _class.$$componentPath = "components/wagesModal/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "funPrivatecfgzz", "funPrivatecfhzz", "anonymousFunc4", "funPrivatecfjzz", "anonymousFunc5", "anonymousFunc6", "funPrivatecgczz", "anonymousFunc7"], _class.$$componentPath = "components/wagesModal/index", _temp2);
 exports.default = WagesModal;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(WagesModal));

@@ -417,10 +417,10 @@ export default function Index() {
         <View className='typeList'>
           <View>上班<Text className='num'>{item && item.work_time || 0}</Text></View>
           <View>加班<Text className='num'>{item && item.overtime || 0}个工</Text></View>
-          <View>按量记
+          <View className='flex'><View>按量记</View>
             {item.amount.type === 0 && <Text className='num'>0笔</Text> }
-            {item.amount.type === 1 && <Text className='num'>{item.amount.unit_num}{item.amount.unit}</Text>}
-            {item.amount.type === 2 && <Text className='num'>{item.amount.count}</Text>}
+            {item.amount.type === 1 && <Text className='num1'>{item.amount.unit_num}{item.amount.unit}</Text>}
+            {item.amount.type === 2 && <Text className='num1'>{item.amount.count}</Text>}
           </View>
         </View>
         </View>

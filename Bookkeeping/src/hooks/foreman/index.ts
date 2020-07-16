@@ -694,7 +694,7 @@ export default function userForeman() {
           // 如果是工人的话默认选中第一条有数据
           // 多条选中最近一条
           // 工人
-          const modalObj = JSON.parse(JSON.stringify(model));
+        const modalObj = JSON.parse(JSON.stringify(model));
         const identity = Taro.getStorageSync(Type)
           if(identity === 2){
             if (!model.groupName){
@@ -709,9 +709,19 @@ export default function userForeman() {
                 }
               }
               setGroupInfo(groupInfo)
-              setModel({ ...modalObj, name: res.data[0].name})
+              // 有名字才加
+              let name='';
+              if(res.data.length>0){
+                if (res.data[0].name){
+                  name = res.data[0].name;
+                }else{
+                  name=''
+                }
+              }
+              setModel({ ...modalObj, name})
               setProjectArr(res.data);
             }else{
+              console.log(res.data,'撒到你家三')
               if (res.data && res.data.length > 0) {
                 for (let i = 0; i < res.data.length; i++) {
                   // res.data[0].click = true;
@@ -719,10 +729,16 @@ export default function userForeman() {
                     res.data[i].click = true;
                   }
                 }
-                setProjectArr(res.data);
+              }else{
+                console.log(321321)
+                //  清空名字班组长
+                setModel({ ...modalObj, name: '', groupName: '', teamName:'' })
+                setForemanTitle('')
               }
+              setProjectArr(res.data);
             }
           }else{
+            console.log('最后')
             setProjectArr(res.data);
           }
       }
@@ -895,7 +911,7 @@ export default function userForeman() {
       let data = JSON.parse(JSON.stringify(model));
       data.name = model.groupName;
       setGroupInfo(res.data)
-      setModel(data)
+      setModel({...data, groupName: '', teamName: ''})
     })
   }
   // 选择加班时长
@@ -1269,6 +1285,8 @@ export default function userForeman() {
     // 获取工资标准
     const data = JSON.parse(JSON.stringify(wageStandard));
     const item = JSON.parse(JSON.stringify(model));
+    const workerItemArr = JSON.parse(JSON.stringify(workerItem));
+    console.log(workerItemArr,'workerListArr')
     // 时间
     let times: number = 0, work_time_hour=0;
     timeArr.map(v=>{
@@ -1489,7 +1507,7 @@ export default function userForeman() {
           const data = {
             groupName: '',
             teamName: '',
-            name: '',
+            name: item.name,
             time: '',
             details: '',
             duration: '',
@@ -1502,10 +1520,38 @@ export default function userForeman() {
             phone: '',
             workersWages: '0',
           }
+          // 上班时长
+          const itemArr = [
+            { id: 1, name: '一个工', click: false, num: 1, whole: true },
+            { id: 2, name: '半个工', click: false, num: 0.5, whole: true },
+            { id: 3, name: '休息', click: false, num: 0 },
+            { id: 4, name: '0.0小时', click: false, num: 0 }
+          ]
+          // 加班时长
+          const addItmeArr=[
+            { id: 1, name: '无加班', click: false, num: 0 },
+            { id: 2, name: '0.0小时', click: false, num: 0 },
+          ]
+          // 日历
+          const calendar = JSON.parse(JSON.stringify(calendarDays));
+          for (let i = 0; i < calendar.length; i++) {
+            calendar[i].click = false
+          }
+          for (let i = 0; i < workerItemArr.length;i++){
+            workerItemArr[i].click = false;
+          }
+          setWorkerItem(workerItemArr)
+          setAddWorkArr(addItmeArr)
+          setTimeData([]);
+          setCalendarDays(calendar);
+          setClickData([]);
+          setTimeArr(itemArr)
           setForemanTitle('');
+          setImage({item:[]})
           setModel(data);
+        }else{
+          Taro.navigateBack();
         }
-        Taro.navigateBack();
 
         dispatch(setWorker([]))
       }else{
@@ -1969,7 +2015,8 @@ export default function userForeman() {
     const data = JSON.parse(JSON.stringify(workerItem));
     const recorderTypes = JSON.parse(JSON.stringify(recorderType))
     let Itme:any[] =[];
-    if (recorderTypes === 3){
+    // 借支和按量记
+    if (recorderTypes === 3 || (recorderTypes === 2 && contractor==1 )){
       for (let i = 0; i < data.length; i++) {
           Itme.push(data[i]);
           data[i].click = true;
