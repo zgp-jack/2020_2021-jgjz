@@ -82,12 +82,48 @@
   height: 60rpx;
   line-height: 60rpx;
   text-align: center;
-  background: rgba(254, 246, 246, 0.8);
-  border: 1rpx solid #fd4521;
+  background: #f9a34e;
   border-radius: 3rpx;
   font-size: 24rpx;
   margin: 0 auto;
   margin-top: 10rpx;
+  color: #fff;
+}
+.wagesModal-personnel-box-list-red {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  background: #F72D57FF;
+  border-radius: 3rpx;
+  font-size: 24rpx;
+  margin: 0 auto;
+  margin-top: 10rpx;
+  color: #fff;
+}
+.wagesModal-personnel-box-list-origion {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  background: #51CEF7FF;
+  border-radius: 3rpx;
+  font-size: 24rpx;
+  margin: 0 auto;
+  margin-top: 10rpx;
+  color: #fff;
+}
+.wagesModal-personnel-box-list-violet {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  background: #BF67CFFF;
+  border-radius: 3rpx;
+  font-size: 24rpx;
+  margin: 0 auto;
+  margin-top: 10rpx;
+  color: #fff;
 }
 .wagesModal-personnel-box-list-click {
   width: 60rpx;

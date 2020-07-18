@@ -51,6 +51,10 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _index7 = __webpack_require__(/*! ../../../utils/msg/index */ "./src/utils/msg/index.ts");
+
+var _index8 = _interopRequireDefault(_index7);
+
 __webpack_require__(/*! ./index.scss */ "./src/pages/recorder/foreman/index.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -79,7 +83,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Foreman.__proto__ || Object.getPrototypeOf(Foreman)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "anonymousState__temp7", "recorderTypeArr", "contractorArr", "borrowing", "loopArray87", "loopArray88", "loopArray89", "loopArray90", "loopArray91", "$compid__136", "$compid__137", "$compid__138", "$compid__139", "$compid__140", "$compid__141", "$compid__142", "$compid__143", "$compid__144", "$compid__145", "$compid__146", "$compid__147", "$compid__148", "$compid__149", "IMGCDNURL", "recorderType", "model", "identity", "foremanTitle", "workerItem", "delType", "contractor", "edit", "projectArr", "clickNum", "unit"], _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.anonymousFunc7Map = {}, _this.anonymousFunc8Map = {}, _this.anonymousFunc19Map = {}, _this.anonymousFunc31Map = {}, _this.anonymousFunc32Map = {}, _this.anonymousFunc33Map = {}, _this.anonymousFunc34Map = {}, _this.customComponents = ["WordsTotal", "ImageView", "ProjectModal", "RecorderPopup", "Quantities", "WorkOvertime", "WorkingHours", "CreateProject", "CalendarModal", "WageStandard", "AddMember", "WagesModal", "EditProject", "AtDrawer"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Foreman.__proto__ || Object.getPrototypeOf(Foreman)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp7", "recorderTypeArr", "contractorArr", "borrowing", "loopArray503", "loopArray504", "loopArray505", "loopArray506", "loopArray507", "$compid__1224", "$compid__1225", "$compid__1226", "$compid__1227", "$compid__1228", "$compid__1229", "$compid__1230", "$compid__1231", "$compid__1232", "$compid__1233", "$compid__1234", "$compid__1235", "$compid__1236", "$compid__1237", "IMGCDNURL", "recorderType", "model", "identity", "foremanTitle", "workerItem", "delType", "contractor", "edit", "projectArr", "clickNum", "unit"], _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.anonymousFunc7Map = {}, _this.anonymousFunc8Map = {}, _this.anonymousFunc19Map = {}, _this.anonymousFunc31Map = {}, _this.anonymousFunc32Map = {}, _this.anonymousFunc33Map = {}, _this.anonymousFunc34Map = {}, _this.customComponents = ["WordsTotal", "ImageView", "ProjectModal", "RecorderPopup", "Quantities", "WorkOvertime", "WorkingHours", "CreateProject", "CalendarModal", "WageStandard", "AddMember", "WagesModal", "EditProject", "AtDrawer"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Foreman, [{
@@ -100,75 +104,75 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__136"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__1224"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__136 = _genCompid2[0],
-          $compid__136 = _genCompid2[1];
+          $prevCompid__1224 = _genCompid2[0],
+          $compid__1224 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__137"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1225"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__137 = _genCompid4[0],
-          $compid__137 = _genCompid4[1];
+          $prevCompid__1225 = _genCompid4[0],
+          $compid__1225 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__138"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1226"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__138 = _genCompid6[0],
-          $compid__138 = _genCompid6[1];
+          $prevCompid__1226 = _genCompid6[0],
+          $compid__1226 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__139"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1227"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__139 = _genCompid8[0],
-          $compid__139 = _genCompid8[1];
+          $prevCompid__1227 = _genCompid8[0],
+          $compid__1227 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__140"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1228"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__140 = _genCompid10[0],
-          $compid__140 = _genCompid10[1];
+          $prevCompid__1228 = _genCompid10[0],
+          $compid__1228 = _genCompid10[1];
 
-      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__141"),
+      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1229"),
           _genCompid12 = _slicedToArray(_genCompid11, 2),
-          $prevCompid__141 = _genCompid12[0],
-          $compid__141 = _genCompid12[1];
+          $prevCompid__1229 = _genCompid12[0],
+          $compid__1229 = _genCompid12[1];
 
-      var _genCompid13 = (0, _taroWeapp.genCompid)(__prefix + "$compid__142"),
+      var _genCompid13 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1230"),
           _genCompid14 = _slicedToArray(_genCompid13, 2),
-          $prevCompid__142 = _genCompid14[0],
-          $compid__142 = _genCompid14[1];
+          $prevCompid__1230 = _genCompid14[0],
+          $compid__1230 = _genCompid14[1];
 
-      var _genCompid15 = (0, _taroWeapp.genCompid)(__prefix + "$compid__143"),
+      var _genCompid15 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1231"),
           _genCompid16 = _slicedToArray(_genCompid15, 2),
-          $prevCompid__143 = _genCompid16[0],
-          $compid__143 = _genCompid16[1];
+          $prevCompid__1231 = _genCompid16[0],
+          $compid__1231 = _genCompid16[1];
 
-      var _genCompid17 = (0, _taroWeapp.genCompid)(__prefix + "$compid__144"),
+      var _genCompid17 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1232"),
           _genCompid18 = _slicedToArray(_genCompid17, 2),
-          $prevCompid__144 = _genCompid18[0],
-          $compid__144 = _genCompid18[1];
+          $prevCompid__1232 = _genCompid18[0],
+          $compid__1232 = _genCompid18[1];
 
-      var _genCompid19 = (0, _taroWeapp.genCompid)(__prefix + "$compid__145"),
+      var _genCompid19 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1233"),
           _genCompid20 = _slicedToArray(_genCompid19, 2),
-          $prevCompid__145 = _genCompid20[0],
-          $compid__145 = _genCompid20[1];
+          $prevCompid__1233 = _genCompid20[0],
+          $compid__1233 = _genCompid20[1];
 
-      var _genCompid21 = (0, _taroWeapp.genCompid)(__prefix + "$compid__146"),
+      var _genCompid21 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1234"),
           _genCompid22 = _slicedToArray(_genCompid21, 2),
-          $prevCompid__146 = _genCompid22[0],
-          $compid__146 = _genCompid22[1];
+          $prevCompid__1234 = _genCompid22[0],
+          $compid__1234 = _genCompid22[1];
 
-      var _genCompid23 = (0, _taroWeapp.genCompid)(__prefix + "$compid__147"),
+      var _genCompid23 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1235"),
           _genCompid24 = _slicedToArray(_genCompid23, 2),
-          $prevCompid__147 = _genCompid24[0],
-          $compid__147 = _genCompid24[1];
+          $prevCompid__1235 = _genCompid24[0],
+          $compid__1235 = _genCompid24[1];
 
-      var _genCompid25 = (0, _taroWeapp.genCompid)(__prefix + "$compid__148"),
+      var _genCompid25 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1236"),
           _genCompid26 = _slicedToArray(_genCompid25, 2),
-          $prevCompid__148 = _genCompid26[0],
-          $compid__148 = _genCompid26[1];
+          $prevCompid__1236 = _genCompid26[0],
+          $compid__1236 = _genCompid26[1];
 
-      var _genCompid27 = (0, _taroWeapp.genCompid)(__prefix + "$compid__149"),
+      var _genCompid27 = (0, _taroWeapp.genCompid)(__prefix + "$compid__1237"),
           _genCompid28 = _slicedToArray(_genCompid27, 2),
-          $prevCompid__149 = _genCompid28[0],
-          $compid__149 = _genCompid28[1];
+          $prevCompid__1237 = _genCompid28[0],
+          $compid__1237 = _genCompid28[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 获取存入的公用内容
@@ -292,7 +296,8 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           onScrollToLower = _userForeman.onScrollToLower,
           onTouchEnd = _userForeman.onTouchEnd,
           onTouchStart = _userForeman.onTouchStart,
-          onLongPress = _userForeman.onLongPress;
+          onLongPress = _userForeman.onLongPress,
+          setClickModalNum = _userForeman.setClickModalNum;
       // const [contractor, setContractor] = useState<number>(0)
       // 成功弹窗
 
@@ -421,6 +426,8 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       // 引导创建项目
       var handleCreateProjectClose = function handleCreateProjectClose() {
         setCreateProjectDisplay(false);
+        var data = JSON.parse(JSON.stringify(model));
+        setModel(_extends({}, data, { groupName: '' }));
       };
       // 关闭日历
       var handleCalendarModalDisplayClose = function handleCalendarModalDisplayClose() {
@@ -439,6 +446,8 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       // 关闭工资
       var handleWagesModalClose = function handleWagesModalClose() {
         setWagesModalDisplay(false);
+        //清空选择人数
+        setClickModalNum(0);
       };
       // 修改删除
       var handleEdit = function handleEdit(type) {
@@ -478,6 +487,21 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       //   bkGetWorker(groupInfo);
       //   userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`) 
       // }
+      // 创建项目下一步
+      var handleNext = function handleNext() {
+        console.log(model.groupName, 'model.groupName');
+        if (model.groupName) {
+          setCreateProjectDisplay(false), setProject(true);
+        } else {
+          (0, _index8.default)('请输入项目名称');
+        }
+      };
+      // 填写班组关闭
+      var handleProjectClose = function handleProjectClose() {
+        setProject(false);
+        var data = JSON.parse(JSON.stringify(model));
+        setModel(_extends({}, data, { groupName: '', teamName: '' }));
+      };
       context.Provider(value);
 
       this.anonymousFunc2 = function () {
@@ -550,14 +574,6 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         return handlePreservation(0);
       };
 
-      var anonymousState__temp5 = function anonymousState__temp5() {
-        return setProject(false);
-      };
-
-      var anonymousState__temp6 = function anonymousState__temp6() {
-        setCreateProjectDisplay(false), setProject(true);
-      };
-
       this.anonymousFunc25 = onScrollToLower;
       this.anonymousFunc26 = onScrollToUpper;
 
@@ -585,12 +601,12 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         setCreateProjectDisplay(true), setShow(false);
       };
 
-      var loopArray87 = recorderTypeArr.item.map(function (v, __index0) {
+      var loopArray503 = recorderTypeArr.item.map(function (v, __index0) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "bfhzz" + __index0;
+        var _$indexKey = "baihz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           return handleClckTabber(v.$original);
@@ -607,12 +623,12 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       });
-      var loopArray88 = recorderType === 2 ? contractorArr.item.map(function (v, __index1) {
+      var loopArray504 = recorderType === 2 ? contractorArr.item.map(function (v, __index1) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey2 = "bfizz" + __index1;
+        var _$indexKey2 = "baiiz" + __index1;
 
         _this2.anonymousFunc1Map[_$indexKey2] = function () {
           return handleRadio(v.$original);
@@ -623,32 +639,39 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray89 = identity === 1 ? workerItem.map(function (v, __index5) {
+      var loopArray505 = identity === 1 ? workerItem.map(function (v, __index5) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey3 = "bfjzz" + __index5;
+        var _$indexKey3 = "baijz" + __index5;
 
         _this2.anonymousFunc5Map[_$indexKey3] = function () {
-          return handleOpenWagesModal(), setWagesModalDisplay(true);
+          return handleOpenWagesModal;
         };
 
-        var _$indexKey4 = "bgazz" + __index5;
+        var _$indexKey4 = "bajaz" + __index5;
 
         _this2.anonymousFunc6Map[_$indexKey4] = function () {
           return handleWorkerItem(v.$original);
         };
 
         var $loopState__temp4 = v.$original.id === 1 ? v.$original.name.slice(0, 2) : null;
+        var $loopState__temp6 = v.$original.id !== 1 ? (0, _classnames2.default)({
+          'workerItem-list-click': v.$original.click,
+          'workerItem-list': !v.$original.click && v.$original.id % 2 == 1 && v.$original.id > 100,
+          'workerItem-list-red': !v.$original.click && v.$original.id % 2 == 0 && v.$original.id > 100,
+          'workerItem-list-origion': !v.$original.click && v.$original.id % 2 == 1 && v.$original.id < 100,
+          'workerItem-list-violet': !v.$original.click && v.$original.id % 2 == 0 && v.$original.id < 100
+        }) : null;
 
-        var _$indexKey5 = "bgbzz" + __index5;
+        var _$indexKey5 = "bajbz" + __index5;
 
         _this2.anonymousFunc7Map[_$indexKey5] = function (e) {
           e.stopPropagation(), handleOpenWagesModal();
         };
 
-        var _$indexKey6 = "bgczz" + __index5;
+        var _$indexKey6 = "bajcz" + __index5;
 
         _this2.anonymousFunc8Map[_$indexKey6] = function (e) {
           e.stopPropagation(), handleDelList(v.$original);
@@ -658,17 +681,18 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey3: _$indexKey3,
           _$indexKey4: _$indexKey4,
           $loopState__temp4: $loopState__temp4,
+          $loopState__temp6: $loopState__temp6,
           _$indexKey5: _$indexKey5,
           _$indexKey6: _$indexKey6,
           $original: v.$original
         };
       }) : [];
-      var loopArray90 = recorderType === 3 ? borrowing.item.map(function (v, __index19) {
+      var loopArray506 = recorderType === 3 ? borrowing.item.map(function (v, __index19) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey7 = "bgdzz" + __index19;
+        var _$indexKey7 = "bajdz" + __index19;
 
         _this2.anonymousFunc19Map[_$indexKey7] = function () {
           return handleRadioBorrowing(v.$original);
@@ -679,30 +703,30 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray91 = projectArr.map(function (v, __index31) {
+      var loopArray507 = projectArr.length > 0 ? projectArr.map(function (v, __index31) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey8 = "bgezz" + __index31;
+        var _$indexKey8 = "bajez" + __index31;
 
         _this2.anonymousFunc31Map[_$indexKey8] = function () {
           return handleProject(v.$original);
         };
 
-        var _$indexKey9 = "bgfzz" + __index31;
+        var _$indexKey9 = "bajfz" + __index31;
 
         _this2.anonymousFunc32Map[_$indexKey9] = function (e) {
           return e.stopPropagation();
         };
 
-        var _$indexKey10 = "bggzz" + __index31;
+        var _$indexKey10 = "bajgz" + __index31;
 
         _this2.anonymousFunc33Map[_$indexKey10] = function (e) {
           e.stopPropagation(), handleEditProjectModal(v.$original);
         };
 
-        var _$indexKey11 = "bghzz" + __index31;
+        var _$indexKey11 = "bajhz" + __index31;
 
         _this2.anonymousFunc34Map[_$indexKey11] = function (e) {
           e.stopPropagation(), handleDelProject(v.$original.id);
@@ -715,34 +739,34 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey11: _$indexKey11,
           $original: v.$original
         };
-      });
+      }) : [];
       _taroWeapp.propsManager.set({
         "num": num
-      }, $compid__136, $prevCompid__136);
+      }, $compid__1224, $prevCompid__1224);
       _taroWeapp.propsManager.set({
         "images": image.item,
         "max": 4,
         "userUploadImg": userUploadImg,
         "userDelImg": userDelImg
-      }, $compid__137, $prevCompid__137);
+      }, $compid__1225, $prevCompid__1225);
       _taroWeapp.propsManager.set({
         "display": project,
         "handleSubmit": handleAddProject,
         "handleInput": handleInput,
         "teamName": model && model.teamName,
         "handleBack": handleBack,
-        "handleClose": anonymousState__temp5
-      }, $compid__138, $prevCompid__138);
+        "handleClose": handleProjectClose
+      }, $compid__1226, $prevCompid__1226);
       _taroWeapp.propsManager.set({
         "display": display,
         "handleRecorderPopup": handleRecorderPopup
-      }, $compid__139, $prevCompid__139);
+      }, $compid__1227, $prevCompid__1227);
       _taroWeapp.propsManager.set({
         "display": quantitiesDisplay,
         "handleClose": handleClose,
         "data": company,
         "handleQuantities": handleQuantities
-      }, $compid__140, $prevCompid__140);
+      }, $compid__1228, $prevCompid__1228);
       _taroWeapp.propsManager.set({
         "display": workOvertimeDisplay,
         "handleWorkOvertimeClose": handleWorkOvertimeClose,
@@ -751,20 +775,20 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         "dataArr": addWorkArr,
         "handleWorkOvertimeOk": handleWorkOvertimeOk,
         "model": model
-      }, $compid__141, $prevCompid__141);
+      }, $compid__1229, $prevCompid__1229);
       _taroWeapp.propsManager.set({
         "display": workingHoursDisplay,
         "handleWorkingHoursClose": handleWorkingHoursClose,
         "type": timeType,
         "handleWorkingHours": handleWorkingHours
-      }, $compid__142, $prevCompid__142);
+      }, $compid__1230, $prevCompid__1230);
       _taroWeapp.propsManager.set({
         "display": createProjectDisplay,
         "handleClose": handleCreateProjectClose,
         "val": model && model.groupName,
-        "handleSubmit": anonymousState__temp6,
+        "handleSubmit": handleNext,
         "handleInput": handleInput
-      }, $compid__143, $prevCompid__143);
+      }, $compid__1231, $prevCompid__1231);
       _taroWeapp.propsManager.set({
         "display": calendarModalDisplay,
         "handleCalendar": handleCalendar,
@@ -783,7 +807,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         "onScrollToLower": this.anonymousFunc25,
         "onScrollToUpper": this.anonymousFunc26,
         "calendarDays": calendarDays
-      }, $compid__144, $prevCompid__144);
+      }, $compid__1232, $prevCompid__1232);
       _taroWeapp.propsManager.set({
         "display": wageStandardDisplay,
         "handleClose": handleWageStandardClose,
@@ -791,14 +815,14 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         "handleWageStandard": handleWageStandard,
         "handleAddWage": handleAddWage,
         "handleWageStandardRadio": handleWageStandardRadio
-      }, $compid__145, $prevCompid__145);
+      }, $compid__1233, $prevCompid__1233);
       _taroWeapp.propsManager.set({
         "display": addMemberDisplay,
         "handleClose": handleAddMemberClose,
         "handleEstablish": handleEstablish,
         "handleInput": handleInput,
         "groupInfo": groupInfo
-      }, $compid__146, $prevCompid__146);
+      }, $compid__1234, $prevCompid__1234);
       _taroWeapp.propsManager.set({
         "display": wagesModalDisplay,
         "handleClose": handleWagesModalClose,
@@ -814,47 +838,45 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         "handleCheckboxStandard": handleCheckboxStandard,
         "clickModalNum": clickModalNum,
         "handleAllClick": handleAllClick
-      }, $compid__147, $prevCompid__147);
+      }, $compid__1235, $prevCompid__1235);
       _taroWeapp.propsManager.set({
         "display": editProjectDisplay,
         "handleEditProjectData": handleEditProjectData,
         "data": editProjectData,
         "handleClose": anonymousState__temp7,
         "handleSubmit": handleEditProject
-      }, $compid__148, $prevCompid__148);
+      }, $compid__1236, $prevCompid__1236);
       _taroWeapp.propsManager.set({
         "show": show,
         "right": true,
         "mask": true,
         "className": "atDrawer",
         "onClose": this.anonymousFunc27
-      }, $compid__149, $prevCompid__149);
+      }, $compid__1237, $prevCompid__1237);
       Object.assign(this.__state, {
-        anonymousState__temp5: anonymousState__temp5,
-        anonymousState__temp6: anonymousState__temp6,
         anonymousState__temp7: anonymousState__temp7,
         recorderTypeArr: recorderTypeArr,
         contractorArr: contractorArr,
         borrowing: borrowing,
-        loopArray87: loopArray87,
-        loopArray88: loopArray88,
-        loopArray89: loopArray89,
-        loopArray90: loopArray90,
-        loopArray91: loopArray91,
-        $compid__136: $compid__136,
-        $compid__137: $compid__137,
-        $compid__138: $compid__138,
-        $compid__139: $compid__139,
-        $compid__140: $compid__140,
-        $compid__141: $compid__141,
-        $compid__142: $compid__142,
-        $compid__143: $compid__143,
-        $compid__144: $compid__144,
-        $compid__145: $compid__145,
-        $compid__146: $compid__146,
-        $compid__147: $compid__147,
-        $compid__148: $compid__148,
-        $compid__149: $compid__149,
+        loopArray503: loopArray503,
+        loopArray504: loopArray504,
+        loopArray505: loopArray505,
+        loopArray506: loopArray506,
+        loopArray507: loopArray507,
+        $compid__1224: $compid__1224,
+        $compid__1225: $compid__1225,
+        $compid__1226: $compid__1226,
+        $compid__1227: $compid__1227,
+        $compid__1228: $compid__1228,
+        $compid__1229: $compid__1229,
+        $compid__1230: $compid__1230,
+        $compid__1231: $compid__1231,
+        $compid__1232: $compid__1232,
+        $compid__1233: $compid__1233,
+        $compid__1234: $compid__1234,
+        $compid__1235: $compid__1235,
+        $compid__1236: $compid__1236,
+        $compid__1237: $compid__1237,
         IMGCDNURL: _index6.IMGCDNURL,
         recorderType: recorderType,
         model: model,

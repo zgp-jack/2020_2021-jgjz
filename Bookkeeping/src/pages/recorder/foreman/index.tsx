@@ -45,7 +45,8 @@ export default function Foreman() {
     handleEditProjectData, handleSetWagesModal, handleWagesList, setWorkList, handleCheckboxStandard, groupInfo, image, setImage, bkGetWorker,
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
-    handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, onLongPress
+    handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
+    onLongPress, setClickModalNum
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -148,6 +149,8 @@ export default function Foreman() {
   // 引导创建项目
   const handleCreateProjectClose = ()=>{
     setCreateProjectDisplay(false)
+    const data = JSON.parse(JSON.stringify(model));
+    setModel({ ...data, groupName:'',})
   }
   // 关闭日历
   const handleCalendarModalDisplayClose = ()=>{
@@ -165,7 +168,9 @@ export default function Foreman() {
   }
   // 关闭工资
   const handleWagesModalClose = ()=>{
-    setWagesModalDisplay(false)
+    setWagesModalDisplay(false);
+    //清空选择人数
+    setClickModalNum(0)
   }
   // 修改删除
   const handleEdit = (type:number)=>{
@@ -201,6 +206,21 @@ export default function Foreman() {
   //   bkGetWorker(groupInfo);
   //   userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`) 
   // }
+  // 创建项目下一步
+  const handleNext = ()=>{
+    console.log(model.groupName,'model.groupName')
+    if (model.groupName){
+      setCreateProjectDisplay(false), setProject(true) 
+    }else{
+      Msg('请输入项目名称')
+    }
+  }
+  // 填写班组关闭
+  const handleProjectClose = ()=>{
+    setProject(false)
+    const data = JSON.parse(JSON.stringify(model));
+    setModel({ ...data, groupName: '', teamName:'' })
+  }
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -289,13 +309,20 @@ export default function Foreman() {
                   // onClick={()=>{}}
                     // onTouchEnd={onTouchEnd}
                     // onTouchStart={onTouchStart}
-                    onLongPress={() => (handleOpenWagesModal(),setWagesModalDisplay(true))}
+                    onLongPress={() => handleOpenWagesModal}
                     onClick={()=>handleWorkerItem(v)}
                     // onTouchStart={() => handleWorkerItem(v)} onLongPress={handleLongClick}
                   >
                     {v.id === 1 &&
                       <View >
-                        <View className={v.click ? 'workerItem-list-first-click' : 'workerItem-list-first'}>
+                        <View 
+                        // className={classnames({
+                        //   'workerItem-list-first-click': v.click,
+                        //   'workerItem-list-first': v.id ==1,
+                        //   'workerItem-list-first-red':v.id>1&&v.id<20,
+                        // })}
+                        className={v.click ? 'workerItem-list-first-click' : 'workerItem-list-first'} 
+                        >
                           {v.name.slice(0, 2)}
                         </View>
                         <View className='workerItem-list-title'>{v.name}</View>
@@ -303,7 +330,24 @@ export default function Foreman() {
                     }
                     {v.id !== 1 &&
                       <View>
-                        <View className={v.click ? 'workerItem-list-click' : 'workerItem-list'}>
+                        <View 
+                        className={classnames({
+                          'workerItem-list-click': v.click,
+                          'workerItem-list': !v.click && v.id % 2 == 1 && v.id>100,
+                          'workerItem-list-red': !v.click && v.id % 2 == 0 && v.id>100,
+                          'workerItem-list-origion': !v.click && v.id % 2 == 1 && v.id < 100,
+                          'workerItem-list-violet': !v.click && v.id % 2 == 0 && v.id < 100,
+                          // 'workerItem-list-pink': !v.click && v.id % 2 == 0 && v.id < 50,
+                          // 'workerItem-list': !v.click && v.id>=100,
+                          // 'workerItem-list-red': !v.click && v.id < 100 && v.id % 2 == 1,
+                          // 'workerItem-list-bulued': !v.click && v.id < 100 && v.id % 2 == 0,
+                          // 'workerItem-list-origion': !v.click && v.id >= 100 && v.id<200 && v.id % 2 !== 0,
+                          // 'workerItem-list-': !v.click && v.id >= 100,
+                          // 'workerItem-list-violet': !v.click && v.id >200,
+                          // 'workerItem-list-pink': !v.click && v.id > 200 && v.id % 2 == 0,
+                        })}
+                          // className={v.click ? 'workerItem-list-click' : 'workerItem-list'}
+                          >
                           {v.name}
                         </View>
                       {!v.del && !v.set && <View className='workerItem-list-icon' onClick={(e) => { e.stopPropagation(), handleOpenWagesModal() }}><Image className='workerItem-list-icon-img' src={`${IMGCDNURL}mark.png`}/></View>}
@@ -513,7 +557,7 @@ export default function Foreman() {
         <View className='footer-right' onClick={()=>handlePreservation(0)}>保存</View>
       </View>
       {/* 填写班组 */}
-        <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={()=>setProject(false)}/>
+        <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={handleProjectClose}/>
       {/* 成功弹窗 */}
       <RecorderPopup display={display} handleRecorderPopup={handleRecorderPopup}/>
       {/* 工程量选择单位 */}
@@ -523,7 +567,7 @@ export default function Foreman() {
       {/* 选择上班时间 */}
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 创建项目引导 */}
-      <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true)}} handleInput={handleInput}/>
+      <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={handleNext} handleInput={handleInput}/>
       {/* 日历 */}
         <CalendarModal display={calendarModalDisplay} handleCalendar={handleCalendar} model={model} setModel={setModel} setTimeData={setTimeData} recorderType={recorderType} handleClickCalendar={handleClickCalendar} time={time}
           getMonthDaysCurrent={getMonthDaysCurrent} arr={arr} clickData={clickData} handleCalendarClose={handleCalendarClose} handleChangeTime={handleChangeTime} handleCalendarSub={handleCalendarSub} onScrollToLower={onScrollToLower} onScrollToUpper={onScrollToUpper} calendarDays={calendarDays}
@@ -553,7 +597,7 @@ export default function Foreman() {
             {edit && <View className='atDrawer-heard-edit' onClick={()=>handleEdit(1)}>取消</View>}
           </View>
           <View className='atDrawer-heard-content'>
-            {projectArr.map(v=>(
+            {projectArr.length>0&&projectArr.map(v=>(
               <View className='atDrawer-list' onClick={()=>handleProject(v)}>
                 <View className='atDrawer-list-title'>{
                   // v.child.map(val=>(
@@ -563,7 +607,7 @@ export default function Foreman() {
                 <View className='atDrawer-list-flex'>
                   <View>{identity === 1 && <View>{v.child[0].leader_name||'-'}</View>}</View>
                   <View>
-                    {!edit && <View><Checkbox checked={v.click} className='checkbox' color='#0099FF' value={''} onClick={(e)=>e.stopPropagation()}/></View>}
+                    {!edit && <View>{v.click &&<Checkbox checked={v.click} className='checkbox' color='#0099FF' value={''} onClick={(e)=>e.stopPropagation()}/>}</View>}
                     {edit && <View className='atDrawer-list-flex'>
                       <View className='atDrawer-list-flex-btn' onClick={(e)=>{e.stopPropagation(),handleEditProjectModal(v)}}>修改</View>
                       <View className='atDrawer-list-flex-btn' onClick={(e)=>{e.stopPropagation(),handleDelProject(v.id)}}>删除</View>
@@ -572,13 +616,14 @@ export default function Foreman() {
                 </View>
               </View>
             ))}
+              {projectArr.length === 0 && <View className='noText'>暂无数据</View>}
           </View>
+        </View>
           <View className='atDrawer-footer'>
               <View className='atDrawer-footer-btn' onClick={() => { setCreateProjectDisplay(true), setShow(false) }}>
                 {/* <Image src={`${IMGCDNURL}add.png`} className='addIcon'/>  */}
                 创建项目</View>
           </View> 
-        </View>
         </AtDrawer>
     </View>
     </context.Provider >

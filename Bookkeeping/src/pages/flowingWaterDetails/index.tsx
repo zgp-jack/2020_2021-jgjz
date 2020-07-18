@@ -86,14 +86,16 @@ export default function FlowingWaterDetails() {
       title: "提示",
       content:'确认删除',
       showCancel: true,
-      success: () => {
-        bkDeleteBusinessAction(params).then(res => {
-          if (res.code === 200) {
-            Taro.navigateBack();
-          } else {
-            Msg(res.msg)
-          }
-        })
+      success: (res) => {
+        if(res.confirm == true){
+          bkDeleteBusinessAction(params).then(res => {
+            if (res.code === 200) {
+              Taro.navigateBack();
+            } else {
+              Msg(res.msg)
+            }
+          })
+        }
       }
     })
     
@@ -149,7 +151,7 @@ export default function FlowingWaterDetails() {
       </View>
       <View className='footer-box'>
         <View className='footer-box-del' onClick={handleDel}>删除</View>
-        <View className='footer-box-edit'>修改</View>
+        <View className='footer-box-edit' onClick={() => { Taro.navigateTo({ url: `/pages/editDetails/index?id=${obj.id}` })}}>修改</View>
       </View>
     </View>
   )

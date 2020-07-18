@@ -53,8 +53,12 @@ export default function Feedback() {
   }
   //提交
   const handlebkAddFeedbackAction = ()=>{
-    if (radio === 0 ){
+    if (radio ==0 ){
       Msg('请选择评价')
+      return
+    }
+    if (!note ){
+      Msg('您还没有写下意见')
       return
     }
     let images: string[] = image.item.map(item => item.url);
@@ -66,10 +70,12 @@ export default function Feedback() {
     bkAddFeedbackAction(params).then(res=>{
       console.log(res);
       if(res.code === 200){
-        Msg('保存成功');
-        Taro.navigateBack({
-          delta: 1
-        })
+        Msg('提交成功，记工记账将因您的意见而变得美好！');
+        setTimeout(()=>{
+          Taro.navigateBack({
+            delta: 1
+          })
+        },500)
       }else{
         Msg('保存失败')
       }
@@ -82,8 +88,8 @@ export default function Feedback() {
       success: () => {
         Taro.hideToast()
         ShowActionModal({
-          title: '恭喜您',
-          msg: '已复制到粘贴板，赶快去添加吧！'
+          // title: '恭喜您',
+          msg: '微信号复制成功'
         })
       }
     })
@@ -110,7 +116,7 @@ export default function Feedback() {
       </View>
       {/* 建议 */}
       <View className='opinion'>
-        <Textarea className='opinionTextarea' onInput={(e) => setNote(e.detail.value)} placeholder='请留下您的意见或建议' placeholder-style='color:rgba(167, 167, 167, 1)'/>
+        <Textarea className='opinionTextarea' maxlength={400} onInput={(e) => setNote(e.detail.value)} placeholder='请留下您的意见或建议' placeholder-style='color:rgba(167, 167, 167, 1)'/>
         <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} /></View>
         <View className='clear'></View>
         {image.item.length === 0 && <View className='addImage'>添加图片</View>}

@@ -17,12 +17,43 @@ export default function NotepadDetails() {
     if(dataArr){
       console.log(dataArr)
       for(let i =0;i<dataArr.length;i++){
-        if(dataArr[i].id === id){
-          setData(dataArr[i])
+        if (dataArr[i].list && dataArr[i].list.length>0){
+          for (let j = 0; j < dataArr[i].list.length;j++){
+            if (dataArr[i].list[j].id === id) {
+              setData(dataArr[i].list[j]);
+              const date = new Date(dataArr[i].list[j].created_time * 1000).getDay();
+              const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+              const week = weeks[date];
+              Taro.setNavigationBarTitle({
+                title: dataArr[i].list[j].created_time_string + '   ' + week,
+              })
+            }
+          }
         }
+        // if(dataArr[i].id === id){
+        //   setData(dataArr[i])
+        //   console.log(dataArr,'xx')
+        //   console.log(dataArr[i].created_time,'xxxx')
+        //   const date = new Date(dataArr[i].created_time*1000).getDay();
+        //   // const time = new Date(dataArr[i].created_time);
+        //   // const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate()) + '    ' + addZero(time.getHours()) + ':' + addZero(time.getMinutes());
+        //   const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+        //   const week = weeks[date];
+        //   console.log(date,'datedatedate')
+        //   console.log(week,'xxx')
+        //   Taro.setNavigationBarTitle({
+        //     title: dataArr[i].created_time_string + '   ' + week,
+        //   })
+        // }
       }
     }
   })
+  const addZero = (num) => {
+    if (parseInt(num) < 10) {
+      num = '0' + num;
+    }
+    return num;
+  }
   // 跳转
   const userRouteJump = (url: string) => {
     Taro.navigateTo({
@@ -64,6 +95,6 @@ export default function NotepadDetails() {
     </View>
   )
 }
-NotepadDetails.config = {
-  navigationBarTitleText: '详情',
-} as Config
+// NotepadDetails.config = {
+//   navigationBarTitleText: '详情',
+// } as Config

@@ -5,15 +5,15 @@
                 <view class="createProject-complaintModal-content">
                     <view class="createProject-complaintModal-content-title">
                         <view>创建项目 开始记工</view>
-                        <view class="createProject-complaintModal-content-colse" bindtap="funPrivateghzzz">x</view>
+                        <view class="createProject-complaintModal-content-colse" bindtap="funPrivatebafcz">x</view>
                     </view>
                     <view class="createProject-complaintModal-content-tips">项目名称:</view>
                     <view class="createProject-complaintModal-content-textareaBox">
-                        <input class="createProject-complaintModal-content-textarea" placeholder="请输入项目名称" value="{{val}}" bindinput="anonymousFunc0" />
+                        <input class="createProject-complaintModal-content-textarea" placeholder="请输入项目名称" value="{{val}}" maxlength="{{10}}" bindinput="anonymousFunc0" />
                     </view>
                     <view class="createProject-complaintModal-content-blued">提示：填写您要记工的工程项目名称</view>
                     <view class="createProject-complaintModal-footer">
-                        <view class="createProject-complaintModal-footer-btn" bindtap="funPrivategizzz">下一步</view>
+                        <view class="createProject-complaintModal-footer-btn" bindtap="funPrivatebafdz">下一步</view>
                     </view>
                 </view>
             </view>

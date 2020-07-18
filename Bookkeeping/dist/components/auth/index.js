@@ -83,12 +83,17 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
           handleClose = _props.handleClose,
           callback = _props.callback;
 
+      var _useState = (0, _taroWeapp.useState)(),
+          _useState2 = _slicedToArray(_useState, 2),
+          data = _useState2[0],
+          setData = _useState2[1];
       // 状态
 
-      var _useState = (0, _taroWeapp.useState)(false),
-          _useState2 = _slicedToArray(_useState, 2),
-          warrant = _useState2[0],
-          setWarrant = _useState2[1];
+
+      var _useState3 = (0, _taroWeapp.useState)(false),
+          _useState4 = _slicedToArray(_useState3, 2),
+          warrant = _useState4[0],
+          setWarrant = _useState4[1];
 
       var userAuthAction = function userAuthAction(e) {
         console.log(e, 'e');
@@ -99,6 +104,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 console.log(res.code, 'code');
                 (0, _index.getUserSessionKeyAction)(res.code).then(function (res) {
                   var sessionKey = res.session_key;
+                  console.log(sessionKey, 'sessionKeysessionKeysessionKey');
                   decodeSessionKey(sessionKey);
                   // callback && callback()
                 });
@@ -141,8 +147,11 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
               encryptedData: encryptedData,
               iv: iv,
               refId: 0,
-              source: ''
+              source: '',
+              type: 'phone'
             };
+            console.log(key, 'keykeykeykey');
+            setData(data);
             (0, _index.GetUserInfoAction)(data).then(function (res) {
               if (res.code === 40003) {
                 _taroWeapp2.default.showModal({
@@ -151,7 +160,9 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                   showCancel: true,
                   success: function success(res) {
                     if (res.confirm) {
-                      userRouteJump("/pages/login/index?session_key=" + key + "&encryptedData=" + encryptedData + "&iv=" + iv);
+                      // 没有绑定手机好就选择微信登陆还是手机登陆
+                      setWarrant(true);
+                      // userRouteJump(`/pages/login/index?session_key=${key}&encryptedData=${encryptedData}&iv=${iv}`)
                     }
                   }
                 });
@@ -170,6 +181,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 // console.log(midData,'midDatamidDatamidDatamidData')
                 // midData.yupao_id = res.data.id;
                 res.data.yupao_id = res.data.id;
+                _taroWeapp2.default.setStorageSync(_store.UserInfo, user);
                 _taroWeapp2.default.setStorageSync(_store.MidData, res.data);
                 var midParams = {
                   mid: res.data.id
@@ -182,6 +194,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                     // worker_id = resItem.data.worker_id;
                     res.data.worker_id = resItem.data.worker_id;
                     _taroWeapp2.default.setStorageSync(_store.MidData, res.data);
+                    _taroWeapp2.default.setStorageSync(_store.CreationTime, resItem.data.created_time);
                   }
                 });
                 _taroWeapp2.default.setStorageSync(_store.UserInfo, user);
@@ -211,16 +224,80 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
         // 需要判断有没有手机号
         userRouteJump("/pages/login/index");
       };
+      var getPhoneNumber = function getPhoneNumber(e) {
+        var item = JSON.parse(JSON.stringify(data));
+        console.log(e);
+        if (e.detail.errMsg == "getPhoneNumber:ok") {
+          // Taro.navigateBack();
+          var params = {
+            session_key: item.session_key,
+            wechat_encryptedData: e.detail.encryptedData,
+            wechat_iv: e.detail.iv,
+            encryptedData: item.encryptedData,
+            iv: item.iv,
+            refId: 0,
+            type: 'wechat',
+            source: ''
+          };
+          (0, _index.GetUserInfoAction)(params).then(function (res) {
+            if (res.code === 40003) {
+              _taroWeapp2.default.showModal({
+                title: '微信账号还没有绑定手机号',
+                content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
+                showCancel: true,
+                success: function success(res) {
+                  if (res.confirm) {
+                    userRouteJump("/pages/login/index?session_key=" + item.session_key + "&encryptedData=" + item.encryptedData + "&iv=" + item.iv);
+                  }
+                }
+              });
+            } else if (res.errcode === 'ok') {
+              var user = {
+                userId: res.data.id,
+                token: res.data.sign.token,
+                tokenTime: res.data.sign.time,
+                uuid: res.data.uuid,
+                login: true
+              };
+              res.data.yupao_id = res.data.id;
+              _taroWeapp2.default.setStorageSync(_store.UserInfo, user);
+              _taroWeapp2.default.setStorageSync(_store.MidData, res.data);
+              var midParams = {
+                mid: res.data.id
+              };
+              (0, _index.bkMemberAuthAction)(midParams).then(function (resItem) {
+                if (resItem.code !== 200) {
+                  (0, _index3.default)(resItem.msg);
+                } else {
+                  // worker_id = resItem.data.worker_id;
+                  res.data.worker_id = resItem.data.worker_id;
+                  _taroWeapp2.default.setStorageSync(_store.MidData, res.data);
+                  _taroWeapp2.default.setStorageSync(_store.CreationTime, resItem.data.created_time);
+                }
+              });
+              _taroWeapp2.default.setStorageSync(_store.UserInfo, user);
+              // Taro.navigateBack();
+              callback && callback();
+            } else {
+              (0, _index3.default)(res.msg || res.errmsg);
+            }
+          });
+        } else {
+          userRouteJump("/pages/login/index?session_key=" + item.session_key + "&encryptedData=" + item.encryptedData + "&iv=" + item.iv);
+        }
+      };
 
       this.anonymousFunc0 = function (e) {
         return userAuthAction(e);
       };
 
-      this.anonymousFunc1 = function () {
+      this.anonymousFunc1 = getPhoneNumber;
+
+      this.anonymousFunc2 = function () {
         return handleClose(false);
       };
 
-      this.anonymousFunc2 = function () {
+      this.anonymousFunc3 = function () {
         userRouteJump("/pages/login/index");
       };
 
@@ -246,10 +323,15 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
     value: function anonymousFunc2(e) {
       ;
     }
+  }, {
+    key: "anonymousFunc3",
+    value: function anonymousFunc3(e) {
+      ;
+    }
   }]);
 
   return Auth;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "components/auth/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3"], _class.$$componentPath = "components/auth/index", _temp2);
 exports.default = Auth;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(Auth));

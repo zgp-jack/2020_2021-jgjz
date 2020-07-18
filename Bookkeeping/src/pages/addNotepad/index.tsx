@@ -64,6 +64,7 @@ export default function AddNotepad() {
           autoFocus
           auto-focus
           cursor={0}
+          maxlength={400}
           onInput={(e) => handleContent(e)}
           className={id ? 'editTextarea' : 'textarea'} 
           value={model && model.note } 
@@ -71,14 +72,15 @@ export default function AddNotepad() {
           placeholder-style='color:#BEBEBE'/>
       </View>
       <View>
-        <View className='image'><ImageView images={image.item} max={4} notepad userUploadImg={userUploadImg} userDelImg={userDelImg} /></View>
+        <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} /></View>
       </View>
-      <View className='footer'>
+      <View className='footerbtn'><View className='footerbtn-btn' onClick={handleSubmit}>保存</View></View>
+      {/* <View className='footer'>
         <View className='footer-box'>
           <View className='footer-box-left' onClick={handelAdd}><View className='footer-box-left-img'><Image className='footer-box-left-img-img' src={`${IMGCDNURL}image.png`}/></View>添加图片</View>
           <View className='footer-box-right' onClick={handleSubmit}>保存</View>
         </View>
-      </View>
+      </View> */}
     </View>
   )
 }

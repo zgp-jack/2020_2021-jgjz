@@ -56,7 +56,7 @@
 }
 .tabber-complaintModal-content-blued {
   margin-left: 49rpx;
-  color: #0099ff;
+  color: #F95A15FF;
   font-size: 24rpx;
   margin-bottom: 47rpx;
 }

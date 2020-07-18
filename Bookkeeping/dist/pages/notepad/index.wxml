@@ -2,13 +2,20 @@
     <block>
         <view class="notepad">
             <view class="searchBar">
-                <at-search-bar compid="{{$compid__42}}"></at-search-bar>
+                <at-search-bar compid="{{$compid__53}}"></at-search-bar>
             </view>
-            <block wx:if="{{data.length === 0}}">
+            <block wx:if="{{data.length === 0 && !isSheach}}">
                 <view class="content">
                     <view class="noData">
                         <view>您今天还没有填写过记事本哦~</view>
-                        <view>点击下方<text class="blued">记事</text>按钮，添加您的记事信息</view>
+                        <view>点击下方<text class="blued">【记事】</text>按钮，添加您的记事信息</view>
+                    </view>
+                </view>
+            </block>
+            <block wx:if="{{data.length === 0 && isSheach}}">
+                <view class="content">
+                    <view class="noData">
+                        <view>暂无数据</view>
                     </view>
                 </view>
             </block>
@@ -20,26 +27,25 @@
             </block>
             <block wx:if="{{data.length > 0 && !busy}}">
                 <view class="dataMT">
-                    <view class="dataContent" wx:key="id" bindtap="anonymousFunc2" wx:for="{{loopArray34}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
-                        <view class="timeTop">
-                            <view class="timeTop-time">{{v.$original.time}}</view>
-                            <view class="timeTop-week">{{v.$original.week}}</view>
+                    <view wx:key="$loopState__temp2" class="list" wx:for="{{loopArray46}}" wx:for-item="v" wx:for-index="i">
+                        <view class="title">
+                            <view class="day">{{v.$original.day}}</view>
+                            <view class="week">{{v.$original.week}}</view>
                         </view>
-                        <view class="dataContent-details"><text class="dataContent-details-title">{{v.$original.note}}</text>
-                            <block wx:if="{{v.$original.view_images.length > 0}}">
-                                <view class="flex">
-                                    <view class="dataContent-imageList" wx:for="{{v.$original.view_images}}" wx:for-item="item" wx:for-index="_anonIdx2">
-                                        <view class="dataContent-imageList-image">
-                                            <image src="{{item.httpurl}}" class="image"></image>
-                                        </view>
+                        <view class="box" wx:key="$loopState__temp4" bindtap="anonymousFunc3" wx:for="{{v.$anonymousCallee__10}}" wx:for-item="values" wx:for-index="index" data-e-tap-so="this" data-e-tap-a-a="{{values._$indexKey}}">
+                            <view class="box-note">{{values.$original.note}}</view>
+                            <view>
+                                <block wx:if="{{values.$original.view_images.length > 0}}">
+                                    <view class="flex">
+                                        <image class="image" src="{{item.httpurl}}" wx:for="{{values.$original.view_images}}" wx:for-item="item" wx:for-index="_anonIdx2"></image>
                                     </view>
-                                </view>
-                            </block>
-                            <view class="dataContent-imageList-footer">
-                                <view class="dataContent-imageList-time">{{v.$original.creatTime}}</view>
+                                </block>
+                            </view>
+                            <view class="title">
+                                <view class="footerTime">{{values.$original.created_time_string}}</view>
                                 <view>
                                     <block wx:if="{{del}}">
-                                        <checkbox checked="{{v.$original.click}}" value="{{v.$original.click}}" catchtap="anonymousFunc3" class="checkboxButton-checkbox" color="#0099FF" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}"></checkbox>
+                                        <checkbox checked="{{values.$original.click}}" value="{{values.$original.click}}" catchtap="anonymousFunc4" class="checkboxButton-checkbox" color="#0099FF" data-e-tap-so="this" data-e-tap-a-a="{{values._$indexKey2}}"></checkbox>
                                     </block>
                                 </view>
                             </view>
@@ -49,25 +55,25 @@
             </block>
             <block wx:if="{{!del}}">
                 <view class="footer">
-                    <view class="footer-btn" bindtap="anonymousFunc4">记事</view>
+                    <view class="footer-btn" bindtap="anonymousFunc5">记事</view>
                 </view>
             </block>
             <block wx:if="{{!del && data.length > 0}}">
-                <view class="checkbox-notepad" bindtap="anonymousFunc5">
+                <view class="checkbox-notepad" bindtap="anonymousFunc6">
                     <view class="checkbox-box">
                         <view class="checkbox-image">
                             <image class="checkbox-image-image" src="{{IMGCDNURL + 'checkout.png'}}"></image>
-                        </view>全选</view>
+                        </view>多选</view>
                 </view>
             </block>
             <block wx:if="{{del}}">
                 <view class="checkboxButton">
                     <view class="checkboxButton-box">
                         <view>
-                            <checkbox value="" checked="{{selectAll}}" bindtap="anonymousFunc6" class="checkboxButton-checkbox" color="#0099FF"></checkbox>多选</view>
+                            <checkbox value="" checked="{{selectAll}}" bindtap="anonymousFunc7" class="checkboxButton-checkbox" color="#0099FF"></checkbox>全选</view>
                         <view class="checkboxButton-right">
-                            <view class="checkboxButton-del" bindtap="anonymousFunc7">批量删除</view>
-                            <view class="checkboxButton-close" bindtap="anonymousFunc8">取消</view>
+                            <view class="checkboxButton-del" bindtap="anonymousFunc8">批量删除</view>
+                            <view class="checkboxButton-close" bindtap="anonymousFunc9">取消</view>
                         </view>
                     </view>
                 </view>

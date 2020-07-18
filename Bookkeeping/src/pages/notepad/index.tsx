@@ -10,7 +10,7 @@ import { IMGCDNURL  } from '../../config';
 import { setNotepad  } from '../../actions/notepad'
 import './index.scss'
 export interface Injected {
-  dataArr: bkGetNotePadTypeData[],
+  dataArr: any[],
 }
 export const context = createContext<Injected>({} as Injected)
 export default function Notepad() {
@@ -25,20 +25,37 @@ export default function Notepad() {
   const [busy, setBusy] =useState<boolean>(false)
   // 全选按钮
   const [selectAll, setSelectAll] = useState<boolean>(false)
+  // 是否是搜索
+  const [isSheach, setIsSheach] = useState<boolean>(false)
+  // 选择ID
+  const [ids, setIds] = useState<string[]>([]);
+  // 获取数据
+  useDidShow(() => {
+    setIds([])
+    setSelectAll(false)
+    getList();
+  })
   // 点击全选
   const handleDel = ()=>{
     setDel(true);
   }
   // 取消
   const handleClose = ()=>{
+    const arr = JSON.parse(JSON.stringify(data))
+    arr.map(v => {
+      if (v.list.length > 0) {
+        v.list.map(val => {
+          val.click = false;
+          return val;
+        })
+      }
+      return v;
+    });
     setDel(false)
+    setIds([])
+    setSelectAll(false)
+    setData(arr)
   }
-  // 选择ID
-  const [ids,setIds] = useState<string[]>([]);
-  // 获取数据
-  useDidShow(()=>{
-    getList();
-  })
   const getList = (key = '')=>{
     let userInfo = Taro.getStorageSync(UserInfo);
     const params = {
@@ -49,21 +66,32 @@ export default function Notepad() {
       key,
     }
     bkGetNotePadAction(params).then(res => {
-      if (res.code === 400 || res.code === 200) {
-        if (res.data.length > 0) {
-          for (let i = 0; i < res.data.length; i++) {
-            let times;
-            if (res.data[i].created_time) {
-              times = getdate((res.data[i].created_time) * 1000)
-            }
+      if (res.code === 200) {
+        // if (res.data.length > 0) {
+        //   for (let i = 0; i < res.data.length; i++) {
+        //     let times;
+        //     if (res.data[i].created_time) {
+        //       times = getdate((res.data[i].created_time) * 1000)
+        //     }
+        //     const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+        //     const date = new Date(res.data[i].created_time * 1000).getDay();
+        //     const creatTime = timestampToTime(res.data[i].created_time * 1000);
+        //     const week = weeks[date];
+        //     res.data[i].time = times;
+        //     res.data[i].week = week;
+        //     res.data[i].creatTime = creatTime;
+        //     res.data[i].click = false
+        //   }
+        // }
+        if(res.data.length>0){
+          for(let i = 0;i<res.data.length;i++){
+            const date = new Date(res.data[i].day).getDay();
             const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
-            const date = new Date(res.data[i].created_time * 1000).getDay();
-            const creatTime = timestampToTime(res.data[i].created_time * 1000);
             const week = weeks[date];
-            res.data[i].time = times;
             res.data[i].week = week;
-            res.data[i].creatTime = creatTime;
-            res.data[i].click = false
+            // for(let j =0;j<res.data.list.length;j++){
+            //   res.data[i].list[j].click = false;
+            // }
           }
         }
         // 给子页面存值
@@ -84,6 +112,7 @@ export default function Notepad() {
   }
   //handleCheckbox
   const handleCheckbox = (e)=>{
+    console.log(e,'eeee');
     const item = JSON.parse(JSON.stringify(ids));
     if(item.length === 0 ){
       item.push(e.id);
@@ -109,45 +138,86 @@ export default function Notepad() {
         }
       }
     }
+    console.log(item,'222')
     setIds(item);
   }
   // 删除
   const bkDeleteNotePad = ()=>{
-    let params = {
-      id: ids
-    }
-    bkDeleteNotePadAction(params).then(res=>{
-      if(res.code === 200 ){
-        getList();
-      }else{
-        Msg(res.msg);
+    Taro.showModal({
+      title:'提示',
+      content:'删除后，当前信息将无法恢复，确定删除？',
+      showCancel: true,
+      success: (res) => {
+        if (res.confirm == true) {
+          if(ids.length === 0){
+            Msg('请选择至少一条信息')
+            return
+          }
+          let params = {
+            id: ids
+          }
+          bkDeleteNotePadAction(params).then(res=>{
+            if(res.code === 200 ){
+              Msg('删除成功')
+              setTimeout(()=>{
+                getList();
+              },500)
+            }else{
+              Msg(res.msg);
+            }
+          })
+        }
       }
     })
   }
   // 全选
   const handleAllCheckbox = ()=>{
-    let idsArr,arr;
-    if(!selectAll){
-      idsArr = data.map(v=>v.id);
-      arr = data.map(v=>{
-        v.click = true;
-        return v 
-      })
+    const arr = JSON.parse(JSON.stringify(data))
+    let clickId:string[]=[];
+    if (!selectAll){
+      arr.map(v =>{
+          if(v.list.length>0){
+            v.list.map(val=>{
+              val.click = true;
+              clickId.push(val.id);
+              return val;
+            })
+          }
+        return v;
+      });
       setSelectAll(true)
     }else{
-      idsArr =[];
-      arr = data.map(v => {
-        v.click = false;
-        return v
-      })
+      clickId = [];
+      arr.map(v => {
+        if (v.list.length > 0) {
+          v.list.map(val => {
+            val.click = false;
+            return val;
+          })
+        }
+        return v;
+      });
       setSelectAll(false)
     }
-    setIds(idsArr);
+    console.log(clickId)
+    setIds(clickId)
     setData(arr)
   }
   // 搜索
   const handleSeach = ()=>{
     getList(val)
+    // 搜索清空，并且全选变false
+    setSelectAll(false)
+    setIds([]);
+    setIsSheach(true)
+  }
+  console.log(data,'data')
+  // 取消搜索
+  const handleOnClear = ()=>{
+    getList();
+    setVal('')
+    setIds([]);
+    setIsSheach(false)
   }
   return(
     <context.Provider value={value}>
@@ -157,25 +227,33 @@ export default function Notepad() {
         <AtSearchBar
           showActionButton
           value={val}
+          maxLength={10}
+          onClear={handleOnClear}
           onChange={(e)=>setVal(e)}
           onActionClick={handleSeach}
         />
       </View>
       {/* 内容 */}
-      {data.length === 0 && 
+        {data.length === 0 && !isSheach && 
       <View className='content'>
         <View className='noData'>
           <View>您今天还没有填写过记事本哦~</View>
-          <View>点击下方<Text className='blued'>记事</Text>按钮，添加您的记事信息</View>
+          <View>点击下方<Text className='blued'>【记事】</Text>按钮，添加您的记事信息</View>
         </View>
       </View>}
+        {data.length === 0 && isSheach &&
+        <View className='content'>
+          <View className='noData'>
+            <View>暂无数据</View>
+          </View>
+        </View>}
         {busy && 
         <View className='busyBox'>
         <View>系统繁忙，刷新试试</View>
         <View className='refresh'>刷新</View>
         </View>}
         {data.length > 0 && !busy  && <View className='dataMT'>
-        {data.map((v)=>(
+        {/* {data.map((v)=>(
           <View className='dataContent' key={v.id} onClick={() => userRouteJump(`/pages/notepadDetails/index?id=${v.id}`)}>
           <View className='timeTop'>
               <View className='timeTop-time'>{v.time}</View>
@@ -200,17 +278,41 @@ export default function Notepad() {
             </View>
           </View>
         </View>
+        ))} */}
+        {data.map((v,i)=>(
+          <View key={i+i} className='list'>
+            <View className='title'>
+              <View className='day'>{v.day}</View>
+              <View className='week'>{v.week}</View>
+            </View>
+            {v.list.map((values,index)=>(
+              <View className='box' key={index + index} onClick={() => userRouteJump(`/pages/notepadDetails/index?id=${values.id}`)}>
+                <View className='box-note'>{values.note}</View>
+                <View>
+                  {values.view_images.length>0 && <View className='flex'>
+                    {values.view_images.map(item=>(
+                      <Image className='image' src={item.httpurl}/>
+                    ))}
+                  </View>}
+                </View>
+                <View className='title'>
+                  <View className='footerTime'>{values.created_time_string}</View>
+                  <View>{del && <Checkbox checked={values.click} value={values.click} onClick={(e) => { e.stopPropagation(); handleCheckbox(values) }} className='checkboxButton-checkbox' color='#0099FF' />}</View>
+                </View>
+              </View>
+            ))}
+          </View>
         ))}
         </View>}
       {/* footer */}
       {/* 记事 */}
       {!del && <View className='footer'><View className='footer-btn' onClick={() => userRouteJump('/pages/addNotepad/index')}>记事</View></View>}
       {/* 全选 */}
-        {!del && data.length > 0 && <View className='checkbox-notepad' onClick={handleDel}><View className='checkbox-box'><View className='checkbox-image'><Image className='checkbox-image-image' src={`${IMGCDNURL}checkout.png`}/></View>全选</View></View>}
+        {!del && data.length > 0 && <View className='checkbox-notepad' onClick={handleDel}><View className='checkbox-box'><View className='checkbox-image'><Image className='checkbox-image-image' src={`${IMGCDNURL}checkout.png`}/></View>多选</View></View>}
       {/* 多选按钮 */}
       {del && <View className='checkboxButton'>
         <View className='checkboxButton-box'>
-            <View><Checkbox value='' checked={selectAll} onClick={handleAllCheckbox} className='checkboxButton-checkbox' color='#0099FF'/>多选</View>
+            <View><Checkbox value='' checked={selectAll} onClick={handleAllCheckbox} className='checkboxButton-checkbox' color='#0099FF'/>全选</View>
           <View className='checkboxButton-right'>
               <View className='checkboxButton-del' onClick={bkDeleteNotePad}>批量删除</View>
             <View className='checkboxButton-close' onClick={handleClose}>取消</View>

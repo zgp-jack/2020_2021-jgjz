@@ -4,7 +4,7 @@ import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProj
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import Auth from '../../components/auth';
@@ -44,7 +44,8 @@ export default function Index() {
     teamName:'',
   })
   // 授权
-  const [display,setDisplay] = useState<boolean>(true)
+  // =====
+  const [display,setDisplay] = useState<boolean>(false)
   const[vals,setVal] = useState<string>('')
   //获取当前时间
   const [time,setTime]= useState<string>('')
@@ -54,6 +55,8 @@ export default function Index() {
   const [month, setMonth] = useState<string>('')
   // 记工时间
   const [start, setStart]  = useState<string>('')
+  // 结束时间
+  const [end,setEnd] = useState<string>('')
   // 获取当前时间与当前是星期几
   const [week, setWeek] = useState<string>('')
   // 时间索引
@@ -88,8 +91,11 @@ export default function Index() {
   // 关闭图片
   const [closeImage, setCloseImage] = useState<boolean>(true);
   // 是否显示云朵
-  const [show,setShow] =useState<boolean>(false)
-  const getDate = ()=>{
+  const [show,setShow] =useState<boolean>(false);
+  // 工人转换提示
+  const [prompt, setPrompt] = useState<boolean>(false)
+
+  const getDates = ()=>{
     const date = new Date().getDay();
     const time = new Date();
     const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
@@ -112,41 +118,83 @@ export default function Index() {
     return num;
   }
   useDidShow(()=>{
+    let midData = Taro.getStorageSync(MidData);
+    let creationTime = Taro.getStorageSync(CreationTime);
+    // 判断有midDat就取消授权
+    if (midData){
+      setDisplay(false)
+    }
+    const newTime = new Date().getTime()/1000;
+    // const time = 
+    console.log(newTime, creationTime,'xxx');
+    // 七天显示内容
+    if (creationTime && (creationTime + 86400 * 7) > newTime){
+      setPrompt(true)
+    }
+    // 设置首页时间选择器时间
+    // if (creationTime){
+    //   // 开始时间
+    //   let myDate = new Date(creationTime*1000);
+    //   const nowY = myDate.getFullYear()-1;
+    //   const nowM = myDate.getMonth();
+    //   const time = nowY + '-' + nowM;
+    //   setStart(time)
+    //   console.log(nowY,'nowT')
+    //   // 结束时间
+    //   const date = new Date();
+    //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+    //   setTime(newMonth);
+    // }else{
+    //   const date = new Date();
+    //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+    //   const nowY = date.getFullYear() - 1;
+    //   const nowM = date.getMonth();
+    //   const time = nowY + '-' + nowM;
+    //   setStart(time)
+    //   setTime(newMonth);
+    // }
+    // 结束时间
+    // const time = 
     // 清楚日历缓存
     dispatch(setClickTIme([]))
     // 判断有没有用户信息没有就显示
     // 获取缓存信息
     let type = Taro.getStorageSync(Type);
-    setType(type)
+    // 有就设置
+    if (type){
+      setType(type)
+    }
     let userInfo = Taro.getStorageSync(UserInfo);
-    if (!userInfo) {
-      setDisplay(true);
-      return
-    } else {
-      setDisplay(false)
-    }
+    // =======
+    // if (!userInfo) {
+    //   setDisplay(false);
+    //   return
+    // } else {
+    //   setDisplay(false)
+    // }
     dispatch(setTypes(type))
-    let midParams = {
-      mid: userInfo.userId,
-    }
-    let midData = Taro.getStorageSync(MidData);
-    if (!midData) {
-      bkMemberAuthAction(midParams).then(res => {
-        if (res.code !== 200) {
-          Msg(res.msg)
-        } else {
-          console.log(res, 'ressssssssssss')
-          let userInfo = Taro.getStorageSync(UserInfo)
-          res.data.sign = {}
-          res.data.sign.token = userInfo.token;
-          res.data.sign.time = res.data.created_time;
-          res.data.uuid = userInfo.uuid;
-          // res.data.worker_id = res.data.worker_id;
-          Taro.setStorageSync(MidData, res.data)
-        }
-      })
-    }
     getData();
+    // let midParams = {
+    //   mid: userInfo.userId,
+    // }
+    // 登陆了就获取信息
+    // let midData = Taro.getStorageSync(MidData);
+    // if (midData) {
+    //   bkMemberAuthAction(midParams).then(res => {
+    //     if (res.code !== 200) {
+    //       Msg(res.msg)
+    //     } else {
+    //       console.log(res, 'ressssssssssss')
+    //       let userInfo = Taro.getStorageSync(UserInfo)
+    //       res.data.sign = {}
+    //       res.data.sign.token = userInfo.token;
+    //       res.data.sign.time = res.data.created_time;
+    //       res.data.uuid = userInfo.uuid;
+    //       // res.data.worker_id = res.data.worker_id;
+    //       Taro.setStorageSync(MidData, res.data)
+    //     }
+    //   })
+    // }
   })
   // useEffect(()=>{
   //   // 判断有没有用户信息没有就显示
@@ -194,62 +242,91 @@ export default function Index() {
   }
   // 获取首页数据
   const getData = ()=>{
-    // const
-    let type = Taro.getStorageSync(Type);
-    if(!type){
-      setIdentity(true)
-      return
-    }
-    setType(type);
+    // 没登录直接进来默认是工人
+    // =====
+    // let type = Taro.getStorageSync(Type);
+    // if(!type){
+    //   setIdentity(true)
+    //   return
+    // }
+    // setType(type);
     // 没有选择角色
-    if (type ===0){
-      setIdentity(true)
+    // if (type ===0){
+    //   setIdentity(true)
+    // }
+    // 没有用户信息就默认设置为工人
+    let midData = Taro.getStorageSync(MidData);
+    if(midData){
+      let type = Taro.getStorageSync(Type);
+        if(!type){
+        setIdentity(true)
+        return
+      }else{
+        setType(type);
+      }
+      //  没有选择角色
+      if (type ===0){
+        setIdentity(true)
+      }
     }
     let changeTime;
     if (!repeat){
-      changeTime = getDate();
+      changeTime = getDates();
     }else{
       changeTime = time;
+      // 设置时间
+      const date = new Date();
+      const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+      setStart(newMonth)
+      setEnd(newMonth)
     }
     console.log(changeTime,'changeTimechangeTime')
     let params = {
       time: changeTime,
       identity: type,
     }
-    bkIndexAction(params).then(res => {
-      if (res.code === 200) {
-        setItme(res.data);
-        setNum(res.data.count_is_new);
-        if (parseInt(res.data.count_is_new) == 0){
-          setShow(true)
-        }else{
-          setShow(false)
-        }
-        // 设置时间
-        setStart(res.data.earliest_month)
-        if (Array.isArray(res.data.business_list.data)){
-          if (res.data.business_list.data){
-            setList(res.data.business_list.data)
-          }else{
-            setList([])
+    // if(! )
+    if (midData){
+      bkIndexAction(params).then(res => {
+        if (res.code === 200) {
+          setItme(res.data);
+          setNum(res.data.count_is_new);
+          if (parseInt(res.data.count_is_new) == 0) {
+            setShow(true)
+          } else {
+            setShow(false)
           }
-        } else if (res.data.business_list.data.constructor === Object){
-          if (res.data.business_list.data.data[0].arr) {
-            setList(res.data.business_list.data.data[0].arr)
-          }else{
-            setList([])
+          // 设置搜索开始结束时间
+          // 设置最早时间
+          setStart(res.data.earliest_month)
+          // 最晚时间
+          const date = new Date();
+          const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+          setEnd(newMonth)
+          if (Array.isArray(res.data.business_list.data)) {
+            if (res.data.business_list.data) {
+              setList(res.data.business_list.data)
+            } else {
+              setList([])
+            }
+          } else if (res.data.business_list.data.constructor === Object) {
+            if (res.data.business_list.data.data[0].arr) {
+              setList(res.data.business_list.data.data[0].arr)
+            } else {
+              setList([])
+            }
           }
+          // 获取信息
+          // 判断是班组长的时候出现弹框
+          let type = Taro.getStorageSync(Type);
+          if (type === 1) {
+            bkGetProjectTeam()
+          }
+        } else {
+          Msg(res.msg);
         }
-        // 获取信息
-        // 判断是班组长的时候出现弹框
-        console.log(type,'typetypetypetypetypetypetype')
-        if(type === 1){
-          bkGetProjectTeam()
-        }
-      } else {
-        Msg(res.msg);
-      }
-    })
+      })
+    }
   }
   // 选择时间
   const handleChangeTime = (e)=>{
@@ -275,10 +352,12 @@ export default function Index() {
   // 切换角色
   const handelChange = (e)=>{
     let msg = e === 1 ? '开始为自己记工吧' :'开始为工人记工吧'
-    Taro.setStorageSync(Type, e);
     Msg(msg)
+    Taro.setStorageSync(Type, e);
     setType(e);
-    getData();
+    setTimeout(()=>{
+      getData();
+    },100)
   }
   const getNextPageData = ()=>{
     // console.log(31231)
@@ -299,6 +378,7 @@ export default function Index() {
     }
     setTips(false)
   }
+  // 返回鱼泡网
   const handleGoback = ()=>{
     Taro.navigateBackMiniProgram({
       // appId:'',
@@ -372,7 +452,23 @@ export default function Index() {
     setProject(false)
     setCreateProjectDisplay(true)
   }
-  console.log(num,'xxx')
+  // 判断是授权进行下一步
+  const nextStep = ()=>{
+    console.log(2313123)
+    let midData = Taro.getStorageSync(MidData);
+    if (!midData) return;
+    1111
+  }
+  // 跳流水
+  const handleJump = (url:string)=>{
+    let midData = Taro.getStorageSync(MidData);
+    if (!midData){
+      setDisplay(true)
+      return;
+    } 
+    userRouteJump(url);
+    // userRouteJump('/pages/flowingWater/index')
+  }
   return (
     <View className='index-content'>
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
@@ -383,7 +479,7 @@ export default function Index() {
           <View className='heard-left'>
             <Picker
               start={start}
-              // end={time}
+              end={end}
               mode='date'
               fields='month'
               onChange={(e) => handleChangeTime(e)}
@@ -397,15 +493,19 @@ export default function Index() {
           </View>
           {/* <Image src={`${IMGCDNURL}user.png`}/> */}
           {type === 1 ? 
-            <View className='heard-middle'>我是班组长<Text className='switch' onClick={() => { handelChange(2) }}><Text className='test'/>切换 </Text></View> : 
-            <View className='heard-middle'>我是工人<Text className='switch' onClick={() => { handelChange(1) }}><Text className='test'/>切换</Text></View>}
+            <View className='heard-middle' onClick={() => { handelChange(2) }}>我是班组长<Text className='switch'><Text className='test'/>切换 </Text>
+              {prompt && <View className='tipes'>工人记工点这里哦</View>}
+            </View> : 
+            <View className='heard-middle' onClick={() => { handelChange(1) }}>我是工人<Text className='switch'><Text className='test'/>切换</Text>
+              {prompt && <View className='tipes'>班组长记工点这里哦</View>}
+            </View>}
           <View onClick={handelTps} className='cloud'>
             {item &&!show &&<AtBadge value={num} maxValue={99} className='AtBadge'/>}
             <Image src={`${IMGCDNURL}cloud.png`} className='heard-right'>
             </Image>
           </View>
         </View>
-        <View onClick={() => userRouteJump('/pages/flowingWater/index')}>
+        <View onClick={() => handleJump('/pages/flowingWater/index')}>
         <View className='moneyList'>
           <View><Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱</View>
           <View><Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`}/>借支</View>
@@ -415,10 +515,10 @@ export default function Index() {
           <View>{item && item.borrow || 0}</View>
         </View>
         <View className='typeList'>
-          <View>上班<Text className='num'>{item && item.work_time || 0}</Text></View>
-          <View>加班<Text className='num'>{item && item.overtime || 0}个工</Text></View>
+          <View>上班<Text className='num'>{item && item.work_time || 0}个工</Text></View>
+          <View>加班<Text className='num'>{item && item.overtime || 0}小时</Text></View>
           <View className='flex'><View>按量记</View>
-            {item.amount.type === 0 && <Text className='num'>0笔</Text> }
+            {item.amount.type === 0 && <Text className='num'>0平方米</Text> }
             {item.amount.type === 1 && <Text className='num1'>{item.amount.unit_num}{item.amount.unit}</Text>}
             {item.amount.type === 2 && <Text className='num1'>{item.amount.count}</Text>}
           </View>
@@ -427,22 +527,22 @@ export default function Index() {
         <View className='yun'><Image className='yun-img' src={`${IMGCDNURL}backgroundCloud.png`}/></View>
         <View className='recordBox'>
           <View className='eventList'>
-            <View className='eventList-left' onClick={() => userRouteJump('/pages/flowingWater/index')}>
+            <View className='eventList-left' onClick={() => handleJump('/pages/flowingWater/index')}>
               <View className='eventList-icon'><Image className='eventList-icon-image' src={`${IMGCDNURL}recorder.png`}/></View>
                 <View>记工流水</View>
               </View>
-              <View className='' onClick={() => userRouteJump('/pages/attendanceSheet/index')}>
+              <View className='' onClick={() => handleJump('/pages/attendanceSheet/index')}>
               <View className='eventList-icon-attendance'><Image className='eventList-icon-attendance-image' src={`${IMGCDNURL}attendance.png`}/></View>
                 <View className='' >考勤表</View>
               </View>
           </View>
           <View className='btnBox'>
             <View className='btn'>
-              {item && item.business_list.data.length === 0 ? <Text onClick={() => userRouteJump(`/pages/recorder/index?type=${type}`)}> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text onClick={() => userRouteJump(`/pages/recorder/index?type=${type}`)}> 再记一笔<Text className='btn-title' onClick={() => userRouteJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
+              {item && item.business_list.data.length === 0 ? <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
               <View className='notepad-Icon'><Image className='notepad-Icon-iamge' src={`${IMGCDNURL}notepad.png`}/></View>
-              <View onClick={() => userRouteJump(`/pages/notepad/index`)}>记事本</View>
+              <View className='record' onClick={() => handleJump(`/pages/notepad/index`)}>记事本</View>
             </View>
           </View>
         </View>
@@ -503,7 +603,7 @@ export default function Index() {
             </ScrollView>
           </View>
         }
-        {item && list.length === 0 && !busy &&  
+        {((item && list.length === 0)||!item) && !busy &&  
           <View className='content-noList'>
             <View>您今天还没有记工~</View>
             <View>点击上方[记工]按钮，开始记工</View>
@@ -511,7 +611,7 @@ export default function Index() {
         }
       </View>
       <View className='jumpBox'>
-        <View className='jumpItem' onClick={() => userRouteJump('/pages/feedback/index')}>
+        <View className='jumpItem' onClick={() => handleJump('/pages/feedback/index')}>
           <View className='ptBox'>
             <View className='jumpItem-icon'><Image className='jumpItem-icon-image' src={`${IMGCDNURL}work.png`}/></View>
             <View className='jumpItem-title'>意见</View>
@@ -535,19 +635,19 @@ export default function Index() {
         </View>
       </AtModal>
       {/* 选择身份弹窗 */}
-      <AtModal isOpened={identity} >
+      <AtModal isOpened={identity} closeOnClickOverlay={false} >
         <View className='useAtModal'>
           <View className='useAtModal-title'>请根据需要选择您的身份</View>
           <View className='useAtModal-tips'>温馨提示：选对身份，才能使用想要的功能哦</View>
           <View className='useAtModal-box'>
             <View onClick={()=>handleChangeRole(1)}>
-              <View className='useAtModal-monitor'><Image className='useAtModal-monitor-img' src={`${IMGCDNURL}banzhu.png`}/></View>
+              <View className='useAtModal-monitor'><Image className='useAtModal-monitor-img' src={`${IMGCDNURL}gongren.png`}/></View>
               <View className='useAtModal-blued'>我是班组长</View>
               <View>对工人记工</View>
               <View className='useAtModal-look'>查看工人的考勤表</View>
             </View>
             <View onClick={() => handleChangeRole(2)}>
-              <View className='useAtModal-worker'><Image className='useAtModal-worker-img' src={`${IMGCDNURL}gongren.png`}/></View>
+              <View className='useAtModal-worker'><Image className='useAtModal-worker-img' src={`${IMGCDNURL}banzhu.png`}/></View>
               <View className='useAtModal-blued'>我是工人</View>
               <View>对自己记工</View>
               <View className='useAtModal-look'>查看自己的考勤表</View>

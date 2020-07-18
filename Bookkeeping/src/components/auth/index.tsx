@@ -2,7 +2,7 @@ import Taro, { useState, useEffect, useShareAppMessage  } from '@tarojs/taro'
 import { View, Button, Image } from '@tarojs/components'
 import { getUserSessionKeyAction, GetUserInfoAction, bkMemberAuthAction  } from '../../utils/request/index'
 import Msg from '../../utils/msg'
-import { UserInfo, MidData } from '../../config/store';
+import { UserInfo, MidData, CreationTime } from '../../config/store';
 import { IMGCDNURL } from '../../config'
 import './index.scss'
 
@@ -21,6 +21,7 @@ export interface AuthData {
   source: string,
   tel?:string,
   code?:string,
+  type?:string,
 }
 
 export interface User {
@@ -28,9 +29,11 @@ export interface User {
   tokenTime: number,
   token: string,
   uuid: string,
-  login: boolean
+  login: boolean,
+  type?:string,
 }
 export default function Auth({ display, handleClose, callback}: PROPS) {
+    const [data,setData] = useState()
     // 状态
   const [warrant,setWarrant] = useState<boolean>(false)
   const userAuthAction = (e)=>{
@@ -41,7 +44,8 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           if (res.code) {
             console.log(res.code,'code')
             getUserSessionKeyAction(res.code).then(res => {
-              var sessionKey: string = res.session_key
+              const sessionKey: string = res.session_key
+              console.log(sessionKey,'sessionKeysessionKeysessionKey')
               decodeSessionKey(sessionKey)
               // callback && callback()
             })
@@ -84,8 +88,11 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           encryptedData: encryptedData,
           iv: iv,
           refId: 0,
-          source: '', //疑似小程序source 忘记干嘛的了
+          source: '', //疑似小程序source 忘记干嘛的了,
+          type:'phone'
         }
+        console.log(key,'keykeykeykey')
+        setData(data)
         GetUserInfoAction(data).then(res => {
           if(res.code === 40003){
             Taro.showModal({
@@ -94,7 +101,9 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
               showCancel: true,
               success:(res)=>{
                 if(res.confirm){
-                  userRouteJump(`/pages/login/index?session_key=${key}&encryptedData=${encryptedData}&iv=${iv}`)
+                  // 没有绑定手机好就选择微信登陆还是手机登陆
+                  setWarrant(true);
+                  // userRouteJump(`/pages/login/index?session_key=${key}&encryptedData=${encryptedData}&iv=${iv}`)
                 }
               }
             })
@@ -105,7 +114,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
               token: res.data.sign.token,
               tokenTime: res.data.sign.time,
               uuid: res.data.uuid,
-              login: true
+              login: true,
             }
             console.log(res,'resMid')
             // let midDatas = Taro.getStorageSync(MidData);
@@ -113,6 +122,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             // console.log(midData,'midDatamidDatamidDatamidData')
             // midData.yupao_id = res.data.id;
             res.data.yupao_id = res.data.id;
+            Taro.setStorageSync(UserInfo, user);
             Taro.setStorageSync(MidData, res.data)
             let midParams = {
               mid: res.data.id
@@ -125,10 +135,12 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
                 // worker_id = resItem.data.worker_id;
                 res.data.worker_id = resItem.data.worker_id;
                 Taro.setStorageSync(MidData, res.data)
+                Taro.setStorageSync(CreationTime, resItem.data.created_time)
               }
             })
             Taro.setStorageSync(UserInfo, user)
             setWarrant(true);
+            
             // dispatch(setUserInfo(user))
             callback && callback()
             // if (page) pageBack()
@@ -155,6 +167,68 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
     // 需要判断有没有手机号
     userRouteJump(`/pages/login/index`)
   }
+  const getPhoneNumber =(e)=>{
+    const item = JSON.parse(JSON.stringify(data));
+    console.log(e);
+    if (e.detail.errMsg == "getPhoneNumber:ok") {
+      // Taro.navigateBack();
+      let params={
+        session_key: item.session_key,
+        wechat_encryptedData: e.detail.encryptedData,
+        wechat_iv: e.detail.iv,
+        encryptedData: item.encryptedData,
+        iv: item.iv,
+        refId: 0,
+        type: 'wechat',
+        source: '',
+      }
+      GetUserInfoAction(params).then(res=>{
+        if (res.code === 40003) {
+          Taro.showModal({
+            title: '微信账号还没有绑定手机号',
+            content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
+            showCancel: true,
+            success: (res) => {
+              if (res.confirm) {
+                userRouteJump(`/pages/login/index?session_key=${item.session_key}&encryptedData=${item.encryptedData}&iv=${item.iv}`)
+              }
+            }
+          })
+        } else if (res.errcode === 'ok') {
+          const user: User = {
+            userId: res.data.id,
+            token: res.data.sign.token,
+            tokenTime: res.data.sign.time,
+            uuid: res.data.uuid,
+            login: true,
+          }
+          res.data.yupao_id = res.data.id;
+          Taro.setStorageSync(UserInfo, user);
+          Taro.setStorageSync(MidData, res.data)
+          let midParams = {
+            mid: res.data.id
+          }
+          bkMemberAuthAction(midParams).then(resItem => {
+            if (resItem.code !== 200) {
+              Msg(resItem.msg)
+            } else {
+              // worker_id = resItem.data.worker_id;
+              res.data.worker_id = resItem.data.worker_id;
+              Taro.setStorageSync(MidData, res.data)
+              Taro.setStorageSync(CreationTime, resItem.data.created_time)
+            }
+          })
+          Taro.setStorageSync(UserInfo, user)
+          // Taro.navigateBack();
+          callback && callback()
+        }else{
+          Msg(res.msg || res.errmsg)
+        }
+      })
+    }else{
+      userRouteJump(`/pages/login/index?session_key=${item.session_key}&encryptedData=${item.encryptedData}&iv=${item.iv}`)
+    }
+  }
   return(
     <View>
       { display && 
@@ -170,7 +244,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           <View className='btn'>
             {/* <View className='sign' onClick={handleAuthorize}>授权登录</View> */}
             {!warrant &&<Button className='sign' openType='getUserInfo' onGetUserInfo={(e) => userAuthAction(e)}>微信授权登录</Button>}
-            {warrant && <Button className='sign' open-type='getPhoneNumber' >微信快捷登陆</Button>}
+            {warrant && <Button className='sign' open-type='getPhoneNumber' onGetPhoneNumber={getPhoneNumber}>微信快捷登陆</Button>}
             {!warrant && <View className='close' onClick={() => handleClose(false)}>取消</View>}
             {warrant && <View className='close' onClick={() => { userRouteJump(`/pages/login/index`)}}>手机号登陆</View>}
           </View>

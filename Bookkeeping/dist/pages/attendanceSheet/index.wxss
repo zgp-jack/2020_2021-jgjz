@@ -206,7 +206,6 @@
   font-size: 26rpx;
 }
 .box-list-bao {
-  display: inline-block;
   text-align: center;
   height: 68rpx;
   width: 145rpx;

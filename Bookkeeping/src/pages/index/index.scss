@@ -30,6 +30,7 @@
 }
 
 .heard-middle{
+  position: relative;
   font-size: 36rpx;
   font-weight: bold;
 }
@@ -87,6 +88,7 @@
 .num{
   margin-left: 15rpx;
   font-size: 28rpx;
+  margin-top: 5rpx;
   // display: inline-block;
   // width: 100rpx;
   // overflow: hidden;
@@ -470,4 +472,20 @@
   margin-left: 15rpx;
   font-size: 28rpx;
   margin-top: 4rpx;
+}
+.record{
+  margin-top: 10rpx;
+}
+.tipes{
+  position: absolute;
+  left: 0rpx;
+  bottom: 0rpx;
+  height: 35rpx;
+  width: 200rpx;
+  background: rgb(240, 136, 38);
+  color: #fff;
+  font-size: 20rpx;
+  line-height: 35rpx;
+  text-align: center;
+  border-radius: 10rpx;
 }

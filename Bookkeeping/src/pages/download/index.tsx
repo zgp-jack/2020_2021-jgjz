@@ -4,7 +4,7 @@ import { bkgetExcelDataAction, bkShareExcelAction } from '../../utils/request/in
 import Msg from '../../utils/msg';
 import { IMGCDNURL } from '../../config';
 import { REQUESTURL } from '../../config'
-import { UserInfo, MidData } from '../../config/store'
+import { UserInfo, MidData, Type } from '../../config/store'
 import './index.scss'
 
 export default function Download() {
@@ -32,6 +32,7 @@ export default function Download() {
     //     console.log(res)
     //   }
     // })
+    let type = Taro.getStorageSync(Type);
     let userInfo = Taro.getStorageSync(UserInfo);
     Taro.downloadFile({
       url: `http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/`,
@@ -41,6 +42,7 @@ export default function Download() {
         token: userInfo.token,
         time: userInfo.tokenTime,
         uuid: userInfo.uuid,
+        identity: type
       },
       success: function (res) {
         Taro.saveFile({
@@ -95,6 +97,7 @@ export default function Download() {
   const handleDownLoad = ()=>{
     let parms = {};
     let userInfo = Taro.getStorageSync(UserInfo);
+    let type = Taro.getStorageSync(Type);
     // bkgetExcelDataAction(parms).then(res=>{
     //   if(res.code === 200){
         Taro.downloadFile({
@@ -105,6 +108,7 @@ export default function Download() {
             token: userInfo.token,
             time: userInfo.tokenTime,
             uuid: userInfo.uuid,
+            identity:type
           },
           success: function (res) {
             Taro.saveFile({

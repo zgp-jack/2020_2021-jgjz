@@ -50,7 +50,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WageStandard.__proto__ || Object.getPrototypeOf(WageStandard)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["wageStandard", "loopArray41", "$compid__47", "$compid__48", "$compid__49", "$compid__50", "display", "handleClose", "handleWageStandard", "handleAddWage", "handleWageStandardRadio", "__fn_onClick"], _this.anonymousFunc2Map = {}, _this.customComponents = ["AtInputNumber"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WageStandard.__proto__ || Object.getPrototypeOf(WageStandard)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["wageStandard", "loopArray40", "$compid__46", "$compid__47", "$compid__48", "$compid__49", "display", "handleClose", "handleWageStandard", "handleAddWage", "handleWageStandardRadio", "__fn_onClick"], _this.anonymousFunc2Map = {}, _this.customComponents = ["AtInputNumber"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(WageStandard, [{
@@ -71,25 +71,25 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__47"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__46"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__47 = _genCompid2[0],
-          $compid__47 = _genCompid2[1];
+          $prevCompid__46 = _genCompid2[0],
+          $compid__46 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__48"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__47"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__48 = _genCompid4[0],
-          $compid__48 = _genCompid4[1];
+          $prevCompid__47 = _genCompid4[0],
+          $compid__47 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__49"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__48"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__49 = _genCompid6[0],
-          $compid__49 = _genCompid6[1];
+          $prevCompid__48 = _genCompid6[0],
+          $compid__48 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__50"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__49"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__50 = _genCompid8[0],
-          $compid__50 = _genCompid8[1];
+          $prevCompid__49 = _genCompid8[0],
+          $compid__49 = _genCompid8[1];
 
       var _props = this.__props,
           display = _props.display,
@@ -116,7 +116,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
         handleWageStandard('day', e);
       };
 
-      var loopArray41 = display ? wageStandard.data.map(function (v, __index2) {
+      var loopArray40 = display ? wageStandard.data.map(function (v, __index2) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
@@ -139,7 +139,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
         "step": 0.5,
         "value": wageStandard.work,
         "onChange": this.anonymousFunc0
-      }, $compid__47, $prevCompid__47);
+      }, $compid__46, $prevCompid__46);
       display && _taroWeapp.propsManager.set({
         "type": "digit",
         "min": 0,
@@ -147,7 +147,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
         "step": 1,
         "value": wageStandard.money,
         "onChange": this.anonymousFunc1
-      }, $compid__48, $prevCompid__48);
+      }, $compid__47, $prevCompid__47);
       display && wageStandard.type == 1 && _taroWeapp.propsManager.set({
         "type": "digit",
         "min": 0,
@@ -155,7 +155,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
         "step": 1,
         "value": wageStandard.addWork,
         "onChange": this.anonymousFunc3
-      }, $compid__49, $prevCompid__49);
+      }, $compid__48, $prevCompid__48);
       display && wageStandard.type == 2 && _taroWeapp.propsManager.set({
         "type": "digit",
         "min": 0,
@@ -163,14 +163,14 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
         "step": 0.5,
         "value": wageStandard.day,
         "onChange": this.anonymousFunc4
-      }, $compid__50, $prevCompid__50);
+      }, $compid__49, $prevCompid__49);
       Object.assign(this.__state, {
         wageStandard: wageStandard,
-        loopArray41: loopArray41,
+        loopArray40: loopArray40,
+        $compid__46: $compid__46,
         $compid__47: $compid__47,
         $compid__48: $compid__48,
         $compid__49: $compid__49,
-        $compid__50: $compid__50,
         display: display
       });
       return this.__state;

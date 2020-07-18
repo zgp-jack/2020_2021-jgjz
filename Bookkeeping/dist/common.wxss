@@ -240,12 +240,61 @@
 .image {
   height: 125rpx;
   width: 125rpx;
+  margin-right: 30rpx;
 }
 
 .flex {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+}
+
+.box {
+  background: #fff;
+  margin-bottom: 10rpx;
+}
+
+.list {
+  margin: 30rpx;
+}
+
+.title {
+  margin-top: 10rpx;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.day {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #797979;
+}
+
+.week {
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #acacac;
+}
+
+.box {
+  padding: 20rpx;
+}
+
+.footerTime {
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #a5a5a5;
+}
+
+.box-note {
+  margin-bottom: 10rpx;
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #333333;
 }
 
 .flowingWater {

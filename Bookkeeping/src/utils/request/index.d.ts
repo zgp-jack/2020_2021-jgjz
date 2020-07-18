@@ -70,7 +70,8 @@ export interface bkGetNotePadTypeData{
   time?:any,
   week?:string,
   creatTime?:string,
-  click?:boolean
+  click?:boolean,
+  created_time_string:string,
 }
 
 // 流水列表

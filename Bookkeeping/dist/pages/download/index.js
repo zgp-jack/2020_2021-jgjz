@@ -103,6 +103,7 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
         //     console.log(res)
         //   }
         // })
+        var type = _taroWeapp2.default.getStorageSync(_store.Type);
         var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
         _taroWeapp2.default.downloadFile({
           url: "http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/",
@@ -111,7 +112,8 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
             mid: userInfo.userId,
             token: userInfo.token,
             time: userInfo.tokenTime,
-            uuid: userInfo.uuid
+            uuid: userInfo.uuid,
+            identity: type
           },
           success: function success(res) {
             _taroWeapp2.default.saveFile({
@@ -166,6 +168,7 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
       var handleDownLoad = function handleDownLoad() {
         var parms = {};
         var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
+        var type = _taroWeapp2.default.getStorageSync(_store.Type);
         // bkgetExcelDataAction(parms).then(res=>{
         //   if(res.code === 200){
         _taroWeapp2.default.downloadFile({
@@ -175,7 +178,8 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
             mid: userInfo.userId,
             token: userInfo.token,
             time: userInfo.tokenTime,
-            uuid: userInfo.uuid
+            uuid: userInfo.uuid,
+            identity: type
           },
           success: function success(res) {
             _taroWeapp2.default.saveFile({

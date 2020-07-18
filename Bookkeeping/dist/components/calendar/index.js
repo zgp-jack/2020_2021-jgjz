@@ -61,7 +61,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarModal.__proto__ || Object.getPrototypeOf(CalendarModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray57", "display", "IMGCDNURL", "weeks", "calendarDays", "recorderType", "time", "handleClickCalendar", "getMonthDaysCurrent", "handleCalendar", "setModel", "model", "setTimeData", "arr", "clickData", "handleCalendarClose", "handleChangeTime", "handleCalendarSub", "__fn_onClick", "onScrollToUpper", "onScrollToLower"], _this.anonymousFunc2Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarModal.__proto__ || Object.getPrototypeOf(CalendarModal)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray55", "display", "IMGCDNURL", "weeks", "calendarDays", "recorderType", "time", "handleClickCalendar", "getMonthDaysCurrent", "handleCalendar", "setModel", "model", "setTimeData", "arr", "clickData", "handleCalendarClose", "handleChangeTime", "handleCalendarSub", "__fn_onClick", "onScrollToUpper", "onScrollToLower"], _this.anonymousFunc2Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(CalendarModal, [{
@@ -525,7 +525,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         return handleChangeTime(1);
       };
 
-      var loopArray57 = display ? calendarDays.map(function (v, i) {
+      var loopArray55 = display ? calendarDays.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
@@ -556,7 +556,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
         };
       }) : [];
       Object.assign(this.__state, {
-        loopArray57: loopArray57,
+        loopArray55: loopArray55,
         display: display,
         IMGCDNURL: _index.IMGCDNURL,
         weeks: weeks,

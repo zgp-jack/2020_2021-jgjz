@@ -68,7 +68,7 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Feedback.__proto__ || Object.getPrototypeOf(Feedback)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '意见反馈'
-    }, _this.$usedState = ["loopArray33", "$compid__41", "evaluate", "image", "PHONE"], _this.anonymousFunc1Map = {}, _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray32", "$compid__41", "evaluate", "image", "PHONE"], _this.anonymousFunc1Map = {}, _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Feedback, [{
@@ -145,8 +145,12 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
       };
       //提交
       var handlebkAddFeedbackAction = function handlebkAddFeedbackAction() {
-        if (radio === 0) {
+        if (radio == 0) {
           (0, _index5.default)('请选择评价');
+          return;
+        }
+        if (!note) {
+          (0, _index5.default)('您还没有写下意见');
           return;
         }
         var images = image.item.map(function (item) {
@@ -160,10 +164,12 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
         (0, _index3.bkAddFeedbackAction)(params).then(function (res) {
           console.log(res);
           if (res.code === 200) {
-            (0, _index5.default)('保存成功');
-            _taroWeapp2.default.navigateBack({
-              delta: 1
-            });
+            (0, _index5.default)('提交成功，记工记账将因您的意见而变得美好！');
+            setTimeout(function () {
+              _taroWeapp2.default.navigateBack({
+                delta: 1
+              });
+            }, 500);
           } else {
             (0, _index5.default)('保存失败');
           }
@@ -176,8 +182,8 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
           success: function success() {
             _taroWeapp2.default.hideToast();
             (0, _index4.ShowActionModal)({
-              title: '恭喜您',
-              msg: '已复制到粘贴板，赶快去添加吧！'
+              // title: '恭喜您',
+              msg: '微信号复制成功'
             });
           }
         });
@@ -189,7 +195,7 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc3 = handlebkAddFeedbackAction;
-      var loopArray33 = evaluate.map(function (v, __index1) {
+      var loopArray32 = evaluate.map(function (v, __index1) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
@@ -212,7 +218,7 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
         "userDelImg": userDelImg
       }, $compid__41, $prevCompid__41);
       Object.assign(this.__state, {
-        loopArray33: loopArray33,
+        loopArray32: loopArray32,
         $compid__41: $compid__41,
         evaluate: evaluate,
         image: image,

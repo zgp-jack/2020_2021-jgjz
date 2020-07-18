@@ -5,3 +5,5 @@ export const UserInfo: string = 'userInfo'
 export const MidData: string = 'midData'
 // 工人班组长
 export const Type:string = 'type'
+// 用户创建时间
+export const CreationTime: string = 'creationTime'

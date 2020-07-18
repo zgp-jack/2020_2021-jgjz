@@ -40,8 +40,6 @@ var _index5 = __webpack_require__(/*! ../../utils/msg/index */ "./src/utils/msg/
 
 var _index6 = _interopRequireDefault(_index5);
 
-var _index7 = __webpack_require__(/*! ../../config/index */ "./src/config/index.ts");
-
 __webpack_require__(/*! ./index.scss */ "./src/pages/addNotepad/index.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -70,7 +68,7 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddNotepad.__proto__ || Object.getPrototypeOf(AddNotepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["$compid__43", "id", "model", "IMGCDNURL"], _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__42", "id", "model"], _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AddNotepad, [{
@@ -89,10 +87,10 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__43"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__42"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__43 = _genCompid2[0],
-          $compid__43 = _genCompid2[1];
+          $prevCompid__42 = _genCompid2[0],
+          $compid__42 = _genCompid2[1];
 
       // 传递过来的值
 
@@ -155,20 +153,17 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
         return handleContent(e);
       };
 
-      this.anonymousFunc1 = handelAdd;
-      this.anonymousFunc2 = handleSubmit;
+      this.anonymousFunc1 = handleSubmit;
       _taroWeapp.propsManager.set({
         "images": image.item,
         "max": 4,
-        "notepad": true,
         "userUploadImg": userUploadImg,
         "userDelImg": userDelImg
-      }, $compid__43, $prevCompid__43);
+      }, $compid__42, $prevCompid__42);
       Object.assign(this.__state, {
-        $compid__43: $compid__43,
+        $compid__42: $compid__42,
         id: id,
-        model: model,
-        IMGCDNURL: _index7.IMGCDNURL
+        model: model
       });
       return this.__state;
     }
@@ -182,15 +177,10 @@ var AddNotepad = (_temp2 = _class = function (_Taro$Component) {
     value: function anonymousFunc1(e) {
       ;
     }
-  }, {
-    key: "anonymousFunc2",
-    value: function anonymousFunc2(e) {
-      ;
-    }
   }]);
 
   return AddNotepad;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "pages/addNotepad/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1"], _class.$$componentPath = "pages/addNotepad/index", _temp2);
 
 
 AddNotepad.config = { navigationBarTitleText: '记事本' };
@@ -259,7 +249,8 @@ function userCode(InitParams) {
     note: '',
     image: [],
     time: '',
-    id: ''
+    id: '',
+    week: ''
   }),
       _useState2 = _slicedToArray(_useState, 2),
       model = _useState2[0],
@@ -276,13 +267,24 @@ function userCode(InitParams) {
 
   (0, _taroWeapp.useEffect)(function () {
     if (InitParams.id) {
+      console.log(useSelectorItem, 'useSelectorItem');
       if (useSelectorItem.notepad.data) {
         var obj = void 0;
         useSelectorItem.notepad.data.map(function (v) {
-          if (v.id === InitParams.id) {
-            obj = v;
+          console.log(v);
+          if (v.list.length > 0 && v.list) {
+            v.list.map(function (val) {
+              console.log(val, 'val');
+              if (val.id === InitParams.id) {
+                obj = val;
+              }
+            });
           }
+          // if (v.id === InitParams.id){
+          //   obj = v;
+          // }
         });
+        console.log(obj, 'obj');
         var params = {
           note: obj.note,
           time: obj.creatTime,
@@ -296,25 +298,37 @@ function userCode(InitParams) {
       // 获取当前时间
       // let lastM = JSON.stringify(new Date(new Date().setMonth(new Date().getMonth() + 1))).slice(1, 11)
       // console.log(lastM,'xxx')
-      var date = new Date();
-      var seperator1 = "-";
-      var year = date.getFullYear();
-      var month = date.getMonth() + 1;
-      var hour = date.getHours();
-      var minutes = date.getMinutes();
-      var seconds = date.getSeconds();
-      var strDate = date.getDate();
-      if (month >= 1 && month <= 9) {
-        month = "0" + month;
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-      }
-      var currentdate = year + seperator1 + month + seperator1 + strDate + "  " + hour + ":" + minutes + ":" + seconds;
+      // const date = new Date();
+      // const seperator1 = "-";
+      // const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+      // const year = date.getFullYear();
+      // let month:any = date.getMonth() + 1;
+      // const hour = date.getHours();
+      // const minutes = date.getMinutes();
+      // const seconds = date.getSeconds();
+      // let strDate:any = date.getDate();
+      // if (month >= 1 && month <= 9) {
+      //   month = "0" + month;
+      // }
+      // if (strDate >= 0 && strDate <= 9) {
+      //   strDate = "0" + strDate;
+      // }
+      // const currentdate = year + seperator1 + month + seperator1 + strDate + "  " + hour + ":" + minutes + ":" + seconds;
+      var date = new Date().getDay();
+      var time = new Date();
+      var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+      var week = weeks[date];
+      var newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate()) + '    ' + addZero(time.getHours()) + ':' + addZero(time.getMinutes());
       var data = JSON.parse(JSON.stringify(model));
-      setModel(_extends({}, data, { time: currentdate }));
+      setModel(_extends({}, data, { time: newTime, week: week }));
     }
   }, []);
+  var addZero = function addZero(num) {
+    if (parseInt(num) < 10) {
+      num = '0' + num;
+    }
+    return num;
+  };
   // 提交
   var handleSubmit = function handleSubmit() {
     var item = JSON.parse(JSON.stringify(model));
@@ -322,6 +336,10 @@ function userCode(InitParams) {
     var images = image.item.map(function (item) {
       return item.url;
     });
+    if (!images && !item.note) {
+      (0, _index3.default)('请选择图片或填写记事');
+      return;
+    }
     var params = {
       note: item.note,
       img: images,
@@ -331,15 +349,21 @@ function userCode(InitParams) {
     if (InitParams.id) {
       (0, _index.bkUpdateNotePadAction)(params).then(function (res) {
         console.log(res);
-        _taroWeapp2.default.navigateTo({ url: '/pages/notepad/index' });
+        (0, _index3.default)('修改成功');
+        // Taro.navigateTo({ url:'/pages/notepad/index'})
+        setTimeout(function () {
+          _taroWeapp2.default.navigateBack({ delta: 2 });
+        }, 500);
       });
     } else {
       (0, _index.bkAddNotepadAction)(params).then(function (res) {
         if (res.code === 200) {
           (0, _index3.default)(res.msg);
-          _taroWeapp2.default.navigateBack({
-            delta: 3
-          });
+          setTimeout(function () {
+            _taroWeapp2.default.navigateBack({
+              delta: 1
+            });
+          }, 500);
         } else {
           (0, _index3.default)(res.msg);
         }

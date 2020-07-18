@@ -25,6 +25,7 @@ export default function CreateProject({ display, handleClose, val, handleInput,h
                 className='createProject-complaintModal-content-textarea'
                 placeholder='请输入项目名称'
                 value={val}
+                maxLength={10}
                 onInput={(e) => handleInput('groupName',e)}
               />
             </View>

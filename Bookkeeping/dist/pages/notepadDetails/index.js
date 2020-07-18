@@ -58,9 +58,7 @@ var NotepadDetails = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NotepadDetails.__proto__ || Object.getPrototypeOf(NotepadDetails)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
-      navigationBarTitleText: '详情'
-    }, _this.$usedState = ["data"], _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NotepadDetails.__proto__ || Object.getPrototypeOf(NotepadDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["data"], _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(NotepadDetails, [{
@@ -98,12 +96,43 @@ var NotepadDetails = (_temp2 = _class = function (_Taro$Component) {
         if (dataArr) {
           console.log(dataArr);
           for (var i = 0; i < dataArr.length; i++) {
-            if (dataArr[i].id === id) {
-              setData(dataArr[i]);
+            if (dataArr[i].list && dataArr[i].list.length > 0) {
+              for (var j = 0; j < dataArr[i].list.length; j++) {
+                if (dataArr[i].list[j].id === id) {
+                  setData(dataArr[i].list[j]);
+                  var date = new Date(dataArr[i].list[j].created_time * 1000).getDay();
+                  var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+                  var week = weeks[date];
+                  _taroWeapp2.default.setNavigationBarTitle({
+                    title: dataArr[i].list[j].created_time_string + '   ' + week
+                  });
+                }
+              }
             }
+            // if(dataArr[i].id === id){
+            //   setData(dataArr[i])
+            //   console.log(dataArr,'xx')
+            //   console.log(dataArr[i].created_time,'xxxx')
+            //   const date = new Date(dataArr[i].created_time*1000).getDay();
+            //   // const time = new Date(dataArr[i].created_time);
+            //   // const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate()) + '    ' + addZero(time.getHours()) + ':' + addZero(time.getMinutes());
+            //   const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+            //   const week = weeks[date];
+            //   console.log(date,'datedatedate')
+            //   console.log(week,'xxx')
+            //   Taro.setNavigationBarTitle({
+            //     title: dataArr[i].created_time_string + '   ' + week,
+            //   })
+            // }
           }
         }
       });
+      var addZero = function addZero(num) {
+        if (parseInt(num) < 10) {
+          num = '0' + num;
+        }
+        return num;
+      };
       // 跳转
       var userRouteJump = function userRouteJump(url) {
         _taroWeapp2.default.navigateTo({
@@ -148,9 +177,11 @@ var NotepadDetails = (_temp2 = _class = function (_Taro$Component) {
 
   return NotepadDetails;
 }(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1"], _class.$$componentPath = "pages/notepadDetails/index", _temp2);
+// NotepadDetails.config = {
+//   navigationBarTitleText: '详情',
+// } as Config
 
 
-NotepadDetails.config = { navigationBarTitleText: '详情' };
 exports.default = NotepadDetails;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(NotepadDetails, true));

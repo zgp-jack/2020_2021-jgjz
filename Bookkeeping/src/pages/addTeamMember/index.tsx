@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from '@tarojs/redux';
 import { setWorker } from '../../actions/workerList';
 import { bkSetGroupLeaderAction, bkAddWorkerInGroupAction } from '../../utils/request/index'
 import { Type } from '../../config/store';
+import classnames from 'classnames'
 import './index.scss'
 
 
@@ -55,6 +56,17 @@ export default function AddTeamMember() {
   //   setData(list)
   // }
   useEffect(()=>{
+    // 动态设置头部
+    let type = Taro.getStorageSync(Type);
+    let titel;
+    if(type === 1){
+      titel = '添加班组成员'
+    }else{
+      titel = '添加班组长'
+    }
+    Taro.setNavigationBarTitle({
+      title: titel,
+    })
     console.log(useSelectorItem.mailList,'useSelectorItem.mailList')
     if (useSelectorItem.mailList) {
       const item = JSON.parse(JSON.stringify(useSelectorItem.mailList))
@@ -212,6 +224,7 @@ export default function AddTeamMember() {
         }
       })
   }
+  console.log(data,'data')
   return(
     <View className='content'>
       <View>
@@ -232,11 +245,16 @@ export default function AddTeamMember() {
                   <View><Checkbox checked={v.click} value={v.click} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /></View>
                 }
                 <View>
-                  <View className='image'></View>
+                  <View className={classnames({
+                    'image': v.id % 2 == 1 && v.id > 100,
+                    'image-red': v.id % 2 == 0 && v.id > 100,
+                    'image-origion': v.id % 2 == 1 && v.id < 100,
+                    'image-violet': v.id % 2 == 0 && v.id < 100,
+                  })}>{v.name.slice(0, 2)}</View>
                 </View>
                 <View>
                   <View className='name'>{v.name}</View>
-                  <View className='phone'>{v.phone}</View>
+                  <View className='phone'>{v.tel}</View>
                 </View>
               </View>
             )))}

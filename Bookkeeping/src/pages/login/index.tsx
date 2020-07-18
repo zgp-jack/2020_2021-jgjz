@@ -99,21 +99,25 @@ export default function Login() {
       source: '',
       tel: model.phone,
       code:model.code,
+      type: 'phone'
     }
     GetUserInfoAction(params).then(res=>{
-      if(res.code === 200){
-        const user: User = {
+      if (res.errcode === 'ok'){
+        const user: any = {
           userId: res.data.id,
           token: res.data.sign.token,
           tokenTime: res.data.sign.time,
           uuid: res.data.uuid,
-          login: true
+          login: true,
         }
+        res.data.yupao_id = res.data.id;
         Taro.setStorageSync(UserInfo, user);
+        Taro.setStorageSync(MidData, res.data)
         let midParams = {
           mid: res.data.id
         }
         bkMemberAuthAction(midParams).then(res=>{
+          console.log(321321);
           if (res.code !== 200) {
             Msg(res.msg)
           } else {

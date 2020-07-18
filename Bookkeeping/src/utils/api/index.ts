@@ -68,7 +68,7 @@ export const bkAddWorkerInGroupUrl = REQUESTURL + '/bk-worker/add-worker-in-grou
 // 分享获取考勤表
 export const bkGetShareExcelDataUrl = REQUESTURL + '/bk-bookkeeping/get-share-excel-data';
 // 验证码
-export const bkGetCodeUrl = REQUESTURL + 'index/get-code/'
+export const bkGetCodeUrl = REQUESTURL + 'bk-index/get-code/'
 // 设置班组长
 export const bkSetGroupLeaderUrl = REQUESTURL +'/bk-project-team/set-group-leader/'
 // 云彩

@@ -32,7 +32,7 @@ var _redux = __webpack_require__(/*! @tarojs/redux */ "./node_modules/@tarojs/re
 
 var _store = __webpack_require__(/*! ../../config/store */ "./src/config/store.ts");
 
-var _type = __webpack_require__(/*! ../../actions/type */ "./src/actions/type.ts");
+var _type3 = __webpack_require__(/*! ../../actions/type */ "./src/actions/type.ts");
 
 var _index2 = __webpack_require__(/*! ../../config/index */ "./src/config/index.ts");
 
@@ -84,7 +84,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray142", "loopArray143", "$compid__300", "$compid__301", "$compid__302", "$compid__303", "$compid__304", "$compid__305", "image", "closeImage", "IMGCDNURL", "start", "vals", "newMonth", "type", "item", "show", "busy", "list", "month", "newTime", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray66", "loopArray67", "$compid__112", "$compid__113", "$compid__114", "$compid__115", "$compid__116", "$compid__117", "image", "closeImage", "IMGCDNURL", "start", "end", "vals", "newMonth", "type", "prompt", "item", "show", "busy", "list", "month", "newTime", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Index, [{
@@ -105,35 +105,35 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__300"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__112"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__300 = _genCompid2[0],
-          $compid__300 = _genCompid2[1];
+          $prevCompid__112 = _genCompid2[0],
+          $compid__112 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__301"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__113"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__301 = _genCompid4[0],
-          $compid__301 = _genCompid4[1];
+          $prevCompid__113 = _genCompid4[0],
+          $compid__113 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__302"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__114"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__302 = _genCompid6[0],
-          $compid__302 = _genCompid6[1];
+          $prevCompid__114 = _genCompid6[0],
+          $compid__114 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__303"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__115"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__303 = _genCompid8[0],
-          $compid__303 = _genCompid8[1];
+          $prevCompid__115 = _genCompid8[0],
+          $compid__115 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__304"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__116"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__304 = _genCompid10[0],
-          $compid__304 = _genCompid10[1];
+          $prevCompid__116 = _genCompid10[0],
+          $compid__116 = _genCompid10[1];
 
-      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__305"),
+      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__117"),
           _genCompid12 = _slicedToArray(_genCompid11, 2),
-          $prevCompid__305 = _genCompid12[0],
-          $compid__305 = _genCompid12[1];
+          $prevCompid__117 = _genCompid12[0],
+          $compid__117 = _genCompid12[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 弹框内容
@@ -146,9 +146,10 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           model = _useState2[0],
           setModel = _useState2[1];
       // 授权
+      // =====
 
 
-      var _useState3 = (0, _taroWeapp.useState)(true),
+      var _useState3 = (0, _taroWeapp.useState)(false),
           _useState4 = _slicedToArray(_useState3, 2),
           display = _useState4[0],
           setDisplay = _useState4[1];
@@ -185,135 +186,149 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           _useState14 = _slicedToArray(_useState13, 2),
           start = _useState14[0],
           setStart = _useState14[1];
-      // 获取当前时间与当前是星期几
+      // 结束时间
 
 
       var _useState15 = (0, _taroWeapp.useState)(''),
           _useState16 = _slicedToArray(_useState15, 2),
-          week = _useState16[0],
-          setWeek = _useState16[1];
+          end = _useState16[0],
+          setEnd = _useState16[1];
+      // 获取当前时间与当前是星期几
+
+
+      var _useState17 = (0, _taroWeapp.useState)(''),
+          _useState18 = _slicedToArray(_useState17, 2),
+          week = _useState18[0],
+          setWeek = _useState18[1];
       // 时间索引
 
 
-      var _useState17 = (0, _taroWeapp.useState)([0, 0]),
-          _useState18 = _slicedToArray(_useState17, 2),
-          time_id = _useState18[0],
-          setTime_id = _useState18[1];
+      var _useState19 = (0, _taroWeapp.useState)([0, 0]),
+          _useState20 = _slicedToArray(_useState19, 2),
+          time_id = _useState20[0],
+          setTime_id = _useState20[1];
       // 时间选择
 
 
-      var _useState19 = (0, _taroWeapp.useState)([]),
-          _useState20 = _slicedToArray(_useState19, 2),
-          timeList = _useState20[0],
-          setTimeList = _useState20[1];
-      // 工人还是班长
-
-
-      var _useState21 = (0, _taroWeapp.useState)(0),
+      var _useState21 = (0, _taroWeapp.useState)([]),
           _useState22 = _slicedToArray(_useState21, 2),
-          type = _useState22[0],
-          setType = _useState22[1];
-      // 按量记
+          timeList = _useState22[0],
+          setTimeList = _useState22[1];
+      // 工人还是班长
 
 
       var _useState23 = (0, _taroWeapp.useState)(0),
           _useState24 = _slicedToArray(_useState23, 2),
-          measureType = _useState24[0],
-          setMeasureType = _useState24[1];
+          type = _useState24[0],
+          setType = _useState24[1];
+      // 按量记
+
+
+      var _useState25 = (0, _taroWeapp.useState)(0),
+          _useState26 = _slicedToArray(_useState25, 2),
+          measureType = _useState26[0],
+          setMeasureType = _useState26[1];
       // 数据列表
 
 
-      var _useState25 = (0, _taroWeapp.useState)([{}, {}, {}]),
-          _useState26 = _slicedToArray(_useState25, 2),
-          data = _useState26[0],
-          setData = _useState26[1];
-      // 弹窗
-
-
-      var _useState27 = (0, _taroWeapp.useState)(false),
+      var _useState27 = (0, _taroWeapp.useState)([{}, {}, {}]),
           _useState28 = _slicedToArray(_useState27, 2),
-          tips = _useState28[0],
-          setTips = _useState28[1];
-      // 系统繁忙
+          data = _useState28[0],
+          setData = _useState28[1];
+      // 弹窗
 
 
       var _useState29 = (0, _taroWeapp.useState)(false),
           _useState30 = _slicedToArray(_useState29, 2),
-          busy = _useState30[0],
-          setBusy = _useState30[1];
-      // 身份弹框
+          tips = _useState30[0],
+          setTips = _useState30[1];
+      // 系统繁忙
 
 
       var _useState31 = (0, _taroWeapp.useState)(false),
           _useState32 = _slicedToArray(_useState31, 2),
-          identity = _useState32[0],
-          setIdentity = _useState32[1];
+          busy = _useState32[0],
+          setBusy = _useState32[1];
+      // 身份弹框
 
-      var _useState33 = (0, _taroWeapp.useState)([]),
+
+      var _useState33 = (0, _taroWeapp.useState)(false),
           _useState34 = _slicedToArray(_useState33, 2),
-          list = _useState34[0],
-          setList = _useState34[1];
+          identity = _useState34[0],
+          setIdentity = _useState34[1];
+
+      var _useState35 = (0, _taroWeapp.useState)([]),
+          _useState36 = _slicedToArray(_useState35, 2),
+          list = _useState36[0],
+          setList = _useState36[1];
       // 云朵
 
 
-      var _useState35 = (0, _taroWeapp.useState)('0'),
-          _useState36 = _slicedToArray(_useState35, 2),
-          num = _useState36[0],
-          setNum = _useState36[1];
-
-      var _useState37 = (0, _taroWeapp.useState)(),
+      var _useState37 = (0, _taroWeapp.useState)('0'),
           _useState38 = _slicedToArray(_useState37, 2),
-          newTime = _useState38[0],
-          setNewTime = _useState38[1];
-      // 数据
-
+          num = _useState38[0],
+          setNum = _useState38[1];
 
       var _useState39 = (0, _taroWeapp.useState)(),
           _useState40 = _slicedToArray(_useState39, 2),
-          item = _useState40[0],
-          setItme = _useState40[1];
+          newTime = _useState40[0],
+          setNewTime = _useState40[1];
+      // 数据
 
-      var _useState41 = (0, _taroWeapp.useState)(Images[0].url),
+
+      var _useState41 = (0, _taroWeapp.useState)(),
           _useState42 = _slicedToArray(_useState41, 2),
-          image = _useState42[0],
-          setImage = _useState42[1];
-      // 设置不是第一次获取数据
+          item = _useState42[0],
+          setItme = _useState42[1];
 
-
-      var _useState43 = (0, _taroWeapp.useState)(false),
+      var _useState43 = (0, _taroWeapp.useState)(Images[0].url),
           _useState44 = _slicedToArray(_useState43, 2),
-          repeat = _useState44[0],
-          setRepeat = _useState44[1];
-      // 班组长创建项目
+          image = _useState44[0],
+          setImage = _useState44[1];
+      // 设置不是第一次获取数据
 
 
       var _useState45 = (0, _taroWeapp.useState)(false),
           _useState46 = _slicedToArray(_useState45, 2),
-          createProjectDisplay = _useState46[0],
-          setCreateProjectDisplay = _useState46[1];
-      // 项目班组
+          repeat = _useState46[0],
+          setRepeat = _useState46[1];
+      // 班组长创建项目
 
 
       var _useState47 = (0, _taroWeapp.useState)(false),
           _useState48 = _slicedToArray(_useState47, 2),
-          project = _useState48[0],
-          setProject = _useState48[1];
+          createProjectDisplay = _useState48[0],
+          setCreateProjectDisplay = _useState48[1];
+      // 项目班组
+
+
+      var _useState49 = (0, _taroWeapp.useState)(false),
+          _useState50 = _slicedToArray(_useState49, 2),
+          project = _useState50[0],
+          setProject = _useState50[1];
       // 关闭图片
 
 
-      var _useState49 = (0, _taroWeapp.useState)(true),
-          _useState50 = _slicedToArray(_useState49, 2),
-          closeImage = _useState50[0],
-          setCloseImage = _useState50[1];
+      var _useState51 = (0, _taroWeapp.useState)(true),
+          _useState52 = _slicedToArray(_useState51, 2),
+          closeImage = _useState52[0],
+          setCloseImage = _useState52[1];
       // 是否显示云朵
 
 
-      var _useState51 = (0, _taroWeapp.useState)(false),
-          _useState52 = _slicedToArray(_useState51, 2),
-          show = _useState52[0],
-          setShow = _useState52[1];
+      var _useState53 = (0, _taroWeapp.useState)(false),
+          _useState54 = _slicedToArray(_useState53, 2),
+          show = _useState54[0],
+          setShow = _useState54[1];
+      // 工人转换提示
 
-      var getDate = function getDate() {
+
+      var _useState55 = (0, _taroWeapp.useState)(false),
+          _useState56 = _slicedToArray(_useState55, 2),
+          prompt = _useState56[0],
+          setPrompt = _useState56[1];
+
+      var getDates = function getDates() {
         var date = new Date().getDay();
         var time = new Date();
         var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
@@ -336,41 +351,83 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         return num;
       };
       (0, _taroWeapp.useDidShow)(function () {
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        var creationTime = _taroWeapp2.default.getStorageSync(_store.CreationTime);
+        // 判断有midDat就取消授权
+        if (midData) {
+          setDisplay(false);
+        }
+        var newTime = new Date().getTime() / 1000;
+        // const time = 
+        console.log(newTime, creationTime, 'xxx');
+        // 七天显示内容
+        if (creationTime && creationTime + 604800 > newTime) {
+          setPrompt(true);
+        }
+        // 设置首页时间选择器时间
+        // if (creationTime){
+        //   // 开始时间
+        //   let myDate = new Date(creationTime*1000);
+        //   const nowY = myDate.getFullYear()-1;
+        //   const nowM = myDate.getMonth();
+        //   const time = nowY + '-' + nowM;
+        //   setStart(time)
+        //   console.log(nowY,'nowT')
+        //   // 结束时间
+        //   const date = new Date();
+        //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+        //   setTime(newMonth);
+        // }else{
+        //   const date = new Date();
+        //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+        //   const nowY = date.getFullYear() - 1;
+        //   const nowM = date.getMonth();
+        //   const time = nowY + '-' + nowM;
+        //   setStart(time)
+        //   setTime(newMonth);
+        // }
+        // 结束时间
+        // const time = 
         // 清楚日历缓存
         dispatch((0, _clickTIme.setClickTIme)([]));
         // 判断有没有用户信息没有就显示
         // 获取缓存信息
         var type = _taroWeapp2.default.getStorageSync(_store.Type);
-        setType(type);
+        // 有就设置
+        if (type) {
+          setType(type);
+        }
         var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
-        if (!userInfo) {
-          setDisplay(true);
-          return;
-        } else {
-          setDisplay(false);
-        }
-        dispatch((0, _type.setTypes)(type));
-        var midParams = {
-          mid: userInfo.userId
-        };
-        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
-        if (!midData) {
-          (0, _index.bkMemberAuthAction)(midParams).then(function (res) {
-            if (res.code !== 200) {
-              (0, _index4.default)(res.msg);
-            } else {
-              console.log(res, 'ressssssssssss');
-              var _userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
-              res.data.sign = {};
-              res.data.sign.token = _userInfo.token;
-              res.data.sign.time = res.data.created_time;
-              res.data.uuid = _userInfo.uuid;
-              // res.data.worker_id = res.data.worker_id;
-              _taroWeapp2.default.setStorageSync(_store.MidData, res.data);
-            }
-          });
-        }
+        // =======
+        // if (!userInfo) {
+        //   setDisplay(false);
+        //   return
+        // } else {
+        //   setDisplay(false)
+        // }
+        dispatch((0, _type3.setTypes)(type));
         getData();
+        // let midParams = {
+        //   mid: userInfo.userId,
+        // }
+        // 登陆了就获取信息
+        // let midData = Taro.getStorageSync(MidData);
+        // if (midData) {
+        //   bkMemberAuthAction(midParams).then(res => {
+        //     if (res.code !== 200) {
+        //       Msg(res.msg)
+        //     } else {
+        //       console.log(res, 'ressssssssssss')
+        //       let userInfo = Taro.getStorageSync(UserInfo)
+        //       res.data.sign = {}
+        //       res.data.sign.token = userInfo.token;
+        //       res.data.sign.time = res.data.created_time;
+        //       res.data.uuid = userInfo.uuid;
+        //       // res.data.worker_id = res.data.worker_id;
+        //       Taro.setStorageSync(MidData, res.data)
+        //     }
+        //   })
+        // }
       });
       // useEffect(()=>{
       //   // 判断有没有用户信息没有就显示
@@ -418,62 +475,91 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       };
       // 获取首页数据
       var getData = function getData() {
-        // const
-        var type = _taroWeapp2.default.getStorageSync(_store.Type);
-        if (!type) {
-          setIdentity(true);
-          return;
-        }
-        setType(type);
+        // 没登录直接进来默认是工人
+        // =====
+        // let type = Taro.getStorageSync(Type);
+        // if(!type){
+        //   setIdentity(true)
+        //   return
+        // }
+        // setType(type);
         // 没有选择角色
-        if (type === 0) {
-          setIdentity(true);
+        // if (type ===0){
+        //   setIdentity(true)
+        // }
+        // 没有用户信息就默认设置为工人
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        if (midData) {
+          var _type = _taroWeapp2.default.getStorageSync(_store.Type);
+          if (!_type) {
+            setIdentity(true);
+            return;
+          } else {
+            setType(_type);
+          }
+          //  没有选择角色
+          if (_type === 0) {
+            setIdentity(true);
+          }
         }
         var changeTime = void 0;
         if (!repeat) {
-          changeTime = getDate();
+          changeTime = getDates();
         } else {
           changeTime = time;
+          // 设置时间
+          var date = new Date();
+          var _newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+          setStart(_newMonth);
+          setEnd(_newMonth);
         }
         console.log(changeTime, 'changeTimechangeTime');
         var params = {
           time: changeTime,
           identity: type
         };
-        (0, _index.bkIndexAction)(params).then(function (res) {
-          if (res.code === 200) {
-            setItme(res.data);
-            setNum(res.data.count_is_new);
-            if (parseInt(res.data.count_is_new) == 0) {
-              setShow(true);
+        // if(! )
+        if (midData) {
+          (0, _index.bkIndexAction)(params).then(function (res) {
+            if (res.code === 200) {
+              setItme(res.data);
+              setNum(res.data.count_is_new);
+              if (parseInt(res.data.count_is_new) == 0) {
+                setShow(true);
+              } else {
+                setShow(false);
+              }
+              // 设置搜索开始结束时间
+              // 设置最早时间
+              setStart(res.data.earliest_month);
+              // 最晚时间
+              var _date = new Date();
+              var _newMonth2 = _date.getFullYear() + '-' + addZero(_date.getMonth() + 1);
+              setEnd(_newMonth2);
+              if (Array.isArray(res.data.business_list.data)) {
+                if (res.data.business_list.data) {
+                  setList(res.data.business_list.data);
+                } else {
+                  setList([]);
+                }
+              } else if (res.data.business_list.data.constructor === Object) {
+                if (res.data.business_list.data.data[0].arr) {
+                  setList(res.data.business_list.data.data[0].arr);
+                } else {
+                  setList([]);
+                }
+              }
+              // 获取信息
+              // 判断是班组长的时候出现弹框
+              var _type2 = _taroWeapp2.default.getStorageSync(_store.Type);
+              if (_type2 === 1) {
+                bkGetProjectTeam();
+              }
             } else {
-              setShow(false);
+              (0, _index4.default)(res.msg);
             }
-            // 设置时间
-            setStart(res.data.earliest_month);
-            if (Array.isArray(res.data.business_list.data)) {
-              if (res.data.business_list.data) {
-                setList(res.data.business_list.data);
-              } else {
-                setList([]);
-              }
-            } else if (res.data.business_list.data.constructor === Object) {
-              if (res.data.business_list.data.data[0].arr) {
-                setList(res.data.business_list.data.data[0].arr);
-              } else {
-                setList([]);
-              }
-            }
-            // 获取信息
-            // 判断是班组长的时候出现弹框
-            console.log(type, 'typetypetypetypetypetypetype');
-            if (type === 1) {
-              bkGetProjectTeam();
-            }
-          } else {
-            (0, _index4.default)(res.msg);
-          }
-        });
+          });
+        }
       };
       // 选择时间
       var handleChangeTime = function handleChangeTime(e) {
@@ -499,10 +585,12 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       // 切换角色
       var handelChange = function handelChange(e) {
         var msg = e === 1 ? '开始为自己记工吧' : '开始为工人记工吧';
-        _taroWeapp2.default.setStorageSync(_store.Type, e);
         (0, _index4.default)(msg);
+        _taroWeapp2.default.setStorageSync(_store.Type, e);
         setType(e);
-        getData();
+        setTimeout(function () {
+          getData();
+        }, 100);
       };
       var getNextPageData = function getNextPageData() {
         // console.log(31231)
@@ -521,6 +609,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         } else if (state === 2) {}
         setTips(false);
       };
+      // 返回鱼泡网
       var handleGoback = function handleGoback() {
         _taroWeapp2.default.navigateBackMiniProgram({
           // appId:'',
@@ -594,7 +683,24 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         setProject(false);
         setCreateProjectDisplay(true);
       };
-      console.log(num, 'xxx');
+      // 判断是授权进行下一步
+      var nextStep = function nextStep() {
+        console.log(2313123);
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        if (!midData) {
+          return;
+        }1111;
+      };
+      // 跳流水
+      var handleJump = function handleJump(url) {
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        if (!midData) {
+          setDisplay(true);
+          return;
+        }
+        userRouteJump(url);
+        // userRouteJump('/pages/flowingWater/index')
+      };
 
       this.anonymousFunc0 = function () {
         hanleImage(image);
@@ -615,31 +721,31 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       this.anonymousFunc4 = handelTps;
 
       this.anonymousFunc5 = function () {
-        return userRouteJump('/pages/flowingWater/index');
+        return handleJump('/pages/flowingWater/index');
       };
 
       this.anonymousFunc6 = function () {
-        return userRouteJump('/pages/flowingWater/index');
+        return handleJump('/pages/flowingWater/index');
       };
 
       this.anonymousFunc7 = function () {
-        return userRouteJump('/pages/attendanceSheet/index');
+        return handleJump('/pages/attendanceSheet/index');
       };
 
       this.anonymousFunc8 = function () {
-        return userRouteJump("/pages/recorder/index?type=" + type);
+        return handleJump("/pages/recorder/index?type=" + type);
       };
 
       this.anonymousFunc9 = function () {
-        return userRouteJump("/pages/recorder/index?type=" + type);
+        return handleJump("/pages/recorder/index?type=" + type);
       };
 
       this.anonymousFunc10 = function () {
-        return userRouteJump("/pages/recorder/index?type=" + type);
+        return handleJump("/pages/recorder/index?type=" + type);
       };
 
       this.anonymousFunc11 = function () {
-        return userRouteJump("/pages/notepad/index");
+        return handleJump("/pages/notepad/index");
       };
 
       this.anonymousFunc12 = function () {
@@ -651,7 +757,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc16 = function () {
-        return userRouteJump('/pages/feedback/index');
+        return handleJump('/pages/feedback/index');
       };
 
       this.anonymousFunc17 = handleGoback;
@@ -684,13 +790,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         return setProject(false);
       };
 
-      var loopArray142 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray66 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = type === 1 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey = "cbizz" + i;
+        var _$indexKey = "bdazz" + i;
 
         _this2.anonymousFunc13Map[_$indexKey] = getNextPageData;
         return {
@@ -699,13 +805,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray143 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray67 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp4 = type === 2 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey2 = "cbjzz" + i;
+        var _$indexKey2 = "bdbzz" + i;
 
         _this2.anonymousFunc15Map[_$indexKey2] = getNextPageData;
         return {
@@ -718,25 +824,26 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "value": num,
         "maxValue": 99,
         "className": "AtBadge"
-      }, $compid__300, $prevCompid__300);
+      }, $compid__112, $prevCompid__112);
       _taroWeapp.propsManager.set({
         "isOpened": tips
-      }, $compid__301, $prevCompid__301);
+      }, $compid__113, $prevCompid__113);
       _taroWeapp.propsManager.set({
-        "isOpened": identity
-      }, $compid__302, $prevCompid__302);
+        "isOpened": identity,
+        "closeOnClickOverlay": false
+      }, $compid__114, $prevCompid__114);
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose,
         "callback": handleCallback
-      }, $compid__303, $prevCompid__303);
+      }, $compid__115, $prevCompid__115);
       _taroWeapp.propsManager.set({
         "display": createProjectDisplay,
         "handleClose": handleCreateProjectClose,
         "val": model && model.groupName,
         "handleSubmit": anonymousState__temp5,
         "handleInput": handleInput
-      }, $compid__304, $prevCompid__304);
+      }, $compid__116, $prevCompid__116);
       _taroWeapp.propsManager.set({
         "display": project,
         "handleSubmit": handleAddProject,
@@ -744,25 +851,27 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "teamName": model && model.teamName,
         "handleBack": handleBack,
         "handleClose": anonymousState__temp6
-      }, $compid__305, $prevCompid__305);
+      }, $compid__117, $prevCompid__117);
       Object.assign(this.__state, {
         anonymousState__temp5: anonymousState__temp5,
         anonymousState__temp6: anonymousState__temp6,
-        loopArray142: loopArray142,
-        loopArray143: loopArray143,
-        $compid__300: $compid__300,
-        $compid__301: $compid__301,
-        $compid__302: $compid__302,
-        $compid__303: $compid__303,
-        $compid__304: $compid__304,
-        $compid__305: $compid__305,
+        loopArray66: loopArray66,
+        loopArray67: loopArray67,
+        $compid__112: $compid__112,
+        $compid__113: $compid__113,
+        $compid__114: $compid__114,
+        $compid__115: $compid__115,
+        $compid__116: $compid__116,
+        $compid__117: $compid__117,
         image: image,
         closeImage: closeImage,
         IMGCDNURL: _index2.IMGCDNURL,
         start: start,
+        end: end,
         vals: vals,
         newMonth: newMonth,
         type: type,
+        prompt: prompt,
         item: item,
         show: show,
         busy: busy,

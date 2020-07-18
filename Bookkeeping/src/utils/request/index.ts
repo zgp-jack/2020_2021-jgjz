@@ -148,7 +148,7 @@ export function getUserSessionKeyAction(code: string): Promise<Inter.SessionKey>
   })
 }
 // 获取登陆账户
-export function GetUserInfoAction(data: AuthData): Promise<Inter.InitUserInfo> {
+export function GetUserInfoAction(data: any): Promise<Inter.InitUserInfo> {
   return doRequestAction({
     url: api.GetUserInfo,
     data: data
@@ -176,16 +176,17 @@ export function bkIndexAction(data): Promise<Inter.bkIndexType> {
 
 // 授权时token验证并创建用户
 export function bkMemberAuthAction(data): Promise<Inter.bkMemberAuth> {
-  let midData = Taro.getStorageSync(MidData);
+  let userInfo = Taro.getStorageSync(UserInfo);
+  console.log(userInfo,'midData')
   return doRequestAction({
     url: api.bkMemberAuthUrl,
     method: 'POST',
     header:{
       'content-type': 'application/x-www-form-urlencoded',
-      mid: midData.yupao_id,
-      token: midData.sign.token,
-      time: midData.sign.time,
-      uuid: midData.uuid
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+      uuid: userInfo.uuid
     },
     data: data
   })
@@ -232,7 +233,7 @@ export function bkAddNotepadAction(data): Promise<Inter.Result> {
 }
 
 // 获取记事本记录
-export function bkGetNotePadAction(data): Promise<Inter.bkGetNotePadType> {
+export function bkGetNotePadAction(data): Promise<Inter.bkGetWorker> {
   let type = Taro.getStorageSync(Type)
   let midData = Taro.getStorageSync(MidData);
   data.identity = type
@@ -750,15 +751,16 @@ export function bkGetShareExcelDataAction(data): Promise<Inter.bkBusinessType> {
 // 验证码
 export function bkGetCodeAction(data): Promise<Inter.bkGetCode> {
   let midData = Taro.getStorageSync(MidData);
+  console.log(midData,'midDatamidData')
   return doRequestAction({
     url: api.bkGetCodeUrl,
     method: 'POST',
     header: {
       'content-type': 'application/x-www-form-urlencoded',
-      mid: midData.yupao_id,
-      token: midData.sign.token,
-      time: midData.sign.time,
-      uuid: midData.uuid
+      // mid: midData.yupao_id,
+      // token: midData.sign.token,
+      // time: midData.sign.time,
+      // uuid: midData.uuid
     },
     data: data
   })

@@ -26,7 +26,7 @@ export default function ProjectModal({ display, teamName, handleSubmit, handleIn
                 className='tabber-complaintModal-content-textarea'
                 placeholder='请输入班组名称'
                 value={teamName}
-                // maxlength={100}
+                maxLength={20}
                 onInput={(e) => handleInput('teamName',e)}
               />
             </View>

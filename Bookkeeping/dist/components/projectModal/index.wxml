@@ -4,16 +4,16 @@
             <view class="tabber-complaintModal">
                 <view class="tabber-complaintModal-content">
                     <view class="tabber-complaintModal-content-title">填写班组
-                        <view class="close" bindtap="funPrivatehbzzz">x</view>
+                        <view class="close" bindtap="funPrivatejcjzz">x</view>
                     </view>
                     <view class="tabber-complaintModal-content-tips">班组名称:</view>
                     <view class="tabber-complaintModal-content-textareaBox">
-                        <input class="tabber-complaintModal-content-textarea" placeholder="请输入班组名称" value="{{teamName}}" bindinput="anonymousFunc0" />
+                        <input class="tabber-complaintModal-content-textarea" placeholder="请输入班组名称" value="{{teamName}}" maxlength="{{20}}" bindinput="anonymousFunc0" />
                     </view>
                     <view class="tabber-complaintModal-content-blued">注：填写您当前项目下需要记工的班组名称</view>
                     <view class="tabber-complaintModal-footer">
-                        <view class="tabber-complaintModal-footer-btn-next" bindtap="funPrivatehczzz">上一步</view>
-                        <view class="tabber-complaintModal-footer-btn" bindtap="funPrivatehdzzz">确定创建</view>
+                        <view class="tabber-complaintModal-footer-btn-next" bindtap="funPrivatejdazz">上一步</view>
+                        <view class="tabber-complaintModal-footer-btn" bindtap="funPrivatejdbzz">确定创建</view>
                     </view>
                 </view>
             </view>
