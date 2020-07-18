@@ -670,8 +670,8 @@ export default function AttendanceSheet() {
   console.log(tebArr.length,'tebArr')
   useShareAppMessage(() => {
     return {
-      title: '微信小程序联盟',
-      desc: '最具人气的小程序开发联盟!',
+      title: '记工记账',
+      desc: '记工记账怕丢失？鱼泡网记工更安全！用鱼泡 网记工记账，手机记工更方便，数据永不丢失~!',
       path: '/pages/share/index'
     }
   })

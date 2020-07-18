@@ -12,7 +12,7 @@
             <view class="content">
                 <view>
                     <block wx:if="{{data.item && data.item.length > 0}}">
-                        <view wx:key="$loopState__temp2" bindtap="anonymousFunc1" wx:for="{{loopArray49}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                        <view wx:key="$loopState__temp2" bindtap="anonymousFunc1" wx:for="{{loopArray47}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                             <view class="content-list">
                                 <view class="content-list-left">
                                     <block wx:if="{{v.$original.click}}">
@@ -43,8 +43,8 @@
                             </view>
                             <block wx:if="{{v.$original.click}}">
                                 <view>
-                                    <view catchtap="anonymousFunc2" wx:for="{{v.$anonymousCallee__12}}" wx:for-item="val" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{val._$indexKey2}}">
-                                        <at-swipe-action compid="{{val.$compid__56}}">
+                                    <view catchtap="anonymousFunc2" wx:for="{{v.$anonymousCallee__11}}" wx:for-item="val" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{val._$indexKey2}}">
+                                        <at-swipe-action compid="{{val.$compid__54}}">
                                             <view wx:key="id" class="content-list-subclass" bindtap="anonymousFunc5" data-e-tap-so="this" data-e-tap-a-a="{{val._$indexKey5}}">
                                                 <view class="content-list-subclass-left">
                                                     <block wx:if="{{isCheckOut}}">
