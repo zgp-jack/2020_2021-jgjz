@@ -366,13 +366,12 @@ export default function Index() {
       return;
     } 
     // 判断
-    // if (lasted_business_identity!==0){
-    //   console.log(type,'type');
-    //   console.log(lasted_business_identity,'lasted_business_identity')
-    //   if (type != lasted_business_identity){
-    //     setTips(true)
-    //   }
-    // }
+    if (lasted_business_identity !== 0 && type != lasted_business_identity){
+      console.log(type,'type');
+      console.log(lasted_business_identity,'lasted_business_identity')
+        setTips(true)
+        return;
+    }
     let msg = e === 1 ? '开始为自己记工吧' :'开始为工人记工吧'
     Msg(msg)
     Taro.setStorageSync(Type, e);
@@ -647,7 +646,7 @@ export default function Index() {
         </View>
       </View>
       {/* 弹框 */}
-      <AtModal isOpened={tips} >
+      <AtModal isOpened={tips} closeOnClickOverlay={false}>
         <View className='AtModal'>
           <View className='AtModal-top'>当前是<Text className='atModal-name'>【{type ==1?'班组长':'工人'}】</Text>身份</View>
           <View className='mtList'>与上一次记工身份不一致，是否<Text className='atModal-change'>切换?</Text></View>

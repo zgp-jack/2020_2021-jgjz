@@ -2385,7 +2385,7 @@ function userForeman() {
             if (res.data && res.data.length > 0) {
               for (var i = 0; i < res.data.length; i++) {
                 res.data[0].click = true;
-                _groupInfo = res.data[0].group_id;
+                _groupInfo = res.data[0].group_id + ',' + res.data[0].id;
                 // groupInfo = res.data[0].child[0].pid + ',' + res.data[0].child[0].id;
                 if (res.data[0].leader_name) {
                   console.log(res.data[0].leader_name, 'res.data[0].leader_name');
@@ -3441,7 +3441,7 @@ function userForeman() {
     var data = JSON.parse(JSON.stringify(model));
     var arr = JSON.parse(JSON.stringify(projectArr));
     data.name = v.name;
-    var groupInfo = v.group_id;
+    var groupInfo = v.group_id + ',' + v.id;
     if (identity === 2) {
       if (v.leader_name) {
         console.log(v.leader_name, 'leader_name');
