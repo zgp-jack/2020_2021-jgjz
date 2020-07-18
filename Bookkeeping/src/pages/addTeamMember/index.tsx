@@ -74,7 +74,7 @@ export default function AddTeamMember() {
       for(let i =0;i<item.length;i++){
         if(item[i].list.length>0){
           for(let j = 0;j<item[i].list.length;j++){
-            item[i].list[j].click = true;
+            // item[i].list[j].click = true;
           }
         }
       }
