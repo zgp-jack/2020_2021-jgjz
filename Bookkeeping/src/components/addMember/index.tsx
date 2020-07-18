@@ -24,7 +24,7 @@ export default function AddMember({ display, handleClose, handleEstablish, handl
               </View>
               <View className='addMember-content-listBox-list'>
                 <View>电话号码(可不填)</View>
-              <Input placeholder='请输入对方电话号码' type='number' className='addMember-content-listBox-list-input' onInput={(e) => handleInput('phone', e)} />
+              <Input maxLength={11} placeholder='请输入对方电话号码' type='number' className='addMember-content-listBox-list-input' onInput={(e) => handleInput('phone', e)} />
               </View>
             </View>
           <View className='addMember-content-footer' onClick={()=>handleEstablish(groupInfo)}>确定创建</View>

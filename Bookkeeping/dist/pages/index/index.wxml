@@ -32,7 +32,7 @@
                 </block>
                 <view bindtap="anonymousFunc4" class="cloud">
                     <block wx:if="{{item && !show}}">
-                        <at-badge compid="{{$compid__57}}"></at-badge>
+                        <at-badge compid="{{$compid__244}}"></at-badge>
                     </block>
                     <image src="{{IMGCDNURL + 'cloud.png'}}" class="heard-right"></image>
                 </view>
@@ -85,7 +85,7 @@
                 <view class="btnBox">
                     <view class="btn">
                         <block>
-                            <block wx:if="{{item && item.business_list.data.length === 0}}"><text bindtap="anonymousFunc8"> 记工<text class="btn-title">(点工 包工 借支)</text></text>
+                            <block wx:if="{{!item || item && item.business_list.data.length === 0}}"><text bindtap="anonymousFunc8"> 记工<text class="btn-title">(点工 包工 借支)</text></text>
                             </block>
                             <block wx:else><text bindtap="anonymousFunc9"> 再记一笔<text class="btn-title" bindtap="anonymousFunc10">(点工 包工 借支)</text></text>
                             </block>
@@ -113,7 +113,7 @@
             <block wx:if="{{type === 1 && list.length > 0 && !busy}}">
                 <view>
                     <scroll-view class="content-list-box" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc12">
-                        <view wx:key="$loopState__temp2" class="content-list" bindtap="anonymousFunc13" wx:for="{{loopArray50}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                        <view wx:key="$loopState__temp2" class="content-list" bindtap="anonymousFunc13" wx:for="{{loopArray122}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                             <view>
                                 <view class="content-list-flex">
                                     <view>{{v.$original.workername}}</view>
@@ -128,7 +128,7 @@
             <block wx:if="{{type === 2 && list.length > 0 && !busy}}">
                 <view>
                     <scroll-view class="content-list-box" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc14">
-                        <view wx:key="$loopState__temp4" class="content-list-type" bindtap="anonymousFunc15" wx:for="{{loopArray51}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}">
+                        <view wx:key="$loopState__temp4" class="content-list-type" bindtap="anonymousFunc15" wx:for="{{loopArray123}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}">
                             <view class="content-list-flex">
                                 <view class="details">我在[{{v.$original.group_info}}]项目组对Ta记了-笔{{v.$original.business_type == '1' ? '记工' : v.$original.business_type == '2' ? '包工' : '借支'}}</view>
                                 <view class="orgion-type">¥{{v.$original.money}}</view>
@@ -162,7 +162,7 @@
                 </view>
             </view>
         </view>
-        <at-modal compid="{{$compid__58}}">
+        <at-modal compid="{{$compid__245}}">
             <view class="AtModal">
                 <view class="AtModal-top">当前是<text class="atModal-name">【班组长】</text>身份</view>
                 <view class="mtList">与上一次记工身份不一致，是否<text class="atModal-change">切换?</text>
@@ -172,7 +172,7 @@
                 <view class="atModal-list" bindtap="anonymousFunc20">不再提醒</view>
             </view>
         </at-modal>
-        <at-modal compid="{{$compid__59}}">
+        <at-modal compid="{{$compid__246}}">
             <view class="useAtModal">
                 <view class="useAtModal-title">请根据需要选择您的身份</view>
                 <view class="useAtModal-tips">温馨提示：选对身份，才能使用想要的功能哦</view>
@@ -196,8 +196,8 @@
                 </view>
             </view>
         </at-modal>
-        <auth compid="{{$compid__60}}"></auth>
-        <create-project compid="{{$compid__61}}"></create-project>
-        <project-modal compid="{{$compid__62}}"></project-modal>
+        <auth compid="{{$compid__247}}"></auth>
+        <create-project compid="{{$compid__248}}"></create-project>
+        <project-modal compid="{{$compid__249}}"></project-modal>
     </view>
 </block>

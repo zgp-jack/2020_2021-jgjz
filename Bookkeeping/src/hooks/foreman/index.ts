@@ -1251,6 +1251,7 @@ export default function userForeman() {
   }
   // 打开工资标准
   const handleOpenWagesModal = ()=>{
+    console.log(31231312,'21321')
     const item = JSON.parse(JSON.stringify(model));
     if (!item.name){
         Msg('请选择项目')
@@ -1605,6 +1606,81 @@ export default function userForeman() {
             })
           }else{
             Msg(res.msg)
+          }
+        })
+      }else{
+        bkAddBusinessAction(params).then(res => {
+          // 清除reducer
+          if (res.code === 200) {
+            if (type === 1) {
+              const data = {
+                groupName: '',
+                teamName: '',
+                name: item.name,
+                time: '',
+                details: '',
+                duration: '',
+                amount: '',
+                price: '',
+                wages: '',
+                borrowing: '',
+                univalent: '',
+                userName: '',
+                phone: '',
+                workersWages: '0',
+              }
+              // 上班时长
+              const itemArr = [
+                { id: 1, name: '一个工', click: false, num: 1, whole: true },
+                { id: 2, name: '半个工', click: false, num: 0.5, whole: true },
+                { id: 3, name: '休息', click: false, num: 0 },
+                { id: 4, name: '0.0小时', click: false, num: 0 }
+              ]
+              // 加班时长
+              const addItmeArr = [
+                { id: 1, name: '无加班', click: false, num: 0 },
+                { id: 2, name: '0.0小时', click: false, num: 0 },
+              ]
+              // 日历
+              const calendar = JSON.parse(JSON.stringify(calendarDays));
+              for (let i = 0; i < calendar.length; i++) {
+                calendar[i].click = false
+              }
+              for (let i = 0; i < workerItemArr.length; i++) {
+                workerItemArr[i].click = false;
+              }
+              setWorkerItem(workerItemArr)
+              setAddWorkArr(addItmeArr)
+              setTimeData([]);
+              setCalendarDays(calendar);
+              setClickData([]);
+              setTimeArr(itemArr)
+              setForemanTitle('');
+              setImage({ item: [] })
+              setModel(data);
+            } else {
+              Taro.showModal({
+                title: '保存成功！',
+                content: '记工数据仅自己可见随时查看，方便快捷',
+                showCancel: true,
+                confirmText: '去考勤表',
+                confirmColor: '#0099FFFF',
+                success: (res) => {
+                  if (res.confirm) {
+                    Taro.redirectTo({
+                      url: '/pages/attendanceSheet/index'
+                    })
+                  } else if (res.cancel) {
+                    Taro.redirectTo({
+                      url: '/pages/flowingWater/index'
+                    })
+                  }
+                }
+              })
+            }
+            dispatch(setWorker([]))
+          } else {
+            Msg(res.msg);
           }
         })
       }

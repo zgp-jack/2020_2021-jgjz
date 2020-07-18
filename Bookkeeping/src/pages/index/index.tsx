@@ -269,6 +269,7 @@ export default function Index() {
         setIdentity(true)
       }
     }
+    // 判断选没有选择时间
     let changeTime;
     if (!repeat){
       changeTime = getDates();
@@ -316,6 +317,8 @@ export default function Index() {
               setList([])
             }
           }
+          // 存在缓存里用来判断是否新增时间
+          
           // 获取信息
           // 判断是班组长的时候出现弹框
           let type = Taro.getStorageSync(Type);
@@ -330,6 +333,11 @@ export default function Index() {
   }
   // 选择时间
   const handleChangeTime = (e)=>{
+    let midData = Taro.getStorageSync(MidData);
+    if (!midData) {
+      setDisplay(true)
+      return;
+    } 
     setVal(e.detail.value)
     setTime(e.detail.value);
     setRepeat(true);
@@ -351,6 +359,11 @@ export default function Index() {
   }
   // 切换角色
   const handelChange = (e)=>{
+    let midData = Taro.getStorageSync(MidData);
+    if (!midData) {
+      setDisplay(true)
+      return;
+    } 
     let msg = e === 1 ? '开始为自己记工吧' :'开始为工人记工吧'
     Msg(msg)
     Taro.setStorageSync(Type, e);
@@ -457,7 +470,6 @@ export default function Index() {
     console.log(2313123)
     let midData = Taro.getStorageSync(MidData);
     if (!midData) return;
-    1111
   }
   // 跳流水
   const handleJump = (url:string)=>{
@@ -469,6 +481,7 @@ export default function Index() {
     userRouteJump(url);
     // userRouteJump('/pages/flowingWater/index')
   }
+  console.log(item,'item')
   return (
     <View className='index-content'>
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
@@ -538,7 +551,7 @@ export default function Index() {
           </View>
           <View className='btnBox'>
             <View className='btn'>
-              {item && item.business_list.data.length === 0 ? <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
+              {!item || (item && item.business_list.data.length === 0) ? <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
               <View className='notepad-Icon'><Image className='notepad-Icon-iamge' src={`${IMGCDNURL}notepad.png`}/></View>
@@ -611,7 +624,7 @@ export default function Index() {
         }
       </View>
       <View className='jumpBox'>
-        <View className='jumpItem' onClick={() => handleJump('/pages/feedback/index')}>
+        <View className='jumpItem' onClick={() => userRouteJump('/pages/feedback/index')}>
           <View className='ptBox'>
             <View className='jumpItem-icon'><Image className='jumpItem-icon-image' src={`${IMGCDNURL}work.png`}/></View>
             <View className='jumpItem-title'>意见</View>

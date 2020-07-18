@@ -254,7 +254,7 @@ export default function AddTeamMember() {
                 </View>
                 <View>
                   <View className='name'>{v.name}</View>
-                  <View className='phone'>{v.tel}</View>
+                  <View className='phone'>{v.tel||''}</View>
                 </View>
               </View>
             )))}

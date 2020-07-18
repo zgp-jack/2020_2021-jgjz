@@ -71,7 +71,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWater.__proto__ || Object.getPrototypeOf(FlowingWater)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记工流水'
-    }, _this.$usedState = ["data", "loopArray47", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["data", "loopArray49", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWater, [{
@@ -365,13 +365,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         return handleCheckboxBtn(1);
       };
 
-      var loopArray47 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
+      var loopArray49 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "jjzzz" + i;
+        var _$indexKey = "baczz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -379,23 +379,23 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
         var $loopState__temp4 = data.item && data.item.length > 0 ? v.$original.total_borrow && v.$original.total_borrow.toFixed(2) : null;
         var $loopState__temp6 = data.item && data.item.length > 0 ? v.$original.total_money && v.$original.total_money.toFixed(2) : null;
-        var $anonymousCallee__11 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
+        var $anonymousCallee__12 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "baazz" + i + "-" + __index2;
+          var _$indexKey2 = "badzz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "babzz" + i + "-" + __index2;
+          var _$indexKey3 = "baezz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "baczz" + i + "-" + __index2;
+          var _$indexKey4 = "bafzz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -412,29 +412,29 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "badzz" + i + "-" + __index2;
+          var _$indexKey5 = "bagzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "baezz" + i + "-" + __index2;
+          var _$indexKey6 = "bahzz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bafzzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "baizzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
-              $prevCompid__54 = _genCompid2[0],
-              $compid__54 = _genCompid2[1];
+              $prevCompid__56 = _genCompid2[0],
+              $compid__56 = _genCompid2[1];
 
           v.$original.click && _taroWeapp.propsManager.set({
             "autoClose": false,
             "onOpened": _this2.anonymousFunc3.bind(_this2, _$indexKey3),
             "onClick": _this2.anonymousFunc4.bind(_this2, _$indexKey4),
             "options": $loopState__temp8
-          }, $compid__54, $prevCompid__54);
+          }, $compid__56, $prevCompid__56);
           return {
             _$indexKey2: _$indexKey2,
             _$indexKey3: _$indexKey3,
@@ -442,7 +442,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
             $loopState__temp8: $loopState__temp8,
             _$indexKey5: _$indexKey5,
             _$indexKey6: _$indexKey6,
-            $compid__54: $compid__54,
+            $compid__56: $compid__56,
             $original: val.$original
           };
         }) : [];
@@ -451,13 +451,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey: _$indexKey,
           $loopState__temp4: $loopState__temp4,
           $loopState__temp6: $loopState__temp6,
-          $anonymousCallee__11: $anonymousCallee__11,
+          $anonymousCallee__12: $anonymousCallee__12,
           $original: v.$original
         };
       }) : [];
       Object.assign(this.__state, {
         data: data,
-        loopArray47: loopArray47,
+        loopArray49: loopArray49,
         IMGCDNURL: _index4.IMGCDNURL,
         isCheckOut: isCheckOut,
         allcheck: allcheck,
@@ -1350,6 +1350,8 @@ var MidData = exports.MidData = 'midData';
 var Type = exports.Type = 'type';
 // 用户创建时间
 var CreationTime = exports.CreationTime = 'creationTime';
+// 班组长数据长度
+// 工人项目长度
 
 /***/ }),
 
@@ -2929,6 +2931,7 @@ function userForeman() {
   };
   // 打开工资标准
   var handleOpenWagesModal = function handleOpenWagesModal() {
+    console.log(31231312, '21321');
     var item = JSON.parse(JSON.stringify(model));
     if (!item.name) {
       (0, _index3.default)('请选择项目');
@@ -3282,13 +3285,80 @@ function userForeman() {
             (0, _index3.default)(res.msg);
           }
         });
+      } else {
+        (0, _index.bkAddBusinessAction)(params).then(function (res) {
+          // 清除reducer
+          if (res.code === 200) {
+            if (type === 1) {
+              var _data5 = {
+                groupName: '',
+                teamName: '',
+                name: item.name,
+                time: '',
+                details: '',
+                duration: '',
+                amount: '',
+                price: '',
+                wages: '',
+                borrowing: '',
+                univalent: '',
+                userName: '',
+                phone: '',
+                workersWages: '0'
+              };
+              // 上班时长
+              var itemArr = [{ id: 1, name: '一个工', click: false, num: 1, whole: true }, { id: 2, name: '半个工', click: false, num: 0.5, whole: true }, { id: 3, name: '休息', click: false, num: 0 }, { id: 4, name: '0.0小时', click: false, num: 0 }];
+              // 加班时长
+              var addItmeArr = [{ id: 1, name: '无加班', click: false, num: 0 }, { id: 2, name: '0.0小时', click: false, num: 0 }];
+              // 日历
+              var calendar = JSON.parse(JSON.stringify(calendarDays));
+              for (var _i20 = 0; _i20 < calendar.length; _i20++) {
+                calendar[_i20].click = false;
+              }
+              for (var _i21 = 0; _i21 < workerItemArr.length; _i21++) {
+                workerItemArr[_i21].click = false;
+              }
+              setWorkerItem(workerItemArr);
+              setAddWorkArr(addItmeArr);
+              setTimeData([]);
+              setCalendarDays(calendar);
+              setClickData([]);
+              setTimeArr(itemArr);
+              setForemanTitle('');
+              setImage({ item: [] });
+              setModel(_data5);
+            } else {
+              _taroWeapp2.default.showModal({
+                title: '保存成功！',
+                content: '记工数据仅自己可见随时查看，方便快捷',
+                showCancel: true,
+                confirmText: '去考勤表',
+                confirmColor: '#0099FFFF',
+                success: function success(res) {
+                  if (res.confirm) {
+                    _taroWeapp2.default.redirectTo({
+                      url: '/pages/attendanceSheet/index'
+                    });
+                  } else if (res.cancel) {
+                    _taroWeapp2.default.redirectTo({
+                      url: '/pages/flowingWater/index'
+                    });
+                  }
+                }
+              });
+            }
+            dispatch((0, _workerList.setWorker)([]));
+          } else {
+            (0, _index3.default)(res.msg);
+          }
+        });
       }
     } else {
       (0, _index.bkAddBusinessAction)(params).then(function (res) {
         // 清除reducer
         if (res.code === 200) {
           if (type === 1) {
-            var _data5 = {
+            var _data6 = {
               groupName: '',
               teamName: '',
               name: item.name,
@@ -3310,11 +3380,11 @@ function userForeman() {
             var addItmeArr = [{ id: 1, name: '无加班', click: false, num: 0 }, { id: 2, name: '0.0小时', click: false, num: 0 }];
             // 日历
             var calendar = JSON.parse(JSON.stringify(calendarDays));
-            for (var _i20 = 0; _i20 < calendar.length; _i20++) {
-              calendar[_i20].click = false;
+            for (var _i22 = 0; _i22 < calendar.length; _i22++) {
+              calendar[_i22].click = false;
             }
-            for (var _i21 = 0; _i21 < workerItemArr.length; _i21++) {
-              workerItemArr[_i21].click = false;
+            for (var _i23 = 0; _i23 < workerItemArr.length; _i23++) {
+              workerItemArr[_i23].click = false;
             }
             setWorkerItem(workerItemArr);
             setAddWorkArr(addItmeArr);
@@ -3324,7 +3394,7 @@ function userForeman() {
             setTimeArr(itemArr);
             setForemanTitle('');
             setImage({ item: [] });
-            setModel(_data5);
+            setModel(_data6);
           } else {
             _taroWeapp2.default.showModal({
               title: '保存成功！',
@@ -3461,9 +3531,9 @@ function userForeman() {
     }
     // 加班时间
     var addTime = 0;
-    for (var _i22 = 0; _i22 < addWorkArrs.length; _i22++) {
-      if (addWorkArrs[_i22].click) {
-        addTime = addWorkArrs[_i22].num;
+    for (var _i24 = 0; _i24 < addWorkArrs.length; _i24++) {
+      if (addWorkArrs[_i24].click) {
+        addTime = addWorkArrs[_i24].num;
       }
     }
     // 获取
@@ -3714,11 +3784,11 @@ function userForeman() {
       if (res.code === 200) {
         // // 给设置模板的设置为已经设置模板
         var data = JSON.parse(JSON.stringify(workerItem));
-        for (var _i23 = 0; _i23 < data.length; _i23++) {
+        for (var _i25 = 0; _i25 < data.length; _i25++) {
           for (var j = 0; j < worker_ids.length; j++) {
-            if (data[_i23].id == worker_ids[j]) {
-              data[_i23].set = true;
-              data[_i23].del = false;
+            if (data[_i25].id == worker_ids[j]) {
+              data[_i25].set = true;
+              data[_i25].del = false;
             }
           }
         }
@@ -3740,9 +3810,9 @@ function userForeman() {
       }
     }
     var clickData = [];
-    for (var _i24 = 0; _i24 < data.length; _i24++) {
-      if (data[_i24].click) {
-        clickData.push(data[_i24]);
+    for (var _i26 = 0; _i26 < data.length; _i26++) {
+      if (data[_i26].click) {
+        clickData.push(data[_i26]);
       }
     }
     setClickModalNum(clickData.length);
@@ -3779,28 +3849,28 @@ function userForeman() {
         }
       }
       var numData = [];
-      for (var _i25 = 0; _i25 < data.length; _i25++) {
-        if (data[_i25].click) {
-          numData.push(data[_i25]);
+      for (var _i27 = 0; _i27 < data.length; _i27++) {
+        if (data[_i27].click) {
+          numData.push(data[_i27]);
         }
       }
       setClickNum(numData.length);
       setWorkerItem(data);
       // return;
     } else {
-      for (var _i26 = 0; _i26 < data.length; _i26++) {
-        if (v.id === data[_i26].id) {
+      for (var _i28 = 0; _i28 < data.length; _i28++) {
+        if (v.id === data[_i28].id) {
           if (v.set) {
-            data[_i26].click = !data[_i26].click;
+            data[_i28].click = !data[_i28].click;
           } else {
             handleOpenWagesModal();
           }
         }
       }
       var _numData = [];
-      for (var _i27 = 0; _i27 < data.length; _i27++) {
-        if (data[_i27].click) {
-          _numData.push(data[_i27]);
+      for (var _i29 = 0; _i29 < data.length; _i29++) {
+        if (data[_i29].click) {
+          _numData.push(data[_i29]);
         }
       }
       setClickNum(_numData.length);
@@ -3819,10 +3889,10 @@ function userForeman() {
         data[i].click = true;
       }
     } else {
-      for (var _i28 = 0; _i28 < data.length; _i28++) {
-        if (data[_i28].set) {
-          Itme.push(data[_i28]);
-          data[_i28].click = true;
+      for (var _i30 = 0; _i30 < data.length; _i30++) {
+        if (data[_i30].set) {
+          Itme.push(data[_i30]);
+          data[_i30].click = true;
         } else {
           (0, _index3.default)('还有人未设置工资标准');
         }
@@ -3847,8 +3917,8 @@ function userForeman() {
       setCheckAll(true);
       setClickModalNum(data.length);
     } else {
-      for (var _i29 = 0; _i29 < data.length; _i29++) {
-        data[_i29].click = false;
+      for (var _i31 = 0; _i31 < data.length; _i31++) {
+        data[_i31].click = false;
       }
       ;
       setCheckAll(false);
@@ -3920,11 +3990,11 @@ function userForeman() {
       setModel(_extends({}, model, { time: _time2 }));
       setCalendarModalDisplay(false);
     } else {
-      var _data6 = JSON.parse(JSON.stringify(clickData));
-      var _time3 = _data6.length + '天';
+      var _data7 = JSON.parse(JSON.stringify(clickData));
+      var _time3 = _data7.length + '天';
       setModel(_extends({}, model, { time: _time3 }));
       setCalendarModalDisplay(false);
-      setTimeData(_data6);
+      setTimeData(_data7);
     }
   };
   // 左

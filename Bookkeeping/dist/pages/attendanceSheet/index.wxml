@@ -160,6 +160,6 @@
                 </view>
             </view>
         </block>
-        <calendar-modal compid="{{$compid__83}}"></calendar-modal>
+        <calendar-modal compid="{{$compid__63}}"></calendar-modal>
     </view>
 </block>

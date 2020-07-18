@@ -92,8 +92,8 @@ var AddMember = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: "funPrivateidzzz",
-    value: function funPrivateidzzz() {
+    key: "funPrivatebjfzz",
+    value: function funPrivatebjfzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -114,7 +114,7 @@ var AddMember = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return AddMember;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivateidzzz", "anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "components/addMember/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatebjfzz", "anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "components/addMember/index", _temp2);
 exports.default = AddMember;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(AddMember));

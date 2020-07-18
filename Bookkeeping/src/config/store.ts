@@ -7,3 +7,5 @@ export const MidData: string = 'midData'
 export const Type:string = 'type'
 // 用户创建时间
 export const CreationTime: string = 'creationTime'
+// 班组长数据长度
+// 工人项目长度

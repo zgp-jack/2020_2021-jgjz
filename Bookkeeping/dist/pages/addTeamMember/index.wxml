@@ -1,13 +1,13 @@
 <block wx:if="{{$taroCompReady}}">
     <view class="content">
         <view>
-            <at-search-bar compid="{{$compid__55}}"></at-search-bar>
+            <at-search-bar compid="{{$compid__188}}"></at-search-bar>
         </view>
         <view id="box">
             <block wx:if="{{data && data.length > 0}}">
-                <view wx:key="$loopState__temp2" wx:for="{{loopArray48}}" wx:for-item="val" wx:for-index="i">
+                <view wx:key="$loopState__temp2" wx:for="{{loopArray102}}" wx:for-item="val" wx:for-index="i">
                     <view class="list-title">{{val.$original.name_py}}</view>
-                    <view class="list-flex-test" bindtap="anonymousFunc2" wx:for="{{val.$anonymousCallee__12}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                    <view class="list-flex-test" bindtap="anonymousFunc2" wx:for="{{val.$anonymousCallee__19}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                         <block wx:if="{{type !== '2'}}">
                             <view>
                                 <checkbox checked="{{v.$original.click}}" value="{{v.$original.click}}" class="Checkbox" bindtap="anonymousFunc3" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}"></checkbox>
@@ -18,7 +18,7 @@
                         </view>
                         <view>
                             <view class="name">{{v.$original.name}}</view>
-                            <view class="phone">{{v.$original.tel}}</view>
+                            <view class="phone">{{v.$original.tel || ''}}</view>
                         </view>
                     </view>
                 </view>
@@ -26,13 +26,13 @@
         </view>
         <view class="add" bindtap="anonymousFunc4">添加</view>
         <view class="letter">
-            <view class="letter-list" id="{{'' + v.$original.name}}" bindtap="anonymousFunc5" wx:key="id" wx:for="{{loopArray49}}" wx:for-item="v" wx:for-index="__index5" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey3}}">{{v.$original.name}}</view>
+            <view class="letter-list" id="{{'' + v.$original.name}}" bindtap="anonymousFunc5" wx:key="id" wx:for="{{loopArray103}}" wx:for-item="v" wx:for-index="__index5" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey3}}">{{v.$original.name}}</view>
         </view>
         <block wx:if="{{type !== '2'}}">
             <view class="footer">
                 <view class="footer-btn" bindtap="anonymousFunc6">开始记工</view>
             </view>
         </block>
-        <add-member compid="{{$compid__56}}"></add-member>
+        <add-member compid="{{$compid__189}}"></add-member>
     </view>
 </block>
