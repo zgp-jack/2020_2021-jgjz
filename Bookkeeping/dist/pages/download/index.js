@@ -106,13 +106,14 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
         var type = _taroWeapp2.default.getStorageSync(_store.Type);
         var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
         _taroWeapp2.default.downloadFile({
-          url: "http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/",
+          url: "https://miniapi.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/?identity=" + type,
           header: {
             'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
             mid: userInfo.userId,
             token: userInfo.token,
             time: userInfo.tokenTime,
-            uuid: userInfo.uuid
+            uuid: userInfo.uuid,
+            identity: type
           },
           success: function success(res) {
             console.log(res, 'resssss');
@@ -172,7 +173,7 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
         // bkgetExcelDataAction(parms).then(res=>{
         //   if(res.code === 200){
         _taroWeapp2.default.downloadFile({
-          url: "http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/",
+          url: "https://miniapi.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/?identity=" + type,
           header: {
             'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
             mid: userInfo.userId,

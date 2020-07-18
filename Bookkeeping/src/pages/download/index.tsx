@@ -35,14 +35,14 @@ export default function Download() {
     let type = Taro.getStorageSync(Type);
     let userInfo = Taro.getStorageSync(UserInfo);
     Taro.downloadFile({
-      url: `http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/`,
+      url: `https://miniapi.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/?identity=${type}`,
       header: {
         'content-type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
         mid: userInfo.userId,
         token: userInfo.token,
         time: userInfo.tokenTime,
         uuid: userInfo.uuid,
-        // identity: type
+        identity: type
       },
       success: function (res) {
         console.log(res,'resssss')
@@ -102,7 +102,7 @@ export default function Download() {
     // bkgetExcelDataAction(parms).then(res=>{
     //   if(res.code === 200){
         Taro.downloadFile({
-          url: `http://miniapitest.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/`,
+          url: `https://miniapi.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/?identity=${type}`,
           header: {
             'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
             mid: userInfo.userId,
