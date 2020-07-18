@@ -112,10 +112,10 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
             mid: userInfo.userId,
             token: userInfo.token,
             time: userInfo.tokenTime,
-            uuid: userInfo.uuid,
-            identity: type
+            uuid: userInfo.uuid
           },
           success: function success(res) {
+            console.log(res, 'resssss');
             _taroWeapp2.default.saveFile({
               tempFilePath: res.tempFilePath,
               success: function success(res) {
@@ -185,23 +185,25 @@ var Download = (_temp2 = _class = function (_Taro$Component) {
             _taroWeapp2.default.saveFile({
               tempFilePath: res.tempFilePath,
               success: function success(res) {
-                var savedFilePath = res.savedFilePath;
-                _taroWeapp2.default.openDocument({
-                  filePath: savedFilePath,
-                  fileType: 'xlsx',
-                  success: function success(val) {
-                    console.log('打开文档成功');
-                    _taroWeapp2.default.navigateTo({
-                      url: "/pages/url/index?url=" + savedFilePath
-                    });
-                  },
-                  fail: function fail(res) {
-                    console.log(res);
-                  },
-                  complete: function complete(res) {
-                    console.log(res);
-                  }
-                });
+                console.log('result', res);
+                // const savedFilePath: any = res.savedFilePath;
+                // console.log(savedFilePath,'savedFilePath')
+                // Taro.openDocument({
+                //   filePath: savedFilePath,
+                //   fileType: 'xlsx',
+                //   success: function (val) {
+                //     console.log('打开文档成功')
+                //     Taro.navigateTo({
+                //       url: `/pages/url/index?url=${savedFilePath}`
+                //     })
+                //   },
+                //   fail: function (res) {
+                //     console.log(res);
+                //   },
+                //   complete: function (res) {
+                //     console.log(res);
+                //   }
+                // })
               }
             });
           },

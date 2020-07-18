@@ -42,9 +42,10 @@ export default function Download() {
         token: userInfo.token,
         time: userInfo.tokenTime,
         uuid: userInfo.uuid,
-        identity: type
+        // identity: type
       },
       success: function (res) {
+        console.log(res,'resssss')
         Taro.saveFile({
           tempFilePath: res.tempFilePath,
           success: function (res) {
@@ -114,23 +115,25 @@ export default function Download() {
             Taro.saveFile({
               tempFilePath: res.tempFilePath,
               success: function (res) {
-                const savedFilePath: any = res.savedFilePath;
-                Taro.openDocument({
-                  filePath: savedFilePath,
-                  fileType: 'xlsx',
-                  success: function (val) {
-                    console.log('打开文档成功')
-                    Taro.navigateTo({
-                      url: `/pages/url/index?url=${savedFilePath}`
-                    })
-                  },
-                  fail: function (res) {
-                    console.log(res);
-                  },
-                  complete: function (res) {
-                    console.log(res);
-                  }
-                })
+                console.log('result', res);
+                // const savedFilePath: any = res.savedFilePath;
+                // console.log(savedFilePath,'savedFilePath')
+                // Taro.openDocument({
+                //   filePath: savedFilePath,
+                //   fileType: 'xlsx',
+                //   success: function (val) {
+                //     console.log('打开文档成功')
+                //     Taro.navigateTo({
+                //       url: `/pages/url/index?url=${savedFilePath}`
+                //     })
+                //   },
+                //   fail: function (res) {
+                //     console.log(res);
+                //   },
+                //   complete: function (res) {
+                //     console.log(res);
+                //   }
+                // })
               }
             })
           },

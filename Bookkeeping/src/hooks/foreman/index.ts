@@ -293,6 +293,7 @@ export default function userForeman() {
       if (identity === 2){
         console.log(useSelectorItem.workerList,'返回')
         setForeman(useSelectorItem.workerList);
+        console.log(useSelectorItem.workerList[0].name,'useSelectorItem.workerList[0].name')
         setForemanTitle(useSelectorItem.workerList[0].name);
         return;
       }
@@ -696,6 +697,7 @@ export default function userForeman() {
           // 如果是工人的话默认选中第一条有数据
           // 多条选中最近一条
           // 工人
+          console.log(res,'ressssss')
         const modalObj = JSON.parse(JSON.stringify(model));
         const identity = Taro.getStorageSync(Type)
           if(identity === 2){
@@ -704,9 +706,13 @@ export default function userForeman() {
               if (res.data && res.data.length>0){
                 for(let i =0;i<res.data.length;i++){
                   res.data[0].click = true;
-                  groupInfo = res.data[0].child[0].pid + ',' + res.data[0].child[0].id;
-                  if(res.data[0].child[0].leader_name){
-                    setForemanTitle(res.data[0].child[0].leader_name)
+                  groupInfo = res.data[0].group_id;
+                  // groupInfo = res.data[0].child[0].pid + ',' + res.data[0].child[0].id;
+                  if(res.data[0].leader_name){
+                    console.log(res.data[0].leader_name,'res.data[0].leader_name')
+                    setForemanTitle(res.data[0].leader_name)
+                  }else{
+                    setForemanTitle('')
                   }
                 }
               }
@@ -1196,6 +1202,12 @@ export default function userForeman() {
   }
   // 删除某一个
   const handleDelList = (v:any)=>{
+    // 判断不能删除自己
+    let midData = Taro.getStorageSync(MidData)
+    if (midData.worker_id === v.id) {
+      Msg('不能删除自己')
+      return
+    }
     console.log(v,'vvvv')
     Taro.showModal({
       title: '温馨提示',
@@ -1765,17 +1777,17 @@ export default function userForeman() {
   }
   // 点击项目
   const handleProject = (v)=>{
+    console.log(v,'xxx')
     let data = JSON.parse(JSON.stringify(model));
     const arr = JSON.parse(JSON.stringify(projectArr))
     data.name = v.name;
-    let groupInfo = v.child[0].pid + ',' + v.child[0].id;
+    let groupInfo = v.group_id;
     if(identity === 2){
-      if(v.child.length>0){
-        if (v.child[0].leader_name){
-          setForemanTitle(v.child[0].leader_name)
-        }else{
-          setForemanTitle('')
-        }
+      if (v.leader_name){
+        console.log(v.leader_name,'leader_name')
+        setForemanTitle(v.leader_name)
+      }else{
+        setForemanTitle('')
       }
     }
     // 设置选择框
@@ -2045,16 +2057,15 @@ export default function userForeman() {
     }
   }
   // 删除项目
-  const handleDelProject = (id)=>{
-    // 判断不能删除自己
-    let midData = Taro.getStorageSync(MidData)
-    if (midData.worker_id === id){
-      Msg('不能删除自己')
-      return
-    }
+  const handleDelProject = (v)=>{
+    console.log(v,'vvv')
+    console.log(321312,'321321')
     let params = {
-      ids:id
+      ids:v.id
     }
+    const name = JSON.parse(JSON.stringify(foremanTitle));
+    const data = JSON.parse(JSON.stringify(model));
+    console.log(name);
     Taro.showModal({
       title:'提示',
       content:'确认删除',
@@ -2064,6 +2075,13 @@ export default function userForeman() {
           bkDeleteprojectTeamAction(params).then(res => {
             if (res.code === 200) {
               bkGetProjectTeam();
+              if (v.group_name === data.name){
+                setForemanTitle('');
+                setModel({...model,name:''});
+              }else{
+                setForemanTitle('');
+                setModel({ ...model, name: '' });
+              }
             } else {
               Msg(res.msg)
             }
@@ -2094,9 +2112,9 @@ export default function userForeman() {
   const handleEditProjectModal = (v)=>{
     setEditProjectDisplay(true);
     const data = JSON.parse(JSON.stringify(editProjectData))
-    data.group_info = v.child[0].pid+','+v.child[0].id;
-    data.team_name = v.child[0].name;
-    data.group_name = v.name;
+    data.group_info = v.group_id;
+    data.team_name = v.name;
+    data.group_name = v.group_name;
     setEditProjectData(data);
   }
   // 修改项目组输入框

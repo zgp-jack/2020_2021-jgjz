@@ -71,7 +71,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWater.__proto__ || Object.getPrototypeOf(FlowingWater)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记工流水'
-    }, _this.$usedState = ["data", "loopArray49", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["data", "loopArray47", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWater, [{
@@ -365,13 +365,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         return handleCheckboxBtn(1);
       };
 
-      var loopArray49 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
+      var loopArray47 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "baczz" + i;
+        var _$indexKey = "jjzzz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -379,23 +379,23 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
         var $loopState__temp4 = data.item && data.item.length > 0 ? v.$original.total_borrow && v.$original.total_borrow.toFixed(2) : null;
         var $loopState__temp6 = data.item && data.item.length > 0 ? v.$original.total_money && v.$original.total_money.toFixed(2) : null;
-        var $anonymousCallee__12 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
+        var $anonymousCallee__11 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "badzz" + i + "-" + __index2;
+          var _$indexKey2 = "baazz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "baezz" + i + "-" + __index2;
+          var _$indexKey3 = "babzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "bafzz" + i + "-" + __index2;
+          var _$indexKey4 = "baczz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -412,29 +412,29 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "bagzz" + i + "-" + __index2;
+          var _$indexKey5 = "badzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "bahzz" + i + "-" + __index2;
+          var _$indexKey6 = "baezz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "baizzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bafzzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
-              $prevCompid__56 = _genCompid2[0],
-              $compid__56 = _genCompid2[1];
+              $prevCompid__54 = _genCompid2[0],
+              $compid__54 = _genCompid2[1];
 
           v.$original.click && _taroWeapp.propsManager.set({
             "autoClose": false,
             "onOpened": _this2.anonymousFunc3.bind(_this2, _$indexKey3),
             "onClick": _this2.anonymousFunc4.bind(_this2, _$indexKey4),
             "options": $loopState__temp8
-          }, $compid__56, $prevCompid__56);
+          }, $compid__54, $prevCompid__54);
           return {
             _$indexKey2: _$indexKey2,
             _$indexKey3: _$indexKey3,
@@ -442,7 +442,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
             $loopState__temp8: $loopState__temp8,
             _$indexKey5: _$indexKey5,
             _$indexKey6: _$indexKey6,
-            $compid__56: $compid__56,
+            $compid__54: $compid__54,
             $original: val.$original
           };
         }) : [];
@@ -451,13 +451,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey: _$indexKey,
           $loopState__temp4: $loopState__temp4,
           $loopState__temp6: $loopState__temp6,
-          $anonymousCallee__12: $anonymousCallee__12,
+          $anonymousCallee__11: $anonymousCallee__11,
           $original: v.$original
         };
       }) : [];
       Object.assign(this.__state, {
         data: data,
-        loopArray49: loopArray49,
+        loopArray47: loopArray47,
         IMGCDNURL: _index4.IMGCDNURL,
         isCheckOut: isCheckOut,
         allcheck: allcheck,
@@ -1985,6 +1985,7 @@ function userForeman() {
       if (identity === 2) {
         console.log(useSelectorItem.workerList, '返回');
         setForeman(useSelectorItem.workerList);
+        console.log(useSelectorItem.workerList[0].name, 'useSelectorItem.workerList[0].name');
         setForemanTitle(useSelectorItem.workerList[0].name);
         return;
       }
@@ -2375,6 +2376,7 @@ function userForeman() {
         // 如果是工人的话默认选中第一条有数据
         // 多条选中最近一条
         // 工人
+        console.log(res, 'ressssss');
         var modalObj = JSON.parse(JSON.stringify(model));
         var _identity = _taroWeapp2.default.getStorageSync(_store.Type);
         if (_identity === 2) {
@@ -2383,9 +2385,13 @@ function userForeman() {
             if (res.data && res.data.length > 0) {
               for (var i = 0; i < res.data.length; i++) {
                 res.data[0].click = true;
-                _groupInfo = res.data[0].child[0].pid + ',' + res.data[0].child[0].id;
-                if (res.data[0].child[0].leader_name) {
-                  setForemanTitle(res.data[0].child[0].leader_name);
+                _groupInfo = res.data[0].group_id;
+                // groupInfo = res.data[0].child[0].pid + ',' + res.data[0].child[0].id;
+                if (res.data[0].leader_name) {
+                  console.log(res.data[0].leader_name, 'res.data[0].leader_name');
+                  setForemanTitle(res.data[0].leader_name);
+                } else {
+                  setForemanTitle('');
                 }
               }
             }
@@ -2877,6 +2883,12 @@ function userForeman() {
   };
   // 删除某一个
   var handleDelList = function handleDelList(v) {
+    // 判断不能删除自己
+    var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+    if (midData.worker_id === v.id) {
+      (0, _index3.default)('不能删除自己');
+      return;
+    }
     console.log(v, 'vvvv');
     _taroWeapp2.default.showModal({
       title: '温馨提示',
@@ -3425,17 +3437,17 @@ function userForeman() {
   var handleCalendar = function handleCalendar(v) {};
   // 点击项目
   var handleProject = function handleProject(v) {
+    console.log(v, 'xxx');
     var data = JSON.parse(JSON.stringify(model));
     var arr = JSON.parse(JSON.stringify(projectArr));
     data.name = v.name;
-    var groupInfo = v.child[0].pid + ',' + v.child[0].id;
+    var groupInfo = v.group_id;
     if (identity === 2) {
-      if (v.child.length > 0) {
-        if (v.child[0].leader_name) {
-          setForemanTitle(v.child[0].leader_name);
-        } else {
-          setForemanTitle('');
-        }
+      if (v.leader_name) {
+        console.log(v.leader_name, 'leader_name');
+        setForemanTitle(v.leader_name);
+      } else {
+        setForemanTitle('');
       }
     }
     // 设置选择框
@@ -3703,16 +3715,15 @@ function userForeman() {
     }
   };
   // 删除项目
-  var handleDelProject = function handleDelProject(id) {
-    // 判断不能删除自己
-    var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
-    if (midData.worker_id === id) {
-      (0, _index3.default)('不能删除自己');
-      return;
-    }
+  var handleDelProject = function handleDelProject(v) {
+    console.log(v, 'vvv');
+    console.log(321312, '321321');
     var params = {
-      ids: id
+      ids: v.id
     };
+    var name = JSON.parse(JSON.stringify(foremanTitle));
+    var data = JSON.parse(JSON.stringify(model));
+    console.log(name);
     _taroWeapp2.default.showModal({
       title: '提示',
       content: '确认删除',
@@ -3722,6 +3733,13 @@ function userForeman() {
           (0, _index.bkDeleteprojectTeamAction)(params).then(function (res) {
             if (res.code === 200) {
               bkGetProjectTeam();
+              if (v.group_name === data.name) {
+                setForemanTitle('');
+                setModel(_extends({}, model, { name: '' }));
+              } else {
+                setForemanTitle('');
+                setModel(_extends({}, model, { name: '' }));
+              }
             } else {
               (0, _index3.default)(res.msg);
             }
@@ -3752,9 +3770,9 @@ function userForeman() {
   var handleEditProjectModal = function handleEditProjectModal(v) {
     setEditProjectDisplay(true);
     var data = JSON.parse(JSON.stringify(editProjectData));
-    data.group_info = v.child[0].pid + ',' + v.child[0].id;
-    data.team_name = v.child[0].name;
-    data.group_name = v.name;
+    data.group_info = v.group_id;
+    data.team_name = v.name;
+    data.group_name = v.group_name;
     setEditProjectData(data);
   };
   // 修改项目组输入框

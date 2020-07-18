@@ -221,6 +221,7 @@ export default function Foreman() {
     const data = JSON.parse(JSON.stringify(model));
     setModel({ ...data, groupName: '', teamName:'' })
   }
+  console.log(foremanTitle,'foremanTitle')
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -605,12 +606,12 @@ export default function Foreman() {
                   // ))
                 }</View>
                 <View className='atDrawer-list-flex'>
-                  <View>{identity === 1 && <View>{v.child[0].leader_name||'-'}</View>}</View>
+                  <View>{identity === 1 && <View>{v.leader_name ? `${v.leader_name}的项目`:'-'}</View>}</View>
                   <View>
                     {!edit && <View>{v.click &&<Checkbox checked={v.click} className='checkbox' color='#0099FF' value={''} onClick={(e)=>e.stopPropagation()}/>}</View>}
                     {edit && <View className='atDrawer-list-flex'>
                       <View className='atDrawer-list-flex-btn' onClick={(e)=>{e.stopPropagation(),handleEditProjectModal(v)}}>修改</View>
-                      <View className='atDrawer-list-flex-btn' onClick={(e)=>{e.stopPropagation(),handleDelProject(v.id)}}>删除</View>
+                      <View className='atDrawer-list-flex-btn' onClick={(e)=>{e.stopPropagation(),handleDelProject(v)}}>删除</View>
                     </View>}
                   </View>
                 </View>

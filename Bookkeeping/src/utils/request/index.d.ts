@@ -48,6 +48,7 @@ export interface bkIndexTypeData {
   work_time: number,
   count_is_new:string,
   earliest_month:string,
+  setLasted_business_identity:number,
 }
 
 export interface bkIndexTypeDataList {
@@ -122,15 +123,28 @@ export interface bkGetProjectTeam extends Result {
   data: bkGetProjectTeamData[]
 }
 export interface bkGetProjectTeamData {
-  child: bkGetProjectTeamDataChild[],
-  created_by: string
-  created_time: string
-  group_leader: string
-  id: string
-  is_deleted: string
-  name: string
+  // child: bkGetProjectTeamDataChild[],
+  // created_by: string
+  // created_time: string
+  // group_leader: string
+  // id: string
+  // is_deleted: string
+  // name: string
+  // pid: string,
+  // click:boolean
+  id: string,
+  name: string,
   pid: string,
-  click:boolean
+  group_leader: string,
+  created_by: string,
+  created_time: string,
+  updated_time: string,
+  identity: string,
+  is_deleted: string,
+  leader_name: string,
+  group_name: string,
+  group_id: string,
+  click:boolean,
 }
 export interface bkGetProjectTeamDataChild{
   created_by: string

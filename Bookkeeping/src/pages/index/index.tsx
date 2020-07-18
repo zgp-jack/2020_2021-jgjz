@@ -94,7 +94,8 @@ export default function Index() {
   const [show,setShow] =useState<boolean>(false);
   // 工人转换提示
   const [prompt, setPrompt] = useState<boolean>(false)
-
+  // 工人上次身份
+  const [lasted_business_identity, setLasted_business_identity]=useState<number>(0)
   const getDates = ()=>{
     const date = new Date().getDay();
     const time = new Date();
@@ -318,7 +319,7 @@ export default function Index() {
             }
           }
           // 存在缓存里用来判断是否新增时间
-          
+          setLasted_business_identity(res.data.setLasted_business_identity);
           // 获取信息
           // 判断是班组长的时候出现弹框
           let type = Taro.getStorageSync(Type);
@@ -364,6 +365,14 @@ export default function Index() {
       setDisplay(true)
       return;
     } 
+    // 判断
+    // if (lasted_business_identity!==0){
+    //   console.log(type,'type');
+    //   console.log(lasted_business_identity,'lasted_business_identity')
+    //   if (type != lasted_business_identity){
+    //     setTips(true)
+    //   }
+    // }
     let msg = e === 1 ? '开始为自己记工吧' :'开始为工人记工吧'
     Msg(msg)
     Taro.setStorageSync(Type, e);
@@ -640,10 +649,10 @@ export default function Index() {
       {/* 弹框 */}
       <AtModal isOpened={tips} >
         <View className='AtModal'>
-          <View className='AtModal-top'>当前是<Text className='atModal-name'>【班组长】</Text>身份</View>
+          <View className='AtModal-top'>当前是<Text className='atModal-name'>【{type ==1?'班组长':'工人'}】</Text>身份</View>
           <View className='mtList'>与上一次记工身份不一致，是否<Text className='atModal-change'>切换?</Text></View>
           <View className='atModal-list' onClick={()=>handleType(0)}>不切换</View>
-          <View className='atModal-list' onClick={() => handleType(1)}>切换成【工人】</View>
+          <View className='atModal-list' onClick={() => handleType(1)}>切换成【{type == 1?'工人':'班组长'}】</View>
           <View className='atModal-list' onClick={() => handleType(2)}>不再提醒</View>
         </View>
       </AtModal>
