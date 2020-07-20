@@ -720,8 +720,8 @@ export default function userForeman() {
               // 有名字才加
               let name='';
               if(res.data.length>0){
-                if (res.data[0].name){
-                  name = res.data[0].name;
+                if (res.data[0].group_name){
+                  name = res.data[0].group_name +'-'+ res.data[0].name;
                 }else{
                   name=''
                 }
@@ -733,7 +733,7 @@ export default function userForeman() {
               if (res.data && res.data.length > 0) {
                 for (let i = 0; i < res.data.length; i++) {
                   // res.data[0].click = true;
-                  if (groupName=== res.data[i].name){
+                  if (groupName === res.data[i].name){
                     res.data[i].click = true;
                   }
                 }
@@ -1097,6 +1097,11 @@ export default function userForeman() {
         total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);
       }
       const num = total.toFixed(2);
+      // let num: any = 0;
+      // if (num && !Object.is(num, NaN)) {
+      //   num = total.toFixed(2);
+      // }
+      console.log(num,'numdsda')
       //给工人自己设置工资标准
       const wageStandards = JSON.parse(JSON.stringify(wageStandard));
       let params = {
@@ -1784,8 +1789,9 @@ export default function userForeman() {
     let groupInfo = v.group_id+','+v.id;
     if(identity === 2){
       if (v.leader_name){
+        console.log(v)
         console.log(v.leader_name,'leader_name')
-        setForemanTitle(v.leader_name)
+        setForemanTitle(v.group_name+'-'+v.name)
       }else{
         setForemanTitle('')
       }
@@ -1848,6 +1854,7 @@ export default function userForeman() {
   const handleAddWage = ()=>{
     // 获取工资标准
     const data = JSON.parse(JSON.stringify(wageStandard));
+    console.log(data,'2313123');
     // 获取上班时长
     const timeArrs = JSON.parse(JSON.stringify(timeArr));
     // 获取加班时长
@@ -1892,7 +1899,7 @@ export default function userForeman() {
     // 获取
     if(identity == 2){
       //工资标准 每个工多少钱/上班标准 * 上班时长  判断加班是按小时算还是i按天算
-      let total;
+      let total=0;
       if(data.type === 1){
         // 按小时算 加班小时* 模板加班金额
         total = (moneyNum / workNum) * time + addWorkNum * addTime;
@@ -1900,7 +1907,12 @@ export default function userForeman() {
         // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
         total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);    
       }
-      const num = total.toFixed(2);
+      // const num = total.toFixed(2);
+      let num:any = 0;
+      if (num && !Object.is(num, NaN)){
+        num = total.toFixed(2);
+      }
+      console.log(num,'xxx')
       // 给工人自己设置工资标准
       let params ={
         identity: identity,
@@ -2012,7 +2024,7 @@ export default function userForeman() {
     data.money = v.money;
     data.addWork = v.overtime_money;
     data.state = 1;
-    data.id = v.id;
+    data.id = v.worker_id;
     data.group_info = v.groupInfo;
     data.type = v.overtime_type;
     data.day = v.overtime;

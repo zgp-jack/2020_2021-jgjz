@@ -4,7 +4,7 @@ import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProj
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import Auth from '../../components/auth';
@@ -96,6 +96,8 @@ export default function Index() {
   const [prompt, setPrompt] = useState<boolean>(false)
   // 工人上次身份
   const [lasted_business_identity, setLasted_business_identity]=useState<number>(0)
+  // 身份弹框不再提醒
+  const [neverPrompt, setNeverPrompt] = useState<boolean>(false)
   const getDates = ()=>{
     const date = new Date().getDay();
     const time = new Date();
@@ -121,6 +123,10 @@ export default function Index() {
   useDidShow(()=>{
     let midData = Taro.getStorageSync(MidData);
     let creationTime = Taro.getStorageSync(CreationTime);
+    let neverPromptType = Taro.getStorageSync(NeverPrompt);
+    if (neverPromptType){
+      setNeverPrompt(true);
+    }
     // 判断有midDat就取消授权
     if (midData){
       setDisplay(false)
@@ -365,20 +371,29 @@ export default function Index() {
       setDisplay(true)
       return;
     } 
-    // 判断
-    if (lasted_business_identity !== 0 && type != lasted_business_identity){
+    // // 判断
+    // if (neverPrompt) {
+    //   return;
+    // }
+    // 判断点击了永不提示
+    console.log(neverPrompt,'neverPrompt')
+    if (lasted_business_identity !== 0 && type != lasted_business_identity && !neverPrompt){
       console.log(type,'type');
       console.log(lasted_business_identity,'lasted_business_identity')
         setTips(true)
         return;
+    }else{
+      let msg = e === 1 ? '开始为自己记工吧' :'开始为工人记工吧'
+      Msg(msg)
+      console.log(e,'eeeeee')
+      // return;
+      setType(e);
+      console.log(e)
+      Taro.setStorageSync(Type, e);
+      setTimeout(()=>{
+        getData();
+      },500)
     }
-    let msg = e === 1 ? '开始为自己记工吧' :'开始为工人记工吧'
-    Msg(msg)
-    Taro.setStorageSync(Type, e);
-    setType(e);
-    setTimeout(()=>{
-      getData();
-    },100)
   }
   const getNextPageData = ()=>{
     // console.log(31231)
@@ -392,10 +407,28 @@ export default function Index() {
   }
   // 弹窗选择
   const handleType = (state:number)=>{
+    // 切换
     if (state === 1){
-      setType(1)
+      let dignity;
+      console.log(type,'typenjdskajdkjab')
+      if(type ===1){
+        dignity = 2
+      // 不切换
+      }else{
+        dignity = 1
+      }
+      let msg = dignity === 1 ? '开始为自己记工吧' : '开始为工人记工吧';
+      Msg(msg)
+      console.log(dignity,'neverPromptneverPrompt')
+      // return;
+      setType(dignity);
+      Taro.setStorageSync(Type, dignity);
+      setTimeout(() => {
+        getData();
+      }, 500)
     }else if(state === 2){
-      
+      Taro.setStorageSync(NeverPrompt, true);
+      setNeverPrompt(true)
     }
     setTips(false)
   }

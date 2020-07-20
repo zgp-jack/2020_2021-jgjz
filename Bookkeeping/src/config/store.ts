@@ -9,3 +9,5 @@ export const Type:string = 'type'
 export const CreationTime: string = 'creationTime'
 // 班组长数据长度
 // 工人项目长度
+// 切换身份用不提示
+export const NeverPrompt: string = 'neverPrompt'
