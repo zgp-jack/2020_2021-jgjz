@@ -3,7 +3,7 @@
         <block wx:if="{{display}}">
             <view class="workingHours-complaintModal">
                 <view class="workingHours-complaintModal-content">
-                    <view class="workingHours-complaintModal-content-title">选择上班时间<text bindtap="funPrivatehizzz" class="workingHours-complaintModal-content-close">x</text>
+                    <view class="workingHours-complaintModal-content-title">选择上班时间<text bindtap="funPrivatehfzzz" class="workingHours-complaintModal-content-close">x</text>
                     </view>
                     <view class="workingHours-complaintModal-content-timeBox">
                         <view class="workingHours-complaintModal-content-box">

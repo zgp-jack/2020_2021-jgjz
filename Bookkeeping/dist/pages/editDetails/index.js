@@ -64,7 +64,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EditDetails.__proto__ || Object.getPrototypeOf(EditDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["borrowing", "loopArray75", "$compid__126", "$compid__127", "$compid__128", "$compid__129", "businessType", "type", "typeName", "val", "identity", "unit"], _this.anonymousFunc9Map = {}, _this.customComponents = ["ImageView", "WageStandard", "WorkOvertime", "WorkingHours"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EditDetails.__proto__ || Object.getPrototypeOf(EditDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["borrowing", "loopArray58", "$compid__64", "$compid__65", "$compid__66", "$compid__67", "businessType", "type", "typeName", "val", "identity", "unit"], _this.anonymousFunc9Map = {}, _this.customComponents = ["ImageView", "WageStandard", "WorkOvertime", "WorkingHours"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(EditDetails, [{
@@ -85,25 +85,25 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__126"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__64"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__126 = _genCompid2[0],
-          $compid__126 = _genCompid2[1];
+          $prevCompid__64 = _genCompid2[0],
+          $compid__64 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__127"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__65"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__127 = _genCompid4[0],
-          $compid__127 = _genCompid4[1];
+          $prevCompid__65 = _genCompid4[0],
+          $compid__65 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__128"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__66"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__128 = _genCompid6[0],
-          $compid__128 = _genCompid6[1];
+          $prevCompid__66 = _genCompid6[0],
+          $compid__66 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__129"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__67"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__129 = _genCompid8[0],
-          $compid__129 = _genCompid8[1];
+          $prevCompid__67 = _genCompid8[0],
+          $compid__67 = _genCompid8[1];
 
       var router = (0, _taroWeapp.useRouter)();
       var id = router.params.id;
@@ -935,12 +935,12 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc14 = handlesub;
-      var loopArray75 = businessType === 3 ? borrowing.item.map(function (v, __index9) {
+      var loopArray58 = businessType === 3 ? borrowing.item.map(function (v, __index9) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "bdjzz" + __index9;
+        var _$indexKey = "bbgzz" + __index9;
 
         _this2.anonymousFunc9Map[_$indexKey] = function () {
           return handleRadioBorrowing(v.$original);
@@ -956,7 +956,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         "max": 4,
         "userUploadImg": userUploadImg,
         "userDelImg": userDelImg
-      }, $compid__126, $prevCompid__126);
+      }, $compid__64, $prevCompid__64);
       _taroWeapp.propsManager.set({
         "display": wageStandardDisplay,
         "handleClose": handleWageStandardDisplay,
@@ -964,7 +964,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         "handleWageStandard": handleWageStandard,
         "handleAddWage": handleAddWage,
         "handleWageStandardRadio": handleWageStandardRadio
-      }, $compid__127, $prevCompid__127);
+      }, $compid__65, $prevCompid__65);
       _taroWeapp.propsManager.set({
         "display": display,
         "handleWorkOvertimeClose": handleClose,
@@ -973,20 +973,20 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         "dataArr": addWorkArr,
         "handleWorkOvertimeOk": handleWorkOvertimeOk,
         "model": val
-      }, $compid__128, $prevCompid__128);
+      }, $compid__66, $prevCompid__66);
       _taroWeapp.propsManager.set({
         "display": workingHoursDisplay,
         "handleWorkingHoursClose": handleWorkingHoursClose,
         "type": timeType,
         "handleWorkingHours": handleWorkingHours
-      }, $compid__129, $prevCompid__129);
+      }, $compid__67, $prevCompid__67);
       Object.assign(this.__state, {
         borrowing: borrowing,
-        loopArray75: loopArray75,
-        $compid__126: $compid__126,
-        $compid__127: $compid__127,
-        $compid__128: $compid__128,
-        $compid__129: $compid__129,
+        loopArray58: loopArray58,
+        $compid__64: $compid__64,
+        $compid__65: $compid__65,
+        $compid__66: $compid__66,
+        $compid__67: $compid__67,
         businessType: businessType,
         type: type,
         typeName: typeName,

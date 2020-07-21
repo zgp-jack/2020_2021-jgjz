@@ -152,14 +152,21 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             // if (page) pageBack()
             
           } else {
-            
             let msg;
             if (res.msg) {
               msg = res.msg;
+              console.log(res.msg, 'res.msg')
             } else if (res.errmsg) {
               msg = res.errmsg
+              console.log(res.errmsg, 'res.errmsg')
             }
-            console.log(msg,'msg')
+            // let msg;
+            // if (res.msg) {
+            //   msg = res.msg;
+            // } else if (res.errmsg) {
+            //   msg = res.errmsg
+            // }
+            // console.log(msg,'msg')
             // Taro.showModal({
             //   content: msg
             // })
@@ -204,7 +211,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
       }
       GetUserInfoAction(params).then(res=>{
         if(res.code === 400 ){
-          console.log(res.data);
+          console.log(res.data,'返回的值');
         }else if (res.code === 40003) {
           // Taro.showModal({
           //   title: '微信账号还没有绑定手机号',
@@ -247,8 +254,10 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           let msg;
           if (res.msg){
             msg = res.msg;
+            console.log(res.msg, 'res.msg1')
           } else if (res.errmsg){
             msg = res.errmsg
+            console.log(res.errmsg,'res.errmsg1')
           }
           console.log(msg, 'msg')
           // Taro.showModal({

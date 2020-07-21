@@ -58,7 +58,7 @@
                     </view>
                     <view>
                         <radio-group class="borrowing-Radio">
-                            <radio bindtap="anonymousFunc9" class="borrowing-Radio-list" color="#0099FF" checked="{{v.$original.click}}" wx:key="id" wx:for="{{loopArray75}}" wx:for-item="v" wx:for-index="__index9" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</radio>
+                            <radio bindtap="anonymousFunc9" class="borrowing-Radio-list" color="#0099FF" checked="{{v.$original.click}}" wx:key="id" wx:for="{{loopArray58}}" wx:for-item="v" wx:for-index="__index9" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</radio>
                         </radio-group>
                     </view>
                 </view>
@@ -91,14 +91,14 @@
         <view class="publish-recruit-card">
             <view class="publish-list-textTarea-item" bindtap="anonymousFunc12"><text class="pulish-list-textTarea-title">备注</text>
                 <textarea value="{{val.note}}" placeholder="请填写备注..." bindinput="anonymousFunc13" maxlength="{{400}}"></textarea>
-                <image-view compid="{{$compid__126}}"></image-view>
+                <image-view compid="{{$compid__64}}"></image-view>
             </view>
         </view>
         <view class="footer">
             <view class="footerBtn" bindtap="anonymousFunc14">保存</view>
         </view>
-        <wage-standard compid="{{$compid__127}}"></wage-standard>
-        <work-overtime compid="{{$compid__128}}"></work-overtime>
-        <working-hours compid="{{$compid__129}}"></working-hours>
+        <wage-standard compid="{{$compid__65}}"></wage-standard>
+        <work-overtime compid="{{$compid__66}}"></work-overtime>
+        <working-hours compid="{{$compid__67}}"></working-hours>
     </view>
 </block>
