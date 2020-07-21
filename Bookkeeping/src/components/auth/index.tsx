@@ -152,15 +152,17 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             // if (page) pageBack()
             
           } else {
+            
             let msg;
             if (res.msg) {
               msg = res.msg;
             } else if (res.errmsg) {
               msg = res.errmsg
             }
-            Taro.showModal({
-              content: msg
-            })
+            console.log(msg,'msg')
+            // Taro.showModal({
+            //   content: msg
+            // })
             // Taro.showModal({
             //   content: res.msg || res.errmsg
             // })
@@ -248,9 +250,10 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           } else if (res.errmsg){
             msg = res.errmsg
           }
-          Taro.showModal({
-            content: msg
-          })
+          console.log(msg, 'msg')
+          // Taro.showModal({
+          //   content: msg
+          // })
           // Msg(res.msg || res.errmsg)
         }
       })

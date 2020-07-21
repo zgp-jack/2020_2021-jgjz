@@ -215,9 +215,10 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 } else if (res.errmsg) {
                   msg = res.errmsg;
                 }
-                _taroWeapp2.default.showModal({
-                  content: msg
-                });
+                console.log(msg, 'msg');
+                // Taro.showModal({
+                //   content: msg
+                // })
                 // Taro.showModal({
                 //   content: res.msg || res.errmsg
                 // })
@@ -305,9 +306,10 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
               } else if (res.errmsg) {
                 msg = res.errmsg;
               }
-              _taroWeapp2.default.showModal({
-                content: msg
-              });
+              console.log(msg, 'msg');
+              // Taro.showModal({
+              //   content: msg
+              // })
               // Msg(res.msg || res.errmsg)
             }
           });

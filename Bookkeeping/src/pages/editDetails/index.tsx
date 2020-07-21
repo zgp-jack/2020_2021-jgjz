@@ -137,7 +137,7 @@ export default function EditDetails() {
           obj.duration = duration;
           obj.money = res.data.money;
           const newData = new Date();
-          const newTime = newData.getFullYear() + '-' + addZero(newData.getMonth() + 1) + '-' + addZero(newData.getDate())+'（今天）';
+          const newTime = newData.getFullYear() + '-' + addZero(newData.getMonth() + 1) + '-' + addZero(newData.getDate());
           obj.time = newTime;
           data.work = res.data.worktime_define;
           data.addWork = res.data.overtime_money;
@@ -148,6 +148,7 @@ export default function EditDetails() {
           }else{
             data.dayAddWork =0
           }
+          data.group_info = res.data.group_info;
           data.type = parseInt(res.data.overtime_type);
           console.log(data.type,'xxxx111')
           for (let i = 0; i < data.data.length;i++){
@@ -649,6 +650,7 @@ export default function EditDetails() {
   // 保存
   const handlesub = ()=>{
     const data = JSON.parse(JSON.stringify(val));
+    const items = JSON.parse(JSON.stringify(wageStandard));
     const businessTypes = JSON.parse(JSON.stringify(businessType));
     const borrowingArr = JSON.parse(JSON.stringify(borrowing.item))
     let img_url: string[] = image.item.map(item => item.url);
@@ -676,17 +678,20 @@ export default function EditDetails() {
     console.log(val,'val')
     console.log(timeArr,'timaeArr')
     console.log(addWorkArr,'addWorkArr')
+    console.log(items,'xxxeqweqw')
     let times: number = 0, work_time_hour = 0;
     timeArr.map(v => {
       if (v.click) {
         if (v.num) {
           if (v.id !== 4) {
+            console.log(v.num,'v.numv.numv.num');
+            console.log(items.work,'items.work')
             times = v.num;
-            work_time_hour = data.work * v.num;
+            work_time_hour = items.work * v.num;
           } else {
-            console.log(data.work);
-            console.log(v.num);
-            times = 1 / data.work * v.num;
+            console.log(items.work,'1111');
+            console.log(v.num,'2222');
+            times = 1 / items.work * v.num;
             work_time_hour = v.num;
           }
         }
