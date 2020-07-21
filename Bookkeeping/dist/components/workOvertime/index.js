@@ -82,7 +82,7 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "hdzzz" + __index0;
+        var _$indexKey = "hgzzz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           handleworkOvertime(1, v.$original);
@@ -98,7 +98,7 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey2 = "hezzz" + __index1;
+        var _$indexKey2 = "hhzzz" + __index1;
 
         _this2.anonymousFunc1Map[_$indexKey2] = function () {
           handleworkOvertime(0, v.$original);
@@ -120,13 +120,13 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: "funPrivatehbzzz",
-    value: function funPrivatehbzzz() {
+    key: "funPrivatehezzz",
+    value: function funPrivatehezzz() {
       return this.props.handleWorkOvertimeClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
-    key: "funPrivatehczzz",
-    value: function funPrivatehczzz() {
+    key: "funPrivatehfzzz",
+    value: function funPrivatehfzzz() {
       return this.props.handleWorkOvertimeOk.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -158,7 +158,7 @@ var WorkOvertime = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return WorkOvertime;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehbzzz", "funPrivatehczzz", "anonymousFunc0", "anonymousFunc1"], _class.$$componentPath = "components/workOvertime/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehezzz", "funPrivatehfzzz", "anonymousFunc0", "anonymousFunc1"], _class.$$componentPath = "components/workOvertime/index", _temp2);
 
 
 WorkOvertime.options = {

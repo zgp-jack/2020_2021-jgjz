@@ -110,7 +110,7 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "ijzzz" + __index4;
+        var _$indexKey = "igzzz" + __index4;
 
         _this2.anonymousFunc4Map[_$indexKey] = function () {
           return handleWagesList(v.$original);
@@ -136,13 +136,13 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey2 = "jbzzz" + i;
+        var _$indexKey2 = "iizzz" + i;
 
         _this2.anonymousFunc5Map[_$indexKey2] = function () {
           return handleCheckboxStandard(v.$original);
         };
 
-        var _$indexKey3 = "jczzz" + i;
+        var _$indexKey3 = "ijzzz" + i;
 
         _this2.anonymousFunc6Map[_$indexKey3] = function () {
           return handleEditWages(v.$original, 0);
@@ -159,7 +159,7 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey4 = "jezzz" + __index7;
+        var _$indexKey4 = "jbzzz" + __index7;
 
         _this2.anonymousFunc7Map[_$indexKey4] = function () {
           return handleEditWages(v.$original, 1);
@@ -204,13 +204,13 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
       ;
     }
   }, {
-    key: 'funPrivateihzzz',
-    value: function funPrivateihzzz() {
+    key: 'funPrivateiezzz',
+    value: function funPrivateiezzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
-    key: 'funPrivateiizzz',
-    value: function funPrivateiizzz() {
+    key: 'funPrivateifzzz',
+    value: function funPrivateifzzz() {
       return this.props.handleAllClick.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -227,8 +227,8 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
       return this.anonymousFunc4Map[_$indexKey] && (_anonymousFunc4Map = this.anonymousFunc4Map)[_$indexKey].apply(_anonymousFunc4Map, e);
     }
   }, {
-    key: 'funPrivatejazzz',
-    value: function funPrivatejazzz() {
+    key: 'funPrivateihzzz',
+    value: function funPrivateihzzz() {
       return this.props.handleAddStandard.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -258,8 +258,8 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
       return this.anonymousFunc6Map[_$indexKey3] && (_anonymousFunc6Map = this.anonymousFunc6Map)[_$indexKey3].apply(_anonymousFunc6Map, e);
     }
   }, {
-    key: 'funPrivatejdzzz',
-    value: function funPrivatejdzzz() {
+    key: 'funPrivatejazzz',
+    value: function funPrivatejazzz() {
       return this.props.handleSetWagesModal.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -278,7 +278,7 @@ var WagesModal = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return WagesModal;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "funPrivateihzzz", "funPrivateiizzz", "anonymousFunc4", "funPrivatejazzz", "anonymousFunc5", "anonymousFunc6", "funPrivatejdzzz", "anonymousFunc7"], _class.$$componentPath = "components/wagesModal/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "funPrivateiezzz", "funPrivateifzzz", "anonymousFunc4", "funPrivateihzzz", "anonymousFunc5", "anonymousFunc6", "funPrivatejazzz", "anonymousFunc7"], _class.$$componentPath = "components/wagesModal/index", _temp2);
 exports.default = WagesModal;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(WagesModal));

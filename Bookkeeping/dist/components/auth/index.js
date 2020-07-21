@@ -153,7 +153,10 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
             console.log(key, 'keykeykeykey');
             setData(data);
             (0, _index.GetUserInfoAction)(data).then(function (res) {
-              if (res.code === 40003) {
+              console.log(res, '全部返回内容1');
+              if (res.code === 400) {
+                console.log(res.data, '返回的值');
+              } else if (res.code === 40003) {
                 // Taro.showModal({
                 //   title: '微信账号还没有绑定手机号',
                 //   content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
@@ -267,6 +270,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
             source: ''
           };
           (0, _index.GetUserInfoAction)(params).then(function (res) {
+            console.log(res, '全部返回内容1');
             if (res.code === 400) {
               console.log(res.data, '返回的值');
             } else if (res.code === 40003) {

@@ -4,9 +4,9 @@
             <view class="wageStandard">
                 <view class="wageStandard-content">
                     <view class="wageStandard-content-heard">
-                        <view class="wageStandard-content-heard-close" bindtap="funPrivateibzzz">取消</view>
+                        <view class="wageStandard-content-heard-close" bindtap="funPrivateiazzz">取消</view>
                         <view>设置工资标准</view>
-                        <view class="wageStandard-content-heard-ok" bindtap="funPrivateiczzz">确定</view>
+                        <view class="wageStandard-content-heard-ok" bindtap="funPrivateibzzz">确定</view>
                     </view>
                     <view class="wageStandard-box">
                         <view class="wageStandard-content-listBox">
