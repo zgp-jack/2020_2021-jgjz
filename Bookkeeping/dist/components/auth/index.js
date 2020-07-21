@@ -209,9 +209,18 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 callback && callback();
                 // if (page) pageBack()
               } else {
+                var msg = undefined;
+                if (res.msg) {
+                  msg = res.msg;
+                } else if (res.errmsg) {
+                  msg = res.errmsg;
+                }
                 _taroWeapp2.default.showModal({
-                  content: res.msg || res.errmsg
+                  content: msg
                 });
+                // Taro.showModal({
+                //   content: res.msg || res.errmsg
+                // })
                 // Msg(res.msg||res.errmsg)
               }
             });
@@ -288,8 +297,14 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
               // Taro.navigateBack();
               callback && callback();
             } else {
+              var msg = undefined;
+              if (res.msg) {
+                msg = res.msg;
+              } else if (res.errmsg) {
+                msg = res.errmsg;
+              }
               _taroWeapp2.default.showModal({
-                content: res.msg || res.errmsg
+                content: msg
               });
               // Msg(res.msg || res.errmsg)
             }

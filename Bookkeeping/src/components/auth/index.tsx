@@ -152,9 +152,18 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             // if (page) pageBack()
             
           } else {
+            let msg;
+            if (res.msg) {
+              msg = res.msg;
+            } else if (res.errmsg) {
+              msg = res.errmsg
+            }
             Taro.showModal({
-              content: res.msg || res.errmsg
+              content: msg
             })
+            // Taro.showModal({
+            //   content: res.msg || res.errmsg
+            // })
             // Msg(res.msg||res.errmsg)
           }
         })
@@ -231,8 +240,14 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           // Taro.navigateBack();
           callback && callback()
         }else{
+          let msg;
+          if (res.msg){
+            msg = res.msg;
+          } else if (res.errmsg){
+            msg = res.errmsg
+          }
           Taro.showModal({
-            content: res.msg || res.errmsg
+            content: msg
           })
           // Msg(res.msg || res.errmsg)
         }

@@ -106,14 +106,14 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       ;
     }
   }, {
-    key: "funPrivatejczzz",
-    value: function funPrivatejczzz() {
+    key: "funPrivateiizzz",
+    value: function funPrivateiizzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }]);
 
   return CalendarModal;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "funPrivatejczzz"], _class.$$componentPath = "components/attendanceModal/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "funPrivateiizzz"], _class.$$componentPath = "components/attendanceModal/index", _temp2);
 exports.default = CalendarModal;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(CalendarModal));
