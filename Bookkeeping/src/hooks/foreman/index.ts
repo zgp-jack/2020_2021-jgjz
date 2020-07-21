@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide } from '@tarojs/taro'
+import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide,useRouter } from '@tarojs/taro'
 import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, bkAddBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction  } from '../../utils/request/index'
 import { MidData, Type } from '../../config/store'
 import { bkGetProjectTeamData } from '../../utils/request/index.d'
@@ -62,6 +62,8 @@ interface TimeType {
   monent: string,
 }
 export default function userForeman() {
+  // const router: Taro.RouterInfo = useRouter();
+  // const { stateType } = router.params;
   // 获取存入的公用内容
   const useSelectorItem = useSelector<any, any>(state => state)
   const dispatch = useDispatch()
@@ -353,7 +355,20 @@ export default function userForeman() {
     getMonthDaysCurrent(new Date());
     if (useSelectorItem.clickTIme.length > 0) {
       setReduxTime(useSelectorItem.clickTIme);
-    }
+    };
+    // 获取上次记录项目
+    // console.log(stateType,'sateTea')
+    // if (stateType){
+      let params={
+        identity : type,
+      }
+      bkgetLastGroupInfoAction(params).then(res=>{
+        if(res.code === 200){
+          console.log(res.data);
+
+        }
+      })
+    // }
   }, [])
   // 关闭清空时间
   // useDidHide(()=>{
@@ -745,7 +760,7 @@ export default function userForeman() {
                 const years = new Date().getFullYear();
                 const months = new Date().getMonth() + 1;
                 const dates = new Date().getDate();
-                time = years +'-'+ months +'-'+ dates+'(今天)'
+                time = years +'-'+ months +'-'+ dates
                 // `${years}-${months}-${dates}(今天)`
               }
               setModel({ ...modalObj, name, duration, time})
@@ -773,7 +788,7 @@ export default function userForeman() {
             const years = new Date().getFullYear();
             const months = new Date().getMonth() + 1;
             const dates = new Date().getDate();
-            const time = years + '-' + months + '-' + dates + '(今天)'
+            const time = years + '-' + months + '-' + dates
             setModel({ ...modalObj, duration, time })
             setTimeArr(data);
             setProjectArr(res.data);
@@ -1348,15 +1363,22 @@ export default function userForeman() {
   const handleWageStandard = (type:string,e:any)=>{
     if (type == 'day') {
       const item = JSON.parse(JSON.stringify(wageStandard));
-      const dayAddWork = item.money / e;
+      const dayAddWork = item.money / e||0;
       item[type] = e;
       item.dayAddWork = dayAddWork.toFixed(2)||0;
+      console.log(item.dayAddWork, 'item.dayAddWork111')
       setWageStandard(item);
       return;
     }
     if (type === 'money') {
       const item = JSON.parse(JSON.stringify(wageStandard));
-      const dayAddWork = e / item.day;
+      // const dayAddWork = e / item.day||0;
+      let dayAddWork;
+      if(item.day == 0){
+        dayAddWork = 0
+      }else{
+        dayAddWork = e / item.day || 0;
+      }
       item[type] = e;
       item.dayAddWork = dayAddWork.toFixed(2)||0;
       setWageStandard(item);
@@ -2479,7 +2501,7 @@ export default function userForeman() {
         const dates = new Date().getDate();
         console.log(data)
         if (data[0].year == years && data[0].month == months && data[0].date == dates ){
-          time = years + '-' + months + '-' + dates + '(今天)'
+          time = years + '-' + months + '-' + dates
         }else{
           time = data[0].year + '-' + data[0].month + '-' + data[0].date
         }

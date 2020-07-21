@@ -1587,6 +1587,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function userForeman() {
+  // const router: Taro.RouterInfo = useRouter();
+  // const { stateType } = router.params;
   // 获取存入的公用内容
   var useSelectorItem = (0, _redux.useSelector)(function (state) {
     return state;
@@ -2104,6 +2106,19 @@ function userForeman() {
     if (useSelectorItem.clickTIme.length > 0) {
       setReduxTime(useSelectorItem.clickTIme);
     }
+    ;
+    // 获取上次记录项目
+    // console.log(stateType,'sateTea')
+    // if (stateType){
+    var params = {
+      identity: type
+    };
+    (0, _index.bkgetLastGroupInfoAction)(params).then(function (res) {
+      if (res.code === 200) {
+        console.log(res.data);
+      }
+    });
+    // }
   }, []);
   // 关闭清空时间
   // useDidHide(()=>{
@@ -2482,7 +2497,7 @@ function userForeman() {
               var years = new Date().getFullYear();
               var months = new Date().getMonth() + 1;
               var dates = new Date().getDate();
-              _time = years + '-' + months + '-' + dates + '(今天)';
+              _time = years + '-' + months + '-' + dates;
               // `${years}-${months}-${dates}(今天)`
             }
             setModel(_extends({}, modalObj, { name: name, duration: duration, time: _time }));
@@ -2510,7 +2525,7 @@ function userForeman() {
           var _years = new Date().getFullYear();
           var _months = new Date().getMonth() + 1;
           var _dates = new Date().getDate();
-          var _time2 = _years + '-' + _months + '-' + _dates + '(今天)';
+          var _time2 = _years + '-' + _months + '-' + _dates;
           setModel(_extends({}, modalObj, { duration: _duration, time: _time2 }));
           setTimeArr(_data);
           setProjectArr(res.data);
@@ -3087,15 +3102,22 @@ function userForeman() {
   var handleWageStandard = function handleWageStandard(type, e) {
     if (type == 'day') {
       var item = JSON.parse(JSON.stringify(wageStandard));
-      var dayAddWork = item.money / e;
+      var dayAddWork = item.money / e || 0;
       item[type] = e;
       item.dayAddWork = dayAddWork.toFixed(2) || 0;
+      console.log(item.dayAddWork, 'item.dayAddWork111');
       setWageStandard(item);
       return;
     }
     if (type === 'money') {
       var _item = JSON.parse(JSON.stringify(wageStandard));
-      var _dayAddWork = e / _item.day;
+      // const dayAddWork = e / item.day||0;
+      var _dayAddWork = void 0;
+      if (_item.day == 0) {
+        _dayAddWork = 0;
+      } else {
+        _dayAddWork = e / _item.day || 0;
+      }
       _item[type] = e;
       _item.dayAddWork = _dayAddWork.toFixed(2) || 0;
       setWageStandard(_item);
@@ -4198,7 +4220,7 @@ function userForeman() {
         var dates = new Date().getDate();
         console.log(_data8);
         if (_data8[0].year == years && _data8[0].month == months && _data8[0].date == dates) {
-          _time5 = years + '-' + months + '-' + dates + '(今天)';
+          _time5 = years + '-' + months + '-' + dates;
         } else {
           _time5 = _data8[0].year + '-' + _data8[0].month + '-' + _data8[0].date;
         }

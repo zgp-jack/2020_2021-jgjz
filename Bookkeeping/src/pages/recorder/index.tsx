@@ -14,6 +14,7 @@ export default function Recorder() {
     const type = Taro.getStorageSync(Type)
     // console.log(userInfo,'userInfouserInfo')
     // console.log(typeof userInfo.type,'xxxx')
+    
     // 有type就是班长 1 
     if (type === 1){
       Taro.setNavigationBarTitle({
@@ -28,7 +29,7 @@ export default function Recorder() {
   },[])
   return(
     <View>
-      <Foreman />
+      <Foreman/>
     </View>
   )
 }

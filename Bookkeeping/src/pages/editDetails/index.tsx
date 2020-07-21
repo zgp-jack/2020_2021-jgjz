@@ -150,7 +150,7 @@ export default function EditDetails() {
           }
           data.type = parseInt(res.data.overtime_type)+1;
           for (let i = 0; i < data.data.length;i++){
-            if(data.data[i].id == parseInt(res.data.type)){
+            if(data.data[i].id == (res.data.type =='0'?1:2)){
               data.data[i].click = true;
             }
           }
@@ -178,7 +178,6 @@ export default function EditDetails() {
           obj.unitNum = res.data.unit_num;
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
-
           setVal(obj);
           setWageStandard(data)
           // 设置数据上班时长数据
@@ -557,6 +556,7 @@ export default function EditDetails() {
     const borrowingArr = JSON.parse(JSON.stringify(borrowing))
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
+    // 
     console.log(businessTypes,'businessTypes')
     let type;
     if (businessTypes === 3){
@@ -565,7 +565,42 @@ export default function EditDetails() {
           type = borrowingArr[i].id
         }
       }
+    }else{
+      type = businessTypes;
     }
+    // 工资标准
+    // const Item = JSON.parse(JSON.stringify(wageStandard));
+    // 时间
+    console.log(val,'val')
+    console.log(timeArr,'timaeArr')
+    console.log(addWorkArr,'addWorkArr')
+    let times: number = 0, work_time_hour = 0;
+    timeArr.map(v => {
+      if (v.click) {
+        if (v.num) {
+          if (v.id !== 4) {
+            times = v.num;
+            work_time_hour = data.work * v.num;
+          } else {
+            console.log(data.work);
+            console.log(v.num);
+            times = 1 / data.work * v.num;
+            work_time_hour = v.num;
+          }
+        }
+      }
+    })
+    // 加班时间
+    let overtime: number = 0;
+    addWorkArr.map(v => {
+      if (v.click) {
+        if (v.num) {
+          overtime = v.num;
+        }
+      }
+    })
+    console.log(times, work_time_hour, overtime);
+    // return;
     // 图片
     let params = {
       money: data.money,
@@ -573,6 +608,9 @@ export default function EditDetails() {
       type,
       img_url,
       id,
+      overtime,
+      work_time: times,
+      work_time_hour,
     }
     updateBusinessAction(params).then(res=>{
       console.log(res);

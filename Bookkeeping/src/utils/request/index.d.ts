@@ -49,6 +49,7 @@ export interface bkIndexTypeData {
   count_is_new:string,
   earliest_month:string,
   setLasted_business_identity:number,
+  lasted_business_identity:string,
 }
 
 export interface bkIndexTypeDataList {

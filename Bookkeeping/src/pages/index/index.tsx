@@ -95,7 +95,7 @@ export default function Index() {
   // 工人转换提示
   const [prompt, setPrompt] = useState<boolean>(false)
   // 工人上次身份
-  const [lasted_business_identity, setLasted_business_identity]=useState<number>(0)
+  const [lasted_business_identity, setLasted_business_identity]=useState<string>('')
   // 身份弹框不再提醒
   const [neverPrompt, setNeverPrompt] = useState<boolean>(false)
   const getDates = ()=>{
@@ -324,8 +324,9 @@ export default function Index() {
               setList([])
             }
           }
+          console.log(3123123)
           // 存在缓存里用来判断是否新增时间
-          setLasted_business_identity(res.data.setLasted_business_identity);
+          setLasted_business_identity(res.data.lasted_business_identity);
           // 获取信息
           // 判断是班组长的时候出现弹框
           let type = Taro.getStorageSync(Type);
@@ -383,14 +384,14 @@ export default function Index() {
     //     setTips(true)
     //     return;
     // }else{
-      let msg = e === 1 ? '开始为自己记工吧' :'开始为工人记工吧'
+      let msg = e === 2 ? '开始为自己记工吧' :'开始为工人记工吧'
       setType(e);
       Taro.setStorageSync(Type, e);
       if(!type){
         Msg(msg)
         setTimeout(()=>{
           getData();
-        },500)
+        },1000)
       }
       // return;
     // }
@@ -518,7 +519,11 @@ export default function Index() {
   // 跳流水
   const handleJump = (url:string,state?:boolean)=>{
     if(state){
-      if (lasted_business_identity !== 0 && type != lasted_business_identity && !neverPrompt){
+      // 判断不是0 然后与当前身份不同就是提示
+      console.log(type,'type')
+      console.log(lasted_business_identity,'lasted_business_identity')
+
+      if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt){
         console.log(type,'type');
         console.log(lasted_business_identity,'lasted_business_identity')
           setTips(true)
@@ -605,7 +610,7 @@ export default function Index() {
           </View>
           <View className='btnBox'>
             <View className='btn'>
-              {!item || (item && item.business_list.data.length === 0) ? <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`,true)}> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`,true)}> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
+              {!item || (item && item.business_list.data.length === 0) ? <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`, true)}> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`,true)}> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
               <View className='notepad-Icon'><Image className='notepad-Icon-iamge' src={`${IMGCDNURL}notepad.png`}/></View>
