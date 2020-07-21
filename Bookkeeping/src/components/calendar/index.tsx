@@ -522,9 +522,10 @@ export default function CalendarModal({
                 >
                 <View>{v.date}</View>
                 <View className='lunarCalendarItem'>{v.lunarCalendarItem}</View>
-                {recorderType === 3 && <View className='noCheckbox'></View>
-                }
-                {recorderType !== 3 && <View>
+                {/* {recorderType === 3 && <View className='noCheckbox'></View>
+                } */}
+                {/* {recorderType !== 3 &&  */}
+                <View>
                   {!v.next && !v.up && <View><Checkbox className={classnames({
                     'checkbox': !v.click,
                     'checkbox-click': v.click,
@@ -535,7 +536,8 @@ export default function CalendarModal({
                     color='rgba(253, 120, 13, 1)'
                   /></View>
                   }
-                </View>}
+                </View>
+                {/* } */}
               </View>
             ))}
           </View>

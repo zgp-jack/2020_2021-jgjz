@@ -402,38 +402,38 @@ export default function userForeman() {
     const calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
     const reduxItem = JSON.parse(JSON.stringify(reduxTime));
     const arrList = JSON.parse(JSON.stringify(arr));
-    if (recorderType === 3) {
-      if (arrList.length === 0) {
-        for (let i = 0; i < calendarDaysArr.length; i++) {
-          if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year) {
-            calendarDaysArr[i].click = true
-            setArr([calendarDaysArr[i]])
-          }
-        }
-        setCalendarDays(calendarDaysArr);
-        return;
-      } else {
-        for (let i = 0; i < arrList.length; i++) {
-          if (v.date == arrList[i].date && v.month == arrList[i].month && v.year == arrList[i].year) {
-            for (let j = 0; j < calendarDaysArr.length; j++) {
-              calendarDaysArr[j].click = false;
-            }
-            setCalendarDays(calendarDaysArr);
-            setArr([])
-          } else {
-            for (let i = 0; i < calendarDaysArr.length; i++) {
-              calendarDaysArr[i].click = false;
-              if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year) {
-                calendarDaysArr[i].click = true
-                setArr([calendarDaysArr[i]])
-              }
-            }
-            setCalendarDays(calendarDaysArr);
-          }
-        }
-        return;
-      }
-    }
+    // if (recorderType === 3) {
+    //   if (arrList.length === 0) {
+    //     for (let i = 0; i < calendarDaysArr.length; i++) {
+    //       if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year) {
+    //         calendarDaysArr[i].click = true
+    //         setArr([calendarDaysArr[i]])
+    //       }
+    //     }
+    //     setCalendarDays(calendarDaysArr);
+    //     return;
+    //   } else {
+    //     for (let i = 0; i < arrList.length; i++) {
+    //       if (v.date == arrList[i].date && v.month == arrList[i].month && v.year == arrList[i].year) {
+    //         for (let j = 0; j < calendarDaysArr.length; j++) {
+    //           calendarDaysArr[j].click = false;
+    //         }
+    //         setCalendarDays(calendarDaysArr);
+    //         setArr([])
+    //       } else {
+    //         for (let i = 0; i < calendarDaysArr.length; i++) {
+    //           calendarDaysArr[i].click = false;
+    //           if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year) {
+    //             calendarDaysArr[i].click = true
+    //             setArr([calendarDaysArr[i]])
+    //           }
+    //         }
+    //         setCalendarDays(calendarDaysArr);
+    //       }
+    //     }
+    //     return;
+    //   }
+    // }
     for (let i = 0; i < calendarDaysArr.length; i++) {
       // 判断是同一天就设置点击
       if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year && !v.up && !v.next) {
@@ -2205,8 +2205,10 @@ export default function userForeman() {
   }
   // 删除项目
   const handleDelProject = (v)=>{
+    console.log(v);
+    const ids = v.group_id+','+v.id;
     let params = {
-      ids:v.id
+      ids,
     }
     const name = JSON.parse(JSON.stringify(foremanTitle));
     const data = JSON.parse(JSON.stringify(model));
@@ -2482,15 +2484,15 @@ export default function userForeman() {
   }
   // 日历确定
   const handleCalendarSub = ()=>{
-    if (recorderType === 3){
-      const data = JSON.parse(JSON.stringify(arr));
-      let time ;
-      if(data.length>0){
-        time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date);
-      }
-      setModel({ ...model, time: time });
-      setCalendarModalDisplay(false);
-    }else{
+    // if (recorderType === 3){
+    //   const data = JSON.parse(JSON.stringify(arr));
+    //   let time ;
+    //   if(data.length>0){
+    //     time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date);
+    //   }
+    //   setModel({ ...model, time: time });
+    //   setCalendarModalDisplay(false);
+    // }else{
       const data = JSON.parse(JSON.stringify(clickData));
       let time ;
       console.log(data);
@@ -2511,7 +2513,7 @@ export default function userForeman() {
       setModel({ ...model, time: time});
       setCalendarModalDisplay(false);
       setTimeData(data);
-    }
+    // }
   }
   // 左
   const onScrollToUpper = ()=>{

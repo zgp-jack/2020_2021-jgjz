@@ -148,9 +148,10 @@ export default function EditDetails() {
           }else{
             data.dayAddWork =0
           }
-          data.type = parseInt(res.data.overtime_type)+1;
+          data.type = parseInt(res.data.overtime_type);
+          console.log(data.type,'xxxx111')
           for (let i = 0; i < data.data.length;i++){
-            if(data.data[i].id == (res.data.type =='0'?1:2)){
+          if (data.data[i].id == res.data.overtime_type){
               data.data[i].click = true;
             }
           }
@@ -179,6 +180,7 @@ export default function EditDetails() {
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
           setVal(obj);
+          console.log(data,'3213213')
           setWageStandard(data)
           // 设置数据上班时长数据
           const timeArrData = JSON.parse(JSON.stringify(timeArr));
@@ -347,14 +349,50 @@ export default function EditDetails() {
     const addWorkNum = data.addWork;
     // 加班时间
     const dayNum = data.day;
-    // 上班时间
+    if (workNum === 0) {
+      Msg('上班标准必须必须大于0')
+      return;
+    }
+    // 每个工多少钱提示
+    if (moneyNum === 0) {
+      Msg('每个工工钱必须大于0')
+      return;
+    }
+    console.log(data.type,'xxx')
+    //按天数 一个工
+    if (data.type === 2) {
+      if (data.day == 0) {
+        Msg('一个工必须大于0小时')
+        return;
+      }
+    }
+    if (data.type === 1) {
+      if (data.addWork == 0) {
+        Msg('每小时加班金额必须大于0')
+        return;
+      }
+    }
     let time = 0;
     for (let i = 0; i < timeArrs.length; i++) {
       if (timeArrs[i].click) {
-        time = timeArrs[i].num;
+        // 选择工
+        if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
+          time = 1 / workNum * timeArrs[i].num
+          // 选择时间
+        } else {
+          if (timeArrs[i].id == 1) {
+            // 等于模板时间
+            time = workNum;
+          } else if (timeArrs[i].id == 2) {
+            // 等于模板时间的一半
+            time = workNum / 2;
+          } else if (timeArrs[i].id == 3) {
+            // 等于0 
+            time = 0;
+          }
+        }
       }
     }
-    console.log(time, 'time')
     // 加班时间
     let addTime = 0;
     for (let i = 0; i < addWorkArrs.length; i++) {
@@ -363,25 +401,65 @@ export default function EditDetails() {
       }
     }
     //工资标准 每个工多少钱/上班标准 * 上班时长  判断加班是按小时算还是i按天算
-    let total;
+    let total = 0;
+    console.log(moneyNum,'moneyNum')
+    console.log(workNum, 'workNum')
+    console.log(time, 'time')
+    console.log(addWorkNum,'addWorkNum')
+    console.log(addTime, 'moneyNum')
+    console.log(dayNum, 'dayNum')
     if (data.type === 1) {
       // 按小时算 加班小时* 模板加班金额
-      console.log(moneyNum,'moneyNum');
-      console.log(workNum,'workNum');
-      console.log(time,'time')
-      console.log((moneyNum / workNum) * time,'xxxx')
-      console.log(addWorkNum * addTime, 'addWorkNum * addTime')
-      total = (moneyNum / workNum) * time + addWorkNum * addTime;
+      total = (parseInt(moneyNum) / parseInt(workNum)) * time + parseInt(addWorkNum) * addTime;
     } else {
       // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
-      total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);
+      total = parseInt(moneyNum) / parseInt(workNum) * time + (parseInt(moneyNum) / parseInt(dayNum) * addTime);
     }
-    console.log(total, 'xxx')
-    const num = total.toFixed(2);
-    console.log(num,'num')
-    // setModel({ ...model, workersWages: num });
+    // const num = total.toFixed(2);
+    let num: any = 0;
+    // if (num && !Object.is(num, NaN)){
+    num = total.toFixed(2);
+    console.log(num)
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
+      // }
+    // // 上班时间
+    // let time = 0;
+    // for (let i = 0; i < timeArrs.length; i++) {
+    //   if (timeArrs[i].click) {
+    //     time = timeArrs[i].num;
+    //   }
+    // }
+    // console.log(time, 'time')
+    // // 加班时间
+    // let addTime = 0;
+    // for (let i = 0; i < addWorkArrs.length; i++) {
+    //   if (addWorkArrs[i].click) {
+    //     addTime = addWorkArrs[i].num
+    //   }
+    // }
+
+    //工资标准 每个工多少钱/上班标准 * 上班时长  判断加班是按小时算还是i按天算
+    // let total;
+    // if (data.type === 1) {
+    //   // 按小时算 加班小时* 模板加班金额
+    //   console.log(moneyNum,'moneyNum');
+    //   console.log(workNum,'workNum');
+    //   console.log(time,'time')
+    //   console.log((moneyNum / workNum) * time,'xxxx')
+    //   console.log(addWorkNum * addTime, 'addWorkNum * addTime')
+    //   total = (moneyNum / workNum) * time + addWorkNum * addTime;
+    // } else {
+    //   // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
+    //   total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);
+    // }
+    // console.log(total, 'xxx')
+    // const num = total.toFixed(2);
+    // console.log(num,'num')
+    // return;
+    // // setModel({ ...model, workersWages: num });
+    // setVal({ ...valData, wages:num})
+    // setWageStandardDisplay(false);
     // const data = JSON.parse(JSON.stringify(wageStandard));
     // const valData = JSON.parse(JSON.stringify(val));
     // // valData.
@@ -470,6 +548,9 @@ export default function EditDetails() {
   const handleWorkOvertimeOk = ()=>{
     const data: any = timeArr.filter(v => v.click);
     const dataList: any = addWorkArr.filter(v => v.click);
+    const item = JSON.parse(JSON.stringify(wageStandard));
+    console.log(item);
+    return;
     let title;
     if (data || dataList) {
       if (data.length > 0) {
@@ -502,17 +583,29 @@ export default function EditDetails() {
       }
     }
     const standardObj = JSON.parse(JSON.stringify(standard));
-    console.log(standardObj,'xxx')
+    // console.log(standardObj,'xxx')
     let wages;
     // 计算
-    console.log(standardObj.money);
-    console.log(standardObj.worktime_define);
-    console.log(standardObj.work_time);
-    if (standardObj.overtime_type  == '1'){
+    // console.log(standardObj.money);
+    // console.log(standardObj.worktime_define);
+    // console.log(standardObj.work_time);
+    // console.log()
+    console.log(item.type,'typesdasdsada')
+    if (item.type  == '1'){
       console.log('等于1')
+      console.log(standardObj.money,'standardObj.money1');
+      console.log(standardObj.worktime_define,'standardObj.worktime_define1)');
+      console.log(standardObj.work_time,'standardObj.work_time');
+      console.log(standardObj.worker_overtime,'standardObj.worker_overtime');
+      console.log(standardObj.overtime_money,'standardObj.overtime_money')
       wages = (parseInt(standardObj.money) / parseInt(standardObj.worktime_define) * parseInt(standardObj.work_time)) + parseInt(standardObj.worker_overtime) * parseInt(standardObj.overtime_money)
     }else{
       console.log('等于2')
+      console.log(standardObj.money, 'standardObj.money');
+      console.log(standardObj.worktime_define, 'standardObj.worktime_define)');
+      console.log(standardObj.work_time, 'standardObj.work_time');
+      console.log(standardObj.worker_overtime, 'standardObj.worker_overtime');
+      console.log(standardObj.overtime_money, 'standardObj.overtime_money')
       wages = (parseInt(standardObj.money) / parseInt(standardObj.worktime_define) * parseInt(standardObj.work_time)) + ((parseInt(standardObj.money) / parseInt(standardObj.worker_overtime)) * parseInt(standardObj.overtime))
     }
     console.log(wages);
@@ -553,21 +646,26 @@ export default function EditDetails() {
   const handlesub = ()=>{
     const data = JSON.parse(JSON.stringify(val));
     const businessTypes = JSON.parse(JSON.stringify(businessType));
-    const borrowingArr = JSON.parse(JSON.stringify(borrowing))
+    const borrowingArr = JSON.parse(JSON.stringify(borrowing.item))
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
     // 
     console.log(businessTypes,'businessTypes')
+    console.log(borrowingArr,'borrowingArr');
     let type;
-    if (businessTypes === 3){
+    if (businessTypes == 3){
+      console.log(32132131)
       for (let i = 0; i < borrowingArr.length;i++){
+        console.log(borrowingArr[i],'111')
         if(borrowingArr[i].click){
+          console.log(borrowingArr[i].id,'x')
           type = borrowingArr[i].id
         }
       }
     }else{
       type = businessTypes;
     }
+    console.log(type,'type')
     // 工资标准
     // const Item = JSON.parse(JSON.stringify(wageStandard));
     // 时间
@@ -611,11 +709,15 @@ export default function EditDetails() {
       overtime,
       work_time: times,
       work_time_hour,
+      note: val.note,
     }
     updateBusinessAction(params).then(res=>{
       console.log(res);
       if(res.code === 200){
-        Taro.navigateBack();
+        Msg(res.msg);
+        setTimeout(()=>{
+          Taro.navigateBack({delta:2});
+        },1000)
       }else{
         Msg(res.msg)
       }

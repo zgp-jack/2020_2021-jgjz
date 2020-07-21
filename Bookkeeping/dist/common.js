@@ -2152,53 +2152,53 @@ function userForeman() {
     var calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
     var reduxItem = JSON.parse(JSON.stringify(reduxTime));
     var arrList = JSON.parse(JSON.stringify(arr));
-    if (recorderType === 3) {
-      if (arrList.length === 0) {
-        for (var i = 0; i < calendarDaysArr.length; i++) {
-          if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year) {
-            calendarDaysArr[i].click = true;
-            setArr([calendarDaysArr[i]]);
-          }
-        }
-        setCalendarDays(calendarDaysArr);
-        return;
-      } else {
-        for (var _i3 = 0; _i3 < arrList.length; _i3++) {
-          if (v.date == arrList[_i3].date && v.month == arrList[_i3].month && v.year == arrList[_i3].year) {
-            for (var j = 0; j < calendarDaysArr.length; j++) {
-              calendarDaysArr[j].click = false;
-            }
-            setCalendarDays(calendarDaysArr);
-            setArr([]);
-          } else {
-            for (var _i4 = 0; _i4 < calendarDaysArr.length; _i4++) {
-              calendarDaysArr[_i4].click = false;
-              if (v.date == calendarDaysArr[_i4].date && v.month == calendarDaysArr[_i4].month && v.year == calendarDaysArr[_i4].year) {
-                calendarDaysArr[_i4].click = true;
-                setArr([calendarDaysArr[_i4]]);
-              }
-            }
-            setCalendarDays(calendarDaysArr);
-          }
-        }
-        return;
-      }
-    }
-    for (var _i5 = 0; _i5 < calendarDaysArr.length; _i5++) {
+    // if (recorderType === 3) {
+    //   if (arrList.length === 0) {
+    //     for (let i = 0; i < calendarDaysArr.length; i++) {
+    //       if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year) {
+    //         calendarDaysArr[i].click = true
+    //         setArr([calendarDaysArr[i]])
+    //       }
+    //     }
+    //     setCalendarDays(calendarDaysArr);
+    //     return;
+    //   } else {
+    //     for (let i = 0; i < arrList.length; i++) {
+    //       if (v.date == arrList[i].date && v.month == arrList[i].month && v.year == arrList[i].year) {
+    //         for (let j = 0; j < calendarDaysArr.length; j++) {
+    //           calendarDaysArr[j].click = false;
+    //         }
+    //         setCalendarDays(calendarDaysArr);
+    //         setArr([])
+    //       } else {
+    //         for (let i = 0; i < calendarDaysArr.length; i++) {
+    //           calendarDaysArr[i].click = false;
+    //           if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year) {
+    //             calendarDaysArr[i].click = true
+    //             setArr([calendarDaysArr[i]])
+    //           }
+    //         }
+    //         setCalendarDays(calendarDaysArr);
+    //       }
+    //     }
+    //     return;
+    //   }
+    // }
+    for (var i = 0; i < calendarDaysArr.length; i++) {
       // 判断是同一天就设置点击
-      if (v.date == calendarDaysArr[_i5].date && v.month == calendarDaysArr[_i5].month && v.year == calendarDaysArr[_i5].year && !v.up && !v.next) {
-        calendarDaysArr[_i5].click = !calendarDaysArr[_i5].click;
+      if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year && !v.up && !v.next) {
+        calendarDaysArr[i].click = !calendarDaysArr[i].click;
         var data = [];
-        for (var _i6 = 0; _i6 < calendarDaysArr.length; _i6++) {
-          if (calendarDaysArr[_i6].click) {
-            data.push(calendarDaysArr[_i6]);
+        for (var _i3 = 0; _i3 < calendarDaysArr.length; _i3++) {
+          if (calendarDaysArr[_i3].click) {
+            data.push(calendarDaysArr[_i3]);
           }
         }
         if (reduxItem.length > 0) {
-          for (var _i7 = 0; _i7 < reduxItem.length; _i7++) {
-            for (var _j = 0; _j < data.length; _j++) {
-              if (!(reduxItem[_i7].year === data[_j].year && reduxItem[_i7].month === data[_j].month && reduxItem[_i7].day === data[_j].day)) {
-                reduxItem.push(data[_i7]);
+          for (var _i4 = 0; _i4 < reduxItem.length; _i4++) {
+            for (var j = 0; j < data.length; j++) {
+              if (!(reduxItem[_i4].year === data[j].year && reduxItem[_i4].month === data[j].month && reduxItem[_i4].day === data[j].day)) {
+                reduxItem.push(data[_i4]);
               }
             }
           }
@@ -2216,12 +2216,12 @@ function userForeman() {
         // 判断向上还是向下
         // 向上
         if (v.up) {
-          var _date = new Date(calendarDaysArr[_i5].year, calendarDaysArr[_i5].month - 1, calendarDaysArr[_i5].date);
+          var _date = new Date(calendarDaysArr[i].year, calendarDaysArr[i].month - 1, calendarDaysArr[i].date);
           getMonthDaysCurrent(_date);
           return;
           // 向下
         } else if (v.next) {
-          var _date2 = new Date(calendarDaysArr[_i5].year, calendarDaysArr[_i5].month + 1, calendarDaysArr[_i5].date);
+          var _date2 = new Date(calendarDaysArr[i].year, calendarDaysArr[i].month + 1, calendarDaysArr[i].date);
           getMonthDaysCurrent(_date2);
           return;
         }
@@ -2263,8 +2263,8 @@ function userForeman() {
       });
     }
     // 当月显示的日期
-    for (var _i8 = 1; _i8 <= days; _i8++) {
-      var _lunarCalendarItem = sloarToLunar(year, month, _i8);
+    for (var _i5 = 1; _i5 <= days; _i5++) {
+      var _lunarCalendarItem = sloarToLunar(year, month, _i5);
       // 获取现在的时间的年月日
       var years = new Date().getFullYear();
       var months = new Date().getMonth() + 1;
@@ -2272,19 +2272,19 @@ function userForeman() {
       calendarDaysArr.push({
         'year': year,
         'month': month,
-        'date': _i8,
-        'day': new Date(year, month - 1, _i8).getDay(),
+        'date': _i5,
+        'day': new Date(year, month - 1, _i5).getDay(),
         'current': true,
         'lunarCalendarItem': _lunarCalendarItem.lunarDay,
-        'selected': _i8 == date,
-        'stop': years <= year && (months == month && dates < _i8 || months < month),
-        'click': years <= year && months == month && dates == _i8
+        'selected': _i5 == date,
+        'stop': years <= year && (months == month && dates < _i5 || months < month),
+        'click': years <= year && months == month && dates == _i5
         // 'next': dates < date
       });
     }
     // 下个月显示的天数及日期
-    for (var _i9 = 1; _i9 < 7 - lastDay; _i9++) {
-      var _date4 = new Date(year, month, _i9);
+    for (var _i6 = 1; _i6 < 7 - lastDay; _i6++) {
+      var _date4 = new Date(year, month, _i6);
       var _lunarCalendarItem2 = sloarToLunar(_date4.getFullYear(), _date4.getMonth() + 1, _date4.getDate());
       calendarDaysArr.push({
         'year': _date4.getFullYear(),
@@ -2300,10 +2300,10 @@ function userForeman() {
     // 设置内容
     if (data) {
       if (data.length > 0) {
-        for (var _i10 = 0; _i10 < calendarDaysArr.length; _i10++) {
+        for (var _i7 = 0; _i7 < calendarDaysArr.length; _i7++) {
           for (var j = 0; j < data[0].length; j++) {
-            if (calendarDaysArr[_i10].year == data[0][j].year && calendarDaysArr[_i10].month == data[0][j].month && calendarDaysArr[_i10].day == data[0][j].day && calendarDaysArr[_i10].lunarCalendarItem == data[0][j].lunarCalendarItem) {
-              calendarDaysArr[_i10].click = true;
+            if (calendarDaysArr[_i7].year == data[0][j].year && calendarDaysArr[_i7].month == data[0][j].month && calendarDaysArr[_i7].day == data[0][j].day && calendarDaysArr[_i7].lunarCalendarItem == data[0][j].lunarCalendarItem) {
+              calendarDaysArr[_i7].click = true;
             }
           }
         }
@@ -2311,9 +2311,9 @@ function userForeman() {
     }
     // 第一次设置值进去
     var dataItme = [];
-    for (var _i11 = 0; _i11 < calendarDaysArr.length; _i11++) {
-      if (calendarDaysArr[_i11].click) {
-        dataItme.push(calendarDaysArr[_i11]);
+    for (var _i8 = 0; _i8 < calendarDaysArr.length; _i8++) {
+      if (calendarDaysArr[_i8].click) {
+        dataItme.push(calendarDaysArr[_i8]);
       }
     }
     setTimeData(dataItme);
@@ -2504,10 +2504,10 @@ function userForeman() {
             setProjectArr(res.data);
           } else {
             if (res.data && res.data.length > 0) {
-              for (var _i12 = 0; _i12 < res.data.length; _i12++) {
+              for (var _i9 = 0; _i9 < res.data.length; _i9++) {
                 // res.data[0].click = true;
-                if (groupName === res.data[_i12].name) {
-                  res.data[_i12].click = true;
+                if (groupName === res.data[_i9].name) {
+                  res.data[_i9].click = true;
                 }
               }
             } else {
@@ -2629,9 +2629,9 @@ function userForeman() {
           if (val === 1) {
             if (dataItem) {
               // 根据姓名判断在那个位置push进去
-              for (var _i13 = 0; _i13 < res.data.length; _i13++) {
-                if (data.name_py === res.data[_i13].name_py) {
-                  res.data[_i13].list.push(data);
+              for (var _i10 = 0; _i10 < res.data.length; _i10++) {
+                if (data.name_py === res.data[_i10].name_py) {
+                  res.data[_i10].list.push(data);
                 }
               }
             }
@@ -2639,9 +2639,9 @@ function userForeman() {
           } else {
             console.log(3123131);
             // 选择另一个项目的情况
-            for (var _i14 = 0; _i14 < _arr.length; _i14++) {
-              if (_arr[_i14].id == obj.id) {
-                _arr.splice(_i14, 1);
+            for (var _i11 = 0; _i11 < _arr.length; _i11++) {
+              if (_arr[_i11].id == obj.id) {
+                _arr.splice(_i11, 1);
               }
             }
             console.log(groupInfos, [obj].concat(_arr), 'groupInfos, [obj,...arr]');
@@ -2662,9 +2662,9 @@ function userForeman() {
         // 存员工redux
         // 设置员工
         var arrDate = [];
-        for (var _i15 = 0; _i15 < res.data.length; _i15++) {
-          for (var _j2 = 0; _j2 < res.data[_i15].list.length; _j2++) {
-            arrDate.push(res.data[_i15].list[_j2]);
+        for (var _i12 = 0; _i12 < res.data.length; _i12++) {
+          for (var _j = 0; _j < res.data[_i12].list.length; _j++) {
+            arrDate.push(res.data[_i12].list[_j]);
           }
         }
         // setWorkerItem(arr);
@@ -2870,9 +2870,9 @@ function userForeman() {
       }
       // 加班时间
       var addTime = 0;
-      for (var _i16 = 0; _i16 < addWorkArrs.length; _i16++) {
-        if (addWorkArrs[_i16].click) {
-          addTime = addWorkArrs[_i16].num;
+      for (var _i13 = 0; _i13 < addWorkArrs.length; _i13++) {
+        if (addWorkArrs[_i13].click) {
+          addTime = addWorkArrs[_i13].num;
         }
       }
       var total = void 0;
@@ -3198,8 +3198,8 @@ function userForeman() {
       }
     } else {
       if (foreman.length > 0) {
-        for (var _i17 = 0; _i17 < foreman.length; _i17++) {
-          workers.push(foreman[_i17].id);
+        for (var _i14 = 0; _i14 < foreman.length; _i14++) {
+          workers.push(foreman[_i14].id);
         }
       }
     }
@@ -3241,9 +3241,9 @@ function userForeman() {
     } else if (tabData.id == 2) {
       // 按量
       var itemType = void 0;
-      for (var _i18 = 0; _i18 < contractorArr.item.length; _i18++) {
-        if (contractorArr.item[_i18].click) {
-          itemType = contractorArr.item[_i18].id;
+      for (var _i15 = 0; _i15 < contractorArr.item.length; _i15++) {
+        if (contractorArr.item[_i15].click) {
+          itemType = contractorArr.item[_i15].id;
         }
       }
       // 按量
@@ -3392,11 +3392,11 @@ function userForeman() {
                       var addItmeArr = [{ id: 1, name: '无加班', click: false, num: 0 }, { id: 2, name: '0.0小时', click: false, num: 0 }];
                       // 日历
                       var calendar = JSON.parse(JSON.stringify(calendarDays));
-                      for (var _i19 = 0; _i19 < calendar.length; _i19++) {
-                        calendar[_i19].click = false;
+                      for (var _i16 = 0; _i16 < calendar.length; _i16++) {
+                        calendar[_i16].click = false;
                       }
-                      for (var _i20 = 0; _i20 < workerItemArr.length; _i20++) {
-                        workerItemArr[_i20].click = false;
+                      for (var _i17 = 0; _i17 < workerItemArr.length; _i17++) {
+                        workerItemArr[_i17].click = false;
                       }
                       setWorkerItem(workerItemArr);
                       setAddWorkArr(addItmeArr);
@@ -3500,11 +3500,11 @@ function userForeman() {
                   var addItmeArr = [{ id: 1, name: '无加班', click: false, num: 0 }, { id: 2, name: '0.0小时', click: false, num: 0 }];
                   // 日历
                   var calendar = JSON.parse(JSON.stringify(calendarDays));
-                  for (var _i21 = 0; _i21 < calendar.length; _i21++) {
-                    calendar[_i21].click = false;
+                  for (var _i18 = 0; _i18 < calendar.length; _i18++) {
+                    calendar[_i18].click = false;
                   }
-                  for (var _i22 = 0; _i22 < workerItemArr.length; _i22++) {
-                    workerItemArr[_i22].click = false;
+                  for (var _i19 = 0; _i19 < workerItemArr.length; _i19++) {
+                    workerItemArr[_i19].click = false;
                   }
                   setWorkerItem(workerItemArr);
                   setAddWorkArr(addItmeArr);
@@ -3570,11 +3570,11 @@ function userForeman() {
             var addItmeArr = [{ id: 1, name: '无加班', click: false, num: 0 }, { id: 2, name: '0.0小时', click: false, num: 0 }];
             // 日历
             var calendar = JSON.parse(JSON.stringify(calendarDays));
-            for (var _i23 = 0; _i23 < calendar.length; _i23++) {
-              calendar[_i23].click = false;
+            for (var _i20 = 0; _i20 < calendar.length; _i20++) {
+              calendar[_i20].click = false;
             }
-            for (var _i24 = 0; _i24 < workerItemArr.length; _i24++) {
-              workerItemArr[_i24].click = false;
+            for (var _i21 = 0; _i21 < workerItemArr.length; _i21++) {
+              workerItemArr[_i21].click = false;
             }
             setWorkerItem(workerItemArr);
             setAddWorkArr(addItmeArr);
@@ -3744,9 +3744,9 @@ function userForeman() {
     }
     // 加班时间
     var addTime = 0;
-    for (var _i25 = 0; _i25 < addWorkArrs.length; _i25++) {
-      if (addWorkArrs[_i25].click) {
-        addTime = addWorkArrs[_i25].num;
+    for (var _i22 = 0; _i22 < addWorkArrs.length; _i22++) {
+      if (addWorkArrs[_i22].click) {
+        addTime = addWorkArrs[_i22].num;
       }
     }
     // 获取
@@ -3922,8 +3922,10 @@ function userForeman() {
   };
   // 删除项目
   var handleDelProject = function handleDelProject(v) {
+    console.log(v);
+    var ids = v.group_id + ',' + v.id;
     var params = {
-      ids: v.id
+      ids: ids
     };
     var name = JSON.parse(JSON.stringify(foremanTitle));
     var data = JSON.parse(JSON.stringify(model));
@@ -4005,11 +4007,11 @@ function userForeman() {
       if (res.code === 200) {
         // // 给设置模板的设置为已经设置模板
         var data = JSON.parse(JSON.stringify(workerItem));
-        for (var _i26 = 0; _i26 < data.length; _i26++) {
+        for (var _i23 = 0; _i23 < data.length; _i23++) {
           for (var j = 0; j < worker_ids.length; j++) {
-            if (data[_i26].id == worker_ids[j]) {
-              data[_i26].set = true;
-              data[_i26].del = false;
+            if (data[_i23].id == worker_ids[j]) {
+              data[_i23].set = true;
+              data[_i23].del = false;
             }
           }
         }
@@ -4031,9 +4033,9 @@ function userForeman() {
       }
     }
     var clickData = [];
-    for (var _i27 = 0; _i27 < data.length; _i27++) {
-      if (data[_i27].click) {
-        clickData.push(data[_i27]);
+    for (var _i24 = 0; _i24 < data.length; _i24++) {
+      if (data[_i24].click) {
+        clickData.push(data[_i24]);
       }
     }
     setClickModalNum(clickData.length);
@@ -4070,28 +4072,28 @@ function userForeman() {
         }
       }
       var numData = [];
-      for (var _i28 = 0; _i28 < data.length; _i28++) {
-        if (data[_i28].click) {
-          numData.push(data[_i28]);
+      for (var _i25 = 0; _i25 < data.length; _i25++) {
+        if (data[_i25].click) {
+          numData.push(data[_i25]);
         }
       }
       setClickNum(numData.length);
       setWorkerItem(data);
       // return;
     } else {
-      for (var _i29 = 0; _i29 < data.length; _i29++) {
-        if (v.id === data[_i29].id) {
+      for (var _i26 = 0; _i26 < data.length; _i26++) {
+        if (v.id === data[_i26].id) {
           if (v.set) {
-            data[_i29].click = !data[_i29].click;
+            data[_i26].click = !data[_i26].click;
           } else {
             handleOpenWagesModal();
           }
         }
       }
       var _numData = [];
-      for (var _i30 = 0; _i30 < data.length; _i30++) {
-        if (data[_i30].click) {
-          _numData.push(data[_i30]);
+      for (var _i27 = 0; _i27 < data.length; _i27++) {
+        if (data[_i27].click) {
+          _numData.push(data[_i27]);
         }
       }
       setClickNum(_numData.length);
@@ -4110,10 +4112,10 @@ function userForeman() {
         data[i].click = true;
       }
     } else {
-      for (var _i31 = 0; _i31 < data.length; _i31++) {
-        if (data[_i31].set) {
-          Itme.push(data[_i31]);
-          data[_i31].click = true;
+      for (var _i28 = 0; _i28 < data.length; _i28++) {
+        if (data[_i28].set) {
+          Itme.push(data[_i28]);
+          data[_i28].click = true;
         } else {
           (0, _index3.default)('还有人未设置工资标准');
         }
@@ -4137,8 +4139,8 @@ function userForeman() {
       setCheckAll(true);
       setClickModalNum(data.length);
     } else {
-      for (var _i32 = 0; _i32 < data.length; _i32++) {
-        data[_i32].click = false;
+      for (var _i29 = 0; _i29 < data.length; _i29++) {
+        data[_i29].click = false;
       }
       ;
       setCheckAll(false);
@@ -4201,36 +4203,36 @@ function userForeman() {
   };
   // 日历确定
   var handleCalendarSub = function handleCalendarSub() {
-    if (recorderType === 3) {
-      var data = JSON.parse(JSON.stringify(arr));
-      var _time4 = void 0;
-      if (data.length > 0) {
-        _time4 = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date);
-      }
-      setModel(_extends({}, model, { time: _time4 }));
-      setCalendarModalDisplay(false);
-    } else {
-      var _data8 = JSON.parse(JSON.stringify(clickData));
-      var _time5 = void 0;
-      console.log(_data8);
-      if (_data8.length == 1) {
-        // const time = data[0].year+
-        var years = new Date().getFullYear();
-        var months = new Date().getMonth() + 1;
-        var dates = new Date().getDate();
-        console.log(_data8);
-        if (_data8[0].year == years && _data8[0].month == months && _data8[0].date == dates) {
-          _time5 = years + '-' + months + '-' + dates;
-        } else {
-          _time5 = _data8[0].year + '-' + _data8[0].month + '-' + _data8[0].date;
-        }
+    // if (recorderType === 3){
+    //   const data = JSON.parse(JSON.stringify(arr));
+    //   let time ;
+    //   if(data.length>0){
+    //     time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date);
+    //   }
+    //   setModel({ ...model, time: time });
+    //   setCalendarModalDisplay(false);
+    // }else{
+    var data = JSON.parse(JSON.stringify(clickData));
+    var time = void 0;
+    console.log(data);
+    if (data.length == 1) {
+      // const time = data[0].year+
+      var years = new Date().getFullYear();
+      var months = new Date().getMonth() + 1;
+      var dates = new Date().getDate();
+      console.log(data);
+      if (data[0].year == years && data[0].month == months && data[0].date == dates) {
+        time = years + '-' + months + '-' + dates;
       } else {
-        _time5 = _data8.length + '天';
+        time = data[0].year + '-' + data[0].month + '-' + data[0].date;
       }
-      setModel(_extends({}, model, { time: _time5 }));
-      setCalendarModalDisplay(false);
-      setTimeData(_data8);
+    } else {
+      time = data.length + '天';
     }
+    setModel(_extends({}, model, { time: time }));
+    setCalendarModalDisplay(false);
+    setTimeData(data);
+    // }
   };
   // 左
   var onScrollToUpper = function onScrollToUpper() {
