@@ -133,7 +133,10 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
                 Msg(resItem.msg)
               }else{
                 // worker_id = resItem.data.worker_id;
-                res.data.worker_id = resItem.data.worker_id;
+                // res.data.worker_id = resItem.data.worker_id;
+                let midData = Taro.getStorageSync(MidData);
+                midData.worker_id = res.data.worker_id;
+                Taro.setStorageSync(MidData, midData)
                 // Taro.setStorageSync(MidData, res.data)
                 Taro.setStorageSync(CreationTime, resItem.data.created_time)
               }
