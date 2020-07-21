@@ -8,7 +8,7 @@ interface PROPS {
   classname?: string
 }
 
-export default function WordsTotal({ total = 500, num = 0, classname = '' }: PROPS) {
+export default function WordsTotal({ total = 400, num = 0, classname = '' }: PROPS) {
   return (
     <View className={'words-total-box ' + classname}>{num}<Text>/{total}</Text></View>
   )

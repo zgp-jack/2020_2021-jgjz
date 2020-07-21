@@ -50,6 +50,7 @@ export default function FlowingWater() {
     }
     bkBusinessAction(params).then(res=>{
       if(res.code === 200){
+        console.log(res.data);
         if (res.data.data && res.data.data.length>0){
           for(let i =0 ;i<res.data.data.length;i++){
             const month = res.data.data[i].time.slice(0, 4) + '年' + res.data.data[i].time.slice(5, 7)+'月';
@@ -71,6 +72,8 @@ export default function FlowingWater() {
           }
           setData({item:res.data.data})
           dispatch(setFlowingWater(res.data))
+        }else{
+          setData({ item: [] })
         }
       }else{
         Msg(res.msg)
@@ -305,7 +308,7 @@ export default function FlowingWater() {
                       <View className='content-list-subclass-left'>
                             {isCheckOut && <View><Checkbox checked={val.checkClick} className='checkbox' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
                         <View className=''>
-                          <View>{val.workername||'-'}</View>
+                            <View>{val.workername || '-'} {val.note&&<Text className='icon'>备</Text>}</View>
                               <View className='content-list-subclass-left-title'>我在{val.group_info}对{val.workername || '-'}记了1笔
                               {val.business_type == '1' ? '记工' : (val.business_type == '2'?'包工':'借支') }
                               </View>

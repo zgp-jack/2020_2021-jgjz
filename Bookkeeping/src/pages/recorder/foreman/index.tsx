@@ -222,6 +222,20 @@ export default function Foreman() {
     setModel({ ...data, groupName: '', teamName:'' })
   }
   console.log(foremanTitle,'foremanTitle')
+  // 添加项目
+  const handleAddProjectList = ()=>{
+    // 判断大于十就能再添加项目饿了
+    if (projectArr.length>9){
+      // Msg('记工记账支持最多同时管理10个项目,请删除已结束项目,再添加新项目')
+      Taro.showModal({
+        title:'系统提示',
+        content:'记工记账支持最多同时管理10个项目，请删除已结束项目，再添加新项目。',
+        showCancel:false
+      })
+      return
+    }
+    setCreateProjectDisplay(true), setShow(false)
+  }
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -310,7 +324,7 @@ export default function Foreman() {
                   // onClick={()=>{}}
                     // onTouchEnd={onTouchEnd}
                     // onTouchStart={onTouchStart}
-                    onLongPress={handleOpenWagesModal}
+                    onLongPress={()=>handleOpenWagesModal(v)}
                     onClick={()=>handleWorkerItem(v)}
                     // onTouchStart={() => handleWorkerItem(v)} onLongPress={handleLongClick}
                   >
@@ -351,7 +365,8 @@ export default function Foreman() {
                           >
                           {v.name}
                         </View>
-                      {!v.del && !v.set && <View className='workerItem-list-icon' onClick={(e) => { e.stopPropagation(), handleOpenWagesModal() }}><Image className='workerItem-list-icon-img' src={`${IMGCDNURL}mark.png`}/></View>}
+                        {/* 判断不是按量和借支的时候才能设置工资 */}
+                      {(recorderType !== 3 && !(recorderType == 2 && contractor ==1) )&&!v.del && !v.set && <View className='workerItem-list-icon' onClick={(e) => { e.stopPropagation(), handleOpenWagesModal(v) }}><Image className='workerItem-list-icon-img' src={`${IMGCDNURL}mark.png`}/></View>}
                         {v.del && <View className='workerItem-list-icon-del' onClick={(e) => { e.stopPropagation(), handleDelList(v) }}>
                         <Image src={`${IMGCDNURL}reduce.png`} className='workerItem-list-icon-del-img'/>
                         </View>}
@@ -602,7 +617,7 @@ export default function Foreman() {
               <View className='atDrawer-list' onClick={()=>handleProject(v)}>
                 <View className='atDrawer-list-title'>{
                   // v.child.map(val=>(
-                    <Text>{v.name}</Text>
+                  <Text>{v.group_name}-{v.name}</Text>
                   // ))
                 }</View>
                 <View className='atDrawer-list-flex'>
@@ -621,7 +636,7 @@ export default function Foreman() {
           </View>
         </View>
           <View className='atDrawer-footer'>
-              <View className='atDrawer-footer-btn' onClick={() => { setCreateProjectDisplay(true), setShow(false) }}>
+            <View className='atDrawer-footer-btn' onClick={handleAddProjectList}>
                 {/* <Image src={`${IMGCDNURL}add.png`} className='addIcon'/>  */}
                 创建项目</View>
           </View> 

@@ -89,6 +89,8 @@ export default function Notepad() {
             const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
             const week = weeks[date];
             res.data[i].week = week;
+            const time = res.data[i].day.substring(0, 4) + '年' + res.data[i].day.substring(5, 7) + '月' + res.data[i].day.substring(8,11)+'日';
+            res.data[i].time = time;
             // for(let j =0;j<res.data.list.length;j++){
             //   res.data[i].list[j].click = false;
             // }
@@ -282,7 +284,7 @@ export default function Notepad() {
         {data.map((v,i)=>(
           <View key={i+i} className='list'>
             <View className='title'>
-              <View className='day'>{v.day}</View>
+              <View className='day'>{v.time}</View>
               <View className='week'>{v.week}</View>
             </View>
             {v.list.map((values,index)=>(

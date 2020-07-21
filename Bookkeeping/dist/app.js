@@ -1488,6 +1488,10 @@ var _userList = __webpack_require__(/*! ./userList */ "./src/reducers/userList.t
 
 var _userList2 = _interopRequireDefault(_userList);
 
+var _phoneList = __webpack_require__(/*! ./phoneList */ "./src/reducers/phoneList.ts");
+
+var _phoneList2 = _interopRequireDefault(_phoneList);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = (0, _redux.combineReducers)({
@@ -1500,7 +1504,8 @@ exports.default = (0, _redux.combineReducers)({
   clickTIme: _clickTIme2.default,
   mailList: _mailList2.default,
   userList: _userList2.default,
-  type: _type2.default
+  type: _type2.default,
+  phoneList: _phoneList2.default
 });
 
 /***/ }),
@@ -1613,6 +1618,44 @@ function msg() {
       return state;
     case _notepad.SET:
       return _extends({}, state, action.data);
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./src/reducers/phoneList.ts":
+/*!***********************************!*\
+  !*** ./src/reducers/phoneList.ts ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = phoneList;
+
+var _phoneList = __webpack_require__(/*! ../constants/phoneList */ "./src/constants/phoneList.ts");
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var DEFAULT_STATE = {
+  data: []
+};
+function phoneList() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _phoneList.GETPHONELIST:
+      return state;
+    case _phoneList.SETPHINELIST:
+      return [].concat(_toConsumableArray(action.data));
     default:
       return state;
   }

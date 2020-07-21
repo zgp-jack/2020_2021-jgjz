@@ -365,7 +365,7 @@ export default function Index() {
     })
   }
   // 切换角色
-  const handelChange = (e)=>{
+  const handelChange = (e,type?:boolean)=>{
     let midData = Taro.getStorageSync(MidData);
     if (!midData) {
       setDisplay(true)
@@ -376,24 +376,24 @@ export default function Index() {
     //   return;
     // }
     // 判断点击了永不提示
-    console.log(neverPrompt,'neverPrompt')
-    if (lasted_business_identity !== 0 && type != lasted_business_identity && !neverPrompt){
-      console.log(type,'type');
-      console.log(lasted_business_identity,'lasted_business_identity')
-        setTips(true)
-        return;
-    }else{
+    // console.log(neverPrompt,'neverPrompt')
+    // if (lasted_business_identity !== 0 && type != lasted_business_identity && !neverPrompt){
+    //   console.log(type,'type');
+    //   console.log(lasted_business_identity,'lasted_business_identity')
+    //     setTips(true)
+    //     return;
+    // }else{
       let msg = e === 1 ? '开始为自己记工吧' :'开始为工人记工吧'
-      Msg(msg)
-      console.log(e,'eeeeee')
-      // return;
       setType(e);
-      console.log(e)
       Taro.setStorageSync(Type, e);
-      setTimeout(()=>{
-        getData();
-      },500)
-    }
+      if(!type){
+        Msg(msg)
+        setTimeout(()=>{
+          getData();
+        },500)
+      }
+      // return;
+    // }
   }
   const getNextPageData = ()=>{
     // console.log(31231)
@@ -407,29 +407,32 @@ export default function Index() {
   }
   // 弹窗选择
   const handleType = (state:number)=>{
+    let dignity;
+    if(type ===1){
+      dignity = 2
+    // 不切换
+    }else{
+      dignity = 1
+    }
     // 切换
     if (state === 1){
-      let dignity;
       console.log(type,'typenjdskajdkjab')
-      if(type ===1){
-        dignity = 2
-      // 不切换
-      }else{
-        dignity = 1
-      }
       let msg = dignity === 1 ? '开始为自己记工吧' : '开始为工人记工吧';
       Msg(msg)
       console.log(dignity,'neverPromptneverPrompt')
       // return;
       setType(dignity);
       Taro.setStorageSync(Type, dignity);
-      setTimeout(() => {
-        getData();
-      }, 500)
-    }else if(state === 2){
-      Taro.setStorageSync(NeverPrompt, true);
-      setNeverPrompt(true)
-    }
+      // userRouteJump(`/pages/recorder/index?type=${dignity}`)
+      // setTimeout(() => {
+        //   getData();
+        // }, 500)
+      }else if(state === 2){
+        Taro.setStorageSync(NeverPrompt, true);
+        setNeverPrompt(true)
+      }
+      // 切换后跳转页面
+    userRouteJump(`/pages/recorder/index?type=${dignity}`)
     setTips(false)
   }
   // 返回鱼泡网
@@ -513,7 +516,17 @@ export default function Index() {
     if (!midData) return;
   }
   // 跳流水
-  const handleJump = (url:string)=>{
+  const handleJump = (url:string,state?:boolean)=>{
+    if(state){
+      if (lasted_business_identity !== 0 && type != lasted_business_identity && !neverPrompt){
+        console.log(type,'type');
+        console.log(lasted_business_identity,'lasted_business_identity')
+          setTips(true)
+          return;
+      }else{
+        handelChange(type,true)
+      }
+    }
     let midData = Taro.getStorageSync(MidData);
     if (!midData){
       setDisplay(true)
@@ -592,7 +605,7 @@ export default function Index() {
           </View>
           <View className='btnBox'>
             <View className='btn'>
-              {!item || (item && item.business_list.data.length === 0) ? <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
+              {!item || (item && item.business_list.data.length === 0) ? <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`,true)}> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}`,true)}> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
               <View className='notepad-Icon'><Image className='notepad-Icon-iamge' src={`${IMGCDNURL}notepad.png`}/></View>

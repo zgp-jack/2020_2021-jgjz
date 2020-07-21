@@ -68,7 +68,7 @@ var WordsTotal = (_temp2 = _class = function (_Taro$Component) {
       ;
       var _props = this.__props,
           _props$total = _props.total,
-          total = _props$total === undefined ? 500 : _props$total,
+          total = _props$total === undefined ? 400 : _props$total,
           _props$num = _props.num,
           num = _props$num === undefined ? 0 : _props$num,
           _props$classname = _props.classname,

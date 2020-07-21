@@ -113,7 +113,7 @@ export default function FlowingWaterDetails() {
       </View>
       <View className='list-content'>
         <AtList className='list'>
-          <View className='list-itme'><Text className='list-itme-title'>工人</Text>:<Text className='list-itme-content'>{obj.workername||'-'}</Text></View>
+          <View className='list-itme'><Text className='list-itme-title'>{obj.identity == 1 ?'工人':'班组长'}</Text>:<Text className='list-itme-content'>{obj.workername||'-'}</Text></View>
           <View className='list-itme'><Text className='list-itme-title'>项目名称</Text>:<Text className='list-itme-content'>{obj.group_info||'-'}</Text></View>
           {obj.business_type === '3' && <View className='list-itme'><Text className='list-itme-title'>借支属于</Text>:<Text className='list-itme-content'>{obj.typeDes}</Text></View>}
           {/* 按天\点工 */}

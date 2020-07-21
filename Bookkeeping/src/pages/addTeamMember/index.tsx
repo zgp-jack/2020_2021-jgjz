@@ -67,18 +67,36 @@ export default function AddTeamMember() {
     Taro.setNavigationBarTitle({
       title: titel,
     })
-    console.log(useSelectorItem.mailList,'useSelectorItem.mailList')
-    if (useSelectorItem.mailList) {
+    console.log(useSelectorItem,'useSelectorItem.mailList')
+    if (useSelectorItem.mailList && useSelectorItem.phoneList) {
       const item = JSON.parse(JSON.stringify(useSelectorItem.mailList))
+      const arr = JSON.parse(JSON.stringify(useSelectorItem.phoneList))
       console.log(item,'itemsdadsdsadsadas')
-      for(let i =0;i<item.length;i++){
-        if(item[i].list.length>0){
-          for(let j = 0;j<item[i].list.length;j++){
-            // item[i].list[j].click = true;
-          }
+      // for(let i =0;i<item.length;i++){
+      //   if(item[i].list.length>0){
+      //     for(let j = 0;j<item[i].list.length;j++){
+      //       // item[i].list[j].click = true;
+      //     }
+      //   }
+      // }
+      const itemData = item.map(v=>{
+        if(v.list){
+          v.list.map(val=>{
+            arr.map(value=>{
+              if(val.id == value.id){
+                console.log(val,'valsdad')
+                val.click =true
+              }
+              return value;
+            })
+            return val;
+          })
+          return v;
         }
-      }
-      console.log(item,'timesdd sakd kasbdjkasb')
+      })
+      
+      console.log(itemData,'timesdd sakd kasbdjkasb')
+      // return;
       setDefaultData(item);
       setData(item)
     }
@@ -122,16 +140,31 @@ export default function AddTeamMember() {
     console.log(value);
     const dataArr = JSON.parse(JSON.stringify(data));
     const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
-    let arr:any[] = [];
+    let arr:any[] = [
+      {list:[]}
+    ];
     if(valData == ''){
       arr = defaultDataArr;
     }else{
       for(let i =0;i<dataArr.length;i++){
         if(dataArr[i].list.length>0){
           for(let j=0;j<dataArr[i].list.length;j++){
-            if(dataArr[i].list[j].name == value){
-              arr.push(dataArr[i]);
+            // 查询电话和手机
+            let list:any =[];
+            // 首先要判断ID和姓名，然后判断在哪个字母表，然后再追加到数组
+            if (dataArr[i].list[j].name.indexOf(value) !== -1 || (dataArr[i].list[j].tel&&dataArr[i].list[j].tel.indexOf(value) !== -1)){
+              console.log(dataArr[i].list[j],'231231')
+              // for(let z =0;z<arr.length;z++){
+              //   for(let b=0;b<arr[z].list;b++){
+              //     if (dataArr[i].name === !arr[z].list.name ){
+              //       arr.push(dataArr[i]);
+              //     }
+              //   }
+              // }
+              list.push(dataArr[i].list[j])
             }
+            console.log(list,'xxx')
+            arr[0].list.push(...list)
           }
         }
       }
@@ -229,6 +262,7 @@ export default function AddTeamMember() {
     <View className='content'>
       <View>
         <AtSearchBar
+          placeholder='请输入要查询的联系人'
           showActionButton
           value={valData}
           onChange={(e) => setValData(e)}

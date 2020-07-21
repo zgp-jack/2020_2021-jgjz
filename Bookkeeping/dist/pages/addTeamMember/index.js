@@ -68,7 +68,7 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddTeamMember.__proto__ || Object.getPrototypeOf(AddTeamMember)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '添加班组成员'
-    }, _this.$usedState = ["loopArray46", "loopArray47", "$compid__52", "$compid__53", "data", "type", "letter"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc5Map = {}, _this.customComponents = ["AtSearchBar", "AddMember"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray66", "loopArray67", "$compid__84", "$compid__85", "data", "type", "letter"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc5Map = {}, _this.customComponents = ["AtSearchBar", "AddMember"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AddTeamMember, [{
@@ -89,15 +89,15 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__52"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__84"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__52 = _genCompid2[0],
-          $compid__52 = _genCompid2[1];
+          $prevCompid__84 = _genCompid2[0],
+          $compid__84 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__53"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__85"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__53 = _genCompid4[0],
-          $compid__53 = _genCompid4[1];
+          $prevCompid__85 = _genCompid4[0],
+          $compid__85 = _genCompid4[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 获取存入的公用内容
@@ -189,18 +189,35 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
         _taroWeapp2.default.setNavigationBarTitle({
           title: titel
         });
-        console.log(useSelectorItem.mailList, 'useSelectorItem.mailList');
-        if (useSelectorItem.mailList) {
+        console.log(useSelectorItem, 'useSelectorItem.mailList');
+        if (useSelectorItem.mailList && useSelectorItem.phoneList) {
           var item = JSON.parse(JSON.stringify(useSelectorItem.mailList));
+          var arr = JSON.parse(JSON.stringify(useSelectorItem.phoneList));
           console.log(item, 'itemsdadsdsadsadas');
-          for (var i = 0; i < item.length; i++) {
-            if (item[i].list.length > 0) {
-              for (var j = 0; j < item[i].list.length; j++) {
-                // item[i].list[j].click = true;
-              }
+          // for(let i =0;i<item.length;i++){
+          //   if(item[i].list.length>0){
+          //     for(let j = 0;j<item[i].list.length;j++){
+          //       // item[i].list[j].click = true;
+          //     }
+          //   }
+          // }
+          var itemData = item.map(function (v) {
+            if (v.list) {
+              v.list.map(function (val) {
+                arr.map(function (value) {
+                  if (val.id == value.id) {
+                    console.log(val, 'valsdad');
+                    val.click = true;
+                  }
+                  return value;
+                });
+                return val;
+              });
+              return v;
             }
-          }
-          console.log(item, 'timesdd sakd kasbdjkasb');
+          });
+          console.log(itemData, 'timesdd sakd kasbdjkasb');
+          // return;
           setDefaultData(item);
           setData(item);
         }
@@ -213,16 +230,31 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
         console.log(value);
         var dataArr = JSON.parse(JSON.stringify(data));
         var defaultDataArr = JSON.parse(JSON.stringify(defaultData));
-        var arr = [];
+        var arr = [{ list: [] }];
         if (valData == '') {
           arr = defaultDataArr;
         } else {
           for (var i = 0; i < dataArr.length; i++) {
             if (dataArr[i].list.length > 0) {
               for (var j = 0; j < dataArr[i].list.length; j++) {
-                if (dataArr[i].list[j].name == value) {
-                  arr.push(dataArr[i]);
+                var _arr$0$list;
+
+                // 查询电话和手机
+                var list = [];
+                // 首先要判断ID和姓名，然后判断在哪个字母表，然后再追加到数组
+                if (dataArr[i].list[j].name.indexOf(value) !== -1 || dataArr[i].list[j].tel && dataArr[i].list[j].tel.indexOf(value) !== -1) {
+                  console.log(dataArr[i].list[j], '231231');
+                  // for(let z =0;z<arr.length;z++){
+                  //   for(let b=0;b<arr[z].list;b++){
+                  //     if (dataArr[i].name === !arr[z].list.name ){
+                  //       arr.push(dataArr[i]);
+                  //     }
+                  //   }
+                  // }
+                  list.push(dataArr[i].list[j]);
                 }
+                console.log(list, 'xxx');
+                (_arr$0$list = arr[0].list).push.apply(_arr$0$list, list);
               }
             }
           }
@@ -330,22 +362,22 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc6 = handleStart;
-      var loopArray46 = data && data.length > 0 ? data.map(function (val, i) {
+      var loopArray66 = data && data.length > 0 ? data.map(function (val, i) {
         val = {
           $original: (0, _taroWeapp.internal_get_original)(val)
         };
         var $loopState__temp2 = data && data.length > 0 ? i + i : null;
-        var $anonymousCallee__12 = data && data.length > 0 ? val.$original.list.map(function (v, __index2) {
+        var $anonymousCallee__19 = data && data.length > 0 ? val.$original.list.map(function (v, __index2) {
           v = {
             $original: (0, _taroWeapp.internal_get_original)(v)
           };
-          var _$indexKey = "baezz" + i + "-" + __index2;
+          var _$indexKey = "bdbzz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey] = function () {
             return handleForeman(val.$original.name_py, v.$original);
           };
 
-          var _$indexKey2 = "bafzz" + i + "-" + __index2;
+          var _$indexKey2 = "bdczz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey2] = function () {
             return handleForeman(val.$original.name_py, v.$original);
@@ -368,16 +400,16 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
         }) : [];
         return {
           $loopState__temp2: $loopState__temp2,
-          $anonymousCallee__12: $anonymousCallee__12,
+          $anonymousCallee__19: $anonymousCallee__19,
           $original: val.$original
         };
       }) : [];
-      var loopArray47 = letter.map(function (v, __index5) {
+      var loopArray67 = letter.map(function (v, __index5) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey3 = "bagzz" + __index5;
+        var _$indexKey3 = "bddzz" + __index5;
 
         _this2.anonymousFunc5Map[_$indexKey3] = function () {
           return handleLetter(v.$original);
@@ -389,23 +421,24 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
         };
       });
       _taroWeapp.propsManager.set({
+        "placeholder": "\u8BF7\u8F93\u5165\u8981\u67E5\u8BE2\u7684\u8054\u7CFB\u4EBA",
         "showActionButton": true,
         "value": valData,
         "onChange": this.anonymousFunc0,
         "onActionClick": this.anonymousFunc1
-      }, $compid__52, $prevCompid__52);
+      }, $compid__84, $prevCompid__84);
       _taroWeapp.propsManager.set({
         "display": addMemberDisplay,
         "handleClose": handleAddMemberClose,
         "handleEstablish": handleEstablish,
         "handleInput": handleInput,
         "groupInfo": groupInfo
-      }, $compid__53, $prevCompid__53);
+      }, $compid__85, $prevCompid__85);
       Object.assign(this.__state, {
-        loopArray46: loopArray46,
-        loopArray47: loopArray47,
-        $compid__52: $compid__52,
-        $compid__53: $compid__53,
+        loopArray66: loopArray66,
+        loopArray67: loopArray67,
+        $compid__84: $compid__84,
+        $compid__85: $compid__85,
         data: data,
         type: type,
         letter: letter

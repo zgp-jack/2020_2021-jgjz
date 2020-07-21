@@ -75,3 +75,5 @@ export const bkSetGroupLeaderUrl = REQUESTURL +'/bk-project-team/set-group-leade
 export const bkUpdateBusinessNewUrl = REQUESTURL +'/bk-bookkeeping/update-business-new/'
 // 工人身份设置自己的工资标准
 export const bkSetWorkerIdentityWageUrl = REQUESTURL +'bk-worker/set-worker-identity-wage/'
+// 获取上次记工班组长
+export const bkgetLastGroupInfoUrl = REQUESTURL + 'bk-project-team/get-last-group-info/';

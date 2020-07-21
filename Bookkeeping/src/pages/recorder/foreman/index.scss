@@ -161,6 +161,9 @@
 .textareaList {
   margin-top: 18rpx;
   margin-bottom: 18rpx;
+  textarea{
+    z-index: 1;
+  }
 }
 
 .publish-list-ditals {

@@ -64,7 +64,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EditDetails.__proto__ || Object.getPrototypeOf(EditDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["borrowing", "loopArray63", "$compid__78", "$compid__79", "$compid__80", "$compid__81", "businessType", "type", "typeName", "val", "identity", "unit"], _this.anonymousFunc9Map = {}, _this.customComponents = ["ImageView", "WageStandard", "WorkOvertime", "WorkingHours"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EditDetails.__proto__ || Object.getPrototypeOf(EditDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["borrowing", "loopArray58", "$compid__64", "$compid__65", "$compid__66", "$compid__67", "businessType", "type", "typeName", "val", "identity", "unit"], _this.anonymousFunc9Map = {}, _this.customComponents = ["ImageView", "WageStandard", "WorkOvertime", "WorkingHours"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(EditDetails, [{
@@ -85,25 +85,25 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__78"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__64"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__78 = _genCompid2[0],
-          $compid__78 = _genCompid2[1];
+          $prevCompid__64 = _genCompid2[0],
+          $compid__64 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__79"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__65"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__79 = _genCompid4[0],
-          $compid__79 = _genCompid4[1];
+          $prevCompid__65 = _genCompid4[0],
+          $compid__65 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__80"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__66"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__80 = _genCompid6[0],
-          $compid__80 = _genCompid6[1];
+          $prevCompid__66 = _genCompid6[0],
+          $compid__66 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__81"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__67"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__81 = _genCompid8[0],
-          $compid__81 = _genCompid8[1];
+          $prevCompid__67 = _genCompid8[0],
+          $compid__67 = _genCompid8[1];
 
       var router = (0, _taroWeapp.useRouter)();
       var id = router.params.id;
@@ -267,13 +267,14 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
               var data = JSON.parse(JSON.stringify(wageStandard));
               var obj = JSON.parse(JSON.stringify(val));
               var standardObj = JSON.parse(JSON.stringify(standard));
+              // setType((parseInt(res.data.type)));
               setBusinessType(parseInt(res.data.business_type));
               setIdentity(parseInt(res.data.identity));
               setImage({ item: res.data.view_images });
               obj.name = res.data.group_info_name;
               obj.note = res.data.note;
               obj.workername = res.data.workername;
-              obj.leaderName = res.data.leaderName;
+              obj.leaderName = res.data.workername;
               // 这里是工要获取到多少工资标里的设置的时间再算
               var duration = res.data.work_time + '个工' + res.data.overtime + '小时';
               obj.duration = duration;
@@ -440,6 +441,13 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       // 支借Radio
       var handleRadioBorrowing = function handleRadioBorrowing(v) {
         console.log(v);
+        var data = JSON.parse(JSON.stringify(borrowing.item));
+        for (var i = 0; i < data.length; i++) {
+          if (v.id = data[i].id) {
+            data[i].click = true;
+          }
+        }
+        setBorrowing(data);
       };
       // 关闭
       var handleClose = function handleClose() {
@@ -699,6 +707,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
           return item.url;
         });
         // 借支的时候radio
+        console.log(businessTypes, 'businessTypes');
         var type = void 0;
         if (businessTypes === 3) {
           for (var i = 0; i < borrowingArr.length; i++) {
@@ -776,12 +785,12 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc14 = handlesub;
-      var loopArray63 = businessType === 3 ? borrowing.item.map(function (v, __index9) {
+      var loopArray58 = businessType === 3 ? borrowing.item.map(function (v, __index9) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "bchzz" + __index9;
+        var _$indexKey = "bbgzz" + __index9;
 
         _this2.anonymousFunc9Map[_$indexKey] = function () {
           return handleRadioBorrowing(v.$original);
@@ -797,7 +806,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         "max": 4,
         "userUploadImg": userUploadImg,
         "userDelImg": userDelImg
-      }, $compid__78, $prevCompid__78);
+      }, $compid__64, $prevCompid__64);
       _taroWeapp.propsManager.set({
         "display": wageStandardDisplay,
         "handleClose": handleWageStandardDisplay,
@@ -805,7 +814,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         "handleWageStandard": handleWageStandard,
         "handleAddWage": handleAddWage,
         "handleWageStandardRadio": handleWageStandardRadio
-      }, $compid__79, $prevCompid__79);
+      }, $compid__65, $prevCompid__65);
       _taroWeapp.propsManager.set({
         "display": display,
         "handleWorkOvertimeClose": handleClose,
@@ -814,20 +823,20 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         "dataArr": addWorkArr,
         "handleWorkOvertimeOk": handleWorkOvertimeOk,
         "model": val
-      }, $compid__80, $prevCompid__80);
+      }, $compid__66, $prevCompid__66);
       _taroWeapp.propsManager.set({
         "display": workingHoursDisplay,
         "handleWorkingHoursClose": handleWorkingHoursClose,
         "type": timeType,
         "handleWorkingHours": handleWorkingHours
-      }, $compid__81, $prevCompid__81);
+      }, $compid__67, $prevCompid__67);
       Object.assign(this.__state, {
         borrowing: borrowing,
-        loopArray63: loopArray63,
-        $compid__78: $compid__78,
-        $compid__79: $compid__79,
-        $compid__80: $compid__80,
-        $compid__81: $compid__81,
+        loopArray58: loopArray58,
+        $compid__64: $compid__64,
+        $compid__65: $compid__65,
+        $compid__66: $compid__66,
+        $compid__67: $compid__67,
         businessType: businessType,
         type: type,
         typeName: typeName,

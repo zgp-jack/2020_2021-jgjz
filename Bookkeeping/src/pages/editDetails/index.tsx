@@ -124,13 +124,14 @@ export default function EditDetails() {
           const data = JSON.parse(JSON.stringify(wageStandard));
           const obj = JSON.parse(JSON.stringify(val));
           const standardObj = JSON.parse(JSON.stringify(standard));
+          // setType((parseInt(res.data.type)));
           setBusinessType(parseInt(res.data.business_type));
           setIdentity(parseInt(res.data.identity));
           setImage({ item: res.data.view_images })
           obj.name = res.data.group_info_name;
           obj.note = res.data.note;
           obj.workername = res.data.workername;
-          obj.leaderName = res.data.leaderName;
+          obj.leaderName = res.data.workername;
           // 这里是工要获取到多少工资标里的设置的时间再算
           const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
           obj.duration = duration;
@@ -295,6 +296,13 @@ export default function EditDetails() {
   // 支借Radio
   const handleRadioBorrowing = (v) => {
     console.log(v)
+    const data = JSON.parse(JSON.stringify(borrowing.item));
+    for(let i =0;i<data.length;i++){
+      if(v.id = data[i].id){
+        data[i].click = true;
+      }
+    }
+    setBorrowing(data);
   }
   // 关闭
   const handleClose = ()=>{
@@ -549,6 +557,7 @@ export default function EditDetails() {
     const borrowingArr = JSON.parse(JSON.stringify(borrowing))
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
+    console.log(businessTypes,'businessTypes')
     let type;
     if (businessTypes === 3){
       for (let i = 0; i < borrowingArr.length;i++){
@@ -761,7 +770,7 @@ export default function EditDetails() {
             value={val.note}
             placeholder='请填写备注...'
             onInput={(e) => handleInput('note', e)}
-            maxlength={500}
+            maxlength={400}
             />
           <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
         </View>

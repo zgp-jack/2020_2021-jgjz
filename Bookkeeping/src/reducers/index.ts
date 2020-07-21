@@ -9,6 +9,7 @@ import clickTIme from './clickTIme'
 import mailList from './mailList'
 import type from './type'
 import userList from './userList'
+import phoneList from './phoneList'
 
 export default combineReducers({
   counter,
@@ -21,4 +22,5 @@ export default combineReducers({
   mailList,
   userList,
   type,
+  phoneList,
 })

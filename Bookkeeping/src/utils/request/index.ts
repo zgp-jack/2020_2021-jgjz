@@ -817,3 +817,20 @@ export function bkSetWorkerIdentityWageAction(data): Promise<Inter.bkGetCode> {
     data: data
   })
 }
+
+
+export function bkgetLastGroupInfoAction(data): Promise<Inter.bkGetWorker> {
+  let midData = Taro.getStorageSync(MidData);
+  return doRequestAction({
+    url: api.bkgetLastGroupInfoUrl,
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
+    data: data
+  })
+}
