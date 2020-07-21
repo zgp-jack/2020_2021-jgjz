@@ -95,18 +95,18 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
         setData(data)
         GetUserInfoAction(data).then(res => {
           if(res.code === 40003){
-            Taro.showModal({
-              title: '微信账号还没有绑定手机号',
-              content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
-              showCancel: true,
-              success:(res)=>{
-                if(res.confirm){
+            // Taro.showModal({
+            //   title: '微信账号还没有绑定手机号',
+            //   content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
+            //   showCancel: true,
+            //   success:(res)=>{
+            //     if(res.confirm){
                   // 没有绑定手机好就选择微信登陆还是手机登陆
                   setWarrant(true);
                   // userRouteJump(`/pages/login/index?session_key=${key}&encryptedData=${encryptedData}&iv=${iv}`)
-                }
-              }
-            })
+            //     }
+            //   }
+            // })
             // setWarrant(true)
           }else if(res.errcode === 'ok'){
             const user: User = {
@@ -130,7 +130,10 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             // let worker_id;
             bkMemberAuthAction(midParams).then(resItem=>{
               if (resItem.code !== 200) {
-                Msg(resItem.msg)
+                // Msg(resItem.msg)
+                Taro.showModal({
+                  content: resItem.msg
+                })
               }else{
                 // worker_id = resItem.data.worker_id;
                 // res.data.worker_id = resItem.data.worker_id;
@@ -149,7 +152,10 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             // if (page) pageBack()
             
           } else {
-            Msg(res.msg||res.errmsg)
+            Taro.showModal({
+              content: res.msg || res.errmsg
+            })
+            // Msg(res.msg||res.errmsg)
           }
         })
       }
@@ -187,16 +193,16 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
       }
       GetUserInfoAction(params).then(res=>{
         if (res.code === 40003) {
-          Taro.showModal({
-            title: '微信账号还没有绑定手机号',
-            content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
-            showCancel: true,
-            success: (res) => {
-              if (res.confirm) {
+          // Taro.showModal({
+          //   title: '微信账号还没有绑定手机号',
+          //   content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
+          //   showCancel: true,
+          //   success: (res) => {
+          //     if (res.confirm) {
                 userRouteJump(`/pages/login/index?session_key=${item.session_key}&encryptedData=${item.encryptedData}&iv=${item.iv}`)
-              }
-            }
-          })
+          //     }
+          //   }
+          // })
         } else if (res.errcode === 'ok') {
           const user: User = {
             userId: res.data.id,
@@ -225,7 +231,10 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           // Taro.navigateBack();
           callback && callback()
         }else{
-          Msg(res.msg || res.errmsg)
+          Taro.showModal({
+            content: res.msg || res.errmsg
+          })
+          // Msg(res.msg || res.errmsg)
         }
       })
     }else{

@@ -376,7 +376,7 @@ export default function EditDetails() {
     console.log(timeArrs,'timeArrstimeArrs')
     for (let i = 0; i < timeArrs.length; i++) {
       if (timeArrs[i].click) {
-        console.log(timeArr[i].id);
+        console.log(timeArr[i])
         // 选择工
         if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
           time = 1 / workNum * timeArrs[i].num
@@ -412,12 +412,11 @@ export default function EditDetails() {
     console.log(dayNum, 'dayNum')
     if (data.type === 1) {
       // 按小时算 加班小时* 模板加班金额
-      total = (parseInt(moneyNum) / parseInt(workNum)) * time + parseInt(addWorkNum) * addTime;
+      total = (parseInt(moneyNum)||0 / parseInt(workNum))||0 * time + parseInt(addWorkNum)||0 * addTime;
       console.log(total,'total')
     } else {
       // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
-      total = parseInt(moneyNum) / parseInt(workNum) * time 
-      // + (parseInt(moneyNum) / parseInt(dayNum) * addTime);
+      total = parseInt(moneyNum)||0 / parseInt(workNum)||0 * time  + (parseInt(moneyNum)||0 / parseInt(dayNum)||0 * addTime);
       console.log(total,'total1')
     }
     // const num = total.toFixed(2);
@@ -555,7 +554,7 @@ export default function EditDetails() {
     const dataList: any = addWorkArr.filter(v => v.click);
     const item = JSON.parse(JSON.stringify(wageStandard));
     console.log(item);
-    return;
+    // return;
     let title;
     if (data || dataList) {
       if (data.length > 0) {
@@ -595,25 +594,11 @@ export default function EditDetails() {
     // console.log(standardObj.worktime_define);
     // console.log(standardObj.work_time);
     // console.log()
-    console.log(item.type,'typesdasdsada')
     if (item.type  == '1'){
-      console.log('等于1')
-      console.log(standardObj.money,'standardObj.money1');
-      console.log(standardObj.worktime_define,'standardObj.worktime_define1)');
-      console.log(standardObj.work_time,'standardObj.work_time');
-      console.log(standardObj.worker_overtime,'standardObj.worker_overtime');
-      console.log(standardObj.overtime_money,'standardObj.overtime_money')
-      wages = (parseInt(standardObj.money) / parseInt(standardObj.worktime_define) * parseInt(standardObj.work_time)) + parseInt(standardObj.worker_overtime) * parseInt(standardObj.overtime_money)
+      wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + parseInt(standardObj.worker_overtime)||0 * parseInt(standardObj.overtime_money)||0
     }else{
-      console.log('等于2')
-      console.log(standardObj.money, 'standardObj.money');
-      console.log(standardObj.worktime_define, 'standardObj.worktime_define)');
-      console.log(standardObj.work_time, 'standardObj.work_time');
-      console.log(standardObj.worker_overtime, 'standardObj.worker_overtime');
-      console.log(standardObj.overtime_money, 'standardObj.overtime_money')
-      wages = (parseInt(standardObj.money) / parseInt(standardObj.worktime_define) * parseInt(standardObj.work_time)) + ((parseInt(standardObj.money) / parseInt(standardObj.worker_overtime)) * parseInt(standardObj.overtime))
+      wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
-    console.log(wages);
     setVal({ ...val, duration: title,wages: wages })
     setDisplay(false);
   }
@@ -711,9 +696,9 @@ export default function EditDetails() {
       type,
       img_url,
       id,
-      overtime,
-      work_time: times,
-      work_time_hour,
+      overtime: overtime||0,
+      work_time: times||0,
+      work_time_hour: work_time_hour||0,
       note: val.note,
     }
     updateBusinessAction(params).then(res=>{

@@ -154,18 +154,18 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
             setData(data);
             (0, _index.GetUserInfoAction)(data).then(function (res) {
               if (res.code === 40003) {
-                _taroWeapp2.default.showModal({
-                  title: '微信账号还没有绑定手机号',
-                  content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
-                  showCancel: true,
-                  success: function success(res) {
-                    if (res.confirm) {
-                      // 没有绑定手机好就选择微信登陆还是手机登陆
-                      setWarrant(true);
-                      // userRouteJump(`/pages/login/index?session_key=${key}&encryptedData=${encryptedData}&iv=${iv}`)
-                    }
-                  }
-                });
+                // Taro.showModal({
+                //   title: '微信账号还没有绑定手机号',
+                //   content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
+                //   showCancel: true,
+                //   success:(res)=>{
+                //     if(res.confirm){
+                // 没有绑定手机好就选择微信登陆还是手机登陆
+                setWarrant(true);
+                // userRouteJump(`/pages/login/index?session_key=${key}&encryptedData=${encryptedData}&iv=${iv}`)
+                //     }
+                //   }
+                // })
                 // setWarrant(true)
               } else if (res.errcode === 'ok') {
                 var user = {
@@ -189,7 +189,10 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 // let worker_id;
                 (0, _index.bkMemberAuthAction)(midParams).then(function (resItem) {
                   if (resItem.code !== 200) {
-                    (0, _index3.default)(resItem.msg);
+                    // Msg(resItem.msg)
+                    _taroWeapp2.default.showModal({
+                      content: resItem.msg
+                    });
                   } else {
                     // worker_id = resItem.data.worker_id;
                     // res.data.worker_id = resItem.data.worker_id;
@@ -206,7 +209,10 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 callback && callback();
                 // if (page) pageBack()
               } else {
-                (0, _index3.default)(res.msg || res.errmsg);
+                _taroWeapp2.default.showModal({
+                  content: res.msg || res.errmsg
+                });
+                // Msg(res.msg||res.errmsg)
               }
             });
           }
@@ -244,16 +250,16 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
           };
           (0, _index.GetUserInfoAction)(params).then(function (res) {
             if (res.code === 40003) {
-              _taroWeapp2.default.showModal({
-                title: '微信账号还没有绑定手机号',
-                content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
-                showCancel: true,
-                success: function success(res) {
-                  if (res.confirm) {
-                    userRouteJump("/pages/login/index?session_key=" + item.session_key + "&encryptedData=" + item.encryptedData + "&iv=" + item.iv);
-                  }
-                }
-              });
+              // Taro.showModal({
+              //   title: '微信账号还没有绑定手机号',
+              //   content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
+              //   showCancel: true,
+              //   success: (res) => {
+              //     if (res.confirm) {
+              userRouteJump("/pages/login/index?session_key=" + item.session_key + "&encryptedData=" + item.encryptedData + "&iv=" + item.iv);
+              //     }
+              //   }
+              // })
             } else if (res.errcode === 'ok') {
               var user = {
                 userId: res.data.id,
@@ -282,7 +288,10 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
               // Taro.navigateBack();
               callback && callback();
             } else {
-              (0, _index3.default)(res.msg || res.errmsg);
+              _taroWeapp2.default.showModal({
+                content: res.msg || res.errmsg
+              });
+              // Msg(res.msg || res.errmsg)
             }
           });
         } else {
