@@ -1,7 +1,7 @@
 import Taro, { useState,useRouter,useEffect} from '@tarojs/taro'
 import ImageView from '../../components/imageview';
 import UploadImgAction from '../../utils/upload'
-import { bkBusinessOneAction, updateBusinessAction } from '../../utils/request/index';
+import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageAction } from '../../utils/request/index';
 import { View, Text, Input, Textarea, RadioGroup, Radio } from '@tarojs/components';
 import WageStandard  from '../../components/wageStandard'
 import Msg from '../../utils/msg'
@@ -426,6 +426,20 @@ export default function EditDetails() {
     console.log(num)
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
+    let params = {
+      identity: identity,
+      worktime_define: data.work,
+      overtime_type: data.type,
+      overtime_money: data.dayAddWork,
+      money: data.money,
+      overtime: data.day,
+      group_info: data.group_info,
+    }
+    bkSetWorkerIdentityWageAction(params).then(res => {
+      if (res.code !== 200) {
+        Msg(res.msg)
+      }
+    })
       // }
     // // 上班时间
     // let time = 0;
