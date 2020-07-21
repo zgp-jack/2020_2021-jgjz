@@ -518,25 +518,25 @@ export default function Index() {
   }
   // 跳流水
   const handleJump = (url:string,state?:boolean)=>{
-    if(state){
-      // 判断不是0 然后与当前身份不同就是提示
-      console.log(type,'type')
-      console.log(lasted_business_identity,'lasted_business_identity')
-
-      if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt){
-        console.log(type,'type');
-        console.log(lasted_business_identity,'lasted_business_identity')
-          setTips(true)
-          return;
-      }else{
-        handelChange(type,true)
-      }
-    }
     let midData = Taro.getStorageSync(MidData);
     if (!midData){
       setDisplay(true)
       return;
     } 
+    if (state) {
+      // 判断不是0 然后与当前身份不同就是提示
+      console.log(type, 'type')
+      console.log(lasted_business_identity, 'lasted_business_identity')
+
+      if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
+        console.log(type, 'type');
+        console.log(lasted_business_identity, 'lasted_business_identity')
+        setTips(true)
+        return;
+      } else {
+        handelChange(type, true)
+      }
+    }
     userRouteJump(url);
     // userRouteJump('/pages/flowingWater/index')
   }

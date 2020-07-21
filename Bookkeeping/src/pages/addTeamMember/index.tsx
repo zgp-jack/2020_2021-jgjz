@@ -79,22 +79,26 @@ export default function AddTeamMember() {
       //     }
       //   }
       // }
-      const itemData = item.map(v=>{
-        if(v.list){
-          v.list.map(val=>{
-            arr.map(value=>{
-              if(val.id == value.id){
-                console.log(val,'valsdad')
-                val.click =true
+      let itemData;
+      if (item.length>0){
+        itemData = item.map(v=>{
+          if(v.list){
+            v.list.map(val=>{
+              if (arr.length>0){
+                arr.map(value=>{
+                  if(val.id == value.id){
+                    console.log(val,'valsdad')
+                    val.click =true
+                  }
+                  return value;
+                })
               }
-              return value;
+              return val;
             })
-            return val;
-          })
-          return v;
-        }
-      })
-      
+            return v;
+          }
+        })
+      }
       console.log(itemData,'timesdd sakd kasbdjkasb')
       // return;
       setDefaultData(item);

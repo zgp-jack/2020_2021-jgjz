@@ -4884,17 +4884,22 @@ function GetUserInfoAction(data) {
 }
 // 首页
 function bkIndexAction(data) {
-  var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
+  // let userInfo: User = Taro.getStorageSync(UserInfo)
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
+  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
   return doRequestAction({
     url: api.bkIndexUrl,
     header: {
       'content-type': 'application/json',
-      mid: userInfo.userId,
-      token: userInfo.token,
-      time: userInfo.tokenTime,
-      uuid: userInfo.uuid
+      // mid: userInfo.userId,
+      // token: userInfo.token,
+      // time: userInfo.tokenTime,
+      // uuid: userInfo.uuid
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
     },
     data: data
   });
@@ -5059,6 +5064,13 @@ function bkGetProjectTeamAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
   var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+  // let userInfo = Taro.getStorageSync(UserInfo);
+  // let token;
+  // if (midData && midData.sign.token) {
+  //   token = midData.sign.token;
+  // } else {
+  //   token = userInfo.token;
+  // }
   return doRequestAction({
     url: api.bkGetProjectTeamUrl,
     header: {
@@ -5067,6 +5079,10 @@ function bkGetProjectTeamAction(data) {
       token: midData.sign.token,
       time: midData.sign.time,
       uuid: midData.uuid
+      // mid: userInfo.userId,
+      // token: token,
+      // time: userInfo.tokenTime,
+      // uuid: userInfo.uuid,
     },
     data: data
   });
@@ -5208,11 +5224,22 @@ function bkWageStandGetWageAction(data) {
   var type = _taroWeapp2.default.getStorageSync(_store.Type);
   data.identity = type;
   var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+  // let userInfo = Taro.getStorageSync(UserInfo);
+  // let token;
+  // if (midData.sign.token){
+  //   token = midData.sign.token;
+  // }else{
+  //   token = userInfo.token;
+  // }
   return doRequestAction({
     url: api.bkWageStandGetWageUrl,
     data: data,
     header: {
       'content-type': 'application/x-www-form-urlencoded',
+      // mid: midData.yupao_id,
+      // token,
+      // time: midData.sign.time,
+      // uuid: midData.uuid
       mid: midData.yupao_id,
       token: midData.sign.token,
       time: midData.sign.time,

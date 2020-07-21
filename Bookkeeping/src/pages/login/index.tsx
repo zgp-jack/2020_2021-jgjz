@@ -121,7 +121,7 @@ export default function Login() {
           if (res.code !== 200) {
             Msg(res.msg)
           } else {
-            Taro.setStorageSync(MidData, res.data)
+            // Taro.setStorageSync(MidData, res.data)
             Taro.navigateBack();
           }
         })

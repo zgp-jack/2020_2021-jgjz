@@ -158,17 +158,22 @@ export function GetUserInfoAction(data: any): Promise<Inter.InitUserInfo> {
 
 // 首页
 export function bkIndexAction(data): Promise<Inter.bkIndexType> {
-  let userInfo: User = Taro.getStorageSync(UserInfo)
+  // let userInfo: User = Taro.getStorageSync(UserInfo)
   let type = Taro.getStorageSync(Type)
   data.identity = type
+  let midData = Taro.getStorageSync(MidData);
   return doRequestAction({
     url: api.bkIndexUrl,
     header: {
       'content-type': 'application/json',
-      mid: userInfo.userId,
-      token: userInfo.token,
-      time: userInfo.tokenTime,
-      uuid: userInfo.uuid
+      // mid: userInfo.userId,
+      // token: userInfo.token,
+      // time: userInfo.tokenTime,
+      // uuid: userInfo.uuid
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
     },
     data: data
   })
@@ -341,6 +346,13 @@ export function bkGetProjectTeamAction(data): Promise<Inter.bkGetProjectTeam> {
   let type = Taro.getStorageSync(Type)
   data.identity = type
   let midData = Taro.getStorageSync(MidData);
+  // let userInfo = Taro.getStorageSync(UserInfo);
+  // let token;
+  // if (midData && midData.sign.token) {
+  //   token = midData.sign.token;
+  // } else {
+  //   token = userInfo.token;
+  // }
   return doRequestAction({
     url: api.bkGetProjectTeamUrl,
     header: {
@@ -349,6 +361,10 @@ export function bkGetProjectTeamAction(data): Promise<Inter.bkGetProjectTeam> {
       token: midData.sign.token,
       time: midData.sign.time,
       uuid: midData.uuid
+      // mid: userInfo.userId,
+      // token: token,
+      // time: userInfo.tokenTime,
+      // uuid: userInfo.uuid,
     },
     data: data
   })
@@ -499,11 +515,22 @@ export function bkWageStandGetWageAction(data): Promise<Inter.bkWageStandGetWage
   let type = Taro.getStorageSync(Type)
   data.identity = type
   let midData = Taro.getStorageSync(MidData);
+  // let userInfo = Taro.getStorageSync(UserInfo);
+  // let token;
+  // if (midData.sign.token){
+  //   token = midData.sign.token;
+  // }else{
+  //   token = userInfo.token;
+  // }
   return doRequestAction({
     url: api.bkWageStandGetWageUrl,
     data: data,
     header: {
       'content-type': 'application/x-www-form-urlencoded',
+      // mid: midData.yupao_id,
+      // token,
+      // time: midData.sign.time,
+      // uuid: midData.uuid
       mid: midData.yupao_id,
       token: midData.sign.token,
       time: midData.sign.time,
