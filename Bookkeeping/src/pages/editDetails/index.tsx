@@ -372,9 +372,11 @@ export default function EditDetails() {
         return;
       }
     }
-    let time = 0;
+    let time:number = 0;
+    console.log(timeArrs,'timeArrstimeArrs')
     for (let i = 0; i < timeArrs.length; i++) {
       if (timeArrs[i].click) {
+        console.log(timeArr[i].id);
         // 选择工
         if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
           time = 1 / workNum * timeArrs[i].num
@@ -394,7 +396,7 @@ export default function EditDetails() {
       }
     }
     // 加班时间
-    let addTime = 0;
+    let addTime:number = 0;
     for (let i = 0; i < addWorkArrs.length; i++) {
       if (addWorkArrs[i].click) {
         addTime = addWorkArrs[i].num
@@ -411,9 +413,12 @@ export default function EditDetails() {
     if (data.type === 1) {
       // 按小时算 加班小时* 模板加班金额
       total = (parseInt(moneyNum) / parseInt(workNum)) * time + parseInt(addWorkNum) * addTime;
+      console.log(total,'total')
     } else {
       // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
-      total = parseInt(moneyNum) / parseInt(workNum) * time + (parseInt(moneyNum) / parseInt(dayNum) * addTime);
+      total = parseInt(moneyNum) / parseInt(workNum) * time 
+      // + (parseInt(moneyNum) / parseInt(dayNum) * addTime);
+      console.log(total,'total1')
     }
     // const num = total.toFixed(2);
     let num: any = 0;

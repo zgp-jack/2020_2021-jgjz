@@ -246,7 +246,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             {!warrant &&<Button className='sign' openType='getUserInfo' onGetUserInfo={(e) => userAuthAction(e)}>微信授权登录</Button>}
             {warrant && <Button className='sign' open-type='getPhoneNumber' onGetPhoneNumber={getPhoneNumber}>微信快捷登陆</Button>}
             {!warrant && <View className='close' onClick={() => handleClose(false)}>取消</View>}
-            {warrant && <View className='close' onClick={() => { userRouteJump(`/pages/login/index`)}}>手机号登陆</View>}
+            {warrant && <View className='close' onClick={() => { userRouteJump(`/pages/login/index?session_key=${data.session_key}&encryptedData=${data.encryptedData}&iv=${data.iv}`)}}>手机号登陆</View>}
           </View>
         </View>
       </View>

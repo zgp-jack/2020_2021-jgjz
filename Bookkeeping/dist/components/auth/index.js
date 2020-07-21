@@ -298,7 +298,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc3 = function () {
-        userRouteJump("/pages/login/index");
+        userRouteJump("/pages/login/index?session_key=" + data.session_key + "&encryptedData=" + data.encryptedData + "&iv=" + data.iv);
       };
 
       Object.assign(this.__state, {
