@@ -77,3 +77,5 @@ export const bkUpdateBusinessNewUrl = REQUESTURL +'/bk-bookkeeping/update-busine
 export const bkSetWorkerIdentityWageUrl = REQUESTURL +'bk-worker/set-worker-identity-wage/'
 // 获取上次记工班组长
 export const bkgetLastGroupInfoUrl = REQUESTURL + 'bk-project-team/get-last-group-info/';
+// 下载文件
+export const shareExcelUrl = REQUESTURL +'bk-bookkeeping/share-excel/';

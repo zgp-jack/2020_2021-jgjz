@@ -72,6 +72,7 @@ export default function AddTeamMember() {
       const item = JSON.parse(JSON.stringify(useSelectorItem.mailList))
       const arr = JSON.parse(JSON.stringify(useSelectorItem.phoneList))
       console.log(item,'itemsdadsdsadsadas')
+      console.log(arr,'arrrrrrrr')
       // for(let i =0;i<item.length;i++){
       //   if(item[i].list.length>0){
       //     for(let j = 0;j<item[i].list.length;j++){
@@ -104,7 +105,7 @@ export default function AddTeamMember() {
       setDefaultData(item);
       setData(item)
     }
-  }, [useSelectorItem.mailList])
+  }, [useSelectorItem.mailList, useSelectorItem.phoneList])
 
   // 字母表
   const letter = [

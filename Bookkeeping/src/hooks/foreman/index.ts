@@ -284,47 +284,47 @@ export default function userForeman() {
   const [reduxTime, setReduxTime] = useState<any[]>([])
   // 工资标准全选
   const [checkAll, setCheckAll] = useState<boolean>(false)
-  useDidShow(() => {
-    if (refresh){
-      setRefresh(false)
-      return;
-    } 
-    const type = Taro.getStorageSync(Type);
-    setIdentity(type)
-    // 判断选择回来 
-    if (useSelectorItem.workerList.length > 0) {
-      if (identity === 2){
-        setForeman(useSelectorItem.workerList);
-        setForemanTitle(useSelectorItem.workerList[0].name);
-        return;
-      }
-      //  ======= 需要修改，等获取到本人信息后
-      let objs = JSON.parse(JSON.stringify(obj));
-      const data = JSON.parse(JSON.stringify(moneyList));
-      const arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
-      if(data.length>0){
-        for(let j = 0;j<data.length;j++){
-          for (let i = 0; i <arrList.length;i++){
-            arrList[i].click = false;
-            if (data[j].worker_id === arrList[i].id){
-              arrList[i].set = true
-            }
-          }
-        }
-      }else{
-        for (let i = 0; i < arrList.length; i++) {
-          arrList[i].click = false;
-        }
-      }
-      for(let i =0;i<arrList.length;i++){
-        if(arrList[i].id === objs.id){
-          objs = arrList[i];
-          arrList.splice(i,1)
-        }
-      }
-      setWorkerItem([objs, ...arrList])
-    }
-  })
+  // useDidShow(() => {
+  //   if (refresh){
+  //     setRefresh(false)
+  //     return;
+  //   } 
+  //   const type = Taro.getStorageSync(Type);
+  //   setIdentity(type)
+  //   // 判断选择回来 
+  //   if (useSelectorItem.workerList.length > 0) {
+  //     if (identity === 2){
+  //       setForeman(useSelectorItem.workerList);
+  //       setForemanTitle(useSelectorItem.workerList[0].name);
+  //       return;
+  //     }
+  //     //  ======= 需要修改，等获取到本人信息后
+  //     let objs = JSON.parse(JSON.stringify(obj));
+  //     const data = JSON.parse(JSON.stringify(moneyList));
+  //     const arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
+  //     if(data.length>0){
+  //       for(let j = 0;j<data.length;j++){
+  //         for (let i = 0; i <arrList.length;i++){
+  //           arrList[i].click = false;
+  //           if (data[j].worker_id === arrList[i].id){
+  //             arrList[i].set = true
+  //           }
+  //         }
+  //       }
+  //     }else{
+  //       for (let i = 0; i < arrList.length; i++) {
+  //         arrList[i].click = false;
+  //       }
+  //     }
+  //     for(let i =0;i<arrList.length;i++){
+  //       if(arrList[i].id === objs.id){
+  //         objs = arrList[i];
+  //         arrList.splice(i,1)
+  //       }
+  //     }
+  //     setWorkerItem([objs, ...arrList])
+  //   }
+  // })
   useEffect(()=>{
     // 获取角色
     let type = Taro.getStorageSync(Type);
@@ -369,7 +369,42 @@ export default function userForeman() {
         }
       })
     // }
-  }, [])
+    // 判断选择回来 
+    console.log(useSelectorItem.workerList,'workerListworkerList')
+    if (useSelectorItem.workerList.length > 0) {
+      if (identity === 2) {
+        setForeman(useSelectorItem.workerList);
+        setForemanTitle(useSelectorItem.workerList[0].name);
+        return;
+      }
+      //  ======= 需要修改，等获取到本人信息后
+      let objs = JSON.parse(JSON.stringify(obj));
+      const data = JSON.parse(JSON.stringify(moneyList));
+      const arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
+      if (data.length > 0) {
+        for (let j = 0; j < data.length; j++) {
+          for (let i = 0; i < arrList.length; i++) {
+            arrList[i].click = false;
+            if (data[j].worker_id === arrList[i].id) {
+              arrList[i].set = true
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < arrList.length; i++) {
+          arrList[i].click = false;
+        }
+      }
+      for (let i = 0; i < arrList.length; i++) {
+        if (arrList[i].id === objs.id) {
+          objs = arrList[i];
+          arrList.splice(i, 1)
+        }
+      }
+      console.log([objs, ...arrList],'[objs, ...arrList]')
+      setWorkerItem([objs, ...arrList])
+    }
+  }, [useSelectorItem.workerList])
   // 关闭清空时间
   // useDidHide(()=>{
   //   // setTimeData([]);
@@ -1281,6 +1316,8 @@ export default function userForeman() {
                 return val;
               })
               setWorkerItem(data);
+              console.log(data,'打卡说的布卡斯巴达克进八廓街')
+              dispatch(setPhoneList(data));
               // 获取工人列表
               // 设置是否点击了
               // const workerListArr = JSON.parse(JSON.stringify(workerList));
@@ -1946,8 +1983,12 @@ export default function userForeman() {
   }
   // 开始记工
   const handleStart = ()=>{
+    // 工人
     const workerItemList = JSON.parse(JSON.stringify(workerItem));
+    console.log(workerItemList,'workerItemList');
+    // 储存工人
     const storagelistItem = JSON.parse(JSON.stringify(storagelist))
+    console.log(storagelistItem,'storagelistItem')
     let arrList:any[]=[];
     if (workerItemList && storagelistItem){
       for (let i = 0; i < workerItemList.length;i++){
@@ -1959,6 +2000,7 @@ export default function userForeman() {
       }
     }
     setWorkerItem([...workerItemList, ...arrList]);
+    console.log([...workerItemList, ...arrList],'[...workerItemList, ...arrList]')
     dispatch(setWorker([...workerItemList, ...arrList]))
     Taro.navigateBack({delta: 1})
   }
@@ -2339,6 +2381,7 @@ export default function userForeman() {
   }
   // 选择工人
   const handleWorkerItem = (v)=>{
+    console.log(v,'231231')
     if (delType)return;
     const modelData = JSON.parse(JSON.stringify(model));
     if (!modelData.name){

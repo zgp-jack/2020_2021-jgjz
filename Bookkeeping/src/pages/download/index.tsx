@@ -2,8 +2,7 @@ import Taro, { Config, useEffect, useState, useRouter } from '@tarojs/taro'
 import { View, Image  } from '@tarojs/components'
 import { bkgetExcelDataAction, bkShareExcelAction } from '../../utils/request/index'
 import Msg from '../../utils/msg';
-import { IMGCDNURL } from '../../config';
-import { REQUESTURL } from '../../config'
+import { IMGCDNURL, REQUESTURL } from '../../config';
 import { UserInfo, MidData, Type } from '../../config/store'
 import './index.scss'
 
@@ -35,7 +34,7 @@ export default function Download() {
     let type = Taro.getStorageSync(Type);
     let userInfo = Taro.getStorageSync(UserInfo);
     Taro.downloadFile({
-      url: `https://miniapi.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/?identity=${type}`,
+      url: `${REQUESTURL}bk-bookkeeping/share-excel/?identity=${type}`,
       header: {
         'content-type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
         mid: userInfo.userId,
@@ -97,12 +96,15 @@ export default function Download() {
   // 下载
   const handleDownLoad = ()=>{
     let parms = {};
+    Taro.showLoading({
+      title: '数据加载中...',
+    })
     let userInfo = Taro.getStorageSync(UserInfo);
     let type = Taro.getStorageSync(Type);
     // bkgetExcelDataAction(parms).then(res=>{
     //   if(res.code === 200){
         Taro.downloadFile({
-          url: `https://miniapi.zhaogong.vrtbbs.com/bk-bookkeeping/share-excel/?identity=${type}`,
+          url: `${REQUESTURL}bk-bookkeeping/share-excel/?identity=${type}`,
           header: {
             'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
             mid: userInfo.userId,
@@ -112,6 +114,8 @@ export default function Download() {
             identity:type
           },
           success: function (res) {
+            Taro.hideLoading()
+            console.log(res,'resss')
             Taro.saveFile({
               tempFilePath: res.tempFilePath,
               success: function (res) {
@@ -138,9 +142,12 @@ export default function Download() {
             })
           },
           fail: function (res) {
+            Taro.hideLoading()
             console.log('文件下载失败');
           },
-          complete: function (res) { },
+          complete: function (res) {
+            Taro.hideLoading()
+          },
         })
     //   }else{
     //     Msg(res.msg)

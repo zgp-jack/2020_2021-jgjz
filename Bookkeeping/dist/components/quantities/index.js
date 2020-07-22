@@ -48,7 +48,7 @@ var Quantities = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Quantities.__proto__ || Object.getPrototypeOf(Quantities)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray36", "display", "data", "handleClose", "handleQuantities", "__fn_onClick"], _this.anonymousFunc0Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Quantities.__proto__ || Object.getPrototypeOf(Quantities)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["loopArray35", "display", "data", "handleClose", "handleQuantities", "__fn_onClick"], _this.anonymousFunc0Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Quantities, [{
@@ -74,12 +74,12 @@ var Quantities = (_temp2 = _class = function (_Taro$Component) {
           data = _props.data,
           handleQuantities = _props.handleQuantities;
 
-      var loopArray36 = display ? data.map(function (v, __index0) {
+      var loopArray35 = display ? data.map(function (v, __index0) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "hdzzz" + __index0;
+        var _$indexKey = "hbzzz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           return handleQuantities(v.$original);
@@ -91,15 +91,15 @@ var Quantities = (_temp2 = _class = function (_Taro$Component) {
         };
       }) : [];
       Object.assign(this.__state, {
-        loopArray36: loopArray36,
+        loopArray35: loopArray35,
         display: display,
         data: data
       });
       return this.__state;
     }
   }, {
-    key: "funPrivatehczzz",
-    value: function funPrivatehczzz() {
+    key: "funPrivatehazzz",
+    value: function funPrivatehazzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -118,7 +118,7 @@ var Quantities = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return Quantities;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehczzz", "anonymousFunc0"], _class.$$componentPath = "components/quantities/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatehazzz", "anonymousFunc0"], _class.$$componentPath = "components/quantities/index", _temp2);
 
 
 Quantities.options = {

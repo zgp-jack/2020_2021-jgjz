@@ -16,7 +16,7 @@ interface RequestHeader {
   uuid?: string,
   version?: string,
   type?:number,
-  identity?:number,
+  identity?:any,
 }
 // 默认请求参数
 interface RequestBase {
@@ -861,3 +861,22 @@ export function bkgetLastGroupInfoAction(data): Promise<Inter.bkGetWorker> {
     data: data
   })
 }
+
+
+// // 下载
+// export function shareExcelAction(data): Promise<Inter.bkGetWorker> {
+//   let midData = Taro.getStorageSync(MidData);
+//   let type: User = Taro.getStorageSync(Type);
+//   return doRequestAction({
+//     url: api.shareExcelUrl + '/identity=' + type,
+//     header: {
+//       'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
+//       mid: midData.yupao_id,
+//       token: midData.sign.token,
+//       time: midData.sign.time,
+//       uuid: midData.uuid,
+//       identity: type
+//     },
+//     data: data
+//   })
+// }

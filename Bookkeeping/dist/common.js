@@ -71,7 +71,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWater.__proto__ || Object.getPrototypeOf(FlowingWater)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记工流水'
-    }, _this.$usedState = ["data", "loopArray49", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["data", "loopArray47", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWater, [{
@@ -368,13 +368,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         return handleCheckboxBtn(1);
       };
 
-      var loopArray49 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
+      var loopArray47 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "baczz" + i;
+        var _$indexKey = "jjzzz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -382,23 +382,23 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
         var $loopState__temp4 = data.item && data.item.length > 0 ? v.$original.total_borrow && v.$original.total_borrow.toFixed(2) : null;
         var $loopState__temp6 = data.item && data.item.length > 0 ? v.$original.total_money && v.$original.total_money.toFixed(2) : null;
-        var $anonymousCallee__12 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
+        var $anonymousCallee__11 = v.$original.click ? v.$original.arr.map(function (val, __index2) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "badzz" + i + "-" + __index2;
+          var _$indexKey2 = "baazz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "baezz" + i + "-" + __index2;
+          var _$indexKey3 = "babzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "bafzz" + i + "-" + __index2;
+          var _$indexKey4 = "baczz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -415,29 +415,29 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "bagzz" + i + "-" + __index2;
+          var _$indexKey5 = "badzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "bahzz" + i + "-" + __index2;
+          var _$indexKey6 = "baezz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "baizzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bafzzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
-              $prevCompid__56 = _genCompid2[0],
-              $compid__56 = _genCompid2[1];
+              $prevCompid__54 = _genCompid2[0],
+              $compid__54 = _genCompid2[1];
 
           v.$original.click && _taroWeapp.propsManager.set({
             "autoClose": false,
             "onOpened": _this2.anonymousFunc3.bind(_this2, _$indexKey3),
             "onClick": _this2.anonymousFunc4.bind(_this2, _$indexKey4),
             "options": $loopState__temp8
-          }, $compid__56, $prevCompid__56);
+          }, $compid__54, $prevCompid__54);
           return {
             _$indexKey2: _$indexKey2,
             _$indexKey3: _$indexKey3,
@@ -445,7 +445,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
             $loopState__temp8: $loopState__temp8,
             _$indexKey5: _$indexKey5,
             _$indexKey6: _$indexKey6,
-            $compid__56: $compid__56,
+            $compid__54: $compid__54,
             $original: val.$original
           };
         }) : [];
@@ -454,13 +454,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey: _$indexKey,
           $loopState__temp4: $loopState__temp4,
           $loopState__temp6: $loopState__temp6,
-          $anonymousCallee__12: $anonymousCallee__12,
+          $anonymousCallee__11: $anonymousCallee__11,
           $original: v.$original
         };
       }) : [];
       Object.assign(this.__state, {
         data: data,
-        loopArray49: loopArray49,
+        loopArray47: loopArray47,
         IMGCDNURL: _index4.IMGCDNURL,
         isCheckOut: isCheckOut,
         allcheck: allcheck,
@@ -2033,48 +2033,49 @@ function userForeman() {
       _useState112 = _slicedToArray(_useState111, 2),
       checkAll = _useState112[0],
       setCheckAll = _useState112[1];
+  // useDidShow(() => {
+  //   if (refresh){
+  //     setRefresh(false)
+  //     return;
+  //   } 
+  //   const type = Taro.getStorageSync(Type);
+  //   setIdentity(type)
+  //   // 判断选择回来 
+  //   if (useSelectorItem.workerList.length > 0) {
+  //     if (identity === 2){
+  //       setForeman(useSelectorItem.workerList);
+  //       setForemanTitle(useSelectorItem.workerList[0].name);
+  //       return;
+  //     }
+  //     //  ======= 需要修改，等获取到本人信息后
+  //     let objs = JSON.parse(JSON.stringify(obj));
+  //     const data = JSON.parse(JSON.stringify(moneyList));
+  //     const arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
+  //     if(data.length>0){
+  //       for(let j = 0;j<data.length;j++){
+  //         for (let i = 0; i <arrList.length;i++){
+  //           arrList[i].click = false;
+  //           if (data[j].worker_id === arrList[i].id){
+  //             arrList[i].set = true
+  //           }
+  //         }
+  //       }
+  //     }else{
+  //       for (let i = 0; i < arrList.length; i++) {
+  //         arrList[i].click = false;
+  //       }
+  //     }
+  //     for(let i =0;i<arrList.length;i++){
+  //       if(arrList[i].id === objs.id){
+  //         objs = arrList[i];
+  //         arrList.splice(i,1)
+  //       }
+  //     }
+  //     setWorkerItem([objs, ...arrList])
+  //   }
+  // })
 
-  (0, _taroWeapp.useDidShow)(function () {
-    if (refresh) {
-      setRefresh(false);
-      return;
-    }
-    var type = _taroWeapp2.default.getStorageSync(_store.Type);
-    setIdentity(type);
-    // 判断选择回来 
-    if (useSelectorItem.workerList.length > 0) {
-      if (identity === 2) {
-        setForeman(useSelectorItem.workerList);
-        setForemanTitle(useSelectorItem.workerList[0].name);
-        return;
-      }
-      //  ======= 需要修改，等获取到本人信息后
-      var objs = JSON.parse(JSON.stringify(obj));
-      var data = JSON.parse(JSON.stringify(moneyList));
-      var arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
-      if (data.length > 0) {
-        for (var j = 0; j < data.length; j++) {
-          for (var i = 0; i < arrList.length; i++) {
-            arrList[i].click = false;
-            if (data[j].worker_id === arrList[i].id) {
-              arrList[i].set = true;
-            }
-          }
-        }
-      } else {
-        for (var _i = 0; _i < arrList.length; _i++) {
-          arrList[_i].click = false;
-        }
-      }
-      for (var _i2 = 0; _i2 < arrList.length; _i2++) {
-        if (arrList[_i2].id === objs.id) {
-          objs = arrList[_i2];
-          arrList.splice(_i2, 1);
-        }
-      }
-      setWorkerItem([objs].concat(_toConsumableArray(arrList)));
-    }
-  });
+
   (0, _taroWeapp.useEffect)(function () {
     // 获取角色
     var type = _taroWeapp2.default.getStorageSync(_store.Type);
@@ -2119,7 +2120,42 @@ function userForeman() {
       }
     });
     // }
-  }, []);
+    // 判断选择回来 
+    console.log(useSelectorItem.workerList, 'workerListworkerList');
+    if (useSelectorItem.workerList.length > 0) {
+      if (identity === 2) {
+        setForeman(useSelectorItem.workerList);
+        setForemanTitle(useSelectorItem.workerList[0].name);
+        return;
+      }
+      //  ======= 需要修改，等获取到本人信息后
+      var _objs = JSON.parse(JSON.stringify(obj));
+      var data = JSON.parse(JSON.stringify(moneyList));
+      var arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
+      if (data.length > 0) {
+        for (var j = 0; j < data.length; j++) {
+          for (var i = 0; i < arrList.length; i++) {
+            arrList[i].click = false;
+            if (data[j].worker_id === arrList[i].id) {
+              arrList[i].set = true;
+            }
+          }
+        }
+      } else {
+        for (var _i = 0; _i < arrList.length; _i++) {
+          arrList[_i].click = false;
+        }
+      }
+      for (var _i2 = 0; _i2 < arrList.length; _i2++) {
+        if (arrList[_i2].id === _objs.id) {
+          _objs = arrList[_i2];
+          arrList.splice(_i2, 1);
+        }
+      }
+      console.log([_objs].concat(_toConsumableArray(arrList)), '[objs, ...arrList]');
+      setWorkerItem([_objs].concat(_toConsumableArray(arrList)));
+    }
+  }, [useSelectorItem.workerList]);
   // 关闭清空时间
   // useDidHide(()=>{
   //   // setTimeData([]);
@@ -3020,6 +3056,8 @@ function userForeman() {
                 return val;
               });
               setWorkerItem(data);
+              console.log(data, '打卡说的布卡斯巴达克进八廓街');
+              dispatch((0, _phoneList.setPhoneList)(data));
               // 获取工人列表
               // 设置是否点击了
               // const workerListArr = JSON.parse(JSON.stringify(workerList));
@@ -3663,8 +3701,12 @@ function userForeman() {
   };
   // 开始记工
   var handleStart = function handleStart() {
+    // 工人
     var workerItemList = JSON.parse(JSON.stringify(workerItem));
+    console.log(workerItemList, 'workerItemList');
+    // 储存工人
     var storagelistItem = JSON.parse(JSON.stringify(storagelist));
+    console.log(storagelistItem, 'storagelistItem');
     var arrList = [];
     if (workerItemList && storagelistItem) {
       for (var i = 0; i < workerItemList.length; i++) {
@@ -3676,6 +3718,7 @@ function userForeman() {
       }
     }
     setWorkerItem([].concat(_toConsumableArray(workerItemList), arrList));
+    console.log([].concat(_toConsumableArray(workerItemList), arrList), '[...workerItemList, ...arrList]');
     dispatch((0, _workerList.setWorker)([].concat(_toConsumableArray(workerItemList), arrList)));
     _taroWeapp2.default.navigateBack({ delta: 1 });
   };
@@ -4056,6 +4099,7 @@ function userForeman() {
   };
   // 选择工人
   var handleWorkerItem = function handleWorkerItem(v) {
+    console.log(v, '231231');
     if (delType) return;
     var modelData = JSON.parse(JSON.stringify(model));
     if (!modelData.name) {
@@ -4522,7 +4566,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.bkgetLastGroupInfoUrl = exports.bkSetWorkerIdentityWageUrl = exports.bkUpdateBusinessNewUrl = exports.bkSetGroupLeaderUrl = exports.bkGetCodeUrl = exports.bkGetShareExcelDataUrl = exports.bkAddWorkerInGroupUrl = exports.updateBusinessUrl = exports.bkBusinessOneUrl = exports.bkupdateWageUrl = exports.bkSetWorkerMoneyByWageUrl = exports.bkUpdateProjectTeamUrl = exports.bkDeleteprojectTeamUrl = exports.bkUpdateWorkerUrl = exports.bkDeleteBusinessUrl = exports.bkGetWorkerWageUrl = exports.bkAddWageUrl = exports.bkWageStandGetWageUrl = exports.bkAddBusinessUrl = exports.bkShareExcelurl = exports.bkgetExcelDataUrl = exports.bkDeleteRroupWorkerUrl = exports.bkGetWorkerUrl = exports.bkAddWorkerUrl = exports.bkAddProjectTeamUrl = exports.bkGetProjectTeamUrl = exports.bkBusinessUrl = exports.bkUpdateNotePadUrl = exports.bkDeleteNotePadUrl = exports.bkGetNotePadUrl = exports.bkAddNotepadUrl = exports.bkAddFeedbackUrl = exports.bkMemberAuthUrl = exports.bkIndexUrl = exports.GetUserInfo = exports.GetUserSessionKey = exports.jobRecommendListUrl = undefined;
+exports.shareExcelUrl = exports.bkgetLastGroupInfoUrl = exports.bkSetWorkerIdentityWageUrl = exports.bkUpdateBusinessNewUrl = exports.bkSetGroupLeaderUrl = exports.bkGetCodeUrl = exports.bkGetShareExcelDataUrl = exports.bkAddWorkerInGroupUrl = exports.updateBusinessUrl = exports.bkBusinessOneUrl = exports.bkupdateWageUrl = exports.bkSetWorkerMoneyByWageUrl = exports.bkUpdateProjectTeamUrl = exports.bkDeleteprojectTeamUrl = exports.bkUpdateWorkerUrl = exports.bkDeleteBusinessUrl = exports.bkGetWorkerWageUrl = exports.bkAddWageUrl = exports.bkWageStandGetWageUrl = exports.bkAddBusinessUrl = exports.bkShareExcelurl = exports.bkgetExcelDataUrl = exports.bkDeleteRroupWorkerUrl = exports.bkGetWorkerUrl = exports.bkAddWorkerUrl = exports.bkAddProjectTeamUrl = exports.bkGetProjectTeamUrl = exports.bkBusinessUrl = exports.bkUpdateNotePadUrl = exports.bkDeleteNotePadUrl = exports.bkGetNotePadUrl = exports.bkAddNotepadUrl = exports.bkAddFeedbackUrl = exports.bkMemberAuthUrl = exports.bkIndexUrl = exports.GetUserInfo = exports.GetUserSessionKey = exports.jobRecommendListUrl = undefined;
 
 var _index = __webpack_require__(/*! ../../config/index */ "./src/config/index.ts");
 
@@ -4602,6 +4646,8 @@ var bkUpdateBusinessNewUrl = exports.bkUpdateBusinessNewUrl = _index.REQUESTURL 
 var bkSetWorkerIdentityWageUrl = exports.bkSetWorkerIdentityWageUrl = _index.REQUESTURL + 'bk-worker/set-worker-identity-wage/';
 // 获取上次记工班组长
 var bkgetLastGroupInfoUrl = exports.bkgetLastGroupInfoUrl = _index.REQUESTURL + 'bk-project-team/get-last-group-info/';
+// 下载文件
+var shareExcelUrl = exports.shareExcelUrl = _index.REQUESTURL + 'bk-bookkeeping/share-excel/';
 
 /***/ }),
 
@@ -5546,6 +5592,23 @@ function bkgetLastGroupInfoAction(data) {
     data: data
   });
 }
+// // 下载
+// export function shareExcelAction(data): Promise<Inter.bkGetWorker> {
+//   let midData = Taro.getStorageSync(MidData);
+//   let type: User = Taro.getStorageSync(Type);
+//   return doRequestAction({
+//     url: api.shareExcelUrl + '/identity=' + type,
+//     header: {
+//       'content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=GBK',
+//       mid: midData.yupao_id,
+//       token: midData.sign.token,
+//       time: midData.sign.time,
+//       uuid: midData.uuid,
+//       identity: type
+//     },
+//     data: data
+//   })
+// }
 
 /***/ }),
 
