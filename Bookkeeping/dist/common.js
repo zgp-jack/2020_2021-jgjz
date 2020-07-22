@@ -2096,29 +2096,31 @@ function userForeman() {
     workerItemData.push(objs);
     setWorkerItem(workerItemData);
     // }
-    // 获取项目名称
-    bkGetProjectTeam();
-    // 获取工人列表
-    // bkGetWorker(groupInfo);
-    // 工资标准
-    bkWageStandGetWage();
-    // 日历
-    getMonthDaysCurrent(new Date());
-    if (useSelectorItem.clickTIme.length > 0) {
-      setReduxTime(useSelectorItem.clickTIme);
-    }
-    ;
-    // 获取上次记录项目
-    // console.log(stateType,'sateTea')
-    // if (stateType){
-    var params = {
-      identity: type
-    };
-    (0, _index.bkgetLastGroupInfoAction)(params).then(function (res) {
-      if (res.code === 200) {
-        console.log(res.data);
+    if (!useSelectorItem.workerList.length) {
+      // 获取项目名称
+      bkGetProjectTeam();
+      // 获取工人列表
+      // bkGetWorker(groupInfo);
+      // 工资标准
+      bkWageStandGetWage();
+      // 日历
+      getMonthDaysCurrent(new Date());
+      if (useSelectorItem.clickTIme.length > 0) {
+        setReduxTime(useSelectorItem.clickTIme);
       }
-    });
+      ;
+      // 获取上次记录项目
+      // console.log(stateType,'sateTea')
+      // if (stateType){
+      var params = {
+        identity: type
+      };
+      (0, _index.bkgetLastGroupInfoAction)(params).then(function (res) {
+        if (res.code === 200) {
+          console.log(res.data);
+        }
+      });
+    }
     // }
     // 判断选择回来 
     console.log(useSelectorItem.workerList, 'workerListworkerList');
@@ -3404,6 +3406,11 @@ function userForeman() {
             (0, _index.bkSetWorkerIdentityWageAction)(paramsData).then(function (resItem) {
               if (resItem.code === 200) {
                 params.group_info = res.data;
+                // 班组长id
+                var _item2 = useSelectorItem.workerList;
+                var group_leader = _item2[0].id;
+                params.group_leader = group_leader;
+                console.log(params, 'paramsparams1');
                 (0, _index.bkAddBusinessAction)(params).then(function (resData) {
                   // 清除reducer
                   if (resData.code === 200) {
@@ -3411,7 +3418,7 @@ function userForeman() {
                       var _data5 = {
                         groupName: '',
                         teamName: '',
-                        name: item.name,
+                        name: _item2.name,
                         time: '',
                         details: '',
                         duration: '',
@@ -3512,6 +3519,12 @@ function userForeman() {
         };
         (0, _index.bkSetWorkerIdentityWageAction)(paramsData).then(function (resItem) {
           if (resItem.code === 200) {
+            // 班组长id
+            var _item3 = useSelectorItem.workerList;
+            console.log(_item3, 'item');
+            var group_leader = _item3[0].id;
+            params.group_leader = group_leader;
+            console.log(params, 'paramsparams2');
             (0, _index.bkAddBusinessAction)(params).then(function (resData) {
               // 清除reducer
               if (resData.code === 200) {
@@ -3519,7 +3532,7 @@ function userForeman() {
                   var _data6 = {
                     groupName: '',
                     teamName: '',
-                    name: item.name,
+                    name: _item3.name,
                     time: '',
                     details: '',
                     duration: '一个工无加班',

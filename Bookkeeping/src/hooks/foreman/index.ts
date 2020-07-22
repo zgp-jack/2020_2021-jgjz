@@ -345,29 +345,31 @@ export default function userForeman() {
       workerItemData.push(objs);
       setWorkerItem(workerItemData)
     // }
-    // 获取项目名称
-    bkGetProjectTeam();
-    // 获取工人列表
-    // bkGetWorker(groupInfo);
-    // 工资标准
-    bkWageStandGetWage();
-    // 日历
-    getMonthDaysCurrent(new Date());
-    if (useSelectorItem.clickTIme.length > 0) {
-      setReduxTime(useSelectorItem.clickTIme);
-    };
-    // 获取上次记录项目
-    // console.log(stateType,'sateTea')
-    // if (stateType){
-      let params={
-        identity : type,
-      }
-      bkgetLastGroupInfoAction(params).then(res=>{
-        if(res.code === 200){
-          console.log(res.data);
-
+    if (!useSelectorItem.workerList.length){
+      // 获取项目名称
+      bkGetProjectTeam();
+      // 获取工人列表
+      // bkGetWorker(groupInfo);
+      // 工资标准
+      bkWageStandGetWage();
+      // 日历
+      getMonthDaysCurrent(new Date());
+      if (useSelectorItem.clickTIme.length > 0) {
+        setReduxTime(useSelectorItem.clickTIme);
+      };
+      // 获取上次记录项目
+      // console.log(stateType,'sateTea')
+      // if (stateType){
+        let params={
+          identity : type,
         }
-      })
+        bkgetLastGroupInfoAction(params).then(res=>{
+          if(res.code === 200){
+            console.log(res.data);
+  
+          }
+        })
+    }
     // }
     // 判断选择回来 
     console.log(useSelectorItem.workerList,'workerListworkerList')
@@ -1654,11 +1656,16 @@ export default function userForeman() {
               overtime_money: data.dayAddWork,
               money: data.money,
               overtime: data.day,
-              group_info: res.data
+              group_info: res.data,
             }
             bkSetWorkerIdentityWageAction(paramsData).then(resItem=>{
               if(resItem.code === 200 ){
                 params.group_info = res.data;
+                // 班组长id
+                const item = useSelectorItem.workerList;
+                const group_leader = item[0].id;
+                params.group_leader = group_leader;
+                console.log(params,'paramsparams1')
                 bkAddBusinessAction(params).then(resData => {
                   // 清除reducer
                   if (resData.code === 200) {
@@ -1775,6 +1782,12 @@ export default function userForeman() {
         }
         bkSetWorkerIdentityWageAction(paramsData).then(resItem => {
           if (resItem.code === 200) {
+            // 班组长id
+            const item = useSelectorItem.workerList;
+            console.log(item,'item')
+            const group_leader = item[0].id;
+            params.group_leader = group_leader;
+            console.log(params, 'paramsparams2')
             bkAddBusinessAction(params).then(resData => {
               // 清除reducer
               if (resData.code === 200) {

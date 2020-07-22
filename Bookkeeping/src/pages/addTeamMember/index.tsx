@@ -206,6 +206,7 @@ export default function AddTeamMember() {
   }
   // 班组长
   const handleForeman = (name,e)=>{
+    console.log(name,e,'dsadasda')
     if(type !== '2'){
       const arr = JSON.parse(JSON.stringify(clickData));
       let dataArr = JSON.parse(JSON.stringify(data));
@@ -237,6 +238,7 @@ export default function AddTeamMember() {
       bkSetGroupLeaderAction(params).then(res => {
         console.log(res,'xxx')
       });
+      console.log(e,'eeee')
       dispatch(setWorker([e]))
       Taro.navigateBack({ delta: 1 })
     }
