@@ -396,6 +396,8 @@ export default function EditDetails() {
         }
       }
     }
+    console.log(time,'tiem');
+    // return;
     // 加班时间
     let addTime:number = 0;
     for (let i = 0; i < addWorkArrs.length; i++) {
@@ -404,26 +406,42 @@ export default function EditDetails() {
       }
     }
     //工资标准 每个工多少钱/上班标准 * 上班时长  判断加班是按小时算还是i按天算
-    let total = 0;
-    console.log(moneyNum,'moneyNum')
-    console.log(workNum, 'workNum')
-    console.log(time, 'time')
-    console.log(addWorkNum,'addWorkNum')
-    console.log(addTime, 'moneyNum')
-    console.log(dayNum, 'dayNum')
-    if (data.type === 1) {
-      // 按小时算 加班小时* 模板加班金额
-      total = (parseInt(moneyNum)||0 / parseInt(workNum))||0 * time + parseInt(addWorkNum)||0 * addTime;
-      console.log(total,'total')
-    } else {
-      // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
-      total = parseInt(moneyNum)||0 / parseInt(workNum)||0 * time  + (parseInt(moneyNum)||0 / parseInt(dayNum)||0 * addTime);
-      console.log(total,'total1')
+    // let total = 0;
+    // console.log(moneyNum,'moneyNum')
+    // console.log(workNum, 'workNum')
+    // console.log(time, 'time')
+    // console.log(addWorkNum,'addWorkNum')
+    // console.log(typeof addWorkNum)
+    // console.log(addTime, 'addTime')
+    // console.log(dayNum, 'dayNum')
+    // 按小时
+    let sum:any=0;
+    if(data.type ===1){
+      console.log(time,'time')
+      sum = (moneyNum / workNum) * (time * workNum) + addWorkNum * addTime;
+    }else{
+      // 按天
+      // 1除以模板时间*上班时间*模板金额  + 上班时长/多少小时算一个工*模板金额
+      sum = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
     }
+    console.log(sum,'sum');
+    // return;
+    // if (data.type === 1) {
+    //   // 按小时算 加班小时* 模板加班金额
+    //   total = ((parseInt(moneyNum)||0 / parseInt(workNum))||0 * (time) )+ (parseInt(addWorkNum)||0 * (addTime));
+    //   console.log(total,'total')
+    // } else {
+    //   console.log('else')
+    //   // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
+    //   console.log(parseFloat(moneyNum) || 0 / parseFloat(workNum) || 0 * time ,'121');
+    //   console.log((parseFloat(moneyNum) || 0 / parseFloat(dayNum) || 0 * addTime),'212')
+    //   total = (parseFloat(moneyNum) || 0 / parseFloat(workNum) || 0 * (time)) + (parseFloat(moneyNum) || 0 / parseFloat(dayNum)||0 * (addTime));
+    //   console.log(total,'total1')
+    // }
     // const num = total.toFixed(2);
     let num: any = 0;
     // if (num && !Object.is(num, NaN)){
-    num = total.toFixed(2);
+    num = sum.toFixed(2);
     console.log(num)
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
@@ -916,6 +934,7 @@ export default function EditDetails() {
         <View className='publish-list-textTarea-item' onClick={() => { }}>
           <Text className='pulish-list-textTarea-title'>备注</Text>
           <Textarea 
+            className='textarea'
             value={val.note}
             placeholder='请填写备注...'
             onInput={(e) => handleInput('note', e)}

@@ -154,9 +154,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
             setData(data);
             (0, _index.GetUserInfoAction)(data).then(function (res) {
               console.log(res, '全部返回内容1');
-              if (res.code === 400) {
-                console.log(res.data, '返回的值');
-              } else if (res.code === 40003) {
+              if (res.code === 40003) {
                 // Taro.showModal({
                 //   title: '微信账号还没有绑定手机号',
                 //   content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
@@ -170,7 +168,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 //   }
                 // })
                 // setWarrant(true)
-              } else if (res.errcode === 'ok') {
+              } else if (res.code === 200) {
                 var user = {
                   userId: res.data.id,
                   token: res.data.sign.token,
@@ -194,7 +192,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                   if (resItem.code !== 200) {
                     // Msg(resItem.msg)
                     _taroWeapp2.default.showModal({
-                      content: resItem.msg
+                      content: resItem.msg || ''
                     });
                   } else {
                     // worker_id = resItem.data.worker_id;
@@ -212,14 +210,14 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 callback && callback();
                 // if (page) pageBack()
               } else {
-                var msg = undefined;
-                if (res.msg) {
-                  msg = res.msg;
-                  console.log(res.msg, 'res.msg');
-                } else if (res.errmsg) {
-                  msg = res.errmsg;
-                  console.log(res.errmsg, 'res.errmsg');
-                }
+                // let msg;
+                // if (res.msg) {
+                //   msg = res.msg;
+                //   console.log(res.msg, 'res.msg')
+                // } else if (res.errmsg) {
+                //   msg = res.errmsg
+                //   console.log(res.errmsg, 'res.errmsg')
+                // }
                 // let msg;
                 // if (res.msg) {
                 //   msg = res.msg;
@@ -230,9 +228,9 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                 // Taro.showModal({
                 //   content: msg
                 // })
-                // Taro.showModal({
-                //   content: res.msg || res.errmsg
-                // })
+                _taroWeapp2.default.showModal({
+                  content: res.msg
+                });
                 // Msg(res.msg||res.errmsg)
               }
             });
@@ -271,9 +269,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
           };
           (0, _index.GetUserInfoAction)(params).then(function (res) {
             console.log(res, '全部返回内容1');
-            if (res.code === 400) {
-              console.log(res.data, '返回的值');
-            } else if (res.code === 40003) {
+            if (res.code === 40003) {
               // Taro.showModal({
               //   title: '微信账号还没有绑定手机号',
               //   content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
@@ -284,7 +280,7 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
               //     }
               //   }
               // })
-            } else if (res.errcode === 'ok') {
+            } else if (res.code === 200) {
               var user = {
                 userId: res.data.id,
                 token: res.data.sign.token,
@@ -312,18 +308,18 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
               // Taro.navigateBack();
               callback && callback();
             } else {
-              var msg = undefined;
-              if (res.msg) {
-                msg = res.msg;
-                console.log(res.msg, 'res.msg1');
-              } else if (res.errmsg) {
-                msg = res.errmsg;
-                console.log(res.errmsg, 'res.errmsg1');
-              }
-              console.log(msg, 'msg');
-              // Taro.showModal({
-              //   content: msg
-              // })
+              // let msg;
+              // if (res.msg){
+              //   msg = res.msg;
+              //   // console.log(res.msg, 'res.msg1')
+              // } else if (res.errmsg){
+              //   msg = res.errmsg
+              //   // console.log(res.errmsg,'res.errmsg1')
+              // }
+              // console.log(msg, 'msg')
+              _taroWeapp2.default.showModal({
+                content: res.msg
+              });
               // Msg(res.msg || res.errmsg)
             }
           });

@@ -84,7 +84,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray56", "loopArray57", "$compid__58", "$compid__59", "$compid__60", "$compid__61", "$compid__62", "$compid__63", "image", "closeImage", "IMGCDNURL", "start", "end", "vals", "newMonth", "type", "prompt", "item", "show", "busy", "list", "month", "newTime", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray296", "loopArray297", "$compid__408", "$compid__409", "$compid__410", "$compid__411", "$compid__412", "$compid__413", "image", "closeImage", "IMGCDNURL", "start", "end", "vals", "newMonth", "type", "prompt", "item", "show", "busy", "list", "month", "newTime", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Index, [{
@@ -105,35 +105,35 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__58"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__408"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__58 = _genCompid2[0],
-          $compid__58 = _genCompid2[1];
+          $prevCompid__408 = _genCompid2[0],
+          $compid__408 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__59"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__409"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__59 = _genCompid4[0],
-          $compid__59 = _genCompid4[1];
+          $prevCompid__409 = _genCompid4[0],
+          $compid__409 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__60"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__410"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__60 = _genCompid6[0],
-          $compid__60 = _genCompid6[1];
+          $prevCompid__410 = _genCompid6[0],
+          $compid__410 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__61"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__411"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__61 = _genCompid8[0],
-          $compid__61 = _genCompid8[1];
+          $prevCompid__411 = _genCompid8[0],
+          $compid__411 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__62"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__412"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__62 = _genCompid10[0],
-          $compid__62 = _genCompid10[1];
+          $prevCompid__412 = _genCompid10[0],
+          $compid__412 = _genCompid10[1];
 
-      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__63"),
+      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__413"),
           _genCompid12 = _slicedToArray(_genCompid11, 2),
-          $prevCompid__63 = _genCompid12[0],
-          $compid__63 = _genCompid12[1];
+          $prevCompid__413 = _genCompid12[0],
+          $compid__413 = _genCompid12[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 弹框内容
@@ -364,6 +364,10 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         }
         return num;
       };
+      // 获取上个小程序传过来的值
+      (0, _taroWeapp.onAppShow)(function (e) {
+        console.log(e, '2312312');
+      });
       (0, _taroWeapp.useDidShow)(function () {
         var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
         var creationTime = _taroWeapp2.default.getStorageSync(_store.CreationTime);
@@ -447,6 +451,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         //   })
         // }
       });
+      (0, _taroWeapp.useEffect)(function () {}, []);
       // useEffect(()=>{
       //   // 判断有没有用户信息没有就显示
       //   // 获取缓存信息
@@ -683,10 +688,24 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       // 返回鱼泡网
       var handleGoback = function handleGoback() {
         _taroWeapp2.default.navigateBackMiniProgram({
-          // appId:'',
-          // path: '/pages/index/index',
-          // envVersion: 'trial',
+          extraData: {
+            foo: 'bar'
+          },
+          success: function success(res) {
+            // 返回成功
+          }
         });
+        // wx.navigateToMiniProgram({
+        //   appId: '',
+        //   path: 'pages/index/index?id=123',
+        //   extraData: {
+        //     foo: 'bar'
+        //   },
+        //   envVersion: 'develop',
+        //   success(res) {
+        //     // 打开成功
+        //   }
+        // })
       };
       // 点击图片
       var hanleImage = function hanleImage(v) {
@@ -875,13 +894,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         return setProject(false);
       };
 
-      var loopArray56 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray296 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = type === 1 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey = "bbezz" + i;
+        var _$indexKey = "bjczz" + i;
 
         _this2.anonymousFunc13Map[_$indexKey] = getNextPageData;
         return {
@@ -890,13 +909,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray57 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray297 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp4 = type === 2 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey2 = "bbfzz" + i;
+        var _$indexKey2 = "bjdzz" + i;
 
         _this2.anonymousFunc15Map[_$indexKey2] = getNextPageData;
         return {
@@ -909,27 +928,27 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "value": num,
         "maxValue": 99,
         "className": "AtBadge"
-      }, $compid__58, $prevCompid__58);
+      }, $compid__408, $prevCompid__408);
       _taroWeapp.propsManager.set({
         "isOpened": tips,
         "closeOnClickOverlay": false
-      }, $compid__59, $prevCompid__59);
+      }, $compid__409, $prevCompid__409);
       _taroWeapp.propsManager.set({
         "isOpened": identity,
         "closeOnClickOverlay": false
-      }, $compid__60, $prevCompid__60);
+      }, $compid__410, $prevCompid__410);
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose,
         "callback": handleCallback
-      }, $compid__61, $prevCompid__61);
+      }, $compid__411, $prevCompid__411);
       _taroWeapp.propsManager.set({
         "display": createProjectDisplay,
         "handleClose": handleCreateProjectClose,
         "val": model && model.groupName,
         "handleSubmit": anonymousState__temp5,
         "handleInput": handleInput
-      }, $compid__62, $prevCompid__62);
+      }, $compid__412, $prevCompid__412);
       _taroWeapp.propsManager.set({
         "display": project,
         "handleSubmit": handleAddProject,
@@ -937,18 +956,18 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "teamName": model && model.teamName,
         "handleBack": handleBack,
         "handleClose": anonymousState__temp6
-      }, $compid__63, $prevCompid__63);
+      }, $compid__413, $prevCompid__413);
       Object.assign(this.__state, {
         anonymousState__temp5: anonymousState__temp5,
         anonymousState__temp6: anonymousState__temp6,
-        loopArray56: loopArray56,
-        loopArray57: loopArray57,
-        $compid__58: $compid__58,
-        $compid__59: $compid__59,
-        $compid__60: $compid__60,
-        $compid__61: $compid__61,
-        $compid__62: $compid__62,
-        $compid__63: $compid__63,
+        loopArray296: loopArray296,
+        loopArray297: loopArray297,
+        $compid__408: $compid__408,
+        $compid__409: $compid__409,
+        $compid__410: $compid__410,
+        $compid__411: $compid__411,
+        $compid__412: $compid__412,
+        $compid__413: $compid__413,
         image: image,
         closeImage: closeImage,
         IMGCDNURL: _index2.IMGCDNURL,

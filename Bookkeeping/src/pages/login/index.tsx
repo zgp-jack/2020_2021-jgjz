@@ -102,7 +102,7 @@ export default function Login() {
       type: 'phone'
     }
     GetUserInfoAction(params).then(res=>{
-      if (res.errcode === 'ok'){
+      if (res.code === 200){
         const user: any = {
           userId: res.data.id,
           token: res.data.sign.token,

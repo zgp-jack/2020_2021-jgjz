@@ -28,6 +28,8 @@ var _taroWeapp2 = _interopRequireDefault(_taroWeapp);
 
 var _index = __webpack_require__(/*! ../../utils/request/index */ "./src/utils/request/index.ts");
 
+var _store = __webpack_require__(/*! ../../config/store */ "./src/config/store.ts");
+
 __webpack_require__(/*! ./index.scss */ "./src/pages/attendanceSheet/index.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -56,7 +58,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AttendanceSheet.__proto__ || Object.getPrototypeOf(AttendanceSheet)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '考勤表'
-    }, _this.$usedState = ["$compid__57", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__365", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AttendanceSheet, [{
@@ -75,10 +77,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__57"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__365"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__57 = _genCompid2[0],
-          $compid__57 = _genCompid2[1];
+          $prevCompid__365 = _genCompid2[0],
+          $compid__365 = _genCompid2[1];
 
       // 月份
 
@@ -117,10 +119,16 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
           data = _useState12[0],
           setData = _useState12[1];
 
-      var _useState13 = (0, _taroWeapp.useState)(false),
+      var _useState13 = (0, _taroWeapp.useState)(0),
           _useState14 = _slicedToArray(_useState13, 2),
-          display = _useState14[0],
-          setDisplay = _useState14[1];
+          identity = _useState14[0],
+          setIdentity = _useState14[1];
+
+      var _useState15 = (0, _taroWeapp.useState)(false),
+          _useState16 = _slicedToArray(_useState15, 2),
+          display = _useState16[0],
+          setDisplay = _useState16[1];
+      // const [refresh, setRefresh] = useState<number>(0)
       // 一键对公
 
 
@@ -138,6 +146,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
         return num;
       };
       (0, _taroWeapp.useEffect)(function () {
+        // 获取身份
+        var type = _taroWeapp2.default.getStorageSync(_store.Type);
+        setIdentity(type);
         // 进来获取本月数据
         var time = new Date();
         var newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
@@ -150,6 +161,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       }, []);
       // 获取数据
       var getList = function getList(newTime) {
+        console.log(fixedTab, 'fixedTab');
+        console.log(tebArr, 'tebArr');
+        var identity = _taroWeapp2.default.getStorageSync(_store.Type);
+        console.log(identity, 'identity');
         var params = {
           date: newTime
         };
@@ -201,10 +216,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
         }];
         var tatalLeftObj = {};
         tatalLeftObj.list = tatalLeft;
-        tatalArr.push(tatalLeftObj);
+        if (identity === 1) {
+          tatalArr.push(tatalLeftObj);
+        }
         (0, _index.bkgetExcelDataAction)(params).then(function (res) {
-          var _obj$list;
-
           var data = res.data;
           var leftData = [];
           var rightData = [];
@@ -255,13 +270,13 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
               if (data[i].borrow.length) {
                 borrow = true;
               }
-              var Type = {
+              var _Type = {
                 hour: hour,
                 work: work,
                 amount: amount,
                 borrow: borrow
               };
-              leftType.type = Type;
+              leftType.type = _Type;
               leftListData.push(leftName, leftType);
               leftObj.list = leftListData;
               leftData.push(leftObj);
@@ -602,7 +617,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
               work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum.toFixed(2) }
             }
           };
-          obj.list.push(sumObj);
+          if (identity === 1) {
+            console.log('ewqewqeq');
+            obj.list.push(sumObj);
+          }
           //计算出哪些天数有数据
           // 记工
           var objItem = {};
@@ -744,19 +762,23 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
                 _obj2.type.amount.unit_name = daySums[_j8].total[0].unit_name;
               }
             }
-            console.log();
             dayArrItme[_i6] = _obj2;
           }
-          console.log(dayArrItme, 'dayArrItme');
-          setFixedTab([].concat(_toConsumableArray(fixedTabList), leftData, tatalArr));
-          (_obj$list = obj.list).push.apply(_obj$list, _toConsumableArray(dayArrItme));
+          if (identity === 1) {
+            var _obj$list;
+
+            (_obj$list = obj.list).push.apply(_obj$list, _toConsumableArray(dayArrItme));
+          }
           rightData.push(obj);
+          setFixedTab([].concat(_toConsumableArray(fixedTabList), leftData, tatalArr));
           setTabArr([].concat(_toConsumableArray(tebArrList), rightData));
         });
       };
       // 设置时间
       var handleTime = function handleTime(e) {
         var time = e.detail.value;
+        setFixedTab([]);
+        setTabArr([]);
         setYear(e.detail.value.slice(0, 4));
         setMonth(e.detail.value.slice(5, 8));
         getList(time);
@@ -794,9 +816,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose
-      }, $compid__57, $prevCompid__57);
+      }, $compid__365, $prevCompid__365);
       Object.assign(this.__state, {
-        $compid__57: $compid__57,
+        $compid__365: $compid__365,
         tebArr: tebArr,
         fixedTab: fixedTab,
         year: year,

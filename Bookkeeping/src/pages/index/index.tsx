@@ -1,4 +1,4 @@
-import Taro, { useEffect,useState,useDidShow } from '@tarojs/taro'
+import Taro, { useEffect,useState,useDidShow,onAppShow } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
 import { useDispatch } from '@tarojs/redux'
@@ -120,6 +120,10 @@ export default function Index() {
     }
     return num;
   }
+  // 获取上个小程序传过来的值
+  onAppShow((e)=>{
+    console.log(e,'2312312')
+  })
   useDidShow(()=>{
     let midData = Taro.getStorageSync(MidData);
     let creationTime = Taro.getStorageSync(CreationTime);
@@ -203,6 +207,9 @@ export default function Index() {
     //   })
     // }
   })
+  useEffect(()=>{
+    
+  },[])
   // useEffect(()=>{
   //   // 判断有没有用户信息没有就显示
   //   // 获取缓存信息
@@ -439,10 +446,24 @@ export default function Index() {
   // 返回鱼泡网
   const handleGoback = ()=>{
     Taro.navigateBackMiniProgram({
-      // appId:'',
-      // path: '/pages/index/index',
-      // envVersion: 'trial',
+      extraData: {
+        foo: 'bar'
+      },
+      success: function (res) {
+        // 返回成功
+      }
     })
+    // wx.navigateToMiniProgram({
+    //   appId: '',
+    //   path: 'pages/index/index?id=123',
+    //   extraData: {
+    //     foo: 'bar'
+    //   },
+    //   envVersion: 'develop',
+    //   success(res) {
+    //     // 打开成功
+    //   }
+    // })
   }
   // 点击图片
   const hanleImage = (v:any)=>{

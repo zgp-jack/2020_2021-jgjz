@@ -212,3 +212,6 @@
 .publish-list-input-disabled .publish-input-list:nth-last-child(1) {
   margin-right: 0;
 }
+.textarea textarea {
+  z-index: 1;
+}

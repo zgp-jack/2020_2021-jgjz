@@ -95,9 +95,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
         setData(data)
         GetUserInfoAction(data).then(res => {
           console.log(res,'全部返回内容1')
-          if (res.code === 400) {
-            console.log(res.data, '返回的值');
-          }else if(res.code === 40003){
+          if(res.code === 40003){
             // Taro.showModal({
             //   title: '微信账号还没有绑定手机号',
             //   content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
@@ -111,7 +109,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             //   }
             // })
             // setWarrant(true)
-          }else if(res.errcode === 'ok'){
+          }else if(res.code === 200){
             const user: User = {
               userId: res.data.id,
               token: res.data.sign.token,
@@ -135,7 +133,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
               if (resItem.code !== 200) {
                 // Msg(resItem.msg)
                 Taro.showModal({
-                  content: resItem.msg
+                  content: resItem.msg||''
                 })
               }else{
                 // worker_id = resItem.data.worker_id;
@@ -155,14 +153,14 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             // if (page) pageBack()
             
           } else {
-            let msg;
-            if (res.msg) {
-              msg = res.msg;
-              console.log(res.msg, 'res.msg')
-            } else if (res.errmsg) {
-              msg = res.errmsg
-              console.log(res.errmsg, 'res.errmsg')
-            }
+            // let msg;
+            // if (res.msg) {
+            //   msg = res.msg;
+            //   console.log(res.msg, 'res.msg')
+            // } else if (res.errmsg) {
+            //   msg = res.errmsg
+            //   console.log(res.errmsg, 'res.errmsg')
+            // }
             // let msg;
             // if (res.msg) {
             //   msg = res.msg;
@@ -173,9 +171,9 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             // Taro.showModal({
             //   content: msg
             // })
-            // Taro.showModal({
-            //   content: res.msg || res.errmsg
-            // })
+            Taro.showModal({
+              content: res.msg
+            })
             // Msg(res.msg||res.errmsg)
           }
         })
@@ -214,9 +212,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
       }
       GetUserInfoAction(params).then(res=>{
         console.log(res, '全部返回内容1')
-        if(res.code === 400 ){
-          console.log(res.data,'返回的值');
-        }else if (res.code === 40003) {
+        if (res.code === 40003) {
           // Taro.showModal({
           //   title: '微信账号还没有绑定手机号',
           //   content: '微信账号绑定手机号后，才可使用手机号后快速填写工能',
@@ -227,7 +223,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           //     }
           //   }
           // })
-        } else if (res.errcode === 'ok') {
+        } else if (res.code === 200) {
           const user: User = {
             userId: res.data.id,
             token: res.data.sign.token,
@@ -255,18 +251,18 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           // Taro.navigateBack();
           callback && callback()
         }else{
-          let msg;
-          if (res.msg){
-            msg = res.msg;
-            console.log(res.msg, 'res.msg1')
-          } else if (res.errmsg){
-            msg = res.errmsg
-            console.log(res.errmsg,'res.errmsg1')
-          }
-          console.log(msg, 'msg')
-          // Taro.showModal({
-          //   content: msg
-          // })
+          // let msg;
+          // if (res.msg){
+          //   msg = res.msg;
+          //   // console.log(res.msg, 'res.msg1')
+          // } else if (res.errmsg){
+          //   msg = res.errmsg
+          //   // console.log(res.errmsg,'res.errmsg1')
+          // }
+          // console.log(msg, 'msg')
+          Taro.showModal({
+            content: res.msg
+          })
           // Msg(res.msg || res.errmsg)
         }
       })

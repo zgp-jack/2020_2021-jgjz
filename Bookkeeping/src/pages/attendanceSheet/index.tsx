@@ -3,6 +3,7 @@ import { View, Text, Picker, Button } from '@tarojs/components'
 import CalendarModal from '../../components/attendanceModal';
 import { bkgetExcelDataAction } from '../../utils/request/index';
 import Msg from '../../utils/msg';
+import {Type} from '../../config/store'
 import './index.scss'
 
 export default function AttendanceSheet() {
@@ -15,7 +16,9 @@ export default function AttendanceSheet() {
   const [fixedTab, setFixedTab] = useState<any[]>([])
   const [tebArr, setTabArr] = useState<any[]>([])
   const [data, setData] = useState<any>([{}, {}, {}])
+  const [identity, setIdentity ] = useState<number>(0)
   const [display, setDisplay] = useState<boolean>(false)
+  // const [refresh, setRefresh] = useState<number>(0)
   // 一键对公
   const handleShare = () => {
     setDisplay(true)
@@ -31,6 +34,9 @@ export default function AttendanceSheet() {
     return num;
   }
   useEffect(() => {
+    // 获取身份
+    let type = Taro.getStorageSync(Type);
+    setIdentity(type)
     // 进来获取本月数据
     const time = new Date();
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
@@ -43,6 +49,10 @@ export default function AttendanceSheet() {
   }, [])
   // 获取数据
   const getList = (newTime: string) => {
+    console.log(fixedTab,'fixedTab')
+    console.log(tebArr,'tebArr')
+    let identity = Taro.getStorageSync(Type);
+    console.log(identity,'identity')
     let params = {
       date: newTime
     };
@@ -100,7 +110,9 @@ export default function AttendanceSheet() {
     ]
     let tatalLeftObj: any = {};
     tatalLeftObj.list = tatalLeft;
-    tatalArr.push(tatalLeftObj);
+    if (identity === 1){
+      tatalArr.push(tatalLeftObj);
+    }
     bkgetExcelDataAction(params).then(res => {
       const data = res.data;
       let leftData: any = [];
@@ -500,7 +512,10 @@ export default function AttendanceSheet() {
           work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum.toFixed(2) }
         }
       }
-      obj.list.push(sumObj);
+      if (identity === 1){
+        console.log('ewqewqeq')
+        obj.list.push(sumObj);
+      }
       //计算出哪些天数有数据
       // 记工
       let objItem = {};
@@ -644,19 +659,21 @@ export default function AttendanceSheet() {
             obj.type.amount.unit_name = (daySums[j].total[0].unit_name);
           }
         }
-        console.log()
         dayArrItme[i] = obj;
       }
-      console.log(dayArrItme,'dayArrItme')
-      setFixedTab([...fixedTabList, ...leftData, ...tatalArr]);
-      obj.list.push(...dayArrItme);
+      if (identity === 1){
+        obj.list.push(...dayArrItme);
+      }
       rightData.push(obj)
+      setFixedTab([...fixedTabList, ...leftData, ...tatalArr]);
       setTabArr([...tebArrList, ...rightData]);
     })
   }
   // 设置时间
   const handleTime = (e) => {
     const time = e.detail.value;
+    setFixedTab([]);
+    setTabArr([]);
     setYear(e.detail.value.slice(0, 4));
     setMonth(e.detail.value.slice(5, 8));
     getList(time);
