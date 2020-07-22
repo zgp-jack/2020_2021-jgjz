@@ -60,7 +60,7 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWaterDetails.__proto__ || Object.getPrototypeOf(FlowingWaterDetails)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '包工'
-    }, _this.$usedState = ["obj", "loopArray34", "$compid__43", "time", "week"], _this.anonymousFunc0Map = {}, _this.customComponents = ["AtList"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["obj", "loopArray65", "$compid__83", "time", "week"], _this.anonymousFunc0Map = {}, _this.customComponents = ["AtList"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWaterDetails, [{
@@ -81,10 +81,10 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__43"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__83"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__43 = _genCompid2[0],
-          $compid__43 = _genCompid2[1];
+          $prevCompid__83 = _genCompid2[0],
+          $compid__83 = _genCompid2[1];
 
       var router = (0, _taroWeapp.useRouter)();
       var _router$params = router.params,
@@ -200,12 +200,12 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
         _taroWeapp2.default.navigateTo({ url: "/pages/editDetails/index?id=" + obj.id });
       };
 
-      var loopArray34 = obj.view_images && obj.view_images.length > 0 ? obj.view_images.map(function (v, __index0) {
+      var loopArray65 = obj.view_images && obj.view_images.length > 0 ? obj.view_images.map(function (v, __index0) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "gizzz" + __index0;
+        var _$indexKey = "bddzz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           return handleImage(v.$original);
@@ -218,11 +218,11 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
       }) : [];
       _taroWeapp.propsManager.set({
         "className": "list"
-      }, $compid__43, $prevCompid__43);
+      }, $compid__83, $prevCompid__83);
       Object.assign(this.__state, {
         obj: obj,
-        loopArray34: loopArray34,
-        $compid__43: $compid__43,
+        loopArray65: loopArray65,
+        $compid__83: $compid__83,
         time: time,
         week: week
       });
