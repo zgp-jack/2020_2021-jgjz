@@ -84,7 +84,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray296", "loopArray297", "$compid__408", "$compid__409", "$compid__410", "$compid__411", "$compid__412", "$compid__413", "image", "closeImage", "IMGCDNURL", "start", "end", "vals", "newMonth", "type", "prompt", "item", "show", "busy", "list", "month", "newTime", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray98", "loopArray99", "$compid__184", "$compid__185", "$compid__186", "$compid__187", "$compid__188", "$compid__189", "image", "closeImage", "IMGCDNURL", "start", "end", "vals", "newMonth", "type", "prompt", "item", "show", "busy", "list", "month", "newTime", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Index, [{
@@ -105,35 +105,35 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__408"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__184"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__408 = _genCompid2[0],
-          $compid__408 = _genCompid2[1];
+          $prevCompid__184 = _genCompid2[0],
+          $compid__184 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__409"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__185"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__409 = _genCompid4[0],
-          $compid__409 = _genCompid4[1];
+          $prevCompid__185 = _genCompid4[0],
+          $compid__185 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__410"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__186"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__410 = _genCompid6[0],
-          $compid__410 = _genCompid6[1];
+          $prevCompid__186 = _genCompid6[0],
+          $compid__186 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__411"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__187"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__411 = _genCompid8[0],
-          $compid__411 = _genCompid8[1];
+          $prevCompid__187 = _genCompid8[0],
+          $compid__187 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__412"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__188"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__412 = _genCompid10[0],
-          $compid__412 = _genCompid10[1];
+          $prevCompid__188 = _genCompid10[0],
+          $compid__188 = _genCompid10[1];
 
-      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__413"),
+      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__189"),
           _genCompid12 = _slicedToArray(_genCompid11, 2),
-          $prevCompid__413 = _genCompid12[0],
-          $compid__413 = _genCompid12[1];
+          $prevCompid__189 = _genCompid12[0],
+          $compid__189 = _genCompid12[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 弹框内容
@@ -367,8 +367,17 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       // 获取上个小程序传过来的值
       (0, _taroWeapp.onAppShow)(function (e) {
         console.log(e, '2312312');
+        if (e.scene === 1037) {
+          console.log(e.query);
+          // 返回token ，tokenTime ,userId
+          if (e.query.userId && e.query.token && e.query.tokenTime) {
+            // 验证有没有手机号
+          }
+        }
       });
       (0, _taroWeapp.useDidShow)(function () {
+        // Taro.onAppShow({
+        // })
         var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
         var creationTime = _taroWeapp2.default.getStorageSync(_store.CreationTime);
         var neverPromptType = _taroWeapp2.default.getStorageSync(_store.NeverPrompt);
@@ -894,13 +903,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         return setProject(false);
       };
 
-      var loopArray296 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray98 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = type === 1 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey = "bjczz" + i;
+        var _$indexKey = "bgczz" + i;
 
         _this2.anonymousFunc13Map[_$indexKey] = getNextPageData;
         return {
@@ -909,13 +918,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray297 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray99 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp4 = type === 2 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey2 = "bjdzz" + i;
+        var _$indexKey2 = "bgdzz" + i;
 
         _this2.anonymousFunc15Map[_$indexKey2] = getNextPageData;
         return {
@@ -928,27 +937,27 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "value": num,
         "maxValue": 99,
         "className": "AtBadge"
-      }, $compid__408, $prevCompid__408);
+      }, $compid__184, $prevCompid__184);
       _taroWeapp.propsManager.set({
         "isOpened": tips,
         "closeOnClickOverlay": false
-      }, $compid__409, $prevCompid__409);
+      }, $compid__185, $prevCompid__185);
       _taroWeapp.propsManager.set({
         "isOpened": identity,
         "closeOnClickOverlay": false
-      }, $compid__410, $prevCompid__410);
+      }, $compid__186, $prevCompid__186);
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose,
         "callback": handleCallback
-      }, $compid__411, $prevCompid__411);
+      }, $compid__187, $prevCompid__187);
       _taroWeapp.propsManager.set({
         "display": createProjectDisplay,
         "handleClose": handleCreateProjectClose,
         "val": model && model.groupName,
         "handleSubmit": anonymousState__temp5,
         "handleInput": handleInput
-      }, $compid__412, $prevCompid__412);
+      }, $compid__188, $prevCompid__188);
       _taroWeapp.propsManager.set({
         "display": project,
         "handleSubmit": handleAddProject,
@@ -956,18 +965,18 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "teamName": model && model.teamName,
         "handleBack": handleBack,
         "handleClose": anonymousState__temp6
-      }, $compid__413, $prevCompid__413);
+      }, $compid__189, $prevCompid__189);
       Object.assign(this.__state, {
         anonymousState__temp5: anonymousState__temp5,
         anonymousState__temp6: anonymousState__temp6,
-        loopArray296: loopArray296,
-        loopArray297: loopArray297,
-        $compid__408: $compid__408,
-        $compid__409: $compid__409,
-        $compid__410: $compid__410,
-        $compid__411: $compid__411,
-        $compid__412: $compid__412,
-        $compid__413: $compid__413,
+        loopArray98: loopArray98,
+        loopArray99: loopArray99,
+        $compid__184: $compid__184,
+        $compid__185: $compid__185,
+        $compid__186: $compid__186,
+        $compid__187: $compid__187,
+        $compid__188: $compid__188,
+        $compid__189: $compid__189,
         image: image,
         closeImage: closeImage,
         IMGCDNURL: _index2.IMGCDNURL,

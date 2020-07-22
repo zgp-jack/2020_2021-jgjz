@@ -195,10 +195,11 @@ var Auth = (_temp2 = _class = function (_Taro$Component) {
                       content: resItem.msg || ''
                     });
                   } else {
+                    console.log(res.data.worker_id, 'dsadsadasd');
                     // worker_id = resItem.data.worker_id;
                     // res.data.worker_id = resItem.data.worker_id;
                     var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
-                    midData.worker_id = res.data.worker_id;
+                    midData.worker_id = resItem.data.worker_id;
                     _taroWeapp2.default.setStorageSync(_store.MidData, midData);
                     // Taro.setStorageSync(MidData, res.data)
                     _taroWeapp2.default.setStorageSync(_store.CreationTime, resItem.data.created_time);

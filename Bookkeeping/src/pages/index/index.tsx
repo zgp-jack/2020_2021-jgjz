@@ -1,4 +1,4 @@
-import Taro, { useEffect,useState,useDidShow,onAppShow } from '@tarojs/taro'
+import Taro, { useEffect, useState, useDidShow, onAppShow } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
 import { useDispatch } from '@tarojs/redux'
@@ -123,8 +123,19 @@ export default function Index() {
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
     console.log(e,'2312312')
+    if (e.scene === 1037){
+      console.log(e.query);
+      // 返回token ，tokenTime ,userId
+      if (e.query.userId && e.query.token && e.query.tokenTime){
+        // 验证有没有手机号
+        
+      }
+    }
   })
   useDidShow(()=>{
+    // Taro.onAppShow({
+
+    // })
     let midData = Taro.getStorageSync(MidData);
     let creationTime = Taro.getStorageSync(CreationTime);
     let neverPromptType = Taro.getStorageSync(NeverPrompt);
