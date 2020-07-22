@@ -251,6 +251,7 @@ export default function userForeman() {
   // 设置点击了的日历
   const [clickData, setClickData] = useState<any[]>([])
   const [arr, setArr] = useState<any[]>([]);
+  // 刷新
   //农历1949-2100年查询表
   let lunarYearArr = [
     0x0b557, //1949
@@ -331,21 +332,22 @@ export default function userForeman() {
     setIdentity(type);
     // 获取用户信息
     let midData = Taro.getStorageSync(MidData)
-    const objs = JSON.parse(JSON.stringify(obj))
-    objs.name = midData.nickname||'未命名';
-    objs.id = midData.worker_id;
-    setObj(objs);
-    // 获取通讯里信息
-    const workerItemData = JSON.parse(JSON.stringify(workerItem));
-    // 获取设置员工信息
-    // if (useSelectorItem.userList.length) {
-    //   useSelectorItem.userList.push(objs);
-    //   setWorkerItem(useSelectorItem.userList)
-    // }else{
-      workerItemData.push(objs);
-      setWorkerItem(workerItemData)
     // }
-    if (!useSelectorItem.workerList.length){
+    if (!useSelectorItem.workerList.length && !refresh){
+      console.log(32131)
+      const objs = JSON.parse(JSON.stringify(obj))
+      objs.name = midData.nickname||'未命名';
+      objs.id = midData.worker_id;
+      setObj(objs);
+      // 获取通讯里信息
+      const workerItemData = JSON.parse(JSON.stringify(workerItem));
+      // 获取设置员工信息
+      // if (useSelectorItem.userList.length) {
+      //   useSelectorItem.userList.push(objs);
+      //   setWorkerItem(useSelectorItem.userList)
+      // }else{
+        workerItemData.push(objs);
+        setWorkerItem(workerItemData)
       // 获取项目名称
       bkGetProjectTeam();
       // 获取工人列表
@@ -366,7 +368,6 @@ export default function userForeman() {
         bkgetLastGroupInfoAction(params).then(res=>{
           if(res.code === 200){
             console.log(res.data);
-  
           }
         })
     }
@@ -1715,6 +1716,7 @@ export default function userForeman() {
                       setForemanTitle('');
                       setImage({ item: [] })
                       setModel(data);
+                      setRefresh(true)
                     } else {
                       Taro.showModal({
                         title: '保存成功！',
@@ -1735,6 +1737,7 @@ export default function userForeman() {
                         }
                       })
                     }
+                    setRefresh(true)
                     dispatch(setWorker([]))
                   } else {
                     Msg(res.msg);
@@ -1837,6 +1840,8 @@ export default function userForeman() {
                   setForemanTitle('');
                   setImage({ item: [] })
                   setModel(data);
+                  // 设置不刷新
+                  setRefresh(true)
                 } else {
                   Taro.showModal({
                     title: '保存成功！',
@@ -1858,6 +1863,8 @@ export default function userForeman() {
                   })
                 }
                 dispatch(setWorker([]))
+                // 设置不刷新
+                setRefresh(true)
               } else {
                 Msg(resData.msg);
               }
@@ -1916,6 +1923,8 @@ export default function userForeman() {
             setForemanTitle('');
             setImage({item:[]})
             setModel(data);
+            // 设置不刷新
+            setRefresh(true)
           }else{
             Taro.showModal({
               title:'保存成功！',
@@ -1936,6 +1945,8 @@ export default function userForeman() {
               }
             })
           }
+          // 设置不刷新
+          setRefresh(true)
           dispatch(setWorker([]))
         }else{
           Msg(res.msg);
@@ -2262,8 +2273,8 @@ export default function userForeman() {
   }
   // 删除项目
   const handleDelProject = (v)=>{
-    console.log(v);
-    const ids = v.group_id+','+v.id;
+    console.log(v,'xxxx');
+    const ids = v.id;
     let params = {
       ids,
     }

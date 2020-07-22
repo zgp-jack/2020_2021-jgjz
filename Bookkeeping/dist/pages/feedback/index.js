@@ -68,7 +68,7 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Feedback.__proto__ || Object.getPrototypeOf(Feedback)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '意见反馈'
-    }, _this.$usedState = ["loopArray32", "$compid__41", "evaluate", "image", "PHONE"], _this.anonymousFunc1Map = {}, _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray33", "$compid__41", "evaluate", "image", "PHONE"], _this.anonymousFunc1Map = {}, _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Feedback, [{
@@ -195,12 +195,12 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc3 = handlebkAddFeedbackAction;
-      var loopArray32 = evaluate.map(function (v, __index1) {
+      var loopArray33 = evaluate.map(function (v, __index1) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "ggzzz" + __index1;
+        var _$indexKey = "ghzzz" + __index1;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return setRadio(v.$original.id);
@@ -218,7 +218,7 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
         "userDelImg": userDelImg
       }, $compid__41, $prevCompid__41);
       Object.assign(this.__state, {
-        loopArray32: loopArray32,
+        loopArray33: loopArray33,
         $compid__41: $compid__41,
         evaluate: evaluate,
         image: image,

@@ -2001,6 +2001,7 @@ function userForeman() {
       _useState106 = _slicedToArray(_useState105, 2),
       arr = _useState106[0],
       setArr = _useState106[1];
+  // 刷新
   //农历1949-2100年查询表
 
 
@@ -2082,21 +2083,22 @@ function userForeman() {
     setIdentity(type);
     // 获取用户信息
     var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
-    var objs = JSON.parse(JSON.stringify(obj));
-    objs.name = midData.nickname || '未命名';
-    objs.id = midData.worker_id;
-    setObj(objs);
-    // 获取通讯里信息
-    var workerItemData = JSON.parse(JSON.stringify(workerItem));
-    // 获取设置员工信息
-    // if (useSelectorItem.userList.length) {
-    //   useSelectorItem.userList.push(objs);
-    //   setWorkerItem(useSelectorItem.userList)
-    // }else{
-    workerItemData.push(objs);
-    setWorkerItem(workerItemData);
     // }
-    if (!useSelectorItem.workerList.length) {
+    if (!useSelectorItem.workerList.length && !refresh) {
+      console.log(32131);
+      var objs = JSON.parse(JSON.stringify(obj));
+      objs.name = midData.nickname || '未命名';
+      objs.id = midData.worker_id;
+      setObj(objs);
+      // 获取通讯里信息
+      var workerItemData = JSON.parse(JSON.stringify(workerItem));
+      // 获取设置员工信息
+      // if (useSelectorItem.userList.length) {
+      //   useSelectorItem.userList.push(objs);
+      //   setWorkerItem(useSelectorItem.userList)
+      // }else{
+      workerItemData.push(objs);
+      setWorkerItem(workerItemData);
       // 获取项目名称
       bkGetProjectTeam();
       // 获取工人列表
@@ -3452,6 +3454,7 @@ function userForeman() {
                       setForemanTitle('');
                       setImage({ item: [] });
                       setModel(_data5);
+                      setRefresh(true);
                     } else {
                       _taroWeapp2.default.showModal({
                         title: '保存成功！',
@@ -3472,6 +3475,7 @@ function userForeman() {
                         }
                       });
                     }
+                    setRefresh(true);
                     dispatch((0, _workerList.setWorker)([]));
                   } else {
                     (0, _index3.default)(res.msg);
@@ -3566,6 +3570,8 @@ function userForeman() {
                   setForemanTitle('');
                   setImage({ item: [] });
                   setModel(_data6);
+                  // 设置不刷新
+                  setRefresh(true);
                 } else {
                   _taroWeapp2.default.showModal({
                     title: '保存成功！',
@@ -3587,6 +3593,8 @@ function userForeman() {
                   });
                 }
                 dispatch((0, _workerList.setWorker)([]));
+                // 设置不刷新
+                setRefresh(true);
               } else {
                 (0, _index3.default)(resData.msg);
               }
@@ -3636,6 +3644,8 @@ function userForeman() {
             setForemanTitle('');
             setImage({ item: [] });
             setModel(_data7);
+            // 设置不刷新
+            setRefresh(true);
           } else {
             _taroWeapp2.default.showModal({
               title: '保存成功！',
@@ -3656,6 +3666,8 @@ function userForeman() {
               }
             });
           }
+          // 设置不刷新
+          setRefresh(true);
           dispatch((0, _workerList.setWorker)([]));
         } else {
           (0, _index3.default)(res.msg);
@@ -3980,8 +3992,8 @@ function userForeman() {
   };
   // 删除项目
   var handleDelProject = function handleDelProject(v) {
-    console.log(v);
-    var ids = v.group_id + ',' + v.id;
+    console.log(v, 'xxxx');
+    var ids = v.id;
     var params = {
       ids: ids
     };
