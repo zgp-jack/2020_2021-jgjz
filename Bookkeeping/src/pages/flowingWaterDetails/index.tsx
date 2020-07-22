@@ -100,7 +100,12 @@ export default function FlowingWaterDetails() {
     })
     
   }
-  console.log(obj,'obj')
+  const handleImage = (e)=>{
+    Taro.previewImage({
+      current: e.httpurl,
+      urls: [e.httpurl]
+    })
+  }
   return(
     <View className='flowingWaterDetails'>
       <View className='top'>
@@ -140,9 +145,9 @@ export default function FlowingWaterDetails() {
             <View>备注</View>
             <View className='remarks-details'>{obj.note}</View>
             <View className='list-img-box'>
-              {obj.view_images.map(v=>(
+              {obj.view_images&&obj.view_images.length>0&&obj.view_images.map(v=>(
                 <View className='list-img'>
-                  <Image src={v.httpurl} className='list-img-img'/>
+                  <Image src={v.httpurl} className='list-img-img' onClick={()=>handleImage(v)}/>
                 </View>
               ))}
             </View>

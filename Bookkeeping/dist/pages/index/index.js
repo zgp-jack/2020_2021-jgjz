@@ -909,7 +909,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         };
         var $loopState__temp2 = type === 1 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey = "bbezz" + i;
+        var _$indexKey = "bbizz" + i;
 
         _this2.anonymousFunc13Map[_$indexKey] = getNextPageData;
         return {
@@ -924,7 +924,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         };
         var $loopState__temp4 = type === 2 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey2 = "bbfzz" + i;
+        var _$indexKey2 = "bbjzz" + i;
 
         _this2.anonymousFunc15Map[_$indexKey2] = getNextPageData;
         return {

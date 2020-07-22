@@ -374,7 +374,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "jjzzz" + i;
+        var _$indexKey = "badzz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -386,19 +386,19 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "baazz" + i + "-" + __index2;
+          var _$indexKey2 = "baezz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "babzz" + i + "-" + __index2;
+          var _$indexKey3 = "bafzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "baczz" + i + "-" + __index2;
+          var _$indexKey4 = "bagzz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -415,19 +415,19 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "badzz" + i + "-" + __index2;
+          var _$indexKey5 = "bahzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "baezz" + i + "-" + __index2;
+          var _$indexKey6 = "baizz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bafzzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bajzzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
               $prevCompid__54 = _genCompid2[0],
               $compid__54 = _genCompid2[1];
@@ -956,13 +956,13 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
             $original: (0, _taroWeapp.internal_get_original)(values)
           };
           var $loopState__temp4 = data.length > 0 && !busy ? index + index : null;
-          var _$indexKey = 'jhzzz' + i + '-' + index;
+          var _$indexKey = 'babzz' + i + '-' + index;
 
           _this2.anonymousFunc3Map[_$indexKey] = function () {
             return userRouteJump("/pages/notepadDetails/index?id=" + values.$original.id);
           };
 
-          var _$indexKey2 = 'jizzz' + i + '-' + index;
+          var _$indexKey2 = 'baczz' + i + '-' + index;
 
           _this2.anonymousFunc4Map[_$indexKey2] = function (e) {
             e.stopPropagation();handleCheckbox(values.$original);
@@ -3848,6 +3848,7 @@ function userForeman() {
       });
       return;
     }
+    console.log(data, 'data');
     // 修改已设置的
     if (state === 1) {
       var _params2 = {
@@ -3908,6 +3909,7 @@ function userForeman() {
   };
   // 修改
   var handleEditWages = function handleEditWages(v, type) {
+    console.log(v, '撒娇的你爸叫博大精深');
     // 判断是修改标准还是修改已有人的工资标准
     setState(type);
     //判断不是新增
@@ -3919,7 +3921,7 @@ function userForeman() {
     data.money = v.money;
     data.addWork = v.overtime_money;
     data.state = 1;
-    data.id = v.worker_id;
+    data.id = v.id;
     data.group_info = v.groupInfo;
     data.type = v.overtime_type;
     data.day = v.overtime;
@@ -4130,7 +4132,7 @@ function userForeman() {
           if (v.set) {
             data[_i26].click = !data[_i26].click;
           } else {
-            handleOpenWagesModal();
+            handleOpenWagesModal(v);
           }
         }
       }

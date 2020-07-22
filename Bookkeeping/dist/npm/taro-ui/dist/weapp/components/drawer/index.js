@@ -178,7 +178,7 @@ var AtDrawer = (_temp2 = _class = function (_AtComponent) {
         };
         var $loopState__temp5 = !!items && items.length ? name.$original + "-" + index : null;
 
-        var _genCompid = (0, _taroWeapp.genCompid)(__prefix + 'jfzzzzzzzz' + index, true),
+        var _genCompid = (0, _taroWeapp.genCompid)(__prefix + 'jjzzzzzzzz' + index, true),
             _genCompid2 = _slicedToArray(_genCompid, 2),
             $prevCompid__51 = _genCompid2[0],
             $compid__51 = _genCompid2[1];

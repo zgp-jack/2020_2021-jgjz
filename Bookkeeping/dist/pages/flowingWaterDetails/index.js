@@ -60,7 +60,7 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWaterDetails.__proto__ || Object.getPrototypeOf(FlowingWaterDetails)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '包工'
-    }, _this.$usedState = ["obj", "$compid__43", "time", "week"], _this.customComponents = ["AtList"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["obj", "loopArray34", "$compid__43", "time", "week"], _this.anonymousFunc0Map = {}, _this.customComponents = ["AtList"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWaterDetails, [{
@@ -73,6 +73,8 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
   }, {
     key: "_createData",
     value: function _createData() {
+      var _this2 = this;
+
       this.__state = arguments[0] || this.state || {};
       this.__props = arguments[1] || this.props || {};
       var __isRunloopRef = arguments[2];
@@ -186,18 +188,40 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
           }
         });
       };
-      console.log(obj, 'obj');
-      this.anonymousFunc0 = handleDel;
+      var handleImage = function handleImage(e) {
+        _taroWeapp2.default.previewImage({
+          current: e.httpurl,
+          urls: [e.httpurl]
+        });
+      };
+      this.anonymousFunc1 = handleDel;
 
-      this.anonymousFunc1 = function () {
+      this.anonymousFunc2 = function () {
         _taroWeapp2.default.navigateTo({ url: "/pages/editDetails/index?id=" + obj.id });
       };
 
+      var loopArray34 = obj.view_images && obj.view_images.length > 0 ? obj.view_images.map(function (v, __index0) {
+        v = {
+          $original: (0, _taroWeapp.internal_get_original)(v)
+        };
+
+        var _$indexKey = "gizzz" + __index0;
+
+        _this2.anonymousFunc0Map[_$indexKey] = function () {
+          return handleImage(v.$original);
+        };
+
+        return {
+          _$indexKey: _$indexKey,
+          $original: v.$original
+        };
+      }) : [];
       _taroWeapp.propsManager.set({
         "className": "list"
       }, $compid__43, $prevCompid__43);
       Object.assign(this.__state, {
         obj: obj,
+        loopArray34: loopArray34,
         $compid__43: $compid__43,
         time: time,
         week: week
@@ -206,18 +230,31 @@ var FlowingWaterDetails = (_temp2 = _class = function (_Taro$Component) {
     }
   }, {
     key: "anonymousFunc0",
-    value: function anonymousFunc0(e) {
+    value: function anonymousFunc0(_$indexKey) {
+      var _anonymousFunc0Map;
+
       ;
+
+      for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        e[_key2 - 1] = arguments[_key2];
+      }
+
+      return this.anonymousFunc0Map[_$indexKey] && (_anonymousFunc0Map = this.anonymousFunc0Map)[_$indexKey].apply(_anonymousFunc0Map, e);
     }
   }, {
     key: "anonymousFunc1",
     value: function anonymousFunc1(e) {
       ;
     }
+  }, {
+    key: "anonymousFunc2",
+    value: function anonymousFunc2(e) {
+      ;
+    }
   }]);
 
   return FlowingWaterDetails;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1"], _class.$$componentPath = "pages/flowingWaterDetails/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "pages/flowingWaterDetails/index", _temp2);
 
 
 FlowingWaterDetails.config = { navigationBarTitleText: '包工' };

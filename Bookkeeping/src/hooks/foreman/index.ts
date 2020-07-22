@@ -2130,6 +2130,7 @@ export default function userForeman() {
       })
       return;
     }
+    console.log(data,'data');
     // 修改已设置的
     if(state === 1){
       let params = {
@@ -2190,6 +2191,7 @@ export default function userForeman() {
   }
   // 修改
   const handleEditWages = (v:any,type:number)=>{
+    console.log(v,'撒娇的你爸叫博大精深')
     // 判断是修改标准还是修改已有人的工资标准
     setState(type)
     //判断不是新增
@@ -2201,7 +2203,7 @@ export default function userForeman() {
     data.money = v.money;
     data.addWork = v.overtime_money;
     data.state = 1;
-    data.id = v.worker_id;
+    data.id = v.id;
     data.group_info = v.groupInfo;
     data.type = v.overtime_type;
     data.day = v.overtime;
@@ -2412,7 +2414,7 @@ export default function userForeman() {
           if(v.set){
             data[i].click = !data[i].click
           }else{
-            handleOpenWagesModal();
+            handleOpenWagesModal(v);
           }
         }
       }

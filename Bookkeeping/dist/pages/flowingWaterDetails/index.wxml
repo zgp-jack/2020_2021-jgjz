@@ -52,16 +52,18 @@
                     <view>备注</view>
                     <view class="remarks-details">{{obj.note}}</view>
                     <view class="list-img-box">
-                        <view class="list-img" wx:for="{{obj.view_images}}" wx:for-item="v" wx:for-index="_anonIdx2">
-                            <image src="{{v.httpurl}}" class="list-img-img"></image>
-                        </view>
+                        <block wx:if="{{obj.view_images && obj.view_images.length > 0}}">
+                            <view class="list-img" wx:for="{{loopArray34}}" wx:for-item="v" wx:for-index="__index0">
+                                <image src="{{v.$original.httpurl}}" class="list-img-img" bindtap="anonymousFunc0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}"></image>
+                            </view>
+                        </block>
                     </view>
                 </view>
             </at-list>
         </view>
         <view class="footer-box">
-            <view class="footer-box-del" bindtap="anonymousFunc0">删除</view>
-            <view class="footer-box-edit" bindtap="anonymousFunc1">修改</view>
+            <view class="footer-box-del" bindtap="anonymousFunc1">删除</view>
+            <view class="footer-box-edit" bindtap="anonymousFunc2">修改</view>
         </view>
     </view>
 </block>

@@ -10,9 +10,9 @@
                         <image src="{{IMGCDNURL + 'rili.png'}}" class="icon-right-image"></image>
                     </view>
                     <view class="calendarModal-complaintModal-content-top">
-                        <view class="content-top-close" bindtap="funPrivatebajzz">取消</view>
+                        <view class="content-top-close" bindtap="funPrivatebbdzz">取消</view>
                         <view class="content-top-title">选择日期(可选择多天)</view>
-                        <view class="content-top-change" bindtap="funPrivatebbazz">确定</view>
+                        <view class="content-top-change" bindtap="funPrivatebbezz">确定</view>
                     </view>
                     <view class="content-tips">
                         <view class="content-tips-time">{{time.year}}
@@ -22,7 +22,7 @@
                         <view><text class="content-tips-box"></text>表示当天已有记工</view>
                     </view>
                     <view class="content-times">
-                        <scroll-view class="scrollView" scroll-x="{{true}}" scroll-with-animation="{{true}}" upper-threshold="{{50}}" lower-threshold="{{50}}" bindscrolltoupper="funPrivatebbbzz" bindscrolltolower="funPrivatebbczz">
+                        <scroll-view class="scrollView" scroll-x="{{true}}" scroll-with-animation="{{true}}" upper-threshold="{{50}}" lower-threshold="{{50}}" bindscrolltoupper="funPrivatebbfzz" bindscrolltolower="funPrivatebbgzz">
                             <view class="scrollView-content">
                                 <view class="content-weekes">
                                     <view wx:key="id" class="content-weekes-week" wx:for="{{weeks}}" wx:for-item="v" wx:for-index="_anonIdx2">{{v.name}}</view>

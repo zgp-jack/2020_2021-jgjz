@@ -3,14 +3,14 @@
         <view class="time">{{data.creatTime}}</view>
         <view class="content">{{data.note}}</view>
         <view class="imageList">
-            <view class="image" wx:for="{{data.view_images}}" wx:for-item="v" wx:for-index="_anonIdx2">
-                <image class="image-image" src="{{v.httpurl}}"></image>
+            <view class="image" wx:for="{{loopArray33}}" wx:for-item="v" wx:for-index="__index0">
+                <image class="image-image" src="{{v.$original.httpurl}}" bindtap="anonymousFunc0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}"></image>
             </view>
         </view>
         <view class="footer">
             <view class="footer-box">
-                <view class="footer-del" bindtap="anonymousFunc0">删除</view>
-                <view class="footer-btn" bindtap="anonymousFunc1">修改</view>
+                <view class="footer-del" bindtap="anonymousFunc1">删除</view>
+                <view class="footer-btn" bindtap="anonymousFunc2">修改</view>
             </view>
         </view>
     </view>

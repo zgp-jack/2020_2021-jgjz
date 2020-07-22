@@ -338,7 +338,8 @@ export default function Foreman() {
                         // })}
                         className={v.click ? 'workerItem-list-first-click' : 'workerItem-list-first'} 
                         >
-                          {v.name.slice(0, 2)}
+                          {/* {v.name.slice(0, 2)} */}
+                        {v.name.substring(v.name.length-2)}
                         </View>
                         <View className='workerItem-list-title'>{v.name}</View>
                       </View>

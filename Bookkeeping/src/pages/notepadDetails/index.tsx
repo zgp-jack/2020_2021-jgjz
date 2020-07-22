@@ -73,6 +73,12 @@ export default function NotepadDetails() {
       }
     })
   }
+  const handleImage = (e)=>{
+    Taro.previewImage({
+      current: e.httpurl,
+      urls: [e.httpurl]
+    })
+  }
   return (
     <View className='notepadDetails'>
       <View className='time'>{data.creatTime}</View>
@@ -82,7 +88,7 @@ export default function NotepadDetails() {
       <View className='imageList'>
         {data.view_images.map(v=>(
           <View className='image'>
-            <Image className='image-image' src={v.httpurl}/>
+            <Image className='image-image' src={v.httpurl} onClick={()=>{handleImage(v)}}/>
           </View>
         ))}
       </View>

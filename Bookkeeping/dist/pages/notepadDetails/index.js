@@ -58,7 +58,7 @@ var NotepadDetails = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NotepadDetails.__proto__ || Object.getPrototypeOf(NotepadDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["data"], _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NotepadDetails.__proto__ || Object.getPrototypeOf(NotepadDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["data", "loopArray33"], _this.anonymousFunc0Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(NotepadDetails, [{
@@ -71,6 +71,8 @@ var NotepadDetails = (_temp2 = _class = function (_Taro$Component) {
   }, {
     key: "_createData",
     value: function _createData() {
+      var _this2 = this;
+
       this.__state = arguments[0] || this.state || {};
       this.__props = arguments[1] || this.props || {};
       var __isRunloopRef = arguments[2];
@@ -152,31 +154,67 @@ var NotepadDetails = (_temp2 = _class = function (_Taro$Component) {
           }
         });
       };
-      this.anonymousFunc0 = handleDel;
+      var handleImage = function handleImage(e) {
+        _taroWeapp2.default.previewImage({
+          current: e.httpurl,
+          urls: [e.httpurl]
+        });
+      };
+      this.anonymousFunc1 = handleDel;
 
-      this.anonymousFunc1 = function () {
+      this.anonymousFunc2 = function () {
         return userRouteJump("/pages/addNotepad/index?id=" + data.id);
       };
 
+      var loopArray33 = data.view_images.map(function (v, __index0) {
+        v = {
+          $original: (0, _taroWeapp.internal_get_original)(v)
+        };
+
+        var _$indexKey = "ghzzz" + __index0;
+
+        _this2.anonymousFunc0Map[_$indexKey] = function () {
+          handleImage(v.$original);
+        };
+
+        return {
+          _$indexKey: _$indexKey,
+          $original: v.$original
+        };
+      });
       Object.assign(this.__state, {
-        data: data
+        data: data,
+        loopArray33: loopArray33
       });
       return this.__state;
     }
   }, {
     key: "anonymousFunc0",
-    value: function anonymousFunc0(e) {
+    value: function anonymousFunc0(_$indexKey) {
+      var _anonymousFunc0Map;
+
       ;
+
+      for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        e[_key2 - 1] = arguments[_key2];
+      }
+
+      return this.anonymousFunc0Map[_$indexKey] && (_anonymousFunc0Map = this.anonymousFunc0Map)[_$indexKey].apply(_anonymousFunc0Map, e);
     }
   }, {
     key: "anonymousFunc1",
     value: function anonymousFunc1(e) {
       ;
     }
+  }, {
+    key: "anonymousFunc2",
+    value: function anonymousFunc2(e) {
+      ;
+    }
   }]);
 
   return NotepadDetails;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1"], _class.$$componentPath = "pages/notepadDetails/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2"], _class.$$componentPath = "pages/notepadDetails/index", _temp2);
 // NotepadDetails.config = {
 //   navigationBarTitleText: '详情',
 // } as Config
