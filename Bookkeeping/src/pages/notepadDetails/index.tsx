@@ -65,11 +65,20 @@ export default function NotepadDetails() {
     let params = {
       id,
     }
-    bkDeleteNotePadAction(params).then(res=>{
-      if(res.code === 200){
-        Taro.navigateBack()
-      }else{
-        Msg(res.msg)
+    Taro.showModal({
+      title: "提示",
+      content: '确认删除',
+      showCancel: true,
+      success: (res) => {
+        if (res.confirm == true) {
+          bkDeleteNotePadAction(params).then(res => {
+            if (res.code === 200) {
+              Taro.navigateBack();
+            } else {
+              Msg(res.msg)
+            }
+          })
+        }
       }
     })
   }

@@ -272,7 +272,7 @@ export default function AddTeamMember() {
     <View className='content'>
       <View>
         <AtSearchBar
-          placeholder='请输入要查询的联系人'
+          placeholder='请输入名字或手机号码查询'
           showActionButton
           value={valData}
           onChange={(e) => setValData(e)}
@@ -294,7 +294,7 @@ export default function AddTeamMember() {
                     'image-red': v.id % 2 == 0 && v.id > 100,
                     'image-origion': v.id % 2 == 1 && v.id < 100,
                     'image-violet': v.id % 2 == 0 && v.id < 100,
-                  })}>{v.name.slice(0, 2)}</View>
+                  })}>{v.name.substring(v.name.length - 2)}</View>
                 </View>
                 <View>
                   <View className='name'>{v.name}</View>

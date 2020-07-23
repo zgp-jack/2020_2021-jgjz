@@ -26,6 +26,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
 var _class, _temp2;
+// import RecorderPopup from '../../../components/recorderPopup';
+
 
 var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js");
 
@@ -83,7 +85,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Foreman.__proto__ || Object.getPrototypeOf(Foreman)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp7", "recorderTypeArr", "contractorArr", "borrowing", "loopArray59", "loopArray60", "loopArray61", "loopArray62", "loopArray63", "$compid__68", "$compid__69", "$compid__70", "$compid__71", "$compid__72", "$compid__73", "$compid__74", "$compid__75", "$compid__76", "$compid__77", "$compid__78", "$compid__79", "$compid__80", "$compid__81", "IMGCDNURL", "recorderType", "model", "identity", "foremanTitle", "workerItem", "contractor", "delType", "edit", "projectArr", "clickNum", "unit"], _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.anonymousFunc7Map = {}, _this.anonymousFunc8Map = {}, _this.anonymousFunc19Map = {}, _this.anonymousFunc31Map = {}, _this.anonymousFunc32Map = {}, _this.anonymousFunc33Map = {}, _this.anonymousFunc34Map = {}, _this.customComponents = ["WordsTotal", "ImageView", "ProjectModal", "RecorderPopup", "Quantities", "WorkOvertime", "WorkingHours", "CreateProject", "CalendarModal", "WageStandard", "AddMember", "WagesModal", "EditProject", "AtDrawer"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Foreman.__proto__ || Object.getPrototypeOf(Foreman)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp9", "recorderTypeArr", "contractorArr", "borrowing", "loopArray59", "loopArray60", "loopArray61", "loopArray62", "loopArray63", "$compid__68", "$compid__69", "$compid__70", "$compid__71", "$compid__72", "$compid__73", "$compid__74", "$compid__75", "$compid__76", "$compid__77", "$compid__78", "$compid__79", "$compid__80", "$compid__81", "IMGCDNURL", "recorderType", "model", "identity", "foremanTitle", "workerItem", "contractor", "delType", "edit", "projectArr", "clickNum", "unit"], _this.anonymousFunc0Map = {}, _this.anonymousFunc1Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.anonymousFunc7Map = {}, _this.anonymousFunc8Map = {}, _this.anonymousFunc19Map = {}, _this.anonymousFunc31Map = {}, _this.anonymousFunc32Map = {}, _this.anonymousFunc33Map = {}, _this.anonymousFunc34Map = {}, _this.customComponents = ["WordsTotal", "ImageView", "ProjectModal", "RecorderPopup", "Quantities", "WorkOvertime", "WorkingHours", "CreateProject", "CalendarModal", "WageStandard", "AddMember", "WagesModal", "EditProject", "AtDrawer"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Foreman, [{
@@ -297,36 +299,31 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           onTouchEnd = _userForeman.onTouchEnd,
           onTouchStart = _userForeman.onTouchStart,
           onLongPress = _userForeman.onLongPress,
-          setClickModalNum = _userForeman.setClickModalNum;
+          setClickModalNum = _userForeman.setClickModalNum,
+          display = _userForeman.display,
+          setDisplay = _userForeman.setDisplay;
       // const [contractor, setContractor] = useState<number>(0)
-      // 成功弹窗
+      // 创建项目引导
 
 
       var _useState = (0, _taroWeapp.useState)(false),
           _useState2 = _slicedToArray(_useState, 2),
-          display = _useState2[0],
-          setDisplay = _useState2[1];
-      // 创建项目引导
+          createProjectDisplay = _useState2[0],
+          setCreateProjectDisplay = _useState2[1];
+      // 项目列表取消，删除/修改
 
 
       var _useState3 = (0, _taroWeapp.useState)(false),
           _useState4 = _slicedToArray(_useState3, 2),
-          createProjectDisplay = _useState4[0],
-          setCreateProjectDisplay = _useState4[1];
-      // 项目列表取消，删除/修改
-
-
-      var _useState5 = (0, _taroWeapp.useState)(false),
-          _useState6 = _slicedToArray(_useState5, 2),
-          edit = _useState6[0],
-          setEdit = _useState6[1];
+          edit = _useState4[0],
+          setEdit = _useState4[1];
       // 项目名称
 
 
-      var _useState7 = (0, _taroWeapp.useState)([{}, {}]),
-          _useState8 = _slicedToArray(_useState7, 2),
-          projectList = _useState8[0],
-          setProjectList = _useState8[1];
+      var _useState5 = (0, _taroWeapp.useState)([{}, {}]),
+          _useState6 = _slicedToArray(_useState5, 2),
+          projectList = _useState6[0],
+          setProjectList = _useState6[1];
       // useDidShow(()=>{
       //   if (useSelectorItem.workerList.length>0){
       //     setWorkerItem(useSelectorItem.workerList)
@@ -334,14 +331,14 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       // })
 
 
-      var _useState9 = (0, _taroWeapp.useState)({
+      var _useState7 = (0, _taroWeapp.useState)({
         group_info: '',
         team_name: '',
         group_name: ''
       }),
-          _useState10 = _slicedToArray(_useState9, 2),
-          editProject = _useState10[0],
-          setEditProject = _useState10[1];
+          _useState8 = _slicedToArray(_useState7, 2),
+          editProject = _useState8[0],
+          setEditProject = _useState8[1];
       // 获取数据
       // useEffect(()=>{
       //   // 获取项目列表
@@ -404,9 +401,16 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       // 点击保存成功弹窗
       var handleRecorderPopup = function handleRecorderPopup(type) {
         // 跳转
-        if (!(type === 1)) {
-          _taroWeapp2.default.navigateBack({
-            delta: 1
+        if (type === 1) {
+          _taroWeapp2.default.redirectTo({
+            url: '/pages/flowingWater/index'
+          });
+        } else {
+          // Taro.navigateBack({
+          //   delta: 1
+          // })
+          _taroWeapp2.default.redirectTo({
+            url: '/pages/attendanceSheet/index'
           });
         }
         setDisplay(false);
@@ -427,7 +431,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       var handleCreateProjectClose = function handleCreateProjectClose() {
         setCreateProjectDisplay(false);
         var data = JSON.parse(JSON.stringify(model));
-        setModel(_extends({}, data, { groupName: '' }));
+        setModel(_extends({}, data, { groupName: '', teamName: '' }));
       };
       // 关闭日历
       var handleCalendarModalDisplayClose = function handleCalendarModalDisplayClose() {
@@ -592,7 +596,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
       this.anonymousFunc25 = onScrollToLower;
       this.anonymousFunc26 = onScrollToUpper;
 
-      var anonymousState__temp7 = function anonymousState__temp7() {
+      var anonymousState__temp9 = function anonymousState__temp9() {
         return setEditProjectDisplay(false);
       };
 
@@ -676,6 +680,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           'workerItem-list-origion': !v.$original.click && v.$original.id % 2 == 1 && v.$original.id < 100,
           'workerItem-list-violet': !v.$original.click && v.$original.id % 2 == 0 && v.$original.id < 100
         }) : null;
+        var $loopState__temp8 = v.$original.id !== 1 ? v.$original.name.substring(v.$original.name.length - 2) : null;
 
         var _$indexKey5 = "bcfzz" + __index5;
 
@@ -694,6 +699,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey4: _$indexKey4,
           $loopState__temp4: $loopState__temp4,
           $loopState__temp6: $loopState__temp6,
+          $loopState__temp8: $loopState__temp8,
           _$indexKey5: _$indexKey5,
           _$indexKey6: _$indexKey6,
           $original: v.$original
@@ -855,7 +861,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         "display": editProjectDisplay,
         "handleEditProjectData": handleEditProjectData,
         "data": editProjectData,
-        "handleClose": anonymousState__temp7,
+        "handleClose": anonymousState__temp9,
         "handleSubmit": handleEditProject
       }, $compid__80, $prevCompid__80);
       _taroWeapp.propsManager.set({
@@ -866,7 +872,7 @@ var Foreman = (_temp2 = _class = function (_Taro$Component) {
         "onClose": this.anonymousFunc27
       }, $compid__81, $prevCompid__81);
       Object.assign(this.__state, {
-        anonymousState__temp7: anonymousState__temp7,
+        anonymousState__temp9: anonymousState__temp9,
         recorderTypeArr: recorderTypeArr,
         contractorArr: contractorArr,
         borrowing: borrowing,

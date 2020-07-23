@@ -193,7 +193,7 @@
   color:rgba(128, 128, 128, 1)
 }
 .content-list-box{
-  height:300rpx;
+  height:290rpx;
   overflow-y: auto;
 }
 .content-list{
@@ -488,4 +488,12 @@
   line-height: 35rpx;
   text-align: center;
   border-radius: 10rpx;
+}
+.scrollViewBox{
+  position: relative;
+}
+.last{
+  position: absolute;
+  left: 40%;
+  bottom: 0rpx;
 }

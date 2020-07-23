@@ -110,7 +110,7 @@ export default function Index() {
     setNewMonth(newMonth)
     setMonth(addZero(time.getMonth() + 1))
     // 先写死
-    // setStart(newTime)
+    setStart(newTime)
     setWeek(week);
     return newMonth;
   }
@@ -133,9 +133,6 @@ export default function Index() {
     }
   })
   useDidShow(()=>{
-    // Taro.onAppShow({
-
-    // })
     let midData = Taro.getStorageSync(MidData);
     let creationTime = Taro.getStorageSync(CreationTime);
     let neverPromptType = Taro.getStorageSync(NeverPrompt);
@@ -218,9 +215,6 @@ export default function Index() {
     //   })
     // }
   })
-  useEffect(()=>{
-    
-  },[])
   // useEffect(()=>{
   //   // 判断有没有用户信息没有就显示
   //   // 获取缓存信息
@@ -266,7 +260,7 @@ export default function Index() {
     })
   }
   // 获取首页数据
-  const getData = ()=>{
+  const getData = (e?:string)=>{
     // 没登录直接进来默认是工人
     // =====
     // let type = Taro.getStorageSync(Type);
@@ -296,15 +290,21 @@ export default function Index() {
     }
     // 判断选没有选择时间
     let changeTime;
-    if (!repeat){
+    console.log(repeat,'resdsada')
+    if (!e){
+      console.log(1)
+      console.log(312312312312)
       changeTime = getDates();
     }else{
-      changeTime = time;
+      // console.log(2);
+      // console.log(time,'time')
+      changeTime = e;
       // 设置时间
-      const date = new Date();
-      const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
-      setStart(newMonth)
-      setEnd(newMonth)
+      // const date = new Date(vals);
+      // const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+      // console.log(newMonth,'newMonthnewMonthnewMonthnewMonth')
+      // setStart(newMonth)
+      // setEnd(newMonth)
     }
     console.log(changeTime,'changeTimechangeTime')
     let params = {
@@ -348,9 +348,9 @@ export default function Index() {
           // 获取信息
           // 判断是班组长的时候出现弹框
           let type = Taro.getStorageSync(Type);
-          if (type === 1) {
-            bkGetProjectTeam()
-          }
+          // if (type === 1) {
+          //   bkGetProjectTeam()
+          // }
         } else {
           Msg(res.msg);
         }
@@ -364,10 +364,13 @@ export default function Index() {
       setDisplay(true)
       return;
     } 
+    console.log(e,'xxx')
     setVal(e.detail.value)
     setTime(e.detail.value);
     setRepeat(true);
-    getData();
+    getData(e.detail.value);
+    console.log(e.detail.value.substring(e.detail.value.length - 2),'e.detail.value.substring(e.detail.value.length - 2)')
+    setMonth(e.detail.value.substring(e.detail.value.length - 2))
   }
   // 点击提示
   const handelTps = ()=>{
@@ -433,10 +436,15 @@ export default function Index() {
     }else{
       dignity = 1
     }
+    // dignity ===2 为班组长
     // 切换
     if (state === 1){
       console.log(type,'typenjdskajdkjab')
       let msg = dignity === 1 ? '开始为自己记工吧' : '开始为工人记工吧';
+      // 班组长
+      if (dignity == 2){
+        bkGetProjectTeam()
+      }
       Msg(msg)
       console.log(dignity,'neverPromptneverPrompt')
       // return;
@@ -446,9 +454,11 @@ export default function Index() {
       // setTimeout(() => {
         //   getData();
         // }, 500)
+        // 切换的时候如果是班组要判断有没有项目
       }else if(state === 2){
         Taro.setStorageSync(NeverPrompt, true);
         setNeverPrompt(true)
+        // 切换的时候如果是班组要判断有没有项目
       }
       // 切换后跳转页面
     userRouteJump(`/pages/recorder/index?type=${dignity}`)
@@ -530,7 +540,7 @@ export default function Index() {
     bkAddProjectTeamAction(params).then(res => {
       if (res.code === 200) {
         setProject(false);
-        bkGetProjectTeam()
+        // bkGetProjectTeam()
       } else {
         Msg(res.msg);
         return;
@@ -557,9 +567,7 @@ export default function Index() {
     } 
     if (state) {
       // 判断不是0 然后与当前身份不同就是提示
-      console.log(type, 'type')
-      console.log(lasted_business_identity, 'lasted_business_identity')
-
+      // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
         console.log(type, 'type');
         console.log(lasted_business_identity, 'lasted_business_identity')
@@ -662,13 +670,14 @@ export default function Index() {
           </View>
         }
         {type === 1 && list.length>0  && !busy && 
-          <View>
+          <View className='scrollViewBox'>
             <ScrollView
               className='content-list-box'
               scrollY
-              refresherEnabled
+              // refresherEnabled
               lowerThreshold={200}
-              onScrollToLower={() => getNextPageData()}
+              onScroll={() => { getNextPageData()}}
+              // onScrollToLower={() => getNextPageData()}
             >
             {list.map((v,i)=>(
               <View key={i + i} className='content-list' onClick={getNextPageData}>
@@ -684,10 +693,11 @@ export default function Index() {
                 </View>
               ))}
             </ScrollView>
+            {list.length>=3 && <View className='last'>更多</View>}
           </View>
         }
         {type === 2 && list.length>0 && !busy && 
-          <View>
+          <View className='scrollViewBox'>
             <ScrollView
               className='content-list-box'
               scrollY
@@ -705,6 +715,7 @@ export default function Index() {
                 </View>
               ))}
             </ScrollView>
+          {list.length >= 3 && <View className='last'>更多</View>}
           </View>
         }
         {((item && list.length === 0)||!item) && !busy &&  

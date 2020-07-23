@@ -111,8 +111,8 @@
                 </view>
             </block>
             <block wx:if="{{type === 1 && list.length > 0 && !busy}}">
-                <view>
-                    <scroll-view class="content-list-box" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc12">
+                <view class="scrollViewBox">
+                    <scroll-view class="content-list-box" scroll-y="{{true}}" lower-threshold="{{200}}" bindscroll="anonymousFunc12">
                         <view wx:key="$loopState__temp2" class="content-list" bindtap="anonymousFunc13" wx:for="{{loopArray54}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                             <view>
                                 <view class="content-list-flex">
@@ -123,10 +123,13 @@
                             </view>
                         </view>
                     </scroll-view>
+                    <block wx:if="{{list.length >= 3}}">
+                        <view class="last">更多</view>
+                    </block>
                 </view>
             </block>
             <block wx:if="{{type === 2 && list.length > 0 && !busy}}">
-                <view>
+                <view class="scrollViewBox">
                     <scroll-view class="content-list-box" scroll-y="{{true}}" refresher-enabled="{{true}}" lower-threshold="{{200}}" bindscrolltolower="anonymousFunc14">
                         <view wx:key="$loopState__temp4" class="content-list-type" bindtap="anonymousFunc15" wx:for="{{loopArray55}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}">
                             <view class="content-list-flex">
@@ -135,6 +138,9 @@
                             </view>
                         </view>
                     </scroll-view>
+                    <block wx:if="{{list.length >= 3}}">
+                        <view class="last">更多</view>
+                    </block>
                 </view>
             </block>
             <block wx:if="{{(item && list.length === 0 || !item) && !busy}}">

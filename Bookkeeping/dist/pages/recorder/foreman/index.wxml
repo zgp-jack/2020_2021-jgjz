@@ -72,7 +72,7 @@
                                 </block>
                                 <block wx:if="{{v.$original.id !== 1}}">
                                     <view>
-                                        <view class="{{v.$loopState__temp6}}">{{v.$original.name}}</view>
+                                        <view class="{{v.$loopState__temp6}}">{{v.$loopState__temp8}}</view>
                                         <block wx:if="{{recorderType !== 3 && !(recorderType == 2 && contractor == 1) && !v.$original.del && !v.$original.set}}">
                                             <view class="workerItem-list-icon" catchtap="anonymousFunc7" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey5}}">
                                                 <image class="workerItem-list-icon-img" src="{{IMGCDNURL + 'mark.png'}}"></image>
@@ -129,7 +129,7 @@
                                     <view class="mt10">(自动计算)</view>
                                 </view>
                             </view>
-                            <input class="publish-list-input-money" type="text" disabled="{{true}}" placeholder="请选择工钱" value="{{model && model.workersWages}}" />
+                            <input class="publish-list-input-money" type="text" disabled="{{true}}" maxlength="{{14}}" placeholder="请选择工钱" value="{{model && model.workersWages}}" />
                         </view>
                     </view>
                 </view>
@@ -138,18 +138,18 @@
                 <view class="measure">
                     <view class="publish-recruit-card">
                         <view class="publish-list-item"><text class="pulish-list-title">工程量</text>:
-                            <input class="publish-list-input-amount" type="digit" placeholder="请填写工程量" bindinput="anonymousFunc14" value="{{model && model.amount}}" />
+                            <input class="publish-list-input-amount" type="digit" maxlength="{{7}}" placeholder="请填写工程量" bindinput="anonymousFunc14" value="{{model && model.amount}}" />
                             <view class="amountType" bindtap="anonymousFunc15">{{unit}}</view>
                         </view>
                     </view>
                     <view class="publish-recruit-card">
                         <view class="publish-list-item"><text class="pulish-list-title">单价</text>:
-                            <input class="publish-list-input" type="digit" placeholder="请填写单价" bindinput="anonymousFunc16" value="{{model && model.price}}" />
+                            <input class="publish-list-input" type="digit" maxlength="{{7}}" placeholder="请填写单价" bindinput="anonymousFunc16" value="{{model && model.price}}" />
                         </view>
                     </view>
                     <view class="publish-recruit-card">
                         <view class="publish-list-item"><text class="pulish-list-title">工钱</text>:
-                            <input class="publish-list-input" type="digit" bindinput="anonymousFunc17" placeholder="工程量和单价未知时，可直接填写" value="{{model && model.wages}}" />
+                            <input class="publish-list-input" type="digit" maxlength="{{14}}" bindinput="anonymousFunc17" placeholder="工程量和单价未知时，可直接填写" value="{{model && model.wages}}" />
                         </view>
                     </view>
                 </view>
@@ -158,7 +158,7 @@
                 <view class="borrowing">
                     <view class="publish-recruit-card">
                         <view class="publish-list-item"><text class="pulish-list-title">本次借支</text>:
-                            <input class="publish-list-input" type="digit" bindinput="anonymousFunc18" placeholder="请输入本次借支金额" value="{{model && model.borrowing}}" />
+                            <input class="publish-list-input" type="digit" maxlength="{{14}}" bindinput="anonymousFunc18" placeholder="请输入本次借支金额" value="{{model && model.borrowing}}" />
                         </view>
                     </view>
                     <view class="publish-recruit-card">

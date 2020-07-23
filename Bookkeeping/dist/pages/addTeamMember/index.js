@@ -401,7 +401,7 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
             'image-origion': v.$original.id % 2 == 1 && v.$original.id < 100,
             'image-violet': v.$original.id % 2 == 0 && v.$original.id < 100
           }) : null;
-          var $loopState__temp6 = data && data.length > 0 ? v.$original.name.slice(0, 2) : null;
+          var $loopState__temp6 = data && data.length > 0 ? v.$original.name.substring(v.$original.name.length - 2) : null;
           return {
             _$indexKey: _$indexKey,
             _$indexKey2: _$indexKey2,
@@ -433,7 +433,7 @@ var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
         };
       });
       _taroWeapp.propsManager.set({
-        "placeholder": "\u8BF7\u8F93\u5165\u8981\u67E5\u8BE2\u7684\u8054\u7CFB\u4EBA",
+        "placeholder": "\u8BF7\u8F93\u5165\u540D\u5B57\u6216\u624B\u673A\u53F7\u7801\u67E5\u8BE2",
         "showActionButton": true,
         "value": valData,
         "onChange": this.anonymousFunc0,

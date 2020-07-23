@@ -354,7 +354,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         setNewMonth(newMonth);
         setMonth(addZero(time.getMonth() + 1));
         // 先写死
-        // setStart(newTime)
+        setStart(newTime);
         setWeek(week);
         return newMonth;
       };
@@ -376,8 +376,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         }
       });
       (0, _taroWeapp.useDidShow)(function () {
-        // Taro.onAppShow({
-        // })
         var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
         var creationTime = _taroWeapp2.default.getStorageSync(_store.CreationTime);
         var neverPromptType = _taroWeapp2.default.getStorageSync(_store.NeverPrompt);
@@ -460,7 +458,6 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         //   })
         // }
       });
-      (0, _taroWeapp.useEffect)(function () {}, []);
       // useEffect(()=>{
       //   // 判断有没有用户信息没有就显示
       //   // 获取缓存信息
@@ -506,7 +503,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         });
       };
       // 获取首页数据
-      var getData = function getData() {
+      var getData = function getData(e) {
         // 没登录直接进来默认是工人
         // =====
         // let type = Taro.getStorageSync(Type);
@@ -536,15 +533,21 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         }
         // 判断选没有选择时间
         var changeTime = void 0;
-        if (!repeat) {
+        console.log(repeat, 'resdsada');
+        if (!e) {
+          console.log(1);
+          console.log(312312312312);
           changeTime = getDates();
         } else {
-          changeTime = time;
+          // console.log(2);
+          // console.log(time,'time')
+          changeTime = e;
           // 设置时间
-          var date = new Date();
-          var _newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
-          setStart(_newMonth);
-          setEnd(_newMonth);
+          // const date = new Date(vals);
+          // const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+          // console.log(newMonth,'newMonthnewMonthnewMonthnewMonth')
+          // setStart(newMonth)
+          // setEnd(newMonth)
         }
         console.log(changeTime, 'changeTimechangeTime');
         var params = {
@@ -566,9 +569,9 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
               // 设置最早时间
               setStart(res.data.earliest_month);
               // 最晚时间
-              var _date = new Date();
-              var _newMonth2 = _date.getFullYear() + '-' + addZero(_date.getMonth() + 1);
-              setEnd(_newMonth2);
+              var date = new Date();
+              var _newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+              setEnd(_newMonth);
               if (Array.isArray(res.data.business_list.data)) {
                 if (res.data.business_list.data) {
                   setList(res.data.business_list.data);
@@ -588,9 +591,9 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
               // 获取信息
               // 判断是班组长的时候出现弹框
               var _type2 = _taroWeapp2.default.getStorageSync(_store.Type);
-              if (_type2 === 1) {
-                bkGetProjectTeam();
-              }
+              // if (type === 1) {
+              //   bkGetProjectTeam()
+              // }
             } else {
               (0, _index4.default)(res.msg);
             }
@@ -604,10 +607,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           setDisplay(true);
           return;
         }
+        console.log(e, 'xxx');
         setVal(e.detail.value);
         setTime(e.detail.value);
         setRepeat(true);
-        getData();
+        getData(e.detail.value);
+        console.log(e.detail.value.substring(e.detail.value.length - 2), 'e.detail.value.substring(e.detail.value.length - 2)');
+        setMonth(e.detail.value.substring(e.detail.value.length - 2));
       };
       // 点击提示
       var handelTps = function handelTps() {
@@ -673,10 +679,15 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         } else {
           dignity = 1;
         }
+        // dignity ===2 为班组长
         // 切换
         if (state === 1) {
           console.log(type, 'typenjdskajdkjab');
           var msg = dignity === 1 ? '开始为自己记工吧' : '开始为工人记工吧';
+          // 班组长
+          if (dignity == 2) {
+            bkGetProjectTeam();
+          }
           (0, _index4.default)(msg);
           console.log(dignity, 'neverPromptneverPrompt');
           // return;
@@ -686,9 +697,11 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           // setTimeout(() => {
           //   getData();
           // }, 500)
+          // 切换的时候如果是班组要判断有没有项目
         } else if (state === 2) {
           _taroWeapp2.default.setStorageSync(_store.NeverPrompt, true);
           setNeverPrompt(true);
+          // 切换的时候如果是班组要判断有没有项目
         }
         // 切换后跳转页面
         userRouteJump("/pages/recorder/index?type=" + dignity);
@@ -770,7 +783,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         (0, _index.bkAddProjectTeamAction)(params).then(function (res) {
           if (res.code === 200) {
             setProject(false);
-            bkGetProjectTeam();
+            // bkGetProjectTeam()
           } else {
             (0, _index4.default)(res.msg);
             return;
@@ -799,8 +812,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         }
         if (state) {
           // 判断不是0 然后与当前身份不同就是提示
-          console.log(type, 'type');
-          console.log(lasted_business_identity, 'lasted_business_identity');
+          // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
           if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
             console.log(type, 'type');
             console.log(lasted_business_identity, 'lasted_business_identity');
@@ -862,7 +874,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc12 = function () {
-        return getNextPageData();
+        getNextPageData();
       };
 
       this.anonymousFunc14 = function () {

@@ -50,7 +50,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WageStandard.__proto__ || Object.getPrototypeOf(WageStandard)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["wageStandard", "loopArray43", "$compid__46", "$compid__47", "$compid__48", "$compid__49", "display", "handleClose", "handleWageStandard", "handleAddWage", "handleWageStandardRadio", "__fn_onClick"], _this.anonymousFunc2Map = {}, _this.customComponents = ["AtInputNumber"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = WageStandard.__proto__ || Object.getPrototypeOf(WageStandard)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["wageStandard", "loopArray40", "$compid__46", "$compid__47", "$compid__48", "$compid__49", "display", "handleClose", "handleWageStandard", "handleAddWage", "handleWageStandardRadio", "__fn_onClick"], _this.anonymousFunc2Map = {}, _this.customComponents = ["AtInputNumber"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(WageStandard, [{
@@ -116,12 +116,12 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
         handleWageStandard('day', e);
       };
 
-      var loopArray43 = display ? wageStandard.data.map(function (v, __index2) {
+      var loopArray40 = display ? wageStandard.data.map(function (v, __index2) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "jfzzz" + __index2;
+        var _$indexKey = "igzzz" + __index2;
 
         _this2.anonymousFunc2Map[_$indexKey] = function () {
           return handleWageStandardRadio(v.$original);
@@ -166,7 +166,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
       }, $compid__49, $prevCompid__49);
       Object.assign(this.__state, {
         wageStandard: wageStandard,
-        loopArray43: loopArray43,
+        loopArray40: loopArray40,
         $compid__46: $compid__46,
         $compid__47: $compid__47,
         $compid__48: $compid__48,
@@ -176,13 +176,13 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
       return this.__state;
     }
   }, {
-    key: "funPrivatejdzzz",
-    value: function funPrivatejdzzz() {
+    key: "funPrivateiezzz",
+    value: function funPrivateiezzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
-    key: "funPrivatejezzz",
-    value: function funPrivatejezzz() {
+    key: "funPrivateifzzz",
+    value: function funPrivateifzzz() {
       return this.props.handleAddWage.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }, {
@@ -221,7 +221,7 @@ var WageStandard = (_temp2 = _class = function (_Taro$Component) {
   }]);
 
   return WageStandard;
-}(_taroWeapp2.default.Component), _class.$$events = ["funPrivatejdzzz", "funPrivatejezzz", "anonymousFunc2"], _class.$$componentPath = "components/wageStandard/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["funPrivateiezzz", "funPrivateifzzz", "anonymousFunc2"], _class.$$componentPath = "components/wageStandard/index", _temp2);
 exports.default = WageStandard;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(WageStandard));

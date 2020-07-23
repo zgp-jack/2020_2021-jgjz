@@ -1,5 +1,5 @@
-import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide,useRouter } from '@tarojs/taro'
-import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, bkAddBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction  } from '../../utils/request/index'
+import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide, useRouter } from '@tarojs/taro'
+import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, bkAddBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction } from '../../utils/request/index'
 import { MidData, Type } from '../../config/store'
 import { bkGetProjectTeamData } from '../../utils/request/index.d'
 import { useDispatch, useSelector } from '@tarojs/redux'
@@ -12,35 +12,35 @@ import Msg from '../../utils/msg';
 export interface BorrowingType {
   item: DataType[]
 }
-interface ModelType{
-  groupName:string,
-  teamName:string,
-  name:string,
-  time:string,
-  details:string,
-  duration:string,
-  amount:string,
-  price:string,
-  wages:string,
-  borrowing:string,
-  univalent:string,
-  userName:string,
-  phone:string,
-  workersWages:string,
+interface ModelType {
+  groupName: string,
+  teamName: string,
+  name: string,
+  time: string,
+  details: string,
+  duration: string,
+  amount: string,
+  price: string,
+  wages: string,
+  borrowing: string,
+  univalent: string,
+  userName: string,
+  phone: string,
+  workersWages: string,
 }
 interface DataType {
   id: number,
   name: string,
   click: boolean,
-  num?:number,
-  whole?:boolean
+  num?: number,
+  whole?: boolean
 }
-interface WorkerItemType{
-  name:string,
-  id:number,
-  del?:false,
-  click?:false,
-  set?:false,
+interface WorkerItemType {
+  name: string,
+  id: number,
+  del?: false,
+  click?: false,
+  set?: false,
 }
 interface ImageDataType {
   item: ImageItem[],
@@ -72,20 +72,20 @@ export default function userForeman() {
   const [identity, setIdentity] = useState<number>(1)
   // 上班时长
   const [timeArr, setTimeArr] = useState<DataType[]>([
-    { id: 1, name: '一个工', click: false, num: 1, whole:true },
-    { id: 2, name: '半个工', click: false, num: 0.5, whole: true  },
-    { id: 3, name: '休息', click: false,num:0 },
-    { id: 4, name: '0.0小时', click: false,num:0 },
+    { id: 1, name: '一个工', click: false, num: 1, whole: true },
+    { id: 2, name: '半个工', click: false, num: 0.5, whole: true },
+    { id: 3, name: '休息', click: false, num: 0 },
+    { id: 4, name: '0.0小时', click: false, num: 0 },
   ])
   //加班时长
-  const [addWorkArr, setAddWorkArr] = useState <DataType[]>(
+  const [addWorkArr, setAddWorkArr] = useState<DataType[]>(
     [
-      { id: 1, name: '无加班', click: false,num:0 },
-      { id: 2, name: '0.0小时', click: false,num:0 },
+      { id: 1, name: '无加班', click: false, num: 0 },
+      { id: 2, name: '0.0小时', click: false, num: 0 },
     ]
   )
   // 选择大单位
-  const [company, setCompany] = useState <DataType[]>([
+  const [company, setCompany] = useState<DataType[]>([
     { id: 1, name: '平方米', click: true },
     { id: 2, name: '立方米', click: false },
     { id: 3, name: '吨', click: false },
@@ -112,41 +112,41 @@ export default function userForeman() {
     ]
   })
   const [model, setModel] = useState<ModelType>({
-    groupName:'',
-    teamName:'',
-    name:'',
-    time:'',
-    details:'',
-    duration:'',
-    amount:'',
-    price:'',
-    wages:'',
-    borrowing:'',
-    univalent:'',
-    userName:'',
-    phone:'',
-    workersWages:'0',
+    groupName: '',
+    teamName: '',
+    name: '',
+    time: '',
+    details: '',
+    duration: '',
+    amount: '',
+    price: '',
+    wages: '',
+    borrowing: '',
+    univalent: '',
+    userName: '',
+    phone: '',
+    workersWages: '0',
   })
-  const [wageStandard, setWageStandard ] = useState<any>({
+  const [wageStandard, setWageStandard] = useState<any>({
     data: [
       { id: 1, name: '按小时计算', click: true },
       { id: 2, name: '按天算', click: false },
     ],
     // 上班模板
-    work:0,
+    work: 0,
     // 上班金额
-    money:0,
+    money: 0,
     // 加班钱（小时）
-    addWork:0,
+    addWork: 0,
     // 小时/天
-    type:1,
+    type: 1,
     // 加班多少小时算一台呢
-    day:0,
+    day: 0,
     // 自动换算加班多少每小时多少钱
     dayAddWork: 0,
-    state:'',
-    group_info:'',
-    id:'',
+    state: '',
+    group_info: '',
+    id: '',
   })
   // 成功弹窗
   const [display, setDisplay] = useState<boolean>(false)
@@ -164,7 +164,7 @@ export default function userForeman() {
   // 上班时长选择
   const [workingHoursDisplay, setWorkingHoursDisplay] = useState<boolean>(false)
   // 上班时长选择类型
-  const [timeType,setTimeType]= useState<number>(0)
+  const [timeType, setTimeType] = useState<number>(0)
   // 填写班组
   const [project, setProject] = useState<boolean>(false)
   // 单位
@@ -175,9 +175,9 @@ export default function userForeman() {
   const [addMemberDisplay, setAddMemberDisplay] = useState<boolean>(false)
   // 用户数据
   const [obj, setObj] = useState<DataType>({
-    name:'',
-    id:0,
-    click:false,
+    name: '',
+    id: 0,
+    click: false,
   })
   const [contractor, setContractor] = useState<number>(0)
   // 图片
@@ -205,9 +205,9 @@ export default function userForeman() {
   // 项目列表
   const [projectArr, setProjectArr] = useState<bkGetProjectTeamData[]>([])
   // 项目id
-  const [ids,setIds] = useState<string>('');
+  const [ids, setIds] = useState<string>('');
   // 判断工资标准修改类型
-  const [state,setState]= useState<number>(0)
+  const [state, setState] = useState<number>(0)
   // 选择班主成员
   const [memberList, setMemberList] = useState<any>([])
   // 工人列表
@@ -215,13 +215,13 @@ export default function userForeman() {
   //储存工人
   const [storagelist, setStoragelist] = useState<any>([])
   // 工资标准
-  const [standard, setStandard] =useState<any>([])
+  const [standard, setStandard] = useState<any>([])
   // 已设置工资标准
   const [moneyList, setMoneyList] = useState<any>([])
   // 工资tab类型
   const [tab, setTab] = useState<number>(0)
   // 选择人数
-  const [clickNum, setClickNum] =useState<number>(0);
+  const [clickNum, setClickNum] = useState<number>(0);
   // 修改项目组数据
   const [editProjectData, setEditProjectData] = useState<any>({
     group_info: '',
@@ -233,18 +233,18 @@ export default function userForeman() {
   // 设置工资标准里的工人
   const [setWorkList, setSetWorkList] = useState<any[]>([])
   // group_info
-  const [groupInfo, setGroupInfo]= useState<string>('')
+  const [groupInfo, setGroupInfo] = useState<string>('')
   // 添加标准
   const [addStandard, setAddStandard] = useState<number>(0)
   // 日历（不等于借支）
-  const [timeData,setTimeData] =useState<any[]>([]);
+  const [timeData, setTimeData] = useState<any[]>([]);
   // modal选择工人
   const [clickModalNum, setClickModalNum] = useState<number>(0)
   // 刷新
-  const [refresh,setRefresh] = useState<boolean>(false)
+  const [refresh, setRefresh] = useState<boolean>(false)
   // 触摸时间设置
   const [endTime, setEndTime] = useState<number>();
-  const [startTime,setStartTime] = useState<number>()
+  const [startTime, setStartTime] = useState<number>()
   // 日历
   // 日历
   const [calendarModalDisplay, setCalendarModalDisplay] = useState<boolean>(false)
@@ -287,117 +287,41 @@ export default function userForeman() {
   const [reduxTime, setReduxTime] = useState<any[]>([])
   // 工资标准全选
   const [checkAll, setCheckAll] = useState<boolean>(false)
-  // useDidShow(() => {
-  //   if (refresh){
-  //     setRefresh(false)
-  //     return;
-  //   } 
-  //   const type = Taro.getStorageSync(Type);
-  //   setIdentity(type)
-  //   // 判断选择回来 
-  //   if (useSelectorItem.workerList.length > 0) {
-  //     if (identity === 2){
-  //       setForeman(useSelectorItem.workerList);
-  //       setForemanTitle(useSelectorItem.workerList[0].name);
-  //       return;
-  //     }
-  //     //  ======= 需要修改，等获取到本人信息后
-  //     let objs = JSON.parse(JSON.stringify(obj));
-  //     const data = JSON.parse(JSON.stringify(moneyList));
-  //     const arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
-  //     if(data.length>0){
-  //       for(let j = 0;j<data.length;j++){
-  //         for (let i = 0; i <arrList.length;i++){
-  //           arrList[i].click = false;
-  //           if (data[j].worker_id === arrList[i].id){
-  //             arrList[i].set = true
-  //           }
-  //         }
-  //       }
-  //     }else{
-  //       for (let i = 0; i < arrList.length; i++) {
-  //         arrList[i].click = false;
-  //       }
-  //     }
-  //     for(let i =0;i<arrList.length;i++){
-  //       if(arrList[i].id === objs.id){
-  //         objs = arrList[i];
-  //         arrList.splice(i,1)
-  //       }
-  //     }
-  //     setWorkerItem([objs, ...arrList])
-  //   }
-  // })
-  useEffect(()=>{
+  useEffect(() => {
     // 获取角色
     let type = Taro.getStorageSync(Type);
     setIdentity(type);
     // 获取用户信息
-    let midData = Taro.getStorageSync(MidData)
-    // }
-    console.log(refresh,'refresh')
-    if (!useSelectorItem.workerList.length && !refresh){
-      console.log(32131)
-      const objs = JSON.parse(JSON.stringify(obj))
-      objs.name = midData.nickname||'未命名';
-      objs.id = midData.worker_id;
-      setObj(objs);
-      // 获取通讯里信息
-      const workerItemData = JSON.parse(JSON.stringify(workerItem));
-      // 获取设置员工信息
-      // if (useSelectorItem.userList.length) {
-      //   useSelectorItem.userList.push(objs);
-      //   setWorkerItem(useSelectorItem.userList)
-      // }else{
-        workerItemData.push(objs);
-        setWorkerItem(workerItemData)
-      // 获取项目名称
-      bkGetProjectTeam();
+    // let midData = Taro.getStorageSync(MidData)
+    console.log(refresh, 'refresh')
+    // 第一次进入页面
+    if (!useSelectorItem.workerList.length && !refresh) {
+      // const objs = JSON.parse(JSON.stringify(obj))
+      // objs.name = midData.nickname||'未命名';
+      // objs.id = midData.worker_id;
+      // console.log(objs,'objs')
+      // setObj(objs);
+      // // 获取通讯里信息
+      // const workerItemData = JSON.parse(JSON.stringify(workerItem));
+      // workerItemData.push(objs);
+      // setWorkerItem(workerItemData)
+      // // 获取项目名称
+      // bkGetProjectTeam();
       // 获取工人列表
       // bkGetWorker(groupInfo);
       // 工资标准
-      bkWageStandGetWage();
-      // 日历
-      getMonthDaysCurrent(new Date());
-      if (useSelectorItem.clickTIme.length > 0) {
-        setReduxTime(useSelectorItem.clickTIme);
-      };
+      // bkWageStandGetWage();
+      // // 日历
+      // getMonthDaysCurrent(new Date());
+      // if (useSelectorItem.clickTIme.length > 0) {
+      //   setReduxTime(useSelectorItem.clickTIme);
+      // };
       // 获取上次记录项目
-      // console.log(stateType,'sateTea')
-      // if (stateType){
-        // const Data = JSON.parse(JSON.stringify(model));
-        // let params={
-        //   identity : type,
-        // }
-        // bkgetLastGroupInfoAction(params).then(res=>{
-        //   if(res.code === 200){
-        //     // 判断有值的话找到对应的赋值
-        //     if(res.data){
-        //       bkGetProjectTeamAction({}).then(resItem => {
-        //         if(resItem.code === 200){
-        //           if(resItem.data.length){
-        //             for(let i =0;i<resItem.data.length;i++){
-        //               console.log(resItem.data[i].group_id + ',' + resItem.data[i].id)
-        //               if (res.data == (resItem.data[i].group_id+','+resItem.data[i].id)){
-        //                 console.log(resItem.data[i],'内容')
-        //                 setGroupInfo(resItem[i].group_id);
-        //                 // 设置项目名称
-        //                 const name = resItem[i].group_name + '-' +  resItem[i].name
-        //                 setModel({...Data,name});
-        //                 // 获取
-        //               }
-        //             }
-        //           }
-        //         }
-        //       })
-        //     }
-        //     console.log(res.data);
-        //   }
-        // })
+      handleInit();
     }
     // }
     // 判断选择回来 
-    console.log(useSelectorItem.workerList,'workerListworkerList')
+    console.log(useSelectorItem.workerList, 'workerListworkerList')
     if (useSelectorItem.workerList.length > 0) {
       if (identity === 2) {
         setForeman(useSelectorItem.workerList);
@@ -428,10 +352,65 @@ export default function userForeman() {
           arrList.splice(i, 1)
         }
       }
-      console.log([objs, ...arrList],'[objs, ...arrList]')
+      console.log([objs, ...arrList], '[objs, ...arrList]')
       setWorkerItem([objs, ...arrList])
     }
   }, [useSelectorItem.workerList])
+  const handleInit = () => {
+    const Data = JSON.parse(JSON.stringify(model));
+    let type = Taro.getStorageSync(Type);
+    let params = {
+      identity: type,
+    }
+    let midData = Taro.getStorageSync(MidData)
+    // 获取上次记录
+    bkgetLastGroupInfoAction(params).then(res => {
+      if (res.code === 200) {
+        // 判断有值的话找到对应的赋值
+        if (res.data) {
+          // 获取项目
+          bkGetProjectTeamAction({}).then(resItem => {
+            if (resItem.code === 200) {
+              if (resItem.data.length) {
+                for (let i = 0; i < resItem.data.length; i++) {
+                  console.log(resItem.data[i].group_id + ',' + resItem.data[i].id)
+                  if (res.data == (resItem.data[i].group_id + ',' + resItem.data[i].id)) {
+                    console.log(resItem.data[i], '内容')
+                    setGroupInfo(resItem.data[i].group_id);
+                    // 设置项目名称
+                    const name = resItem.data[i].group_name + '-' + resItem.data[i].name
+                    setModel({ ...Data, name });
+                    // 获取人员
+                    bkGetWorker((resItem.data[i].group_id + ',' + resItem.data[i].id), true)
+                  }
+                }
+              }
+            }
+          })
+        }
+        console.log(res.data);
+      } else {
+        const objs = JSON.parse(JSON.stringify(obj))
+        objs.name = midData.nickname || '未命名';
+        objs.id = midData.worker_id;
+        console.log(objs, 'objs')
+        setObj(objs);
+        // 获取通讯里信息
+        const workerItemData = JSON.parse(JSON.stringify(workerItem));
+        workerItemData.push(objs);
+        setWorkerItem(workerItemData)
+        // 获取项目名称
+        bkGetProjectTeam();
+        // 工资标准
+        bkWageStandGetWage();
+        // 日历
+        getMonthDaysCurrent(new Date());
+        if (useSelectorItem.clickTIme.length > 0) {
+          setReduxTime(useSelectorItem.clickTIme);
+        };
+      }
+    })
+  }
   // 关闭清空时间
   // useDidHide(()=>{
   //   // setTimeData([]);
@@ -453,7 +432,7 @@ export default function userForeman() {
     return num;
   }
   // 日历点击
-  const handleClickCalendar = (v:any)=>{
+  const handleClickCalendar = (v: any) => {
     const date = v.year + '-' + addZero(v.month) + '-' + addZero(v.date);
     const dates = (new Date(date)).valueOf();
     const newDate = (new Date()).valueOf();
@@ -465,7 +444,7 @@ export default function userForeman() {
     const calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
     const reduxItem = JSON.parse(JSON.stringify(reduxTime));
     const arrList = JSON.parse(JSON.stringify(arr));
-    
+
     // if (recorderType === 3) {
     //   if (arrList.length === 0) {
     //     for (let i = 0; i < calendarDaysArr.length; i++) {
@@ -522,7 +501,7 @@ export default function userForeman() {
           reduxItem.push(data)
         }
         dispatch(setClickTIme(reduxItem))
-        console.log(data,'date');
+        console.log(data, 'date');
         setClickData(data)
         setCalendarDays(calendarDaysArr);
         return;
@@ -594,7 +573,7 @@ export default function userForeman() {
         'current': true,
         'lunarCalendarItem': lunarCalendarItem.lunarDay,
         'selected': i == date, // 判断当前日期
-        'stop': years <= year && ((months == month && dates < i) || months< month),
+        'stop': years <= year && ((months == month && dates < i) || months < month),
         'click': years <= year && months == month && dates == i
         // 'next': dates < date
       })
@@ -628,8 +607,8 @@ export default function userForeman() {
       }
     }
     // 第一次设置值进去
-    let dataItme:any[] = [];
-    for (let i = 0; i < calendarDaysArr.length;i++){
+    let dataItme: any[] = [];
+    for (let i = 0; i < calendarDaysArr.length; i++) {
       if (calendarDaysArr[i].click) {
         dataItme.push(calendarDaysArr[i]);
       }
@@ -780,114 +759,114 @@ export default function userForeman() {
     }
   }
   // 获取项目名称
-  const bkGetProjectTeam = (groupName?:string)=>{
+  const bkGetProjectTeam = (groupName?: string) => {
     bkGetProjectTeamAction({}).then(res => {
-      if(res.code === 200){
-          // 如果是工人的话默认选中第一条有数据
-          // 多条选中最近一条
-          // 工人
+      if (res.code === 200) {
+        // 如果是工人的话默认选中第一条有数据
+        // 多条选中最近一条
+        // 工人
         const modalObj = JSON.parse(JSON.stringify(model));
         const identity = Taro.getStorageSync(Type)
-          if(identity === 2){
-            console.log(model.groupName,'model.groupNamemodel.groupName')
-            if (!model.groupName){
-              let groupInfo
-              if (res.data && res.data.length>0){
-                for(let i =0;i<res.data.length;i++){
-                  res.data[0].click = true;
-                  groupInfo = res.data[0].group_id+','+res.data[0].id;
-                  // groupInfo = res.data[0].child[0].pid + ',' + res.data[0].child[0].id;
-                  if(res.data[0].leader_name){
-                    setForemanTitle(res.data[0].leader_name);
-                    console.log(res.data[0],'data[0]')
-                    // 设置值
-                    dispatch(setWorker([res.data[0]]))
-                  }else{
-                    setForemanTitle('')
-                  }
+        if (identity === 2) {
+          console.log(model.groupName, 'model.groupNamemodel.groupName')
+          if (!model.groupName) {
+            let groupInfo
+            if (res.data && res.data.length > 0) {
+              for (let i = 0; i < res.data.length; i++) {
+                res.data[0].click = true;
+                groupInfo = res.data[0].group_id + ',' + res.data[0].id;
+                // groupInfo = res.data[0].child[0].pid + ',' + res.data[0].child[0].id;
+                if (res.data[0].leader_name) {
+                  setForemanTitle(res.data[0].leader_name);
+                  console.log(res.data[0], 'data[0]')
+                  // 设置值
+                  dispatch(setWorker([res.data[0]]))
+                } else {
+                  setForemanTitle('')
                 }
               }
-              setGroupInfo(groupInfo)
-              // 有名字才加
-              let name='';
-              if(res.data.length>0){
-                if (res.data[0].group_name){
-                  name = res.data[0].group_name +'-'+ res.data[0].name;
-                }else{
-                  name=''
-                }
-              }
-              // 设置值
-              let duration = modalObj.duration;
-              let time = modalObj.time
-              if (identity === 2) {
-                const data = JSON.parse(JSON.stringify(timeArr));
-                duration = '一个工无加班'
-                data[0].click = true;
-                setTimeArr(data);
-                const years = new Date().getFullYear();
-                const months = new Date().getMonth() + 1;
-                const dates = new Date().getDate();
-                time = years +'-'+ months +'-'+ dates
-                // `${years}-${months}-${dates}(今天)`
-              }
-              setModel({ ...modalObj, name, duration, time})
-              console.log(res.data,'res.datam amsdKn dsknad ksa ')
-              setProjectArr(res.data);
-            }else{
-              if (res.data && res.data.length > 0) {
-                for (let i = 0; i < res.data.length; i++) {
-                  // res.data[0].click = true;
-                  if (groupName === res.data[i].name){
-                    res.data[i].click = true;
-                  }
-                }
-              }else{
-                //  清空名字班组长
-                setModel({ ...modalObj, name: '', groupName: '', teamName:'' })
-                setForemanTitle('')
-              }
-              console.log(res.data,'res.datam amsd ')
-              setProjectArr(res.data);
             }
-          }else{
-            const data = JSON.parse(JSON.stringify(timeArr));
-            const duration = '一个工无加班'
-            data[0].click = true;
-            setTimeArr(data);
-            const years = new Date().getFullYear();
-            const months = new Date().getMonth() + 1;
-            const dates = new Date().getDate();
-            const time = years + '-' + months + '-' + dates
-            setModel({ ...modalObj, duration, time })
-            setTimeArr(data);
+            setGroupInfo(groupInfo)
+            // 有名字才加
+            let name = '';
+            if (res.data.length > 0) {
+              if (res.data[0].group_name) {
+                name = res.data[0].group_name + '-' + res.data[0].name;
+              } else {
+                name = ''
+              }
+            }
+            // 设置值
+            let duration = modalObj.duration;
+            let time = modalObj.time
+            if (identity === 2) {
+              const data = JSON.parse(JSON.stringify(timeArr));
+              duration = '一个工无加班'
+              data[0].click = true;
+              setTimeArr(data);
+              const years = new Date().getFullYear();
+              const months = new Date().getMonth() + 1;
+              const dates = new Date().getDate();
+              time = years + '-' + months + '-' + dates
+              // `${years}-${months}-${dates}(今天)`
+            }
+            setModel({ ...modalObj, name, duration, time })
+            console.log(res.data, 'res.datam amsdKn dsknad ksa ')
+            setProjectArr(res.data);
+          } else {
+            if (res.data && res.data.length > 0) {
+              for (let i = 0; i < res.data.length; i++) {
+                // res.data[0].click = true;
+                if (groupName === res.data[i].name) {
+                  res.data[i].click = true;
+                }
+              }
+            } else {
+              //  清空名字班组长
+              setModel({ ...modalObj, name: '', groupName: '', teamName: '' })
+              setForemanTitle('')
+            }
+            console.log(res.data, 'res.datam amsd ')
             setProjectArr(res.data);
           }
+        } else {
+          const data = JSON.parse(JSON.stringify(timeArr));
+          const duration = '一个工无加班'
+          data[0].click = true;
+          setTimeArr(data);
+          const years = new Date().getFullYear();
+          const months = new Date().getMonth() + 1;
+          const dates = new Date().getDate();
+          const time = years + '-' + months + '-' + dates
+          setModel({ ...modalObj, duration, time })
+          setTimeArr(data);
+          setProjectArr(res.data);
+        }
       }
     })
   }
   // 已设置工资标准标准
-  const bkGetWorkerWage = (id?:string,Item?:any)=>{
+  const bkGetWorkerWage = (id?: string, Item?: any) => {
     let prams;
-    if(id){
+    if (id) {
       prams = {
-        group_info:id
+        group_info: id
       }
-    }else{
+    } else {
       prams = {
         group_info: groupInfo
       }
     }
     // return;
-    bkGetWorkerWageAction(prams).then(res=>{
-      if(res.code === 200){
-        console.log(res,'ressssss')
+    bkGetWorkerWageAction(prams).then(res => {
+      if (res.code === 200) {
+        console.log(res, 'ressssss')
         setMoneyList(res.data);
         // 判断页面上的是否设置工资标准
-        if(identity ===1 ){
+        if (identity === 1) {
           const data = JSON.parse(JSON.stringify(workerItem))
           // 获取工人传过来数据，判断是否设置工资标准
-          if (Item){
+          if (Item) {
             for (let i = 0; i < Item.length; i++) {
               for (let j = 0; j < res.data.length; j++) {
                 if (res.data[j].worker_id === Item[i].id) {
@@ -895,7 +874,7 @@ export default function userForeman() {
                 }
               }
             }
-            console.log(Item,'ItemItemItem')
+            console.log(Item, 'ItemItemItem')
             setWorkerItem(Item)
             return;
           }
@@ -908,20 +887,20 @@ export default function userForeman() {
           // }
           // setWorkerItem(data)
         }
-      }else{
+      } else {
         Msg(res.msg)
       }
     })
   }
   // 工资标准
-  const bkWageStandGetWage = ()=>{
-    bkWageStandGetWageAction({}).then(res=>{
-      if(res.code === 200){
-        for(let i =0;i<res.data.length;i++){
-          if(i === 0 ){
+  const bkWageStandGetWage = () => {
+    bkWageStandGetWageAction({}).then(res => {
+      if (res.code === 200) {
+        for (let i = 0; i < res.data.length; i++) {
+          if (i === 0) {
             res.data[i].click = true;
             setTemplateId(res.data[i].id)
-          }else{
+          } else {
             res.data[i].click = false;
           }
         }
@@ -930,24 +909,25 @@ export default function userForeman() {
     })
   }
   // 工人列表
-  const bkGetWorker = (groupInfos?:any, val?:any,dataItem?:any)=>{
+  const bkGetWorker = (groupInfos?: any, val?: any, dataItem?: any) => {
     // 不传group_info获取通讯录里的所有人
     let params;
-    if (groupInfos){
+    if (groupInfos) {
       params = {
-        group_info:groupInfos
+        group_info: groupInfos
       }
-    }else{
+    } else {
       params = {}
     }
-    bkGetWorkerAction(params).then(res=>{
-      if(res.code === 200){
-        console.log(res.data);
+    let midData = Taro.getStorageSync(MidData)
+    bkGetWorkerAction(params).then(res => {
+      if (res.code === 200) {
+        console.log(res.data, 'dadadada');
         const data = JSON.parse(JSON.stringify(workerItem));
-        let arr:any[] = [];
-        for(let i =0;i<res.data.length;i++){
-          if(res.data[i].list){
-            for(let j = 0;j<res.data[i].list.length;j++){
+        let arr: any[] = [];
+        for (let i = 0; i < res.data.length; i++) {
+          if (res.data[i].list) {
+            for (let j = 0; j < res.data[i].list.length; j++) {
               // 判断有worktime_define和money就是设置了工资标准
               // if (res.data[i].list[j].worktime_define && res.data[i].list[j].money){
               //   res.data[i].list[j].set = true;
@@ -957,9 +937,9 @@ export default function userForeman() {
           }
         }
         // 有自己
-        if (val){
+        if (val) {
           // 添加成功
-          if(val ===1){
+          if (val === 1) {
             if (dataItem) {
               // 根据姓名判断在那个位置push进去
               for (let i = 0; i < res.data.length; i++) {
@@ -969,24 +949,29 @@ export default function userForeman() {
               }
             }
             dispatch(setmailList(res.data))
-          }else{
-            console.log(3123131)
+          } else {
+            const objs = JSON.parse(JSON.stringify(obj))
+            objs.name = midData.nickname || '未命名';
+            objs.id = midData.worker_id;
+            console.log(objs, 'objs')
+            setObj(objs);
             // 选择另一个项目的情况
-            for(let i = 0;i<arr.length;i++){
-              if (arr[i].id == obj.id){
-                arr.splice(i,1);
+            for (let i = 0; i < arr.length; i++) {
+              if (arr[i].id == objs.id) {
+                arr.splice(i, 1);
               }
             }
-            console.log(groupInfos, [obj, ...arr],'groupInfos, [obj,...arr]')
+
+            console.log(groupInfos, [obj, ...arr], 'groupInfos, [obj,...arr]')
             dispatch(setPhoneList([obj, ...arr]));
-            bkGetWorkerWage(groupInfos, [obj,...arr]);
+            bkGetWorkerWage(groupInfos, [obj, ...arr]);
+          }
         }
-      }
         dispatch(setUserList(res.data))
         setWorkerList(res.data);
         // 判断有就不存了存通讯录redux
         // 么有groupInfos就不修改
-        if (!groupInfos){
+        if (!groupInfos) {
           dispatch(setmailList(res.data))
         }
         // // else{
@@ -994,28 +979,28 @@ export default function userForeman() {
         // }
         // 存员工redux
         // 设置员工
-        let arrDate:any[]=[];
-        for(let i=0;i<res.data.length;i++){
-          for(let j=0;j<res.data[i].list.length;j++){
+        let arrDate: any[] = [];
+        for (let i = 0; i < res.data.length; i++) {
+          for (let j = 0; j < res.data[i].list.length; j++) {
             arrDate.push(res.data[i].list[j]);
           }
         }
         // setWorkerItem(arr);
         dispatch(setUserList(res.data))
         setWorkerList(res.data);
-      }else{
+      } else {
         Msg(res.msg);
         return;
       }
     })
   }
   // 输入框
-  const handleInput = (type:string,e)=>{
+  const handleInput = (type: string, e) => {
     let data = JSON.parse(JSON.stringify(model));
-    if (type === 'details'){
+    if (type === 'details') {
       setNum(e.detail.value.length);
     }
-    if (type == 'amount' || type == 'price' || type == 'wages' || type == 'borrowing'){
+    if (type == 'amount' || type == 'price' || type == 'wages' || type == 'borrowing') {
       if (/^(\d?)+(\.\d{0,2})?$/.test(e.detail.value)) { //正则验证，提现金额小数点后不能大于两位数字
         data[type] = e.detail.value;
       } else {
@@ -1029,16 +1014,16 @@ export default function userForeman() {
     setModel(data);
   }
   // 创建项目
-  const handleAddProject = ()=>{
-    let params={
+  const handleAddProject = () => {
+    let params = {
       group_name: model.groupName,
       team_name: model.teamName,
     }
-    bkAddProjectTeamAction(params).then(res=>{
-      if(res.code === 200){
+    bkAddProjectTeamAction(params).then(res => {
+      if (res.code === 200) {
         setIds(res.data);
         bkGetProjectTeam(model.groupName);
-      }else{
+      } else {
         Msg(res.msg);
         return;
       }
@@ -1046,16 +1031,16 @@ export default function userForeman() {
       let data = JSON.parse(JSON.stringify(model));
       data.name = model.groupName;
       setGroupInfo(res.data)
-      setModel({...data, groupName: '', teamName: ''})
+      setModel({ ...data, groupName: '', teamName: '' })
     })
   }
   // 选择加班时长
-  const handleworkOvertime = (type:number,val:any)=>{
+  const handleworkOvertime = (type: number, val: any) => {
     const data = JSON.parse(JSON.stringify(model));
     setTimeType(type)
-    if(type === 1){
+    if (type === 1) {
       let arr;
-      if(val.id === 4){
+      if (val.id === 4) {
         arr = timeArr.map(v => {
           if (v.id === val.id) {
             v.click = !v.click;
@@ -1068,12 +1053,12 @@ export default function userForeman() {
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         // return;
-      }else{
-        arr = timeArr.map(v=>{
-          if(v.id === val.id){
+      } else {
+        arr = timeArr.map(v => {
+          if (v.id === val.id) {
             v.click = !v.click;
-          }else{
-            if(v.id === 4){
+          } else {
+            if (v.id === 4) {
               v.name = '0.0小时';
             }
             v.click = false
@@ -1084,29 +1069,29 @@ export default function userForeman() {
       }
       // console.log(arr);
       let addTime;
-      for(let i =0;i<addWorkArr.length;i++){
-        if(addWorkArr[i].click){
-          if (addWorkArr[i].id!==1 ){
-            addTime = '加班'+addWorkArr[i].name
-          }else{
+      for (let i = 0; i < addWorkArr.length; i++) {
+        if (addWorkArr[i].click) {
+          if (addWorkArr[i].id !== 1) {
+            addTime = '加班' + addWorkArr[i].name
+          } else {
             addTime = '无加班'
           }
-        }else{
+        } else {
           addTime = '无加班'
         }
       }
       let duration;
-      if(val.id == 3){
+      if (val.id == 3) {
         duration = val.name + addTime;
-      }else{
+      } else {
         duration = '上班' + val.name + addTime;
       }
-      if(val.id!=4){
-        setModel({ ...data, duration})
+      if (val.id != 4) {
+        setModel({ ...data, duration })
       }
-    }else{
+    } else {
       let arr;
-      if(val.id != 2){
+      if (val.id != 2) {
         arr = addWorkArr.map(v => {
           if (v.id === val.id) {
             v.click = !v.click
@@ -1119,7 +1104,7 @@ export default function userForeman() {
           return v;
         })
         setAddWorkArr(arr);
-      }else{
+      } else {
         arr = addWorkArr.map(v => {
           if (v.id === val.id) {
             v.click = !v.click;
@@ -1145,10 +1130,10 @@ export default function userForeman() {
           Time = '休息'
         }
       }
-      
+
       let duration;
       if (val.id == 1) {
-        duration = Time +'无加班';
+        duration = Time + '无加班';
       } else {
         duration = '上班' + Time + val.name;
       }
@@ -1158,11 +1143,11 @@ export default function userForeman() {
     }
   }
   // 加班时长弹框选择
-  const handleWorkingHours = (type:number,e:any)=>{
+  const handleWorkingHours = (type: number, e: any) => {
     const Item = JSON.parse(JSON.stringify(model));
-    if(type === 1){
-      const data = timeArr.map((v)=>{
-        if(v.id === 4){
+    if (type === 1) {
+      const data = timeArr.map((v) => {
+        if (v.id === 4) {
           v.name = e.name;
           v.click = true;
           v.num = e.num
@@ -1182,14 +1167,14 @@ export default function userForeman() {
           addTime = '无加班'
         }
       }
-      console.log(addWorkArr,'addWorkArr')
-      console.log(e.name,'122121');
+      console.log(addWorkArr, 'addWorkArr')
+      console.log(e.name, '122121');
       console.log(addTime)
       console.log()
       let duration;
       duration = '上班' + e.name + addTime;
       setModel({ ...Item, duration })
-    }else{
+    } else {
       const data = addWorkArr.map((v) => {
         if (v.id === 2) {
           v.name = e.name;
@@ -1213,30 +1198,30 @@ export default function userForeman() {
       }
 
       let duration;
-      duration =  Time + '加班' + e.name;
+      duration = Time + '加班' + e.name;
       setModel({ ...Item, duration })
     }
     setWorkingHoursDisplay(false);
     setWorkOvertimeDisplay(true);
-    
+
   }
   // 确认时间选择
-  const handleWorkOvertimeOk = ()=>{
-    const data:any = timeArr.filter(v=>v.click);
-    const dataList:any = addWorkArr.filter(v=>v.click);
+  const handleWorkOvertimeOk = () => {
+    const data: any = timeArr.filter(v => v.click);
+    const dataList: any = addWorkArr.filter(v => v.click);
     let title;
-    if (data || dataList){
-      if (data.length > 0){
+    if (data || dataList) {
+      if (data.length > 0) {
         if (data[0].name == '休息') {
-          title =  data[0].name 
+          title = data[0].name
         } else {
-          title = '上班' + data[0].name 
+          title = '上班' + data[0].name
         }
       }
-      if (dataList.length > 0){
-        if (dataList[0].name !== '无加班'){
+      if (dataList.length > 0) {
+        if (dataList[0].name !== '无加班') {
           title = '加班' + dataList[0].name
-        }else{
+        } else {
           title = dataList[0].name
         }
       }
@@ -1245,17 +1230,17 @@ export default function userForeman() {
           title = data[0].name + dataList[0].name
         } else {
 
-          if (data[0].name == '休息'){
+          if (data[0].name == '休息') {
             title = '加班' + dataList[0].name
           }
-          if (dataList[0].name == '无加班'){
+          if (dataList[0].name == '无加班') {
             title = '上班' + data[0].name + dataList[0].name
           }
           title = '上班' + data[0].name + '加班' + dataList[0].name
         }
       }
     }
-    if(identity === 2){
+    if (identity === 2) {
       const data = JSON.parse(JSON.stringify(wageStandard));
       // 获取上班时长
       const timeArrs = JSON.parse(JSON.stringify(timeArr));
@@ -1274,17 +1259,17 @@ export default function userForeman() {
       for (let i = 0; i < timeArrs.length; i++) {
         if (timeArrs[i].click) {
           // 选择工
-          if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3 ){
+          if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
             time = 1 / workNum * timeArrs[i].num
-          // 选择时间
-          }else{
-            if (timeArrs[i].id == 1){
+            // 选择时间
+          } else {
+            if (timeArrs[i].id == 1) {
               // 等于模板时间
               time = workNum;
-            } else if (timeArrs[i].id == 2){
+            } else if (timeArrs[i].id == 2) {
               // 等于模板时间的一半
-              time = workNum/2;
-            } else if (timeArrs[i].id == 3){
+              time = workNum / 2;
+            } else if (timeArrs[i].id == 3) {
               // 等于0 
               time = 0;
             }
@@ -1315,37 +1300,37 @@ export default function userForeman() {
       //给工人自己设置工资标准
       const wageStandards = JSON.parse(JSON.stringify(wageStandard));
       let params = {
-          identity:identity,
-          worktime_define: wageStandards.work,
-          overtime_type: wageStandards.type,
-          overtime_money: wageStandards.dayAddWork,
-          money: wageStandards.money,
-          overtime: wageStandards.day,
-          group_info:groupInfo
-        }
-      bkSetWorkerIdentityWageAction(params).then(res=>{
-        if(res.code !== 200){
+        identity: identity,
+        worktime_define: wageStandards.work,
+        overtime_type: wageStandards.type,
+        overtime_money: wageStandards.dayAddWork,
+        money: wageStandards.money,
+        overtime: wageStandards.day,
+        group_info: groupInfo
+      }
+      bkSetWorkerIdentityWageAction(params).then(res => {
+        if (res.code !== 200) {
           Msg(res.msg)
         }
       })
-      console.log(num,'workersWages')
+      console.log(num, 'workersWages')
       setModel({ ...model, workersWages: num, duration: title });
       setWorkOvertimeDisplay(false);
       return;
     }
-    setModel({ ...model, duration: title})
+    setModel({ ...model, duration: title })
     setWorkOvertimeDisplay(false);
   }
   // 选择单位
-  const handleQuantities = (val)=>{
-    const arr = company.map((v)=>{
-      if(v.id === val.id){
-        v.click=!v.click
-        if(v.click){
+  const handleQuantities = (val) => {
+    const arr = company.map((v) => {
+      if (v.id === val.id) {
+        v.click = !v.click
+        if (v.click) {
           setUnit(v.name)
           setQuantitiesDisplay(false)
         }
-      }else{
+      } else {
         v.click = false
       }
       return v;
@@ -1353,33 +1338,33 @@ export default function userForeman() {
     setCompany(arr)
   }
   // 支借Radio
-  const handleRadioBorrowing = (v)=>{
+  const handleRadioBorrowing = (v) => {
     const data = JSON.parse(JSON.stringify(borrowing.item));
-    for(let i =0;i<data.length;i++){
-      if(data[i].id === v.id){
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === v.id) {
         data[i].click = true;
       }
     }
-    setBorrowing({item:data})
+    setBorrowing({ item: data })
   }
   // 添加成员
-  const handleEstablish = (id)=>{
+  const handleEstablish = (id) => {
     const data = JSON.parse(JSON.stringify(model))
-    let params:any = {
+    let params: any = {
       name: data.userName,
-      tel:data.phone,
+      tel: data.phone,
       // group_info: id,
     }
     // bkGetWorker(id, true);
     // dispatch(setmailList([]));
     // setAddMemberDisplay(false)
     // return;
-    bkAddWorkerActiion(params).then(res=>{
-      if(res.code === 200){
+    bkAddWorkerActiion(params).then(res => {
+      if (res.code === 200) {
         // 叫后台返回id 姓名 电话
         const data = res.data;
         // 添加成功后重新获取设置数据
-        bkGetWorker('',1,data);
+        bkGetWorker('', 1, data);
         // ======= 测试无法测试
         // const data = JSON.parse(JSON.stringify(workerItem));
         // params.id = Math.random();
@@ -1388,24 +1373,24 @@ export default function userForeman() {
         // 重新获取数据
         // bkGetWorkerAction
         setAddMemberDisplay(false)
-      }else{
+      } else {
         Msg(res.msg)
       }
     })
   }
   // 点击删除
-  const handleDel =(type:number)=>{
+  const handleDel = (type: number) => {
     const data = JSON.parse(JSON.stringify(workerItem));
-    if(type === 0){
-      const arr = data.map(v=>{
-        if(v.id != 1){
+    if (type === 0) {
+      const arr = data.map(v => {
+        if (v.id != 1) {
           v.del = true;
         }
         return v;
       })
       setWorkerItem(arr);
       setDeldelType(true)
-    }else{
+    } else {
       const arr = data.map(v => {
         if (v.id != 1) {
           v.del = false;
@@ -1417,7 +1402,7 @@ export default function userForeman() {
     }
   }
   // 删除某一个
-  const handleDelList = (v:any)=>{
+  const handleDelList = (v: any) => {
     // 判断不能删除自己
     let midData = Taro.getStorageSync(MidData)
     if (midData.worker_id === v.id) {
@@ -1428,24 +1413,24 @@ export default function userForeman() {
       title: '温馨提示',
       content: '删除工人后，工人将不在此项目中，但他之前的记工数据不会受影响。确定要删除吗？',
       showCancel: true,
-      success:((res)=>{
-        if(res.confirm == true){
+      success: ((res) => {
+        if (res.confirm == true) {
           let params = {
-            ids:v.id,
-            group_info:groupInfo
+            ids: v.id,
+            group_info: groupInfo
           }
-          bkDeleteRroupWorkerAction(params).then(res=>{
-            if(res.code === 200){
+          bkDeleteRroupWorkerAction(params).then(res => {
+            if (res.code === 200) {
               const data = JSON.parse(JSON.stringify(workerItem));
               // data.splice(data.indexOf(v.id), 1);
-              data.map((val,i)=>{
-                if(val.id === v.id){
-                  data.splice(i,1)
+              data.map((val, i) => {
+                if (val.id === v.id) {
+                  data.splice(i, 1)
                 }
                 return val;
               })
               setWorkerItem(data);
-              console.log(data,'打卡说的布卡斯巴达克进八廓街')
+              console.log(data, '打卡说的布卡斯巴达克进八廓街')
               dispatch(setPhoneList(data));
               // 获取工人列表
               // 设置是否点击了
@@ -1470,8 +1455,8 @@ export default function userForeman() {
               // dispatch(setUserList(workerListArr))
               // setWorkerItem
               // setWorkerItem(workerListArr)
-              
-            }else{
+
+            } else {
               Msg(res.msg);
             }
           })
@@ -1480,58 +1465,58 @@ export default function userForeman() {
     })
   }
   //添加标准
-  const handleAddStandard = ()=>{
+  const handleAddStandard = () => {
     setAddStandard(1);
     setWagesModalDisplay(false);
     setWageStandardDisplay(true);
   }
   // 打开工资标准
-  const handleOpenWagesModal = (v?:any)=>{
+  const handleOpenWagesModal = (v?: any) => {
     const item = JSON.parse(JSON.stringify(model));
-    if (!item.name){
-        Msg('请选择项目')
-        return
+    if (!item.name) {
+      Msg('请选择项目')
+      return
     }
     // 借支和按量长按没用
-    if (recorderType === 3 || (recorderType == 2 && contractor == 1) ){
+    if (recorderType === 3 || (recorderType == 2 && contractor == 1)) {
       return;
     }
-    console.log(v,'xxxx1');
-      setWagesModalDisplay(true);
-      //把工资标准的内容设置为新的s
-      const data = JSON.parse(JSON.stringify(workerItem));
-      console.log(data,'data')
-      let setData:any=[],NoSetData:any=[];
-      for(let i =0;i<data.length;i++){
-        console.log(data[i],'data1') 
-        data[i].click = false;
-        if(v){
-          if(data[i].id == v.id){
-            data[i].click = true;
-          }
-        }
-        if(data[i].set){
-          setData.push(data[i]);
-        }else{
-          NoSetData.push(data[i]);   
+    console.log(v, 'xxxx1');
+    setWagesModalDisplay(true);
+    //把工资标准的内容设置为新的s
+    const data = JSON.parse(JSON.stringify(workerItem));
+    console.log(data, 'data')
+    let setData: any = [], NoSetData: any = [];
+    for (let i = 0; i < data.length; i++) {
+      console.log(data[i], 'data1')
+      data[i].click = false;
+      if (v) {
+        if (data[i].id == v.id) {
+          data[i].click = true;
         }
       }
-      // 长按默认1
-      if(v){
-        setClickModalNum(1)
+      if (data[i].set) {
+        setData.push(data[i]);
+      } else {
+        NoSetData.push(data[i]);
       }
-      // 设置人员
-      setSetWorkList([...NoSetData, ...setData])
-       // 一设置工资标准标准
-      bkGetWorkerWage();
+    }
+    // 长按默认1
+    if (v) {
+      setClickModalNum(1)
+    }
+    // 设置人员
+    setSetWorkList([...NoSetData, ...setData])
+    // 一设置工资标准标准
+    bkGetWorkerWage();
   }
   // 添加工资标准
-  const handleWageStandard = (type:string,e:any)=>{
+  const handleWageStandard = (type: string, e: any) => {
     if (type == 'day') {
       const item = JSON.parse(JSON.stringify(wageStandard));
       item[type] = e;
-      let num:number|string=0;
-      if (item.money > 0 && e > 0 ){
+      let num: number | string = 0;
+      if (item.money > 0 && e > 0) {
         num = (item.money / e).toFixed(2)
       }
       item.dayAddWork = num;
@@ -1542,13 +1527,13 @@ export default function userForeman() {
       const item = JSON.parse(JSON.stringify(wageStandard));
       // const dayAddWork = e / item.day||0;
       let dayAddWork;
-      if(item.day == 0){
+      if (item.day == 0) {
         dayAddWork = 0
-      }else{
+      } else {
         dayAddWork = e / item.day || 0;
       }
       item[type] = e;
-      item.dayAddWork = dayAddWork.toFixed(2)||0;
+      item.dayAddWork = dayAddWork.toFixed(2) || 0;
       setWageStandard(item);
       return;
     }
@@ -1557,80 +1542,80 @@ export default function userForeman() {
     setWageStandard(data);
   }
   // 保存
-  const handlePreservation = (type:number)=>{
+  const handlePreservation = (type: number) => {
     // 获取工资标准
     const data = JSON.parse(JSON.stringify(wageStandard));
     const item = JSON.parse(JSON.stringify(model));
     const workerItemArr = JSON.parse(JSON.stringify(workerItem));
-    console.log(addWorkArr,'addWorkArr')
+    console.log(addWorkArr, 'addWorkArr')
     // 时间
-    let times: number = 0, work_time_hour=0;
-    timeArr.map(v=>{
-      if(v.click){
-        if (v.num){
-          if(v.id!==4){
+    let times: number = 0, work_time_hour = 0;
+    timeArr.map(v => {
+      if (v.click) {
+        if (v.num) {
+          if (v.id !== 4) {
             times = v.num;
             work_time_hour = data.work * v.num;
-          }else{
+          } else {
             times = 1 / data.work * v.num;
-            work_time_hour= v.num;
+            work_time_hour = v.num;
           }
         }
       }
     })
-    console.log(timeArr,'timeArr')
-    console.log(times,work_time_hour);
+    console.log(timeArr, 'timeArr')
+    console.log(times, work_time_hour);
     // const times = 1/data.work * work_time;
     // 加班时间
-    let overtime:number=0;
+    let overtime: number = 0;
     addWorkArr.map(v => {
       if (v.click) {
-        if (v.num){
+        if (v.num) {
           overtime = v.num;
         }
       }
     })
     // 借支radio类型
-    let radioType:string|number='';
-    borrowing.item.map(v=>{
-      if(v.click){
+    let radioType;
+    borrowing.item.map(v => {
+      if (v.click) {
         radioType = v.id;
       }
     })
     //单位
     let unit;
-    company.map(v=>{
-      if(v.click){
+    company.map(v => {
+      if (v.click) {
         unit = v.name;
       }
     })
     const timeItem = JSON.parse(JSON.stringify(timeData));
-    console.log(timeItem,'timeItemtimeItem')
-    let time: string[] = timeItem.map(item => (item.year +'-'+ item.month +'-'+ item.date));
+    console.log(timeItem, 'timeItemtimeItem')
+    let time: string[] = timeItem.map(item => (item.year + '-' + item.month + '-' + item.date));
     // type 1 再来一笔 0 保存
     let tabData;
-    recorderTypeArr.item.map((v)=>{
-      if(v.click){
+    recorderTypeArr.item.map((v) => {
+      if (v.click) {
         tabData = v;
       }
     })
     // 获取ID
-    let workers:number[] = [];
-    if(identity === 1){
-      for(let i =0;i<workerItem.length;i++){
-        if (workerItem[i].click){
+    let workers: number[] = [];
+    if (identity === 1) {
+      for (let i = 0; i < workerItem.length; i++) {
+        if (workerItem[i].click) {
           workers.push(workerItem[i].id)
         }
       }
-    }else {
-      if (foreman.length>0){
-        for (let i = 0; i < foreman.length;i++){
+    } else {
+      if (foreman.length > 0) {
+        for (let i = 0; i < foreman.length; i++) {
           workers.push(foreman[i].id);
         }
       }
     }
     // 工人ID传自己
-    if(identity === 2){
+    if (identity === 2) {
       // workers = 
       const midData = Taro.getStorageSync(MidData);
       workers = midData.worker_id;
@@ -1638,8 +1623,8 @@ export default function userForeman() {
     // 图片
     let img_url: string[] = image.item.map(item => item.url);
     // 记工
-    let params:any={};
-    if (tabData.id == 1){
+    let params: any = {};
+    if (tabData.id == 1) {
       params = {
         // 记工类型
         business_type: tabData.id,
@@ -1662,16 +1647,16 @@ export default function userForeman() {
         money: item.workersWages,
         work_time_hour,
       }
-    } else if (tabData.id == 2){
+    } else if (tabData.id == 2) {
       // 按量
       let itemType;
-      for (let i = 0; i < contractorArr.item.length;i++){
-        if (contractorArr.item[i].click){
+      for (let i = 0; i < contractorArr.item.length; i++) {
+        if (contractorArr.item[i].click) {
           itemType = contractorArr.item[i].id;
         }
       }
       // 按量
-      if (itemType === 1 ){
+      if (itemType === 1) {
         params = {
           // 记工类型
           business_type: tabData.id,
@@ -1697,7 +1682,7 @@ export default function userForeman() {
           money: item.wages,
           work_time_hour,
         }
-      }else{
+      } else {
         // 按天
         params = {
           // 记工类型
@@ -1724,7 +1709,7 @@ export default function userForeman() {
           work_time_hour,
         }
       }
-    }else if(tabData.id === 3){
+    } else if (tabData.id === 3) {
       params = {
         // 记工类型
         business_type: tabData.id,
@@ -1740,7 +1725,7 @@ export default function userForeman() {
         note: item.details,
         // note: item.note,
         // 记录日期
-        time:item.time,
+        time: item.time,
         // 工人id
         workers,
         type: radioType,
@@ -1748,27 +1733,27 @@ export default function userForeman() {
         work_time_hour
       }
     }
-    console.log(params,'params');
+    console.log(params, 'params');
     // 工人的时候要先设置工资标准
     const foremanTitles = JSON.parse(JSON.stringify(foremanTitle))
-    if(identity === 2){
+    if (identity === 2) {
       // if (!item.name){
       //   Msg('请选择项目')
       //   return
       // }
-      if (!foremanTitles){
+      if (!foremanTitles) {
         Msg('请选择班组长')
         return
       }
-      if (!time){
+      if (!time) {
         Msg('请选择日期')
         return
       }
     }
-    console.log(time,'xxx')
+    console.log(time, 'xxx')
     // 记工(包工按量)
     // 工人记工的时候，没有选择项目名称，为他默认一个
-    if (identity === 2){
+    if (identity === 2) {
       if (projectArr.length === 0) {
         let items = {
           group_name: '其他项目',
@@ -1777,7 +1762,7 @@ export default function userForeman() {
         bkAddProjectTeamAction(items).then(res => {
           if (res.code === 200) {
             // 成功之后还要给自己设置工资标准
-            let paramsData ={
+            let paramsData = {
               identity: identity,
               worktime_define: data.work,
               overtime_type: data.type,
@@ -1786,14 +1771,14 @@ export default function userForeman() {
               overtime: data.day,
               group_info: res.data,
             }
-            bkSetWorkerIdentityWageAction(paramsData).then(resItem=>{
-              if(resItem.code === 200 ){
+            bkSetWorkerIdentityWageAction(paramsData).then(resItem => {
+              if (resItem.code === 200) {
                 params.group_info = res.data;
                 // 班组长id
                 const item = useSelectorItem.workerList;
                 const group_leader = item[0].id;
                 params.group_leader = group_leader;
-                console.log(params,'paramsparams1')
+                console.log(params, 'paramsparams1')
                 bkAddBusinessAction(params).then(resData => {
                   // 清除reducer
                   if (resData.code === 200) {
@@ -1855,15 +1840,15 @@ export default function userForeman() {
                 })
               }
             })
-          }else{
+          } else {
             Msg(res.msg)
           }
         })
-      }else{
+      } else {
         // 成功之后还要给自己设置工资标准
         // 上班标准提示
         // 按量和借支没有工钱判断
-        if (recorderType !== 3 && !(recorderType == 2 && contractor == 1)){
+        if (recorderType !== 3 && !(recorderType == 2 && contractor == 1)) {
           if (data.work === 0) {
             Msg('上班标准必须必须大于0')
             return;
@@ -1887,7 +1872,7 @@ export default function userForeman() {
             }
           }
         }
-        if (recorderType == 3 || (recorderType == 2 && contractor == 1)){
+        if (recorderType == 3 || (recorderType == 2 && contractor == 1)) {
           console.log(3213123)
           bkAddBusinessAction(params).then(resData => {
             // 清除reducer
@@ -1959,12 +1944,12 @@ export default function userForeman() {
           overtime: data.day,
           group_info: groupInfo
         }
-        console.log(paramsData,'paramsData')
+        console.log(paramsData, 'paramsData')
         bkSetWorkerIdentityWageAction(paramsData).then(resItem => {
           if (resItem.code === 200) {
             // 班组长id
             const item = useSelectorItem.workerList;
-            console.log(item,'item')
+            console.log(item, 'item')
             const group_leader = item[0].id;
             params.group_leader = group_leader;
             console.log(params, 'paramsparams2')
@@ -2029,16 +2014,16 @@ export default function userForeman() {
                 Msg(resData.msg);
               }
             })
-          }else{
+          } else {
             Msg(resItem.msg)
           }
         })
       }
-    }else{
-      bkAddBusinessAction(params).then(res=>{
+    } else {
+      bkAddBusinessAction(params).then(res => {
         // 清除reducer
-        if(res.code === 200){
-          if(type === 1){
+        if (res.code === 200) {
+          if (type === 1) {
             const data = {
               groupName: '',
               teamName: '',
@@ -2063,7 +2048,7 @@ export default function userForeman() {
               { id: 4, name: '0.0小时', click: false, num: 0 }
             ]
             // 加班时长
-            const addItmeArr=[
+            const addItmeArr = [
               { id: 1, name: '无加班', click: false, num: 0 },
               { id: 2, name: '0.0小时', click: false, num: 0 },
             ]
@@ -2072,7 +2057,7 @@ export default function userForeman() {
             for (let i = 0; i < calendar.length; i++) {
               calendar[i].click = false
             }
-            for (let i = 0; i < workerItemArr.length;i++){
+            for (let i = 0; i < workerItemArr.length; i++) {
               workerItemArr[i].click = false;
             }
             setWorkerItem(workerItemArr)
@@ -2082,11 +2067,11 @@ export default function userForeman() {
             // setClickData([]);
             setTimeArr(itemArr)
             setForemanTitle('');
-            setImage({item:[]})
+            setImage({ item: [] })
             setModel(data);
             // 设置不刷新
             setRefresh(true)
-          }else{
+          } else {
             // Taro.showModal({
             //   title:'保存成功！',
             //   content:'记工数据仅自己可见,随时查看，方便快捷',
@@ -2110,32 +2095,32 @@ export default function userForeman() {
           // 设置不刷新
           setRefresh(true)
           dispatch(setWorker([]))
-        }else{
+        } else {
           Msg(res.msg);
         }
       })
     }
   }
-  const handleCalendar = (v)=>{
+  const handleCalendar = (v) => {
   }
   // 点击项目
-  const handleProject = (v)=>{
+  const handleProject = (v) => {
     let data = JSON.parse(JSON.stringify(model));
     const arr = JSON.parse(JSON.stringify(projectArr))
     data.name = v.group_name + '-' + v.name;
-    let groupInfo = v.group_id+','+v.id;
-    if(identity === 2){
-      if (v.leader_name){
+    let groupInfo = v.group_id + ',' + v.id;
+    if (identity === 2) {
+      if (v.leader_name) {
         setForemanTitle(v.leader_name)
-      }else{
+      } else {
         setForemanTitle('')
       }
     }
     // 设置选择框
-    for(let i =0;i<arr.length;i++){
-      if(v.id === arr[i].id){
+    for (let i = 0; i < arr.length; i++) {
+      if (v.id === arr[i].id) {
         arr[i].click = true;
-      }else{
+      } else {
         arr[i].click = false;
       }
     }
@@ -2144,22 +2129,22 @@ export default function userForeman() {
     setModel(data)
     setGroupInfo(groupInfo)
     // 选择项目的时候先获取设置工资标准员工
-    bkGetWorker(groupInfo,true)
+    bkGetWorker(groupInfo, true)
     // bkGetWorkerWage(groupInfo,true);
     // 获取工人列表
     // return;
   }
   // 添加班组成员选择
-  const handleCheckbox = (e)=>{
+  const handleCheckbox = (e) => {
 
     const data = JSON.parse(JSON.stringify(memberList));
     const worker = JSON.parse(JSON.stringify(workerItem))
-    if(data.length === 0 ){
+    if (data.length === 0) {
       data.push(e);
-    }else{
+    } else {
       if (data.indexOf(e.id) === -1) {
         data.push(e.id)
-      }else{
+      } else {
         data.splice(data.indexOf(e.id), 1)
       }
     }
@@ -2168,30 +2153,30 @@ export default function userForeman() {
     setWorkerItem(worker)
   }
   // 开始记工
-  const handleStart = ()=>{
+  const handleStart = () => {
     // 工人
     const workerItemList = JSON.parse(JSON.stringify(workerItem));
-    console.log(workerItemList,'workerItemList');
+    console.log(workerItemList, 'workerItemList');
     // 储存工人
     const storagelistItem = JSON.parse(JSON.stringify(storagelist))
-    console.log(storagelistItem,'storagelistItem')
-    let arrList:any[]=[];
-    if (workerItemList && storagelistItem){
-      for (let i = 0; i < workerItemList.length;i++){
-        for(let j= 0 ;j<storagelistItem.length ;j++){
-          if (workerItemList[i].name != storagelistItem[j].name){
+    console.log(storagelistItem, 'storagelistItem')
+    let arrList: any[] = [];
+    if (workerItemList && storagelistItem) {
+      for (let i = 0; i < workerItemList.length; i++) {
+        for (let j = 0; j < storagelistItem.length; j++) {
+          if (workerItemList[i].name != storagelistItem[j].name) {
             arrList.push(storagelistItem[j]);
           }
         }
       }
     }
     setWorkerItem([...workerItemList, ...arrList]);
-    console.log([...workerItemList, ...arrList],'[...workerItemList, ...arrList]')
+    console.log([...workerItemList, ...arrList], '[...workerItemList, ...arrList]')
     dispatch(setWorker([...workerItemList, ...arrList]))
-    Taro.navigateBack({delta: 1})
+    Taro.navigateBack({ delta: 1 })
   }
   // 确认添加标准
-  const handleAddWage = ()=>{
+  const handleAddWage = () => {
     // 获取工资标准
     const data = JSON.parse(JSON.stringify(wageStandard));
     // 获取上班时长
@@ -2207,7 +2192,7 @@ export default function userForeman() {
     // 加班时间
     const dayNum = data.day;
     // 上班标准提示
-    if (workNum === 0){
+    if (workNum === 0) {
       Msg('上班标准必须必须大于0')
       return;
     }
@@ -2217,8 +2202,8 @@ export default function userForeman() {
       return;
     }
     //按天数 一个工
-    if (data.type === 2){
-      if (data.day ===0 ){
+    if (data.type === 2) {
+      if (data.day === 0) {
         Msg('一个工必须大于0小时')
         return;
       }
@@ -2233,7 +2218,7 @@ export default function userForeman() {
     // return;
     // 上班时间
     let time = 0;
-    for(let i =0;i<timeArrs.length;i++){
+    for (let i = 0; i < timeArrs.length; i++) {
       if (timeArrs[i].click) {
         // 选择工
         if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
@@ -2261,27 +2246,27 @@ export default function userForeman() {
       }
     }
     // 获取
-    if(identity == 2){
+    if (identity == 2) {
       //工资标准 每个工多少钱/上班标准 * 上班时长  判断加班是按小时算还是i按天算
-      let total=0;
-      if(data.type === 1){
+      let total = 0;
+      if (data.type === 1) {
         // 按小时算 加班小时* 模板加班金额
         total = (moneyNum / workNum) * time + addWorkNum * addTime;
-      }else{
+      } else {
         // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
-        total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);    
+        total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);
       }
       // const num = total.toFixed(2);
-      let num:any = 0;
+      let num: any = 0;
       // if (num && !Object.is(num, NaN)){
-        num = total.toFixed(2);
+      num = total.toFixed(2);
       // }
       // 给工人自己设置工资标准
       // 传0会报错所以判断是按天还是按小时
       let params;
       // 按小时
-      if (data.type === 1){
-        params ={
+      if (data.type === 1) {
+        params = {
           identity: identity,
           worktime_define: data.work,
           overtime_type: data.type,
@@ -2291,7 +2276,7 @@ export default function userForeman() {
           group_info: groupInfo
         }
         // 按天
-      }else{
+      } else {
         params = {
           identity: identity,
           worktime_define: data.work,
@@ -2302,39 +2287,39 @@ export default function userForeman() {
           group_info: groupInfo
         }
       }
-      bkSetWorkerIdentityWageAction(params).then(res=>{
-        if(res.code !== 200){
+      bkSetWorkerIdentityWageAction(params).then(res => {
+        if (res.code !== 200) {
           Msg(res.msg)
         }
       })
-      console.log(num,'numnum')
-      setModel({ ...model, workersWages:num});
+      console.log(num, 'numnum')
+      setModel({ ...model, workersWages: num });
       setWageStandardDisplay(false);
       return;
     }
-    if (addStandard === 1){
+    if (addStandard === 1) {
       let params = {
-        name:'',
+        name: '',
         worktime_define: data.work,
         overtime_type: data.type,
         overtime_money: data.dayAddWork,
         money: data.money,
         overtime: data.day,
       }
-      bkAddWageAction(params).then(res=>{
-        if(res.code === 200){
+      bkAddWageAction(params).then(res => {
+        if (res.code === 200) {
           bkWageStandGetWage();
           setWagesModalDisplay(true)
-        }else{
+        } else {
           Msg(res.msg);
           return
         }
       })
       return;
     }
-    console.log(data,'data');
+    console.log(data, 'data');
     // 修改已设置的
-    if(state === 1){
+    if (state === 1) {
       let params = {
         id: data.id,
         group_info: groupInfo,
@@ -2354,21 +2339,21 @@ export default function userForeman() {
           Msg(res.msg);
         }
       })
-    }else{
+    } else {
       let params = {
         // name:'',
         worktime_define: data.work,
-        overtime_type:data.type,
+        overtime_type: data.type,
         overtime_money: data.dayAddWork,
         money: data.money,
-        overtime:data.day,
-        id:data.id
+        overtime: data.day,
+        id: data.id
         // type: 'wage'//后端说修改type传这个
       }
-      bkupdateWageAction(params).then(res=>{
-        if(res.code === 200 ){
+      bkupdateWageAction(params).then(res => {
+        if (res.code === 200) {
           bkWageStandGetWage();
-        }else{
+        } else {
           Msg(res.msg);
           return
         }
@@ -2377,13 +2362,13 @@ export default function userForeman() {
     }
   }
   // 切换时间还是天
-  const handleWageStandardRadio = (e)=>{
+  const handleWageStandardRadio = (e) => {
     const data = JSON.parse(JSON.stringify(wageStandard));
     data.type = e.id;
-    const arr = data.data.map(v=>{
-      if(e.id === v.id){
+    const arr = data.data.map(v => {
+      if (e.id === v.id) {
         v.click = true
-      }else{
+      } else {
         v.click = false
       }
       return v;
@@ -2392,8 +2377,8 @@ export default function userForeman() {
     setWageStandard(data)
   }
   // 修改
-  const handleEditWages = (v:any,type:number)=>{
-    console.log(v,'撒娇的你爸叫博大精深')
+  const handleEditWages = (v: any, type: number) => {
+    console.log(v, '撒娇的你爸叫博大精深')
     // 判断是修改标准还是修改已有人的工资标准
     setState(type)
     //判断不是新增
@@ -2409,34 +2394,34 @@ export default function userForeman() {
     data.group_info = v.groupInfo;
     data.type = v.overtime_type;
     data.day = v.overtime;
-    for(let i =0;i<data.data.length;i++){
-      if (parseInt(v.overtime_type) == data.data[i].id ){
+    for (let i = 0; i < data.data.length; i++) {
+      if (parseInt(v.overtime_type) == data.data[i].id) {
         data.data[i].click = true
-      }else{
+      } else {
         data.data[i].click = false
       }
     }
     setWageStandard(data)
   }
   // 修改已定义工资标准
-  const handleEditWageStandard = ()=>{
+  const handleEditWageStandard = () => {
     const item = JSON.parse(JSON.stringify(wageStandard));
     let params = {
-      id:item.id,
+      id: item.id,
       group_info: groupInfo,
       worktime_define: item.work,
-      overtime_type:item.type,
+      overtime_type: item.type,
       overtime: item.day,
       overtime_money: item.dayAddWork,
-      money:item.money,
+      money: item.money,
       type: 'wage'//后端说修改type传这个
     };
-    bkUpdateWorkerAction(params).then(res=>{
-      if(res.code === 200){
+    bkUpdateWorkerAction(params).then(res => {
+      if (res.code === 200) {
         bkGetWorkerWage();
         setWagesModalDisplay(true);
         setWageStandardDisplay(false);
-      }else{
+      } else {
         Msg(res.msg);
       }
     })
@@ -2450,8 +2435,8 @@ export default function userForeman() {
     }
   }
   // 删除项目
-  const handleDelProject = (v)=>{
-    console.log(v,'xxxx');
+  const handleDelProject = (v) => {
+    console.log(v, 'xxxx');
     const ids = v.id;
     let params = {
       ids,
@@ -2459,18 +2444,18 @@ export default function userForeman() {
     const name = JSON.parse(JSON.stringify(foremanTitle));
     const data = JSON.parse(JSON.stringify(model));
     Taro.showModal({
-      title:'提示',
-      content:'确认删除',
-      showCancel:true,
-      success:(res)=>{
-        if (res.confirm == true){
+      title: '提示',
+      content: '确认删除',
+      showCancel: true,
+      success: (res) => {
+        if (res.confirm == true) {
           bkDeleteprojectTeamAction(params).then(res => {
             if (res.code === 200) {
               bkGetProjectTeam();
-              if (v.group_name === data.name){
+              if (v.group_name === data.name) {
                 setForemanTitle('');
-                setModel({...model,name:''});
-              }else{
+                setModel({ ...model, name: '' });
+              } else {
                 setForemanTitle('');
                 setModel({ ...model, name: '' });
               }
@@ -2483,25 +2468,25 @@ export default function userForeman() {
     })
   }
   // 确认修改项目
-  const handleEditProject = ()=>{
+  const handleEditProject = () => {
     const data = JSON.parse(JSON.stringify(editProjectData));
     let params = {
       group_info: data.group_info,
       team_name: data.team_name,
       group_name: data.group_name,
     }
-    bkUpdateProjectTeamAction(params).then(res=>{
-      if(res.code === 200){
+    bkUpdateProjectTeamAction(params).then(res => {
+      if (res.code === 200) {
         setEditProjectDisplay(false);
         bkGetProjectTeam();
-      }else if(res.code === 400){
+      } else if (res.code === 400) {
         Msg(res.msg)
         return;
       }
     })
   }
   // 修改项目弹框
-  const handleEditProjectModal = (v)=>{
+  const handleEditProjectModal = (v) => {
     setEditProjectDisplay(true);
     const data = JSON.parse(JSON.stringify(editProjectData))
     data.group_info = v.group_id;
@@ -2510,35 +2495,35 @@ export default function userForeman() {
     setEditProjectData(data);
   }
   // 修改项目组输入框
-  const handleEditProjectData =(type,e)=>{
+  const handleEditProjectData = (type, e) => {
     let data = JSON.parse(JSON.stringify(editProjectData));
     data[type] = e.detail.value;
     setEditProjectData(data);
   }
   // 给工人设置标准
-  const handleSetWagesModal = ()=>{
-    if (!templateId){
+  const handleSetWagesModal = () => {
+    if (!templateId) {
       Msg('请选择模板');
       return;
     }
-    let worker_ids:string[] =[];
-    for (let i = 0; i < setWorkList.length;i++){
-      if (setWorkList[i].click){
+    let worker_ids: string[] = [];
+    for (let i = 0; i < setWorkList.length; i++) {
+      if (setWorkList[i].click) {
         worker_ids.push(setWorkList[i].id);
       }
     }
-    const params={
+    const params = {
       worker_ids: worker_ids.toString(),
       wage_id: templateId,
-      group_info:groupInfo
+      group_info: groupInfo
     };
-    bkSetWorkerMoneyByWageAction(params).then(res=>{
-      if(res.code === 200){
+    bkSetWorkerMoneyByWageAction(params).then(res => {
+      if (res.code === 200) {
         // // 给设置模板的设置为已经设置模板
         const data = JSON.parse(JSON.stringify(workerItem));
-        for(let i =0;i<data.length;i++){
-          for (let j = 0; j < worker_ids.length;j++){
-            if (data[i].id == worker_ids[j]){
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < worker_ids.length; j++) {
+            if (data[i].id == worker_ids[j]) {
               data[i].set = true;
               data[i].del = false;
             }
@@ -2547,23 +2532,23 @@ export default function userForeman() {
         setWorkerItem(data)
         bkGetWorkerWage();
         setWagesModalDisplay(false);
-      }else{
+      } else {
         Msg(res.msg);
         return;
       }
     })
   }
   // 选择工人
-  const handleWagesList = (v)=>{
+  const handleWagesList = (v) => {
     const data = JSON.parse(JSON.stringify(setWorkList));
-    for (let i = 0; i < data.length;i++){
-      if(v.id === data[i].id){
+    for (let i = 0; i < data.length; i++) {
+      if (v.id === data[i].id) {
         data[i].click = !data[i].click;
       }
     }
-    let clickData:any[]=[] ;
-    for(let i=0;i<data.length;i++){
-      if(data[i].click){
+    let clickData: any[] = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].click) {
         clickData.push(data[i]);
       }
     }
@@ -2571,34 +2556,34 @@ export default function userForeman() {
     setSetWorkList(data);
   }
   // 选模板
-  const handleCheckboxStandard = (v)=>{
+  const handleCheckboxStandard = (v) => {
     const data = JSON.parse(JSON.stringify(standard));
-    for(let i=0;i<data.length;i++){
-      if(v.id === data[i].id){
+    for (let i = 0; i < data.length; i++) {
+      if (v.id === data[i].id) {
         data[i].click = true;
         setTemplateId(v.id);
-      }else{
+      } else {
         data[i].click = false
       }
     }
     setStandard(data);
   }
   // 选择工人
-  const handleWorkerItem = (v)=>{
-    console.log(v,'231231')
-    if (delType)return;
+  const handleWorkerItem = (v) => {
+    console.log(v, '231231')
+    if (delType) return;
     const modelData = JSON.parse(JSON.stringify(model));
-    if (!modelData.name){
+    if (!modelData.name) {
       Msg('请先选择项目')
       return
     }
     const data = JSON.parse(JSON.stringify(workerItem));
     // 借支对时候全部都可以点
     const id = JSON.parse(JSON.stringify(contractor));
-    if (recorderType === 3 || (recorderType === 2 && id ===1 )){
+    if (recorderType === 3 || (recorderType === 2 && id === 1)) {
       for (let i = 0; i < data.length; i++) {
         if (v.id === data[i].id) {
-            data[i].click = !data[i].click
+          data[i].click = !data[i].click
         }
       }
       let numData: any[] = [];
@@ -2610,19 +2595,19 @@ export default function userForeman() {
       setClickNum(numData.length);
       setWorkerItem(data);
       // return;
-    }else{
-      for(let i=0;i<data.length;i++){
-        if(v.id === data[i].id){
-          if(v.set){
+    } else {
+      for (let i = 0; i < data.length; i++) {
+        if (v.id === data[i].id) {
+          if (v.set) {
             data[i].click = !data[i].click
-          }else{
+          } else {
             handleOpenWagesModal(v);
           }
         }
       }
-      let numData:any[]=[];
-      for(let i =0;i<data.length;i++){
-        if(data[i].click){
+      let numData: any[] = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].click) {
           numData.push(data[i])
         }
       }
@@ -2631,17 +2616,17 @@ export default function userForeman() {
     }
   }
   // 成员全选
-  const handleAllChange = ()=>{
+  const handleAllChange = () => {
     const data = JSON.parse(JSON.stringify(workerItem));
     const recorderTypes = JSON.parse(JSON.stringify(recorderType))
-    let Itme:any[] =[];
+    let Itme: any[] = [];
     // 借支和按量记
-    if (recorderTypes === 3 || (recorderTypes === 2 && contractor==1 )){
+    if (recorderTypes === 3 || (recorderTypes === 2 && contractor == 1)) {
       for (let i = 0; i < data.length; i++) {
-          Itme.push(data[i]);
-          data[i].click = true;
+        Itme.push(data[i]);
+        data[i].click = true;
       }
-    }else{
+    } else {
       for (let i = 0; i < data.length; i++) {
         if (data[i].set) {
           Itme.push(data[i]);
@@ -2655,19 +2640,19 @@ export default function userForeman() {
     setClickNum(Itme.length);
   }
   // 长按
-  const handleLongClick = ()=>{
+  const handleLongClick = () => {
     setWageStandardDisplay(true)
   }
   // 全选
-  const handleAllClick = ()=>{
+  const handleAllClick = () => {
     const data = JSON.parse(JSON.stringify(setWorkList));
-    if(!checkAll){
-      for(let i =0;i<data.length;i++){
+    if (!checkAll) {
+      for (let i = 0; i < data.length; i++) {
         data[i].click = true
       };
       setCheckAll(true)
       setClickModalNum(data.length);
-    }else{
+    } else {
       for (let i = 0; i < data.length; i++) {
         data[i].click = false
       };
@@ -2679,11 +2664,11 @@ export default function userForeman() {
   // 切换包工类型
   const handleRadio = (v) => {
     const data = JSON.parse(JSON.stringify(contractorArr.item));
-    for(let i =0;i<data.length;i++){
-      if(data[i].id === v.id ){
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === v.id) {
         data[i].click = true
         setContractor(v.id)
-      }else{
+      } else {
         data[i].click = false;
       }
     }
@@ -2696,21 +2681,21 @@ export default function userForeman() {
     })
   }
   // 选择工人添加，没有选择项目无法选择
-  const handleAdd = ()=>{
+  const handleAdd = () => {
     if (!model.name) {
       Msg('请选择项目')
       return
     }
     bkGetWorker();
     // setRefresh(true)
-    userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`) 
+    userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`)
   }
   // 日历关闭
-  const handleCalendarClose = ()=>{
+  const handleCalendarClose = () => {
     // 并清空
     setTimeData([]);
     const calendar = JSON.parse(JSON.stringify(calendarDays));
-    for(let i=0;i<calendar.length;i++){
+    for (let i = 0; i < calendar.length; i++) {
       calendar[i].click = false
     }
     setCalendarDays(calendar);
@@ -2718,19 +2703,19 @@ export default function userForeman() {
     setCalendarModalDisplay(false);
   }
   // 日历切换时间
-  const handleChangeTime = (type: number)=>{
-      if(type === 0){
-      let date = new Date(JSON.parse(time.year), JSON.parse(time.monent)-2,1)
+  const handleChangeTime = (type: number) => {
+    if (type === 0) {
+      let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
       getMonthDaysCurrent(date);
       return;
-    }else{
+    } else {
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
       getMonthDaysCurrent(date);
       return;
     }
   }
   // 日历确定
-  const handleCalendarSub = ()=>{
+  const handleCalendarSub = () => {
     // if (recorderType === 3){
     //   const data = JSON.parse(JSON.stringify(arr));
     //   let time ;
@@ -2740,55 +2725,55 @@ export default function userForeman() {
     //   setModel({ ...model, time: time });
     //   setCalendarModalDisplay(false);
     // }else{
-      const data = JSON.parse(JSON.stringify(clickData));
-      let time ;
-      console.log(data);
-      if(data.length == 1){
-        // const time = data[0].year+
-        const years = new Date().getFullYear();
-        const months = new Date().getMonth() + 1;
-        const dates = new Date().getDate();
-        console.log(data)
-        if (data[0].year == years && data[0].month == months && data[0].date == dates ){
-          time = years + '-' + months + '-' + dates
-        }else{
-          time = data[0].year + '-' + data[0].month + '-' + data[0].date
-        }
-      }else{
-        time = data.length +'天';
+    const data = JSON.parse(JSON.stringify(clickData));
+    let time;
+    console.log(data);
+    if (data.length == 1) {
+      // const time = data[0].year+
+      const years = new Date().getFullYear();
+      const months = new Date().getMonth() + 1;
+      const dates = new Date().getDate();
+      console.log(data)
+      if (data[0].year == years && data[0].month == months && data[0].date == dates) {
+        time = years + '-' + months + '-' + dates
+      } else {
+        time = data[0].year + '-' + data[0].month + '-' + data[0].date
       }
-      setModel({ ...model, time: time});
-      setCalendarModalDisplay(false);
-      setTimeData(data);
+    } else {
+      time = data.length + '天';
+    }
+    setModel({ ...model, time: time });
+    setCalendarModalDisplay(false);
+    setTimeData(data);
     // }
   }
   // 左
-  const onScrollToUpper = ()=>{
+  const onScrollToUpper = () => {
     let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
     getMonthDaysCurrent(date);
   }
   // 右
-  const onScrollToLower = ()=>{
+  const onScrollToLower = () => {
     let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
     getMonthDaysCurrent(date);
   }
   // 触摸结束
-  const onTouchEnd = (e)=>{
+  const onTouchEnd = (e) => {
     const endTime = e.timeStamp;
     setEndTime(endTime)
   }
   // 触摸开始
-  const onTouchStart= (e)=>{
+  const onTouchStart = (e) => {
     const startTime = e.timeStamp;
     setStartTime(startTime)
   }
   // 工人长按
-  const onLongPress = ()=>{
+  const onLongPress = () => {
     setWageStandardDisplay(true)
   }
   return {
     model,
-    project, 
+    project,
     setModel,
     setProject,
     handleInput,
@@ -2796,7 +2781,7 @@ export default function userForeman() {
     workOvertimeDisplay,
     handleworkOvertime,
     setWorkOvertimeDisplay,
-    workingHoursDisplay, 
+    workingHoursDisplay,
     setWorkingHoursDisplay,
     timeType,
     handleWorkingHours,
@@ -2806,41 +2791,41 @@ export default function userForeman() {
     company,
     handleQuantities,
     unit,
-    quantitiesDisplay, 
+    quantitiesDisplay,
     setQuantitiesDisplay,
-    borrowing, 
+    borrowing,
     setBorrowing,
     handleRadioBorrowing,
-    workerItem, 
+    workerItem,
     setWorkerItem,
     handleEstablish,
-    addMemberDisplay, 
+    addMemberDisplay,
     setAddMemberDisplay,
     handleDel,
     handleDelList,
     delType,
     setDeldelType,
     handleAddStandard,
-    wagesModalDisplay, 
+    wagesModalDisplay,
     setWagesModalDisplay,
-    wageStandardDisplay, 
+    wageStandardDisplay,
     setWageStandardDisplay,
     wageStandard,
     handleWageStandard,
     handlePreservation,
-    recorderTypeArr, 
+    recorderTypeArr,
     setRecorderTypeArr,
     handleCalendar,
     projectArr,
     handleProject,
-    show, 
-    setShow, 
-    workerList, 
+    show,
+    setShow,
+    workerList,
     setWorkerList,
     handleCheckbox,
     memberList,
     setMemberList,
-    storagelist, 
+    storagelist,
     setStoragelist,
     handleStart,
     standard,
@@ -2853,7 +2838,7 @@ export default function userForeman() {
     tab,
     handleAtSwitch,
     handleDelProject,
-    editProjectDisplay, 
+    editProjectDisplay,
     setEditProjectDisplay,
     handleEditProject,
     handleEditProjectModal,
@@ -2861,18 +2846,18 @@ export default function userForeman() {
     handleEditProjectData,
     handleSetWagesModal,
     handleWagesList,
-    setWorkList, 
+    setWorkList,
     setSetWorkList,
     handleCheckboxStandard,
     groupInfo,
-    image, 
+    image,
     setImage,
     bkGetWorker,
-    contractorArr, 
+    contractorArr,
     setContractorArr,
     num,
     handleWorkerItem,
-    timeData, 
+    timeData,
     setTimeData,
     handleAllChange,
     clickNum,
@@ -2881,7 +2866,7 @@ export default function userForeman() {
     refresh,
     setRefresh,
     handleLongClick,
-    identity, 
+    identity,
     setIdentity,
     foreman,
     foremanTitle,
@@ -2892,9 +2877,9 @@ export default function userForeman() {
     handleAdd,
     recorderType,
     setRecorderType,
-    calendarDays, 
+    calendarDays,
     setCalendarDays,
-    clickData, 
+    clickData,
     setClickData,
     handleClickCalendar,
     time,
@@ -2910,7 +2895,7 @@ export default function userForeman() {
     onTouchEnd,
     onTouchStart,
     onLongPress,
-    display, 
+    display,
     setDisplay
   }
 }

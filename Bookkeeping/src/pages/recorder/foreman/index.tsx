@@ -22,6 +22,7 @@ import { setDataList } from '../../../actions/list'
 import { setClickTIme } from '../../../actions/clickTIme'
 import { IMGCDNURL } from '../../../config'
 import classnames from 'classnames'
+// import RecorderPopup from '../../../components/recorderPopup';
 import Msg from '../../../utils/msg';
 import './index.scss'
 
@@ -46,12 +47,11 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum
+    onLongPress, setClickModalNum, display, setDisplay
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
-  // 成功弹窗
-  const [display, setDisplay] = useState<boolean>(false)
+  
   // 创建项目引导
   const [createProjectDisplay, setCreateProjectDisplay] = useState<boolean>(false)
   // 项目列表取消，删除/修改
@@ -126,10 +126,15 @@ export default function Foreman() {
   const handleRecorderPopup = (type:number)=>{
     // 跳转
     if(type === 1){
-
+      Taro.redirectTo({
+          url:'/pages/flowingWater/index'
+        })
     }else{
-      Taro.navigateBack({
-        delta: 1
+      // Taro.navigateBack({
+      //   delta: 1
+      // })
+      Taro.redirectTo({
+        url: '/pages/attendanceSheet/index'
       })
     }
     setDisplay(false)
@@ -150,7 +155,7 @@ export default function Foreman() {
   const handleCreateProjectClose = ()=>{
     setCreateProjectDisplay(false)
     const data = JSON.parse(JSON.stringify(model));
-    setModel({ ...data, groupName:'',})
+    setModel({ ...data, groupName: '', teamName: ''})
   }
   // 关闭日历
   const handleCalendarModalDisplayClose = ()=>{
@@ -339,7 +344,8 @@ export default function Foreman() {
                         className={v.click ? 'workerItem-list-first-click' : 'workerItem-list-first'} 
                         >
                           {/* {v.name.slice(0, 2)} */}
-                        {v.name.substring(v.name.length-2)}
+                        {/* {v.name.substring(v.name.length-2)} */}
+                        {v.name.substring(v.name.length - 2)}
                         </View>
                         <View className='workerItem-list-title'>{v.name}</View>
                       </View>
@@ -364,7 +370,8 @@ export default function Foreman() {
                         })}
                           // className={v.click ? 'workerItem-list-click' : 'workerItem-list'}
                           >
-                          {v.name}
+                          {/* {v.name} */}
+                        {v.name.substring(v.name.length - 2)}
                         </View>
                         {/* 判断不是按量和借支的时候才能设置工资 */}
                       {(recorderType !== 3 && !(recorderType == 2 && contractor ==1) )&&!v.del && !v.set && <View className='workerItem-list-icon' onClick={(e) => { e.stopPropagation(), handleOpenWagesModal(v) }}><Image className='workerItem-list-icon-img' src={`${IMGCDNURL}mark.png`}/></View>}
@@ -442,6 +449,7 @@ export default function Foreman() {
               className='publish-list-input-money'
               type='text'
               disabled
+              maxLength={14}
               placeholder='请选择工钱'
               value={model && model.workersWages}
             />
@@ -458,6 +466,7 @@ export default function Foreman() {
               :<Input
                 className='publish-list-input-amount'
                 type='digit'
+                maxLength={7}
                 placeholder='请填写工程量'
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
@@ -471,6 +480,7 @@ export default function Foreman() {
               :<Input
                 className='publish-list-input'
                 type='digit'
+                maxLength={7}
                 placeholder='请填写单价'
                 onInput={(e) => handleInput('price', e)}
                 value={model && model.price}
@@ -483,6 +493,7 @@ export default function Foreman() {
               :<Input
                 className='publish-list-input'
                 type='digit'
+                maxLength={14}
                 onInput={(e) => handleInput('wages', e)}
                 placeholder='工程量和单价未知时，可直接填写'
                 value={model && model.wages}
@@ -501,6 +512,7 @@ export default function Foreman() {
                 className='publish-list-input'
                 type='digit'
                 // disabled
+                maxLength={14}
                 onInput={(e) => handleInput('borrowing', e)}
                 placeholder='请输入本次借支金额'
                 value={model && model.borrowing}

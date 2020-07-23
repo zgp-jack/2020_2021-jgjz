@@ -22,7 +22,7 @@ export default function WorkOvertime({ display, handleWorkOvertimeClose, handlew
       {display &&
         <View className='workOvertime-complaintModal'>
           <View className='workOvertime-complaintModal-content'>
-          <View className='workOvertime-complaintModal-content-title'><Text className='close' onClick={handleWorkOvertimeClose}>取消</Text><Text className='title'>选择加班时长</Text><Text onClick={handleWorkOvertimeOk} className='workOvertime-complaintModal-content-close'>确定</Text></View>
+          <View className='workOvertime-complaintModal-content-title'><Text className='close' onClick={handleWorkOvertimeClose}>取消</Text><Text className='title'>选择上班时长</Text><Text onClick={handleWorkOvertimeOk} className='workOvertime-complaintModal-content-close'>确定</Text></View>
           <View className='workOvertime-complaintModal-content-timeBox'>
             <View className='workOvertime-complaintModal-content-tips'>{model.duration}</View>
             <View>上班时长</View>

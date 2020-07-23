@@ -33,7 +33,7 @@ export default function Notepad() {
   useDidShow(() => {
     setIds([])
     setSelectAll(false)
-    getList();
+    getList(val);
   })
   // 点击全选
   const handleDel = ()=>{
@@ -95,6 +95,9 @@ export default function Notepad() {
             //   res.data[i].list[j].click = false;
             // }
           }
+        }else{
+          setDel(false);
+          setSelectAll(false)
         }
         // 给子页面存值
         dispatch(setNotepad(res))
@@ -145,16 +148,20 @@ export default function Notepad() {
   }
   // 删除
   const bkDeleteNotePad = ()=>{
+    if (ids.length === 0) {
+      Msg('请选择至少一条信息')
+      return
+    }
     Taro.showModal({
       title:'提示',
       content:'删除后，当前信息将无法恢复，确定删除？',
       showCancel: true,
       success: (res) => {
         if (res.confirm == true) {
-          if(ids.length === 0){
-            Msg('请选择至少一条信息')
-            return
-          }
+          // if(ids.length === 0){
+          //   Msg('请选择至少一条信息')
+          //   return
+          // }
           let params = {
             id: ids
           }
@@ -216,7 +223,7 @@ export default function Notepad() {
   console.log(data,'data')
   // 取消搜索
   const handleOnClear = ()=>{
-    getList();
+    // getList();
     setVal('')
     setIds([]);
     setIsSheach(false)

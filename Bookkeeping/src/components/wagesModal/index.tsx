@@ -71,7 +71,7 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                           'wagesModal-personnel-box-list-violet': !v.click && v.id % 2 == 0 && v.id < 100,
                           'wagesModal-personnel-box-list-click': v.click,
                           // 'wagesModal-personnel-box-list-set':v.set
-                        })}>{v.name.slice(0,2)}</View>
+                        })}>{v.name.substring(v.name.length - 2)}</View>
                         <View className='names'>{v.name}</View>
                         </View>
                         <View className={v.set?'':'list-icon'}></View>
