@@ -71,7 +71,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlowingWater.__proto__ || Object.getPrototypeOf(FlowingWater)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记工流水'
-    }, _this.$usedState = ["data", "loopArray47", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["data", "loopArray45", "IMGCDNURL", "isCheckOut", "allcheck", "year", "mon"], _this.anonymousFunc1Map = {}, _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.anonymousFunc5Map = {}, _this.anonymousFunc6Map = {}, _this.customComponents = ["AtSwipeAction"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(FlowingWater, [{
@@ -368,13 +368,13 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
         return handleCheckboxBtn(1);
       };
 
-      var loopArray47 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
+      var loopArray45 = data.item && data.item.length > 0 ? data.item.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = data.item && data.item.length > 0 ? i + i : null;
 
-        var _$indexKey = "badzz" + i;
+        var _$indexKey = "babzz" + i;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return handleClick(v.$original);
@@ -386,19 +386,19 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
           val = {
             $original: (0, _taroWeapp.internal_get_original)(val)
           };
-          var _$indexKey2 = "baezz" + i + "-" + __index2;
+          var _$indexKey2 = "baczz" + i + "-" + __index2;
 
           _this2.anonymousFunc2Map[_$indexKey2] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey3 = "bafzz" + i + "-" + __index2;
+          var _$indexKey3 = "badzz" + i + "-" + __index2;
 
           _this2.anonymousFunc3Map[_$indexKey3] = function (e) {
             e.preventDefault(), e.stopPropagation();
           };
 
-          var _$indexKey4 = "bagzz" + i + "-" + __index2;
+          var _$indexKey4 = "baezz" + i + "-" + __index2;
 
           _this2.anonymousFunc4Map[_$indexKey4] = function (e) {
             return handleSwipeAction(e, val.$original);
@@ -415,29 +415,29 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
               backgroundColor: '#FF4949'
             }
           }] : null;
-          var _$indexKey5 = "bahzz" + i + "-" + __index2;
+          var _$indexKey5 = "bafzz" + i + "-" + __index2;
 
           _this2.anonymousFunc5Map[_$indexKey5] = function (e) {
             return handleJump(e, v.$original, val.$original.id);
           };
 
-          var _$indexKey6 = "baizz" + i + "-" + __index2;
+          var _$indexKey6 = "bagzz" + i + "-" + __index2;
 
           _this2.anonymousFunc6Map[_$indexKey6] = function (e) {
             e.stopPropagation();handleCheckbox(val.$original);
           };
 
-          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bajzzzzzzz" + i + "-" + __index2, true),
+          var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "bahzzzzzzz" + i + "-" + __index2, true),
               _genCompid2 = _slicedToArray(_genCompid, 2),
-              $prevCompid__54 = _genCompid2[0],
-              $compid__54 = _genCompid2[1];
+              $prevCompid__51 = _genCompid2[0],
+              $compid__51 = _genCompid2[1];
 
           v.$original.click && _taroWeapp.propsManager.set({
             "autoClose": false,
             "onOpened": _this2.anonymousFunc3.bind(_this2, _$indexKey3),
             "onClick": _this2.anonymousFunc4.bind(_this2, _$indexKey4),
             "options": $loopState__temp8
-          }, $compid__54, $prevCompid__54);
+          }, $compid__51, $prevCompid__51);
           return {
             _$indexKey2: _$indexKey2,
             _$indexKey3: _$indexKey3,
@@ -445,7 +445,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
             $loopState__temp8: $loopState__temp8,
             _$indexKey5: _$indexKey5,
             _$indexKey6: _$indexKey6,
-            $compid__54: $compid__54,
+            $compid__51: $compid__51,
             $original: val.$original
           };
         }) : [];
@@ -460,7 +460,7 @@ var FlowingWater = (_temp2 = _class = function (_Taro$Component) {
       }) : [];
       Object.assign(this.__state, {
         data: data,
-        loopArray47: loopArray47,
+        loopArray45: loopArray45,
         IMGCDNURL: _index4.IMGCDNURL,
         isCheckOut: isCheckOut,
         allcheck: allcheck,
@@ -658,7 +658,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Notepad.__proto__ || Object.getPrototypeOf(Notepad)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '记事本'
-    }, _this.$usedState = ["loopArray46", "$compid__53", "data", "isSheach", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray44", "$compid__50", "data", "isSheach", "busy", "del", "IMGCDNURL", "selectAll"], _this.anonymousFunc3Map = {}, _this.anonymousFunc4Map = {}, _this.customComponents = ["AtSearchBar"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Notepad, [{
@@ -679,10 +679,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__53"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__50"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__53 = _genCompid2[0],
-          $compid__53 = _genCompid2[1];
+          $prevCompid__50 = _genCompid2[0],
+          $compid__50 = _genCompid2[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 输入框
@@ -953,7 +953,7 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
       this.anonymousFunc7 = handleAllCheckbox;
       this.anonymousFunc8 = bkDeleteNotePad;
       this.anonymousFunc9 = handleClose;
-      var loopArray46 = data.length > 0 && !busy ? data.map(function (v, i) {
+      var loopArray44 = data.length > 0 && !busy ? data.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
@@ -963,13 +963,13 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
             $original: (0, _taroWeapp.internal_get_original)(values)
           };
           var $loopState__temp4 = data.length > 0 && !busy ? index + index : null;
-          var _$indexKey = 'babzz' + i + '-' + index;
+          var _$indexKey = 'jjzzz' + i + '-' + index;
 
           _this2.anonymousFunc3Map[_$indexKey] = function () {
             return userRouteJump("/pages/notepadDetails/index?id=" + values.$original.id);
           };
 
-          var _$indexKey2 = 'baczz' + i + '-' + index;
+          var _$indexKey2 = 'baazz' + i + '-' + index;
 
           _this2.anonymousFunc4Map[_$indexKey2] = function (e) {
             e.stopPropagation();handleCheckbox(values.$original);
@@ -995,10 +995,10 @@ var Notepad = (_temp2 = _class = function (_Taro$Component) {
         "onClear": this.anonymousFunc0,
         "onChange": this.anonymousFunc1,
         "onActionClick": this.anonymousFunc2
-      }, $compid__53, $prevCompid__53);
+      }, $compid__50, $prevCompid__50);
       Object.assign(this.__state, {
-        loopArray46: loopArray46,
-        $compid__53: $compid__53,
+        loopArray44: loopArray44,
+        $compid__50: $compid__50,
         data: data,
         isSheach: isSheach,
         busy: busy,

@@ -58,7 +58,7 @@ var NotepadDetails = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NotepadDetails.__proto__ || Object.getPrototypeOf(NotepadDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["data", "loopArray33"], _this.anonymousFunc0Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NotepadDetails.__proto__ || Object.getPrototypeOf(NotepadDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["data", "loopArray32"], _this.anonymousFunc0Map = {}, _this.customComponents = [], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(NotepadDetails, [{
@@ -175,12 +175,12 @@ var NotepadDetails = (_temp2 = _class = function (_Taro$Component) {
         return userRouteJump("/pages/addNotepad/index?id=" + data.id);
       };
 
-      var loopArray33 = data.view_images.map(function (v, __index0) {
+      var loopArray32 = data.view_images.map(function (v, __index0) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "ghzzz" + __index0;
+        var _$indexKey = "ggzzz" + __index0;
 
         _this2.anonymousFunc0Map[_$indexKey] = function () {
           handleImage(v.$original);
@@ -193,7 +193,7 @@ var NotepadDetails = (_temp2 = _class = function (_Taro$Component) {
       });
       Object.assign(this.__state, {
         data: data,
-        loopArray33: loopArray33
+        loopArray32: loopArray32
       });
       return this.__state;
     }

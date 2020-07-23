@@ -7,6 +7,7 @@ import ProjectModal from '../../components/projectModal'
 import { UserInfo, MidData, Type, CreationTime, NeverPrompt } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
+import { setWorker } from '../../actions/workerList'
 import Auth from '../../components/auth';
 import { AtModal, AtBadge } from "taro-ui"
 import Msg from '../../utils/msg'
@@ -176,6 +177,8 @@ export default function Index() {
     // const time = 
     // 清楚日历缓存
     dispatch(setClickTIme([]))
+    //清楚
+    dispatch(setWorker([]))
     // 判断有没有用户信息没有就显示
     // 获取缓存信息
     let type = Taro.getStorageSync(Type);
