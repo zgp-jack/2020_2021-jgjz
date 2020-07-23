@@ -2099,12 +2099,12 @@ function userForeman() {
     var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
     // }
     console.log(refresh, 'refresh');
+    var objs = JSON.parse(JSON.stringify(obj));
+    objs.name = midData.nickname || '未命名';
+    objs.id = midData.worker_id;
+    setObj(objs);
     if (!useSelectorItem.workerList.length && !refresh) {
       console.log(32131);
-      var objs = JSON.parse(JSON.stringify(obj));
-      objs.name = midData.nickname || '未命名';
-      objs.id = midData.worker_id;
-      setObj(objs);
       // 获取通讯里信息
       var workerItemData = JSON.parse(JSON.stringify(workerItem));
       // 获取设置员工信息
@@ -2196,6 +2196,7 @@ function userForeman() {
       setWorkerItem([_objs].concat(_toConsumableArray(arrList)));
     }
   }, [useSelectorItem.workerList]);
+  console.log(obj, 'xxx');
   // 关闭清空时间
   // useDidHide(()=>{
   //   // setTimeData([]);

@@ -336,12 +336,12 @@ export default function userForeman() {
     let midData = Taro.getStorageSync(MidData)
     // }
     console.log(refresh,'refresh')
+    const objs = JSON.parse(JSON.stringify(obj))
+    objs.name = midData.nickname||'未命名';
+    objs.id = midData.worker_id;
+    setObj(objs);
     if (!useSelectorItem.workerList.length && !refresh){
       console.log(32131)
-      const objs = JSON.parse(JSON.stringify(obj))
-      objs.name = midData.nickname||'未命名';
-      objs.id = midData.worker_id;
-      setObj(objs);
       // 获取通讯里信息
       const workerItemData = JSON.parse(JSON.stringify(workerItem));
       // 获取设置员工信息
@@ -432,6 +432,7 @@ export default function userForeman() {
       setWorkerItem([objs, ...arrList])
     }
   }, [useSelectorItem.workerList])
+  console.log(obj,'xxx')
   // 关闭清空时间
   // useDidHide(()=>{
   //   // setTimeData([]);
