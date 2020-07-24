@@ -102,6 +102,7 @@ export default function Login() {
         let userInfo = Taro.getStorageSync(UserInfo);
         console.log(userInfo,'dsadasdasdsada')
         if(res.code === 200 ){
+          console.log(res,'eewqeqweqw')
           // auth
           let paramsData = {
             mid: userInfo.userId
