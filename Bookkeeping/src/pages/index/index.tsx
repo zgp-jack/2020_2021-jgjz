@@ -166,7 +166,6 @@ export default function Index() {
             let obj:any={
               sign:{}
             }
-            obj = res.data;
             obj.userId = e.referrerInfo.extraData.userId;
             obj.token = e.referrerInfo.extraData.token;
             obj.tokenTime = e.referrerInfo.extraData.tokenTime;
