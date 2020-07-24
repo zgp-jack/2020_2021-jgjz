@@ -99,6 +99,7 @@ export default function Login() {
       jumpBindTelAction(params).then(res=>{
         console.log(res);
         let userInfo = Taro.getStorageSync(UserInfo);
+        console.log(userInfo,'dsadasdasdsada')
         if(res.code === 200 ){
           // auth
           let paramsData = {
