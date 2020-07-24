@@ -126,6 +126,7 @@ export default function Index() {
   }
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
+    console.log(e,'返回内容')
     if (e.scene === 1037){
       //return false
       // 返回token ，tokenTime ,userId
@@ -137,7 +138,7 @@ export default function Index() {
           tokenTime: e.referrerInfo.extraData.tokenTime
         }
         appletJumpAction(params).then(res=>{
-          console.log(res,'返回数据')
+          console.log(res,'请求返回数据')
           // 直接返回记工记账用户信息
           if(res.code == 200){
             if(res.data){
