@@ -6047,16 +6047,16 @@ function appletJumpAction(data) {
 }
 // jumpBindTelUrl 小程序跳转后 添加绑定手机号
 function jumpBindTelAction(data) {
-  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+  var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
   return doRequestAction({
     url: api.jumpBindTelUrl,
+    method: 'POST',
     header: {
       // 'content-type': 'application/json',
       'content-type': 'application/x-www-form-urlencoded',
-      mid: midData.yupao_id,
-      token: midData.sign.token,
-      time: midData.sign.time,
-      uuid: midData.uuid
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.time
     },
     data: data
   });

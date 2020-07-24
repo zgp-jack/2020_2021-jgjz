@@ -65,7 +65,7 @@ var Login = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Login.__proto__ || Object.getPrototypeOf(Login)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__184", "$compid__185", "liked", "time"], _this.customComponents = ["AtInput"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Login.__proto__ || Object.getPrototypeOf(Login)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__118", "$compid__119", "liked", "time"], _this.customComponents = ["AtInput"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Login, [{
@@ -84,15 +84,15 @@ var Login = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__184"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__118"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__184 = _genCompid2[0],
-          $compid__184 = _genCompid2[1];
+          $prevCompid__118 = _genCompid2[0],
+          $compid__118 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__185"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__119"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__185 = _genCompid4[0],
-          $compid__185 = _genCompid4[1];
+          $prevCompid__119 = _genCompid4[0],
+          $compid__119 = _genCompid4[1];
 
       var router = (0, _taroWeapp.useRouter)();
       var _router$params = router.params,
@@ -189,6 +189,25 @@ var Login = (_temp2 = _class = function (_Taro$Component) {
           };
           (0, _index.jumpBindTelAction)(params).then(function (res) {
             console.log(res);
+            var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
+            if (res.code === 200) {
+              // auth
+              var paramsData = {
+                mid: userInfo.userId
+              };
+              (0, _index.GetUserInfoAction)(paramsData).then(function (resData) {
+                if (resData.code === 200) {
+                  var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+                  midData.worker_id = res.data.worker_id;
+                  _taroWeapp2.default.setStorageSync(_store.MidData, midData);
+                  _taroWeapp2.default.navigateBack();
+                } else {
+                  (0, _index4.default)(res.msg);
+                }
+              });
+            } else {
+              (0, _index4.default)(res.msg);
+            }
           });
         } else {
           var _params = {
@@ -252,7 +271,7 @@ var Login = (_temp2 = _class = function (_Taro$Component) {
         "placeholder": "\u8F93\u5165\u624B\u673A\u53F7",
         "value": model.phone,
         "onChange": this.anonymousFunc0
-      }, $compid__184, $prevCompid__184);
+      }, $compid__118, $prevCompid__118);
       _taroWeapp.propsManager.set({
         "className": "codeInput",
         "name": "number",
@@ -262,10 +281,10 @@ var Login = (_temp2 = _class = function (_Taro$Component) {
         "placeholder": "\u8BF7\u8F93\u5165\u9A8C\u8BC1\u7801",
         "value": model.code,
         "onChange": this.anonymousFunc1
-      }, $compid__185, $prevCompid__185);
+      }, $compid__119, $prevCompid__119);
       Object.assign(this.__state, {
-        $compid__184: $compid__184,
-        $compid__185: $compid__185,
+        $compid__118: $compid__118,
+        $compid__119: $compid__119,
         liked: liked,
         time: time
       });

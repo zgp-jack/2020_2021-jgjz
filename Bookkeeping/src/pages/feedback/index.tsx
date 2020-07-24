@@ -87,10 +87,11 @@ export default function Feedback() {
       data: PHONE,
       success: () => {
         Taro.hideToast()
-        ShowActionModal({
-          // title: '恭喜您',
-          msg: '微信号复制成功'
-        })
+        Msg('微信号复制成功')
+        // ShowActionModal({
+        //   // title: '恭喜您',
+        //   msg: '微信号复制成功'
+        // })
       }
     })
   }

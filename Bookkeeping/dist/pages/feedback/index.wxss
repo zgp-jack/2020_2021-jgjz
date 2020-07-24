@@ -30,6 +30,7 @@
   border-radius: 6rpx;
   color: #ffffff;
   text-align: center;
+  margin-top: 13rpx;
 }
 .evaluate {
   background: #fff;
@@ -90,7 +91,7 @@
   height: 80rpx;
   line-height: 80rpx;
   background: #0099ff;
-  border-radius: 40rpx;
+  border-radius: 10rpx;
   color: #fff;
   text-align: center;
   margin: 0 auto;

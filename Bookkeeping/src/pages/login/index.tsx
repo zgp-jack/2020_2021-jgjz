@@ -98,6 +98,25 @@ export default function Login() {
       };
       jumpBindTelAction(params).then(res=>{
         console.log(res);
+        let userInfo = Taro.getStorageSync(UserInfo);
+        if(res.code === 200 ){
+          // auth
+          let paramsData = {
+            mid: userInfo.userId
+          };
+          GetUserInfoAction(paramsData).then(resData => {
+            if(resData.code ===200){
+              let midData = Taro.getStorageSync(MidData);
+              midData.worker_id = res.data.worker_id;
+              Taro.setStorageSync(MidData, midData)
+              Taro.navigateBack();
+            }else{
+              Msg(res.msg);
+            }
+          })
+        }else{
+          Msg(res.msg);
+        }
       })
     }else{
       let params = {
