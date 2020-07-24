@@ -96,6 +96,7 @@ export default function Login() {
         tel: model.phone,
         code: model.code,
       };
+      console.log(params,'dsadasdas')
       jumpBindTelAction(params).then(res=>{
         console.log(res);
         let userInfo = Taro.getStorageSync(UserInfo);
