@@ -126,6 +126,10 @@ export default function Index() {
   onAppShow((e)=>{
     console.log(e,'2312312')
     if (e.scene === 1037){
+      console.log('-------e.referrerInfo---------')
+      console.log(e.referrerInfo)
+      console.log('--------end---------')
+      return false
       // 返回token ，tokenTime ,userId
       if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime){
         // 验证有没有手机号
