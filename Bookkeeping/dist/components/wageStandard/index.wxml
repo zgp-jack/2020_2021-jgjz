@@ -4,9 +4,9 @@
             <view class="wageStandard">
                 <view class="wageStandard-content">
                     <view class="wageStandard-content-heard">
-                        <view class="wageStandard-content-heard-close" bindtap="funPrivateifzzz">取消</view>
+                        <view class="wageStandard-content-heard-close" bindtap="funPrivatejbzzz">取消</view>
                         <view>设置工资标准</view>
-                        <view class="wageStandard-content-heard-ok" bindtap="funPrivateigzzz">确定</view>
+                        <view class="wageStandard-content-heard-ok" bindtap="funPrivatejczzz">确定</view>
                     </view>
                     <view class="wageStandard-box">
                         <view class="wageStandard-content-listBox">
@@ -28,7 +28,7 @@
                         <view class="formula-heard">
                             <view>加班工资计算方式：</view>
                             <radio-group>
-                                <radio class="radio" checked="{{v.$original.click}}" color="#0099FF" wx:key="id" bindtap="anonymousFunc2" wx:for="{{loopArray40}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</radio>
+                                <radio class="radio" checked="{{v.$original.click}}" color="#0099FF" wx:key="id" bindtap="anonymousFunc2" wx:for="{{loopArray42}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</radio>
                             </radio-group>
                         </view>
                         <block wx:if="{{wageStandard.type == 1}}">

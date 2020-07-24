@@ -903,7 +903,7 @@ export function appletJumpAction(data): Promise<Inter.bkGetWorker> {
 // jumpBindTelUrl 小程序跳转后 添加绑定手机号
 export function jumpBindTelAction(data): Promise<Inter.bkGetWorker> {
   let userInfo = Taro.getStorageSync(UserInfo);
-  console.log(123123123,'21321321')
+  console.log(userInfo,'21321321')
   return doRequestAction({
     url: api.jumpBindTelUrl,
     method: 'POST',
@@ -912,7 +912,7 @@ export function jumpBindTelAction(data): Promise<Inter.bkGetWorker> {
       'content-type': 'application/x-www-form-urlencoded',
       mid: userInfo.userId,
       token: userInfo.token,
-      time: userInfo.time,
+      time: userInfo.tokenTime,
     },
     data: data,
   })
