@@ -163,18 +163,31 @@ export default function Index() {
             //  有鱼泡账号
           } else if (res.code == 40000){
             console.log(res.data,'res.dafdsda')
+            let obj:any={
+              sign:{}
+            }
+            obj = res.data;
+            obj.userId = e.referrerInfo.extraData.userId;
+            obj.token = e.referrerInfo.extraData.token;
+            obj.tokenTime = e.referrerInfo.extraData.tokenTime;
+            obj.uuid = e.referrerInfo.extraData.userUuid;
+            obj.sign = {
+              token: e.referrerInfo.extraData.token,
+              time: e.referrerInfo.extraData.tokenTime
+            }
             // 要存UserInfo
             Taro.setStorageSync(UserInfo, res.data);
             let params = {
-              mid: res.data.id
+              mid: e.referrerInfo.extraData.userId,
             }
             bkMemberAuthAction(params).then(res=>{
               console.log(res);
               if(res.code !== 200){
                 Msg(res.msg);
               }else{
-                let midData = Taro.getStorageSync(MidData);
+                let midData = Taro.getStorageSync(UserInfo);
                 midData.worker_id = res.data.worker_id;
+                midData.yupao_id = res.data.yupao_id;
                 Taro.setStorageSync(MidData, midData)
               }
             })
