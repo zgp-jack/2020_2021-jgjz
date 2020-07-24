@@ -129,7 +129,7 @@ export default function Index() {
       console.log('-------e.referrerInfo---------')
       console.log(e.referrerInfo)
       console.log('--------end---------')
-      return false
+      //return false
       // 返回token ，tokenTime ,userId
       if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime){
         // 验证有没有手机号
@@ -146,12 +146,14 @@ export default function Index() {
             console.log(res.data,'res.data');
             console.log(321321)
             if(res.data){
-              let obj:any={
+              let obj:any = {
                 sign:{},
               };
               obj = res.data;
               obj.userId = e.referrerInfo.extraData.userId;
+              console.log(222)
               obj.token = e.referrerInfo.extraData.token;
+              console.log(111)
               obj.tokenTime = e.referrerInfo.extraData.tokenTime;
               obj.sign.token = e.referrerInfo.extraData.token;
               obj.sign.time = e.referrerInfo.extraData.tokenTime;
