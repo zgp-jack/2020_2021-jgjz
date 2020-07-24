@@ -100,7 +100,7 @@ export default function Index() {
   // 身份弹框不再提醒
   const [neverPrompt, setNeverPrompt] = useState<boolean>(false)
   // 点击记工跳转到注册手机号
-  const [login,setLogin] = useState<boolean>(false)
+  const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
     const date = new Date().getDay();
     const time = new Date();
@@ -186,8 +186,8 @@ export default function Index() {
             Taro.setStorageSync(UserInfo,obj);
             console.log(Taro.getStorageSync(UserInfo),'u')
             // 设置点击直接跳转到注册手机号页面
-            setLogin(true);
-            console.log(login,'setlogin')
+            setLoginStatus(true);
+            //console.log(login,'setlogin')
           }
         })
       }
@@ -631,6 +631,7 @@ export default function Index() {
     if (login){
       userRouteJump('/pages/login/index?type=1');
     }
+    return
     let midData = Taro.getStorageSync(MidData);
     if (!midData){
       setDisplay(true)
