@@ -111,9 +111,12 @@ export default function Login() {
             console.log(resData,'dsadsa');
             if(resData.code ===200){
               let midData = Taro.getStorageSync(MidData);
-              midData.worker_id = res.data.worker_id;
-              Taro.setStorageSync(MidData, midData)
-              Taro.navigateBack();
+              console.log(midData,'midData')
+              if (midData){
+                midData.worker_id = res.data.worker_id;
+                Taro.setStorageSync(MidData, midData)
+                Taro.navigateBack();
+              }
             }else{
               Msg(res.msg);
             }
