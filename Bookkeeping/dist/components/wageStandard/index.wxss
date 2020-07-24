@@ -1,1 +1,123 @@
-.wageStandard{position:fixed;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,.3);z-index:5;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.wageStandard-content{position:absolute;bottom:0;left:0;width:100%;border-radius:10rpx 10rpx 5rpx 5rpx;-webkit-box-shadow:#e7e6e4 0 0 10rpx;box-shadow:#e7e6e4 0 0 10rpx}.wageStandard-content-heard{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;color:#24272a;font-size:29rpx;height:80rpx;line-height:80rpx;background:#fff;border-bottom:1rpx solid #f3f2f2;padding:0 28rpx}.wageStandard-content-heard-close{color:#979695;font-size:26rpx}.wageStandard-content-heard-ok{color:#09f;font-size:26rpx}.wageStandard-content-listBox-list{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;font-size:28rpx;margin:0 27rpx;border-bottom:1rpx solid #f6f6f6;padding:30rpx 0rpx}.wageStandard-content-listBox-list-title{color:#979695;font-size:28rpx;line-height:30rpx}.wageStandard-content-listBox-list-left{margin:auto 0}.formula,.wageStandard-box{background:#fff}.formula{margin-top:12rpx;padding-bottom:20rpx}.formula-heard{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-justify-content:space-around;-ms-flex-pack:distribute;justify-content:space-around;padding:27rpx 35rpx;color:#979695;font-size:28rpx}.radio{color:#232729;-webkit-transform:scale(.9,.9);-ms-transform:scale(.9,.9);transform:scale(.9,.9)}.workList{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;height:97rpx;line-height:97rpx;width:696rpx;background:#f3f1f1;margin:0 auto 10rpx}.workList-title{margin-left:20rpx;color:#010101;font-size:28rpx}.workList-add{margin-right:20rpx;display:-webkit-flex;display:-ms-flexbox;display:flex}
+.wageStandard {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.wageStandard-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 10rpx 10rpx 5rpx 5rpx;
+  -webkit-box-shadow: #e7e6e4 0 0 10rpx;
+          box-shadow: #e7e6e4 0 0 10rpx;
+}
+.wageStandard-content-heard {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  color: #24272a;
+  font-size: 29rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f3f2f2;
+  padding: 0 28rpx;
+}
+.wageStandard-content-heard-close {
+  color: #979695;
+  font-size: 26rpx;
+}
+.wageStandard-content-heard-ok {
+  color: #0099ff;
+  font-size: 26rpx;
+}
+.wageStandard-content-listBox-list {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 28rpx;
+  margin: 0 27rpx;
+  border-bottom: 1rpx solid #f6f6f6;
+  padding: 30rpx 0rpx;
+}
+.wageStandard-content-listBox-list-title {
+  color: #979695;
+  font-size: 28rpx;
+  line-height: 30rpx;
+}
+.wageStandard-content-listBox-list-left {
+  margin: auto 0;
+}
+.wageStandard-box {
+  background: #fff;
+}
+.formula {
+  margin-top: 12rpx;
+  background: #fff;
+  padding-bottom: 20rpx;
+}
+.formula-heard {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  padding: 27rpx 35rpx;
+  color: #979695;
+  font-size: 28rpx;
+}
+.radio {
+  color: #232729;
+  -webkit-transform: scale(0.9, 0.9);
+      -ms-transform: scale(0.9, 0.9);
+          transform: scale(0.9, 0.9);
+}
+.workList {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 97rpx;
+  line-height: 97rpx;
+  width: 696rpx;
+  background: #f3f1f1;
+  margin: 0 auto;
+  margin-bottom: 10rpx;
+}
+.workList-title {
+  margin-left: 20rpx;
+  color: #010101;
+  font-size: 28rpx;
+}
+.workList-add {
+  margin-right: 20rpx;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}

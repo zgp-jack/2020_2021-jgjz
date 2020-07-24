@@ -317,6 +317,7 @@ export default function Index() {
     // }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
+    console.log(midData,'有美誉mid')
     if(midData){
       let type = Taro.getStorageSync(Type);
         if(!type){
@@ -356,6 +357,7 @@ export default function Index() {
     // if(! )
     if (midData){
       bkIndexAction(params).then(res => {
+        console.log('发起首页请求')
         if (res.code === 200) {
           setItme(res.data);
           setNum(res.data.count_is_new);

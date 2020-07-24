@@ -1,1 +1,75 @@
-.addMember{position:fixed;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,.3);z-index:5;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.addMember-content{position:relative;width:80%;background:#fff;border-radius:10rpx 10rpx 5rpx 5rpx;-webkit-box-shadow:#e7e6e4 0 0 10rpx;box-shadow:#e7e6e4 0 0 10rpx}.addMember-content-heard{height:95rpx;line-height:95rpx;background:#f4f3f3;border-radius:20rpx 20rpx 0rpx 0rpx;font-size:32rpx;color:#000;position:relative;text-align:center}.addMember-content-heard-close{position:absolute;right:20rpx;top:0}.addMember-content-listBox{background:#fff;padding:30rpx 30rpx 0}.addMember-content-listBox-list{color:#000;font-size:30rpx}.addMember-content-listBox-list-input{border:1rpx solid #c2c0bd;height:84rpx;border-radius:3rpx;padding:0 20rpx;margin-top:20rpx;margin-bottom:48rpx}.addMember-content-footer{height:78rpx;line-height:78rpx;color:#fff;font-size:35rpx;background:#3981f7;border-radius:5rpx;text-align:center;width:90%;margin:0 auto 20rpx}
+.addMember {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.addMember-content {
+  position: absolute;
+  position: relative;
+  width: 80%;
+  background: white;
+  border-radius: 10rpx 10rpx 5rpx 5rpx;
+  -webkit-box-shadow: #e7e6e4 0 0 10rpx;
+          box-shadow: #e7e6e4 0 0 10rpx;
+}
+.addMember-content-heard {
+  height: 95rpx;
+  line-height: 95rpx;
+  background: #f4f3f3;
+  border-radius: 20rpx 20rpx 0rpx 0rpx;
+  font-size: 32rpx;
+  color: black;
+  position: relative;
+  text-align: center;
+}
+.addMember-content-heard-close {
+  position: absolute;
+  right: 20rpx;
+  top: 0;
+}
+.addMember-content-listBox {
+  background: #fff;
+  padding: 30rpx;
+  padding-bottom: 0;
+}
+.addMember-content-listBox-list {
+  color: black;
+  font-size: 30rpx;
+}
+.addMember-content-listBox-list-input {
+  border: 1rpx solid #c2c0bd;
+  height: 84rpx;
+  border-radius: 3rpx;
+  padding: 0 20rpx;
+  margin-top: 20rpx;
+  margin-bottom: 48rpx;
+}
+.addMember-content-footer {
+  width: 632rpx;
+  height: 78rpx;
+  line-height: 78rpx;
+  color: #fff;
+  font-size: 35rpx;
+  background: #3981f7;
+  border-radius: 5rpx;
+  text-align: center;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 20rpx;
+}
