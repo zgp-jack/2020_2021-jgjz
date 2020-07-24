@@ -3,11 +3,11 @@
         <block wx:if="{{display}}">
             <view class="workingHours-complaintModal">
                 <view class="workingHours-complaintModal-content">
-                    <view class="workingHours-complaintModal-content-title">选择上班时间<text bindtap="funPrivateiczzz" class="workingHours-complaintModal-content-close">x</text>
+                    <view class="workingHours-complaintModal-content-title">选择上班时间<text bindtap="funPrivateibzzz" class="workingHours-complaintModal-content-close">x</text>
                     </view>
                     <view class="workingHours-complaintModal-content-timeBox">
                         <view class="workingHours-complaintModal-content-box">
-                            <view class="{{v.$original.click ? 'workingHours-complaintModal-content-box-list-click' : 'workingHours-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray39}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</view>
+                            <view class="{{v.$original.click ? 'workingHours-complaintModal-content-box-list-click' : 'workingHours-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray38}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</view>
                         </view>
                     </view>
                 </view>

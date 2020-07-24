@@ -146,6 +146,7 @@ export default function Index() {
             res.data.tokenTime = e.referrerInfo.extraData.tokenTime;
             res.data.sign.token = e.referrerInfo.extraData.token;
             res.data.sign.time = e.referrerInfo.extraData.tokenTime;
+            console.log(res.data,'redadmskldnmaslkdnlkasn')
             Taro.setStorageSync(MidData, res.data);
             getData();
             // 没有鱼泡账号
