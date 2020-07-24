@@ -53,7 +53,7 @@
                     <view class="remarks-details">{{obj.note}}</view>
                     <view class="list-img-box">
                         <block wx:if="{{obj.view_images && obj.view_images.length > 0}}">
-                            <view class="list-img" wx:for="{{loopArray33}}" wx:for-item="v" wx:for-index="__index0">
+                            <view class="list-img" wx:for="{{loopArray34}}" wx:for-item="v" wx:for-index="__index0">
                                 <image src="{{v.$original.httpurl}}" class="list-img-img" bindtap="anonymousFunc0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}"></image>
                             </view>
                         </block>
