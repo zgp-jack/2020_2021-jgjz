@@ -110,15 +110,15 @@ export default function Login() {
           bkMemberAuthAction(paramsData).then(resData => {
             console.log(resData,'dsadsa');
             if(resData.code ===200){
-              let midData = Taro.getStorageSync(MidData);
+              let midData = Taro.getStorageSync(UserInfo);
               console.log(midData,'midData')
               if (midData){
                 console.log(11111,'1111')
                 midData.worker_id = res.data.worker_id;
                 Taro.setStorageSync(MidData, midData)
+                Taro.navigateBack({delta:1});
               }
               console.log('返回上一夜')
-              Taro.navigateBack({delta:1});
             }else{
               Msg(res.msg);
             }

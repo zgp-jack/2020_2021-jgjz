@@ -204,6 +204,7 @@ export default function Index() {
       setNeverPrompt(true);
     }
     // 判断有midDat就取消授权
+    console.log(midData,'midData是够有缓存')
     if (midData){
       setDisplay(false)
       loginType=false;
