@@ -883,7 +883,6 @@ export function bkgetLastGroupInfoAction(data): Promise<Inter.bkGetWorker> {
 
 // 鱼泡网跳过来
 export function appletJumpAction(data): Promise<Inter.bkGetWorker> {
-  
   return doRequestAction({
     url: api.appletJumpUrl,
     header: {
@@ -897,6 +896,6 @@ export function appletJumpAction(data): Promise<Inter.bkGetWorker> {
       // uuid: midData.uuid
       // mid:
     },
-    data: {}
+    data: data,
   })
 }

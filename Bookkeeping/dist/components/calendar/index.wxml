@@ -28,7 +28,7 @@
                                     <view wx:key="id" class="content-weekes-week" wx:for="{{weeks}}" wx:for-item="v" wx:for-index="_anonIdx2">{{v.name}}</view>
                                 </view>
                                 <view class="content-days">
-                                    <view wx:key="$loopState__temp2" bindtap="anonymousFunc2" style="{{v.$loopState__temp4}}" class="{{v.$loopState__temp6}}" wx:for="{{loopArray53}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
+                                    <view wx:key="$loopState__temp2" bindtap="anonymousFunc2" style="{{v.$loopState__temp4}}" class="{{v.$loopState__temp6}}" wx:for="{{loopArray51}}" wx:for-item="v" wx:for-index="i" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">
                                         <view style="{{v.$loopState__temp8}}">{{v.$original.date}}</view>
                                         <view class="lunarCalendarItem" style="{{v.$loopState__temp10}}">{{v.$original.lunarCalendarItem}}</view>
                                         <view>

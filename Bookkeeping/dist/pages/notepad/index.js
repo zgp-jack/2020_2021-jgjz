@@ -1,1 +1,1 @@
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([["pages/notepad/index"],[],[["./src/pages/notepad/index.tsx","runtime","taro","vendors","common"]]]);
+(wx.webpackJsonp=wx.webpackJsonp||[]).push([[43],[],[[196,0,1,2,3]]]);
