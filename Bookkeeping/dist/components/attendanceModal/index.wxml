@@ -17,7 +17,7 @@
                             <button class="btn">下载到本地</button>
                         </view>
                     </view>
-                    <view class="close" bindtap="funPrivatejfzzz">取消</view>
+                    <view class="close" bindtap="funPrivatejizzz">取消</view>
                 </view>
             </view>
         </block>

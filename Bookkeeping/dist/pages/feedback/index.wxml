@@ -12,7 +12,7 @@
             <view>您觉得记工记账用起来怎么样？给个评价吧~</view>
             <view class="evaluateRadio">
                 <radio-group class="RadioGroup">
-                    <radio wx:key="id" class="evaluateRadioList" bindtap="anonymousFunc1" color="#0099FF" wx:for="{{loopArray32}}" wx:for-item="v" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.title}}</radio>
+                    <radio wx:key="id" class="evaluateRadioList" bindtap="anonymousFunc1" color="#0099FF" wx:for="{{loopArray33}}" wx:for-item="v" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.title}}</radio>
                 </radio-group>
             </view>
         </view>
