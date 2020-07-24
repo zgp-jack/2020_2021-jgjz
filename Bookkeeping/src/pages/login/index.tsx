@@ -107,6 +107,7 @@ export default function Login() {
             mid: userInfo.userId
           };
           GetUserInfoAction(paramsData).then(resData => {
+            console.log(resData,'dsadsa');
             if(resData.code ===200){
               let midData = Taro.getStorageSync(MidData);
               midData.worker_id = res.data.worker_id;
