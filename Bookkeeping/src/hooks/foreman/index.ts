@@ -1481,7 +1481,7 @@ export default function userForeman() {
   const handleEstablish = (id)=>{
     const data = JSON.parse(JSON.stringify(model))
     if (!isPhone(model.phone)) {
-      Msg('请先输入正确的手机号码')
+      Msg('请输入正确的手机号')
       return
     }
     let params:any = {

@@ -1,6 +1,6 @@
 import Taro, { useEffect, useState, useDidShow, onAppShow } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
-import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
+import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction, appletJumpAction } from '../../utils/request/index';
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
@@ -126,11 +126,43 @@ export default function Index() {
   onAppShow((e)=>{
     console.log(e,'2312312')
     if (e.scene === 1037){
-      console.log(e.query);
       // 返回token ，tokenTime ,userId
-      if (e.query.userId && e.query.token && e.query.tokenTime){
+      if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime){
         // 验证有没有手机号
-        
+        let params = {
+          userId: e.referrerInfo.extraData.userId,
+          token: e.referrerInfo.extraData.token,
+          tokenTime: e.referrerInfo.extraData.tokenTime
+        }
+        console.log(312312312,'112')
+        appletJumpAction(params).then(res=>{
+          console.log(res,'跳转返回结果');
+          // 直接返回记工记账用户信息
+          if(res.code == 200){
+            
+            // 没有鱼泡账号
+          } else if (res.code == 40001){
+            //  有鱼泡账号
+          } else if (res.code == 40000){
+            // 要存UserInfo
+            Taro.setStorageSync(UserInfo, res.data);
+            let params = {
+              mid: res.data.id
+            }
+            bkMemberAuthAction(params).then(res=>{
+              console.log(res);
+              if(res.code !== 200){
+                Msg(res.msg);
+              }else{
+                let midData = Taro.getStorageSync(MidData);
+                midData.worker_id = res.data.worker_id;
+                Taro.setStorageSync(MidData, midData)
+              }
+            })
+          } else if (res.code == 40003){
+
+          }
+        })
       }
     }
   })
@@ -470,25 +502,27 @@ export default function Index() {
   }
   // 返回鱼泡网
   const handleGoback = ()=>{
-    Taro.navigateBackMiniProgram({
-      extraData: {
-        foo: 'bar'
-      },
-      success: function (res) {
-        // 返回成功
-      }
-    })
-    // wx.navigateToMiniProgram({
-    //   appId: '',
-    //   path: 'pages/index/index?id=123',
+    // Taro.navigateBackMiniProgram({
     //   extraData: {
     //     foo: 'bar'
     //   },
-    //   envVersion: 'develop',
-    //   success(res) {
-    //     // 打开成功
+    //   success: function (res) {
+    //     // 返回成功
     //   }
     // })
+    //**重点**要打开的小程序版本，有效值 develop（开发版），trial（体验版），release（正式版
+    // ========发布正式要修改
+    Taro.navigateToMiniProgram({
+      appId: 'wx456feacb0e86162f',
+      path: '/pages/index/index',
+      extraData: {
+        foo: 'bar'
+      },
+      envVersion: 'trial',
+      success(res) {
+        // 打开成功
+      }
+    })
   }
   // 点击图片
   const hanleImage = (v:any)=>{

@@ -79,3 +79,5 @@ export const bkSetWorkerIdentityWageUrl = REQUESTURL +'bk-worker/set-worker-iden
 export const bkgetLastGroupInfoUrl = REQUESTURL + 'bk-project-team/get-last-group-info/';
 // 下载文件
 export const shareExcelUrl = REQUESTURL +'bk-bookkeeping/share-excel/';
+//鱼泡网跳过来
+export const appletJumpUrl = REQUESTURL +'bk-member/applet-jump'

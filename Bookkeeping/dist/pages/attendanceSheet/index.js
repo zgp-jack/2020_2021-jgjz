@@ -58,7 +58,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AttendanceSheet.__proto__ || Object.getPrototypeOf(AttendanceSheet)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '考勤表'
-    }, _this.$usedState = ["$compid__81", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__183", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AttendanceSheet, [{
@@ -77,10 +77,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__81"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__183"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__81 = _genCompid2[0],
-          $compid__81 = _genCompid2[1];
+          $prevCompid__183 = _genCompid2[0],
+          $compid__183 = _genCompid2[1];
 
       // 月份
 
@@ -792,6 +792,8 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
               // }
               // 判断是否添加
               setAdditional(additional + 1);
+            } else {
+              setAdditional(0);
             }
           }
         });
@@ -815,7 +817,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       (0, _taroWeapp.useShareAppMessage)(function () {
         return {
           // title: '记工记账',
-          title: '记工记账怕丢失？鱼泡网记工更安全！用鱼泡 网记工记账，手机记工更方便，数据永不丢失~',
+          title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
           path: '/pages/share/index'
         };
       });
@@ -838,9 +840,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose
-      }, $compid__81, $prevCompid__81);
+      }, $compid__183, $prevCompid__183);
       Object.assign(this.__state, {
-        $compid__81: $compid__81,
+        $compid__183: $compid__183,
         tebArr: tebArr,
         fixedTab: fixedTab,
         year: year,

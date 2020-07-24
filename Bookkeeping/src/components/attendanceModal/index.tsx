@@ -21,7 +21,7 @@ export default function CalendarModal({ display, handleClose }: PROPS) {
   useShareAppMessage(()=>{
     return {
       // title: '记工记账',
-      title: '记工记账怕丢失？鱼泡网记工更安全！用鱼泡网记工记账，手机记工更方便，数据永不丢失~',
+      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
       path: '/pages/share/index'
     }
   })

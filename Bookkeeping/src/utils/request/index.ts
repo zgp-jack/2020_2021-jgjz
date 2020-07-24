@@ -880,3 +880,23 @@ export function bkgetLastGroupInfoAction(data): Promise<Inter.bkGetWorker> {
 //     data: data
 //   })
 // }
+
+// 鱼泡网跳过来
+export function appletJumpAction(data): Promise<Inter.bkGetWorker> {
+  
+  return doRequestAction({
+    url: api.appletJumpUrl,
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: data.userId,
+      token:data.token,
+      time:data.tokenTime,
+      // token: midData.sign.token,
+      // time: midData.sign.time,
+      // uuid: midData.uuid
+      // mid:
+    },
+    data: {}
+  })
+}

@@ -85,7 +85,7 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       (0, _taroWeapp.useShareAppMessage)(function () {
         return {
           // title: '记工记账',
-          title: '记工记账怕丢失？鱼泡网记工更安全！用鱼泡网记工记账，手机记工更方便，数据永不丢失~',
+          title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
           path: '/pages/share/index'
         };
       });
@@ -106,14 +106,14 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
       ;
     }
   }, {
-    key: "funPrivateijzzz",
-    value: function funPrivateijzzz() {
+    key: "funPrivatebgfzz",
+    value: function funPrivatebgfzz() {
       return this.props.handleClose.apply(undefined, Array.prototype.slice.call(arguments, 1));
     }
   }]);
 
   return CalendarModal;
-}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "funPrivateijzzz"], _class.$$componentPath = "components/attendanceModal/index", _temp2);
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "funPrivatebgfzz"], _class.$$componentPath = "components/attendanceModal/index", _temp2);
 exports.default = CalendarModal;
 
 Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(CalendarModal));

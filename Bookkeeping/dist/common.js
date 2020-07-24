@@ -3242,7 +3242,7 @@ function userForeman() {
   var handleEstablish = function handleEstablish(id) {
     var data = JSON.parse(JSON.stringify(model));
     if (!(0, _index4.isPhone)(model.phone)) {
-      (0, _index3.default)('请先输入正确的手机号码');
+      (0, _index3.default)('请输入正确的手机号');
       return;
     }
     var params = {
@@ -4980,7 +4980,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.shareExcelUrl = exports.bkgetLastGroupInfoUrl = exports.bkSetWorkerIdentityWageUrl = exports.bkUpdateBusinessNewUrl = exports.bkSetGroupLeaderUrl = exports.bkGetCodeUrl = exports.bkGetShareExcelDataUrl = exports.bkAddWorkerInGroupUrl = exports.updateBusinessUrl = exports.bkBusinessOneUrl = exports.bkupdateWageUrl = exports.bkSetWorkerMoneyByWageUrl = exports.bkUpdateProjectTeamUrl = exports.bkDeleteprojectTeamUrl = exports.bkUpdateWorkerUrl = exports.bkDeleteBusinessUrl = exports.bkGetWorkerWageUrl = exports.bkAddWageUrl = exports.bkWageStandGetWageUrl = exports.bkAddBusinessUrl = exports.bkShareExcelurl = exports.bkgetExcelDataUrl = exports.bkDeleteRroupWorkerUrl = exports.bkGetWorkerUrl = exports.bkAddWorkerUrl = exports.bkAddProjectTeamUrl = exports.bkGetProjectTeamUrl = exports.bkBusinessUrl = exports.bkUpdateNotePadUrl = exports.bkDeleteNotePadUrl = exports.bkGetNotePadUrl = exports.bkAddNotepadUrl = exports.bkAddFeedbackUrl = exports.bkMemberAuthUrl = exports.bkIndexUrl = exports.GetUserInfo = exports.GetUserSessionKey = exports.jobRecommendListUrl = undefined;
+exports.appletJumpUrl = exports.shareExcelUrl = exports.bkgetLastGroupInfoUrl = exports.bkSetWorkerIdentityWageUrl = exports.bkUpdateBusinessNewUrl = exports.bkSetGroupLeaderUrl = exports.bkGetCodeUrl = exports.bkGetShareExcelDataUrl = exports.bkAddWorkerInGroupUrl = exports.updateBusinessUrl = exports.bkBusinessOneUrl = exports.bkupdateWageUrl = exports.bkSetWorkerMoneyByWageUrl = exports.bkUpdateProjectTeamUrl = exports.bkDeleteprojectTeamUrl = exports.bkUpdateWorkerUrl = exports.bkDeleteBusinessUrl = exports.bkGetWorkerWageUrl = exports.bkAddWageUrl = exports.bkWageStandGetWageUrl = exports.bkAddBusinessUrl = exports.bkShareExcelurl = exports.bkgetExcelDataUrl = exports.bkDeleteRroupWorkerUrl = exports.bkGetWorkerUrl = exports.bkAddWorkerUrl = exports.bkAddProjectTeamUrl = exports.bkGetProjectTeamUrl = exports.bkBusinessUrl = exports.bkUpdateNotePadUrl = exports.bkDeleteNotePadUrl = exports.bkGetNotePadUrl = exports.bkAddNotepadUrl = exports.bkAddFeedbackUrl = exports.bkMemberAuthUrl = exports.bkIndexUrl = exports.GetUserInfo = exports.GetUserSessionKey = exports.jobRecommendListUrl = undefined;
 
 var _index = __webpack_require__(/*! ../../config/index */ "./src/config/index.ts");
 
@@ -5062,6 +5062,8 @@ var bkSetWorkerIdentityWageUrl = exports.bkSetWorkerIdentityWageUrl = _index.REQ
 var bkgetLastGroupInfoUrl = exports.bkgetLastGroupInfoUrl = _index.REQUESTURL + 'bk-project-team/get-last-group-info/';
 // 下载文件
 var shareExcelUrl = exports.shareExcelUrl = _index.REQUESTURL + 'bk-bookkeeping/share-excel/';
+//鱼泡网跳过来
+var appletJumpUrl = exports.appletJumpUrl = _index.REQUESTURL + 'bk-member/applet-jump';
 
 /***/ }),
 
@@ -5208,6 +5210,7 @@ exports.bkSetGroupLeaderAction = bkSetGroupLeaderAction;
 exports.bkUpdateBusinessNewAction = bkUpdateBusinessNewAction;
 exports.bkSetWorkerIdentityWageAction = bkSetWorkerIdentityWageAction;
 exports.bkgetLastGroupInfoAction = bkgetLastGroupInfoAction;
+exports.appletJumpAction = appletJumpAction;
 
 var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js");
 
@@ -6023,6 +6026,20 @@ function bkgetLastGroupInfoAction(data) {
 //     data: data
 //   })
 // }
+// 鱼泡网跳过来
+function appletJumpAction(data) {
+  return doRequestAction({
+    url: api.appletJumpUrl,
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: data.userId,
+      token: data.token,
+      time: data.tokenTime
+    },
+    data: {}
+  });
+}
 
 /***/ }),
 
