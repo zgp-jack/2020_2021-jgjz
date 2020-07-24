@@ -139,6 +139,7 @@ export default function Index() {
           console.log(res,'跳转返回结果');
           // 直接返回记工记账用户信息
           if(res.code == 200){
+            console.log(2202200220202020)
             res.data.userId = e.referrerInfo.extraData.userId;
             res.data.token = e.referrerInfo.extraData.token;
             res.data.tokenTime = e.referrerInfo.extraData.tokenTime;
@@ -358,7 +359,7 @@ export default function Index() {
       identity: type,
     }
     // if(! )
-    if (midData){
+    if (midData || data){
       bkIndexAction(params).then(res => {
         console.log('发起首页请求')
         if (res.code === 200) {
