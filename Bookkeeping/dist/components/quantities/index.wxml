@@ -3,10 +3,10 @@
         <block wx:if="{{display}}">
             <view class="quantities-complaintModal">
                 <view class="quantities-complaintModal-content">
-                    <view class="quantities-complaintModal-content-title">选择单位<text bindtap="funPrivatehgzzz" class="quantities-complaintModal-content-close">x</text>
+                    <view class="quantities-complaintModal-content-title">选择单位<text bindtap="funPrivatehdzzz" class="quantities-complaintModal-content-close">x</text>
                     </view>
                     <view class="quantities-complaintModal-content-box">
-                        <view class="{{v.$original.click ? 'quantities-complaintModal-content-box-list-click' : 'quantities-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray36}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</view>
+                        <view class="{{v.$original.click ? 'quantities-complaintModal-content-box-list-click' : 'quantities-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray35}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</view>
                     </view>
                 </view>
             </view>

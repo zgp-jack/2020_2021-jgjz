@@ -4,8 +4,8 @@
             <slot></slot>
         </view>
         <block wx:if="{{anonymousState__temp9}}">
-            <at-swipe-action-options compid="{{$compid__52}}">
-                <view wx:key="$loopState__temp4" style="{{item.$loopState__temp6}}" bindtap="anonymousFunc0" class="{{item.$loopState__temp8}}" wx:for="{{loopArray45}}" wx:for-item="item" wx:for-index="key" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"><text class="option__text">{{item.$original.text}}</text>
+            <at-swipe-action-options compid="{{$compid__50}}">
+                <view wx:key="$loopState__temp4" style="{{item.$loopState__temp6}}" bindtap="anonymousFunc0" class="{{item.$loopState__temp8}}" wx:for="{{loopArray43}}" wx:for-item="item" wx:for-index="key" data-e-tap-so="this" data-e-tap-a-a="{{item._$indexKey}}"><text class="option__text">{{item.$original.text}}</text>
                 </view>
             </at-swipe-action-options>
         </block>

@@ -130,7 +130,7 @@ export default function Index() {
     if (e.scene === 1037){
       //return false
       // 返回token ，tokenTime ,userId
-      if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime&&e.referrerInfo.extraData.uuid){
+      if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime&&e.referrerInfo.extraData.userUuid){
         // 验证有没有手机号
         let params = {
           userId: e.referrerInfo.extraData.userId,
@@ -149,7 +149,7 @@ export default function Index() {
               obj.userId = e.referrerInfo.extraData.userId;
               obj.token = e.referrerInfo.extraData.token;
               obj.tokenTime = e.referrerInfo.extraData.tokenTime;
-              obj.uuid = e.referrerInfo.extraData.uuid;
+              obj.uuid = e.referrerInfo.extraData.userUuid;
               obj.sign = {
                 token : e.referrerInfo.extraData.token,
                 time : e.referrerInfo.extraData.tokenTime
@@ -181,7 +181,7 @@ export default function Index() {
             let obj:any={};
             obj.userId = e.referrerInfo.extraData.userId;
             obj.token = e.referrerInfo.extraData.token;
-            obj.uuid = e.referrerInfo.extraData.uuid;
+            obj.uuid = e.referrerInfo.extraData.userUuid;
             obj.tokenTime = e.referrerInfo.extraData.tokenTime;
             Taro.setStorageSync(UserInfo,obj);
             // 设置点击直接跳转到注册手机号页面

@@ -18,7 +18,7 @@
             </view>
         </view>
         <view class="list-content">
-            <at-list compid="{{$compid__43}}">
+            <at-list compid="{{$compid__52}}">
                 <view class="list-itme"><text class="list-itme-title">{{obj.identity == 1 ? '工人' : '班组长'}}</text>:<text class="list-itme-content"> {{obj.identity == 1 ? obj.workername : obj.leader_name}}</text>
                 </view>
                 <view class="list-itme"><text class="list-itme-title">项目名称</text>:<text class="list-itme-content">{{obj.group_info || '-'}}</text>
@@ -53,7 +53,7 @@
                     <view class="remarks-details">{{obj.note}}</view>
                     <view class="list-img-box">
                         <block wx:if="{{obj.view_images && obj.view_images.length > 0}}">
-                            <view class="list-img" wx:for="{{loopArray34}}" wx:for-item="v" wx:for-index="__index0">
+                            <view class="list-img" wx:for="{{loopArray45}}" wx:for-item="v" wx:for-index="__index0">
                                 <image src="{{v.$original.httpurl}}" class="list-img-img" bindtap="anonymousFunc0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}"></image>
                             </view>
                         </block>
