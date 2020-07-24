@@ -139,14 +139,13 @@ export default function Index() {
           console.log(res,'跳转返回结果');
           // 直接返回记工记账用户信息
           if(res.code == 200){
-            console.log(2202200220202020)
             res.data.userId = e.referrerInfo.extraData.userId;
             res.data.token = e.referrerInfo.extraData.token;
             res.data.tokenTime = e.referrerInfo.extraData.tokenTime;
             res.data.sign.token = e.referrerInfo.extraData.token;
             res.data.sign.time = e.referrerInfo.extraData.tokenTime;
             Taro.setStorageSync(MidData, res.data);
-            getData('', res.data);
+            getData();
             // 没有鱼泡账号
           } else if (res.code == 40001){
             //  有鱼泡账号
@@ -303,10 +302,7 @@ export default function Index() {
     })
   }
   // 获取首页数据
-  const getData = (e?:string,data?:any)=>{
-    if(data){
-      Taro.setStorageSync(MidData, data);
-    }
+  const getData = (e?:string)=>{
     // 没登录直接进来默认是工人
     // =====
     // let type = Taro.getStorageSync(Type);
@@ -338,7 +334,7 @@ export default function Index() {
     // 判断选没有选择时间
     let changeTime;
     console.log(repeat,'resdsada')
-    if (!e || e!=''){
+    if (!e){
       console.log(1)
       console.log(312312312312)
       changeTime = getDates();
@@ -359,7 +355,7 @@ export default function Index() {
       identity: type,
     }
     // if(! )
-    if (midData || data){
+    if (midData){
       bkIndexAction(params).then(res => {
         console.log('发起首页请求')
         if (res.code === 200) {
