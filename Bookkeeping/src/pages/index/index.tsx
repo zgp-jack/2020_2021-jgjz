@@ -139,14 +139,11 @@ export default function Index() {
           console.log(res,'跳转返回结果');
           // 直接返回记工记账用户信息
           if(res.code == 200){
-            const userId= e.referrerInfo.extraData.userId;
-            const token= e.referrerInfo.extraData.token;
-            const tokenTime= e.referrerInfo.extraData.tokenTime;
-            res.data.userId = userId;
-            res.data.token = token;
-            res.data.tokenTime = tokenTime;
-            res.data.sign.token = token;
-            res.data.sign.time = tokenTime;
+            res.data.userId = e.referrerInfo.extraData.userId;
+            res.data.token = e.referrerInfo.extraData.token;
+            res.data.tokenTime = e.referrerInfo.extraData.tokenTime;
+            res.data.sign.token = e.referrerInfo.extraData.token;
+            res.data.sign.time = e.referrerInfo.extraData.tokenTime;
             Taro.setStorageSync(MidData, res.data);
             getData();
             // 没有鱼泡账号
