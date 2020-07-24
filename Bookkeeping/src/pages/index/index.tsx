@@ -184,8 +184,10 @@ export default function Index() {
             obj.uuid = e.referrerInfo.extraData.userUuid;
             obj.tokenTime = e.referrerInfo.extraData.tokenTime;
             Taro.setStorageSync(UserInfo,obj);
+            console.log(1111)
             // 设置点击直接跳转到注册手机号页面
             setLogin(true);
+            console.log(login,'111')
           }
         })
       }
