@@ -145,6 +145,8 @@ export default function Index() {
             res.data.userId = userId;
             res.data.token = token;
             res.data.tokenTime = tokenTime;
+            res.data.sign.token = token;
+            res.data.sign.time = tokenTime;
             Taro.setStorageSync(MidData, res.data);
             getData();
             // 没有鱼泡账号
