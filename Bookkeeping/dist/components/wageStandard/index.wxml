@@ -4,22 +4,22 @@
             <view class="wageStandard">
                 <view class="wageStandard-content">
                     <view class="wageStandard-content-heard">
-                        <view class="wageStandard-content-heard-close" bindtap="funPrivatejgzzz">取消</view>
+                        <view class="wageStandard-content-heard-close" bindtap="funPrivateiezzz">取消</view>
                         <view>设置工资标准</view>
-                        <view class="wageStandard-content-heard-ok" bindtap="funPrivatejhzzz">确定</view>
+                        <view class="wageStandard-content-heard-ok" bindtap="funPrivateifzzz">确定</view>
                     </view>
                     <view class="wageStandard-box">
                         <view class="wageStandard-content-listBox">
                             <view class="wageStandard-content-listBox-list">
                                 <view class="wageStandard-content-listBox-list-left"><text class="wageStandard-content-listBox-list-title">上班标准:</text> {{wageStandard.work}}小时算一个工</view>
                                 <view>
-                                    <at-input-number compid="{{$compid__47}}"></at-input-number>
+                                    <at-input-number compid="{{$compid__46}}"></at-input-number>
                                 </view>
                             </view>
                             <view class="wageStandard-content-listBox-list">
                                 <view class="wageStandard-content-listBox-list-left"><text class="wageStandard-content-listBox-list-title">每个工多少钱:</text> {{wageStandard.money}}/个工</view>
                                 <view>
-                                    <at-input-number compid="{{$compid__48}}"></at-input-number>
+                                    <at-input-number compid="{{$compid__47}}"></at-input-number>
                                 </view>
                             </view>
                         </view>
@@ -28,14 +28,14 @@
                         <view class="formula-heard">
                             <view>加班工资计算方式：</view>
                             <radio-group>
-                                <radio class="radio" checked="{{v.$original.click}}" color="#0099FF" wx:key="id" bindtap="anonymousFunc2" wx:for="{{loopArray43}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</radio>
+                                <radio class="radio" checked="{{v.$original.click}}" color="#0099FF" wx:key="id" bindtap="anonymousFunc2" wx:for="{{loopArray40}}" wx:for-item="v" wx:for-index="__index2" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</radio>
                             </radio-group>
                         </view>
                         <block wx:if="{{wageStandard.type == 1}}">
                             <view class="workList">
                                 <view class="workList-title">加班{{wageStandard.addWork}}元/小时</view>
                                 <view class="workList-add">
-                                    <at-input-number compid="{{$compid__49}}"></at-input-number>
+                                    <at-input-number compid="{{$compid__48}}"></at-input-number>
                                 </view>
                             </view>
                         </block>
@@ -44,7 +44,7 @@
                                 <view class="workList">
                                     <view class="workList-title">加班{{wageStandard.day}}小时算一个工</view>
                                     <view class="workList-add">
-                                        <at-input-number compid="{{$compid__50}}"></at-input-number>
+                                        <at-input-number compid="{{$compid__49}}"></at-input-number>
                                     </view>
                                 </view>
                                 <view class="workList">
