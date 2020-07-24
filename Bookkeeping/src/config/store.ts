@@ -11,3 +11,9 @@ export const CreationTime: string = 'creationTime'
 // 工人项目长度
 // 切换身份用不提示
 export const NeverPrompt: string = 'neverPrompt'
+// 日历
+export const Calendar: string = 'calendar'
+// 工人
+export const User:string ='user'
+// 记工时间
+export const RecordTime: string ='recordTime'

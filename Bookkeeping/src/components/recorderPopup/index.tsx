@@ -16,7 +16,7 @@ export default function RecorderPopup({ display, handleRecorderPopup }: PROPS) {
         <View className='tabber-complaintModal'>
           <View className='tabber-complaintModal-content'>
             <View className='tabber-complaintModal-content-title '>保存成功!</View>
-            <View className='tabber-complaintModal-content-box'>记工数据,仅自己可见随时查看，方便快捷</View>
+            <View className='tabber-complaintModal-content-box'>记工数据,仅自己可见,随时查看，方便快捷</View>
             <View className='tabber-complaintModal-content-footer'>
               <View className='tabber-complaintModal-content-footer-left' onClick={() => handleRecorderPopup(0)}>取消</View>
               <View className='tabber-complaintModal-content-footer-right' onClick={() => handleRecorderPopup(1)}>查看考勤表</View>

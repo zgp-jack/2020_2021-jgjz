@@ -65,7 +65,7 @@ var Login = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Login.__proto__ || Object.getPrototypeOf(Login)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__44", "$compid__45", "liked", "time"], _this.customComponents = ["AtInput"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Login.__proto__ || Object.getPrototypeOf(Login)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["$compid__43", "$compid__44", "liked", "time"], _this.customComponents = ["AtInput"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Login, [{
@@ -84,15 +84,15 @@ var Login = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__44"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__43"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__44 = _genCompid2[0],
-          $compid__44 = _genCompid2[1];
+          $prevCompid__43 = _genCompid2[0],
+          $compid__43 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__45"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__44"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__45 = _genCompid4[0],
-          $compid__45 = _genCompid4[1];
+          $prevCompid__44 = _genCompid4[0],
+          $compid__44 = _genCompid4[1];
 
       var router = (0, _taroWeapp.useRouter)();
       var _router$params = router.params,
@@ -241,7 +241,7 @@ var Login = (_temp2 = _class = function (_Taro$Component) {
         "placeholder": "\u8F93\u5165\u624B\u673A\u53F7",
         "value": model.phone,
         "onChange": this.anonymousFunc0
-      }, $compid__44, $prevCompid__44);
+      }, $compid__43, $prevCompid__43);
       _taroWeapp.propsManager.set({
         "className": "codeInput",
         "name": "number",
@@ -251,10 +251,10 @@ var Login = (_temp2 = _class = function (_Taro$Component) {
         "placeholder": "\u8BF7\u8F93\u5165\u9A8C\u8BC1\u7801",
         "value": model.code,
         "onChange": this.anonymousFunc1
-      }, $compid__45, $prevCompid__45);
+      }, $compid__44, $prevCompid__44);
       Object.assign(this.__state, {
+        $compid__43: $compid__43,
         $compid__44: $compid__44,
-        $compid__45: $compid__45,
         liked: liked,
         time: time
       });
@@ -359,109 +359,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
-
-/***/ }),
-
-/***/ "./src/utils/v/index.ts":
-/*!******************************!*\
-  !*** ./src/utils/v/index.ts ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.isPhone = isPhone;
-exports.isNumber = isNumber;
-exports.isVaildNumber = isVaildNumber;
-exports.randIntNumber = randIntNumber;
-exports.getRandNumber = getRandNumber;
-exports.isUrl = isUrl;
-exports.isRequire = isRequire;
-exports.isVaildVal = isVaildVal;
-exports.isIdcard = isIdcard;
-exports.isType = isType;
-exports.isIos = isIos;
-
-var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js");
-
-var _taroWeapp2 = _interopRequireDefault(_taroWeapp);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// 是否是电话号码
-function isPhone(tel) {
-  var reg = /^1[0-9]{10}$/;
-  return reg.test(tel);
-}
-// 是否是数字
-function isNumber(num) {
-  var reg = /^[0-9]+$/;
-  return reg.test(num);
-}
-function isVaildNumber(_ref) {
-  var num = _ref.num,
-      _ref$min = _ref.min,
-      min = _ref$min === undefined ? 0 : _ref$min,
-      _ref$max = _ref.max,
-      max = _ref$max === undefined ? 10 : _ref$max;
-
-  if (!isNumber(num)) return false;
-  return num >= min && num <= max;
-}
-// 生成区间整数
-function randIntNumber() {
-  var min = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-  var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 20;
-
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-// 生成随机数
-function getRandNumber() {
-  var min = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-  var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 20;
-
-  return min + Math.random() * (max - min);
-}
-// 检测是否是网址
-function isUrl(url) {
-  var reg = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
-  return reg.test(url);
-}
-// 检测必填
-function isRequire(val) {
-  var str = val.replace(/\s+/g, '');
-  return str != '' && str != null && str != undefined && str != 'null' && str != undefined;
-}
-// 内容必须有汉字 且不少于 min 字
-function isVaildVal(val) {
-  var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 15;
-  var max = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-
-  var reg = new RegExp('[\\u4E00-\\u9FFF]+');
-  return max ? reg.test(val) && val.length >= min && val.length <= max : reg.test(val) && val.length >= min;
-}
-// 检测是否是身份证
-function isIdcard(val) {
-  var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-  return reg.test(val);
-}
-// 检测数据类型
-function isType(data, type) {
-  var reg = Object.prototype.toString.call(data).slice(8, -1).toLowerCase();
-  if (!type) return reg;
-  if (reg == type) return true;
-  return false;
-}
-// 检测是否是ios客户端
-function isIos() {
-  var system = _taroWeapp2.default.getSystemInfoSync();
-  return system.platform === 'ios';
-}
 
 /***/ })
 

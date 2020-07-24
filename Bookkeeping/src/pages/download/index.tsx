@@ -165,6 +165,7 @@ export default function Download() {
       <View className='footer'>
         <View className='footer-box'>
         <View className='footer-left' onClick={handleLook}>打开查看</View>
+        {/* <View className='footer-right' onClick={handleLook}>下载到微信</View> */}
         <View className='footer-right' onClick={handleDownLoad}>下载到微信</View>
         </View>
       </View>

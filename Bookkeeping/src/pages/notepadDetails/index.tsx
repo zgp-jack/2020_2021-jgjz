@@ -67,8 +67,9 @@ export default function NotepadDetails() {
     }
     Taro.showModal({
       title: "提示",
-      content: '确认删除',
+      content: '删除后,当前信息将无法恢复,确定删除？',
       showCancel: true,
+      confirmText:'确认删除',
       success: (res) => {
         if (res.confirm == true) {
           bkDeleteNotePadAction(params).then(res => {

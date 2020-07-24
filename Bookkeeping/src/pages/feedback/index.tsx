@@ -70,12 +70,12 @@ export default function Feedback() {
     bkAddFeedbackAction(params).then(res=>{
       console.log(res);
       if(res.code === 200){
-        Msg('提交成功，记工记账将因您的意见而变得美好！');
+        Msg('提交成功，记工记账将因您的意见而变得更好！');
         setTimeout(()=>{
           Taro.navigateBack({
             delta: 1
           })
-        },500)
+        },1000)
       }else{
         Msg('保存失败')
       }

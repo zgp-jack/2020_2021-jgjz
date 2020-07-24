@@ -131,7 +131,7 @@ export default function EditDetails() {
           obj.name = res.data.group_info_name;
           obj.note = res.data.note;
           obj.workername = res.data.workername;
-          obj.leaderName = res.data.workername;
+          obj.leaderName = res.data.leader_name;
           // 这里是工要获取到多少工资标里的设置的时间再算
           const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
           obj.duration = duration;

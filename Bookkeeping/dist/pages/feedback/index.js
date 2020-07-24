@@ -68,7 +68,7 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Feedback.__proto__ || Object.getPrototypeOf(Feedback)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '意见反馈'
-    }, _this.$usedState = ["loopArray33", "$compid__42", "evaluate", "image", "PHONE"], _this.anonymousFunc1Map = {}, _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["loopArray32", "$compid__41", "evaluate", "image", "PHONE"], _this.anonymousFunc1Map = {}, _this.customComponents = ["ImageView"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Feedback, [{
@@ -89,10 +89,10 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__42"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__41"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__42 = _genCompid2[0],
-          $compid__42 = _genCompid2[1];
+          $prevCompid__41 = _genCompid2[0],
+          $compid__41 = _genCompid2[1];
 
       // 评价
 
@@ -164,12 +164,12 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
         (0, _index3.bkAddFeedbackAction)(params).then(function (res) {
           console.log(res);
           if (res.code === 200) {
-            (0, _index5.default)('提交成功，记工记账将因您的意见而变得美好！');
+            (0, _index5.default)('提交成功，记工记账将因您的意见而变得更好！');
             setTimeout(function () {
               _taroWeapp2.default.navigateBack({
                 delta: 1
               });
-            }, 500);
+            }, 1000);
           } else {
             (0, _index5.default)('保存失败');
           }
@@ -195,12 +195,12 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc3 = handlebkAddFeedbackAction;
-      var loopArray33 = evaluate.map(function (v, __index1) {
+      var loopArray32 = evaluate.map(function (v, __index1) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "ghzzz" + __index1;
+        var _$indexKey = "ggzzz" + __index1;
 
         _this2.anonymousFunc1Map[_$indexKey] = function () {
           return setRadio(v.$original.id);
@@ -216,10 +216,10 @@ var Feedback = (_temp2 = _class = function (_Taro$Component) {
         "max": 4,
         "userUploadImg": userUploadImg,
         "userDelImg": userDelImg
-      }, $compid__42, $prevCompid__42);
+      }, $compid__41, $prevCompid__41);
       Object.assign(this.__state, {
-        loopArray33: loopArray33,
-        $compid__42: $compid__42,
+        loopArray32: loopArray32,
+        $compid__41: $compid__41,
         evaluate: evaluate,
         image: image,
         PHONE: _index6.PHONE

@@ -1,6 +1,6 @@
 import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide,useRouter } from '@tarojs/taro'
 import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, bkAddBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction  } from '../../utils/request/index'
-import { MidData, Type } from '../../config/store'
+import { MidData, Type, Calendar, RecordTime, User } from '../../config/store'
 import { bkGetProjectTeamData } from '../../utils/request/index.d'
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setWorker } from '../../actions/workerList'
@@ -9,6 +9,7 @@ import { setUserList } from '../../actions/userList';
 import { setClickTIme } from '../../actions/clickTIme'
 import { setPhoneList } from '../../actions/phoneList';
 import Msg from '../../utils/msg';
+import { isPhone } from '../../utils/v'
 export interface BorrowingType {
   item: DataType[]
 }
@@ -253,6 +254,8 @@ export default function userForeman() {
   // 设置点击了的日历
   const [clickData, setClickData] = useState<any[]>([])
   const [arr, setArr] = useState<any[]>([]);
+  // 设置打开日时点击的值
+  const [openClickTime, setOpenClickTime] = useState<any[]>([])
   // 刷新
   //农历1949-2100年查询表
   let lunarYearArr = [
@@ -287,47 +290,6 @@ export default function userForeman() {
   const [reduxTime, setReduxTime] = useState<any[]>([])
   // 工资标准全选
   const [checkAll, setCheckAll] = useState<boolean>(false)
-  // useDidShow(() => {
-  //   if (refresh){
-  //     setRefresh(false)
-  //     return;
-  //   } 
-  //   const type = Taro.getStorageSync(Type);
-  //   setIdentity(type)
-  //   // 判断选择回来 
-  //   if (useSelectorItem.workerList.length > 0) {
-  //     if (identity === 2){
-  //       setForeman(useSelectorItem.workerList);
-  //       setForemanTitle(useSelectorItem.workerList[0].name);
-  //       return;
-  //     }
-  //     //  ======= 需要修改，等获取到本人信息后
-  //     let objs = JSON.parse(JSON.stringify(obj));
-  //     const data = JSON.parse(JSON.stringify(moneyList));
-  //     const arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
-  //     if(data.length>0){
-  //       for(let j = 0;j<data.length;j++){
-  //         for (let i = 0; i <arrList.length;i++){
-  //           arrList[i].click = false;
-  //           if (data[j].worker_id === arrList[i].id){
-  //             arrList[i].set = true
-  //           }
-  //         }
-  //       }
-  //     }else{
-  //       for (let i = 0; i < arrList.length; i++) {
-  //         arrList[i].click = false;
-  //       }
-  //     }
-  //     for(let i =0;i<arrList.length;i++){
-  //       if(arrList[i].id === objs.id){
-  //         objs = arrList[i];
-  //         arrList.splice(i,1)
-  //       }
-  //     }
-  //     setWorkerItem([objs, ...arrList])
-  //   }
-  // })
   useEffect(()=>{
     // 获取角色
     let type = Taro.getStorageSync(Type);
@@ -335,13 +297,11 @@ export default function userForeman() {
     // 获取用户信息
     let midData = Taro.getStorageSync(MidData)
     // }
-    console.log(refresh,'refresh')
     const objs = JSON.parse(JSON.stringify(obj))
     objs.name = midData.nickname||'未命名';
     objs.id = midData.worker_id;
     setObj(objs);
     if (!useSelectorItem.workerList.length && !refresh){
-      console.log(32131)
       // 获取通讯里信息
       const workerItemData = JSON.parse(JSON.stringify(workerItem));
       // 获取设置员工信息
@@ -359,6 +319,7 @@ export default function userForeman() {
       bkWageStandGetWage();
       // 日历
       getMonthDaysCurrent(new Date());
+      // 日历点击的值
       if (useSelectorItem.clickTIme.length > 0) {
         setReduxTime(useSelectorItem.clickTIme);
       };
@@ -397,11 +358,16 @@ export default function userForeman() {
     }
     // }
     // 判断选择回来 
-    console.log(useSelectorItem.workerList,'workerListworkerList')
+    console.log(useSelectorItem.workerList,'useSelectorItem.workerList')
     if (useSelectorItem.workerList.length > 0) {
       if (identity === 2) {
         setForeman(useSelectorItem.workerList);
-        setForemanTitle(useSelectorItem.workerList[0].name);
+        console.log(useSelectorItem.workerList[0],'useSelectorItem.workerList1111')
+        if (useSelectorItem.workerList[0].leader_name){
+          setForemanTitle(useSelectorItem.workerList[0].leader_name);
+        }else{
+          setForemanTitle(useSelectorItem.workerList[0].name);
+        }
         return;
       }
       //  ======= 需要修改，等获取到本人信息后
@@ -428,11 +394,9 @@ export default function userForeman() {
           arrList.splice(i, 1)
         }
       }
-      console.log([objs, ...arrList],'[objs, ...arrList]')
       setWorkerItem([objs, ...arrList])
     }
   }, [useSelectorItem.workerList])
-  console.log(obj,'xxx')
   // 关闭清空时间
   // useDidHide(()=>{
   //   // setTimeData([]);
@@ -466,7 +430,27 @@ export default function userForeman() {
     const calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
     const reduxItem = JSON.parse(JSON.stringify(reduxTime));
     const arrList = JSON.parse(JSON.stringify(arr));
-    
+    const openClickData = JSON.parse(JSON.stringify(openClickTime));
+    //点击的时候变颜色，取消消失显示原来的保存点击的内容，点击保存的时候，设置最新的
+    //设置值
+    // 点击的时候存起来，取消删除
+    // let openItem:any =[];
+    // if(openItem.length == 0){
+    //   openItem.push(v);
+    // }else{
+    //   for (let i = 0; i < openClickData.length;i++){
+    //     // 判断是否相同
+    //     // if (v.date == openClickData[i].date && v.month == openClickData[i].month && v.year == openClickData[i].year && !v.up && !v.next) {
+    //     //   openClickData[i].click = !openClickData[i].click;
+    //     // }
+    //     openClickData.map((val,i)=>{
+    //       if (v.date == val.date && v.month == val.month && v.year == val.year && !v.up && !v.next) {
+    //         // val.click = !val.click;
+    //       }
+    //     })
+    //   }
+    // }
+    // setOpenClickTime(openItem)
     // if (recorderType === 3) {
     //   if (arrList.length === 0) {
     //     for (let i = 0; i < calendarDaysArr.length; i++) {
@@ -499,32 +483,117 @@ export default function userForeman() {
     //     return;
     //   }
     // }
+    // 遍历本月的值
     for (let i = 0; i < calendarDaysArr.length; i++) {
       // 判断是同一天就设置点击
       if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year && !v.up && !v.next) {
-        calendarDaysArr[i].click = !calendarDaysArr[i].click;
-        let data: any[] = [];
-        for (let i = 0; i < calendarDaysArr.length; i++) {
-          if (calendarDaysArr[i].click) {
-            data.push(calendarDaysArr[i]);
+        if (clickDataItem.length > 30){
+          if (calendarDaysArr[i].click){
+            calendarDaysArr[i].click = !calendarDaysArr[i].click;
+            // 点击的时候用的
+            let data: any[] = [];
+            console.log(calendarDaysArr[i], 'calendarDaysArr[i]')
+            console.log(calendarDaysArr[i].click, 'calendarDaysArr[i].click')
+            // 判断是true时候删除
+            if (calendarDaysArr[i].click) {
+              console.log([...clickDataItem, calendarDaysArr[i]], '[...clickDataItem, calendarDaysArr[i]];')
+              data = [...clickDataItem, calendarDaysArr[i]];
+              // 增加
+            } else {
+              // calendarDaysArr.sp
+              for (let j = 0; j < clickDataItem.length; j++) {
+                if (clickDataItem[j].date == calendarDaysArr[i].date && clickDataItem[j].month == calendarDaysArr[i].month && clickDataItem[j].year == calendarDaysArr[i].year) {
+                  clickDataItem.splice(j, 1)
+                }
+              }
+              data = [...clickDataItem];
+            }
+            console.log(data, 'data')
+            setClickData(data)
+          }else{
+            Msg('最多选择31天')
+            return;
           }
-        }
-        if (reduxItem.length > 0) {
-          for (let i = 0; i < reduxItem.length; i++) {
-            for (let j = 0; j < data.length; j++) {
-              if (reduxItem[i].year === data[j].year && reduxItem[i].month === data[j].month && reduxItem[i].day === data[j].day) {
-                // reduxItem.splice(i,1)
-              } else {
-                reduxItem.push(data[i]);
+        }else{
+          calendarDaysArr[i].click = !calendarDaysArr[i].click;
+           // 点击的时候用的
+          let data:any[] =[];
+          console.log(calendarDaysArr[i],'calendarDaysArr[i]')
+          console.log(calendarDaysArr[i].click,'calendarDaysArr[i].click')
+          // 判断是true时候删除
+          if (calendarDaysArr[i].click){
+            console.log([...clickDataItem, calendarDaysArr[i]],'[...clickDataItem, calendarDaysArr[i]];')
+            data = [...clickDataItem, calendarDaysArr[i]];
+            // 增加
+          }else{
+            // calendarDaysArr.sp
+            for (let j = 0; j < clickDataItem.length;j++){
+              if (clickDataItem[j].date == calendarDaysArr[i].date && clickDataItem[j].month == calendarDaysArr[i].month && clickDataItem[j].year == calendarDaysArr[i].year){
+                clickDataItem.splice(j,1)
               }
             }
+            data = [...clickDataItem];
           }
-        } else {
-          reduxItem.push(data)
+          console.log(data,'data')
+          setClickData(data)
         }
-        dispatch(setClickTIme(reduxItem))
-        console.log(data,'date');
-        setClickData(data)
+        // 点击的时候用的
+        // let data,={};
+        // 用来提交的时候用的
+        let showData:any=[]=[];
+        //把点击的push进去
+        for (let i = 0; i < calendarDaysArr.length; i++) {
+          if (calendarDaysArr[i].click) {
+            // data.push(calendarDaysArr[i]);
+            // for (let j = 0; j < clickDataItem.length;j++){
+            //   if(clickDataItem)
+            // }
+            // data = calendarDaysArr[i]
+            // data = [...clickDataItem, calendarDaysArr[i]];
+            showData.push(calendarDaysArr[i])
+          }
+        }
+        // const arr = [...clickDataItem, data];
+        // console.log(arr,'data');
+        // if (reduxItem.length > 0) {
+        //   for (let i = 0; i < reduxItem.length; i++) {
+        //     for (let j = 0; j < data.length; j++) {
+        //       if (reduxItem[i].year === data[j].year && reduxItem[i].month === data[j].month && reduxItem[i].day === data[j].day) {
+        //         // reduxItem.splice(i,1)
+        //       } else {
+        //         reduxItem.push(data[i]);
+        //       }
+        //     }
+        //   }
+        // } else {
+        //   reduxItem.push(data)
+        // }
+        // console.log(reduxItem,'reduxItem')
+        // setReduxTime(reduxItem)
+        // dispatch(setClickTIme(reduxItem))
+        // console.log(data,'date');
+        // 点击的时候的值
+        // console.log(clickDataItem,'clickDataItem')
+        // console.log(data,'data')
+        // const item = [...clickDataItem, ...data]
+        // 获取点击了的值
+        // let list:any=[];
+        // for (let i = 0; i < clickDataItem.length;i++){
+        //   // 循环判断年不同，或者月不同，或者日不同都push
+        //   if (v.date == clickDataItem[i].date && v.month == clickDataItem[i].month && v.year == clickDataItem[i].year) {
+        //   }else{
+        //     list.push(v);
+        //   }
+        // }
+        // console.log(list);
+        // if (list){
+        //   setClickData({data,...list})
+        // }else{
+        // setClickData(arr)
+        // }
+        // setOpenClickTime(showData)
+        // console.log(calendarDaysArr,'calendarDaysArrcalendarDaysArr')
+        // 已经点击了的值的内容
         setCalendarDays(calendarDaysArr);
         return;
         // }
@@ -547,6 +616,8 @@ export default function userForeman() {
   }
   // 对应月份日期
   const getMonthDaysCurrent = (e) => {
+    // 获取点击了的数据
+    const clickDataItem = JSON.parse(JSON.stringify(clickData));
     let data;
     if (useSelectorItem.clickTIme.length > 0) {
       data = useSelectorItem.clickTIme;
@@ -579,27 +650,61 @@ export default function userForeman() {
         'up': true,
       })
     }
-    // 当月显示的日期
-    for (let i = 1; i <= days; i++) {
-      const lunarCalendarItem = sloarToLunar(year, month, i);
-      // 获取现在的时间的年月日
-      const years = new Date().getFullYear();
-      const months = new Date().getMonth() + 1;
-      const dates = new Date().getDate();
+    // 获取记录过的日历
+    const calendarItem = Taro.getStorageSync(Calendar);
+    // if(calendarItem.length>0){
+      // for (let j = 0; j < calendarItem.length;j++){
+        // 当月显示的日期
+        for (let i = 1; i <= days; i++) {
+          const lunarCalendarItem = sloarToLunar(year, month, i);
+          // 获取现在的时间的年月日
+          const years = new Date().getFullYear();
+          const months = new Date().getMonth() + 1;
+          const dates = new Date().getDate();
+          // if (calendarItem.length > 0){
+          //   for (let j = 0; j < calendarItem.length; j++) {
+          // }else{
 
-      calendarDaysArr.push({
-        'year': year,
-        'month': month,
-        'date': i,
-        'day': new Date(year, month - 1, i).getDay(),
-        'current': true,
-        'lunarCalendarItem': lunarCalendarItem.lunarDay,
-        'selected': i == date, // 判断当前日期
-        'stop': years <= year && ((months == month && dates < i) || months< month),
-        'click': years <= year && months == month && dates == i
-        // 'next': dates < date
-      })
-    }
+          // }
+          
+          calendarDaysArr.push({
+            'year': year,
+            'month': month,
+            'date': i,
+            'day': new Date(year, month - 1, i).getDay(),
+            'current': true,
+            'lunarCalendarItem': lunarCalendarItem.lunarDay,
+            'selected': i == date, // 判断当前日期
+            'stop': years <= year && ((months == month && dates < i) || months < month),
+            // 'click': years <= year && months == month && dates == i
+            // 'next': dates < date
+            // 'record': calendarItem[j].year == year && calendarItem[j].month == month && calendarItem[j].day == i
+          })
+        }
+      // }
+    // }else{
+    //   // 当月显示的日期
+    //   for (let i = 1; i <= days; i++) {
+    //     const lunarCalendarItem = sloarToLunar(year, month, i);
+    //     // 获取现在的时间的年月日
+    //     const years = new Date().getFullYear();
+    //     const months = new Date().getMonth() + 1;
+    //     const dates = new Date().getDate();
+
+    //     calendarDaysArr.push({
+    //       'year': year,
+    //       'month': month,
+    //       'date': i,
+    //       'day': new Date(year, month - 1, i).getDay(),
+    //       'current': true,
+    //       'lunarCalendarItem': lunarCalendarItem.lunarDay,
+    //       'selected': i == date, // 判断当前日期
+    //       'stop': years <= year && ((months == month && dates < i) || months < month),
+    //       // 'click': years <= year && months == month && dates == i
+    //       // 'next': dates < date
+    //     })
+    //   }
+    // }
     // 下个月显示的天数及日期
     for (let i = 1; i < 7 - lastDay; i++) {
       let date = new Date(year, month, i)
@@ -629,14 +734,17 @@ export default function userForeman() {
       }
     }
     // 第一次设置值进去
-    let dataItme:any[] = [];
-    for (let i = 0; i < calendarDaysArr.length;i++){
-      if (calendarDaysArr[i].click) {
-        dataItme.push(calendarDaysArr[i]);
-      }
-    }
-    setTimeData(dataItme)
+    // let dataItme:any[] = [];
+    // for (let i = 0; i < calendarDaysArr.length;i++){
+    //   if (calendarDaysArr[i].click) {
+    //     dataItme.push(calendarDaysArr[i]);
+    //   }
+    // }
+    // console.log(dataItme,'dataItme')
+    // setTimeData(dataItme)
     // setClickData(dataItme)
+    // console.log('选择后内容')
+    // console.log(calendarDaysArr,'calendarDaysArr')
     setCalendarDays(calendarDaysArr)
   }
   // 公历转农历函数
@@ -790,9 +898,10 @@ export default function userForeman() {
         const modalObj = JSON.parse(JSON.stringify(model));
         const identity = Taro.getStorageSync(Type)
           if(identity === 2){
+            console.log(312321321)
             console.log(model.groupName,'model.groupNamemodel.groupName')
             if (!model.groupName){
-              let groupInfo
+              let groupInfo;
               if (res.data && res.data.length>0){
                 for(let i =0;i<res.data.length;i++){
                   res.data[0].click = true;
@@ -829,18 +938,27 @@ export default function userForeman() {
                 const years = new Date().getFullYear();
                 const months = new Date().getMonth() + 1;
                 const dates = new Date().getDate();
-                time = years +'-'+ months +'-'+ dates
+                // time = years +'-'+ months +'-'+ dates
                 // `${years}-${months}-${dates}(今天)`
               }
-              setModel({ ...modalObj, name, duration, time})
+              // setForemanTitle(res.data[0].leader_name)
+              // setModel({ ...modalObj, name, duration})
+                // ========
+              setModel({ ...modalObj, name, duration, time })
               console.log(res.data,'res.datam amsdKn dsknad ksa ')
               setProjectArr(res.data);
             }else{
+              console.log('dasdasdasd')
               if (res.data && res.data.length > 0) {
                 for (let i = 0; i < res.data.length; i++) {
                   // res.data[0].click = true;
-                  if (groupName === res.data[i].name){
+                  console.log(res.data[i],'groupNamegroupName');
+                  console.log(groupName,'groupName')
+                  if (groupName === res.data[i].group_name + '-' + res.data[i].name){
                     res.data[i].click = true;
+                    // 清空
+                    setModel({ ...modalObj, name: res.data[i].group_name + '-' + res.data[i].name})
+                    setForemanTitle('');
                   }
                 }
               }else{
@@ -848,7 +966,6 @@ export default function userForeman() {
                 setModel({ ...modalObj, name: '', groupName: '', teamName:'' })
                 setForemanTitle('')
               }
-              console.log(res.data,'res.datam amsd ')
               setProjectArr(res.data);
             }
           }else{
@@ -859,8 +976,10 @@ export default function userForeman() {
             const years = new Date().getFullYear();
             const months = new Date().getMonth() + 1;
             const dates = new Date().getDate();
-            const time = years + '-' + months + '-' + dates
-            setModel({ ...modalObj, duration, time })
+            // const time = years + '-' + months + '-' + dates
+            // ======
+            setModel({ ...modalObj, duration })
+            // setModel({ ...modalObj, duration, time })
             setTimeArr(data);
             setProjectArr(res.data);
           }
@@ -882,7 +1001,6 @@ export default function userForeman() {
     // return;
     bkGetWorkerWageAction(prams).then(res=>{
       if(res.code === 200){
-        console.log(res,'ressssss')
         setMoneyList(res.data);
         // 判断页面上的是否设置工资标准
         if(identity ===1 ){
@@ -896,7 +1014,6 @@ export default function userForeman() {
                 }
               }
             }
-            console.log(Item,'ItemItemItem')
             setWorkerItem(Item)
             return;
           }
@@ -943,7 +1060,6 @@ export default function userForeman() {
     }
     bkGetWorkerAction(params).then(res=>{
       if(res.code === 200){
-        console.log(res.data);
         const data = JSON.parse(JSON.stringify(workerItem));
         let arr:any[] = [];
         for(let i =0;i<res.data.length;i++){
@@ -971,14 +1087,12 @@ export default function userForeman() {
             }
             dispatch(setmailList(res.data))
           }else{
-            console.log(3123131)
             // 选择另一个项目的情况
             for(let i = 0;i<arr.length;i++){
               if (arr[i].id == obj.id){
                 arr.splice(i,1);
               }
             }
-            console.log(groupInfos, [obj, ...arr],'groupInfos, [obj,...arr]')
             dispatch(setPhoneList([obj, ...arr]));
             bkGetWorkerWage(groupInfos, [obj,...arr]);
         }
@@ -1021,7 +1135,7 @@ export default function userForeman() {
         data[type] = e.detail.value;
       } else {
         Msg('请输入两位小数或整数')
-        data[type] = '';
+        data[type] = e.detail.value;
       }
       setModel(data);
       return;
@@ -1038,7 +1152,8 @@ export default function userForeman() {
     bkAddProjectTeamAction(params).then(res=>{
       if(res.code === 200){
         setIds(res.data);
-        bkGetProjectTeam(model.groupName);
+        const name = model.groupName + '-' + model.teamName;
+        bkGetProjectTeam(name);
       }else{
         Msg(res.msg);
         return;
@@ -1083,7 +1198,6 @@ export default function userForeman() {
         })
         setTimeArr(arr)
       }
-      // console.log(arr);
       let addTime;
       for(let i =0;i<addWorkArr.length;i++){
         if(addWorkArr[i].click){
@@ -1106,6 +1220,7 @@ export default function userForeman() {
         setModel({ ...data, duration})
       }
     }else{
+      //加班时长
       let arr;
       if(val.id != 2){
         arr = addWorkArr.map(v => {
@@ -1135,18 +1250,21 @@ export default function userForeman() {
         return;
       }
       let Time;
+      console.log(timeArr,'timeArr')
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
+          console.log(timeArr[i].id)
           if (timeArr[i].id == 3) {
             Time = '休息'
           } else {
             Time = '上班' + timeArr[i].name
           }
-        } else {
+          break;
+        }else{
           Time = '休息'
         }
       }
-      
+      console.log(Time,'Time')
       let duration;
       if (val.id == 1) {
         duration = Time +'无加班';
@@ -1183,10 +1301,6 @@ export default function userForeman() {
           addTime = '无加班'
         }
       }
-      console.log(addWorkArr,'addWorkArr')
-      console.log(e.name,'122121');
-      console.log(addTime)
-      console.log()
       let duration;
       duration = '上班' + e.name + addTime;
       setModel({ ...Item, duration })
@@ -1208,6 +1322,7 @@ export default function userForeman() {
           } else {
             Time = '上班' + timeArr[i].name
           }
+          break;
         } else {
           Time = '休息'
         }
@@ -1329,7 +1444,6 @@ export default function userForeman() {
           Msg(res.msg)
         }
       })
-      console.log(num,'workersWages')
       setModel({ ...model, workersWages: num, duration: title });
       setWorkOvertimeDisplay(false);
       return;
@@ -1366,6 +1480,10 @@ export default function userForeman() {
   // 添加成员
   const handleEstablish = (id)=>{
     const data = JSON.parse(JSON.stringify(model))
+    if (!isPhone(model.phone)) {
+      Msg('请先输入正确的手机号码')
+      return
+    }
     let params:any = {
       name: data.userName,
       tel:data.phone,
@@ -1446,7 +1564,6 @@ export default function userForeman() {
                 return val;
               })
               setWorkerItem(data);
-              console.log(data,'打卡说的布卡斯巴达克进八廓街')
               dispatch(setPhoneList(data));
               // 获取工人列表
               // 设置是否点击了
@@ -1497,14 +1614,11 @@ export default function userForeman() {
     if (recorderType === 3 || (recorderType == 2 && contractor == 1) ){
       return;
     }
-    console.log(v,'xxxx1');
       setWagesModalDisplay(true);
       //把工资标准的内容设置为新的s
       const data = JSON.parse(JSON.stringify(workerItem));
-      console.log(data,'data')
       let setData:any=[],NoSetData:any=[];
       for(let i =0;i<data.length;i++){
-        console.log(data[i],'data1') 
         data[i].click = false;
         if(v){
           if(data[i].id == v.id){
@@ -1563,7 +1677,6 @@ export default function userForeman() {
     const data = JSON.parse(JSON.stringify(wageStandard));
     const item = JSON.parse(JSON.stringify(model));
     const workerItemArr = JSON.parse(JSON.stringify(workerItem));
-    console.log(addWorkArr,'addWorkArr')
     // 时间
     let times: number = 0, work_time_hour=0;
     timeArr.map(v=>{
@@ -1579,8 +1692,6 @@ export default function userForeman() {
         }
       }
     })
-    console.log(timeArr,'timeArr')
-    console.log(times,work_time_hour);
     // const times = 1/data.work * work_time;
     // 加班时间
     let overtime:number=0;
@@ -1606,7 +1717,6 @@ export default function userForeman() {
       }
     })
     const timeItem = JSON.parse(JSON.stringify(timeData));
-    console.log(timeItem,'timeItemtimeItem')
     let time: string[] = timeItem.map(item => (item.year +'-'+ item.month +'-'+ item.date));
     // type 1 再来一笔 0 保存
     let tabData;
@@ -1749,7 +1859,6 @@ export default function userForeman() {
         work_time_hour
       }
     }
-    console.log(params,'params');
     // 工人的时候要先设置工资标准
     const foremanTitles = JSON.parse(JSON.stringify(foremanTitle))
     if(identity === 2){
@@ -1766,7 +1875,6 @@ export default function userForeman() {
         return
       }
     }
-    console.log(time,'xxx')
     // 记工(包工按量)
     // 工人记工的时候，没有选择项目名称，为他默认一个
     if (identity === 2){
@@ -1794,11 +1902,11 @@ export default function userForeman() {
                 const item = useSelectorItem.workerList;
                 const group_leader = item[0].id;
                 params.group_leader = group_leader;
-                console.log(params,'paramsparams1')
                 bkAddBusinessAction(params).then(resData => {
                   // 清除reducer
                   if (resData.code === 200) {
                     if (type === 1) {
+                      Msg('保存成功')
                       const data = {
                         groupName: '',
                         teamName: '',
@@ -1848,6 +1956,14 @@ export default function userForeman() {
                     } else {
                       setDisplay(true)
                     }
+                    // 保存成功记忆日历
+                    Taro.setStorageSync(Calendar, timeItem);
+                    // 保存记工的时间和记工工人
+                    handleRecordTime(workers);
+                    // const RecordTime = '';
+                    // const User = workerItem;
+                    // Taro.setStorageSync(RecordTime, timeItem);
+                    // Taro.setStorageSync(Calendar, timeItem);
                     setRefresh(true)
                     dispatch(setWorker([]))
                   } else {
@@ -1889,11 +2005,11 @@ export default function userForeman() {
           }
         }
         if (recorderType == 3 || (recorderType == 2 && contractor == 1)){
-          console.log(3213123)
           bkAddBusinessAction(params).then(resData => {
             // 清除reducer
             if (resData.code === 200) {
               if (type === 1) {
+                Msg('保存成功')
                 const data = {
                   groupName: '',
                   teamName: '',
@@ -1943,6 +2059,10 @@ export default function userForeman() {
               } else {
                 setDisplay(true)
               }
+              // 保存成功记忆日历
+              Taro.setStorageSync(Calendar, timeItem);
+              // 保存记工的时间和记工工人
+              handleRecordTime(workers);
               setRefresh(true)
               dispatch(setWorker([]))
             } else {
@@ -1960,19 +2080,17 @@ export default function userForeman() {
           overtime: data.day,
           group_info: groupInfo
         }
-        console.log(paramsData,'paramsData')
         bkSetWorkerIdentityWageAction(paramsData).then(resItem => {
           if (resItem.code === 200) {
             // 班组长id
             const item = useSelectorItem.workerList;
-            console.log(item,'item')
             const group_leader = item[0].id;
             params.group_leader = group_leader;
-            console.log(params, 'paramsparams2')
             bkAddBusinessAction(params).then(resData => {
               // 清除reducer
               if (resData.code === 200) {
                 if (type === 1) {
+                  Msg('保存成功')
                   const data = {
                     groupName: '',
                     teamName: '',
@@ -2023,6 +2141,10 @@ export default function userForeman() {
                 } else {
                   setDisplay(true)
                 }
+                // 保存成功记忆日历
+                Taro.setStorageSync(Calendar, timeItem);
+                // 保存记工的时间和记工工人
+                handleRecordTime(workers);
                 dispatch(setWorker([]))
                 // 设置不刷新
                 setRefresh(true)
@@ -2040,6 +2162,7 @@ export default function userForeman() {
         // 清除reducer
         if(res.code === 200){
           if(type === 1){
+            Msg('保存成功')
             const data = {
               groupName: '',
               teamName: '',
@@ -2088,27 +2211,13 @@ export default function userForeman() {
             // 设置不刷新
             setRefresh(true)
           }else{
-            // Taro.showModal({
-            //   title:'保存成功！',
-            //   content:'记工数据仅自己可见,随时查看，方便快捷',
-            //   showCancel: true,
-            //   confirmText:'去考勤表',
-            //   confirmColor:'#0099FFFF',
-            //   success:(res)=>{
-            //     if (res.confirm) {
-            //       Taro.redirectTo({
-            //         url: '/pages/attendanceSheet/index'
-            //       })
-            //     } else if (res.cancel){
-            //       Taro.redirectTo({
-            //         url:'/pages/flowingWater/index'
-            //       })
-            //     }
-            //   }
-            // })
             setDisplay(true)
           }
           // 设置不刷新
+          // 保存成功记忆日历
+          Taro.setStorageSync(Calendar, timeItem);
+          // 保存记工的时间和记工工人
+          handleRecordTime(workers);
           setRefresh(true)
           dispatch(setWorker([]))
         }else{
@@ -2118,6 +2227,38 @@ export default function userForeman() {
     }
   }
   const handleCalendar = (v)=>{
+  }
+  // 进入页面判断时间
+  const handleUser=()=>{
+    // 获取现在的时间再加一天
+    const time = new Date();
+    const times = time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+    const date = (new Date(times)).valueOf() + 86400000;
+    const oldTime = Taro.getStorageSync(RecordTime);
+    const userData = Taro.getStorageSync(User);
+    // 设置了时间并大于今天
+    if (oldTime && oldTime > date) {
+
+    }
+  }
+  // 保存时间
+  const handleRecordTime = (workers:any[])=>{
+    // 现在的时间
+    const time = new Date();
+    const times = time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+    const date = (new Date(times)).valueOf();
+    // 时间
+    Taro.setStorageSync(RecordTime, date);
+    // 工人
+    const user = Taro.getStorageSync(User);
+    if (user.length>0){
+      const arr = user.concat(workers).filter(function (v, i, arr) {
+        return arr.indexOf(v) === arr.lastIndexOf(v);
+      });
+      Taro.setStorageSync(User, arr);
+    }else{
+      Taro.setStorageSync(User, workers);
+    }
   }
   // 点击项目
   const handleProject = (v)=>{
@@ -2172,10 +2313,8 @@ export default function userForeman() {
   const handleStart = ()=>{
     // 工人
     const workerItemList = JSON.parse(JSON.stringify(workerItem));
-    console.log(workerItemList,'workerItemList');
     // 储存工人
     const storagelistItem = JSON.parse(JSON.stringify(storagelist))
-    console.log(storagelistItem,'storagelistItem')
     let arrList:any[]=[];
     if (workerItemList && storagelistItem){
       for (let i = 0; i < workerItemList.length;i++){
@@ -2187,7 +2326,6 @@ export default function userForeman() {
       }
     }
     setWorkerItem([...workerItemList, ...arrList]);
-    console.log([...workerItemList, ...arrList],'[...workerItemList, ...arrList]')
     dispatch(setWorker([...workerItemList, ...arrList]))
     Taro.navigateBack({delta: 1})
   }
@@ -2308,7 +2446,6 @@ export default function userForeman() {
           Msg(res.msg)
         }
       })
-      console.log(num,'numnum')
       setModel({ ...model, workersWages:num});
       setWageStandardDisplay(false);
       return;
@@ -2333,7 +2470,6 @@ export default function userForeman() {
       })
       return;
     }
-    console.log(data,'data');
     // 修改已设置的
     if(state === 1){
       let params = {
@@ -2356,15 +2492,28 @@ export default function userForeman() {
         }
       })
     }else{
-      let params = {
-        // name:'',
-        worktime_define: data.work,
-        overtime_type:data.type,
-        overtime_money: data.dayAddWork,
-        money: data.money,
-        overtime:data.day,
-        id:data.id
-        // type: 'wage'//后端说修改type传这个
+      let params;
+      if (data.type == 1) {
+        params = {
+          name: '',
+          worktime_define: data.work,
+          overtime_type: data.type,
+          overtime_money: data.addWork,
+          money: data.money,
+          overtime: data.day,
+          id: data.id
+        }
+        // 按天
+      } else {
+        params = {
+          name: '',
+          worktime_define: data.work,
+          overtime_type: data.type,
+          overtime_money: data.dayAddWork,
+          money: data.money,
+          overtime: data.day,
+          id: data.id
+        }
       }
       bkupdateWageAction(params).then(res=>{
         if(res.code === 200 ){
@@ -2394,7 +2543,6 @@ export default function userForeman() {
   }
   // 修改
   const handleEditWages = (v:any,type:number)=>{
-    console.log(v,'撒娇的你爸叫博大精深')
     // 判断是修改标准还是修改已有人的工资标准
     setState(type)
     //判断不是新增
@@ -2452,7 +2600,6 @@ export default function userForeman() {
   }
   // 删除项目
   const handleDelProject = (v)=>{
-    console.log(v,'xxxx');
     const ids = v.id;
     let params = {
       ids,
@@ -2505,7 +2652,7 @@ export default function userForeman() {
   const handleEditProjectModal = (v)=>{
     setEditProjectDisplay(true);
     const data = JSON.parse(JSON.stringify(editProjectData))
-    data.group_info = v.group_id;
+    data.group_info = v.group_id+','+v.id;
     data.team_name = v.name;
     data.group_name = v.group_name;
     setEditProjectData(data);
@@ -2708,13 +2855,57 @@ export default function userForeman() {
   }
   // 日历关闭
   const handleCalendarClose = ()=>{
-    // 并清空
-    setTimeData([]);
-    const calendar = JSON.parse(JSON.stringify(calendarDays));
-    for(let i=0;i<calendar.length;i++){
-      calendar[i].click = false
+    // 取消的时候清空点击的值，但是保留显示的值
+    const clickDataItem = JSON.parse(JSON.stringify(clickData));
+    // setClickData([]);
+    const data = JSON.parse(JSON.stringify(openClickTime));
+    const calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
+    for (let i = 0; i < calendarDaysArr.length;i++){
+      for(let j=0;j<data.length;j++){
+        if (data[j].date == calendarDaysArr[i].date && data[j].month == calendarDaysArr[i].month && data[j].year == calendarDaysArr[i].year) {
+          calendarDaysArr[i].click = true;
+        }
+      }
     }
-    setCalendarDays(calendar);
+    setCalendarDays(calendarDaysArr)
+    let time;
+    if (data.length == 1) {
+      // const time = data[0].year+
+      const years = new Date().getFullYear();
+      const months = new Date().getMonth() + 1;
+      const dates = new Date().getDate();
+      if (data[0].year == years && data[0].month == months && data[0].date == dates) {
+        time = years + '-' + months + '-' + dates
+      } else {
+        time = data[0].year + '-' + data[0].month + '-' + data[0].date
+      }
+    } else {
+      time = data.length + '天';
+    }
+    setModel({ ...model, time: time });
+    // clickDataItem.map((v,i)=>{
+    //   if (data.length==0){
+    //     v.click = false;
+    //   }else{
+    //     data.map(val=>{
+    //       if (v.date ==val.date && v.month ==val.month && v.year ==val.year) {
+    //         // 判断相同就不清楚
+    //         v.click = true;
+    //       }
+    //       return val;
+    //     })
+    //   }
+    //   return v;
+    // })
+    // console.log(clickDataItem,'clickDataItem');
+    // setClickData(clickDataItem)
+    // 并清空
+    // setTimeData([]);
+    // const calendar = JSON.parse(JSON.stringify(calendarDays));
+    // for(let i=0;i<calendar.length;i++){
+    //   calendar[i].click = false
+    // }
+    // setCalendarDays(calendar);
     // setClickData([]);
     setCalendarModalDisplay(false);
   }
@@ -2723,6 +2914,7 @@ export default function userForeman() {
       if(type === 0){
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent)-2,1)
       getMonthDaysCurrent(date);
+      console.log(clickData,'切换日期')
       return;
     }else{
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
@@ -2743,13 +2935,11 @@ export default function userForeman() {
     // }else{
       const data = JSON.parse(JSON.stringify(clickData));
       let time ;
-      console.log(data);
       if(data.length == 1){
         // const time = data[0].year+
         const years = new Date().getFullYear();
         const months = new Date().getMonth() + 1;
         const dates = new Date().getDate();
-        console.log(data)
         if (data[0].year == years && data[0].month == months && data[0].date == dates ){
           time = years + '-' + months + '-' + dates
         }else{
@@ -2758,9 +2948,15 @@ export default function userForeman() {
       }else{
         time = data.length +'天';
       }
+      // 显示
       setModel({ ...model, time: time});
-      setCalendarModalDisplay(false);
+      // 覆盖点击的值
+      setOpenClickTime(data)
+      // 点击的值
       setTimeData(data);
+      // 关闭
+      setCalendarModalDisplay(false);
+      console.log(data,'datadadsa')
     // }
   }
   // 左

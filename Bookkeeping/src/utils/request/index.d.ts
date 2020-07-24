@@ -200,6 +200,7 @@ export interface bkBusinessOneType extends Result{
     worker_money: string,
     workername: string,
     leaderName: string,
+    leader_name:string,
     worker_overtime:string,
   }
 }

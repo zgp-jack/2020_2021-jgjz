@@ -112,6 +112,7 @@ export default function Index() {
     setMonth(addZero(time.getMonth() + 1))
     // 先写死
     setStart(newTime)
+    setEnd(newMonth)
     setWeek(week);
     return newMonth;
   }

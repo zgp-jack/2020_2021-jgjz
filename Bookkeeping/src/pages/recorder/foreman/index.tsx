@@ -127,14 +127,14 @@ export default function Foreman() {
     // 跳转
     if(type === 1){
       Taro.redirectTo({
-          url:'/pages/flowingWater/index'
+          url: '/pages/attendanceSheet/index'
         })
     }else{
       // Taro.navigateBack({
       //   delta: 1
       // })
       Taro.redirectTo({
-        url: '/pages/attendanceSheet/index'
+        url: '/pages/flowingWater/index'
       })
     }
     setDisplay(false)
@@ -226,7 +226,6 @@ export default function Foreman() {
     const data = JSON.parse(JSON.stringify(model));
     setModel({ ...data, groupName: '', teamName:'' })
   }
-  console.log(foremanTitle,'foremanTitle')
   // 添加项目
   const handleAddProjectList = ()=>{
     // 判断大于十就能再添加项目饿了
@@ -239,6 +238,8 @@ export default function Foreman() {
       })
       return
     }
+    const data = JSON.parse(JSON.stringify(model));
+    setModel({ ...data, groupName: '', teamName: '' })
     setCreateProjectDisplay(true), setShow(false)
   }
   return (
@@ -449,7 +450,7 @@ export default function Foreman() {
               className='publish-list-input-money'
               type='text'
               disabled
-              maxLength={14}
+              maxLength={16}
               placeholder='请选择工钱'
               value={model && model.workersWages}
             />
@@ -466,7 +467,7 @@ export default function Foreman() {
               :<Input
                 className='publish-list-input-amount'
                 type='digit'
-                maxLength={7}
+                maxLength={9}
                 placeholder='请填写工程量'
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
@@ -480,7 +481,7 @@ export default function Foreman() {
               :<Input
                 className='publish-list-input'
                 type='digit'
-                maxLength={7}
+                maxLength={9}
                 placeholder='请填写单价'
                 onInput={(e) => handleInput('price', e)}
                 value={model && model.price}
@@ -493,7 +494,7 @@ export default function Foreman() {
               :<Input
                 className='publish-list-input'
                 type='digit'
-                maxLength={14}
+                maxLength={16}
                 onInput={(e) => handleInput('wages', e)}
                 placeholder='工程量和单价未知时，可直接填写'
                 value={model && model.wages}
@@ -512,7 +513,7 @@ export default function Foreman() {
                 className='publish-list-input'
                 type='digit'
                 // disabled
-                maxLength={14}
+                maxLength={16}
                 onInput={(e) => handleInput('borrowing', e)}
                 placeholder='请输入本次借支金额'
                 value={model && model.borrowing}

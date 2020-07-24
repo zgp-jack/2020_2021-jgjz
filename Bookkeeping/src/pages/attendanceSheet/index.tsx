@@ -18,6 +18,8 @@ export default function AttendanceSheet() {
   const [data, setData] = useState<any>([{}, {}, {}])
   const [identity, setIdentity ] = useState<number>(0)
   const [display, setDisplay] = useState<boolean>(false)
+  //判断是否追加
+  const [additional, setAdditional]= useState<number>(0)
   // const [refresh, setRefresh] = useState<number>(0)
   // 一键对公
   const handleShare = () => {
@@ -49,9 +51,6 @@ export default function AttendanceSheet() {
   }, [])
   // 获取数据
   const getList = (newTime: string) => {
-    console.log(fixedTab,'fixedTab')
-    console.log(tebArr,'tebArr')
-    let identity = Taro.getStorageSync(Type);
     console.log(identity,'identity')
     let params = {
       date: newTime
@@ -85,7 +84,9 @@ export default function AttendanceSheet() {
       list: arr,
     }
     const tebArrList = JSON.parse(JSON.stringify(tebArr));
-    tebArrList.push(arrObj);
+    if (additional == 0){
+      tebArrList.push(arrObj);
+    }
     const fixedTabList = JSON.parse(JSON.stringify(fixedTab));
     const defaultArr = [
       { id: 1, name: '工人',default:true },
@@ -94,7 +95,9 @@ export default function AttendanceSheet() {
     const fixedTabObj = {
       list: defaultArr
     }
-    fixedTabList.push(fixedTabObj);
+    if (fixedTabList ==0 ){
+      fixedTabList.push(fixedTabObj);
+    }
     let tatalArr:any[] = [];
     // 左边总计
     const tatalLeft = [
@@ -114,6 +117,8 @@ export default function AttendanceSheet() {
       tatalArr.push(tatalLeftObj);
     }
     bkgetExcelDataAction(params).then(res => {
+      if(res.code === 200 ){
+      if(res.data.length>0){
       const data = res.data;
       let leftData: any = [];
       let rightData: any = [];
@@ -173,7 +178,9 @@ export default function AttendanceSheet() {
           leftType.type = Type;
           leftListData.push(leftName, leftType);
           leftObj.list = leftListData;
-          leftData.push(leftObj);
+          if (additional === 0){
+            leftData.push(leftObj);
+          }
           // 设置右边参数
           const rightListData: any[] = [];
           // 数组长度超过1就是显示几笔，为1的时候就显示内容
@@ -379,7 +386,9 @@ export default function AttendanceSheet() {
           let rightDataObj = {
             list: rightListData[0],
           }
-          rightData.push(rightDataObj)
+          if (additional===0){
+            rightData.push(rightDataObj)
+          }
           // 获取总的
           // 遍历这个月天数
           // 获取每一个的30天
@@ -513,7 +522,6 @@ export default function AttendanceSheet() {
         }
       }
       if (identity === 1){
-        console.log('ewqewqeq')
         obj.list.push(sumObj);
       }
       //计算出哪些天数有数据
@@ -589,13 +597,11 @@ export default function AttendanceSheet() {
       for (let i = 0; i < daySum.length; i++) {
         for (let j = 0; j < daySums.length; j++) {
           if (daySum[i].date_num === daySums[j].date_num) {
-            console.log(daySums[j],'xx')
             daySums[j].total[0].sum += (+daySum[i].total[0].sum);
             daySums[j].total[0].unit_name = daySum[i].total[0].unit_name;
           }
         }
       }
-      console.log(daySums,'daySumdaySumdaySum')
       const dayArrItme = JSON.parse(JSON.stringify(dayArr));
       for (let i = 0; i < dayArrItme.length;i++){
         let obj:any = {
@@ -665,8 +671,19 @@ export default function AttendanceSheet() {
         obj.list.push(...dayArrItme);
       }
       rightData.push(obj)
-      setFixedTab([...fixedTabList, ...leftData, ...tatalArr]);
-      setTabArr([...tebArrList, ...rightData]);
+        console.log(tebArrList,'tebArrList');
+        console.log(rightData,'rightData')
+      // if (additional==0){
+        setFixedTab([...fixedTabList, ...leftData, ...tatalArr]);
+        setTabArr([...tebArrList, ...rightData]);
+      // }else{
+        // setFixedTab([...fixedTabList]);
+        // setTabArr([...tebArrList, ...rightData]);
+      // }
+      // 判断是否添加
+      setAdditional(additional+1);
+      }
+    }
     })
   }
   // 设置时间
@@ -687,8 +704,8 @@ export default function AttendanceSheet() {
   console.log(tebArr.length,'tebArr')
   useShareAppMessage(() => {
     return {
-      title: '记工记账',
-      desc: '记工记账怕丢失？鱼泡网记工更安全！用鱼泡 网记工记账，手机记工更方便，数据永不丢失~!',
+      // title: '记工记账',
+      title: '记工记账怕丢失？鱼泡网记工更安全！用鱼泡 网记工记账，手机记工更方便，数据永不丢失~',
       path: '/pages/share/index'
     }
   })
@@ -826,8 +843,9 @@ export default function AttendanceSheet() {
         <View className='footer-btn'>
           <View className='footer-btn-box'>
             <View className='footer-btn-box-left' onClick={handleShare}>
-              <View>一键对工</View>
-              <View className='footer-btn-box-left-title'>发送到工人微信群快速对工</View>
+              {/* <View>分享给微信好友</View> */}
+              <Button open-type="share">分享给微信好友</Button>
+              {/* <View className='footer-btn-box-left-title'>发送到工人微信群快速对工</View> */}
             </View>
             <View className='footer-btn-box-right' onClick={() => userRouteJump(`/pages/recorder/index`)}>
               <View>记工</View>

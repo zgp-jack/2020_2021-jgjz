@@ -142,8 +142,7 @@
             <view class="footer-btn">
                 <view class="footer-btn-box">
                     <view class="footer-btn-box-left" bindtap="anonymousFunc1">
-                        <view>一键对工</view>
-                        <view class="footer-btn-box-left-title">发送到工人微信群快速对工</view>
+                        <button open-type="share">分享给微信好友</button>
                     </view>
                     <view class="footer-btn-box-right" bindtap="anonymousFunc2">
                         <view>记工</view>
@@ -160,6 +159,6 @@
                 </view>
             </view>
         </block>
-        <calendar-modal compid="{{$compid__63}}"></calendar-modal>
+        <calendar-modal compid="{{$compid__81}}"></calendar-modal>
     </view>
 </block>

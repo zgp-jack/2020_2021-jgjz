@@ -512,6 +512,7 @@ export default function CalendarModal({
             {calendarDays.map((v,i)=>(
               <View key={i + i} 
                 onClick={() => { handleClickCalendar(v)}}
+                style={v.record ? { background: 'rgba(240,189,48,0.3)' } : ''}
                 // className={v.current ? 'content-days-day' :'content-days-day-no'}
                 className={classnames({
                   'content-days-day': v.current,
@@ -520,8 +521,8 @@ export default function CalendarModal({
                   'content-days-day-click': v.click,
                 })}
                 >
-                <View>{v.date}</View>
-                <View className='lunarCalendarItem'>{v.lunarCalendarItem}</View>
+                <View style={v.record ? { color: '#3C3B3B' } : ''}>{v.date}</View>
+                <View className='lunarCalendarItem' style={v.record ? { color: '#BABABAFF' } : ''}>{v.lunarCalendarItem}</View>
                 {/* {recorderType === 3 && <View className='noCheckbox'></View>
                 } */}
                 {/* {recorderType !== 3 &&  */}

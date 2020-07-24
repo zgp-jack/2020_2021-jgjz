@@ -58,7 +58,7 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AttendanceSheet.__proto__ || Object.getPrototypeOf(AttendanceSheet)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
       navigationBarTitleText: '考勤表'
-    }, _this.$usedState = ["$compid__63", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    }, _this.$usedState = ["$compid__81", "tebArr", "fixedTab", "year", "month"], _this.customComponents = ["CalendarModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AttendanceSheet, [{
@@ -77,10 +77,10 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__63"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__81"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__63 = _genCompid2[0],
-          $compid__63 = _genCompid2[1];
+          $prevCompid__81 = _genCompid2[0],
+          $compid__81 = _genCompid2[1];
 
       // 月份
 
@@ -128,6 +128,13 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
           _useState16 = _slicedToArray(_useState15, 2),
           display = _useState16[0],
           setDisplay = _useState16[1];
+      //判断是否追加
+
+
+      var _useState17 = (0, _taroWeapp.useState)(0),
+          _useState18 = _slicedToArray(_useState17, 2),
+          additional = _useState18[0],
+          setAdditional = _useState18[1];
       // const [refresh, setRefresh] = useState<number>(0)
       // 一键对公
 
@@ -161,9 +168,6 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       }, []);
       // 获取数据
       var getList = function getList(newTime) {
-        console.log(fixedTab, 'fixedTab');
-        console.log(tebArr, 'tebArr');
-        var identity = _taroWeapp2.default.getStorageSync(_store.Type);
         console.log(identity, 'identity');
         var params = {
           date: newTime
@@ -197,13 +201,17 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
           list: arr
         };
         var tebArrList = JSON.parse(JSON.stringify(tebArr));
-        tebArrList.push(arrObj);
+        if (additional == 0) {
+          tebArrList.push(arrObj);
+        }
         var fixedTabList = JSON.parse(JSON.stringify(fixedTab));
         var defaultArr = [{ id: 1, name: '工人', default: true }, { id: 2, name: '记工类型', default: true }];
         var fixedTabObj = {
           list: defaultArr
         };
-        fixedTabList.push(fixedTabObj);
+        if (fixedTabList == 0) {
+          fixedTabList.push(fixedTabObj);
+        }
         var tatalArr = [];
         // 左边总计
         var tatalLeft = [{ name: '总计', id: Math.random(), default: true }, {
@@ -220,558 +228,572 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
           tatalArr.push(tatalLeftObj);
         }
         (0, _index.bkgetExcelDataAction)(params).then(function (res) {
-          var data = res.data;
-          var leftData = [];
-          var rightData = [];
-          var tatalDataArr = [];
-          var jigongSum = [];
-          var daySum = [];
-          var workSum = [];
-          var borrowNumSum = [];
-          if (data.length > 0) {
-            for (var i = 0; i < data.length; i++) {
-              var leftObj = {};
-              // 右边第一个总计
-              var rightObj = {};
-              rightObj.name = 0;
-              rightObj.type = {};
-              rightObj.type.amount = '';
-              rightObj.type.hour = {
-                work_time: '',
-                over_time: ''
-              };
-              rightObj.type.work = {
-                work_time: '',
-                over_time: ''
-              };
-              rightObj.type.borrow = '';
-              // 设置左边的参数
-              var leftListData = [];
-              // 姓名
-              var leftName = { name: data[i].name };
-              //点工类型
-              var leftType = {};
-              var hour = undefined;
-              if (data[i].hour.length) {
-                hour = true;
-              }
-              // 包工(天)
-              var work = undefined;
-              if (data[i].work.length) {
-                work = true;
-              }
-              // 包工(量)
-              var amount = undefined;
-              if (data[i].amount.length) {
-                amount = true;
-              }
-              // 借支
-              var borrow = undefined;
-              if (data[i].borrow.length) {
-                borrow = true;
-              }
-              var _Type = {
-                hour: hour,
-                work: work,
-                amount: amount,
-                borrow: borrow
-              };
-              leftType.type = _Type;
-              leftListData.push(leftName, leftType);
-              leftObj.list = leftListData;
-              leftData.push(leftObj);
-              // 设置右边参数
-              var rightListData = [];
-              // 数组长度超过1就是显示几笔，为1的时候就显示内容
-              // 记工
-              var dayArrs = JSON.parse(JSON.stringify(dayArr));
-              var numSumWorkTime = 0;
-              // 借支总金额
-              var numBorrow = 0;
-              // 遍历每一天
-              for (var j = 0; j < dayArrs.length; j++) {
-                dayArrs[j].type = {};
-                // 判断有记工
-                var sumWorkTime = 0;
-                var sumOverTime = 0;
-                if (data[i].hour.length > 0) {
-                  var num = [];
-                  for (var _k = 0; _k < data[i].hour.length; _k++) {
-                    num.push(data[i].hour[_k].total);
-                    sumWorkTime = sumWorkTime + +data[i].hour[_k].total.work_time;
-                    sumOverTime = sumOverTime + +data[i].hour[_k].total.over_time;
-                    // 判断是哪天给哪天设置值
-                    if (data[i].hour[_k].date_num == dayArrs[j].name) {
-                      if (data[i].hour[_k].list) {
-                        if (data[i].hour[_k].list.length > 0) {
-                          if (data[i].hour[_k].list.length == 1) {
-                            var hourData = {
-                              work_time: data[i].hour[_k].list[0].work_time,
-                              over_time: data[i].hour[_k].list[0].overtime
-                            };
-                            dayArrs[j].type.hour = hourData;
-                          } else if (data[i].hour[_k].list.length > 1) {
-                            var _hourData = {
-                              num: data[i].hour[_k].list.length + '笔'
-                            };
-                            dayArrs[j].type.hour = _hourData;
+          if (res.code === 200) {
+            if (res.data.length > 0) {
+              var _data = res.data;
+              var leftData = [];
+              var rightData = [];
+              var tatalDataArr = [];
+              var jigongSum = [];
+              var daySum = [];
+              var workSum = [];
+              var borrowNumSum = [];
+              if (_data.length > 0) {
+                for (var i = 0; i < _data.length; i++) {
+                  var leftObj = {};
+                  // 右边第一个总计
+                  var rightObj = {};
+                  rightObj.name = 0;
+                  rightObj.type = {};
+                  rightObj.type.amount = '';
+                  rightObj.type.hour = {
+                    work_time: '',
+                    over_time: ''
+                  };
+                  rightObj.type.work = {
+                    work_time: '',
+                    over_time: ''
+                  };
+                  rightObj.type.borrow = '';
+                  // 设置左边的参数
+                  var leftListData = [];
+                  // 姓名
+                  var leftName = { name: _data[i].name };
+                  //点工类型
+                  var leftType = {};
+                  var hour = undefined;
+                  if (_data[i].hour.length) {
+                    hour = true;
+                  }
+                  // 包工(天)
+                  var work = undefined;
+                  if (_data[i].work.length) {
+                    work = true;
+                  }
+                  // 包工(量)
+                  var amount = undefined;
+                  if (_data[i].amount.length) {
+                    amount = true;
+                  }
+                  // 借支
+                  var borrow = undefined;
+                  if (_data[i].borrow.length) {
+                    borrow = true;
+                  }
+                  var _Type = {
+                    hour: hour,
+                    work: work,
+                    amount: amount,
+                    borrow: borrow
+                  };
+                  leftType.type = _Type;
+                  leftListData.push(leftName, leftType);
+                  leftObj.list = leftListData;
+                  if (additional === 0) {
+                    leftData.push(leftObj);
+                  }
+                  // 设置右边参数
+                  var rightListData = [];
+                  // 数组长度超过1就是显示几笔，为1的时候就显示内容
+                  // 记工
+                  var dayArrs = JSON.parse(JSON.stringify(dayArr));
+                  var numSumWorkTime = 0;
+                  // 借支总金额
+                  var numBorrow = 0;
+                  // 遍历每一天
+                  for (var j = 0; j < dayArrs.length; j++) {
+                    dayArrs[j].type = {};
+                    // 判断有记工
+                    var sumWorkTime = 0;
+                    var sumOverTime = 0;
+                    if (_data[i].hour.length > 0) {
+                      var num = [];
+                      for (var _k = 0; _k < _data[i].hour.length; _k++) {
+                        num.push(_data[i].hour[_k].total);
+                        sumWorkTime = sumWorkTime + +_data[i].hour[_k].total.work_time;
+                        sumOverTime = sumOverTime + +_data[i].hour[_k].total.over_time;
+                        // 判断是哪天给哪天设置值
+                        if (_data[i].hour[_k].date_num == dayArrs[j].name) {
+                          if (_data[i].hour[_k].list) {
+                            if (_data[i].hour[_k].list.length > 0) {
+                              if (_data[i].hour[_k].list.length == 1) {
+                                var hourData = {
+                                  work_time: _data[i].hour[_k].list[0].work_time,
+                                  over_time: _data[i].hour[_k].list[0].overtime
+                                };
+                                dayArrs[j].type.hour = hourData;
+                              } else if (_data[i].hour[_k].list.length > 1) {
+                                var _hourData = {
+                                  num: _data[i].hour[_k].list.length + '笔'
+                                };
+                                dayArrs[j].type.hour = _hourData;
+                              }
+                            }
                           }
                         }
                       }
-                    }
-                  }
-                  var work_time = 0;
-                  var over_time = 0;
-                  if (num.length > 0) {
-                    for (var z = 0; z < num.length; z++) {
-                      if (num[z].work_time) {
-                        work_time = work_time + +num[z].work_time;
-                      }
-                      if (num[z].over_time) {
-                        over_time = over_time + +num[z].over_time;
-                      }
-                    }
-                  }
-                  rightObj.type.hour.work_time = work_time;
-                  rightObj.type.hour.over_time = over_time;
-                }
-                numSumWorkTime = numSumWorkTime + sumOverTime;
-                // 判断有按天work
-                if (data[i].work.length > 0) {
-                  var _num = [];
-                  for (var _k2 = 0; _k2 < data[i].work.length; _k2++) {
-                    _num.push(data[i].work[_k2].total);
-                    // 判断是哪天给哪天设置值
-                    if (data[i].work[_k2].date_num == dayArrs[j].name) {
-                      if (data[i].work[_k2].list) {
-                        if (data[i].work[_k2].list.length > 0) {
-                          if (data[i].work[_k2].list.length == 1) {
-                            var _hourData2 = {
-                              work_time: data[i].work[_k2].list[0].work_time,
-                              over_time: data[i].work[_k2].list[0].overtime
-                            };
-                            dayArrs[j].type.work = _hourData2;
-                          } else if (data[i].work[_k2].list.length > 1) {
-                            var _hourData3 = {
-                              num: data[i].work[_k2].list.length
-                            };
-                            dayArrs[j].type.work = _hourData3;
+                      var work_time = 0;
+                      var over_time = 0;
+                      if (num.length > 0) {
+                        for (var z = 0; z < num.length; z++) {
+                          if (num[z].work_time) {
+                            work_time = work_time + +num[z].work_time;
+                          }
+                          if (num[z].over_time) {
+                            over_time = over_time + +num[z].over_time;
                           }
                         }
                       }
+                      rightObj.type.hour.work_time = work_time;
+                      rightObj.type.hour.over_time = over_time;
                     }
-                  }
-                  var _work_time = 0;
-                  var _over_time = 0;
-                  if (_num.length > 0) {
-                    for (var _z = 0; _z < _num.length; _z++) {
-                      if (_num[_z].work_time) {
-                        _work_time = _work_time + +_num[_z].work_time;
-                      }
-                      if (_num[_z].over_time) {
-                        _over_time = _over_time + +_num[_z].over_time;
-                      }
-                    }
-                  }
-                  rightObj.type.work.work_time = _work_time;
-                  rightObj.type.work.over_time = _over_time;
-                }
-                // 判断按量 amount
-                if (data[i].amount.length > 0) {
-                  var _num2 = [];
-                  for (var _k3 = 0; _k3 < data[i].amount.length; _k3++) {
-                    // 判断是哪天给哪天设置值
-                    if (data[i].amount[_k3].date_num == dayArrs[j].name) {
-                      // 按量返回的是数组
-                      if (data[i].amount[_k3].total.length > 0) {
-                        for (var b = 0; b < data[i].amount[_k3].total.length; b++) {
-                          _num2.push(data[i].amount[_k3].total[b]);
-                        }
-                      }
-                      if (data[i].amount[_k3].list) {
-                        if (data[i].amount[_k3].list.length > 0) {
-                          if (data[i].amount[_k3].list.length == 1) {
-                            var _hourData4 = {
-                              unit_num: data[i].amount[_k3].list[0].unit_num,
-                              unit: data[i].amount[_k3].list[0].unit
-                            };
-                            dayArrs[j].type.amount = _hourData4;
-                          } else if (data[i].amount[_k3].list.length > 1) {
-                            var _hourData5 = {
-                              num: data[i].amount[_k3].list.length + '笔'
-                            };
-                            dayArrs[j].type.amount = _hourData5;
+                    numSumWorkTime = numSumWorkTime + sumOverTime;
+                    // 判断有按天work
+                    if (_data[i].work.length > 0) {
+                      var _num = [];
+                      for (var _k2 = 0; _k2 < _data[i].work.length; _k2++) {
+                        _num.push(_data[i].work[_k2].total);
+                        // 判断是哪天给哪天设置值
+                        if (_data[i].work[_k2].date_num == dayArrs[j].name) {
+                          if (_data[i].work[_k2].list) {
+                            if (_data[i].work[_k2].list.length > 0) {
+                              if (_data[i].work[_k2].list.length == 1) {
+                                var _hourData2 = {
+                                  work_time: _data[i].work[_k2].list[0].work_time,
+                                  over_time: _data[i].work[_k2].list[0].overtime
+                                };
+                                dayArrs[j].type.work = _hourData2;
+                              } else if (_data[i].work[_k2].list.length > 1) {
+                                var _hourData3 = {
+                                  num: _data[i].work[_k2].list.length
+                                };
+                                dayArrs[j].type.work = _hourData3;
+                              }
+                            }
                           }
                         }
                       }
+                      var _work_time = 0;
+                      var _over_time = 0;
+                      if (_num.length > 0) {
+                        for (var _z = 0; _z < _num.length; _z++) {
+                          if (_num[_z].work_time) {
+                            _work_time = _work_time + +_num[_z].work_time;
+                          }
+                          if (_num[_z].over_time) {
+                            _over_time = _over_time + +_num[_z].over_time;
+                          }
+                        }
+                      }
+                      rightObj.type.work.work_time = _work_time;
+                      rightObj.type.work.over_time = _over_time;
                     }
-                  }
-                  var _arr = [];
-                  if (_num2.length > 0) {
-                    for (var c = 0; c < _num2.length; c++) {
-                      if (_arr.length === 0) {
-                        _arr.push(_num2[c]);
-                      } else {
-                        for (var m = 0; m < _arr.length; m++) {
-                          if (_arr[m].unit_name !== _num2[c].unit_name) {
-                            // arr[m].unit_name = num[c].unit_name;
-                            // arr[m].sum = num[c].sum;
+                    // 判断按量 amount
+                    if (_data[i].amount.length > 0) {
+                      var _num2 = [];
+                      for (var _k3 = 0; _k3 < _data[i].amount.length; _k3++) {
+                        // 判断是哪天给哪天设置值
+                        if (_data[i].amount[_k3].date_num == dayArrs[j].name) {
+                          // 按量返回的是数组
+                          if (_data[i].amount[_k3].total.length > 0) {
+                            for (var b = 0; b < _data[i].amount[_k3].total.length; b++) {
+                              _num2.push(_data[i].amount[_k3].total[b]);
+                            }
+                          }
+                          if (_data[i].amount[_k3].list) {
+                            if (_data[i].amount[_k3].list.length > 0) {
+                              if (_data[i].amount[_k3].list.length == 1) {
+                                var _hourData4 = {
+                                  unit_num: _data[i].amount[_k3].list[0].unit_num,
+                                  unit: _data[i].amount[_k3].list[0].unit
+                                };
+                                dayArrs[j].type.amount = _hourData4;
+                              } else if (_data[i].amount[_k3].list.length > 1) {
+                                var _hourData5 = {
+                                  num: _data[i].amount[_k3].list.length + '笔'
+                                };
+                                dayArrs[j].type.amount = _hourData5;
+                              }
+                            }
+                          }
+                        }
+                      }
+                      var _arr = [];
+                      if (_num2.length > 0) {
+                        for (var c = 0; c < _num2.length; c++) {
+                          if (_arr.length === 0) {
                             _arr.push(_num2[c]);
                           } else {
-                            _arr[m].sum += +_num2[c].sum;
+                            for (var m = 0; m < _arr.length; m++) {
+                              if (_arr[m].unit_name !== _num2[c].unit_name) {
+                                // arr[m].unit_name = num[c].unit_name;
+                                // arr[m].sum = num[c].sum;
+                                _arr.push(_num2[c]);
+                              } else {
+                                _arr[m].sum += +_num2[c].sum;
+                              }
+                            }
+                          }
+                        }
+                        rightObj.type.amount = _arr[0];
+                        // const unitMap = {}
+                        // console.log(num,'num')
+                        // num.forEach((item) => {
+                        //   if (unitMap[item.unit_name]) {
+                        //     unitMap[item.unit_name] += +item.sum
+                        //   } else {
+                        //     unitMap[item.unit_name] = +item.sum
+                        //   }
+                        // })
+                        // num.forEach((item) => {
+                        //   console.log(item,'itme')
+                        //   if (unitMap[item.unit_name]){
+                        //     console.log()
+                        //   }
+                        // })
+                        // console.log(unitMap,'unitMapunitMap')
+                        // rightObj.type.amount = [unitMap];
+                        // console.log(unitMap,'unitMap')
+                      }
+                    }
+                    // 借支
+                    if (_data[i].borrow.length > 0) {
+                      var _num3 = [];
+                      for (var _k4 = 0; _k4 < _data[i].borrow.length; _k4++) {
+                        _num3.push(_data[i].borrow[_k4].total);
+                        // 判断是哪天给哪天设置值
+                        if (_data[i].borrow[_k4].date_num == dayArrs[j].name) {
+                          if (_data[i].borrow[_k4].list) {
+                            if (_data[i].borrow[_k4].list.length > 0) {
+                              if (_data[i].borrow[_k4].list.length == 1) {
+                                var _hourData6 = {
+                                  money: _data[i].borrow[_k4].list[0].money
+                                };
+                                dayArrs[j].type.borrow = _hourData6;
+                              } else if (_data[i].borrow[_k4].list.length > 1) {
+                                var _hourData7 = {
+                                  num: _data[i].borrow[_k4].list.length + '笔'
+                                };
+                                dayArrs[j].type.borrow = _hourData7;
+                              }
+                            }
                           }
                         }
                       }
+                      var money = 0;
+                      if (_num3.length > 0) {
+                        for (var _z2 = 0; _z2 < _num3.length; _z2++) {
+                          if (_num3[_z2].money) {
+                            money = money + +_num3[_z2].money;
+                          }
+                        }
+                      }
+                      rightObj.type.borrow = money;
+                      numBorrow = numBorrow + rightObj.type.borrow;
                     }
-                    rightObj.type.amount = _arr[0];
-                    // const unitMap = {}
-                    // console.log(num,'num')
-                    // num.forEach((item) => {
-                    //   if (unitMap[item.unit_name]) {
-                    //     unitMap[item.unit_name] += +item.sum
-                    //   } else {
-                    //     unitMap[item.unit_name] = +item.sum
+                  }
+                  var list = [rightObj].concat(_toConsumableArray(dayArrs));
+                  rightListData.push(list);
+                  var rightDataObj = {
+                    list: rightListData[0]
+                  };
+                  if (additional === 0) {
+                    rightData.push(rightDataObj);
+                  }
+                  // 获取总的
+                  // 遍历这个月天数
+                  // 获取每一个的30天
+                  // 记工
+                  for (var _c = 0; _c < _data[i].hour.length; _c++) {
+                    jigongSum.push(_data[i].hour[_c]);
+                  }
+                  //按量
+                  for (var _c2 = 0; _c2 < _data[i].amount.length; _c2++) {
+                    daySum.push(_data[i].amount[_c2]);
+                  }
+                  // 按天
+                  for (var _c3 = 0; _c3 < _data[i].work.length; _c3++) {
+                    workSum.push(_data[i].work[_c3]);
+                  }
+                  // 借支
+                  for (var _c4 = 0; _c4 < _data[i].borrow.length; _c4++) {
+                    borrowNumSum.push(_data[i].borrow[_c4]);
+                  }
+                  // if(data[i].hour){
+                  //   for(let x =0;x<dayArrs.length;x++){
+                  //     dayArrs[x].type={}
+                  //     for(let c =0;c<data[i].hour.length;c++){
+                  //       if (dayArrs[x].name === data[i].hour[c].date_num){
+                  //         console.log(data[i].hour[c].date_num,'222')
+                  //         tatalDataArr.push(data[i].hour[c].total.work_time)
+                  //         dayArrs[x].type.work_time += data[i].hour[c].total.work_time;
+                  //       }
+                  //     }
+                  //   }
+                  // }
+                  // console.log(dayArrs,'xxx')
+                  // let work_timeNum:any=[];
+                  // for (let s = 0; s < dayArr.length; s++) {
+                  //   if(data[i].hour.length>0){
+                  //     for (let z = 0; z < data[i].hour.length;z++){
+                  //         work_timeNum.push(data[i].hour[z]);
+                  //     }
+                  //   }
+                  // }
+                  // console.log(work_timeNum,'work_timeNum');
+                  // let num = 0;
+                  // for(let x=0;x<dayArr.length;x++){
+                  //   for (let c = 0; c < work_timeNum.length;c++){
+                  //     if (dayArr[x].name === work_timeNum[c].date_num){
+                  //       num += (+work_timeNum[c].total.work_time)
+                  //     }
+                  //   }
+                  // }
+                  // console.log(num,'num')
+                  // 借支
+                  // let borrowNum: any = [];
+                  // for (let s = 0; s < dayArr.length; s++) {
+                  //   if (data[i].borrow.length > 0) {
+                  //     for (let z = 0; z < data[i].borrow.length; z++) {
+                  //       borrowNum.push(data[i].borrow[z]);
+                  //     }
+                  //   }
+                  // }
+                  // let hoursObj:any={};
+                  // hoursObj.list = work_timeNum;
+                  // let hourArr:any[]=[];
+                  // tatalDataArr .push(hoursObj);
+                  // // console.log(hourArr,'work_timeNum')
+                  // for(let z=0;z<dayArr.length;z++){
+                  //   let nums=0;
+                  //   for (let m = 0; m < work_timeNum.length;m++){
+                  //       if (dayArr[z].name === work_timeNum[m].date_num){
+                  //         nums += (+work_timeNum[m].total.over_time);
+                  //         // console.log(+work_timeNum[m].total.over_time,'+work_timeNum[m].total.over_time')
+                  //       }
+                  //   }
+                  // console.log(nums,'nums')
+                  // }
+                  // for (let u = 0; u < hourArr.length;u++){
+                  // }
+                }
+              }
+              // 借支总额
+              var borrowSum = 0;
+              // 点工时间
+              var hourWorkTimeSum = 0;
+              // 点工加班时间
+              var hourOverTimeSum = 0;
+              // 按天时间
+              var workWorkTimeSum = 0;
+              // 按天加班时间
+              var workOverTimeSum = 0;
+              // 按量
+              var sumSum = 0;
+              var unitNameSum = '';
+              // console.log(rightData,'rightData')
+              for (var _i = 0; _i < rightData.length; _i++) {
+                if (rightData[_i].list[0].name === 0) {
+                  // 借支
+                  if (rightData[_i].list[0].type.borrow) {
+                    borrowSum += +rightData[_i].list[0].type.borrow;
+                  }
+                  // 点工
+                  if (Object.keys(rightData[_i].list[0].type.hour).length) {
+                    hourWorkTimeSum += +rightData[_i].list[0].type.hour.work_time;
+                    hourOverTimeSum += +rightData[_i].list[0].type.hour.over_time;
+                  }
+                  // 按天
+                  if (Object.keys(rightData[_i].list[0].type.work).length) {
+                    workWorkTimeSum += +rightData[_i].list[0].type.work.work_time;
+                    workOverTimeSum += +rightData[_i].list[0].type.work.over_time;
+                  }
+                  // 按量
+                  if (Object.keys(rightData[_i].list[0].type.amount).length) {
+                    sumSum += +rightData[_i].list[0].type.amount.sum;
+                    unitNameSum = rightData[_i].list[0].type.amount.unit_name;
+                  }
+                }
+              }
+              var _obj2 = {};
+              _obj2.list = [];
+              var sumObj = {
+                id: 0,
+                type: {
+                  amount: {
+                    sum: sumSum,
+                    unit_name: unitNameSum
+                  },
+                  borrow: {
+                    money: borrowSum
+                  },
+                  hour: { work_time: hourWorkTimeSum.toFixed(2), over_time: hourOverTimeSum.toFixed(2) },
+                  work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum.toFixed(2) }
+                }
+              };
+              if (identity === 1) {
+                _obj2.list.push(sumObj);
+              }
+              //计算出哪些天数有数据
+              // 记工
+              var objItem = {};
+              var jigongSums = jigongSum.reduce(function (item, next) {
+                objItem[next.date_num] ? '' : objItem[next.date_num] = item.push(next);
+                return item;
+              }, []);
+              // 按量
+              var dayObj = {};
+              var daySums = daySum.reduce(function (item, next) {
+                dayObj[next.date_num] ? '' : dayObj[next.date_num] = item.push(next);
+                return item;
+              }, []);
+              // 按天
+              var workObj = {};
+              var workSums = workSum.reduce(function (item, next) {
+                workObj[next.date_num] ? '' : workObj[next.date_num] = item.push(next);
+                return item;
+              }, []);
+              //借支
+              var borrowObj = {};
+              var borrowNumSums = borrowNumSum.reduce(function (item, next) {
+                borrowObj[next.date_num] ? '' : borrowObj[next.date_num] = item.push(next);
+                return item;
+              }, []);
+              // 有的天数的内容设置为空方便相加
+              // 记工
+              // for (let i = 0; i < jigongSums.length;i++){
+              //   jigongSums[i].total.over_time = 0;
+              //   jigongSums[i].total.work_time =0;
+              // }
+              // 按天
+              // for (let i = 0; i < workSums.length; i++) {
+              //   workSums[i].total.over_time = 0;
+              //   workSums[i].total.work_time = 0;
+              // }
+              // 按量
+              // 借支
+              // for (let i = 0; i < borrowNumSums.length; i++) {
+              //   borrowNumSums[i].total.borrow = 0;
+              // }
+              // 循环相加
+              // 记工
+              for (var _i2 = 0; _i2 < jigongSum.length; _i2++) {
+                for (var _j = 0; _j < jigongSums.length; _j++) {
+                  if (jigongSum[_i2].date_num === jigongSums[_j].date_num) {
+                    jigongSums[_j].total.work_time += parseInt(jigongSum[_i2].total.work_time);
+                    jigongSums[_j].total.over_time += parseInt(jigongSum[_i2].total.over_time);
+                  }
+                }
+              }
+              // 按天
+              for (var _i3 = 0; _i3 < workSum.length; _i3++) {
+                for (var _j2 = 0; _j2 < workSums.length; _j2++) {
+                  if (workSum[_i3].date_num === workSums[_j2].date_num) {
+                    workSums[_j2].total.work_time += parseInt(workSum[_i3].total.work_time);
+                    workSums[_j2].total.over_time += parseInt(workSum[_i3].total.over_time);
+                  }
+                }
+              }
+              // 借支
+              for (var _i4 = 0; _i4 < borrowNumSum.length; _i4++) {
+                for (var _j3 = 0; _j3 < borrowNumSums.length; _j3++) {
+                  if (borrowNumSum[_i4].date_num === borrowNumSums[_j3].date_num) {
+                    // console.log(borrowNumSum[i].total.money,'borrowNumSum[i].total.money')
+                    borrowNumSums[_j3].total.borrow += +borrowNumSum[_i4].total.money;
+                  }
+                }
+              }
+              // 按量 daySums
+              for (var _i5 = 0; _i5 < daySum.length; _i5++) {
+                for (var _j4 = 0; _j4 < daySums.length; _j4++) {
+                  if (daySum[_i5].date_num === daySums[_j4].date_num) {
+                    daySums[_j4].total[0].sum += +daySum[_i5].total[0].sum;
+                    daySums[_j4].total[0].unit_name = daySum[_i5].total[0].unit_name;
+                  }
+                }
+              }
+              var dayArrItme = JSON.parse(JSON.stringify(dayArr));
+              for (var _i6 = 0; _i6 < dayArrItme.length; _i6++) {
+                var _obj3 = {
+                  type: {
+                    hour: {
+                      over_time: '',
+                      work_time: ''
+                    },
+                    borrow: {
+                      money: ''
+                    },
+                    work: {
+                      over_time: '',
+                      work_time: ''
+                    },
+                    amount: {
+                      sum: '',
+                      unit_name: ''
+                    }
+                  }
+                };
+                // 记工
+                for (var _j5 = 0; _j5 < jigongSums.length; _j5++) {
+                  if (dayArrItme[_i6].name === jigongSums[_j5].date_num) {
+                    // obj ={
+                    //   name: jigongSums[j].date_num,
+                    //   type:{
+                    //     hour:{
+                    //       over_time: jigongSums[j].total.over_time,
+                    //       work_time: jigongSums[j].total.work_time,
+                    //     }
                     //   }
-                    // })
-                    // num.forEach((item) => {
-                    //   console.log(item,'itme')
-                    //   if (unitMap[item.unit_name]){
-                    //     console.log()
-                    //   }
-                    // })
-                    // console.log(unitMap,'unitMapunitMap')
-                    // rightObj.type.amount = [unitMap];
-                    // console.log(unitMap,'unitMap')
+                    // }
+                    // dayArrItme[i] = jigongSums[j];
+                    // dayArrItme[i].type.hour.over_time = jigongSums[j].total.over_time
+                    _obj3.type.hour.over_time = parseInt(jigongSums[_j5].total.over_time).toFixed(2);
+                    _obj3.type.hour.work_time = parseInt(jigongSums[_j5].total.work_time).toFixed(2);
+                    // dayArrItme[i] = obj;
+                  }
+                }
+                // 按天
+                for (var _j6 = 0; _j6 < workSums.length; _j6++) {
+                  if (dayArrItme[_i6].name === workSums[_j6].date_num) {
+                    _obj3.type.work.over_time = parseInt(workSums[_j6].total.over_time).toFixed(2);
+                    _obj3.type.work.work_time = parseInt(workSums[_j6].total.work_time).toFixed(2);
                   }
                 }
                 // 借支
-                if (data[i].borrow.length > 0) {
-                  var _num3 = [];
-                  for (var _k4 = 0; _k4 < data[i].borrow.length; _k4++) {
-                    _num3.push(data[i].borrow[_k4].total);
-                    // 判断是哪天给哪天设置值
-                    if (data[i].borrow[_k4].date_num == dayArrs[j].name) {
-                      if (data[i].borrow[_k4].list) {
-                        if (data[i].borrow[_k4].list.length > 0) {
-                          if (data[i].borrow[_k4].list.length == 1) {
-                            var _hourData6 = {
-                              money: data[i].borrow[_k4].list[0].money
-                            };
-                            dayArrs[j].type.borrow = _hourData6;
-                          } else if (data[i].borrow[_k4].list.length > 1) {
-                            var _hourData7 = {
-                              num: data[i].borrow[_k4].list.length + '笔'
-                            };
-                            dayArrs[j].type.borrow = _hourData7;
-                          }
-                        }
-                      }
-                    }
+                for (var _j7 = 0; _j7 < borrowNumSums.length; _j7++) {
+                  if (dayArrItme[_i6].name === borrowNumSums[_j7].date_num) {
+                    _obj3.name = borrowNumSums[_j7].date_num, _obj3.type.borrow.money = borrowNumSums[_j7].total.money;
                   }
-                  var money = 0;
-                  if (_num3.length > 0) {
-                    for (var _z2 = 0; _z2 < _num3.length; _z2++) {
-                      if (_num3[_z2].money) {
-                        money = money + +_num3[_z2].money;
-                      }
-                    }
+                }
+                // 按量
+                for (var _j8 = 0; _j8 < daySums.length; _j8++) {
+                  if (dayArrItme[_i6].name === daySums[_j8].date_num) {
+                    _obj3.name = daySums[_j8].date_num, console.log(daySums[_j8].total[0].unit_name, 'daySums[j]');
+                    _obj3.type.amount.sum = parseInt(daySums[_j8].total[0].sum);
+                    _obj3.type.amount.unit_name = daySums[_j8].total[0].unit_name;
                   }
-                  rightObj.type.borrow = money;
-                  numBorrow = numBorrow + rightObj.type.borrow;
                 }
+                dayArrItme[_i6] = _obj3;
               }
-              var list = [rightObj].concat(_toConsumableArray(dayArrs));
-              rightListData.push(list);
-              var rightDataObj = {
-                list: rightListData[0]
-              };
-              rightData.push(rightDataObj);
-              // 获取总的
-              // 遍历这个月天数
-              // 获取每一个的30天
-              // 记工
-              for (var _c = 0; _c < data[i].hour.length; _c++) {
-                jigongSum.push(data[i].hour[_c]);
-              }
-              //按量
-              for (var _c2 = 0; _c2 < data[i].amount.length; _c2++) {
-                daySum.push(data[i].amount[_c2]);
-              }
-              // 按天
-              for (var _c3 = 0; _c3 < data[i].work.length; _c3++) {
-                workSum.push(data[i].work[_c3]);
-              }
-              // 借支
-              for (var _c4 = 0; _c4 < data[i].borrow.length; _c4++) {
-                borrowNumSum.push(data[i].borrow[_c4]);
-              }
-              // if(data[i].hour){
-              //   for(let x =0;x<dayArrs.length;x++){
-              //     dayArrs[x].type={}
-              //     for(let c =0;c<data[i].hour.length;c++){
-              //       if (dayArrs[x].name === data[i].hour[c].date_num){
-              //         console.log(data[i].hour[c].date_num,'222')
-              //         tatalDataArr.push(data[i].hour[c].total.work_time)
-              //         dayArrs[x].type.work_time += data[i].hour[c].total.work_time;
-              //       }
-              //     }
-              //   }
-              // }
-              // console.log(dayArrs,'xxx')
-              // let work_timeNum:any=[];
-              // for (let s = 0; s < dayArr.length; s++) {
-              //   if(data[i].hour.length>0){
-              //     for (let z = 0; z < data[i].hour.length;z++){
-              //         work_timeNum.push(data[i].hour[z]);
-              //     }
-              //   }
-              // }
-              // console.log(work_timeNum,'work_timeNum');
-              // let num = 0;
-              // for(let x=0;x<dayArr.length;x++){
-              //   for (let c = 0; c < work_timeNum.length;c++){
-              //     if (dayArr[x].name === work_timeNum[c].date_num){
-              //       num += (+work_timeNum[c].total.work_time)
-              //     }
-              //   }
-              // }
-              // console.log(num,'num')
-              // 借支
-              // let borrowNum: any = [];
-              // for (let s = 0; s < dayArr.length; s++) {
-              //   if (data[i].borrow.length > 0) {
-              //     for (let z = 0; z < data[i].borrow.length; z++) {
-              //       borrowNum.push(data[i].borrow[z]);
-              //     }
-              //   }
-              // }
-              // let hoursObj:any={};
-              // hoursObj.list = work_timeNum;
-              // let hourArr:any[]=[];
-              // tatalDataArr .push(hoursObj);
-              // // console.log(hourArr,'work_timeNum')
-              // for(let z=0;z<dayArr.length;z++){
-              //   let nums=0;
-              //   for (let m = 0; m < work_timeNum.length;m++){
-              //       if (dayArr[z].name === work_timeNum[m].date_num){
-              //         nums += (+work_timeNum[m].total.over_time);
-              //         // console.log(+work_timeNum[m].total.over_time,'+work_timeNum[m].total.over_time')
-              //       }
-              //   }
-              // console.log(nums,'nums')
-              // }
-              // for (let u = 0; u < hourArr.length;u++){
-              // }
-            }
-          }
-          // 借支总额
-          var borrowSum = 0;
-          // 点工时间
-          var hourWorkTimeSum = 0;
-          // 点工加班时间
-          var hourOverTimeSum = 0;
-          // 按天时间
-          var workWorkTimeSum = 0;
-          // 按天加班时间
-          var workOverTimeSum = 0;
-          // 按量
-          var sumSum = 0;
-          var unitNameSum = '';
-          // console.log(rightData,'rightData')
-          for (var _i = 0; _i < rightData.length; _i++) {
-            if (rightData[_i].list[0].name === 0) {
-              // 借支
-              if (rightData[_i].list[0].type.borrow) {
-                borrowSum += +rightData[_i].list[0].type.borrow;
-              }
-              // 点工
-              if (Object.keys(rightData[_i].list[0].type.hour).length) {
-                hourWorkTimeSum += +rightData[_i].list[0].type.hour.work_time;
-                hourOverTimeSum += +rightData[_i].list[0].type.hour.over_time;
-              }
-              // 按天
-              if (Object.keys(rightData[_i].list[0].type.work).length) {
-                workWorkTimeSum += +rightData[_i].list[0].type.work.work_time;
-                workOverTimeSum += +rightData[_i].list[0].type.work.over_time;
-              }
-              // 按量
-              if (Object.keys(rightData[_i].list[0].type.amount).length) {
-                sumSum += +rightData[_i].list[0].type.amount.sum;
-                unitNameSum = rightData[_i].list[0].type.amount.unit_name;
-              }
-            }
-          }
-          var obj = {};
-          obj.list = [];
-          var sumObj = {
-            id: 0,
-            type: {
-              amount: {
-                sum: sumSum,
-                unit_name: unitNameSum
-              },
-              borrow: {
-                money: borrowSum
-              },
-              hour: { work_time: hourWorkTimeSum.toFixed(2), over_time: hourOverTimeSum.toFixed(2) },
-              work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum.toFixed(2) }
-            }
-          };
-          if (identity === 1) {
-            console.log('ewqewqeq');
-            obj.list.push(sumObj);
-          }
-          //计算出哪些天数有数据
-          // 记工
-          var objItem = {};
-          var jigongSums = jigongSum.reduce(function (item, next) {
-            objItem[next.date_num] ? '' : objItem[next.date_num] = item.push(next);
-            return item;
-          }, []);
-          // 按量
-          var dayObj = {};
-          var daySums = daySum.reduce(function (item, next) {
-            dayObj[next.date_num] ? '' : dayObj[next.date_num] = item.push(next);
-            return item;
-          }, []);
-          // 按天
-          var workObj = {};
-          var workSums = workSum.reduce(function (item, next) {
-            workObj[next.date_num] ? '' : workObj[next.date_num] = item.push(next);
-            return item;
-          }, []);
-          //借支
-          var borrowObj = {};
-          var borrowNumSums = borrowNumSum.reduce(function (item, next) {
-            borrowObj[next.date_num] ? '' : borrowObj[next.date_num] = item.push(next);
-            return item;
-          }, []);
-          // 有的天数的内容设置为空方便相加
-          // 记工
-          // for (let i = 0; i < jigongSums.length;i++){
-          //   jigongSums[i].total.over_time = 0;
-          //   jigongSums[i].total.work_time =0;
-          // }
-          // 按天
-          // for (let i = 0; i < workSums.length; i++) {
-          //   workSums[i].total.over_time = 0;
-          //   workSums[i].total.work_time = 0;
-          // }
-          // 按量
-          // 借支
-          // for (let i = 0; i < borrowNumSums.length; i++) {
-          //   borrowNumSums[i].total.borrow = 0;
-          // }
-          // 循环相加
-          // 记工
-          for (var _i2 = 0; _i2 < jigongSum.length; _i2++) {
-            for (var _j = 0; _j < jigongSums.length; _j++) {
-              if (jigongSum[_i2].date_num === jigongSums[_j].date_num) {
-                jigongSums[_j].total.work_time += parseInt(jigongSum[_i2].total.work_time);
-                jigongSums[_j].total.over_time += parseInt(jigongSum[_i2].total.over_time);
-              }
-            }
-          }
-          // 按天
-          for (var _i3 = 0; _i3 < workSum.length; _i3++) {
-            for (var _j2 = 0; _j2 < workSums.length; _j2++) {
-              if (workSum[_i3].date_num === workSums[_j2].date_num) {
-                workSums[_j2].total.work_time += parseInt(workSum[_i3].total.work_time);
-                workSums[_j2].total.over_time += parseInt(workSum[_i3].total.over_time);
-              }
-            }
-          }
-          // 借支
-          for (var _i4 = 0; _i4 < borrowNumSum.length; _i4++) {
-            for (var _j3 = 0; _j3 < borrowNumSums.length; _j3++) {
-              if (borrowNumSum[_i4].date_num === borrowNumSums[_j3].date_num) {
-                // console.log(borrowNumSum[i].total.money,'borrowNumSum[i].total.money')
-                borrowNumSums[_j3].total.borrow += +borrowNumSum[_i4].total.money;
-              }
-            }
-          }
-          // 按量 daySums
-          for (var _i5 = 0; _i5 < daySum.length; _i5++) {
-            for (var _j4 = 0; _j4 < daySums.length; _j4++) {
-              if (daySum[_i5].date_num === daySums[_j4].date_num) {
-                console.log(daySums[_j4], 'xx');
-                daySums[_j4].total[0].sum += +daySum[_i5].total[0].sum;
-                daySums[_j4].total[0].unit_name = daySum[_i5].total[0].unit_name;
-              }
-            }
-          }
-          console.log(daySums, 'daySumdaySumdaySum');
-          var dayArrItme = JSON.parse(JSON.stringify(dayArr));
-          for (var _i6 = 0; _i6 < dayArrItme.length; _i6++) {
-            var _obj2 = {
-              type: {
-                hour: {
-                  over_time: '',
-                  work_time: ''
-                },
-                borrow: {
-                  money: ''
-                },
-                work: {
-                  over_time: '',
-                  work_time: ''
-                },
-                amount: {
-                  sum: '',
-                  unit_name: ''
-                }
-              }
-            };
-            // 记工
-            for (var _j5 = 0; _j5 < jigongSums.length; _j5++) {
-              if (dayArrItme[_i6].name === jigongSums[_j5].date_num) {
-                // obj ={
-                //   name: jigongSums[j].date_num,
-                //   type:{
-                //     hour:{
-                //       over_time: jigongSums[j].total.over_time,
-                //       work_time: jigongSums[j].total.work_time,
-                //     }
-                //   }
-                // }
-                // dayArrItme[i] = jigongSums[j];
-                // dayArrItme[i].type.hour.over_time = jigongSums[j].total.over_time
-                _obj2.type.hour.over_time = parseInt(jigongSums[_j5].total.over_time).toFixed(2);
-                _obj2.type.hour.work_time = parseInt(jigongSums[_j5].total.work_time).toFixed(2);
-                // dayArrItme[i] = obj;
-              }
-            }
-            // 按天
-            for (var _j6 = 0; _j6 < workSums.length; _j6++) {
-              if (dayArrItme[_i6].name === workSums[_j6].date_num) {
-                _obj2.type.work.over_time = parseInt(workSums[_j6].total.over_time).toFixed(2);
-                _obj2.type.work.work_time = parseInt(workSums[_j6].total.work_time).toFixed(2);
-              }
-            }
-            // 借支
-            for (var _j7 = 0; _j7 < borrowNumSums.length; _j7++) {
-              if (dayArrItme[_i6].name === borrowNumSums[_j7].date_num) {
-                _obj2.name = borrowNumSums[_j7].date_num, _obj2.type.borrow.money = borrowNumSums[_j7].total.money;
-              }
-            }
-            // 按量
-            for (var _j8 = 0; _j8 < daySums.length; _j8++) {
-              if (dayArrItme[_i6].name === daySums[_j8].date_num) {
-                _obj2.name = daySums[_j8].date_num, console.log(daySums[_j8].total[0].unit_name, 'daySums[j]');
-                _obj2.type.amount.sum = parseInt(daySums[_j8].total[0].sum);
-                _obj2.type.amount.unit_name = daySums[_j8].total[0].unit_name;
-              }
-            }
-            dayArrItme[_i6] = _obj2;
-          }
-          if (identity === 1) {
-            var _obj$list;
+              if (identity === 1) {
+                var _obj2$list;
 
-            (_obj$list = obj.list).push.apply(_obj$list, _toConsumableArray(dayArrItme));
+                (_obj2$list = _obj2.list).push.apply(_obj2$list, _toConsumableArray(dayArrItme));
+              }
+              rightData.push(_obj2);
+              console.log(tebArrList, 'tebArrList');
+              console.log(rightData, 'rightData');
+              // if (additional==0){
+              setFixedTab([].concat(_toConsumableArray(fixedTabList), leftData, tatalArr));
+              setTabArr([].concat(_toConsumableArray(tebArrList), rightData));
+              // }else{
+              // setFixedTab([...fixedTabList]);
+              // setTabArr([...tebArrList, ...rightData]);
+              // }
+              // 判断是否添加
+              setAdditional(additional + 1);
+            }
           }
-          rightData.push(obj);
-          setFixedTab([].concat(_toConsumableArray(fixedTabList), leftData, tatalArr));
-          setTabArr([].concat(_toConsumableArray(tebArrList), rightData));
         });
       };
       // 设置时间
@@ -792,8 +814,8 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       console.log(tebArr.length, 'tebArr');
       (0, _taroWeapp.useShareAppMessage)(function () {
         return {
-          title: '记工记账',
-          desc: '记工记账怕丢失？鱼泡网记工更安全！用鱼泡 网记工记账，手机记工更方便，数据永不丢失~!',
+          // title: '记工记账',
+          title: '记工记账怕丢失？鱼泡网记工更安全！用鱼泡 网记工记账，手机记工更方便，数据永不丢失~',
           path: '/pages/share/index'
         };
       });
@@ -816,9 +838,9 @@ var AttendanceSheet = (_temp2 = _class = function (_Taro$Component) {
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose
-      }, $compid__63, $prevCompid__63);
+      }, $compid__81, $prevCompid__81);
       Object.assign(this.__state, {
-        $compid__63: $compid__63,
+        $compid__81: $compid__81,
         tebArr: tebArr,
         fixedTab: fixedTab,
         year: year,

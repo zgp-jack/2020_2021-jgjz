@@ -9,6 +9,7 @@ import { setUserList } from '../../actions/userList';
 import { setClickTIme } from '../../actions/clickTIme'
 import { setPhoneList } from '../../actions/phoneList';
 import Msg from '../../utils/msg';
+import { isPhone } from '../../utils/v'
 export interface BorrowingType {
   item: DataType[]
 }
@@ -1005,7 +1006,7 @@ export default function userForeman() {
         data[type] = e.detail.value;
       } else {
         Msg('请输入两位小数或整数')
-        data[type] = '';
+        data[type] = e.detail.value;
       }
       setModel(data);
       return;
@@ -1349,7 +1350,12 @@ export default function userForeman() {
   }
   // 添加成员
   const handleEstablish = (id) => {
-    const data = JSON.parse(JSON.stringify(model))
+    const data = JSON.parse(JSON.stringify(model));
+    console.log(data,'dadada')
+    if (!isPhone(model.phone)){
+      Msg('请先输入正确的手机号码')
+      return
+    }
     let params: any = {
       name: data.userName,
       tel: data.phone,
@@ -2263,6 +2269,8 @@ export default function userForeman() {
       // }
       // 给工人自己设置工资标准
       // 传0会报错所以判断是按天还是按小时
+      console.log(data.addWork,'data.addWork')
+      console.log(data,'data')
       let params;
       // 按小时
       if (data.type === 1) {

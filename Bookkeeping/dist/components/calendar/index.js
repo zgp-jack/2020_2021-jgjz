@@ -537,13 +537,16 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
           handleClickCalendar(v.$original);
         };
 
-        var $loopState__temp4 = display ? (0, _classnames2.default)({
+        var $loopState__temp4 = display ? (0, _taroWeapp.internal_inline_style)(v.$original.record ? { background: 'rgba(240,189,48,0.3)' } : '') : null;
+        var $loopState__temp6 = display ? (0, _classnames2.default)({
           'content-days-day': v.$original.current,
           'content-days-day-no': !v.$original.current,
           'content-days-day-choice': v.$original.choice,
           'content-days-day-click': v.$original.click
         }) : null;
-        var $loopState__temp6 = !v.$original.next && !v.$original.up ? (0, _classnames2.default)({
+        var $loopState__temp8 = display ? (0, _taroWeapp.internal_inline_style)(v.$original.record ? { color: '#3C3B3B' } : '') : null;
+        var $loopState__temp10 = display ? (0, _taroWeapp.internal_inline_style)(v.$original.record ? { color: '#BABABAFF' } : '') : null;
+        var $loopState__temp12 = !v.$original.next && !v.$original.up ? (0, _classnames2.default)({
           'checkbox': !v.$original.click,
           'checkbox-click': v.$original.click
         }) : null;
@@ -552,6 +555,9 @@ var CalendarModal = (_temp2 = _class = function (_Taro$Component) {
           _$indexKey: _$indexKey,
           $loopState__temp4: $loopState__temp4,
           $loopState__temp6: $loopState__temp6,
+          $loopState__temp8: $loopState__temp8,
+          $loopState__temp10: $loopState__temp10,
+          $loopState__temp12: $loopState__temp12,
           $original: v.$original
         };
       }) : [];
