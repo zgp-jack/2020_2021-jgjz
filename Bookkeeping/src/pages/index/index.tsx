@@ -649,7 +649,7 @@ export default function Index() {
     userRouteJump(url);
     // userRouteJump('/pages/flowingWater/index')
   }
-  console.log(item,'item')
+  console.log(login,'loginloginloginlogin')
   return (
     <View className='index-content'>
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
