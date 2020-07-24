@@ -64,7 +64,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EditDetails.__proto__ || Object.getPrototypeOf(EditDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["borrowing", "loopArray56", "$compid__63", "$compid__64", "$compid__65", "$compid__66", "businessType", "type", "typeName", "val", "identity", "unit"], _this.anonymousFunc9Map = {}, _this.customComponents = ["ImageView", "WageStandard", "WorkOvertime", "WorkingHours"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EditDetails.__proto__ || Object.getPrototypeOf(EditDetails)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["borrowing", "loopArray67", "$compid__94", "$compid__95", "$compid__96", "$compid__97", "businessType", "type", "typeName", "val", "identity", "unit"], _this.anonymousFunc9Map = {}, _this.customComponents = ["ImageView", "WageStandard", "WorkOvertime", "WorkingHours"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(EditDetails, [{
@@ -85,25 +85,25 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__63"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__94"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__63 = _genCompid2[0],
-          $compid__63 = _genCompid2[1];
+          $prevCompid__94 = _genCompid2[0],
+          $compid__94 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__64"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__95"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__64 = _genCompid4[0],
-          $compid__64 = _genCompid4[1];
+          $prevCompid__95 = _genCompid4[0],
+          $compid__95 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__65"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__96"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__65 = _genCompid6[0],
-          $compid__65 = _genCompid6[1];
+          $prevCompid__96 = _genCompid6[0],
+          $compid__96 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__66"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__97"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__66 = _genCompid8[0],
-          $compid__66 = _genCompid8[1];
+          $prevCompid__97 = _genCompid8[0],
+          $compid__97 = _genCompid8[1];
 
       var router = (0, _taroWeapp.useRouter)();
       var id = router.params.id;
@@ -768,6 +768,10 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
           }
         }
         var standardObj = JSON.parse(JSON.stringify(standard));
+        // 上班时长
+        var timeArrs = JSON.parse(JSON.stringify(timeArr));
+        // 获取加班时长
+        var addWorkArrs = JSON.parse(JSON.stringify(addWorkArr));
         // console.log(standardObj,'xxx')
         var wages = void 0;
         // 计算
@@ -775,10 +779,50 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         // console.log(standardObj.worktime_define);
         // console.log(standardObj.work_time);
         // console.log()
+        //模板金额 
+        var moneyNum = item.money;
+        // 模板时间
+        var workNum = item.work;
+        //加班金钱
+        var addWorkNum = item.addWork;
+        // 加班时间
+        var dayNum = item.day;
+        var time = 0;
+        console.log(timeArrs, 'timeArrstimeArrs');
+        for (var i = 0; i < timeArrs.length; i++) {
+          if (timeArrs[i].click) {
+            console.log(timeArr[i]);
+            // 选择工
+            if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
+              time = 1 / workNum * timeArrs[i].num;
+              // 选择时间
+            } else {
+              if (timeArrs[i].id == 1) {
+                // 等于模板时间
+                time = workNum;
+              } else if (timeArrs[i].id == 2) {
+                // 等于模板时间的一半
+                time = workNum / 2;
+              } else if (timeArrs[i].id == 3) {
+                // 等于0 
+                time = 0;
+              }
+            }
+          }
+        }
+        var addTime = 0;
+        for (var _i5 = 0; _i5 < addWorkArrs.length; _i5++) {
+          if (addWorkArrs[_i5].click) {
+            addTime = addWorkArrs[_i5].num;
+          }
+        }
         if (item.type == '1') {
-          wages = parseInt(standardObj.money) || 0 / parseInt(standardObj.worktime_define) || 0 * parseInt(standardObj.work_time) || 0 + parseInt(standardObj.worker_overtime) || 0 * parseInt(standardObj.overtime_money) || 0;
+          wages = moneyNum / workNum * (time * workNum) + addWorkNum * addTime;
+          // wages = (item.money/item.work)
+          // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + parseInt(standardObj.worker_overtime)||0 * parseInt(standardObj.overtime_money)||0
         } else {
-          wages = parseInt(standardObj.money) || 0 / parseInt(standardObj.worktime_define) || 0 * parseInt(standardObj.work_time) || 0 + (parseInt(standardObj.money) || 0 / parseInt(standardObj.worker_overtime) || 0 * parseInt(standardObj.overtime)) || 0;
+          wages = moneyNum / workNum * (time * workNum) + moneyNum / dayNum * addTime;
+          // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
         }
         setVal(_extends({}, val, { duration: title, wages: wages }));
         setDisplay(false);
@@ -953,12 +997,12 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
       };
 
       this.anonymousFunc14 = handlesub;
-      var loopArray56 = businessType === 3 ? borrowing.item.map(function (v, __index9) {
+      var loopArray67 = businessType === 3 ? borrowing.item.map(function (v, __index9) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
 
-        var _$indexKey = "bcazz" + __index9;
+        var _$indexKey = "bdfzz" + __index9;
 
         _this2.anonymousFunc9Map[_$indexKey] = function () {
           return handleRadioBorrowing(v.$original);
@@ -974,7 +1018,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         "max": 4,
         "userUploadImg": userUploadImg,
         "userDelImg": userDelImg
-      }, $compid__63, $prevCompid__63);
+      }, $compid__94, $prevCompid__94);
       _taroWeapp.propsManager.set({
         "display": wageStandardDisplay,
         "handleClose": handleWageStandardDisplay,
@@ -982,7 +1026,7 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         "handleWageStandard": handleWageStandard,
         "handleAddWage": handleAddWage,
         "handleWageStandardRadio": handleWageStandardRadio
-      }, $compid__64, $prevCompid__64);
+      }, $compid__95, $prevCompid__95);
       _taroWeapp.propsManager.set({
         "display": display,
         "handleWorkOvertimeClose": handleClose,
@@ -991,20 +1035,20 @@ var EditDetails = (_temp2 = _class = function (_Taro$Component) {
         "dataArr": addWorkArr,
         "handleWorkOvertimeOk": handleWorkOvertimeOk,
         "model": val
-      }, $compid__65, $prevCompid__65);
+      }, $compid__96, $prevCompid__96);
       _taroWeapp.propsManager.set({
         "display": workingHoursDisplay,
         "handleWorkingHoursClose": handleWorkingHoursClose,
         "type": timeType,
         "handleWorkingHours": handleWorkingHours
-      }, $compid__66, $prevCompid__66);
+      }, $compid__97, $prevCompid__97);
       Object.assign(this.__state, {
         borrowing: borrowing,
-        loopArray56: loopArray56,
-        $compid__63: $compid__63,
-        $compid__64: $compid__64,
-        $compid__65: $compid__65,
-        $compid__66: $compid__66,
+        loopArray67: loopArray67,
+        $compid__94: $compid__94,
+        $compid__95: $compid__95,
+        $compid__96: $compid__96,
+        $compid__97: $compid__97,
         businessType: businessType,
         type: type,
         typeName: typeName,

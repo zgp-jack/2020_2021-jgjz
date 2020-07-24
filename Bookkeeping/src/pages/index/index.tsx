@@ -623,6 +623,7 @@ export default function Index() {
   }
   // 跳流水
   const handleJump = (url:string,state?:boolean)=>{
+    console.log(login,'login')
     if (login){
       userRouteJump('/pages/login/index?type=1');
     }

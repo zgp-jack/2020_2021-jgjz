@@ -620,6 +620,10 @@ export default function EditDetails() {
       }
     }
     const standardObj = JSON.parse(JSON.stringify(standard));
+    // 上班时长
+    const timeArrs = JSON.parse(JSON.stringify(timeArr));
+    // 获取加班时长
+    const addWorkArrs = JSON.parse(JSON.stringify(addWorkArr));
     // console.log(standardObj,'xxx')
     let wages;
     // 计算
@@ -627,10 +631,50 @@ export default function EditDetails() {
     // console.log(standardObj.worktime_define);
     // console.log(standardObj.work_time);
     // console.log()
+    //模板金额 
+    const moneyNum = item.money;
+    // 模板时间
+    const workNum = item.work;
+    //加班金钱
+    const addWorkNum = item.addWork;
+    // 加班时间
+    const dayNum = item.day;
+    let time: number = 0;
+    console.log(timeArrs, 'timeArrstimeArrs')
+    for (let i = 0; i < timeArrs.length; i++) {
+      if (timeArrs[i].click) {
+        console.log(timeArr[i])
+        // 选择工
+        if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
+          time = 1 / workNum * timeArrs[i].num
+          // 选择时间
+        } else {
+          if (timeArrs[i].id == 1) {
+            // 等于模板时间
+            time = workNum;
+          } else if (timeArrs[i].id == 2) {
+            // 等于模板时间的一半
+            time = workNum / 2;
+          } else if (timeArrs[i].id == 3) {
+            // 等于0 
+            time = 0;
+          }
+        }
+      }
+    }
+    let addTime: number = 0;
+    for (let i = 0; i < addWorkArrs.length; i++) {
+      if (addWorkArrs[i].click) {
+        addTime = addWorkArrs[i].num
+      }
+    }
     if (item.type  == '1'){
-      wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + parseInt(standardObj.worker_overtime)||0 * parseInt(standardObj.overtime_money)||0
+      wages = (moneyNum / workNum) * (time * workNum) + addWorkNum * addTime;
+      // wages = (item.money/item.work)
+      // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + parseInt(standardObj.worker_overtime)||0 * parseInt(standardObj.overtime_money)||0
     }else{
-      wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
+      wages = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
+      // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
     setVal({ ...val, duration: title,wages: wages })
     setDisplay(false);

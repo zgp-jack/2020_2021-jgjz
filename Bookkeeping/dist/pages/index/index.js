@@ -86,7 +86,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray84", "loopArray85", "$compid__150", "$compid__151", "$compid__152", "$compid__153", "$compid__154", "$compid__155", "image", "closeImage", "IMGCDNURL", "start", "end", "vals", "newMonth", "type", "prompt", "item", "show", "busy", "list", "month", "newTime", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray70", "loopArray71", "$compid__104", "$compid__105", "$compid__106", "$compid__107", "$compid__108", "$compid__109", "image", "closeImage", "IMGCDNURL", "start", "end", "vals", "newMonth", "type", "prompt", "item", "show", "busy", "list", "month", "newTime", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Index, [{
@@ -107,35 +107,35 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       var __prefix = this.$prefix;
       ;
 
-      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__150"),
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__104"),
           _genCompid2 = _slicedToArray(_genCompid, 2),
-          $prevCompid__150 = _genCompid2[0],
-          $compid__150 = _genCompid2[1];
+          $prevCompid__104 = _genCompid2[0],
+          $compid__104 = _genCompid2[1];
 
-      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__151"),
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__105"),
           _genCompid4 = _slicedToArray(_genCompid3, 2),
-          $prevCompid__151 = _genCompid4[0],
-          $compid__151 = _genCompid4[1];
+          $prevCompid__105 = _genCompid4[0],
+          $compid__105 = _genCompid4[1];
 
-      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__152"),
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__106"),
           _genCompid6 = _slicedToArray(_genCompid5, 2),
-          $prevCompid__152 = _genCompid6[0],
-          $compid__152 = _genCompid6[1];
+          $prevCompid__106 = _genCompid6[0],
+          $compid__106 = _genCompid6[1];
 
-      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__153"),
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__107"),
           _genCompid8 = _slicedToArray(_genCompid7, 2),
-          $prevCompid__153 = _genCompid8[0],
-          $compid__153 = _genCompid8[1];
+          $prevCompid__107 = _genCompid8[0],
+          $compid__107 = _genCompid8[1];
 
-      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__154"),
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__108"),
           _genCompid10 = _slicedToArray(_genCompid9, 2),
-          $prevCompid__154 = _genCompid10[0],
-          $compid__154 = _genCompid10[1];
+          $prevCompid__108 = _genCompid10[0],
+          $compid__108 = _genCompid10[1];
 
-      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__155"),
+      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__109"),
           _genCompid12 = _slicedToArray(_genCompid11, 2),
-          $prevCompid__155 = _genCompid12[0],
-          $compid__155 = _genCompid12[1];
+          $prevCompid__109 = _genCompid12[0],
+          $compid__109 = _genCompid12[1];
 
       var dispatch = (0, _redux.useDispatch)();
       // 弹框内容
@@ -875,6 +875,7 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
       };
       // 跳流水
       var handleJump = function handleJump(url, state) {
+        console.log(login, 'login');
         if (login) {
           userRouteJump('/pages/login/index?type=1');
         }
@@ -988,13 +989,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         return setProject(false);
       };
 
-      var loopArray84 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray70 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp2 = type === 1 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey = "bfczz" + i;
+        var _$indexKey = "bdizz" + i;
 
         _this2.anonymousFunc13Map[_$indexKey] = getNextPageData;
         return {
@@ -1003,13 +1004,13 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
           $original: v.$original
         };
       }) : [];
-      var loopArray85 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
+      var loopArray71 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
         v = {
           $original: (0, _taroWeapp.internal_get_original)(v)
         };
         var $loopState__temp4 = type === 2 && list.length > 0 && !busy ? i + i : null;
 
-        var _$indexKey2 = "bfdzz" + i;
+        var _$indexKey2 = "bdjzz" + i;
 
         _this2.anonymousFunc15Map[_$indexKey2] = getNextPageData;
         return {
@@ -1022,27 +1023,27 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "value": num,
         "maxValue": 99,
         "className": "AtBadge"
-      }, $compid__150, $prevCompid__150);
+      }, $compid__104, $prevCompid__104);
       _taroWeapp.propsManager.set({
         "isOpened": tips,
         "closeOnClickOverlay": false
-      }, $compid__151, $prevCompid__151);
+      }, $compid__105, $prevCompid__105);
       _taroWeapp.propsManager.set({
         "isOpened": identity,
         "closeOnClickOverlay": false
-      }, $compid__152, $prevCompid__152);
+      }, $compid__106, $prevCompid__106);
       _taroWeapp.propsManager.set({
         "display": display,
         "handleClose": handleClose,
         "callback": handleCallback
-      }, $compid__153, $prevCompid__153);
+      }, $compid__107, $prevCompid__107);
       _taroWeapp.propsManager.set({
         "display": createProjectDisplay,
         "handleClose": handleCreateProjectClose,
         "val": model && model.groupName,
         "handleSubmit": anonymousState__temp5,
         "handleInput": handleInput
-      }, $compid__154, $prevCompid__154);
+      }, $compid__108, $prevCompid__108);
       _taroWeapp.propsManager.set({
         "display": project,
         "handleSubmit": handleAddProject,
@@ -1050,18 +1051,18 @@ var Index = (_temp2 = _class = function (_Taro$Component) {
         "teamName": model && model.teamName,
         "handleBack": handleBack,
         "handleClose": anonymousState__temp6
-      }, $compid__155, $prevCompid__155);
+      }, $compid__109, $prevCompid__109);
       Object.assign(this.__state, {
         anonymousState__temp5: anonymousState__temp5,
         anonymousState__temp6: anonymousState__temp6,
-        loopArray84: loopArray84,
-        loopArray85: loopArray85,
-        $compid__150: $compid__150,
-        $compid__151: $compid__151,
-        $compid__152: $compid__152,
-        $compid__153: $compid__153,
-        $compid__154: $compid__154,
-        $compid__155: $compid__155,
+        loopArray70: loopArray70,
+        loopArray71: loopArray71,
+        $compid__104: $compid__104,
+        $compid__105: $compid__105,
+        $compid__106: $compid__106,
+        $compid__107: $compid__107,
+        $compid__108: $compid__108,
+        $compid__109: $compid__109,
         image: image,
         closeImage: closeImage,
         IMGCDNURL: _index2.IMGCDNURL,
