@@ -162,6 +162,7 @@ export default function Index() {
           } else if (res.code == 40001){
             //  有鱼泡账号
           } else if (res.code == 40000){
+            console.log(res.data,'res.dafdsda')
             // 要存UserInfo
             Taro.setStorageSync(UserInfo, res.data);
             let params = {
