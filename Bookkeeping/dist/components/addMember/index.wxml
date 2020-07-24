@@ -3,7 +3,7 @@
         <block wx:if="{{display}}">
             <view class="addMember">
                 <view class="addMember-content">
-                    <view class="addMember-content-heard">添加成员<text class="addMember-content-heard-close" bindtap="funPrivateihzzz">x</text>
+                    <view class="addMember-content-heard">添加成员<text class="addMember-content-heard-close" bindtap="funPrivatejizzz">x</text>
                     </view>
                     <view class="addMember-content-listBox">
                         <view class="addMember-content-listBox-list">

@@ -145,7 +145,7 @@ export default function Index() {
             res.data.sign.token = e.referrerInfo.extraData.token;
             res.data.sign.time = e.referrerInfo.extraData.tokenTime;
             Taro.setStorageSync(MidData, res.data);
-            getData();
+            getData('', res.data);
             // 没有鱼泡账号
           } else if (res.code == 40001){
             //  有鱼泡账号
@@ -302,7 +302,10 @@ export default function Index() {
     })
   }
   // 获取首页数据
-  const getData = (e?:string)=>{
+  const getData = (e?:string,data?:any)=>{
+    if(data){
+      Taro.setStorageSync(MidData, data);
+    }
     // 没登录直接进来默认是工人
     // =====
     // let type = Taro.getStorageSync(Type);
@@ -334,7 +337,7 @@ export default function Index() {
     // 判断选没有选择时间
     let changeTime;
     console.log(repeat,'resdsada')
-    if (!e){
+    if (!e || e!=''){
       console.log(1)
       console.log(312312312312)
       changeTime = getDates();
