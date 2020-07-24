@@ -139,6 +139,8 @@ export default function Index() {
           console.log(res,'跳转返回结果');
           // 直接返回记工记账用户信息
           if(res.code == 200){
+            console.log(res.data,'res.data');
+            console.log(321321)
             res.data.userId = e.referrerInfo.extraData.userId;
             res.data.token = e.referrerInfo.extraData.token;
             res.data.tokenTime = e.referrerInfo.extraData.tokenTime;
