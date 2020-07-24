@@ -81,3 +81,5 @@ export const bkgetLastGroupInfoUrl = REQUESTURL + 'bk-project-team/get-last-grou
 export const shareExcelUrl = REQUESTURL +'bk-bookkeeping/share-excel/';
 //鱼泡网跳过来
 export const appletJumpUrl = REQUESTURL +'bk-member/applet-jump/'
+// 小程序跳转后 添加绑定手机号
+export const jumpBindTelUrl = REQUESTURL + 'bk-member/applet-jump-bind-tel/'

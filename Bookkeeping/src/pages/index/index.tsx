@@ -99,6 +99,8 @@ export default function Index() {
   const [lasted_business_identity, setLasted_business_identity]=useState<string>('')
   // 身份弹框不再提醒
   const [neverPrompt, setNeverPrompt] = useState<boolean>(false)
+  // 点击记工跳转到注册手机号
+  const [login,setLogin] = useState<boolean>(false)
   const getDates = ()=>{
     const date = new Date().getDay();
     const time = new Date();
@@ -124,11 +126,7 @@ export default function Index() {
   }
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
-    console.log(e,'2312312')
     if (e.scene === 1037){
-      console.log('-------e.referrerInfo---------')
-      console.log(e.referrerInfo)
-      console.log('--------end---------')
       //return false
       // 返回token ，tokenTime ,userId
       if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime){
@@ -138,28 +136,21 @@ export default function Index() {
           token: e.referrerInfo.extraData.token,
           tokenTime: e.referrerInfo.extraData.tokenTime
         }
-        console.log(312312312,'112')
         appletJumpAction(params).then(res=>{
-          console.log(res,'跳转返回结果');
           // 直接返回记工记账用户信息
           if(res.code == 200){
-            console.log(res.data,'res.data');
-            console.log(321321)
             if(res.data){
               let obj:any = {
                 sign:{},
               };
               obj = res.data;
               obj.userId = e.referrerInfo.extraData.userId;
-              console.log(222)
               obj.token = e.referrerInfo.extraData.token;
-              console.log(111)
               obj.tokenTime = e.referrerInfo.extraData.tokenTime;
               obj.sign = {
                 token : e.referrerInfo.extraData.token,
                 time : e.referrerInfo.extraData.tokenTime
               }
-              console.log(obj,'redadmskldnmaslkdnlkasn')
               Taro.setStorageSync(MidData, obj);
               getData();
             }
@@ -183,7 +174,9 @@ export default function Index() {
               }
             })
           } else if (res.code == 40003){
-
+            console.log(res,'4000322')
+            // 设置点击直接跳转到注册手机号页面
+            setLogin(true);
           }
         })
       }
@@ -623,6 +616,9 @@ export default function Index() {
   }
   // 跳流水
   const handleJump = (url:string,state?:boolean)=>{
+    if (login){
+      userRouteJump('/pages/login/index?type=1');
+    }
     let midData = Taro.getStorageSync(MidData);
     if (!midData){
       setDisplay(true)

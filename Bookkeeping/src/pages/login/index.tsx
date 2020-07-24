@@ -1,7 +1,7 @@
 import Taro, { Config, useEffect, useState, createContext, useDidShow ,useRouter} from '@tarojs/taro'
 import { View, Text, Checkbox, Image, Input } from '@tarojs/components'
 import { AtInput } from 'taro-ui'
-import { bkGetCodeAction, GetUserInfoAction, bkMemberAuthAction } from '../../utils/request/index';
+import { bkGetCodeAction, GetUserInfoAction, bkMemberAuthAction, jumpBindTelAction } from '../../utils/request/index';
 import { isPhone } from '../../utils/v'
 import { UserInfo, MidData } from '../../config/store';
 import Msg from '../../utils/msg';
@@ -23,7 +23,7 @@ export const SendTypeHave: string = 'have'
 export const SendTypeNo: string = 'no'
 export default function Login() {
   const router: Taro.RouterInfo = useRouter();
-  const { session_key, encryptedData, iv} = router.params;
+  const { session_key, encryptedData, iv,type} = router.params;
   const [time,setTime] = useState<number>(60)
   const [liked,setLike] = useState<boolean>(true)
   const [model, setModel] = useState<ModalType>({
@@ -91,46 +91,56 @@ export default function Login() {
       Msg('请先输入手机验证码')
       return;
     }
-    let params = {
-      session_key: session_key,
-      encryptedData,
-      iv,
-      refId: 0,
-      source: '',
-      tel: model.phone,
-      code:model.code,
-      type: 'phone'
-    }
-    GetUserInfoAction(params).then(res=>{
-      if (res.code === 200){
-        const user: any = {
-          userId: res.data.id,
-          token: res.data.sign.token,
-          tokenTime: res.data.sign.time,
-          uuid: res.data.uuid,
-          login: true,
-        }
-        res.data.yupao_id = res.data.id;
-        Taro.setStorageSync(UserInfo, user);
-        Taro.setStorageSync(MidData, res.data)
-        let midParams = {
-          mid: res.data.id
-        }
-        bkMemberAuthAction(midParams).then(res=>{
-          console.log(321321);
-          if (res.code !== 200) {
-            Msg(res.msg)
-          } else {
-            let midData = Taro.getStorageSync(MidData);
-            midData.worker_id = res.data.worker_id;
-            Taro.setStorageSync(MidData, midData)
-            Taro.navigateBack();
-          }
-        })
-      }else{
-        Msg(res.msg)
+    if(type){
+      let params = {
+        tel: model.phone,
+        code: model.code,
+      };
+      jumpBindTelAction(params).then(res=>{
+        console.log(res);
+      })
+    }else{
+      let params = {
+        session_key: session_key,
+        encryptedData,
+        iv,
+        refId: 0,
+        source: '',
+        tel: model.phone,
+        code:model.code,
+        type: 'phone'
       }
-    })
+      GetUserInfoAction(params).then(res=>{
+        if (res.code === 200){
+          const user: any = {
+            userId: res.data.id,
+            token: res.data.sign.token,
+            tokenTime: res.data.sign.time,
+            uuid: res.data.uuid,
+            login: true,
+          }
+          res.data.yupao_id = res.data.id;
+          Taro.setStorageSync(UserInfo, user);
+          Taro.setStorageSync(MidData, res.data)
+          let midParams = {
+            mid: res.data.id
+          }
+          bkMemberAuthAction(midParams).then(res=>{
+            console.log(321321);
+            if (res.code !== 200) {
+              Msg(res.msg)
+            } else {
+              let midData = Taro.getStorageSync(MidData);
+              midData.worker_id = res.data.worker_id;
+              Taro.setStorageSync(MidData, midData)
+              Taro.navigateBack();
+            }
+          })
+        }else{
+          Msg(res.msg)
+        }
+      })
+    }
   }
   return (
     <View className='content'>

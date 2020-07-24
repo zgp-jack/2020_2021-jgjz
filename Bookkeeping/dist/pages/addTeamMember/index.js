@@ -1,1 +1,604 @@
-(wx.webpackJsonp=wx.webpackJsonp||[]).push([[34],{"128":function(n,e,t){n.exports=t.p+"pages/addTeamMember/index.wxml"},"221":function(n,e,t){"use strict";t.r(e);t(222);var o=t(74);for(var r in o)"default"!==r&&function(n){t.d(e,n,(function(){return o[n]}))}(r)},"222":function(n,e,t){"use strict";t(128)},"225":function(n,e,t){},"27":function(n,e,t){"use strict";Object.defineProperty(e,"__esModule",{"value":!0});var o,r,_slicedToArray=function(n,e){if(Array.isArray(n))return n;if(Symbol.iterator in Object(n))return function sliceIterator(n,e){var t=[],o=!0,r=!1,a=void 0;try{for(var i,u=n[Symbol.iterator]();!(o=(i=u.next()).done)&&(t.push(i.value),!e||t.length!==e);o=!0);}catch(n){r=!0,a=n}finally{try{!o&&u.return&&u.return()}finally{if(r)throw a}}return t}(n,e);throw new TypeError("Invalid attempt to destructure non-iterable instance")},a=function(){function defineProperties(n,e){for(var t=0;t<e.length;t++){var o=e[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(n,o.key,o)}}return function(n,e,t){return e&&defineProperties(n.prototype,e),t&&defineProperties(n,t),n}}(),i=t(0),u=_interopRequireDefault(i),l=_interopRequireDefault(t(129)),s=t(8),c=t(64),d=t(2),p=t(4),f=t(130),m=_interopRequireDefault(t(1));function _interopRequireDefault(n){return n&&n.__esModule?n:{"default":n}}function _classCallCheck(n,e){if(!(n instanceof e))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(n,e){if(!n)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?n:e}t(225);var g=(r=o=function(n){function AddTeamMember(){var n,e,t;_classCallCheck(this,AddTeamMember);for(var o=arguments.length,r=Array(o),a=0;a<o;a++)r[a]=arguments[a];return e=t=_possibleConstructorReturn(this,(n=AddTeamMember.__proto__||Object.getPrototypeOf(AddTeamMember)).call.apply(n,[this].concat(r))),t.config={"navigationBarTitleText":"添加班组成员"},t.$usedState=["loopArray48","loopArray49","$compid__55","$compid__56","data","type","letter"],t.anonymousFunc2Map={},t.anonymousFunc3Map={},t.anonymousFunc5Map={},t.customComponents=["AtSearchBar","AddMember"],_possibleConstructorReturn(t,e)}return function _inherits(n,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);n.prototype=Object.create(e&&e.prototype,{"constructor":{"value":n,"enumerable":!1,"writable":!0,"configurable":!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(n,e):n.__proto__=e)}(AddTeamMember,n),a(AddTeamMember,[{"key":"_constructor","value":function _constructor(n){(function get(n,e,t){null===n&&(n=Function.prototype);var o=Object.getOwnPropertyDescriptor(n,e);if(void 0===o){var r=Object.getPrototypeOf(n);return null===r?void 0:get(r,e,t)}if("value"in o)return o.value;var a=o.get;return void 0!==a?a.call(t):void 0})(AddTeamMember.prototype.__proto__||Object.getPrototypeOf(AddTeamMember.prototype),"_constructor",this).call(this,n),this.$$refs=new u.default.RefsArray}},{"key":"_createData","value":function _createData(){var n=this;this.__state=arguments[0]||this.state||{},this.__props=arguments[1]||this.props||{};var e=this.$prefix,t=(0,i.genCompid)(e+"$compid__55"),o=_slicedToArray(t,2),r=o[0],a=o[1],g=(0,i.genCompid)(e+"$compid__56"),y=_slicedToArray(g,2),h=y[0],v=y[1],_=(0,s.useDispatch)(),b=(0,s.useSelector)((function(n){return n})),$=(0,i.useRouter)(),F=$.params,S=F.groupInfo,O=F.type,k=(0,l.default)(),M=k.handleInput,A=k.handleEstablish,x=k.addMemberDisplay,w=k.setAddMemberDisplay,T=(k.workerList,k.setWorkerList,k.storagelist,k.setStoragelist,(0,i.useState)([])),C=_slicedToArray(T,2),J=C[0],N=C[1],P=(0,i.useState)([]),j=_slicedToArray(P,2),L=j[0],R=j[1],D=(0,i.useState)([]),I=_slicedToArray(D,2),B=I[0],E=I[1],z=(0,i.useState)(""),W=_slicedToArray(z,2),q=W[0],K=W[1],G=function handleAddMemberClose(){w(!1)};(0,i.useEffect)((function(){var n=void 0;if(n=1===u.default.getStorageSync(p.Type)?"添加班组成员":"添加班组长",u.default.setNavigationBarTitle({"title":n}),console.log(b,"useSelectorItem.mailList"),b.mailList&&b.phoneList){var e=JSON.parse(JSON.stringify(b.mailList)),t=JSON.parse(JSON.stringify(b.phoneList));console.log(e,"itemsdadsdsadsadas"),console.log(t,"arrrrrrrr");var o=void 0;e.length>0&&(o=e.map((function(n){if(n.list)return n.list.map((function(n){return t.length>0&&t.map((function(e){return n.id==e.id&&(console.log(n,"valsdad"),n.click=!0),e})),n})),n}))),console.log(o,"timesdd sakd kasbdjkasb"),R(e),N(e)}}),[b.mailList,b.phoneList]);var Q=[{"id":1,"name":"A"},{"id":2,"name":"B"},{"id":3,"name":"C"},{"id":4,"name":"D"},{"id":5,"name":"E"},{"id":6,"name":"F"},{"id":8,"name":"G"},{"id":9,"name":"H"},{"id":10,"name":"I"},{"id":11,"name":"J"},{"id":12,"name":"K"},{"id":13,"name":"L"},{"id":14,"name":"M"},{"id":15,"name":"N"},{"id":16,"name":"O"},{"id":17,"name":"P"},{"id":18,"name":"Q"},{"id":19,"name":"R"},{"id":20,"name":"S"},{"id":21,"name":"T"},{"id":22,"name":"U"},{"id":23,"name":"V"},{"id":24,"name":"W"},{"id":25,"name":"X"},{"id":26,"name":"Y"},{"id":27,"name":"Z"}],V=function onActionClick(){var n=JSON.parse(JSON.stringify(q));console.log(n);var e=JSON.parse(JSON.stringify(J)),t=JSON.parse(JSON.stringify(L)),o=[{"list":[]}];if(""==q)o=t;else for(var r=0;r<e.length;r++)if(e[r].list.length>0)for(var a=0;a<e[r].list.length;a++){var i,u=[];(-1!==e[r].list[a].name.indexOf(n)||e[r].list[a].tel&&-1!==e[r].list[a].tel.indexOf(n))&&(console.log(e[r].list[a],"231231"),u.push(e[r].list[a])),console.log(u,"xxx"),(i=o[0].list).push.apply(i,u)}console.log(o,"arrrr"),N(o)},H=function handleLetter(n){console.log(n,"v"),console.log("#"+n.name);var e=u.default.createSelectorQuery();e.select("#"+n.name).boundingClientRect(),e.selectViewport().scrollOffset(),e.exec((function(n){var e=750/u.default.getSystemInfoSync().windowWidth;console.log(e,"ata"),console.log(n,"res111"),u.default.pageScrollTo({"scrollTop":n[0].top*e,"duration":300})}))},U=function handleForeman(n,e){if(console.log(n,e,"dsadasda"),"2"!==O){var t=JSON.parse(JSON.stringify(B)),o=JSON.parse(JSON.stringify(J));0===t.length||-1===t.indexOf(e.id)?t.push(e):t.splice(t.indexOf(e.id),1);for(var r=0;r<o.length;r++)if(o[r].name_py===n)for(var a=0;a<o[r].list.length;a++)e.id===o[r].list[a].id&&(o[r].list[a].click=!o[r].list[a].click);E(t),N(o)}else{var i={"group_info":S,"group_leader":e.id};(0,d.bkSetGroupLeaderAction)(i).then((function(n){console.log(n,"xxx")})),console.log(e,"eeee"),_((0,c.setWorker)([e])),u.default.navigateBack({"delta":1})}},X=function handleStart(){for(var n=JSON.parse(JSON.stringify(J)),e=[],t=0;t<n.length;t++)for(var o=0;o<n[t].list.length;o++)n[t].list[o].click&&e.push(n[t].list[o]);var r={"worker_id":e.map((function(n){return n.id})),"group_info":S};(0,d.bkAddWorkerInGroupAction)(r).then((function(n){200===n.code&&(console.log(e,"arrrr"),_((0,f.setPhoneList)(e)),_((0,c.setWorker)(e)),u.default.navigateBack({"delta":1}))}))};console.log(J,"data"),this.anonymousFunc0=function(n){return K(n)},this.anonymousFunc1=function(){return V()},this.anonymousFunc4=function(){return w(!0)},this.anonymousFunc6=X;var Y=J&&J.length>0?J.map((function(e,t){return e={"$original":(0,i.internal_get_original)(e)},{"$loopState__temp2":J&&J.length>0?t+t:null,"$anonymousCallee__12":J&&J.length>0?e.$original.list.map((function(o,r){o={"$original":(0,i.internal_get_original)(o)};var a="bbazz"+t+"-"+r;n.anonymousFunc2Map[a]=function(){return U(e.$original.name_py,o.$original)};var u="bbbzz"+t+"-"+r;return n.anonymousFunc3Map[u]=function(){return U(e.$original.name_py,o.$original)},{"_$indexKey":a,"_$indexKey2":u,"$loopState__temp4":J&&J.length>0?(0,m.default)({"image":o.$original.id%2==1&&o.$original.id>100,"image-red":o.$original.id%2==0&&o.$original.id>100,"image-origion":o.$original.id%2==1&&o.$original.id<100,"image-violet":o.$original.id%2==0&&o.$original.id<100}):null,"$loopState__temp6":J&&J.length>0?o.$original.name.substring(o.$original.name.length-2):null,"$original":o.$original}})):[],"$original":e.$original}})):[],Z=Q.map((function(e,t){e={"$original":(0,i.internal_get_original)(e)};var o="bbczz"+t;return n.anonymousFunc5Map[o]=function(){return H(e.$original)},{"_$indexKey3":o,"$original":e.$original}}));return i.propsManager.set({"placeholder":"请输入名字或手机号码查询","showActionButton":!0,"value":q,"onChange":this.anonymousFunc0,"onActionClick":this.anonymousFunc1},a,r),i.propsManager.set({"display":x,"handleClose":G,"handleEstablish":A,"handleInput":M,"groupInfo":S},v,h),Object.assign(this.__state,{"loopArray48":Y,"loopArray49":Z,"$compid__55":a,"$compid__56":v,"data":J,"type":O,"letter":Q}),this.__state}},{"key":"anonymousFunc0","value":function anonymousFunc0(n){}},{"key":"anonymousFunc1","value":function anonymousFunc1(n){}},{"key":"anonymousFunc2","value":function anonymousFunc2(n){for(var e,t=arguments.length,o=Array(t>1?t-1:0),r=1;r<t;r++)o[r-1]=arguments[r];return this.anonymousFunc2Map[n]&&(e=this.anonymousFunc2Map)[n].apply(e,o)}},{"key":"anonymousFunc3","value":function anonymousFunc3(n){for(var e,t=arguments.length,o=Array(t>1?t-1:0),r=1;r<t;r++)o[r-1]=arguments[r];return this.anonymousFunc3Map[n]&&(e=this.anonymousFunc3Map)[n].apply(e,o)}},{"key":"anonymousFunc4","value":function anonymousFunc4(n){}},{"key":"anonymousFunc5","value":function anonymousFunc5(n){for(var e,t=arguments.length,o=Array(t>1?t-1:0),r=1;r<t;r++)o[r-1]=arguments[r];return this.anonymousFunc5Map[n]&&(e=this.anonymousFunc5Map)[n].apply(e,o)}},{"key":"anonymousFunc6","value":function anonymousFunc6(n){}}]),AddTeamMember}(u.default.Component),o.$$events=["anonymousFunc2","anonymousFunc3","anonymousFunc4","anonymousFunc5","anonymousFunc6"],o.$$componentPath="pages/addTeamMember/index",r);g.config={"navigationBarTitleText":"添加班组成员"},e.default=g,Component(t(0).default.createComponent(g,!0))},"74":function(n,e,t){"use strict";t.r(e);var o=t(27),r=t.n(o);for(var a in o)"default"!==a&&function(n){t.d(e,n,(function(){return o[n]}))}(a);e.default=r.a}},[[221,0,1,2,3]]]);
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([["pages/addTeamMember/index"],{
+
+/***/ "./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/addTeamMember/index.tsx?taro&type=script&parse=PAGE&":
+/*!*********************************************************************************************************************************************************!*\
+  !*** ./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--4-0!./src/pages/addTeamMember/index.tsx?taro&type=script&parse=PAGE& ***!
+  \*********************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _class, _temp2;
+
+var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js");
+
+var _taroWeapp2 = _interopRequireDefault(_taroWeapp);
+
+var _index = __webpack_require__(/*! ../../hooks/foreman/index */ "./src/hooks/foreman/index.ts");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _redux = __webpack_require__(/*! @tarojs/redux */ "./node_modules/@tarojs/redux/index.js");
+
+var _workerList = __webpack_require__(/*! ../../actions/workerList */ "./src/actions/workerList.ts");
+
+var _index3 = __webpack_require__(/*! ../../utils/request/index */ "./src/utils/request/index.ts");
+
+var _store = __webpack_require__(/*! ../../config/store */ "./src/config/store.ts");
+
+var _phoneList = __webpack_require__(/*! ../../actions/phoneList */ "./src/actions/phoneList.ts");
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+__webpack_require__(/*! ./index.scss */ "./src/pages/addTeamMember/index.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddTeamMember = (_temp2 = _class = function (_Taro$Component) {
+  _inherits(AddTeamMember, _Taro$Component);
+
+  function AddTeamMember() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, AddTeamMember);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddTeamMember.__proto__ || Object.getPrototypeOf(AddTeamMember)).call.apply(_ref, [this].concat(args))), _this), _this.config = {
+      navigationBarTitleText: '添加班组成员'
+    }, _this.$usedState = ["loopArray48", "loopArray49", "$compid__55", "$compid__56", "data", "type", "letter"], _this.anonymousFunc2Map = {}, _this.anonymousFunc3Map = {}, _this.anonymousFunc5Map = {}, _this.customComponents = ["AtSearchBar", "AddMember"], _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(AddTeamMember, [{
+    key: "_constructor",
+    value: function _constructor(props) {
+      _get(AddTeamMember.prototype.__proto__ || Object.getPrototypeOf(AddTeamMember.prototype), "_constructor", this).call(this, props);
+
+      this.$$refs = new _taroWeapp2.default.RefsArray();
+    }
+  }, {
+    key: "_createData",
+    value: function _createData() {
+      var _this2 = this;
+
+      this.__state = arguments[0] || this.state || {};
+      this.__props = arguments[1] || this.props || {};
+      var __isRunloopRef = arguments[2];
+      var __prefix = this.$prefix;
+      ;
+
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__55"),
+          _genCompid2 = _slicedToArray(_genCompid, 2),
+          $prevCompid__55 = _genCompid2[0],
+          $compid__55 = _genCompid2[1];
+
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__56"),
+          _genCompid4 = _slicedToArray(_genCompid3, 2),
+          $prevCompid__56 = _genCompid4[0],
+          $compid__56 = _genCompid4[1];
+
+      var dispatch = (0, _redux.useDispatch)();
+      // 获取存入的公用内容
+      var useSelectorItem = (0, _redux.useSelector)(function (state) {
+        return state;
+      });
+      var router = (0, _taroWeapp.useRouter)();
+      var _router$params = router.params,
+          groupInfo = _router$params.groupInfo,
+          type = _router$params.type;
+
+      var _userForeman = (0, _index2.default)(),
+          handleInput = _userForeman.handleInput,
+          handleEstablish = _userForeman.handleEstablish,
+          addMemberDisplay = _userForeman.addMemberDisplay,
+          setAddMemberDisplay = _userForeman.setAddMemberDisplay,
+          workerList = _userForeman.workerList,
+          setWorkerList = _userForeman.setWorkerList,
+          storagelist = _userForeman.storagelist,
+          setStoragelist = _userForeman.setStoragelist;
+      // 列表数据
+
+
+      var _useState = (0, _taroWeapp.useState)([]),
+          _useState2 = _slicedToArray(_useState, 2),
+          data = _useState2[0],
+          setData = _useState2[1];
+      // 默认值
+
+
+      var _useState3 = (0, _taroWeapp.useState)([]),
+          _useState4 = _slicedToArray(_useState3, 2),
+          defaultData = _useState4[0],
+          setDefaultData = _useState4[1];
+      // 点击数据
+
+
+      var _useState5 = (0, _taroWeapp.useState)([]),
+          _useState6 = _slicedToArray(_useState5, 2),
+          clickData = _useState6[0],
+          setClickData = _useState6[1];
+      // 输入框
+
+
+      var _useState7 = (0, _taroWeapp.useState)(''),
+          _useState8 = _slicedToArray(_useState7, 2),
+          valData = _useState8[0],
+          setValData = _useState8[1];
+      // 关闭添加成员
+
+
+      var handleAddMemberClose = function handleAddMemberClose() {
+        setAddMemberDisplay(false);
+      };
+      // const handleCheckbox = (e)=>{
+      //   console.log('checkout')
+      //   const arr = JSON.parse(JSON.stringify(clickData));
+      //   let dataArr = JSON.parse(JSON.stringify(data));
+      //   console.log(e);
+      //   // let arr = JSON.parse(JSON.stringify(storagelist));
+      //   // let dataArr = JSON.parse(JSON.stringify(workerList));
+      //   if (arr.length === 0 ){
+      //     arr.push(e);
+      //   }else{
+      //     if (arr.indexOf(e.id) === -1) {
+      //       arr.push(e)
+      //     } else {
+      //       arr.splice(arr.indexOf(e.id), 1)
+      //     }
+      //   }
+      //   const list= dataArr.map(v=>{
+      //     if(v.id === e.id){
+      //       v.click = !v.click;
+      //     }
+      //     return v;
+      //   })
+      //   setClickData(arr);
+      //   setData(list)
+      // }
+      (0, _taroWeapp.useEffect)(function () {
+        // 动态设置头部
+        var type = _taroWeapp2.default.getStorageSync(_store.Type);
+        var titel = void 0;
+        if (type === 1) {
+          titel = '添加班组成员';
+        } else {
+          titel = '添加班组长';
+        }
+        _taroWeapp2.default.setNavigationBarTitle({
+          title: titel
+        });
+        console.log(useSelectorItem, 'useSelectorItem.mailList');
+        if (useSelectorItem.mailList && useSelectorItem.phoneList) {
+          var item = JSON.parse(JSON.stringify(useSelectorItem.mailList));
+          var arr = JSON.parse(JSON.stringify(useSelectorItem.phoneList));
+          console.log(item, 'itemsdadsdsadsadas');
+          console.log(arr, 'arrrrrrrr');
+          // for(let i =0;i<item.length;i++){
+          //   if(item[i].list.length>0){
+          //     for(let j = 0;j<item[i].list.length;j++){
+          //       // item[i].list[j].click = true;
+          //     }
+          //   }
+          // }
+          var itemData = undefined;
+          if (item.length > 0) {
+            itemData = item.map(function (v) {
+              if (v.list) {
+                v.list.map(function (val) {
+                  if (arr.length > 0) {
+                    arr.map(function (value) {
+                      if (val.id == value.id) {
+                        console.log(val, 'valsdad');
+                        val.click = true;
+                      }
+                      return value;
+                    });
+                  }
+                  return val;
+                });
+                return v;
+              }
+            });
+          }
+          console.log(itemData, 'timesdd sakd kasbdjkasb');
+          // return;
+          setDefaultData(item);
+          setData(item);
+        }
+      }, [useSelectorItem.mailList, useSelectorItem.phoneList]);
+      // 字母表
+      var letter = [{ id: 1, name: 'A' }, { id: 2, name: 'B' }, { id: 3, name: 'C' }, { id: 4, name: 'D' }, { id: 5, name: 'E' }, { id: 6, name: 'F' }, { id: 8, name: 'G' }, { id: 9, name: 'H' }, { id: 10, name: 'I' }, { id: 11, name: 'J' }, { id: 12, name: 'K' }, { id: 13, name: 'L' }, { id: 14, name: 'M' }, { id: 15, name: 'N' }, { id: 16, name: 'O' }, { id: 17, name: 'P' }, { id: 18, name: 'Q' }, { id: 19, name: 'R' }, { id: 20, name: 'S' }, { id: 21, name: 'T' }, { id: 22, name: 'U' }, { id: 23, name: 'V' }, { id: 24, name: 'W' }, { id: 25, name: 'X' }, { id: 26, name: 'Y' }, { id: 27, name: 'Z' }];
+      var handleClick = function handleClick() {};
+      var onActionClick = function onActionClick() {
+        var value = JSON.parse(JSON.stringify(valData));
+        console.log(value);
+        var dataArr = JSON.parse(JSON.stringify(data));
+        var defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+        var arr = [{ list: [] }];
+        if (valData == '') {
+          arr = defaultDataArr;
+        } else {
+          for (var i = 0; i < dataArr.length; i++) {
+            if (dataArr[i].list.length > 0) {
+              for (var j = 0; j < dataArr[i].list.length; j++) {
+                var _arr$0$list;
+
+                // 查询电话和手机
+                var list = [];
+                // 首先要判断ID和姓名，然后判断在哪个字母表，然后再追加到数组
+                if (dataArr[i].list[j].name.indexOf(value) !== -1 || dataArr[i].list[j].tel && dataArr[i].list[j].tel.indexOf(value) !== -1) {
+                  console.log(dataArr[i].list[j], '231231');
+                  // for(let z =0;z<arr.length;z++){
+                  //   for(let b=0;b<arr[z].list;b++){
+                  //     if (dataArr[i].name === !arr[z].list.name ){
+                  //       arr.push(dataArr[i]);
+                  //     }
+                  //   }
+                  // }
+                  list.push(dataArr[i].list[j]);
+                }
+                console.log(list, 'xxx');
+                (_arr$0$list = arr[0].list).push.apply(_arr$0$list, list);
+              }
+            }
+          }
+        }
+        console.log(arr, 'arrrr');
+        setData(arr);
+      };
+      var handleChange = function handleChange() {};
+      var handleLetter = function handleLetter(v) {
+        console.log(v, 'v');
+        console.log("#" + v.name);
+        var query = _taroWeapp2.default.createSelectorQuery(); // 创建节点查询器 query
+        query.select("#" + v.name).boundingClientRect(); // 这段代码的意思是选择Id=productServe的节点，获取节点位置信息的查询请求
+        query.selectViewport().scrollOffset(); // 这段代码的意思是获取页面滑动位置的查询请求
+        query.exec(function (res) {
+          var winWidth = _taroWeapp2.default.getSystemInfoSync().windowWidth;
+          var data = 750 / winWidth;
+          console.log(data, 'ata');
+          console.log(res, 'res111');
+          _taroWeapp2.default.pageScrollTo({
+            scrollTop: res[0].top * data,
+            duration: 300
+          });
+        });
+      };
+      // 跳转
+      var userRouteJump = function userRouteJump(url) {
+        _taroWeapp2.default.navigateTo({
+          url: url
+        });
+      };
+      // 班组长
+      var handleForeman = function handleForeman(name, e) {
+        console.log(name, e, 'dsadasda');
+        if (type !== '2') {
+          var arr = JSON.parse(JSON.stringify(clickData));
+          var dataArr = JSON.parse(JSON.stringify(data));
+          if (arr.length === 0) {
+            arr.push(e);
+          } else {
+            if (arr.indexOf(e.id) === -1) {
+              arr.push(e);
+            } else {
+              arr.splice(arr.indexOf(e.id), 1);
+            }
+          }
+          for (var i = 0; i < dataArr.length; i++) {
+            if (dataArr[i].name_py === name) {
+              for (var j = 0; j < dataArr[i].list.length; j++) {
+                if (e.id === dataArr[i].list[j].id) {
+                  dataArr[i].list[j].click = !dataArr[i].list[j].click;
+                }
+              }
+            }
+          }
+          setClickData(arr);
+          setData(dataArr);
+        } else {
+          var params = {
+            group_info: groupInfo,
+            group_leader: e.id
+          };
+          (0, _index3.bkSetGroupLeaderAction)(params).then(function (res) {
+            console.log(res, 'xxx');
+          });
+          console.log(e, 'eeee');
+          dispatch((0, _workerList.setWorker)([e]));
+          _taroWeapp2.default.navigateBack({ delta: 1 });
+        }
+      };
+      var handleStart = function handleStart() {
+        var dataArr = JSON.parse(JSON.stringify(data));
+        var clickArr = [];
+        for (var i = 0; i < dataArr.length; i++) {
+          for (var j = 0; j < dataArr[i].list.length; j++) {
+            if (dataArr[i].list[j].click) {
+              clickArr.push(dataArr[i].list[j]);
+            }
+          }
+        }
+        var ids = clickArr.map(function (item) {
+          return item.id;
+        });
+        var params = {
+          worker_id: ids,
+          group_info: groupInfo
+        };
+        (0, _index3.bkAddWorkerInGroupAction)(params).then(function (res) {
+          if (res.code === 200) {
+            console.log(clickArr, 'arrrr');
+            dispatch((0, _phoneList.setPhoneList)(clickArr));
+            dispatch((0, _workerList.setWorker)(clickArr));
+            _taroWeapp2.default.navigateBack({ delta: 1 });
+          }
+        });
+      };
+      console.log(data, 'data');
+
+      this.anonymousFunc0 = function (e) {
+        return setValData(e);
+      };
+
+      this.anonymousFunc1 = function () {
+        return onActionClick();
+      };
+
+      this.anonymousFunc4 = function () {
+        return setAddMemberDisplay(true);
+      };
+
+      this.anonymousFunc6 = handleStart;
+      var loopArray48 = data && data.length > 0 ? data.map(function (val, i) {
+        val = {
+          $original: (0, _taroWeapp.internal_get_original)(val)
+        };
+        var $loopState__temp2 = data && data.length > 0 ? i + i : null;
+        var $anonymousCallee__12 = data && data.length > 0 ? val.$original.list.map(function (v, __index2) {
+          v = {
+            $original: (0, _taroWeapp.internal_get_original)(v)
+          };
+          var _$indexKey = "bbazz" + i + "-" + __index2;
+
+          _this2.anonymousFunc2Map[_$indexKey] = function () {
+            return handleForeman(val.$original.name_py, v.$original);
+          };
+
+          var _$indexKey2 = "bbbzz" + i + "-" + __index2;
+
+          _this2.anonymousFunc3Map[_$indexKey2] = function () {
+            return handleForeman(val.$original.name_py, v.$original);
+          };
+
+          var $loopState__temp4 = data && data.length > 0 ? (0, _classnames2.default)({
+            'image': v.$original.id % 2 == 1 && v.$original.id > 100,
+            'image-red': v.$original.id % 2 == 0 && v.$original.id > 100,
+            'image-origion': v.$original.id % 2 == 1 && v.$original.id < 100,
+            'image-violet': v.$original.id % 2 == 0 && v.$original.id < 100
+          }) : null;
+          var $loopState__temp6 = data && data.length > 0 ? v.$original.name.substring(v.$original.name.length - 2) : null;
+          return {
+            _$indexKey: _$indexKey,
+            _$indexKey2: _$indexKey2,
+            $loopState__temp4: $loopState__temp4,
+            $loopState__temp6: $loopState__temp6,
+            $original: v.$original
+          };
+        }) : [];
+        return {
+          $loopState__temp2: $loopState__temp2,
+          $anonymousCallee__12: $anonymousCallee__12,
+          $original: val.$original
+        };
+      }) : [];
+      var loopArray49 = letter.map(function (v, __index5) {
+        v = {
+          $original: (0, _taroWeapp.internal_get_original)(v)
+        };
+
+        var _$indexKey3 = "bbczz" + __index5;
+
+        _this2.anonymousFunc5Map[_$indexKey3] = function () {
+          return handleLetter(v.$original);
+        };
+
+        return {
+          _$indexKey3: _$indexKey3,
+          $original: v.$original
+        };
+      });
+      _taroWeapp.propsManager.set({
+        "placeholder": "\u8BF7\u8F93\u5165\u540D\u5B57\u6216\u624B\u673A\u53F7\u7801\u67E5\u8BE2",
+        "showActionButton": true,
+        "value": valData,
+        "onChange": this.anonymousFunc0,
+        "onActionClick": this.anonymousFunc1
+      }, $compid__55, $prevCompid__55);
+      _taroWeapp.propsManager.set({
+        "display": addMemberDisplay,
+        "handleClose": handleAddMemberClose,
+        "handleEstablish": handleEstablish,
+        "handleInput": handleInput,
+        "groupInfo": groupInfo
+      }, $compid__56, $prevCompid__56);
+      Object.assign(this.__state, {
+        loopArray48: loopArray48,
+        loopArray49: loopArray49,
+        $compid__55: $compid__55,
+        $compid__56: $compid__56,
+        data: data,
+        type: type,
+        letter: letter
+      });
+      return this.__state;
+    }
+  }, {
+    key: "anonymousFunc0",
+    value: function anonymousFunc0(e) {
+      ;
+    }
+  }, {
+    key: "anonymousFunc1",
+    value: function anonymousFunc1(e) {
+      ;
+    }
+  }, {
+    key: "anonymousFunc2",
+    value: function anonymousFunc2(_$indexKey) {
+      var _anonymousFunc2Map;
+
+      ;
+
+      for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        e[_key2 - 1] = arguments[_key2];
+      }
+
+      return this.anonymousFunc2Map[_$indexKey] && (_anonymousFunc2Map = this.anonymousFunc2Map)[_$indexKey].apply(_anonymousFunc2Map, e);
+    }
+  }, {
+    key: "anonymousFunc3",
+    value: function anonymousFunc3(_$indexKey2) {
+      var _anonymousFunc3Map;
+
+      ;
+
+      for (var _len3 = arguments.length, e = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        e[_key3 - 1] = arguments[_key3];
+      }
+
+      return this.anonymousFunc3Map[_$indexKey2] && (_anonymousFunc3Map = this.anonymousFunc3Map)[_$indexKey2].apply(_anonymousFunc3Map, e);
+    }
+  }, {
+    key: "anonymousFunc4",
+    value: function anonymousFunc4(e) {
+      ;
+    }
+  }, {
+    key: "anonymousFunc5",
+    value: function anonymousFunc5(_$indexKey3) {
+      var _anonymousFunc5Map;
+
+      ;
+
+      for (var _len4 = arguments.length, e = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+        e[_key4 - 1] = arguments[_key4];
+      }
+
+      return this.anonymousFunc5Map[_$indexKey3] && (_anonymousFunc5Map = this.anonymousFunc5Map)[_$indexKey3].apply(_anonymousFunc5Map, e);
+    }
+  }, {
+    key: "anonymousFunc6",
+    value: function anonymousFunc6(e) {
+      ;
+    }
+  }]);
+
+  return AddTeamMember;
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5", "anonymousFunc6"], _class.$$componentPath = "pages/addTeamMember/index", _temp2);
+
+
+AddTeamMember.config = { navigationBarTitleText: '添加班组成员' };
+exports.default = AddTeamMember;
+
+Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(AddTeamMember, true));
+
+/***/ }),
+
+/***/ "./node_modules/file-loader/dist/cjs.js?name=[path][name].wxml&context=/Users/zhangyibo/jgjz/jigongjizhang/Bookkeeping/src!./node_modules/@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/addTeamMember/index.tsx?taro&type=template&parse=PAGE&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js?name=[path][name].wxml&context=/Users/zhangyibo/jgjz/jigongjizhang/Bookkeeping/src!./node_modules/@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--4-0!./src/pages/addTeamMember/index.tsx?taro&type=template&parse=PAGE& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "pages/addTeamMember/index.wxml";
+
+/***/ }),
+
+/***/ "./src/pages/addTeamMember/index.scss":
+/*!********************************************!*\
+  !*** ./src/pages/addTeamMember/index.scss ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/pages/addTeamMember/index.tsx":
+/*!*******************************************!*\
+  !*** ./src/pages/addTeamMember/index.tsx ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.tsx?taro&type=template&parse=PAGE& */ "./src/pages/addTeamMember/index.tsx?taro&type=template&parse=PAGE&");
+/* harmony import */ var _index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.tsx?taro&type=script&parse=PAGE& */ "./src/pages/addTeamMember/index.tsx?taro&type=script&parse=PAGE&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+
+
+/***/ }),
+
+/***/ "./src/pages/addTeamMember/index.tsx?taro&type=script&parse=PAGE&":
+/*!************************************************************************!*\
+  !*** ./src/pages/addTeamMember/index.tsx?taro&type=script&parse=PAGE& ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--4-0!./index.tsx?taro&type=script&parse=PAGE& */ "./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/addTeamMember/index.tsx?taro&type=script&parse=PAGE&");
+/* harmony import */ var _node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./src/pages/addTeamMember/index.tsx?taro&type=template&parse=PAGE&":
+/*!**************************************************************************!*\
+  !*** ./src/pages/addTeamMember/index.tsx?taro&type=template&parse=PAGE& ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/file-loader/dist/cjs.js?name=[path][name].wxml&context=/Users/zhangyibo/jgjz/jigongjizhang/Bookkeeping/src!../../../node_modules/@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!../../../node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--4-0!./index.tsx?taro&type=template&parse=PAGE& */ "./node_modules/file-loader/dist/cjs.js?name=[path][name].wxml&context=/Users/zhangyibo/jgjz/jigongjizhang/Bookkeeping/src!./node_modules/@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/addTeamMember/index.tsx?taro&type=template&parse=PAGE&");
+/* harmony import */ var _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ })
+
+},[["./src/pages/addTeamMember/index.tsx","runtime","taro","vendors","common"]]]);

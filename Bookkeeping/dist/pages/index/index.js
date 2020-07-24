@@ -1,1 +1,1327 @@
-(wx.webpackJsonp=wx.webpackJsonp||[]).push([[41],{"117":function(e,n,t){e.exports=t.p+"pages/index/index.wxml"},"17":function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{"value":!0});var o,a,_slicedToArray=function(e,n){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function sliceIterator(e,n){var t=[],o=!0,a=!1,u=void 0;try{for(var r,s=e[Symbol.iterator]();!(o=(r=s.next()).done)&&(t.push(r.value),!n||t.length!==n);o=!0);}catch(e){a=!0,u=e}finally{try{!o&&s.return&&s.return()}finally{if(a)throw u}}return t}(e,n);throw new TypeError("Invalid attempt to destructure non-iterable instance")},u=function(){function defineProperties(e,n){for(var t=0;t<n.length;t++){var o=n[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(e,n,t){return n&&defineProperties(e.prototype,n),t&&defineProperties(e,t),e}}(),r=t(0),s=_interopRequireDefault(r),i=t(2),c=t(8),l=t(4),d=t(188),f=t(6),y=t(64),m=_interopRequireDefault(t(3)),p=t(118);function _interopRequireDefault(e){return e&&e.__esModule?e:{"default":e}}function _classCallCheck(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(e,n){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!n||"object"!=typeof n&&"function"!=typeof n?e:n}t(189);var g=[{"url":f.IMGCDNURL+"noviceGuidance1.png","id":1},{"url":f.IMGCDNURL+"noviceGuidance2.png","id":2},{"url":f.IMGCDNURL+"noviceGuidance3.png","id":3},{"url":f.IMGCDNURL+"noviceGuidance4.png","id":4},{"url":f.IMGCDNURL+"noviceGuidance5.png","id":5}],h=(a=o=function(e){function Index(){var e,n,t;_classCallCheck(this,Index);for(var o=arguments.length,a=Array(o),u=0;u<o;u++)a[u]=arguments[u];return n=t=_possibleConstructorReturn(this,(e=Index.__proto__||Object.getPrototypeOf(Index)).call.apply(e,[this].concat(a))),t.$usedState=["anonymousState__temp5","anonymousState__temp6","loopArray54","loopArray55","$compid__57","$compid__58","$compid__59","$compid__60","$compid__61","$compid__62","image","closeImage","IMGCDNURL","start","end","vals","newMonth","type","prompt","item","show","busy","list","month","newTime","week"],t.anonymousFunc13Map={},t.anonymousFunc15Map={},t.customComponents=["AtBadge","AtModal","Auth","CreateProject","ProjectModal"],_possibleConstructorReturn(t,n)}return function _inherits(e,n){if("function"!=typeof n&&null!==n)throw new TypeError("Super expression must either be null or a function, not "+typeof n);e.prototype=Object.create(n&&n.prototype,{"constructor":{"value":e,"enumerable":!1,"writable":!0,"configurable":!0}}),n&&(Object.setPrototypeOf?Object.setPrototypeOf(e,n):e.__proto__=n)}(Index,e),u(Index,[{"key":"_constructor","value":function _constructor(e){(function get(e,n,t){null===e&&(e=Function.prototype);var o=Object.getOwnPropertyDescriptor(e,n);if(void 0===o){var a=Object.getPrototypeOf(e);return null===a?void 0:get(a,n,t)}if("value"in o)return o.value;var u=o.get;return void 0!==u?u.call(t):void 0})(Index.prototype.__proto__||Object.getPrototypeOf(Index.prototype),"_constructor",this).call(this,e),this.$$refs=new s.default.RefsArray}},{"key":"_createData","value":function _createData(){var e=this;this.__state=arguments[0]||this.state||{},this.__props=arguments[1]||this.props||{};var n=this.$prefix,t=(0,r.genCompid)(n+"$compid__57"),o=_slicedToArray(t,2),a=o[0],u=o[1],h=(0,r.genCompid)(n+"$compid__58"),v=_slicedToArray(h,2),_=v[0],F=v[1],S=(0,r.genCompid)(n+"$compid__59"),k=_slicedToArray(S,2),b=k[0],x=k[1],I=(0,r.genCompid)(n+"$compid__60"),D=_slicedToArray(I,2),M=D[0],w=D[1],T=(0,r.genCompid)(n+"$compid__61"),C=_slicedToArray(T,2),$=C[0],P=C[1],A=(0,r.genCompid)(n+"$compid__62"),O=_slicedToArray(A,2),j=O[0],N=O[1],R=(0,c.useDispatch)(),G=(0,r.useState)({"groupName":"","teamName":""}),U=_slicedToArray(G,2),E=U[0],L=U[1],J=(0,r.useState)(!1),B=_slicedToArray(J,2),Y=B[0],z=B[1],W=(0,r.useState)(""),q=_slicedToArray(W,2),K=q[0],V=q[1],Z=(0,r.useState)(""),H=_slicedToArray(Z,2),Q=(H[0],H[1]),X=(0,r.useState)(""),ee=_slicedToArray(X,2),ne=ee[0],te=ee[1],oe=(0,r.useState)(""),ae=_slicedToArray(oe,2),ue=ae[0],re=ae[1],se=(0,r.useState)(""),ie=_slicedToArray(se,2),ce=ie[0],le=ie[1],de=(0,r.useState)(""),fe=_slicedToArray(de,2),ye=fe[0],me=fe[1],pe=(0,r.useState)(""),ge=_slicedToArray(pe,2),he=ge[0],ve=ge[1],_e=(0,r.useState)([0,0]),Fe=_slicedToArray(_e,2),Se=(Fe[0],Fe[1],(0,r.useState)([])),ke=_slicedToArray(Se,2),be=(ke[0],ke[1],(0,r.useState)(0)),xe=_slicedToArray(be,2),Ie=xe[0],De=xe[1],Me=(0,r.useState)(0),we=_slicedToArray(Me,2),Te=(we[0],we[1],(0,r.useState)([{},{},{}])),Ce=_slicedToArray(Te,2),$e=(Ce[0],Ce[1],(0,r.useState)(!1)),Pe=_slicedToArray($e,2),Ae=Pe[0],Oe=Pe[1],je=(0,r.useState)(!1),Ne=_slicedToArray(je,2),Re=Ne[0],Ge=(Ne[1],(0,r.useState)(!1)),Ue=_slicedToArray(Ge,2),Ee=Ue[0],Le=Ue[1],Je=(0,r.useState)([]),Be=_slicedToArray(Je,2),Ye=Be[0],ze=Be[1],We=(0,r.useState)("0"),qe=_slicedToArray(We,2),Ke=qe[0],Ve=qe[1],Ze=(0,r.useState)(),He=_slicedToArray(Ze,2),Qe=He[0],Xe=He[1],en=(0,r.useState)(),nn=_slicedToArray(en,2),tn=nn[0],on=nn[1],an=(0,r.useState)(g[0].url),un=_slicedToArray(an,2),rn=un[0],sn=un[1],cn=(0,r.useState)(!1),ln=_slicedToArray(cn,2),dn=ln[0],fn=ln[1],yn=(0,r.useState)(!1),mn=_slicedToArray(yn,2),pn=mn[0],gn=mn[1],hn=(0,r.useState)(!1),vn=_slicedToArray(hn,2),_n=vn[0],Fn=vn[1],Sn=(0,r.useState)(!0),kn=_slicedToArray(Sn,2),bn=kn[0],xn=kn[1],In=(0,r.useState)(!1),Dn=_slicedToArray(In,2),Mn=Dn[0],wn=Dn[1],Tn=(0,r.useState)(!1),Cn=_slicedToArray(Tn,2),$n=Cn[0],Pn=Cn[1],An=(0,r.useState)(""),On=_slicedToArray(An,2),jn=On[0],Nn=On[1],Rn=(0,r.useState)(!1),Gn=_slicedToArray(Rn,2),Un=Gn[0],En=Gn[1],Ln=function getDates(){var e=(new Date).getDay(),n=new Date,t=new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六")[e],o=n.getFullYear()+"-"+Jn(n.getMonth()+1)+"-"+Jn(n.getDate()),a=n.getFullYear()+"-"+Jn(n.getMonth()+1);return Xe(o),te(a),re(Jn(n.getMonth()+1)),le(o),me(a),ve(t),a},Jn=function addZero(e){return parseInt(e)<10&&(e="0"+e),e};(0,r.onAppShow)((function(e){if(console.log(e,"2312312"),1037===e.scene&&(console.log("-------e.referrerInfo---------"),console.log(e.referrerInfo),console.log("--------end---------"),e.referrerInfo.extraData.userId&&e.referrerInfo.extraData.token&&e.referrerInfo.extraData.tokenTime)){var n={"userId":e.referrerInfo.extraData.userId,"token":e.referrerInfo.extraData.token,"tokenTime":e.referrerInfo.extraData.tokenTime};console.log(312312312,"112"),(0,i.appletJumpAction)(n).then((function(n){if(console.log(n,"跳转返回结果"),200==n.code){if(console.log(n.data,"res.data"),console.log(321321),n.data){var t={"sign":{}};(t=n.data).userId=e.referrerInfo.extraData.userId,console.log(222),t.token=e.referrerInfo.extraData.token,console.log(111),t.tokenTime=e.referrerInfo.extraData.tokenTime,t.sign.token=e.referrerInfo.extraData.token,t.sign.time=e.referrerInfo.extraData.tokenTime,console.log(t,"redadmskldnmaslkdnlkasn"),s.default.setStorageSync(l.MidData,t),Yn()}}else if(40001==n.code);else if(4e4==n.code){s.default.setStorageSync(l.UserInfo,n.data);var o={"mid":n.data.id};(0,i.bkMemberAuthAction)(o).then((function(e){if(console.log(e),200!==e.code)(0,m.default)(e.msg);else{var n=s.default.getStorageSync(l.MidData);n.worker_id=e.data.worker_id,s.default.setStorageSync(l.MidData,n)}}))}else n.code}))}})),(0,r.useDidShow)((function(){var e=s.default.getStorageSync(l.MidData),n=s.default.getStorageSync(l.CreationTime);s.default.getStorageSync(l.NeverPrompt)&&En(!0),e&&z(!1);var t=(new Date).getTime()/1e3;console.log(t,n,"xxx"),n&&n+604800>t&&Pn(!0),R((0,p.setClickTIme)([])),R((0,y.setWorker)([]));var o=s.default.getStorageSync(l.Type);o&&De(o);s.default.getStorageSync(l.UserInfo);R((0,d.setTypes)(o)),Yn()}));var Bn=function bkGetProjectTeam(){(0,i.bkGetProjectTeamAction)({}).then((function(e){0===e.data.length&&gn(!0)}))},Yn=function getData(e){var n=s.default.getStorageSync(l.MidData);if(console.log(n,"有美誉mid"),n){var t=s.default.getStorageSync(l.Type);if(!t)return void Le(!0);De(t),0===t&&Le(!0)}var o=void 0;console.log(dn,"resdsada"),e?o=e:(console.log(1),console.log(312312312312),o=Ln()),console.log(o,"changeTimechangeTime");var a={"time":o,"identity":Ie};n&&(0,i.bkIndexAction)(a).then((function(e){if(console.log("发起首页请求"),200===e.code){on(e.data),Ve(e.data.count_is_new),0==parseInt(e.data.count_is_new)?wn(!0):wn(!1),le(e.data.earliest_month);var n=new Date,t=n.getFullYear()+"-"+Jn(n.getMonth()+1);me(t),Array.isArray(e.data.business_list.data)?e.data.business_list.data?ze(e.data.business_list.data):ze([]):e.data.business_list.data.constructor===Object&&(e.data.business_list.data.data[0].arr?ze(e.data.business_list.data.data[0].arr):ze([])),console.log(3123123),Nn(e.data.lasted_business_identity);s.default.getStorageSync(l.Type)}else(0,m.default)(e.msg)}))},zn=function handleChangeTime(e){s.default.getStorageSync(l.MidData)?(console.log(e,"xxx"),V(e.detail.value),Q(e.detail.value),fn(!0),Yn(e.detail.value),console.log(e.detail.value.substring(e.detail.value.length-2),"e.detail.value.substring(e.detail.value.length - 2)"),re(e.detail.value.substring(e.detail.value.length-2))):z(!0)},Wn=function handelTps(){var e={"identity":Ie};(0,i.bkUpdateBusinessNewAction)(e).then((function(e){200===e.code?((0,m.default)("您完成了[ "+e.data+" ]条记工信息的备份，数据安全不丢失~"),wn(!0)):(0,m.default)("放心使用，免费记工，数据永远不会丢失哟")}))},qn=function handelChange(e,n){if(s.default.getStorageSync(l.MidData)){var t=2===e?"开始为自己记工吧":"开始为工人记工吧";De(e),s.default.setStorageSync(l.Type,e),n||((0,m.default)(t),setTimeout((function(){Yn()}),1e3))}else z(!0)},Kn=function getNextPageData(){Vn("/pages/flowingWater/index")},Vn=function userRouteJump(e){s.default.navigateTo({"url":e})},Zn=function handleType(e){var n=void 0;if(n=1===Ie?2:1,1===e){console.log(Ie,"typenjdskajdkjab");var t=1===n?"开始为自己记工吧":"开始为工人记工吧";2==n&&Bn(),(0,m.default)(t),console.log(n,"neverPromptneverPrompt"),De(n),s.default.setStorageSync(l.Type,n)}else 2===e&&(s.default.setStorageSync(l.NeverPrompt,!0),En(!0));Vn("/pages/recorder/index?type="+n),Oe(!1)},Hn=function handleGoback(){s.default.navigateToMiniProgram({"appId":"wx456feacb0e86162f","path":"/pages/index/index","extraData":{"foo":"bar"},"envVersion":"trial","success":function success(e){}})},Qn=function hanleImage(e){var n=void 0;if(e!==g[g.length-1].url)for(var t=0;t<g.length;t++)e===g[t].url&&(n=g[t+1].url);else xn(!0),Yn();sn(n)},Xn=function handleClose(e){z(e)},et=function handleCallback(){xn(!1),z(!1)},nt=function handleChangeRole(e){De(e),Le(!1),s.default.setStorageSync(l.Type,e),Yn()},tt=function handleCreateProjectClose(){gn(!1)},ot=function handleInput(e,n){var t=JSON.parse(JSON.stringify(E));t[e]=n.detail.value,L(t)},at=function handleAddProject(){var e={"group_name":E.groupName,"team_name":E.teamName};(0,i.bkAddProjectTeamAction)(e).then((function(e){200===e.code?Fn(!1):(0,m.default)(e.msg)}))},ut=function handleBack(){Fn(!1),gn(!0)},rt=function handleJump(e,n){if(s.default.getStorageSync(l.MidData)){if(n){if(0!==parseInt(jn)&&Ie!=parseInt(jn)&&!Un)return console.log(Ie,"type"),console.log(jn,"lasted_business_identity"),void Oe(!0);qn(Ie,!0)}Vn(e)}else z(!0)};console.log(tn,"item"),this.anonymousFunc0=function(){Qn(rn)},this.anonymousFunc1=function(e){return zn(e)},this.anonymousFunc2=function(){qn(2)},this.anonymousFunc3=function(){qn(1)},this.anonymousFunc4=Wn,this.anonymousFunc5=function(){return rt("/pages/flowingWater/index")},this.anonymousFunc6=function(){return rt("/pages/flowingWater/index")},this.anonymousFunc7=function(){return rt("/pages/attendanceSheet/index")},this.anonymousFunc8=function(){return rt("/pages/recorder/index?type="+Ie+"&stateType=1",!0)},this.anonymousFunc9=function(){return rt("/pages/recorder/index?type="+Ie+"&stateType=1",!0)},this.anonymousFunc10=function(){return rt("/pages/recorder/index?type="+Ie)},this.anonymousFunc11=function(){return rt("/pages/notepad/index")},this.anonymousFunc12=function(){Kn()},this.anonymousFunc14=function(){return Kn()},this.anonymousFunc16=function(){return Vn("/pages/feedback/index")},this.anonymousFunc17=Hn,this.anonymousFunc18=function(){return Zn(0)},this.anonymousFunc19=function(){return Zn(1)},this.anonymousFunc20=function(){return Zn(2)},this.anonymousFunc21=function(){return nt(1)},this.anonymousFunc22=function(){return nt(2)};var st=function anonymousState__temp5(){gn(!1),Fn(!0)},it=function anonymousState__temp6(){return Fn(!1)},ct=1===Ie&&Ye.length>0&&!Re?Ye.map((function(n,t){n={"$original":(0,r.internal_get_original)(n)};var o=1===Ie&&Ye.length>0&&!Re?t+t:null,a="bbizz"+t;return e.anonymousFunc13Map[a]=Kn,{"$loopState__temp2":o,"_$indexKey":a,"$original":n.$original}})):[],lt=2===Ie&&Ye.length>0&&!Re?Ye.map((function(n,t){n={"$original":(0,r.internal_get_original)(n)};var o=2===Ie&&Ye.length>0&&!Re?t+t:null,a="bbjzz"+t;return e.anonymousFunc15Map[a]=Kn,{"$loopState__temp4":o,"_$indexKey2":a,"$original":n.$original}})):[];return tn&&!Mn&&r.propsManager.set({"value":Ke,"maxValue":99,"className":"AtBadge"},u,a),r.propsManager.set({"isOpened":Ae,"closeOnClickOverlay":!1},F,_),r.propsManager.set({"isOpened":Ee,"closeOnClickOverlay":!1},x,b),r.propsManager.set({"display":Y,"handleClose":Xn,"callback":et},w,M),r.propsManager.set({"display":pn,"handleClose":tt,"val":E&&E.groupName,"handleSubmit":st,"handleInput":ot},P,$),r.propsManager.set({"display":_n,"handleSubmit":at,"handleInput":ot,"teamName":E&&E.teamName,"handleBack":ut,"handleClose":it},N,j),Object.assign(this.__state,{"anonymousState__temp5":st,"anonymousState__temp6":it,"loopArray54":ct,"loopArray55":lt,"$compid__57":u,"$compid__58":F,"$compid__59":x,"$compid__60":w,"$compid__61":P,"$compid__62":N,"image":rn,"closeImage":bn,"IMGCDNURL":f.IMGCDNURL,"start":ce,"end":ye,"vals":K,"newMonth":ne,"type":Ie,"prompt":$n,"item":tn,"show":Mn,"busy":Re,"list":Ye,"month":ue,"newTime":Qe,"week":he}),this.__state}},{"key":"anonymousFunc0","value":function anonymousFunc0(e){}},{"key":"anonymousFunc1","value":function anonymousFunc1(e){}},{"key":"anonymousFunc2","value":function anonymousFunc2(e){}},{"key":"anonymousFunc3","value":function anonymousFunc3(e){}},{"key":"anonymousFunc4","value":function anonymousFunc4(e){}},{"key":"anonymousFunc5","value":function anonymousFunc5(e){}},{"key":"anonymousFunc6","value":function anonymousFunc6(e){}},{"key":"anonymousFunc7","value":function anonymousFunc7(e){}},{"key":"anonymousFunc8","value":function anonymousFunc8(e){}},{"key":"anonymousFunc9","value":function anonymousFunc9(e){}},{"key":"anonymousFunc10","value":function anonymousFunc10(e){}},{"key":"anonymousFunc11","value":function anonymousFunc11(e){}},{"key":"anonymousFunc12","value":function anonymousFunc12(e){}},{"key":"anonymousFunc13","value":function anonymousFunc13(e){for(var n,t=arguments.length,o=Array(t>1?t-1:0),a=1;a<t;a++)o[a-1]=arguments[a];return this.anonymousFunc13Map[e]&&(n=this.anonymousFunc13Map)[e].apply(n,o)}},{"key":"anonymousFunc14","value":function anonymousFunc14(e){}},{"key":"anonymousFunc15","value":function anonymousFunc15(e){for(var n,t=arguments.length,o=Array(t>1?t-1:0),a=1;a<t;a++)o[a-1]=arguments[a];return this.anonymousFunc15Map[e]&&(n=this.anonymousFunc15Map)[e].apply(n,o)}},{"key":"anonymousFunc16","value":function anonymousFunc16(e){}},{"key":"anonymousFunc17","value":function anonymousFunc17(e){}},{"key":"anonymousFunc18","value":function anonymousFunc18(e){}},{"key":"anonymousFunc19","value":function anonymousFunc19(e){}},{"key":"anonymousFunc20","value":function anonymousFunc20(e){}},{"key":"anonymousFunc21","value":function anonymousFunc21(e){}},{"key":"anonymousFunc22","value":function anonymousFunc22(e){}}]),Index}(s.default.Component),o.$$events=["anonymousFunc0","anonymousFunc1","anonymousFunc2","anonymousFunc3","anonymousFunc4","anonymousFunc5","anonymousFunc6","anonymousFunc7","anonymousFunc8","anonymousFunc9","anonymousFunc10","anonymousFunc11","anonymousFunc12","anonymousFunc13","anonymousFunc14","anonymousFunc15","anonymousFunc16","anonymousFunc17","anonymousFunc18","anonymousFunc19","anonymousFunc20","anonymousFunc21","anonymousFunc22"],o.$$componentPath="pages/index/index",a);n.default=h,Component(t(0).default.createComponent(h,!0))},"185":function(e,n,t){"use strict";t.r(n);t(186);var o=t(63);for(var a in o)"default"!==a&&function(e){t.d(n,e,(function(){return o[e]}))}(a)},"186":function(e,n,t){"use strict";t(117)},"188":function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{"value":!0}),n.setTypes=function setTypes(e){return{"type":o.SETTYPE,"data":e}},n.getType=function getType(){return{"type":o.GETTYPE}};var o=t(114)},"189":function(e,n,t){},"63":function(e,n,t){"use strict";t.r(n);var o=t(17),a=t.n(o);for(var u in o)"default"!==u&&function(e){t.d(n,e,(function(){return o[e]}))}(u);n.default=a.a}},[[185,0,1,2,3]]]);
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([["pages/index/index"],{
+
+/***/ "./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/index/index.tsx?taro&type=script&parse=PAGE&":
+/*!*************************************************************************************************************************************************!*\
+  !*** ./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--4-0!./src/pages/index/index.tsx?taro&type=script&parse=PAGE& ***!
+  \*************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _class, _temp2;
+
+var _taroWeapp = __webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js");
+
+var _taroWeapp2 = _interopRequireDefault(_taroWeapp);
+
+var _index = __webpack_require__(/*! ../../utils/request/index */ "./src/utils/request/index.ts");
+
+var _redux = __webpack_require__(/*! @tarojs/redux */ "./node_modules/@tarojs/redux/index.js");
+
+var _store = __webpack_require__(/*! ../../config/store */ "./src/config/store.ts");
+
+var _type3 = __webpack_require__(/*! ../../actions/type */ "./src/actions/type.ts");
+
+var _index2 = __webpack_require__(/*! ../../config/index */ "./src/config/index.ts");
+
+var _workerList = __webpack_require__(/*! ../../actions/workerList */ "./src/actions/workerList.ts");
+
+var _index3 = __webpack_require__(/*! ../../utils/msg/index */ "./src/utils/msg/index.ts");
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _clickTIme = __webpack_require__(/*! ../../actions/clickTIme */ "./src/actions/clickTIme.ts");
+
+__webpack_require__(/*! ./index.scss */ "./src/pages/index/index.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// 设置新手指引图片
+var Images = [{
+  url: _index2.IMGCDNURL + "noviceGuidance1.png",
+  id: 1
+}, {
+  url: _index2.IMGCDNURL + "noviceGuidance2.png",
+  id: 2
+}, {
+  url: _index2.IMGCDNURL + "noviceGuidance3.png",
+  id: 3
+}, {
+  url: _index2.IMGCDNURL + "noviceGuidance4.png",
+  id: 4
+}, {
+  url: _index2.IMGCDNURL + "noviceGuidance5.png",
+  id: 5
+}];
+
+var Index = (_temp2 = _class = function (_Taro$Component) {
+  _inherits(Index, _Taro$Component);
+
+  function Index() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, Index);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Index.__proto__ || Object.getPrototypeOf(Index)).call.apply(_ref, [this].concat(args))), _this), _this.$usedState = ["anonymousState__temp5", "anonymousState__temp6", "loopArray98", "loopArray99", "$compid__192", "$compid__193", "$compid__194", "$compid__195", "$compid__196", "$compid__197", "image", "closeImage", "IMGCDNURL", "start", "end", "vals", "newMonth", "type", "prompt", "item", "show", "busy", "list", "month", "newTime", "week"], _this.anonymousFunc13Map = {}, _this.anonymousFunc15Map = {}, _this.customComponents = ["AtBadge", "AtModal", "Auth", "CreateProject", "ProjectModal"], _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Index, [{
+    key: '_constructor',
+    value: function _constructor(props) {
+      _get(Index.prototype.__proto__ || Object.getPrototypeOf(Index.prototype), '_constructor', this).call(this, props);
+
+      this.$$refs = new _taroWeapp2.default.RefsArray();
+    }
+  }, {
+    key: '_createData',
+    value: function _createData() {
+      var _this2 = this;
+
+      this.__state = arguments[0] || this.state || {};
+      this.__props = arguments[1] || this.props || {};
+      var __isRunloopRef = arguments[2];
+      var __prefix = this.$prefix;
+      ;
+
+      var _genCompid = (0, _taroWeapp.genCompid)(__prefix + "$compid__192"),
+          _genCompid2 = _slicedToArray(_genCompid, 2),
+          $prevCompid__192 = _genCompid2[0],
+          $compid__192 = _genCompid2[1];
+
+      var _genCompid3 = (0, _taroWeapp.genCompid)(__prefix + "$compid__193"),
+          _genCompid4 = _slicedToArray(_genCompid3, 2),
+          $prevCompid__193 = _genCompid4[0],
+          $compid__193 = _genCompid4[1];
+
+      var _genCompid5 = (0, _taroWeapp.genCompid)(__prefix + "$compid__194"),
+          _genCompid6 = _slicedToArray(_genCompid5, 2),
+          $prevCompid__194 = _genCompid6[0],
+          $compid__194 = _genCompid6[1];
+
+      var _genCompid7 = (0, _taroWeapp.genCompid)(__prefix + "$compid__195"),
+          _genCompid8 = _slicedToArray(_genCompid7, 2),
+          $prevCompid__195 = _genCompid8[0],
+          $compid__195 = _genCompid8[1];
+
+      var _genCompid9 = (0, _taroWeapp.genCompid)(__prefix + "$compid__196"),
+          _genCompid10 = _slicedToArray(_genCompid9, 2),
+          $prevCompid__196 = _genCompid10[0],
+          $compid__196 = _genCompid10[1];
+
+      var _genCompid11 = (0, _taroWeapp.genCompid)(__prefix + "$compid__197"),
+          _genCompid12 = _slicedToArray(_genCompid11, 2),
+          $prevCompid__197 = _genCompid12[0],
+          $compid__197 = _genCompid12[1];
+
+      var dispatch = (0, _redux.useDispatch)();
+      // 弹框内容
+
+      var _useState = (0, _taroWeapp.useState)({
+        groupName: '',
+        teamName: ''
+      }),
+          _useState2 = _slicedToArray(_useState, 2),
+          model = _useState2[0],
+          setModel = _useState2[1];
+      // 授权
+      // =====
+
+
+      var _useState3 = (0, _taroWeapp.useState)(false),
+          _useState4 = _slicedToArray(_useState3, 2),
+          display = _useState4[0],
+          setDisplay = _useState4[1];
+
+      var _useState5 = (0, _taroWeapp.useState)(''),
+          _useState6 = _slicedToArray(_useState5, 2),
+          vals = _useState6[0],
+          setVal = _useState6[1];
+      //获取当前时间
+
+
+      var _useState7 = (0, _taroWeapp.useState)(''),
+          _useState8 = _slicedToArray(_useState7, 2),
+          time = _useState8[0],
+          setTime = _useState8[1];
+      // 当前月份
+
+
+      var _useState9 = (0, _taroWeapp.useState)(''),
+          _useState10 = _slicedToArray(_useState9, 2),
+          newMonth = _useState10[0],
+          setNewMonth = _useState10[1];
+      //显示月份
+
+
+      var _useState11 = (0, _taroWeapp.useState)(''),
+          _useState12 = _slicedToArray(_useState11, 2),
+          month = _useState12[0],
+          setMonth = _useState12[1];
+      // 记工时间
+
+
+      var _useState13 = (0, _taroWeapp.useState)(''),
+          _useState14 = _slicedToArray(_useState13, 2),
+          start = _useState14[0],
+          setStart = _useState14[1];
+      // 结束时间
+
+
+      var _useState15 = (0, _taroWeapp.useState)(''),
+          _useState16 = _slicedToArray(_useState15, 2),
+          end = _useState16[0],
+          setEnd = _useState16[1];
+      // 获取当前时间与当前是星期几
+
+
+      var _useState17 = (0, _taroWeapp.useState)(''),
+          _useState18 = _slicedToArray(_useState17, 2),
+          week = _useState18[0],
+          setWeek = _useState18[1];
+      // 时间索引
+
+
+      var _useState19 = (0, _taroWeapp.useState)([0, 0]),
+          _useState20 = _slicedToArray(_useState19, 2),
+          time_id = _useState20[0],
+          setTime_id = _useState20[1];
+      // 时间选择
+
+
+      var _useState21 = (0, _taroWeapp.useState)([]),
+          _useState22 = _slicedToArray(_useState21, 2),
+          timeList = _useState22[0],
+          setTimeList = _useState22[1];
+      // 工人还是班长
+
+
+      var _useState23 = (0, _taroWeapp.useState)(0),
+          _useState24 = _slicedToArray(_useState23, 2),
+          type = _useState24[0],
+          setType = _useState24[1];
+      // 按量记
+
+
+      var _useState25 = (0, _taroWeapp.useState)(0),
+          _useState26 = _slicedToArray(_useState25, 2),
+          measureType = _useState26[0],
+          setMeasureType = _useState26[1];
+      // 数据列表
+
+
+      var _useState27 = (0, _taroWeapp.useState)([{}, {}, {}]),
+          _useState28 = _slicedToArray(_useState27, 2),
+          data = _useState28[0],
+          setData = _useState28[1];
+      // 弹窗
+
+
+      var _useState29 = (0, _taroWeapp.useState)(false),
+          _useState30 = _slicedToArray(_useState29, 2),
+          tips = _useState30[0],
+          setTips = _useState30[1];
+      // 系统繁忙
+
+
+      var _useState31 = (0, _taroWeapp.useState)(false),
+          _useState32 = _slicedToArray(_useState31, 2),
+          busy = _useState32[0],
+          setBusy = _useState32[1];
+      // 身份弹框
+
+
+      var _useState33 = (0, _taroWeapp.useState)(false),
+          _useState34 = _slicedToArray(_useState33, 2),
+          identity = _useState34[0],
+          setIdentity = _useState34[1];
+
+      var _useState35 = (0, _taroWeapp.useState)([]),
+          _useState36 = _slicedToArray(_useState35, 2),
+          list = _useState36[0],
+          setList = _useState36[1];
+      // 云朵
+
+
+      var _useState37 = (0, _taroWeapp.useState)('0'),
+          _useState38 = _slicedToArray(_useState37, 2),
+          num = _useState38[0],
+          setNum = _useState38[1];
+
+      var _useState39 = (0, _taroWeapp.useState)(),
+          _useState40 = _slicedToArray(_useState39, 2),
+          newTime = _useState40[0],
+          setNewTime = _useState40[1];
+      // 数据
+
+
+      var _useState41 = (0, _taroWeapp.useState)(),
+          _useState42 = _slicedToArray(_useState41, 2),
+          item = _useState42[0],
+          setItme = _useState42[1];
+
+      var _useState43 = (0, _taroWeapp.useState)(Images[0].url),
+          _useState44 = _slicedToArray(_useState43, 2),
+          image = _useState44[0],
+          setImage = _useState44[1];
+      // 设置不是第一次获取数据
+
+
+      var _useState45 = (0, _taroWeapp.useState)(false),
+          _useState46 = _slicedToArray(_useState45, 2),
+          repeat = _useState46[0],
+          setRepeat = _useState46[1];
+      // 班组长创建项目
+
+
+      var _useState47 = (0, _taroWeapp.useState)(false),
+          _useState48 = _slicedToArray(_useState47, 2),
+          createProjectDisplay = _useState48[0],
+          setCreateProjectDisplay = _useState48[1];
+      // 项目班组
+
+
+      var _useState49 = (0, _taroWeapp.useState)(false),
+          _useState50 = _slicedToArray(_useState49, 2),
+          project = _useState50[0],
+          setProject = _useState50[1];
+      // 关闭图片
+
+
+      var _useState51 = (0, _taroWeapp.useState)(true),
+          _useState52 = _slicedToArray(_useState51, 2),
+          closeImage = _useState52[0],
+          setCloseImage = _useState52[1];
+      // 是否显示云朵
+
+
+      var _useState53 = (0, _taroWeapp.useState)(false),
+          _useState54 = _slicedToArray(_useState53, 2),
+          show = _useState54[0],
+          setShow = _useState54[1];
+      // 工人转换提示
+
+
+      var _useState55 = (0, _taroWeapp.useState)(false),
+          _useState56 = _slicedToArray(_useState55, 2),
+          prompt = _useState56[0],
+          setPrompt = _useState56[1];
+      // 工人上次身份
+
+
+      var _useState57 = (0, _taroWeapp.useState)(''),
+          _useState58 = _slicedToArray(_useState57, 2),
+          lasted_business_identity = _useState58[0],
+          setLasted_business_identity = _useState58[1];
+      // 身份弹框不再提醒
+
+
+      var _useState59 = (0, _taroWeapp.useState)(false),
+          _useState60 = _slicedToArray(_useState59, 2),
+          neverPrompt = _useState60[0],
+          setNeverPrompt = _useState60[1];
+      // 点击记工跳转到注册手机号
+
+
+      var _useState61 = (0, _taroWeapp.useState)(false),
+          _useState62 = _slicedToArray(_useState61, 2),
+          login = _useState62[0],
+          setLogin = _useState62[1];
+
+      var getDates = function getDates() {
+        var date = new Date().getDay();
+        var time = new Date();
+        var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+        var week = weeks[date];
+        var newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate());
+        var newMonth = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
+        // setTime(newTime);
+        setNewTime(newTime);
+        setNewMonth(newMonth);
+        setMonth(addZero(time.getMonth() + 1));
+        // 先写死
+        setStart(newTime);
+        setEnd(newMonth);
+        setWeek(week);
+        return newMonth;
+      };
+      var addZero = function addZero(num) {
+        if (parseInt(num) < 10) {
+          num = '0' + num;
+        }
+        return num;
+      };
+      // 获取上个小程序传过来的值
+      (0, _taroWeapp.onAppShow)(function (e) {
+        if (e.scene === 1037) {
+          //return false
+          // 返回token ，tokenTime ,userId
+          if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime) {
+            // 验证有没有手机号
+            var params = {
+              userId: e.referrerInfo.extraData.userId,
+              token: e.referrerInfo.extraData.token,
+              tokenTime: e.referrerInfo.extraData.tokenTime
+            };
+            (0, _index.appletJumpAction)(params).then(function (res) {
+              // 直接返回记工记账用户信息
+              if (res.code == 200) {
+                if (res.data) {
+                  var obj = {
+                    sign: {}
+                  };
+                  obj = res.data;
+                  obj.userId = e.referrerInfo.extraData.userId;
+                  obj.token = e.referrerInfo.extraData.token;
+                  obj.tokenTime = e.referrerInfo.extraData.tokenTime;
+                  obj.sign = {
+                    token: e.referrerInfo.extraData.token,
+                    time: e.referrerInfo.extraData.tokenTime
+                  };
+                  _taroWeapp2.default.setStorageSync(_store.MidData, obj);
+                  getData();
+                }
+                // 没有鱼泡账号
+              } else if (res.code == 40001) {
+                //  有鱼泡账号
+              } else if (res.code == 40000) {
+                // 要存UserInfo
+                _taroWeapp2.default.setStorageSync(_store.UserInfo, res.data);
+                var _params = {
+                  mid: res.data.id
+                };
+                (0, _index.bkMemberAuthAction)(_params).then(function (res) {
+                  console.log(res);
+                  if (res.code !== 200) {
+                    (0, _index4.default)(res.msg);
+                  } else {
+                    var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+                    midData.worker_id = res.data.worker_id;
+                    _taroWeapp2.default.setStorageSync(_store.MidData, midData);
+                  }
+                });
+              } else if (res.code == 40003) {
+                console.log(res, '4000322');
+                // 设置点击直接跳转到注册手机号页面
+                setLogin(true);
+              }
+            });
+          }
+        }
+      });
+      (0, _taroWeapp.useDidShow)(function () {
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        var creationTime = _taroWeapp2.default.getStorageSync(_store.CreationTime);
+        var neverPromptType = _taroWeapp2.default.getStorageSync(_store.NeverPrompt);
+        if (neverPromptType) {
+          setNeverPrompt(true);
+        }
+        // 判断有midDat就取消授权
+        if (midData) {
+          setDisplay(false);
+        }
+        var newTime = new Date().getTime() / 1000;
+        // const time = 
+        console.log(newTime, creationTime, 'xxx');
+        // 七天显示内容
+        if (creationTime && creationTime + 604800 > newTime) {
+          setPrompt(true);
+        }
+        // 设置首页时间选择器时间
+        // if (creationTime){
+        //   // 开始时间
+        //   let myDate = new Date(creationTime*1000);
+        //   const nowY = myDate.getFullYear()-1;
+        //   const nowM = myDate.getMonth();
+        //   const time = nowY + '-' + nowM;
+        //   setStart(time)
+        //   console.log(nowY,'nowT')
+        //   // 结束时间
+        //   const date = new Date();
+        //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+        //   setTime(newMonth);
+        // }else{
+        //   const date = new Date();
+        //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+        //   const nowY = date.getFullYear() - 1;
+        //   const nowM = date.getMonth();
+        //   const time = nowY + '-' + nowM;
+        //   setStart(time)
+        //   setTime(newMonth);
+        // }
+        // 结束时间
+        // const time = 
+        // 清楚日历缓存
+        dispatch((0, _clickTIme.setClickTIme)([]));
+        //清楚
+        dispatch((0, _workerList.setWorker)([]));
+        // 判断有没有用户信息没有就显示
+        // 获取缓存信息
+        var type = _taroWeapp2.default.getStorageSync(_store.Type);
+        // 有就设置
+        if (type) {
+          setType(type);
+        }
+        var userInfo = _taroWeapp2.default.getStorageSync(_store.UserInfo);
+        // =======
+        // if (!userInfo) {
+        //   setDisplay(false);
+        //   return
+        // } else {
+        //   setDisplay(false)
+        // }
+        dispatch((0, _type3.setTypes)(type));
+        getData();
+        // let midParams = {
+        //   mid: userInfo.userId,
+        // }
+        // 登陆了就获取信息
+        // let midData = Taro.getStorageSync(MidData);
+        // if (midData) {
+        //   bkMemberAuthAction(midParams).then(res => {
+        //     if (res.code !== 200) {
+        //       Msg(res.msg)
+        //     } else {
+        //       console.log(res, 'ressssssssssss')
+        //       let userInfo = Taro.getStorageSync(UserInfo)
+        //       res.data.sign = {}
+        //       res.data.sign.token = userInfo.token;
+        //       res.data.sign.time = res.data.created_time;
+        //       res.data.uuid = userInfo.uuid;
+        //       // res.data.worker_id = res.data.worker_id;
+        //       Taro.setStorageSync(MidData, res.data)
+        //     }
+        //   })
+        // }
+      });
+      // useEffect(()=>{
+      //   // 判断有没有用户信息没有就显示
+      //   // 获取缓存信息
+      //   let type = Taro.getStorageSync(Type);
+      //   setType(type)
+      //   let userInfo = Taro.getStorageSync(UserInfo);
+      //   if(!userInfo){
+      //     setDisplay(true);
+      //     return
+      //   }else{
+      //     setDisplay(false)
+      //   }
+      //   dispatch(setTypes(type))
+      //   let midParams={
+      //     mid: userInfo.userId,
+      //   }
+      //   let midData = Taro.getStorageSync(MidData);
+      //   if (!midData){
+      //     bkMemberAuthAction(midParams).then(res=>{
+      //       if(res.code !== 200){
+      //         Msg(res.msg)
+      //       }else{
+      //         console.log(res,'ressssssssssss')
+      //         let userInfo = Taro.getStorageSync(UserInfo)
+      //         res.data.sign={}
+      //         res.data.sign.token = userInfo.token;
+      //         res.data.sign.time = res.data.created_time;
+      //         res.data.uuid = userInfo.uuid;
+      //         // res.data.worker_id = res.data.worker_id;
+      //         Taro.setStorageSync(MidData, res.data)
+      //       }
+      //     })
+      //   }
+      //   getData();
+      // },[])
+      // 获取项目名称
+      var bkGetProjectTeam = function bkGetProjectTeam() {
+        (0, _index.bkGetProjectTeamAction)({}).then(function (res) {
+          // 判断为0就出现新增弹  框
+          if (res.data.length === 0) {
+            setCreateProjectDisplay(true);
+          }
+        });
+      };
+      // 获取首页数据
+      var getData = function getData(e) {
+        // 没登录直接进来默认是工人
+        // =====
+        // let type = Taro.getStorageSync(Type);
+        // if(!type){
+        //   setIdentity(true)
+        //   return
+        // }
+        // setType(type);
+        // 没有选择角色
+        // if (type ===0){
+        //   setIdentity(true)
+        // }
+        // 没有用户信息就默认设置为工人
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        console.log(midData, '有美誉mid');
+        if (midData) {
+          var _type = _taroWeapp2.default.getStorageSync(_store.Type);
+          if (!_type) {
+            setIdentity(true);
+            return;
+          } else {
+            setType(_type);
+          }
+          //  没有选择角色
+          if (_type === 0) {
+            setIdentity(true);
+          }
+        }
+        // 判断选没有选择时间
+        var changeTime = void 0;
+        console.log(repeat, 'resdsada');
+        if (!e) {
+          console.log(1);
+          console.log(312312312312);
+          changeTime = getDates();
+        } else {
+          // console.log(2);
+          // console.log(time,'time')
+          changeTime = e;
+          // 设置时间
+          // const date = new Date(vals);
+          // const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+          // console.log(newMonth,'newMonthnewMonthnewMonthnewMonth')
+          // setStart(newMonth)
+          // setEnd(newMonth)
+        }
+        console.log(changeTime, 'changeTimechangeTime');
+        var params = {
+          time: changeTime,
+          identity: type
+        };
+        // if(! )
+        if (midData) {
+          (0, _index.bkIndexAction)(params).then(function (res) {
+            console.log('发起首页请求');
+            if (res.code === 200) {
+              setItme(res.data);
+              setNum(res.data.count_is_new);
+              if (parseInt(res.data.count_is_new) == 0) {
+                setShow(true);
+              } else {
+                setShow(false);
+              }
+              // 设置搜索开始结束时间
+              // 设置最早时间
+              setStart(res.data.earliest_month);
+              // 最晚时间
+              var date = new Date();
+              var _newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+              setEnd(_newMonth);
+              if (Array.isArray(res.data.business_list.data)) {
+                if (res.data.business_list.data) {
+                  setList(res.data.business_list.data);
+                } else {
+                  setList([]);
+                }
+              } else if (res.data.business_list.data.constructor === Object) {
+                if (res.data.business_list.data.data[0].arr) {
+                  setList(res.data.business_list.data.data[0].arr);
+                } else {
+                  setList([]);
+                }
+              }
+              console.log(3123123);
+              // 存在缓存里用来判断是否新增时间
+              setLasted_business_identity(res.data.lasted_business_identity);
+              // 获取信息
+              // 判断是班组长的时候出现弹框
+              var _type2 = _taroWeapp2.default.getStorageSync(_store.Type);
+              // if (type === 1) {
+              //   bkGetProjectTeam()
+              // }
+            } else {
+              (0, _index4.default)(res.msg);
+            }
+          });
+        }
+      };
+      // 选择时间
+      var handleChangeTime = function handleChangeTime(e) {
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        if (!midData) {
+          setDisplay(true);
+          return;
+        }
+        console.log(e, 'xxx');
+        setVal(e.detail.value);
+        setTime(e.detail.value);
+        setRepeat(true);
+        getData(e.detail.value);
+        console.log(e.detail.value.substring(e.detail.value.length - 2), 'e.detail.value.substring(e.detail.value.length - 2)');
+        setMonth(e.detail.value.substring(e.detail.value.length - 2));
+      };
+      // 点击提示
+      var handelTps = function handelTps() {
+        var params = {
+          identity: type
+        };
+        (0, _index.bkUpdateBusinessNewAction)(params).then(function (res) {
+          if (res.code === 200) {
+            (0, _index4.default)('\u60A8\u5B8C\u6210\u4E86[ ' + res.data + ' ]\u6761\u8BB0\u5DE5\u4FE1\u606F\u7684\u5907\u4EFD\uFF0C\u6570\u636E\u5B89\u5168\u4E0D\u4E22\u5931~');
+            setShow(true);
+          } else {
+            (0, _index4.default)('放心使用，免费记工，数据永远不会丢失哟');
+          }
+        });
+      };
+      // 切换角色
+      var handelChange = function handelChange(e, type) {
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        if (!midData) {
+          setDisplay(true);
+          return;
+        }
+        // // 判断
+        // if (neverPrompt) {
+        //   return;
+        // }
+        // 判断点击了永不提示
+        // console.log(neverPrompt,'neverPrompt')
+        // if (lasted_business_identity !== 0 && type != lasted_business_identity && !neverPrompt){
+        //   console.log(type,'type');
+        //   console.log(lasted_business_identity,'lasted_business_identity')
+        //     setTips(true)
+        //     return;
+        // }else{
+        var msg = e === 2 ? '开始为自己记工吧' : '开始为工人记工吧';
+        setType(e);
+        _taroWeapp2.default.setStorageSync(_store.Type, e);
+        if (!type) {
+          (0, _index4.default)(msg);
+          setTimeout(function () {
+            getData();
+          }, 1000);
+        }
+        // return;
+        // }
+      };
+      var getNextPageData = function getNextPageData() {
+        // console.log(31231)
+        userRouteJump("/pages/flowingWater/index");
+      };
+      // 跳转
+      var userRouteJump = function userRouteJump(url) {
+        _taroWeapp2.default.navigateTo({
+          url: url
+        });
+      };
+      // 弹窗选择
+      var handleType = function handleType(state) {
+        var dignity = void 0;
+        if (type === 1) {
+          dignity = 2;
+          // 不切换
+        } else {
+          dignity = 1;
+        }
+        // dignity ===2 为班组长
+        // 切换
+        if (state === 1) {
+          console.log(type, 'typenjdskajdkjab');
+          var msg = dignity === 1 ? '开始为自己记工吧' : '开始为工人记工吧';
+          // 班组长
+          if (dignity == 2) {
+            bkGetProjectTeam();
+          }
+          (0, _index4.default)(msg);
+          console.log(dignity, 'neverPromptneverPrompt');
+          // return;
+          setType(dignity);
+          _taroWeapp2.default.setStorageSync(_store.Type, dignity);
+          // userRouteJump(`/pages/recorder/index?type=${dignity}`)
+          // setTimeout(() => {
+          //   getData();
+          // }, 500)
+          // 切换的时候如果是班组要判断有没有项目
+        } else if (state === 2) {
+          _taroWeapp2.default.setStorageSync(_store.NeverPrompt, true);
+          setNeverPrompt(true);
+          // 切换的时候如果是班组要判断有没有项目
+        }
+        // 切换后跳转页面
+        userRouteJump("/pages/recorder/index?type=" + dignity);
+        setTips(false);
+      };
+      // 返回鱼泡网
+      var handleGoback = function handleGoback() {
+        // Taro.navigateBackMiniProgram({
+        //   extraData: {
+        //     foo: 'bar'
+        //   },
+        //   success: function (res) {
+        //     // 返回成功
+        //   }
+        // })
+        //**重点**要打开的小程序版本，有效值 develop（开发版），trial（体验版），release（正式版
+        // ========发布正式要修改
+        _taroWeapp2.default.navigateToMiniProgram({
+          appId: 'wx456feacb0e86162f',
+          path: '/pages/index/index',
+          extraData: {
+            foo: 'bar'
+          },
+          envVersion: 'trial',
+          success: function success(res) {
+            // 打开成功
+          }
+        });
+      };
+      // 点击图片
+      var hanleImage = function hanleImage(v) {
+        var url = void 0;
+        if (v !== Images[Images.length - 1].url) {
+          for (var i = 0; i < Images.length; i++) {
+            if (v === Images[i].url) {
+              url = Images[i + 1].url;
+            }
+          }
+        } else {
+          // 关闭
+          setCloseImage(true);
+          // 并开启选择身份
+          getData();
+        }
+        setImage(url);
+      };
+      // 关闭授权
+      var handleClose = function handleClose(e) {
+        setDisplay(e);
+      };
+      var handleCallback = function handleCallback() {
+        // userRouteJump(`/pages/login/index`)
+        // return;
+        // 打开新手指引
+        setCloseImage(false);
+        setDisplay(false);
+      };
+      //身份
+      var handleChangeRole = function handleChangeRole(e) {
+        setType(e);
+        setIdentity(false);
+        _taroWeapp2.default.setStorageSync(_store.Type, e);
+        getData();
+      };
+      // 关闭创建项目
+      var handleCreateProjectClose = function handleCreateProjectClose() {
+        setCreateProjectDisplay(false);
+      };
+      // 弹框输入
+      var handleInput = function handleInput(type, e) {
+        var data = JSON.parse(JSON.stringify(model));
+        data[type] = e.detail.value;
+        setModel(data);
+      };
+      // 确认弹框
+      var handleAddProject = function handleAddProject() {
+        var params = {
+          group_name: model.groupName,
+          team_name: model.teamName
+        };
+        (0, _index.bkAddProjectTeamAction)(params).then(function (res) {
+          if (res.code === 200) {
+            setProject(false);
+            // bkGetProjectTeam()
+          } else {
+            (0, _index4.default)(res.msg);
+            return;
+          }
+        });
+      };
+      // 填写项目返回上一步
+      var handleBack = function handleBack() {
+        setProject(false);
+        setCreateProjectDisplay(true);
+      };
+      // 判断是授权进行下一步
+      var nextStep = function nextStep() {
+        console.log(2313123);
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        if (!midData) {
+          return;
+        }
+      };
+      // 跳流水
+      var handleJump = function handleJump(url, state) {
+        if (login) {
+          userRouteJump('/pages/login/index?type=1');
+        }
+        var midData = _taroWeapp2.default.getStorageSync(_store.MidData);
+        if (!midData) {
+          setDisplay(true);
+          return;
+        }
+        if (state) {
+          // 判断不是0 然后与当前身份不同就是提示
+          // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
+          if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
+            console.log(type, 'type');
+            console.log(lasted_business_identity, 'lasted_business_identity');
+            setTips(true);
+            return;
+          } else {
+            handelChange(type, true);
+          }
+        }
+        userRouteJump(url);
+        // userRouteJump('/pages/flowingWater/index')
+      };
+      console.log(item, 'item');
+
+      this.anonymousFunc0 = function () {
+        hanleImage(image);
+      };
+
+      this.anonymousFunc1 = function (e) {
+        return handleChangeTime(e);
+      };
+
+      this.anonymousFunc2 = function () {
+        handelChange(2);
+      };
+
+      this.anonymousFunc3 = function () {
+        handelChange(1);
+      };
+
+      this.anonymousFunc4 = handelTps;
+
+      this.anonymousFunc5 = function () {
+        return handleJump('/pages/flowingWater/index');
+      };
+
+      this.anonymousFunc6 = function () {
+        return handleJump('/pages/flowingWater/index');
+      };
+
+      this.anonymousFunc7 = function () {
+        return handleJump('/pages/attendanceSheet/index');
+      };
+
+      this.anonymousFunc8 = function () {
+        return handleJump("/pages/recorder/index?type=" + type + "&stateType=1", true);
+      };
+
+      this.anonymousFunc9 = function () {
+        return handleJump("/pages/recorder/index?type=" + type + "&stateType=1", true);
+      };
+
+      this.anonymousFunc10 = function () {
+        return handleJump("/pages/recorder/index?type=" + type);
+      };
+
+      this.anonymousFunc11 = function () {
+        return handleJump("/pages/notepad/index");
+      };
+
+      this.anonymousFunc12 = function () {
+        getNextPageData();
+      };
+
+      this.anonymousFunc14 = function () {
+        return getNextPageData();
+      };
+
+      this.anonymousFunc16 = function () {
+        return userRouteJump('/pages/feedback/index');
+      };
+
+      this.anonymousFunc17 = handleGoback;
+
+      this.anonymousFunc18 = function () {
+        return handleType(0);
+      };
+
+      this.anonymousFunc19 = function () {
+        return handleType(1);
+      };
+
+      this.anonymousFunc20 = function () {
+        return handleType(2);
+      };
+
+      this.anonymousFunc21 = function () {
+        return handleChangeRole(1);
+      };
+
+      this.anonymousFunc22 = function () {
+        return handleChangeRole(2);
+      };
+
+      var anonymousState__temp5 = function anonymousState__temp5() {
+        setCreateProjectDisplay(false), setProject(true);
+      };
+
+      var anonymousState__temp6 = function anonymousState__temp6() {
+        return setProject(false);
+      };
+
+      var loopArray98 = type === 1 && list.length > 0 && !busy ? list.map(function (v, i) {
+        v = {
+          $original: (0, _taroWeapp.internal_get_original)(v)
+        };
+        var $loopState__temp2 = type === 1 && list.length > 0 && !busy ? i + i : null;
+
+        var _$indexKey = "bggzz" + i;
+
+        _this2.anonymousFunc13Map[_$indexKey] = getNextPageData;
+        return {
+          $loopState__temp2: $loopState__temp2,
+          _$indexKey: _$indexKey,
+          $original: v.$original
+        };
+      }) : [];
+      var loopArray99 = type === 2 && list.length > 0 && !busy ? list.map(function (v, i) {
+        v = {
+          $original: (0, _taroWeapp.internal_get_original)(v)
+        };
+        var $loopState__temp4 = type === 2 && list.length > 0 && !busy ? i + i : null;
+
+        var _$indexKey2 = "bghzz" + i;
+
+        _this2.anonymousFunc15Map[_$indexKey2] = getNextPageData;
+        return {
+          $loopState__temp4: $loopState__temp4,
+          _$indexKey2: _$indexKey2,
+          $original: v.$original
+        };
+      }) : [];
+      item && !show && _taroWeapp.propsManager.set({
+        "value": num,
+        "maxValue": 99,
+        "className": "AtBadge"
+      }, $compid__192, $prevCompid__192);
+      _taroWeapp.propsManager.set({
+        "isOpened": tips,
+        "closeOnClickOverlay": false
+      }, $compid__193, $prevCompid__193);
+      _taroWeapp.propsManager.set({
+        "isOpened": identity,
+        "closeOnClickOverlay": false
+      }, $compid__194, $prevCompid__194);
+      _taroWeapp.propsManager.set({
+        "display": display,
+        "handleClose": handleClose,
+        "callback": handleCallback
+      }, $compid__195, $prevCompid__195);
+      _taroWeapp.propsManager.set({
+        "display": createProjectDisplay,
+        "handleClose": handleCreateProjectClose,
+        "val": model && model.groupName,
+        "handleSubmit": anonymousState__temp5,
+        "handleInput": handleInput
+      }, $compid__196, $prevCompid__196);
+      _taroWeapp.propsManager.set({
+        "display": project,
+        "handleSubmit": handleAddProject,
+        "handleInput": handleInput,
+        "teamName": model && model.teamName,
+        "handleBack": handleBack,
+        "handleClose": anonymousState__temp6
+      }, $compid__197, $prevCompid__197);
+      Object.assign(this.__state, {
+        anonymousState__temp5: anonymousState__temp5,
+        anonymousState__temp6: anonymousState__temp6,
+        loopArray98: loopArray98,
+        loopArray99: loopArray99,
+        $compid__192: $compid__192,
+        $compid__193: $compid__193,
+        $compid__194: $compid__194,
+        $compid__195: $compid__195,
+        $compid__196: $compid__196,
+        $compid__197: $compid__197,
+        image: image,
+        closeImage: closeImage,
+        IMGCDNURL: _index2.IMGCDNURL,
+        start: start,
+        end: end,
+        vals: vals,
+        newMonth: newMonth,
+        type: type,
+        prompt: prompt,
+        item: item,
+        show: show,
+        busy: busy,
+        list: list,
+        month: month,
+        newTime: newTime,
+        week: week
+      });
+      return this.__state;
+    }
+  }, {
+    key: 'anonymousFunc0',
+    value: function anonymousFunc0(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc1',
+    value: function anonymousFunc1(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc2',
+    value: function anonymousFunc2(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc3',
+    value: function anonymousFunc3(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc4',
+    value: function anonymousFunc4(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc5',
+    value: function anonymousFunc5(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc6',
+    value: function anonymousFunc6(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc7',
+    value: function anonymousFunc7(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc8',
+    value: function anonymousFunc8(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc9',
+    value: function anonymousFunc9(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc10',
+    value: function anonymousFunc10(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc11',
+    value: function anonymousFunc11(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc12',
+    value: function anonymousFunc12(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc13',
+    value: function anonymousFunc13(_$indexKey) {
+      var _anonymousFunc13Map;
+
+      ;
+
+      for (var _len2 = arguments.length, e = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        e[_key2 - 1] = arguments[_key2];
+      }
+
+      return this.anonymousFunc13Map[_$indexKey] && (_anonymousFunc13Map = this.anonymousFunc13Map)[_$indexKey].apply(_anonymousFunc13Map, e);
+    }
+  }, {
+    key: 'anonymousFunc14',
+    value: function anonymousFunc14(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc15',
+    value: function anonymousFunc15(_$indexKey2) {
+      var _anonymousFunc15Map;
+
+      ;
+
+      for (var _len3 = arguments.length, e = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        e[_key3 - 1] = arguments[_key3];
+      }
+
+      return this.anonymousFunc15Map[_$indexKey2] && (_anonymousFunc15Map = this.anonymousFunc15Map)[_$indexKey2].apply(_anonymousFunc15Map, e);
+    }
+  }, {
+    key: 'anonymousFunc16',
+    value: function anonymousFunc16(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc17',
+    value: function anonymousFunc17(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc18',
+    value: function anonymousFunc18(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc19',
+    value: function anonymousFunc19(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc20',
+    value: function anonymousFunc20(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc21',
+    value: function anonymousFunc21(e) {
+      ;
+    }
+  }, {
+    key: 'anonymousFunc22',
+    value: function anonymousFunc22(e) {
+      ;
+    }
+  }]);
+
+  return Index;
+}(_taroWeapp2.default.Component), _class.$$events = ["anonymousFunc0", "anonymousFunc1", "anonymousFunc2", "anonymousFunc3", "anonymousFunc4", "anonymousFunc5", "anonymousFunc6", "anonymousFunc7", "anonymousFunc8", "anonymousFunc9", "anonymousFunc10", "anonymousFunc11", "anonymousFunc12", "anonymousFunc13", "anonymousFunc14", "anonymousFunc15", "anonymousFunc16", "anonymousFunc17", "anonymousFunc18", "anonymousFunc19", "anonymousFunc20", "anonymousFunc21", "anonymousFunc22"], _class.$$componentPath = "pages/index/index", _temp2);
+// Index.config = {
+//   navigationBarTitleText: '首页',
+// } as Config
+
+
+exports.default = Index;
+
+Component(__webpack_require__(/*! @tarojs/taro-weapp */ "./node_modules/@tarojs/taro-weapp/index.js").default.createComponent(Index, true));
+
+/***/ }),
+
+/***/ "./node_modules/file-loader/dist/cjs.js?name=[path][name].wxml&context=/Users/zhangyibo/jgjz/jigongjizhang/Bookkeeping/src!./node_modules/@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/index/index.tsx?taro&type=template&parse=PAGE&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js?name=[path][name].wxml&context=/Users/zhangyibo/jgjz/jigongjizhang/Bookkeeping/src!./node_modules/@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--4-0!./src/pages/index/index.tsx?taro&type=template&parse=PAGE& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "pages/index/index.wxml";
+
+/***/ }),
+
+/***/ "./src/actions/type.ts":
+/*!*****************************!*\
+  !*** ./src/actions/type.ts ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setTypes = setTypes;
+exports.getType = getType;
+
+var _typs = __webpack_require__(/*! ../constants/typs */ "./src/constants/typs.ts");
+
+function setTypes(data) {
+  return {
+    type: _typs.SETTYPE,
+    data: data
+  };
+}
+function getType() {
+  return {
+    type: _typs.GETTYPE
+  };
+}
+
+/***/ }),
+
+/***/ "./src/pages/index/index.scss":
+/*!************************************!*\
+  !*** ./src/pages/index/index.scss ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/pages/index/index.tsx":
+/*!***********************************!*\
+  !*** ./src/pages/index/index.tsx ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.tsx?taro&type=template&parse=PAGE& */ "./src/pages/index/index.tsx?taro&type=template&parse=PAGE&");
+/* harmony import */ var _index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.tsx?taro&type=script&parse=PAGE& */ "./src/pages/index/index.tsx?taro&type=script&parse=PAGE&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+
+
+/***/ }),
+
+/***/ "./src/pages/index/index.tsx?taro&type=script&parse=PAGE&":
+/*!****************************************************************!*\
+  !*** ./src/pages/index/index.tsx?taro&type=script&parse=PAGE& ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--4-0!./index.tsx?taro&type=script&parse=PAGE& */ "./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/index/index.tsx?taro&type=script&parse=PAGE&");
+/* harmony import */ var _node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_script_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./src/pages/index/index.tsx?taro&type=template&parse=PAGE&":
+/*!******************************************************************!*\
+  !*** ./src/pages/index/index.tsx?taro&type=template&parse=PAGE& ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/file-loader/dist/cjs.js?name=[path][name].wxml&context=/Users/zhangyibo/jgjz/jigongjizhang/Bookkeeping/src!../../../node_modules/@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!../../../node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js??ref--4-0!./index.tsx?taro&type=template&parse=PAGE& */ "./node_modules/file-loader/dist/cjs.js?name=[path][name].wxml&context=/Users/zhangyibo/jgjz/jigongjizhang/Bookkeeping/src!./node_modules/@tarojs/mini-runner/dist/loaders/miniTemplateLoader.js!./node_modules/@tarojs/mini-runner/dist/loaders/wxTransformerLoader.js?!./src/pages/index/index.tsx?taro&type=template&parse=PAGE&");
+/* harmony import */ var _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_file_loader_dist_cjs_js_name_path_name_wxml_context_Users_zhangyibo_jgjz_jigongjizhang_Bookkeeping_src_node_modules_tarojs_mini_runner_dist_loaders_miniTemplateLoader_js_node_modules_tarojs_mini_runner_dist_loaders_wxTransformerLoader_js_ref_4_0_index_tsx_taro_type_template_parse_PAGE___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ })
+
+},[["./src/pages/index/index.tsx","runtime","taro","vendors","common"]]]);

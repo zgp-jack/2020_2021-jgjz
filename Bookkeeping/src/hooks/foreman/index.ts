@@ -148,6 +148,7 @@ export default function userForeman() {
     state:'',
     group_info:'',
     id:'',
+    worker_id:'',
   })
   // 成功弹窗
   const [display, setDisplay] = useState<boolean>(false)
@@ -2473,7 +2474,7 @@ export default function userForeman() {
     // 修改已设置的
     if(state === 1){
       let params = {
-        id: data.id,
+        id: data.worker_id,
         group_info: groupInfo,
         worktime_define: data.work,
         overtime_type: data.type,
@@ -2558,6 +2559,7 @@ export default function userForeman() {
     data.group_info = v.groupInfo;
     data.type = v.overtime_type;
     data.day = v.overtime;
+    data.worker_id = v.worker_id;
     for(let i =0;i<data.data.length;i++){
       if (parseInt(v.overtime_type) == data.data[i].id ){
         data.data[i].click = true

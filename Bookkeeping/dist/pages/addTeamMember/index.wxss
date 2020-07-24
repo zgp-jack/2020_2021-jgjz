@@ -1,1 +1,148 @@
-.content{padding-bottom:200rpx}.seach{background:#fff;height:104rpx}.at-indexes__menu{top:20%}.image{background:#f9a34e}.image,.image-origion,.image-red,.image-violet{height:68rpx;width:68rpx;line-height:68rpx;color:#fff;text-align:center;margin-right:51rpx}.image-red{background:#f72d57ff}.image-origion,.image-violet{background:#51cef7ff}.image-violet{background:#bf67cfff}.list-flex-test{margin-top:20rpx}.list-flex,.list-flex-test{display:-webkit-flex;display:-ms-flexbox;display:flex;background:#fff;padding:20rpx 28rpx;border-bottom:1rpx solid #ccc}.list-flex:last-child{border-bottom:none}.list-title{height:27rpx;font-size:20rpx;padding:10rpx 10rpx 10rpx 28rpx}.name{font-size:28rpx;color:#000}.phone{font-size:26rpx;color:#999}.letter{position:fixed;right:20rpx;top:13%}.letter-list{font-size:20rpx;color:#999}.add,.footer{position:fixed}.add{right:0rpx;bottom:200rpx;width:82rpx;height:82rpx;line-height:82rpx;text-align:center;background:#29bbf3;-webkit-box-shadow:0rpx 10rpx 15rpx 0rpx rgba(41,187,243,.45);box-shadow:0rpx 10rpx 15rpx 0rpx rgba(41,187,243,.45);border-radius:50%;font-size:24rpx;color:#fff}.footer{left:0;bottom:0;width:100%;background:#fff;height:135rpx;line-height:135rpx}.footer-btn{width:90%;height:90rpx;line-height:90rpx;text-align:center;margin:20rpx auto auto;background:#09f;color:#fff;border-radius:10rpx}.Checkbox{-webkit-transform:scale(.6,.6);-ms-transform:scale(.6,.6);transform:scale(.6,.6);margin-top:10rpx}
+.content {
+  padding-bottom: 200rpx;
+}
+.seach {
+  background: #fff;
+  height: 104rpx;
+}
+.at-indexes__menu {
+  top: 20%;
+}
+.image {
+  height: 68rpx;
+  width: 68rpx;
+  text-align: center;
+  line-height: 68rpx;
+  margin-right: 51rpx;
+  color: #fff;
+  background: #f9a34e;
+}
+.image-red {
+  height: 68rpx;
+  width: 68rpx;
+  line-height: 68rpx;
+  margin-right: 51rpx;
+  color: #fff;
+  text-align: center;
+  background: #F72D57FF;
+}
+.image-red {
+  height: 68rpx;
+  width: 68rpx;
+  line-height: 68rpx;
+  margin-right: 51rpx;
+  color: #fff;
+  text-align: center;
+  background: #F72D57FF;
+}
+.image-origion {
+  height: 68rpx;
+  width: 68rpx;
+  line-height: 68rpx;
+  color: #fff;
+  text-align: center;
+  margin-right: 51rpx;
+  background: #51CEF7FF;
+}
+.image-violet {
+  height: 68rpx;
+  width: 68rpx;
+  line-height: 68rpx;
+  color: #fff;
+  text-align: center;
+  margin-right: 51rpx;
+  background: #51CEF7FF;
+}
+.image-violet {
+  height: 68rpx;
+  line-height: 68rpx;
+  width: 68rpx;
+  color: #fff;
+  text-align: center;
+  margin-right: 51rpx;
+  background: #BF67CFFF;
+}
+.list-flex-test {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: #fff;
+  padding: 20rpx 28rpx;
+  border-bottom: 1rpx solid #ccc;
+  margin-top: 20rpx;
+}
+.list-flex {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: #fff;
+  padding: 20rpx 28rpx;
+  border-bottom: 1rpx solid #ccc;
+}
+.list-flex:last-child {
+  border-bottom: none;
+}
+.list-title {
+  height: 27rpx;
+  font-size: 20rpx;
+  padding: 10rpx;
+  padding-left: 28rpx;
+}
+.name {
+  font-size: 28rpx;
+  color: black;
+}
+.phone {
+  font-size: 26rpx;
+  color: #999999;
+}
+.letter {
+  position: fixed;
+  right: 20rpx;
+  top: 13%;
+}
+.letter-list {
+  font-size: 20rpx;
+  color: #999999;
+}
+.add {
+  position: fixed;
+  right: 0rpx;
+  bottom: 200rpx;
+  width: 82rpx;
+  height: 82rpx;
+  line-height: 82rpx;
+  text-align: center;
+  background: #29bbf3;
+  -webkit-box-shadow: 0rpx 10rpx 15rpx 0rpx rgba(41, 187, 243, 0.45);
+          box-shadow: 0rpx 10rpx 15rpx 0rpx rgba(41, 187, 243, 0.45);
+  border-radius: 50%;
+  font-size: 24rpx;
+  color: #fff;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  height: 135rpx;
+  line-height: 135rpx;
+}
+.footer-btn {
+  width: 90%;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  margin: auto;
+  margin-top: 20rpx;
+  background: #0099ff;
+  color: #fff;
+  border-radius: 10rpx;
+}
+.Checkbox {
+  -webkit-transform: scale(0.6, 0.6);
+      -ms-transform: scale(0.6, 0.6);
+          transform: scale(0.6, 0.6);
+  margin-top: 10rpx;
+}

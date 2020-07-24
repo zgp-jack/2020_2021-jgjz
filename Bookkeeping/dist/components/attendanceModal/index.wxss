@@ -1,1 +1,112 @@
-.calendarModal{position:fixed;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,.3);z-index:5;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center}.calendarModal button{position:relative;display:block;margin-left:auto;margin-right:auto;padding-left:14rpx;padding-right:14rpx;-webkit-box-sizing:border-box;box-sizing:border-box;text-align:center;text-decoration:none;line-height:2.55555556;-webkit-tap-highlight-color:transparent;overflow:hidden;color:#000;font-size:30rpx;background-color:#fff;border-radius:0}.calendarModal button::after{border:0}.calendarModal-content{position:absolute;bottom:0;left:0;width:100%;border-radius:10rpx 10rpx 5rpx 5rpx;-webkit-box-shadow:#e7e6e4 0 0 10rpx;box-shadow:#e7e6e4 0 0 10rpx}.footer-box{margin:0 auto;background:#fff;height:227rpx;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-justify-content:space-around;-ms-flex-pack:distribute;justify-content:space-around;-webkit-align-items:center;-ms-flex-align:center;align-items:center;color:#262626;font-size:30rpx}.weChat{margin:auto auto 27rpx}.weChat,.weChat-img{height:75rpx;width:75rpx;background-size:contain}.download{margin:auto auto 27rpx}.download,.download-img{height:75rpx;width:75rpx;background-size:contain}.close{background:#fff;text-align:center;height:106rpx;line-height:106rpx;margin-top:12rpx;width:100%;color:#262626;font-size:30rpx;border-radius:10rpx}.btn{border:0}
+.calendarModal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.calendarModal button {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14rpx;
+  padding-right: 14rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  line-height: 2.55555556;
+  border-radius: 5rpx;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  color: #000000;
+  font-size: 30rpx;
+  background-color: #F8F8F8;
+}
+.calendarModal button::after {
+  border: none;
+}
+.calendarModal button {
+  background-color: #fff;
+}
+.calendarModal button {
+  border-radius: 0;
+}
+.calendarModal-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 10rpx 10rpx 5rpx 5rpx;
+  -webkit-box-shadow: #e7e6e4 0 0 10rpx;
+          box-shadow: #e7e6e4 0 0 10rpx;
+}
+.footer-box {
+  margin: 0 auto;
+  background: #fff;
+  height: 227rpx;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #262626;
+  font-size: 30rpx;
+}
+.weChat {
+  height: 75rpx;
+  width: 75rpx;
+  background-size: contain;
+  margin: auto;
+  margin-bottom: 27rpx;
+}
+.weChat-img {
+  height: 75rpx;
+  width: 75rpx;
+  background-size: contain;
+}
+.download {
+  height: 75rpx;
+  width: 75rpx;
+  background-size: contain;
+  margin: auto;
+  margin-bottom: 27rpx;
+}
+.download-img {
+  height: 75rpx;
+  width: 75rpx;
+  background-size: contain;
+}
+.close {
+  background: #fff;
+  text-align: center;
+  height: 106rpx;
+  line-height: 106rpx;
+  margin-top: 12rpx;
+  width: 100%;
+  color: #262626;
+  font-size: 30rpx;
+  border-radius: 10rpx;
+}
+.btn {
+  border: none;
+}
