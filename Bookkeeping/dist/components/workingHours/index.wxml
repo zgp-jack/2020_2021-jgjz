@@ -7,7 +7,7 @@
                     </view>
                     <view class="workingHours-complaintModal-content-timeBox">
                         <view class="workingHours-complaintModal-content-box">
-                            <view class="{{v.$original.click ? 'workingHours-complaintModal-content-box-list-click' : 'workingHours-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray37}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</view>
+                            <view class="{{v.$original.click ? 'workingHours-complaintModal-content-box-list-click' : 'workingHours-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray38}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</view>
                         </view>
                     </view>
                 </view>

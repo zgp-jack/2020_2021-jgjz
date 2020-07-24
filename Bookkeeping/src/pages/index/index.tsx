@@ -155,8 +155,10 @@ export default function Index() {
               obj.token = e.referrerInfo.extraData.token;
               console.log(111)
               obj.tokenTime = e.referrerInfo.extraData.tokenTime;
-              obj.sign.token = e.referrerInfo.extraData.token;
-              obj.sign.time = e.referrerInfo.extraData.tokenTime;
+              obj.sign = {
+                token : e.referrerInfo.extraData.token,
+                time : e.referrerInfo.extraData.tokenTime
+              }
               console.log(obj,'redadmskldnmaslkdnlkasn')
               Taro.setStorageSync(MidData, obj);
               getData();
