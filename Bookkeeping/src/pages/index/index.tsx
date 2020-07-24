@@ -1,4 +1,4 @@
-import Taro, { useEffect, useState, useDidShow, onAppShow } from '@tarojs/taro'
+import Taro, { useEffect, useState, useDidShow, onAppShow, login } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction, appletJumpAction } from '../../utils/request/index';
 import { useDispatch } from '@tarojs/redux'
@@ -14,6 +14,7 @@ import Msg from '../../utils/msg'
 import { setClickTIme } from '../../actions/clickTIme'
 import './index.scss'
 
+let loginType = false;
   // 设置新手指引图片
 const Images = [
   {
@@ -100,7 +101,7 @@ export default function Index() {
   // 身份弹框不再提醒
   const [neverPrompt, setNeverPrompt] = useState<boolean>(false)
   // 点击记工跳转到注册手机号
-  const [login,setLoginStatus] = useState<boolean>(false)
+  // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
     const date = new Date().getDay();
     const time = new Date();
@@ -186,7 +187,8 @@ export default function Index() {
             Taro.setStorageSync(UserInfo,obj);
             console.log(Taro.getStorageSync(UserInfo),'u')
             // 设置点击直接跳转到注册手机号页面
-            setLoginStatus(true);
+            // setLoginStatus(true);
+            loginType = true;
             //console.log(login,'setlogin')
           }
         })
@@ -203,6 +205,7 @@ export default function Index() {
     // 判断有midDat就取消授权
     if (midData){
       setDisplay(false)
+      loginType=false;
     }
     const newTime = new Date().getTime()/1000;
     // const time = 
@@ -628,10 +631,10 @@ export default function Index() {
   // 跳流水
   const handleJump = (url:string,state?:boolean)=>{
     console.log(login,'login')
-    if (login){
+    if (loginType){
       userRouteJump('/pages/login/index?type=1');
+      return;
     }
-    return
     let midData = Taro.getStorageSync(MidData);
     if (!midData){
       setDisplay(true)
