@@ -115,6 +115,7 @@ export default function Login() {
               if (midData){
                 console.log(11111,'1111')
                 midData.worker_id = resData.data.worker_id;
+                midData.yupao_id = resData.data.yupao_id;
                 Taro.setStorageSync(MidData, midData)
                 Taro.navigateBack({delta:1});
               }

@@ -184,6 +184,10 @@ export default function Index() {
             obj.userId = e.referrerInfo.extraData.userId;
             obj.token = e.referrerInfo.extraData.token;
             obj.uuid = e.referrerInfo.extraData.userUuid;
+            obj.sign = {
+              token: e.referrerInfo.extraData.token,
+              time: e.referrerInfo.extraData.tokenTime
+            }
             obj.tokenTime = e.referrerInfo.extraData.tokenTime;
             Taro.setStorageSync(UserInfo,obj);
             console.log(Taro.getStorageSync(UserInfo),'u')
