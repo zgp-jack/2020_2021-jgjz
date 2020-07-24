@@ -141,13 +141,15 @@ export default function Index() {
           if(res.code == 200){
             console.log(res.data,'res.data');
             console.log(321321)
-            res.data.userId = e.referrerInfo.extraData.userId;
-            res.data.token = e.referrerInfo.extraData.token;
-            res.data.tokenTime = e.referrerInfo.extraData.tokenTime;
-            res.data.sign.token = e.referrerInfo.extraData.token;
-            res.data.sign.time = e.referrerInfo.extraData.tokenTime;
-            console.log(res.data,'redadmskldnmaslkdnlkasn')
-            Taro.setStorageSync(MidData, res.data);
+            let obj:any={};
+            obj = res.data;
+            obj.userId = e.referrerInfo.extraData.userId;
+            obj.token = e.referrerInfo.extraData.token;
+            obj.tokenTime = e.referrerInfo.extraData.tokenTime;
+            obj.sign.token = e.referrerInfo.extraData.token;
+            obj.sign.time = e.referrerInfo.extraData.tokenTime;
+            console.log(obj,'redadmskldnmaslkdnlkasn')
+            Taro.setStorageSync(MidData, obj);
             getData();
             // 没有鱼泡账号
           } else if (res.code == 40001){

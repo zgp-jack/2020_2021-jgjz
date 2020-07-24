@@ -3,7 +3,7 @@
         <view class="time">{{data.creatTime}}</view>
         <view class="content">{{data.note}}</view>
         <view class="imageList">
-            <view class="image" wx:for="{{loopArray34}}" wx:for-item="v" wx:for-index="__index0">
+            <view class="image" wx:for="{{loopArray33}}" wx:for-item="v" wx:for-index="__index0">
                 <image class="image-image" src="{{v.$original.httpurl}}" bindtap="anonymousFunc0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}"></image>
             </view>
         </view>

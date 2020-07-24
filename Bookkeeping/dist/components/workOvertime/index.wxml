@@ -3,17 +3,17 @@
         <block wx:if="{{display}}">
             <view class="workOvertime-complaintModal">
                 <view class="workOvertime-complaintModal-content">
-                    <view class="workOvertime-complaintModal-content-title"><text class="close" bindtap="funPrivatejfzzz">取消</text><text class="title">选择上班时长</text><text bindtap="funPrivatejgzzz" class="workOvertime-complaintModal-content-close">确定</text>
+                    <view class="workOvertime-complaintModal-content-title"><text class="close" bindtap="funPrivatehdzzz">取消</text><text class="title">选择上班时长</text><text bindtap="funPrivatehezzz" class="workOvertime-complaintModal-content-close">确定</text>
                     </view>
                     <view class="workOvertime-complaintModal-content-timeBox">
                         <view class="workOvertime-complaintModal-content-tips">{{model.duration}}</view>
                         <view>上班时长</view>
                         <view class="workOvertime-complaintModal-content-box">
-                            <view class="{{v.$original.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray42}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</view>
+                            <view class="{{v.$original.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc0" wx:for="{{loopArray36}}" wx:for-item="v" wx:for-index="__index0" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey}}">{{v.$original.name}}</view>
                         </view>
                         <view class="workOvertime-complaintModal-content-box-title">加班时长</view>
                         <view class="workOvertime-complaintModal-content-box-add">
-                            <view class="{{v.$original.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc1" wx:for="{{loopArray43}}" wx:for-item="v" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}">{{v.$original.name}}</view>
+                            <view class="{{v.$original.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}}" wx:key="id" bindtap="anonymousFunc1" wx:for="{{loopArray37}}" wx:for-item="v" wx:for-index="__index1" data-e-tap-so="this" data-e-tap-a-a="{{v._$indexKey2}}">{{v.$original.name}}</view>
                         </view>
                     </view>
                 </view>
