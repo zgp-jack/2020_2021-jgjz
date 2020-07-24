@@ -142,7 +142,9 @@ export default function Index() {
             console.log(res.data,'res.data');
             console.log(321321)
             if(res.data){
-              let obj:any={};
+              let obj:any={
+                sign:{},
+              };
               obj = res.data;
               obj.userId = e.referrerInfo.extraData.userId;
               obj.token = e.referrerInfo.extraData.token;
