@@ -175,13 +175,14 @@ export default function Index() {
               token: e.referrerInfo.extraData.token,
               time: e.referrerInfo.extraData.tokenTime
             }
+            console.log(obj,'obj')
             // 要存UserInfo
-            Taro.setStorageSync(UserInfo, res.data);
+            Taro.setStorageSync(UserInfo, obj);
             let params = {
               mid: e.referrerInfo.extraData.userId,
             }
             bkMemberAuthAction(params).then(res=>{
-              console.log(res);
+              console.log(res,'auth请求');
               if(res.code !== 200){
                 Msg(res.msg);
               }else{
