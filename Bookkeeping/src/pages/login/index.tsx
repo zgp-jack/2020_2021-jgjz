@@ -115,7 +115,7 @@ export default function Login() {
               if (midData){
                 midData.worker_id = res.data.worker_id;
                 Taro.setStorageSync(MidData, midData)
-                Taro.navigateBack();
+                Taro.navigateBack({delta:1});
               }
             }else{
               Msg(res.msg);
