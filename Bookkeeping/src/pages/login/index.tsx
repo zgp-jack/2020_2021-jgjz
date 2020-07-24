@@ -107,7 +107,7 @@ export default function Login() {
           let paramsData = {
             mid: userInfo.userId
           };
-          GetUserInfoAction(paramsData).then(resData => {
+          bkMemberAuthAction(paramsData).then(resData => {
             console.log(resData,'dsadsa');
             if(resData.code ===200){
               let midData = Taro.getStorageSync(MidData);

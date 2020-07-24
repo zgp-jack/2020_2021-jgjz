@@ -1,5 +1,0 @@
-<block wx:if="{{$taroCompReady}}">
-    <view id="{{'swipeActionOptions-' + componentId}}" class="{{rootClass}}">
-        <slot></slot>
-    </view>
-</block>
