@@ -145,6 +145,7 @@ export default function EditDetails() {
           data.money = res.data.worker_money;
           data.day = res.data.overtime;
           data.worker_id = res.data.worker_id;
+          data.group_info = res.data.group_info;
           if (parseInt(res.data.money) && parseInt(res.data.overtime)){
             data.dayAddWork = parseInt(res.data.money) / parseInt(res.data.overtime)||0;
           }else{
@@ -451,7 +452,7 @@ export default function EditDetails() {
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
     let params;
-    // if (data.type === 1) {
+    if (data.type === 1) {
         params = {
           identity: identity,
           worktime_define: data.work,
@@ -462,31 +463,31 @@ export default function EditDetails() {
           group_info: data.group_info,
         }
       // 按天
-    // } else {
-    //   params = {
-    //     identity: identity,
-    //     worktime_define: data.work,
-    //     overtime_type: data.type,
-    //     overtime_money: data.dayAddWork,
-    //     money: data.money,
-    //     overtime: data.day,
-    //     group_info: data.group_info,
-    //   }
-    // }
+    } else {
+      params = {
+        identity: identity,
+        worktime_define: data.work,
+        overtime_type: data.type,
+        overtime_money: data.dayAddWork,
+        money: data.money,
+        overtime: data.day,
+        group_info: data.group_info,
+      }
+    }
     console.log(data,'1111');
     let paramsData:any = {};
-    // if (data.type === 1){
-    //   paramsData = {
-    //     id: data.worker_id,
-    //     worktime_define: data.work,
-    //     overtime_type: data.type,
-    //     overtime_money: data.addWork,
-    //     money: data.money,
-    //     overtime: data.day,
-    //     group_info: data.group_info,
-    //     type: 'wage'
-    //   }
-    // }else{
+    if (data.type === 1){
+      paramsData = {
+        id: data.worker_id,
+        worktime_define: data.work,
+        overtime_type: data.type,
+        overtime_money: data.addWork,
+        money: data.money,
+        overtime: data.day,
+        group_info: data.group_info,
+        type: 'wage'
+      }
+    }else{
       paramsData = {
         id: data.worker_id,
         worktime_define: data.work,
@@ -497,7 +498,7 @@ export default function EditDetails() {
         group_info: data.group_info,
         type: 'wage'
       }
-    // }
+    }
     // return;
     // let paramsData = {
     //   id: data.worker_id,
@@ -835,9 +836,11 @@ export default function EditDetails() {
     })
     console.log(times, work_time_hour, overtime);
     // return;
+    console.log(val,'val');
+    // return;
     // 图片
     let params = {
-      money: data.money,
+      money: val.wages,
       time:data.time,
       type,
       img_url,
@@ -846,6 +849,7 @@ export default function EditDetails() {
       work_time: times||0,
       work_time_hour: work_time_hour||0,
       note: val.note,
+      group_info: items.group_info
     }
     updateBusinessAction(params).then(res=>{
       console.log(res);

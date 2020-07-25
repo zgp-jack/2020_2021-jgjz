@@ -174,14 +174,12 @@ export default function Index() {
               token: e.referrerInfo.extraData.token,
               time: e.referrerInfo.extraData.tokenTime
             }
-            console.log(obj,'obj')
             // 要存UserInfo
             Taro.setStorageSync(UserInfo, obj);
             let params = {
               mid: e.referrerInfo.extraData.userId,
             }
             bkMemberAuthAction(params).then(res=>{
-              console.log(res,'auth请求');
               if(res.code !== 200){
                 Msg(res.msg);
               }else{
@@ -192,7 +190,6 @@ export default function Index() {
               }
             })
           } else if (res.code == 40003){
-            console.log(res,'4000322')
             let obj:any={};
             obj.userId = e.referrerInfo.extraData.userId;
             obj.token = e.referrerInfo.extraData.token;
@@ -203,7 +200,6 @@ export default function Index() {
             }
             obj.tokenTime = e.referrerInfo.extraData.tokenTime;
             Taro.setStorageSync(UserInfo,obj);
-            console.log(Taro.getStorageSync(UserInfo),'u')
             // 设置点击直接跳转到注册手机号页面
             // setLoginStatus(true);
             loginType = true;
@@ -221,14 +217,12 @@ export default function Index() {
       setNeverPrompt(true);
     }
     // 判断有midDat就取消授权
-    console.log(midData,'midData是够有缓存')
     if (midData){
       setDisplay(false)
       loginType=false;
     }
     const newTime = new Date().getTime()/1000;
     // const time = 
-    console.log(newTime, creationTime,'xxx');
     // 七天显示内容
     if (creationTime && (creationTime + 86400 * 7) > newTime){
       setPrompt(true)
@@ -365,7 +359,6 @@ export default function Index() {
     // }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
-    console.log(midData,'有美誉mid')
     if(midData){
       let type = Taro.getStorageSync(Type);
         if(!type){
@@ -381,10 +374,7 @@ export default function Index() {
     }
     // 判断选没有选择时间
     let changeTime;
-    console.log(repeat,'resdsada')
     if (!e){
-      console.log(1)
-      console.log(312312312312)
       changeTime = getDates();
     }else{
       // console.log(2);
@@ -397,7 +387,6 @@ export default function Index() {
       // setStart(newMonth)
       // setEnd(newMonth)
     }
-    console.log(changeTime,'changeTimechangeTime')
     let params = {
       time: changeTime,
       identity: type,
@@ -405,7 +394,6 @@ export default function Index() {
     // if(! )
     if (midData){
       bkIndexAction(params).then(res => {
-        console.log('发起首页请求')
         if (res.code === 200) {
           setItme(res.data);
           setNum(res.data.count_is_new);
@@ -434,7 +422,6 @@ export default function Index() {
               setList([])
             }
           }
-          console.log(3123123)
           // 存在缓存里用来判断是否新增时间
           setLasted_business_identity(res.data.lasted_business_identity);
           // 获取信息
@@ -456,12 +443,10 @@ export default function Index() {
       setDisplay(true)
       return;
     } 
-    console.log(e,'xxx')
     setVal(e.detail.value)
     setTime(e.detail.value);
     setRepeat(true);
     getData(e.detail.value);
-    console.log(e.detail.value.substring(e.detail.value.length - 2),'e.detail.value.substring(e.detail.value.length - 2)')
     setMonth(e.detail.value.substring(e.detail.value.length - 2))
   }
   // 点击提示
@@ -669,13 +654,11 @@ export default function Index() {
   }
   // 判断是授权进行下一步
   const nextStep = ()=>{
-    console.log(2313123)
     let midData = Taro.getStorageSync(MidData);
     if (!midData) return;
   }
   // 跳流水
   const handleJump = (url:string,state?:boolean)=>{
-    console.log(login,'login')
     if (loginType){
       userRouteJump('/pages/login/index?type=1');
       return;
@@ -685,14 +668,11 @@ export default function Index() {
       setDisplay(true)
       return;
     } 
-    console.log(state,'staete')
     // 点击记工
     if (state) {
       // 判断不是0 然后与当前身份不同就是提示
       // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
-        console.log(type, 'type');
-        console.log(lasted_business_identity, 'lasted_business_identity')
         setTips(true)
         return;
       } else {
@@ -704,13 +684,11 @@ export default function Index() {
         }
       }
     }
-    console.log(type,'type');
     // 如果是班组长需要判断有没有项目
     
     userRouteJump(url);
     // userRouteJump('/pages/flowingWater/index')
   }
-  console.log(login,'loginloginloginlogin')
   return (
     <View className='index-content'>
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
@@ -762,7 +740,7 @@ export default function Index() {
           <View className='flex'><View>按量记</View>
             {item.amount.type === 0 && <Text className='num'>0平方米</Text> }
             {item.amount.type === 1 && <Text className='num1'>{item.amount.unit_num}{item.amount.unit}</Text>}
-            {item.amount.type === 2 && <Text className='num1'>{item.amount.count}</Text>}
+            {item.amount.type === 2 && <Text className='num1'>{item.amount.count}笔</Text>}
           </View>
         </View>
         </View>

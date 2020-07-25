@@ -29,15 +29,15 @@ export default function FlowingWaterDetails() {
     }
     console.log(data,'datadata')
     let title;
-    if (data.business_type === '1'){
+    if (data.business_type == '1'){
       title ='点工'
-    } else if (data.business_type === '2'){
+    } else if (data.business_type == '2'){
       if(data.type === '1'){
         title = '包工按天'
-      } else if (data.type === '2') {
+      } else if (data.type == '2') {
         title = '包工按量'
       }
-    }else if (data.business_type === '4') {
+    }else if (data.business_type == '3') {
       title = '借支'
     }
     Taro.setNavigationBarTitle({
@@ -109,10 +109,10 @@ export default function FlowingWaterDetails() {
   return(
     <View className='flowingWaterDetails'>
       <View className='top'>
-        {obj.business_type &&obj.business_type === '1' && <View className='top-name'>点工工钱</View>}
-        {obj.business_type && obj.business_type === '2' && obj.type === '1'&& <View className='top-name'>包工(按天记)工钱</View>}
-        {obj.business_type && obj.business_type === '2' && obj.type === '2' && <View className='top-name'>包工(按量记)工钱</View>}
-        {obj.business_type &&obj.business_type === '3' && <View className='top-name'>本次借支</View>}
+        {obj.business_type &&obj.business_type == '1' && <View className='top-name'>点工工钱</View>}
+        {obj.business_type && obj.business_type == '2' && obj.type === '1'&& <View className='top-name'>包工(按天记)工钱</View>}
+        {obj.business_type && obj.business_type == '2' && obj.type === '2' && <View className='top-name'>包工(按量记)工钱</View>}
+        {obj.business_type &&obj.business_type == '3' && <View className='top-name'>本次借支</View>}
         <View className='top-money'>¥{obj.money}</View>
         <View className='top-time'>{time}<Text>{week}</Text></View>
       </View>
