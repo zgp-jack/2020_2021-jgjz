@@ -542,6 +542,7 @@ export default function userForeman() {
             // }
             // data = calendarDaysArr[i]
             // data = [...clickDataItem, calendarDaysArr[i]];
+            console.log(showData,'showData')
             showData.push(calendarDaysArr[i])
           }
         }
@@ -936,50 +937,6 @@ export default function userForeman() {
                 return;
                 }
               })
-              // let groupInfo;
-              // if (res.data && res.data.length>0){
-              //   for(let i =0;i<res.data.length;i++){
-              //     res.data[0].click = true;
-              //     groupInfo = res.data[0].group_id+','+res.data[0].id;
-              //     // groupInfo = res.data[0].child[0].pid + ',' + res.data[0].child[0].id;
-              //     if(res.data[0].leader_name){
-              //       setForemanTitle(res.data[0].leader_name);
-              //       // 设置值
-              //       dispatch(setWorker([res.data[0]]))
-              //     }else{
-              //       setForemanTitle('')
-              //     }
-              //   }
-              // }
-              // setGroupInfo(groupInfo)
-              // 有名字才加
-              // let name='';
-              // if(res.data.length>0){
-              //   if (res.data[0].group_name){
-              //     name = res.data[0].group_name +'-'+ res.data[0].name;
-              //   }else{
-              //     name=''
-              //   }
-              // }
-              // 设置值
-              // let duration = modalObj.duration;
-              // let time = modalObj.time
-              // if (identity === 2) {
-              //   const data = JSON.parse(JSON.stringify(timeArr));
-              //   duration = '一个工无加班'
-              //   data[0].click = true;
-              //   setTimeArr(data);
-              //   const years = new Date().getFullYear();
-              //   const months = new Date().getMonth() + 1;
-              //   const dates = new Date().getDate();
-              //   // time = years +'-'+ months +'-'+ dates
-              //   // `${years}-${months}-${dates}(今天)`
-              // }
-              // // setForemanTitle(res.data[0].leader_name)
-              // // setModel({ ...modalObj, name, duration})
-              //   // ========
-              // setModel({ ...modalObj, name, duration, time })
-              // setProjectArr(res.data);
               // 创建项目的时候
             }else{
               if (res.data && res.data.length > 0) {
@@ -1001,6 +958,20 @@ export default function userForeman() {
             }
             // 班组长
           }else{
+            // 新增项目的额时候
+            if(groupName){
+              for (let i = 0; i < res.data.length; i++) {
+                if (groupName === res.data[i].group_name + '-' + res.data[i].name) {
+                  res.data[i].click = true;
+                  setModel({ ...modalObj, name: groupName });
+                  // 然后获取工人列表
+                  bkGetWorker(res.data[i].group_id + ',' + res.data[i].id,true);
+                }
+              }
+              setProjectArr(res.data);
+              console.log(res.data,'res.data')
+              return;
+            }
             // 角色
             let type = Taro.getStorageSync(Type);
             // 获取上一次记录清空
@@ -1220,6 +1191,7 @@ export default function userForeman() {
       if(res.code === 200){
         setIds(res.data);
         const name = model.groupName + '-' + model.teamName;
+        console.log(name,'namenameem')
         bkGetProjectTeam(name);
       }else{
         Msg(res.msg);
@@ -2862,8 +2834,17 @@ export default function userForeman() {
     }else{
       for (let i = 0; i < data.length; i++) {
         if (data[i].set) {
-          Itme.push(data[i]);
-          data[i].click = true;
+          // Itme.push(data[i]);
+          // data[i].click = true;
+          if(data[i].click){
+            data[i].click = false;
+            setClickNum(0);
+            return;
+          }else{
+            Itme.push(data[i]);
+          }
+          setClickNum(Itme.length);
+          return;
         } else {
           Msg('还有人未设置工资标准')
         }
