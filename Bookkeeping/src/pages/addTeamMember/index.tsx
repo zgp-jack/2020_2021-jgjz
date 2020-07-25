@@ -220,6 +220,7 @@ export default function AddTeamMember() {
         }
       }
       for(let i =0;i<dataArr.length;i++){
+        dataArr[i].group_leader = dataArr[i].id;
         if (dataArr[i].name_py === name){
           for(let j = 0;j<dataArr[i].list.length;j++){
             if(e.id === dataArr[i].list[j].id){
@@ -239,6 +240,7 @@ export default function AddTeamMember() {
         console.log(res,'xxx')
       });
       console.log(e,'eeee')
+      e.group_leader = e.id;
       dispatch(setWorker([e]))
       Taro.navigateBack({ delta: 1 })
     }

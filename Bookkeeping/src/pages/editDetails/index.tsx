@@ -314,9 +314,12 @@ export default function EditDetails() {
   const handleWageStandard = (type,e)=>{
     if (type == 'day') {
       const item = JSON.parse(JSON.stringify(wageStandard));
-      const dayAddWork = item.money / e;
-      item[type] = e;
-      item.dayAddWork = dayAddWork.toFixed(2);
+      let dayAddWork = 0;
+      if(e !== 0){
+        dayAddWork = item.money / e;
+      }
+      item[type] = e||0;
+      item.dayAddWork = dayAddWork.toFixed(2)||0;
       setWageStandard(item);
       return;
     }
@@ -445,15 +448,38 @@ export default function EditDetails() {
     console.log(num)
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
-    let params = {
-      identity: identity,
-      worktime_define: data.work,
-      overtime_type: data.type,
-      overtime_money: data.dayAddWork,
-      money: data.money,
-      overtime: data.day,
-      group_info: data.group_info,
+    let params;
+    if (data.type === 1) {
+      params = {
+        identity: identity,
+        worktime_define: data.work,
+        overtime_type: data.type,
+        overtime_money: data.addWork,
+        money: data.money,
+        overtime: data.day,
+        group_info: data.group_info,
+      }
+      // 按天
+    } else {
+      params = {
+        identity: identity,
+        worktime_define: data.work,
+        overtime_type: data.type,
+        overtime_money: data.dayAddWork,
+        money: data.money,
+        overtime: data.day,
+        group_info: data.group_info,
+      }
     }
+    // let params = {
+    //   identity: identity,
+    //   worktime_define: data.work,
+    //   overtime_type: data.type,
+    //   overtime_money: data.dayAddWork,
+    //   money: data.money,
+    //   overtime: data.day,
+    //   group_info: data.group_info,
+    // }
     bkSetWorkerIdentityWageAction(params).then(res => {
       if (res.code !== 200) {
         Msg(res.msg)

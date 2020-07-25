@@ -336,11 +336,16 @@ export default function Index() {
   //   getData();
   // },[])
   // 获取项目名称
-  const bkGetProjectTeam = ()=>{
+  const bkGetProjectTeam = (dignity,state?:number)=>{
     bkGetProjectTeamAction({}).then(res=>{
-      // 判断为0就出现新增弹  框
+      // 判断为0就出现新增弹框
       if(res.data.length === 0){
         setCreateProjectDisplay(true)
+      }else{
+        if(state){
+          Msg('开始为工人记工吧')
+        }
+        userRouteJump(`/pages/recorder/index?type=${dignity}`)
       }
     })
   }
@@ -434,7 +439,7 @@ export default function Index() {
           setLasted_business_identity(res.data.lasted_business_identity);
           // 获取信息
           // 判断是班组长的时候出现弹框
-          let type = Taro.getStorageSync(Type);
+          // let type = Taro.getStorageSync(Type);
           // if (type === 1) {
           //   bkGetProjectTeam()
           // }
@@ -527,11 +532,18 @@ export default function Index() {
     // 切换
     if (state === 1){
       console.log(type,'typenjdskajdkjab')
-      let msg = dignity === 1 ? '开始为自己记工吧' : '开始为工人记工吧';
       // 班组长
-      if (dignity == 2){
-        bkGetProjectTeam()
+      if (dignity == 1){
+        setTips(false)
+        setType(dignity);
+        Taro.setStorageSync(Type, dignity);
+        Msg('开始为工人记工吧')
+        setTimeout(()=>{
+          bkGetProjectTeam(1,1)
+        },1000)
+        return;
       }
+      let msg = dignity === 1 ? '开始为自己记工吧' : '开始为工人记工吧';
       Msg(msg)
       console.log(dignity,'neverPromptneverPrompt')
       // return;
@@ -546,6 +558,14 @@ export default function Index() {
         Taro.setStorageSync(NeverPrompt, true);
         setNeverPrompt(true)
         // 切换的时候如果是班组要判断有没有项目
+      }else{
+        console.log(dignity,'dignitydignity')
+        // 班组长
+        if (dignity === 2){
+          bkGetProjectTeam(dignity);
+        }
+        setTips(false)
+        return;
       }
       // 切换后跳转页面
     userRouteJump(`/pages/recorder/index?type=${dignity}`)
@@ -613,6 +633,7 @@ export default function Index() {
   // 关闭创建项目
   const handleCreateProjectClose = ()=>{
     setCreateProjectDisplay(false)
+    setModel({ groupName: '', teamName:''})
   }
   // 弹框输入
   const handleInput = (type: string, e)=>{
@@ -629,6 +650,9 @@ export default function Index() {
     bkAddProjectTeamAction(params).then(res => {
       if (res.code === 200) {
         setProject(false);
+        setModel({ groupName: '', teamName: '' })
+        // 班组长是1
+        userRouteJump(`/pages/recorder/index?type=${1}`)
         // bkGetProjectTeam()
       } else {
         Msg(res.msg);
@@ -659,6 +683,8 @@ export default function Index() {
       setDisplay(true)
       return;
     } 
+    console.log(state,'staete')
+    // 点击记工
     if (state) {
       // 判断不是0 然后与当前身份不同就是提示
       // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
@@ -668,9 +694,17 @@ export default function Index() {
         setTips(true)
         return;
       } else {
-        handelChange(type, true)
+        if (type === 1) {
+          bkGetProjectTeam(2)
+          return;
+        }else{
+          handelChange(type, true)
+        }
       }
     }
+    console.log(type,'type');
+    // 如果是班组长需要判断有没有项目
+    
     userRouteJump(url);
     // userRouteJump('/pages/flowingWater/index')
   }
@@ -869,7 +903,7 @@ export default function Index() {
       {/* 创建项目 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
       {/* 填写班组 */}
-      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={()=>setProject(false)} />
+      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setProject(false), setModel({ groupName: '', teamName: '' })}} />
     </View>
   )
 }

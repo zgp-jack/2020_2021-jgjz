@@ -1328,14 +1328,12 @@ export default function userForeman() {
           Time = '休息'
         }
       }
-
       let duration;
       duration =  Time + '加班' + e.name;
       setModel({ ...Item, duration })
     }
     setWorkingHoursDisplay(false);
     setWorkOvertimeDisplay(true);
-    
   }
   // 确认时间选择
   const handleWorkOvertimeOk = ()=>{
@@ -1419,33 +1417,36 @@ export default function userForeman() {
       let total;
       if (data.type === 1) {
         // 按小时算 加班小时* 模板加班金额
-        total = (moneyNum / workNum) * time + addWorkNum * addTime;
+        total = (moneyNum / workNum) * (time * workNum) + addWorkNum * addTime;
+        // total = (moneyNum / workNum) * time + addWorkNum * addTime;
       } else {
         // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
-        total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);
+        // total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);
+        total = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
       }
       // const num = total.toFixed(2);
-      let num: any = 0;
-      if (num && !Object.is(num, NaN)) {
-        num = total.toFixed(2);
-      }
-      //给工人自己设置工资标准
-      const wageStandards = JSON.parse(JSON.stringify(wageStandard));
-      let params = {
-          identity:identity,
-          worktime_define: wageStandards.work,
-          overtime_type: wageStandards.type,
-          overtime_money: wageStandards.dayAddWork,
-          money: wageStandards.money,
-          overtime: wageStandards.day,
-          group_info:groupInfo
-        }
-      bkSetWorkerIdentityWageAction(params).then(res=>{
-        if(res.code !== 200){
-          Msg(res.msg)
-        }
-      })
-      setModel({ ...model, workersWages: num, duration: title });
+      // let num: any = 0;
+      // if (num && !Object.is(num, NaN)) {
+      //   num = total.toFixed(2);
+      // }
+      console.log(total,'total')
+      // //给工人自己设置工资标准
+      // const wageStandards = JSON.parse(JSON.stringify(wageStandard));
+      // let params = {
+      //     identity:identity,
+      //     worktime_define: wageStandards.work,
+      //     overtime_type: wageStandards.type,
+      //     overtime_money: wageStandards.dayAddWork,
+      //     money: wageStandards.money,
+      //     overtime: wageStandards.day,
+      //     group_info:groupInfo
+      //   }
+      // bkSetWorkerIdentityWageAction(params).then(res=>{
+      //   if(res.code !== 200){
+      //     Msg(res.msg)
+      //   }
+      // })
+      setModel({ ...model, workersWages: total, duration: title });
       setWorkOvertimeDisplay(false);
       return;
     }
@@ -1901,8 +1902,9 @@ export default function userForeman() {
                 params.group_info = res.data;
                 // 班组长id
                 const item = useSelectorItem.workerList;
-                const group_leader = item[0].id;
+                const group_leader = item[0].group_leader;
                 params.group_leader = group_leader;
+                console.log(params.group_leader,'params.group_leader')
                 bkAddBusinessAction(params).then(resData => {
                   // 清除reducer
                   if (resData.code === 200) {
@@ -2006,6 +2008,11 @@ export default function userForeman() {
           }
         }
         if (recorderType == 3 || (recorderType == 2 && contractor == 1)){
+          // 班组长id
+          const item = useSelectorItem.workerList;
+          const group_leader = item[0].group_leader;
+          params.group_leader = group_leader;
+          console.log(params.group_leader, 'params.group_leader111')
           bkAddBusinessAction(params).then(resData => {
             // 清除reducer
             if (resData.code === 200) {
@@ -2085,8 +2092,9 @@ export default function userForeman() {
           if (resItem.code === 200) {
             // 班组长id
             const item = useSelectorItem.workerList;
-            const group_leader = item[0].id;
+            const group_leader = item[0].group_leader;
             params.group_leader = group_leader;
+            console.log(params.group_leader,'paramsparamsparams3')
             bkAddBusinessAction(params).then(resData => {
               // 清除reducer
               if (resData.code === 200) {
@@ -2788,8 +2796,10 @@ export default function userForeman() {
     // 借支和按量记
     if (recorderTypes === 3 || (recorderTypes === 2 && contractor==1 )){
       for (let i = 0; i < data.length; i++) {
+        data[i].click = !data[i].click;
+        if (data[i].click){
           Itme.push(data[i]);
-          data[i].click = true;
+        }
       }
     }else{
       for (let i = 0; i < data.length; i++) {
@@ -2812,11 +2822,15 @@ export default function userForeman() {
   const handleAllClick = ()=>{
     const data = JSON.parse(JSON.stringify(setWorkList));
     if(!checkAll){
+      let Itme:any[] =[];
       for(let i =0;i<data.length;i++){
-        data[i].click = true
+        if (data[i].click) {
+          Itme.push(data[i]);
+        }
+        data[i].click = !data[i].click
       };
       setCheckAll(true)
-      setClickModalNum(data.length);
+      setClickModalNum(Itme.length);
     }else{
       for (let i = 0; i < data.length; i++) {
         data[i].click = false
