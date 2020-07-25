@@ -563,6 +563,8 @@ export default function Index() {
         // 班组长
         if (dignity === 2){
           bkGetProjectTeam(dignity);
+        }else{
+          userRouteJump(`/pages/recorder/index?type=${dignity}`)
         }
         setTips(false)
         return;

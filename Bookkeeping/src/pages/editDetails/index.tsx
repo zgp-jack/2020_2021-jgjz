@@ -1,7 +1,7 @@
 import Taro, { useState,useRouter,useEffect} from '@tarojs/taro'
 import ImageView from '../../components/imageview';
 import UploadImgAction from '../../utils/upload'
-import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageAction } from '../../utils/request/index';
+import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageAction, bkUpdateWorkerAction } from '../../utils/request/index';
 import { View, Text, Input, Textarea, RadioGroup, Radio } from '@tarojs/components';
 import WageStandard  from '../../components/wageStandard'
 import Msg from '../../utils/msg'
@@ -88,6 +88,7 @@ export default function EditDetails() {
     state: '',
     group_info: '',
     id: '',
+    worker_id:'',
   })
   const [val,setVal] = useState({
     note:'',
@@ -143,6 +144,7 @@ export default function EditDetails() {
           data.addWork = res.data.overtime_money;
           data.money = res.data.worker_money;
           data.day = res.data.overtime;
+          data.worker_id = res.data.worker_id;
           if (parseInt(res.data.money) && parseInt(res.data.overtime)){
             data.dayAddWork = parseInt(res.data.money) / parseInt(res.data.overtime)||0;
           }else{
@@ -449,42 +451,79 @@ export default function EditDetails() {
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
     let params;
-    if (data.type === 1) {
-      params = {
-        identity: identity,
-        worktime_define: data.work,
-        overtime_type: data.type,
-        overtime_money: data.addWork,
-        money: data.money,
-        overtime: data.day,
-        group_info: data.group_info,
-      }
+    // if (data.type === 1) {
+        params = {
+          identity: identity,
+          worktime_define: data.work,
+          overtime_type: data.type,
+          overtime_money: data.addWork,
+          money: data.money,
+          overtime: data.day,
+          group_info: data.group_info,
+        }
       // 按天
-    } else {
-      params = {
-        identity: identity,
+    // } else {
+    //   params = {
+    //     identity: identity,
+    //     worktime_define: data.work,
+    //     overtime_type: data.type,
+    //     overtime_money: data.dayAddWork,
+    //     money: data.money,
+    //     overtime: data.day,
+    //     group_info: data.group_info,
+    //   }
+    // }
+    console.log(data,'1111');
+    let paramsData:any = {};
+    // if (data.type === 1){
+    //   paramsData = {
+    //     id: data.worker_id,
+    //     worktime_define: data.work,
+    //     overtime_type: data.type,
+    //     overtime_money: data.addWork,
+    //     money: data.money,
+    //     overtime: data.day,
+    //     group_info: data.group_info,
+    //     type: 'wage'
+    //   }
+    // }else{
+      paramsData = {
+        id: data.worker_id,
         worktime_define: data.work,
         overtime_type: data.type,
         overtime_money: data.dayAddWork,
         money: data.money,
         overtime: data.day,
         group_info: data.group_info,
+        type: 'wage'
       }
-    }
-    // let params = {
-    //   identity: identity,
+    // }
+    // return;
+    // let paramsData = {
+    //   id: data.worker_id,
+    //   group_info: data.group_info,
     //   worktime_define: data.work,
     //   overtime_type: data.type,
+    //   overtime: data.day,
     //   overtime_money: data.dayAddWork,
     //   money: data.money,
-    //   overtime: data.day,
-    //   group_info: data.group_info,
-    // }
-    bkSetWorkerIdentityWageAction(params).then(res => {
-      if (res.code !== 200) {
-        Msg(res.msg)
-      }
-    })
+    //   type: 'wage'//后端说修改type传这个
+    // };
+    // 工人
+    if(identity === 2){
+      bkSetWorkerIdentityWageAction(params).then(res => {
+        if (res.code !== 200) {
+          Msg(res.msg)
+        }
+      })
+      //  班组长
+    }else{
+      bkUpdateWorkerAction(paramsData).then(res=>{
+        if(res.code !== 200){
+          Msg(res.msg)
+        }
+      })
+    }
       // }
     // // 上班时间
     // let time = 0;
