@@ -590,7 +590,7 @@ export default function userForeman() {
         // setOpenClickTime(showData)
         // console.log(calendarDaysArr,'calendarDaysArrcalendarDaysArr')
         // 已经点击了的值的内容
-        console.log(calendarDaysArr,'calendarDaysArr')
+        // console.log(calendarDaysArr,'calendarDaysArr')
         setCalendarDays(calendarDaysArr);
         return;
         // }
@@ -614,8 +614,8 @@ export default function userForeman() {
   // 对应月份日期
   const getMonthDaysCurrent = (e) => {
     // 获取点击了的数据
-    const clickDataItem = JSON.parse(JSON.stringify(clickData));
-    // console.log(clickDataItem,'clickDataItemclickDataItem')
+    const clickDataArr = JSON.parse(JSON.stringify(clickData));
+    console.log(clickDataArr,'clickDataItemclickDataItem')
     let data;
     if (useSelectorItem.clickTIme.length > 0) {
       data = useSelectorItem.clickTIme;
@@ -666,40 +666,42 @@ export default function userForeman() {
           // }else{
 
           // }
-          if (clickDataItem.length>0){
-            for(let j = 0;j<clickDataItem.length;j++){
-              // console.log(clickDataItem[j],'clickDataItem')
-              // calendarDaysArr.push({
-              //   'year': year,
-              //   'month': month,
-              //   'date': i,
-              //   'day': new Date(year, month - 1, i).getDay(),
-              //   'current': true,
-              //   'lunarCalendarItem': lunarCalendarItem.lunarDay,
-              //   'selected': i == date, // 判断当前日期
-              //   'stop': years <= year && ((months == month && dates < i) || months < month),
-              //   'click': years <= year && months == month && dates == i
-              //   // 'next': dates < date
-              //   // 'record': calendarItem[j].year == year && calendarItem[j].month == month && calendarItem[j].day == i
-              // })
-            }
-          }else{
-
+          // if (clickDataArr.length && clickDataArr.length>0){
+          //   console.log(clickDataArr,'clickDataArr11111')
+          //   for (let j = 0; j < clickDataArr[j].length;j++){
+          //     console.log(clickDataArr[j],'clickDataArr[jjj]')
+          //     calendarDaysArr.push({
+          //       'year': year,
+          //       'month': month,
+          //       'date': i,
+          //       'day': new Date(year, month - 1, i).getDay(),
+          //       'current': true,
+          //       'lunarCalendarItem': lunarCalendarItem.lunarDay,
+          //       'selected': i == date, // 判断当前日期
+          //       'stop': years <= year && ((months == month && dates < i) || months < month),
+          //       'click': clickDataArr[j].year == year && clickDataArr[j].month == month && clickDataArr[j].date == i
+          //       // 'click': years <= year && months == month && dates == i
+          //       // 'next': dates < date
+          //       // 'record': calendarItem[j].year == year && calendarItem[j].month == month && calendarItem[j].day == i
+          //     })
+          //     console.log(calendarDaysArr,'calendarDaysArr')
+          //   }
+          // }else{
+            calendarDaysArr.push({
+              'year': year,
+              'month': month,
+              'date': i,
+              'day': new Date(year, month - 1, i).getDay(),
+              'current': true,
+              'lunarCalendarItem': lunarCalendarItem.lunarDay,
+              'selected': i == date, // 判断当前日期
+              'stop': years <= year && ((months == month && dates < i) || months < month),
+              // 'click': years <= year && months == month && dates == i
+              // 'next': dates < date
+              // 'record': calendarItem[j].year == year && calendarItem[j].month == month && calendarItem[j].day == i
+            })
           }
-          calendarDaysArr.push({
-            'year': year,
-            'month': month,
-            'date': i,
-            'day': new Date(year, month - 1, i).getDay(),
-            'current': true,
-            'lunarCalendarItem': lunarCalendarItem.lunarDay,
-            'selected': i == date, // 判断当前日期
-            'stop': years <= year && ((months == month && dates < i) || months < month),
-            // 'click': years <= year && months == month && dates == i
-            // 'next': dates < date
-            // 'record': calendarItem[j].year == year && calendarItem[j].month == month && calendarItem[j].day == i
-          })
-        }
+        // }
       // }
     // }else{
     //   // 当月显示的日期
@@ -747,6 +749,22 @@ export default function userForeman() {
           for (let j = 0; j < data[0].length; j++) {
             if (calendarDaysArr[i].year == data[0][j].year && calendarDaysArr[i].month == data[0][j].month && calendarDaysArr[i].day == data[0][j].day && calendarDaysArr[i].lunarCalendarItem == data[0][j].lunarCalendarItem) {
               calendarDaysArr[i].click = true
+            }
+          }
+        }
+      }
+    }
+    console.log(calendarDaysArr,'calendarDaysArr')
+    console.log(clickDataArr,'点击的日历都能接受的空间啊不健康')
+    // 设置点击
+    // 遍历点击
+    if (clickDataArr.length>0){
+      for (let i = 0, len = clickDataArr.length; i < len; i++) {
+        if (clickDataArr[i].click){
+          // 遍历i日期
+          for (let j = 0, length = calendarDaysArr.length; j < length;j++){
+            if (clickDataArr[i].date == calendarDaysArr[j].date && clickDataArr[i].month == calendarDaysArr[j].month && clickDataArr[i].year == calendarDaysArr[j].year ){
+              calendarDaysArr[j].click = true;
             }
           }
         }
@@ -2949,17 +2967,34 @@ export default function userForeman() {
   // 日历关闭
   const handleCalendarClose = ()=>{
     // 取消的时候清空点击的值，但是保留显示的值
-    const clickDataItem = JSON.parse(JSON.stringify(clickData));
+    // 取消的时候获取点击的值，然后获取点击上次确认的值,然后遍历出来
+    const clickDataArr = JSON.parse(JSON.stringify(clickData));
     // setClickData([]);
+    // 确认日历的值
     const data = JSON.parse(JSON.stringify(openClickTime));
+    console.log(data,'dadad')
     const calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
-    for (let i = 0; i < calendarDaysArr.length;i++){
-      for(let j=0;j<data.length;j++){
-        if (data[j].date == calendarDaysArr[i].date && data[j].month == calendarDaysArr[i].month && data[j].year == calendarDaysArr[i].year) {
-          calendarDaysArr[i].click = true;
+    // 遍历本月日历，然后遍历上次点击的日历，判断相同就设置为true
+    // for(let j=0;j<data.length;j++){
+    //   for (let i = 0; i < calendarDaysArr.length;i++){
+    //       console.log(data[i],'dagta[i]')
+    //         calendarDaysArr[i].click = false;
+    //       if (data[j].date == calendarDaysArr[i].date && data[j].month == calendarDaysArr[i].month && data[j].year == calendarDaysArr[i].year) {
+    //         calendarDaysArr[i].click = true;
+    //       }
+    //     }
+    //   }
+    for (let i = 0,len = calendarDaysArr.length;i<len;i++){
+      calendarDaysArr[i].click = false;
+      if(data.length>0){
+        for(let j = 0,length= data.length;j<length;j++){
+          if (data[j].date == calendarDaysArr[i].date && data[j].month == calendarDaysArr[i].month && data[j].year == calendarDaysArr[i].year){
+            calendarDaysArr[i].click = true;
+          }
         }
       }
     }
+    setClickData(data)
     setCalendarDays(calendarDaysArr)
     let time;
     if (data.length == 1) {

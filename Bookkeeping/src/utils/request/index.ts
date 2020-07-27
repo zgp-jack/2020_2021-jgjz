@@ -201,18 +201,25 @@ export function bkMemberAuthAction(data): Promise<Inter.bkMemberAuth> {
 export function bkAddFeedbackAction(data): Promise<Inter.Result> {
   let type = Taro.getStorageSync(Type)
   let midData = Taro.getStorageSync(MidData);
-  data.identity = type
+  let header;
+  if (midData){
+    header = {
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token || '',
+      time: midData.sign.time || '',
+      uuid: midData.uuid
+    }
+  }else{
+    header = {
+      'content-type': 'application/x-www-form-urlencoded',
+    }
+  }
+  // data.identity = type
   return doRequestAction({
     url: api.bkAddFeedbackUrl,
     method: 'POST',
-    header: {
-      // 'content-type': 'application/json',
-      'content-type': 'application/x-www-form-urlencoded',
-      mid: midData.yupao_id,
-      token: midData.sign.token,
-      time: midData.sign.time,
-      uuid: midData.uuid
-    },
+    header: header,
     data: data
   })
 }

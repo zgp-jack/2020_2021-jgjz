@@ -89,7 +89,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           iv: iv,
           refId: 0,
           source: '', //疑似小程序source 忘记干嘛的了,
-          type:'phone'
+          // type:'phone'
         }
         console.log(key,'keykeykeykey')
         setData(data)

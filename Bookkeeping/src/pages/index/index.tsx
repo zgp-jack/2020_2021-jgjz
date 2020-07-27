@@ -404,10 +404,14 @@ export default function Index() {
           }
           // 设置搜索开始结束时间
           // 设置最早时间
-          setStart(res.data.earliest_month)
-          // 最晚时间
           const date = new Date();
           const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+          if (res.data.earliest_month) {
+            setStart(res.data.earliest_month)
+          } else {
+            setStart(newMonth)
+          }
+          // 最晚时间
           setEnd(newMonth)
           if (Array.isArray(res.data.business_list.data)) {
             if (res.data.business_list.data) {
