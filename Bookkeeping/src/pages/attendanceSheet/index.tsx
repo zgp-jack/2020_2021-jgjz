@@ -1,8 +1,10 @@
 import Taro, { Config, useEffect, useState, useRouter, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Picker, Button } from '@tarojs/components'
 import CalendarModal from '../../components/attendanceModal';
-import { bkgetExcelDataAction } from '../../utils/request/index';
+import { bkgetExcelDataAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
 import Msg from '../../utils/msg';
+import CreateProject from '../../components/createProject';
+import ProjectModal from '../../components/projectModal'
 import {Type} from '../../config/store'
 import './index.scss'
 
@@ -18,8 +20,17 @@ export default function AttendanceSheet() {
   const [data, setData] = useState<any>([{}, {}, {}])
   const [identity, setIdentity ] = useState<number>(0)
   const [display, setDisplay] = useState<boolean>(false)
+  // 班组长创建项目
+  const [createProjectDisplay, setCreateProjectDisplay] = useState<boolean>(false)
+  // 项目班组
+  const [project, setProject] = useState<boolean>(false)
   //判断是否追加
   const [additional, setAdditional]= useState<number>(0)
+  // 弹框内容
+  const [model, setModel] = useState<any>({
+    groupName: '',
+    teamName: '',
+  })
   // const [refresh, setRefresh] = useState<number>(0)
   // 一键对公
   const handleShare = () => {
@@ -48,6 +59,7 @@ export default function AttendanceSheet() {
     setMonth(months)
     setDate(newTime);
     getList(newTime);
+    
   }, [])
   // 获取数据
   const getList = (newTime: string) => {
@@ -711,6 +723,51 @@ export default function AttendanceSheet() {
       path: '/pages/share/index'
     }
   })
+  // 跳转
+  const handleJump = ()=>{
+    bkGetProjectTeamAction({}).then(res=>{
+      if (res.data.length === 0) {
+        setCreateProjectDisplay(true)
+      }else{
+        let type = Taro.getStorageSync(Type);
+        userRouteJump(`/pages/recorder/index?type=${type}`)
+      }
+    })
+  }
+  // 关闭创建项目
+  const handleCreateProjectClose = () => {
+    setCreateProjectDisplay(false)
+    setModel({ groupName: '', teamName: '' })
+  }
+  // 弹框输入
+  const handleInput = (type: string, e) => {
+    let data = JSON.parse(JSON.stringify(model));
+    data[type] = e.detail.value;
+    setModel(data);
+  }
+  // 确认弹框
+  const handleAddProject = () => {
+    let params = {
+      group_name: model.groupName,
+      team_name: model.teamName,
+    }
+    bkAddProjectTeamAction(params).then(res => {
+      if (res.code === 200) {
+        setProject(false);
+        setModel({ groupName: '', teamName: '' })
+        let type = Taro.getStorageSync(Type);
+        userRouteJump(`/pages/recorder/index?type=${type}`)
+      } else {
+        Msg(res.msg);
+        return;
+      }
+    })
+  }
+  // 填写项目返回上一步
+  const handleBack = () => {
+    setProject(false)
+    setCreateProjectDisplay(true)
+  }
   // 分享
   return (
     <View className='AttendanceSheetContent'>
@@ -849,7 +906,7 @@ export default function AttendanceSheet() {
               <Button open-type="share">分享给微信好友</Button>
               {/* <View className='footer-btn-box-left-title'>发送到工人微信群快速对工</View> */}
             </View>
-            <View className='footer-btn-box-right' onClick={() => userRouteJump(`/pages/recorder/index`)}>
+            <View className='footer-btn-box-right' onClick={handleJump}>
               <View>记工</View>
               <View className='footer-btn-box-right-title'>(点工 包工 借支)</View>
             </View>
@@ -858,12 +915,16 @@ export default function AttendanceSheet() {
       }
       {
         tebArr.length <= 2 && <View className='btnBox'>
-          <View className='btn' onClick={() => userRouteJump(`/pages/recorder/index`)}>
+          <View className='btn' onClick={handleJump}>
             <View>记工<Text className='title'>(点工 包工 借支)</Text></View>
           </View>
         </View>
       }
       <CalendarModal display={display} handleClose={handleClose} />
+      {/* 创建项目 */}
+      <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
+      {/* 填写班组 */}
+      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setProject(false), setModel({ groupName: '', teamName: '' }) }} />
     </View>
   )
 }

@@ -505,12 +505,14 @@ export default function userForeman() {
               }
               data = [...clickDataItem];
             }
+            console.log(data,'点击日历')
             setClickData(data)
           }else{
             Msg('最多选择31天')
             return;
           }
         }else{
+          console.log(1111)
           calendarDaysArr[i].click = !calendarDaysArr[i].click;
            // 点击的时候用的
           let data:any[] =[];
@@ -527,6 +529,7 @@ export default function userForeman() {
             }
             data = [...clickDataItem];
           }
+          console.log(data, '点击日历1')
           setClickData(data)
         }
         // 点击的时候用的
@@ -587,6 +590,7 @@ export default function userForeman() {
         // setOpenClickTime(showData)
         // console.log(calendarDaysArr,'calendarDaysArrcalendarDaysArr')
         // 已经点击了的值的内容
+        console.log(calendarDaysArr,'calendarDaysArr')
         setCalendarDays(calendarDaysArr);
         return;
         // }
@@ -611,6 +615,7 @@ export default function userForeman() {
   const getMonthDaysCurrent = (e) => {
     // 获取点击了的数据
     const clickDataItem = JSON.parse(JSON.stringify(clickData));
+    // console.log(clickDataItem,'clickDataItemclickDataItem')
     let data;
     if (useSelectorItem.clickTIme.length > 0) {
       data = useSelectorItem.clickTIme;
@@ -645,8 +650,10 @@ export default function userForeman() {
     }
     // 获取记录过的日历
     const calendarItem = Taro.getStorageSync(Calendar);
+    
     // if(calendarItem.length>0){
       // for (let j = 0; j < calendarItem.length;j++){
+        // 当月的数据显示点击
         // 当月显示的日期
         for (let i = 1; i <= days; i++) {
           const lunarCalendarItem = sloarToLunar(year, month, i);
@@ -659,7 +666,26 @@ export default function userForeman() {
           // }else{
 
           // }
-          
+          if (clickDataItem.length>0){
+            for(let j = 0;j<clickDataItem.length;j++){
+              // console.log(clickDataItem[j],'clickDataItem')
+              // calendarDaysArr.push({
+              //   'year': year,
+              //   'month': month,
+              //   'date': i,
+              //   'day': new Date(year, month - 1, i).getDay(),
+              //   'current': true,
+              //   'lunarCalendarItem': lunarCalendarItem.lunarDay,
+              //   'selected': i == date, // 判断当前日期
+              //   'stop': years <= year && ((months == month && dates < i) || months < month),
+              //   'click': years <= year && months == month && dates == i
+              //   // 'next': dates < date
+              //   // 'record': calendarItem[j].year == year && calendarItem[j].month == month && calendarItem[j].day == i
+              // })
+            }
+          }else{
+
+          }
           calendarDaysArr.push({
             'year': year,
             'month': month,
@@ -984,10 +1010,10 @@ export default function userForeman() {
                   // 判断遍历出项目
                   if (res.data[i].group_id + ',' + res.data[i].id === resData.data){
                     const data = JSON.parse(JSON.stringify(model));
+                    bkGetWorker(resData.data,true);
                     setModel({ ...data, name: res.data[i].group_name})
                   }
                 }
-                  bkGetWorker(resData.data,true);
                 return;
               }
             })
@@ -1012,6 +1038,8 @@ export default function userForeman() {
   }
   // 已设置工资标准标准
   const bkGetWorkerWage = (id?:string,Item?:any)=>{
+    console.log(id,'id')
+    console.log(groupInfo,'handleWorkerItem')
     console.log(Item,'Item')
     let prams;
     if(id){
@@ -1031,10 +1059,12 @@ export default function userForeman() {
         if(identity ===1 ){
           const data = JSON.parse(JSON.stringify(workerItem))
           // 获取工人传过来数据，判断是否设置工资标准
+          console.log(res.data,'工资标准');
+          console.log(Item,'Item')
           if (Item){
             for (let i = 0; i < Item.length; i++) {
               for (let j = 0; j < res.data.length; j++) {
-                if (res.data[j].worker_id === Item[i].id) {
+                if (res.data[j].worker_id == Item[i].id) {
                   Item[i].set = true;
                 }
               }
@@ -1114,6 +1144,7 @@ export default function userForeman() {
             }
             dispatch(setmailList(res.data))
           }else{
+            console.log('删除啊啊啊')
             // const objs = JSON.parse(JSON.stringify(obj));
             let midData = Taro.getStorageSync(MidData)
             // console.log(objs,'objdsadas');
@@ -1131,6 +1162,7 @@ export default function userForeman() {
             }
             console.log(objs,'objs');
             console.log([objs, ...arr],'[objs, ...arr]')
+            setGroupInfo(groupInfos)
             dispatch(setPhoneList([objs, ...arr]));
             bkGetWorkerWage(groupInfos, [objs,...arr]);
         }
@@ -2457,6 +2489,7 @@ export default function userForeman() {
       // }
       // 给工人自己设置工资标准
       // 传0会报错所以判断是按天还是按小时
+      console.log(data,'dadaadd');
       let params;
       // 按小时
       if (data.type === 1){
@@ -2518,7 +2551,7 @@ export default function userForeman() {
         worktime_define: data.work,
         overtime_type: data.type,
         overtime: data.day,
-        overtime_money: data.dayAddWork,
+        overtime_money: data.addWork,
         money: data.money,
         type: 'wage'//后端说修改type传这个
       };
@@ -2832,21 +2865,26 @@ export default function userForeman() {
         }
       }
     }else{
+      console.log(data,'data')
       for (let i = 0; i < data.length; i++) {
+        // if (!data[i].set){
+        //   Msg('还有人未设置工资标准')
+        // }
         if (data[i].set) {
           // Itme.push(data[i]);
           // data[i].click = true;
           if(data[i].click){
             data[i].click = false;
+            setWorkerItem(data);
             setClickNum(0);
             return;
           }else{
+            data[i].click = true;
             Itme.push(data[i]);
           }
+          setWorkerItem(data);
           setClickNum(Itme.length);
           return;
-        } else {
-          Msg('还有人未设置工资标准')
         }
       }
     }
@@ -2969,6 +3007,7 @@ export default function userForeman() {
       if(type === 0){
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent)-2,1)
       getMonthDaysCurrent(date);
+        console.log(clickData,'clickData')
       return;
     }else{
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
@@ -2988,6 +3027,7 @@ export default function userForeman() {
     //   setCalendarModalDisplay(false);
     // }else{
       const data = JSON.parse(JSON.stringify(clickData));
+      console.log(data,'日历')
       let time ;
       if(data.length == 1){
         // const time = data[0].year+

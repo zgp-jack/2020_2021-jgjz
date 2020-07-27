@@ -782,6 +782,7 @@ export default function Index() {
             <ScrollView
               className='content-list-box'
               scrollY
+              scrollTop={0}
               // refresherEnabled
               lowerThreshold={200}
               onScroll={() => { getNextPageData()}}

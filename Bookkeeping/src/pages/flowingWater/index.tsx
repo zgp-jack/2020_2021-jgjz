@@ -1,12 +1,14 @@
 import Taro, { Config, useEffect, useState, useRouter, createContext,useDidShow } from '@tarojs/taro'
 import { View, Text, Picker, Checkbox,Image } from '@tarojs/components'
-import { bkBusinessAction, bkDeleteBusinessAction } from '../../utils/request/index';
+import { bkBusinessAction, bkDeleteBusinessAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
 import Msg from '../../utils/msg'
 import { AtSwipeAction } from "taro-ui"
 import { useDispatch } from '@tarojs/redux'
 import { IMGCDNURL } from '../../config';
 import { Type } from '../../config/store'
 import { setFlowingWater } from '../../actions/flowingWater';
+import CreateProject from '../../components/createProject';
+import ProjectModal from '../../components/projectModal'
 import { bkBusinessTypeDataItem } from '../../utils/request/index.d'
 import './index.scss'
 export interface Injected {
@@ -30,6 +32,17 @@ export default function FlowingWater() {
   const [isCheckOut, setIsCheckOut] = useState<boolean>(false)
   // 全选内容
   const [allcheck, setAllcheck] = useState<boolean>(false)
+  // 班组长创建项目
+  const [createProjectDisplay, setCreateProjectDisplay] = useState<boolean>(false)
+  // 项目班组
+  const [project, setProject] = useState<boolean>(false)
+  //判断是否追加
+  const [additional, setAdditional] = useState<number>(0)
+  // 弹框内容
+  const [model, setModel] = useState<any>({
+    groupName: '',
+    teamName: '',
+  })
   // 获取数据
   useDidShow(()=>{
     const date = JSON.stringify(new Date()).slice(1, 11)
@@ -241,6 +254,51 @@ export default function FlowingWater() {
     })
   }
   console.log(data,'data')
+  // 记工
+  const handleAddJump = ()=>{
+    bkGetProjectTeamAction({}).then(res => {
+      if (res.data.length === 0) {
+        setCreateProjectDisplay(true)
+      } else {
+        let type = Taro.getStorageSync(Type);
+        userRouteJump(`/pages/recorder/index?type=${type}`)
+      }
+    })
+  }
+  // 关闭创建项目
+  const handleCreateProjectClose = () => {
+    setCreateProjectDisplay(false)
+    setModel({ groupName: '', teamName: '' })
+  }
+  // 弹框输入
+  const handleInput = (type: string, e) => {
+    let data = JSON.parse(JSON.stringify(model));
+    data[type] = e.detail.value;
+    setModel(data);
+  }
+  // 确认弹框
+  const handleAddProject = () => {
+    let params = {
+      group_name: model.groupName,
+      team_name: model.teamName,
+    }
+    bkAddProjectTeamAction(params).then(res => {
+      if (res.code === 200) {
+        setProject(false);
+        setModel({ groupName: '', teamName: '' })
+        let type = Taro.getStorageSync(Type);
+        userRouteJump(`/pages/recorder/index?type=${type}`)
+      } else {
+        Msg(res.msg);
+        return;
+      }
+    })
+  }
+  // 填写项目返回上一步
+  const handleBack = () => {
+    setProject(false)
+    setCreateProjectDisplay(true)
+  }
   return(
     <context.Provider value={value}>
     <View className='flowingWater'>
@@ -329,7 +387,7 @@ export default function FlowingWater() {
           <View className='noData'>
             <View>本月您还没有记工哦~</View>
             <View>点击【去记工】按钮，添加您的记工信息</View>
-            <View className='goRecordWorkBox'><View className='goRecordWork' onClick={() => userRouteJump('/pages/recorder/index')}>去记工</View></View>
+            <View className='goRecordWorkBox'><View className='goRecordWork' onClick={handleAddJump}>去记工</View></View>
           </View>
         </View>
         }
@@ -351,6 +409,10 @@ export default function FlowingWater() {
       </View>
       }
     </View>
+      {/* 创建项目 */}
+      <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
+      {/* 填写班组 */}
+      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setProject(false), setModel({ groupName: '', teamName: '' }) }} />
     </context.Provider>
   )
 }
