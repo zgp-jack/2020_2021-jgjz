@@ -391,10 +391,10 @@ export default function EditDetails() {
         } else {
           if (timeArrs[i].id == 1) {
             // 等于模板时间
-            time = workNum;
+            time = 1 / workNum * workNum;
           } else if (timeArrs[i].id == 2) {
             // 等于模板时间的一半
-            time = workNum / 2;
+            time = 1 / workNum * workNum / 2;
           } else if (timeArrs[i].id == 3) {
             // 等于0 
             time = 0;
@@ -402,7 +402,6 @@ export default function EditDetails() {
         }
       }
     }
-    console.log(time,'tiem');
     // return;
     // 加班时间
     let addTime:number = 0;
@@ -709,7 +708,6 @@ export default function EditDetails() {
     console.log(timeArrs, 'timeArrstimeArrs')
     for (let i = 0; i < timeArrs.length; i++) {
       if (timeArrs[i].click) {
-        console.log(timeArr[i])
         // 选择工
         if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
           time = 1 / workNum * timeArrs[i].num
@@ -717,10 +715,13 @@ export default function EditDetails() {
         } else {
           if (timeArrs[i].id == 1) {
             // 等于模板时间
-            time = workNum;
+            console.log(workNum,'workNum')
+            console.log(timeArrs[i].num)
+            time = 1 / workNum * workNum;
           } else if (timeArrs[i].id == 2) {
             // 等于模板时间的一半
-            time = workNum / 2;
+            time = 1 / workNum * workNum/ 2;
+            console.log(time,'timedsadasd')
           } else if (timeArrs[i].id == 3) {
             // 等于0 
             time = 0;
@@ -734,6 +735,9 @@ export default function EditDetails() {
         addTime = addWorkArrs[i].num
       }
     }
+    console.log(time,'time');
+    console.log(workNum,'workNum')
+    // return;
     if (item.type  == '1'){
       wages = (moneyNum / workNum) * (time * workNum) + addWorkNum * addTime;
       // wages = (item.money/item.work)
@@ -742,6 +746,7 @@ export default function EditDetails() {
       wages = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
+    console.log(wages,'wages')
     setVal({ ...val, duration: title,wages: wages })
     setDisplay(false);
   }

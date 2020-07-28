@@ -321,7 +321,7 @@
   border: 1rpx solid rgba(4, 151, 253, 1);
 }
 .whole {
-  width: 96rpx;
+  min-width: 96rpx;
   height: 42rpx;
   background: rgba(0, 153, 255, 0);
   border: 1rpx solid #0099FF;
@@ -676,7 +676,11 @@
   position: relative;
   padding: 8rpx;
 }
-
+.discipline {
+  position: relative;
+  padding: 8rpx;
+  background: rgba(215, 239, 255, 1);
+}
 .publish-list-item-money {
   display: flex;
   position: relative;

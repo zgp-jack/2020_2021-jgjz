@@ -39,9 +39,10 @@ interface DataType {
 interface WorkerItemType {
   name: string,
   id: number,
-  del?: false,
-  click?: false,
-  set?: false,
+  del?: boolean,
+  click?: boolean,
+  set?: boolean,
+  discipline?: boolean,
 }
 interface ImageDataType {
   item: ImageItem[],

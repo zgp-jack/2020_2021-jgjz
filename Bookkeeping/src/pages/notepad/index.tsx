@@ -117,7 +117,6 @@ export default function Notepad() {
   }
   //handleCheckbox
   const handleCheckbox = (e)=>{
-    console.log(e,'eeee');
     const item = JSON.parse(JSON.stringify(ids));
     if(item.length === 0 ){
       item.push(e.id);
@@ -143,7 +142,6 @@ export default function Notepad() {
         }
       }
     }
-    console.log(item,'222')
     setIds(item);
   }
   // 删除
@@ -208,7 +206,6 @@ export default function Notepad() {
       });
       setSelectAll(false)
     }
-    console.log(clickId)
     setIds(clickId)
     setData(arr)
   }
@@ -220,13 +217,14 @@ export default function Notepad() {
     setIds([]);
     setIsSheach(true)
   }
-  console.log(data,'data')
   // 取消搜索
   const handleOnClear = ()=>{
     // getList();
-    setVal('')
+    setData([]);
+    setIsSheach(true)
+    setVal('');
     setIds([]);
-    setIsSheach(false)
+    // setIsSheach(false)
   }
   return(
     <context.Provider value={value}>

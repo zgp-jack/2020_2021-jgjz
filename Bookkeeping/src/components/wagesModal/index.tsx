@@ -22,8 +22,9 @@ interface PROPS {
   handleCheckboxStandard:(v)=>void,
   clickModalNum:number,
   handleAllClick:()=>void,
+  checkAll:boolean,
 }
-export default function WagesModal({ display, handleClose, data, handleAddStandard, standard, moneyList, handleEditWages, tab, handleAtSwitch, handleSetWagesModal, handleWagesList, handleCheckboxStandard, clickModalNum, handleAllClick }: PROPS) {
+export default function WagesModal({ display, handleClose, data, handleAddStandard, standard, moneyList, handleEditWages, tab, handleAtSwitch, handleSetWagesModal, handleWagesList, handleCheckboxStandard, clickModalNum, handleAllClick ,checkAll}: PROPS) {
   return(
     <View>
       {display && 
@@ -40,7 +41,7 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                   }
                   {tab === 1 && 
                   <View className='setWagesClick' onClick={(e) => { e.stopPropagation(); handleAtSwitch(1) }}>查看工资标准
-                        <View className='lookWagesClick' onClick={() => { handleAtSwitch(0) }}>设置工资标准
+                  <View className='lookWagesClick' onClick={() => { handleAtSwitch(0) }}>设置工资标准
                     </View>
                   </View>
                   }
@@ -54,7 +55,7 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
               <View className='worker-title'>
                 <View>选择工人(已选择[{clickModalNum}]人)</View>
                 <View>
-                  <View className='allChange' onClick={handleAllClick}>全选</View>
+                    <View className='allChange' onClick={handleAllClick}>{!checkAll ? '全选' :'取消全选'}</View>
                   <View className='change'>(已选{clickModalNum}人)</View>
                 </View>
               </View>

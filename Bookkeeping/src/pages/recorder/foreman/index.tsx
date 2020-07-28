@@ -47,7 +47,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -318,7 +318,7 @@ export default function Foreman() {
                     <View className='workerBox-list-title-origin-tips'><Text className='workerBox-list-title-origin-color'></Text>表示当天已记过工</View>
                   </View>
                 </View>
-                <View><View className='whole' onClick={(e) => { e.stopPropagation(), e.preventDefault(), handleAllChange() }}>全选</View></View>
+              <View><View className='whole' onClick={(e) => { e.stopPropagation(), e.preventDefault(), handleAllChange() }}>{!allClick ?'全选':'取消全选'}</View></View>
               </View>
               <View className='workerBox-change'>
                 <View></View>
@@ -326,10 +326,12 @@ export default function Foreman() {
               </View>
               <View className='workerItem'>
                 {workerItem.map(v => (
-                  <View className='listPosition' 
+                  <View 
+                  // className='listPosition' 
                   // onClick={()=>{}}
                     // onTouchEnd={onTouchEnd}
                     // onTouchStart={onTouchStart}
+                    className={v.discipline ? 'discipline' : 'listPosition'}
                     onLongPress={()=>handleOpenWagesModal(v)}
                     onClick={()=>handleWorkerItem(v)}
                     // onTouchStart={() => handleWorkerItem(v)} onLongPress={handleLongClick}
@@ -607,7 +609,7 @@ export default function Foreman() {
       {/* 添加成员 */}
         <AddMember display={addMemberDisplay} handleClose={handleAddMemberClose} handleEstablish={handleEstablish} handleInput={handleInput} groupInfo={groupInfo}/>
       {/* 工资 */}
-        <WagesModal display={wagesModalDisplay} handleClose={handleWagesModalClose} data={setWorkList} handleAddStandard={handleAddStandard} standard={standard} moneyList={moneyList} handleEditWages={handleEditWages} handleAtSwitch={handleAtSwitch} tab={tab} handleSetWagesModal={handleSetWagesModal} handleWagesList={handleWagesList} handleCheckboxStandard={handleCheckboxStandard} clickModalNum={clickModalNum} handleAllClick={handleAllClick}/>
+        <WagesModal display={wagesModalDisplay} handleClose={handleWagesModalClose} data={setWorkList} handleAddStandard={handleAddStandard} standard={standard} moneyList={moneyList} handleEditWages={handleEditWages} handleAtSwitch={handleAtSwitch} tab={tab} handleSetWagesModal={handleSetWagesModal} handleWagesList={handleWagesList} handleCheckboxStandard={handleCheckboxStandard} clickModalNum={clickModalNum} handleAllClick={handleAllClick} checkAll={checkAll}/>
         {/* 修改项目 */}
         <EditProject display={editProjectDisplay} handleEditProjectData={handleEditProjectData} data={editProjectData} handleClose={() => setEditProjectDisplay(false)} handleSubmit={handleEditProject}/>
       <AtDrawer
