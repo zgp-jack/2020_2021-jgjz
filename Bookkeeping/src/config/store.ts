@@ -16,4 +16,6 @@ export const Calendar: string = 'calendar'
 // 工人
 export const User:string ='user'
 // 记工时间
-export const RecordTime: string ='recordTime'
+export const RecordTime: string ='recordTime';
+// 记工第二天
+export const Tomorrow: string='tomorrow'

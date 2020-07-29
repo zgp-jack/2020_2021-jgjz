@@ -96,7 +96,7 @@ export default function NotepadDetails() {
         {data.note}
       </View>
       <View className='imageList'>
-        {data.view_images.map(v=>(
+        {data.view_images && data.view_images.length>0&&data.view_images.map(v=>(
           <View className='image'>
             <Image className='image-image' src={v.httpurl} onClick={()=>{handleImage(v)}}/>
           </View>

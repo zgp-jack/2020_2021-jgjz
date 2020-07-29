@@ -296,7 +296,7 @@ export default function Notepad() {
               <View className='box' key={index + index} onClick={() => userRouteJump(`/pages/notepadDetails/index?id=${values.id}`)}>
                 <View className='box-note'>{values.note}</View>
                 <View>
-                  {values.view_images.length>0 && <View className='flex'>
+                  {values.view_images&&values.view_images.length>0 && <View className='flex'>
                     {values.view_images.map(item=>(
                       <Image className='image' src={item.httpurl}/>
                     ))}

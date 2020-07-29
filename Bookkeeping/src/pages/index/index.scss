@@ -10,7 +10,7 @@
 }
 .top_img {
   position: absolute;
-  height: 517rpx;
+  height: 520rpx;
   // color: #fff;
   // background: url('../../assets/images/background.png') no-repeat center center;
   background-size: cover;
@@ -76,6 +76,12 @@
   font-size:48rpx;
   text-align: center;
 }
+.money-left{
+  // width: ;
+}
+.money-right{
+
+}
 .typeList{
   margin-top: 50rpx;
   display: flex;
@@ -87,7 +93,7 @@
 }
 .num{
   margin-left: 15rpx;
-  font-size: 28rpx;
+  font-size: 24rpx;
   margin-top: 5rpx;
   // display: inline-block;
   // width: 100rpx;
@@ -496,4 +502,8 @@
   position: absolute;
   left: 40%;
   bottom: 0rpx;
+}
+.textCenter{
+  text-align: center;
+  font-size: 30rpx;
 }

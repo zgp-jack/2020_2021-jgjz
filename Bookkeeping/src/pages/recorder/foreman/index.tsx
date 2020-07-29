@@ -1,5 +1,5 @@
 import Taro, { Config, useEffect, useState, createContext,useDidShow } from '@tarojs/taro'
-import { View, Text, Image, RadioGroup, Radio, Input, Textarea, Checkbox } from '@tarojs/components'
+import { View, Text, Image, RadioGroup, Radio, Input, Textarea, Checkbox,CoverView } from '@tarojs/components'
 import ProjectModal from '../../../components/projectModal'
 import WordsTotal from '../../../components/wordstotal'
 import { bkGetProjectTeamAction } from '../../../utils/request/index'
@@ -242,6 +242,7 @@ export default function Foreman() {
     setModel({ ...data, groupName: '', teamName: '' })
     setCreateProjectDisplay(true), setShow(false)
   }
+  console.log(foremanTitle,'foremanTitle')
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -569,6 +570,7 @@ export default function Foreman() {
         <View className='publish-recruit-card'>
           <View className='publish-list-ditals'>
             <View>备注</View>
+            <CoverView>
             <Textarea
               className='textarea'
               placeholder='请填写备注...'
@@ -576,6 +578,7 @@ export default function Foreman() {
               onInput={(e) => handleInput('details',e)}
               maxlength={400}
             />
+            </CoverView>
           </View>
           <View>
             <WordsTotal num={num} />

@@ -2,7 +2,7 @@ import Taro, { useState,useRouter,useEffect} from '@tarojs/taro'
 import ImageView from '../../components/imageview';
 import UploadImgAction from '../../utils/upload'
 import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageAction, bkUpdateWorkerAction } from '../../utils/request/index';
-import { View, Text, Input, Textarea, RadioGroup, Radio } from '@tarojs/components';
+import { View, Text, Input, Textarea, RadioGroup, Radio, CoverView } from '@tarojs/components';
 import WageStandard  from '../../components/wageStandard'
 import Msg from '../../utils/msg'
 import WorkingHours from '../../components/workingHours';
@@ -129,7 +129,7 @@ export default function EditDetails() {
           setBusinessType(parseInt(res.data.business_type));
           setIdentity(parseInt(res.data.identity));
           setImage({ item: res.data.view_images })
-          obj.name = res.data.group_info_name;
+          obj.name = (res.data.group_info_name).replace(',','-');
           obj.note = res.data.note;
           obj.workername = res.data.workername;
           obj.leaderName = res.data.leader_name;
@@ -1051,6 +1051,7 @@ export default function EditDetails() {
       <View className='publish-recruit-card'>
         <View className='publish-list-textTarea-item' onClick={() => { }}>
           <Text className='pulish-list-textTarea-title'>备注</Text>
+          <CoverView>
           <Textarea 
             className='textarea'
             value={val.note}
@@ -1058,6 +1059,7 @@ export default function EditDetails() {
             onInput={(e) => handleInput('note', e)}
             maxlength={400}
             />
+            </CoverView>
           <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
         </View>
       </View>

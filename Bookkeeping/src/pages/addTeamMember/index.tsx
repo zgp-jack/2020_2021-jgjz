@@ -241,6 +241,7 @@ export default function AddTeamMember() {
       });
       console.log(e,'eeee')
       e.group_leader = e.id;
+      e.leader_name= e.name;
       dispatch(setWorker([e]))
       Taro.navigateBack({ delta: 1 })
     }

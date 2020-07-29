@@ -11,6 +11,7 @@ import { setWorker } from '../../actions/workerList'
 import Auth from '../../components/auth';
 import { AtModal, AtBadge } from "taro-ui"
 import Msg from '../../utils/msg'
+// import _ from 'lodash';
 import { setClickTIme } from '../../actions/clickTIme'
 import './index.scss'
 
@@ -498,7 +499,7 @@ export default function Index() {
       // return;
     // }
   }
-  const getNextPageData = ()=>{
+  const getNextPageData =()=>{
     // console.log(31231)
     userRouteJump(`/pages/flowingWater/index`)
   }
@@ -735,16 +736,25 @@ export default function Index() {
           <View><Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`}/>借支</View>
         </View>
         <View className='money'>
-          <View>{item && item.money || 0}</View>
-          <View>{item && item.borrow || 0}</View>
+          <View className='money-left'>
+            {(item && item.money > 10000000 ? '一千万' : item.money)||0}
+          {/* {item && item.money || 0} */}
+          </View>
+          <View className=''>
+          {(item && item.money > 10000000 ? '一千万' : item.money) || 0}
+          {/* {item && item.borrow || 0} */}
+          </View>
         </View>
         <View className='typeList'>
-          <View>上班<Text className='num'>{item && item.work_time || 0}个工</Text></View>
-          <View>加班<Text className='num'>{item && item.overtime || 0}小时</Text></View>
-          <View className='flex'><View>按量记</View>
-            {item.amount.type === 0 && <Text className='num'>0平方米</Text> }
-            {item.amount.type === 1 && <Text className='num1'>{item.amount.unit_num}{item.amount.unit}</Text>}
-            {item.amount.type === 2 && <Text className='num1'>{item.amount.count}笔</Text>}
+          <View className='textCenter'>上班
+            <View className='num'>{item && item.work_time || 0}个工</View>
+          </View>
+            <View className='textCenter'>加班<View className='num'>{item && item.overtime || 0}小时</View></View>
+          <View className='textCenter'><View>按量记
+            {item.amount.type === 0 && <View className='num'>0平方米</View> }
+            {item.amount.type === 1 && <View className='num1'>{item.amount.unit_num}{item.amount.unit}</View>}
+            {item.amount.type === 2 && <View className='num1'>{item.amount.count}笔</View>}
+          </View>
           </View>
         </View>
         </View>
@@ -789,7 +799,7 @@ export default function Index() {
               scrollTop={0}
               // refresherEnabled
               lowerThreshold={200}
-              onScroll={() => { getNextPageData()}}
+              onScroll={getNextPageData}
               // onScrollToLower={() => getNextPageData()}
             >
             {list.map((v,i)=>(
@@ -816,7 +826,7 @@ export default function Index() {
               scrollY
               refresherEnabled
               lowerThreshold={200}
-              onScrollToLower={() => getNextPageData()}
+              onScrollToLower={getNextPageData}
             >
             {list.map((v, i) => (
               <View key={i + i} className='content-list-type' onClick={getNextPageData}>
