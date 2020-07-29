@@ -128,11 +128,16 @@ export default function FlowingWaterDetails() {
           {((obj.business_type == '2' && obj.type ==='1') || obj.business_type == '1') && 
           <View>
             <View className='list-itme'><Text className='list-itme-title'>上班时长</Text>:<Text className='list-itme-content'>{obj.work_time}个工（{obj.work_time_hour}小时）</Text></View>
-            <View className='list-itme'><Text className='list-itme-title'>加班时长</Text>:<Text className='list-itme-content'>{obj.addTime}个工（{obj.overtime}小时)</Text></View>
+            <View className='list-itme'><Text className='list-itme-title'>加班时长</Text>:<Text className='list-itme-content'>{obj.overtime}小时</Text></View>
             <View className='wages'>
               <View className='wages-title'>工资标准</View>
               <View className='wages-list'>上班：{obj.worktime_define}小时算1个工<Text className='wages-list-blued'>{obj.worker_money}</Text>元/个工</View>
-              <View className='wages-list'>加班：{obj.overtime_type === '1' ? '按小时算' : '按天算'}{obj.worker_overtime}小时算1个工<Text className='wages-list-blued'>{obj.overtime_money}</Text>元/小时</View>
+              <View className='wages-list'>
+                加班：
+                {/* 加班：{obj.overtime_type === '1' ? '按小时算' : '按天算'}{obj.worker_overtime}小时算1个工 */}
+                {/* <Text className='wages-list-blued'>{obj.overtime_money}</Text>元/小时 */}
+                {obj.overtime_type == '1' ? <Text>按小时天算 <Text className='wages-list-blued'>{obj.overtime_money}</Text>元/小时</Text> : <Text>按工天算 <Text className='wages-list-blued'>{obj.worker_overtime}</Text>小时算一个工</Text>}
+              </View>
             </View>
           </View>
           }

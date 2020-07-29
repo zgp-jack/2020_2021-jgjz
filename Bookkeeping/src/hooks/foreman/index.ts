@@ -2176,11 +2176,14 @@ export default function userForeman() {
     const data = JSON.parse(JSON.stringify(wageStandard));
     const item = JSON.parse(JSON.stringify(model));
     const workerItemArr = JSON.parse(JSON.stringify(workerItem));
+    console.log(data,'data')
     // 时间
     let times: number = 0, work_time_hour=0;
     timeArr.map(v=>{
       if(v.click){
         if (v.num){
+          console.log(data.work,'work');
+          console.log(v.num)
           if(v.id!==4){
             times = v.num;
             work_time_hour = data.work * v.num;
@@ -2191,6 +2194,8 @@ export default function userForeman() {
         }
       }
     })
+    console.log(work_time_hour);
+    // return;
     // const times = 1/data.work * work_time;
     // 加班时间
     let overtime:number=0;

@@ -388,7 +388,7 @@ export default function Foreman() {
                   </View>
                 ))}
                 {delType && <View>
-                  <View className='ml20' onClick={() => handleDel(1)}>
+                  <View className='discipline' onClick={() => handleDel(1)}>
                     <View className='workerItem-ok' >
                     <Image src={`${IMGCDNURL}ok.png`} className='workerItem-ok-img'/>
                     </View>
@@ -642,7 +642,12 @@ export default function Foreman() {
                 <View className='atDrawer-list-flex'>
                   <View>{identity === 1 && <View>{v.leader_name ? `${v.leader_name}的项目`:'-'}</View>}</View>
                   <View>
-                    {!edit && <View>{v.click &&<Checkbox checked={v.click} className='checkbox' color='#0099FF' value={''} onClick={(e)=>e.stopPropagation()}/>}</View>}
+                    {!edit && <View>{v.click &&
+                    <View>
+                      <Image src={`${IMGCDNURL}ok.png`} className='project-icon' />
+                    </View>}
+                     {/* <Checkbox checked={v.click} className='checkbox' color='#0099FF' value={''} onClick={(e)=>e.stopPropagation()}/>} */}
+                    </View>}
                     {edit && <View className='atDrawer-list-flex'>
                       <View className='atDrawer-list-flex-btn' onClick={(e)=>{e.stopPropagation(),handleEditProjectModal(v)}}>修改</View>
                       <View className='atDrawer-list-flex-btn' onClick={(e)=>{e.stopPropagation(),handleDelProject(v)}}>删除</View>
