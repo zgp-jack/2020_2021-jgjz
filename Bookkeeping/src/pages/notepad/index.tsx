@@ -224,6 +224,7 @@ export default function Notepad() {
     setIsSheach(true)
     setVal('');
     setIds([]);
+    getList(val)
     // setIsSheach(false)
   }
   return(

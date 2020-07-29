@@ -1147,6 +1147,8 @@ export default function userForeman() {
             }else{
               if (res.data && res.data.length > 0) {
                 for (let i = 0; i < res.data.length; i++) {
+                  console.log('创建项目 ')
+                  console.log(res.data,'项目res')
                   // res.data[0].click = true;
                   if (groupName === res.data[i].group_name + '-' + res.data[i].name){
                     res.data[i].click = true;
@@ -1204,10 +1206,13 @@ export default function userForeman() {
                     // 设置名字
                   }else{
                     const data = JSON.parse(JSON.stringify(model));
+                    // 判断只有一个数据的时候设置第一个项目为true
+                    if(res.data.length === 1){
+                      res.data[0].click = true;
+                    }
                     bkGetWorker(res.data[0].group_id + ',' + res.data[0].id, true);
                     name = res.data[0].group_name + '-' + res.data[0].name;
                     setModel({ ...data, name });
-                    res.data[0].click = true;
                     // 设置groupInfo
                     setGroupInfo(res.data[0].group_id + ',' + res.data[0].id)
                   }
@@ -1256,22 +1261,31 @@ export default function userForeman() {
                   date: dates,
                   click: true
                 }];
-                const name = res.data[0].group_name + '-' + res.data[0].name;
+                let name;
+                if(res.data.length>0){
+                  name = res.data[0].group_name + '-' + res.data[0].name;
+                  res.data[0].click = true;
+                  bkGetWorker(res.data[0].group_id + ',' + res.data[0].id, true);
+                  setGroupInfo(res.data[0].group_id + ',' + res.data[0].id)
+                  bkGetWorkerWage(res.data[0].group_id + ',' + res.data[0].id)
+                  res.data[0].click = true;
+                }
+                setGroupInfo('')
                 setOpenClickTime(clickDataArr)
                 setClickData(clickDataArr);
                 getMonthDaysCurrent(new Date(), clickDataArr)
-                  setModel({ ...modalObj, duration, time, name, details:'' })
+                setModel({ ...modalObj, duration, time, name, details:'' })
                 // const data = JSON.parse(JSON.stringify(model));
                 // setModel({ ...data, name });
-                bkGetWorker(res.data[0].group_id + ',' + res.data[0].id, true);
-                res.data[0].click = true;
+                // bkGetWorker(res.data[0].group_id + ',' + res.data[0].id, true);
+                // res.data[0].click = true;
                 // 设置groupInfo
-                const groupInfos = res.data[0].group_id + ',' + res.data[0].id;
+                // const groupInfos = res.data[0].group_id + ',' + res.data[0].id;
                 console.log(res.data,'res.darta')
-                console.log(groupInfos,'groupInfo')
-                setGroupInfo(res.data[0].group_id + ',' + res.data[0].id)
-                  console.log(res.data[0].group_id + ',' + res.data[0].id,'cccc5')
-                bkGetWorkerWage(res.data[0].group_id + ',' + res.data[0].id)
+                // console.log(groupInfos,'groupInfo')
+                // setGroupInfo(res.data[0].group_id + ',' + res.data[0].id)
+                  // console.log(res.data[0].group_id + ',' + res.data[0].id,'cccc5')
+                // bkGetWorkerWage(res.data[0].group_id + ',' + res.data[0].id)
                 setProjectArr(res.data);
               }
             }
@@ -2320,7 +2334,7 @@ export default function userForeman() {
         note: item.details,
         // note: item.note,
         // 记录日期
-        time:item.time,
+        time,
         // 工人id
         workers,
         type: radioType,
@@ -3329,13 +3343,13 @@ export default function userForeman() {
             if (res.code === 200) {
               console.log('删除')
               bkGetProjectTeam();
-              if (v.group_name === data.name){
-                setForemanTitle('');
-                setModel({...model,name:''});
-              }else{
+              // if (v.group_name === data.name){
+              //   setForemanTitle('');
+              //   setModel({...model,name:''});
+              // }else{
                 setForemanTitle('');
                 setModel({ ...model, name: '' });
-              }
+              // }
             } else {
               Msg(res.msg)
             }

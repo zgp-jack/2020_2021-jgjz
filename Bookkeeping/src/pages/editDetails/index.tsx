@@ -888,7 +888,7 @@ export default function EditDetails() {
               className='publish-list-input-disabled'
               type='text'
               disabled
-              placeholder='请选择包工类型'
+              // placeholder='请选择包工类型'
               value={typeName}
             />
           </View>
@@ -901,7 +901,7 @@ export default function EditDetails() {
             className='publish-list-input-disabled'
             type='text'
             disabled
-            placeholder='请选择项目名称'
+            // placeholder='请选择项目名称'
             value={val.name}
           />
         </View>
@@ -914,7 +914,7 @@ export default function EditDetails() {
               className='publish-list-input-disabled'
               type='text'
               disabled
-              placeholder='请选择班组长'
+              // placeholder='请选择班组长'
               value={val.leaderName}
             />
           </View>
@@ -928,7 +928,7 @@ export default function EditDetails() {
             className='publish-list-input-disabled'
             type='text'
             disabled
-            placeholder='请选择工人'
+            // placeholder='请选择工人'
             value={val.workername}
           />
         </View>

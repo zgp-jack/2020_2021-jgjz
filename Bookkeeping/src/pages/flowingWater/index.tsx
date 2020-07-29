@@ -86,6 +86,7 @@ export default function FlowingWater() {
           setData({item:res.data.data})
           dispatch(setFlowingWater(res.data))
         }else{
+          setIsCheckOut(false)
           setData({ item: [] })
         }
       }else{
@@ -167,17 +168,19 @@ export default function FlowingWater() {
     let params = {
       ids:[v.id]
     }
-    console.log(v,'vvvvv');
     if(e.text == '删除'){
       Taro.showModal({
         title:'提示',
-        content:'确认删除',
+        content:'数据一经删除将无法恢复。请谨慎操作哦！',
         showCancel: true,
         success:(res)=>{
           if (res.confirm == true) {
             bkDeleteBusinessAction(params).then(res => {
               if (res.code === 200) {
-                getList(time, lastTime)
+                Msg('删除成功！')
+                setTimeout(()=>{
+                  getList(time, lastTime)
+                },800)
               } else {
                 Msg(res.msg)
               }
@@ -232,30 +235,40 @@ export default function FlowingWater() {
     const arr = JSON.parse(JSON.stringify(data.item));
     console.log(arr,'xxx')
     let ids:any[]=[];
+    let dataItem:any[] = [];
     for(let i =0;i<arr.length;i++){
       for (let j=0;j<arr[i].arr.length;j++){
         console.log(arr[i].arr[j])
+        if(arr[i].arr[j]){
+          dataItem.push(arr[i].arr[j]);
+        }
         if(arr[i].arr[j].checkClick){
           console.log(arr[i].arr[j].checkClick)
           ids.push(arr[i].arr[j].id);
         }
       }
     }
-    
     let params = {
       ids,
     }
+
+    const num = dataItem.length;
+    const delNum = ids.length;
+    // 总共多少笔
     console.log(ids);
     Taro.showModal({
       title: "提示",
-      content: '删除后,当前信息将无法恢复,确定删除？',
+      content: `本月共记录${num}笔记工，记工删除${delNum}笔。数据一经删除将无法恢复。请谨慎操作哦！`,
       showCancel: true,
       confirmText: '确认删除',
       success: (res) => {
         if (res.confirm == true) {
           bkDeleteBusinessAction(params).then(res => {
             if (res.code === 200) {
-              getList(time, lastTime)
+              Msg('删除成功');
+              setTimeout(()=>{
+                getList(time, lastTime)
+              },800)
             } else {
               Msg(res.msg)
             }
@@ -384,7 +397,7 @@ export default function FlowingWater() {
                       <View className='content-list-subclass-left'>
                             {isCheckOut && <View><Checkbox checked={val.checkClick} className='checkbox' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
                         <View className=''>
-                            <View>{val.workername || '-'} {val.note&&<Text className='icon'>备</Text>}</View>
+                              <View>{val.workername || '-'} {(val.note || val.view_images.length>0)&&<Text className='icon'>备</Text>}</View>
                               <View className='content-list-subclass-left-title'>我在{val.group_info}对{val.workername || '-'}记了1笔
                               {val.business_type == '1' ? '记工' : (val.business_type == '2'?'包工':'借支') }
                               </View>
