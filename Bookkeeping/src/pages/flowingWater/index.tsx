@@ -241,17 +241,35 @@ export default function FlowingWater() {
         }
       }
     }
+    
     let params = {
       ids,
     }
     console.log(ids);
-    bkDeleteBusinessAction(params).then(res=>{
-      if(res.code === 200 ){
-        getList(time, lastTime)
-      }else{
-        Msg(res.msg)
+    Taro.showModal({
+      title: "提示",
+      content: '删除后,当前信息将无法恢复,确定删除？',
+      showCancel: true,
+      confirmText: '确认删除',
+      success: (res) => {
+        if (res.confirm == true) {
+          bkDeleteBusinessAction(params).then(res => {
+            if (res.code === 200) {
+              getList(time, lastTime)
+            } else {
+              Msg(res.msg)
+            }
+          })
+        }
       }
     })
+    // bkDeleteBusinessAction(params).then(res=>{
+    //   if(res.code === 200 ){
+    //     getList(time, lastTime)
+    //   }else{
+    //     Msg(res.msg)
+    //   }
+    // })
   }
   console.log(data,'data')
   // 记工

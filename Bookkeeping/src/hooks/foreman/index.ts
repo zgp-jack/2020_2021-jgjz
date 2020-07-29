@@ -1417,6 +1417,7 @@ export default function userForeman() {
   }
   // 工人列表
   const bkGetWorker = (groupInfos?:any, val?:any,dataItem?:any)=>{
+    console.log('工人列表111')
     // 不传group_info获取通讯录里的所有人
     const type = Taro.getStorageSync(Type);
     let params;
@@ -2953,7 +2954,7 @@ export default function userForeman() {
       return;
     }
     // 选择项目的时候先获取设置工资标准员工
-    bkGetWorker(groupInfo,true)
+    bkGetWorker(v.group_id + ',' + v.id,true)
     // bkGetWorkerWage(groupInfo,true);
     // 获取工人列表
     // return;
