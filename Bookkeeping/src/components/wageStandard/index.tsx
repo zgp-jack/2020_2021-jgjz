@@ -12,6 +12,7 @@ interface PROPS {
   handleWageStandardRadio:(e)=>void,
 }
 export default function WageStandard({ display, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio }: PROPS) {
+  console.log(wageStandard,'wageStandard')
   return(
     <View>
       {display && <View className='wageStandard'>

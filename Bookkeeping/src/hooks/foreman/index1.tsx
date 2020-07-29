@@ -1481,7 +1481,7 @@ export default function userForeman() {
   const handleOpenWagesModal = (v?: any) => {
     const item = JSON.parse(JSON.stringify(model));
     if (!item.name) {
-      Msg('请选择项目')
+      Msg('请先选择项目')
       return
     }
     // 借支和按量长按没用
@@ -2692,7 +2692,7 @@ export default function userForeman() {
   // 选择工人添加，没有选择项目无法选择
   const handleAdd = () => {
     if (!model.name) {
-      Msg('请选择项目')
+      Msg('请先选择项目')
       return
     }
     bkGetWorker();

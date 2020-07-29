@@ -74,7 +74,10 @@ export default function NotepadDetails() {
         if (res.confirm == true) {
           bkDeleteNotePadAction(params).then(res => {
             if (res.code === 200) {
-              Taro.navigateBack();
+              Msg('删除成功')
+              setTimeout(()=>{
+                Taro.navigateBack();
+              },800)
             } else {
               Msg(res.msg)
             }

@@ -220,11 +220,11 @@ export default function Notepad() {
   // 取消搜索
   const handleOnClear = ()=>{
     // getList();
-    setData([]);
+    // setData([]);
     setIsSheach(true)
     setVal('');
-    setIds([]);
-    getList(val)
+    // setIds([]);
+    // getList(val)
     // setIsSheach(false)
   }
   return(

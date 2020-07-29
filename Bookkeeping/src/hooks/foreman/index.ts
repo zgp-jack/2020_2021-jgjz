@@ -1150,11 +1150,16 @@ export default function userForeman() {
                   console.log('创建项目 ')
                   console.log(res.data,'项目res')
                   // res.data[0].click = true;
-                  if (groupName === res.data[i].group_name + '-' + res.data[i].name){
+                  console.log(groupName,'groupName');
+                  console.log(res.data[i].group_name + '-' + res.data[i].name), '1111';
+                  if (groupName == res.data[i].group_name + '-' + res.data[i].name){
                     res.data[i].click = true;
                     // 清空
+                    console.log(res.data[i].group_name + '-' + res.data[i].name,'21312')
                     setModel({ ...modalObj, name: res.data[i].group_name + '-' + res.data[i].name})
                     setForemanTitle('');
+                    setProjectArr(res.data);
+                    return;
                   }
                 }
               }else{
@@ -1270,6 +1275,12 @@ export default function userForeman() {
                   bkGetWorkerWage(res.data[0].group_id + ',' + res.data[0].id)
                   res.data[0].click = true;
                 }
+                // 删除项目后设置工人
+                let midData = Taro.getStorageSync(MidData)
+                const objs = JSON.parse(JSON.stringify(obj))
+                objs.name = midData.nickname || '未命名';
+                objs.id = midData.worker_id;
+                setWorkerItem([objs])
                 setGroupInfo('')
                 setOpenClickTime(clickDataArr)
                 setClickData(clickDataArr);
@@ -1418,6 +1429,9 @@ export default function userForeman() {
     bkWageStandGetWageAction({}).then(res=>{
       if(res.code === 200){
         for(let i =0;i<res.data.length;i++){
+          if(res.data[i].overtime_type == 2){
+            res.data[i].addWork = res.data[i].money / (res.data[i].overtime || 0);
+          }
           if(i === 0 ){
             res.data[i].click = true;
             setTemplateId(res.data[i].id)
@@ -1425,6 +1439,7 @@ export default function userForeman() {
             res.data[i].click = false;
           }
         }
+        console.log(res.data,'狗狗你作弊白噢')
         setStandard(res.data);
       }
     })
@@ -1583,31 +1598,32 @@ export default function userForeman() {
   }
   // 创建项目
   const handleAddProject = ()=>{
+    let type = Taro.getStorageSync(Type);
     let params={
       group_name: model.groupName,
       team_name: model.teamName,
     }
     bkAddProjectTeamAction(params).then(res=>{
       if(res.code === 200){
+        // 修改工资标准
+        if (type === 2) {
+          console.log(res.data, 'ccccc1')
+          bkGetWorkerWage(res.data)
+        }
         setIds(res.data);
         const name = model.groupName + '-' + model.teamName;
         bkGetProjectTeam(name);
-        let type = Taro.getStorageSync(Type);
-        // 修改工资标准
-        if (type === 2){
-          console.log(res.data,'ccccc1')
-          bkGetWorkerWage(res.data)
-        }
+        setGroupInfo(res.data)
       }else{
         Msg(res.msg);
         return;
       }
       setProject(false);
-      let data = JSON.parse(JSON.stringify(model));
-      data.name = model.groupName;
-      console.log(res.data,'选择2')
-      setGroupInfo(res.data)
-      setModel({...data, groupName: '', teamName: ''})
+      // let data = JSON.parse(JSON.stringify(model));
+      // data.name = model.groupName;
+      // console.log(res.data,'选择2')
+      // setGroupInfo(res.data)
+      // setModel({...data, groupName: '', teamName: ''})
     })
   }
   console.log(groupInfo,'groupInfo')
@@ -2089,7 +2105,7 @@ export default function userForeman() {
     if (delType) return;
     const item = JSON.parse(JSON.stringify(model));
     if (!item.name){
-        Msg('请选择项目')
+        Msg('请先选择项目')
         return
     }
     // 借支和按量长按没用
@@ -3235,7 +3251,7 @@ export default function userForeman() {
           name: '',
           worktime_define: data.work,
           overtime_type: data.type,
-          overtime_money: data.dayAddWork,
+          overtime_money: data.addWork,
           money: data.money,
           overtime: data.day,
           id: data.id
@@ -3292,6 +3308,11 @@ export default function userForeman() {
         data.data[i].click = false
       }
     }
+    console.log(v,'31231312');
+    if (v.overtime_type == 2){
+      data.dayAddWork = (parseFloat(v.money) / parseFloat(v.overtime)).toFixed(2);
+    }
+    console.log(data,'sdasdas')
     setWageStandard(data)
   }
   // 修改已定义工资标准
@@ -3651,7 +3672,7 @@ export default function userForeman() {
   // 选择工人添加，没有选择项目无法选择
   const handleAdd = ()=>{
     if (!model.name) {
-      Msg('请选择项目')
+      Msg('请先选择项目')
       return
     }
     bkGetWorker();

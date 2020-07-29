@@ -84,13 +84,16 @@ export default function FlowingWaterDetails() {
     }
     Taro.showModal({
       title: "提示",
-      content:'确认删除',
+      content:'数据一经删除将无法恢复。请谨慎操作哦！',
       showCancel: true,
       success: (res) => {
         if(res.confirm == true){
           bkDeleteBusinessAction(params).then(res => {
             if (res.code === 200) {
-              Taro.navigateBack();
+              Msg('删除成功')
+              setTimeout(()=>{
+                Taro.navigateBack();
+              },800)
             } else {
               Msg(res.msg)
             }
