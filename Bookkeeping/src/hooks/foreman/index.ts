@@ -989,7 +989,7 @@ export default function userForeman() {
               wageStandardData.dayAddWork = 0;
               setWageStandard(wageStandardData)
               //设置工人工资为0
-              setModel({ ...modalObj, duration, time, name: '', workersWages:'0' })
+              setModel({ ...modalObj, duration, time, name: '', workersWages:'0',details:'' })
               // setModel({ ...model, workersWages: '0' })
               return;
             }
@@ -1036,7 +1036,7 @@ export default function userForeman() {
                       }];
                       setOpenClickTime(clickDataArr)
                       setClickData(clickDataArr);
-                      setModel({ ...modalObj, name, duration, time })
+                      setModel({ ...modalObj, name, duration, time, details:'' })
                       console.log(res.data,'[][][][]')
                       setProjectArr(res.data);
                       getMonthDaysCurrent(new Date(), clickDataArr)
@@ -1061,7 +1061,7 @@ export default function userForeman() {
                       }
                         modales = obj;
                       }else{
-                        modales = { ...modalObj, name, duration, time };
+                        modales = { ...modalObj, name, duration, time,details:'' };
                       }
                       console.log(modales,'modales')
                       // 设置班组长
@@ -1074,6 +1074,73 @@ export default function userForeman() {
                     }
                   }
                 return;
+                }else{
+                  // 设置默认点击
+                  res.data[0].click = true;
+                  // 设置groupInfo
+                  const groupInfos = res.data[0].group_id + ',' + res.data[0].id;
+                  setGroupInfo(res.data[0].group_id + ',' + res.data[0].id)
+                  // 设置名字
+                  const name = res.data[0].group_name + '-' + res.data[0].name;
+                  // 设置班组长
+                  dispatch(setWorker([res.data[0]]))
+                  console.log(res.data[0].leader_name, 'res.data[i].group_leaderres.data[i].group_leader')
+                  setForemanTitle(res.data[0].leader_name || '');
+                  // 设置一个工无加班
+                  // let duration = modalObj.duration;
+                  const duration = '一个工无加班';
+                  // 一个工所以为0直接设置
+                  const data = JSON.parse(JSON.stringify(timeArr));
+                  data[0].click = true;
+                  setTimeArr(data);
+                  // 设置今天
+                  const years = new Date().getFullYear();
+                  const months = new Date().getMonth() + 1;
+                  const dates = new Date().getDate();
+                  const time = years + '-' + months + '-' + dates;
+                  const clickDataArr = [{
+                    year: years,
+                    month: months,
+                    date: dates,
+                    click: true
+                  }];
+                  setOpenClickTime(clickDataArr)
+                  setClickData(clickDataArr);
+                  setModel({ ...modalObj, name, duration, time, details:'' })
+                  console.log(res.data, '[][][][]')
+                  setProjectArr(res.data);
+                  getMonthDaysCurrent(new Date(), clickDataArr)
+                  let modales;
+                  // const modales = { ...modalObj, name, duration, time };
+                  if (isAgain) {
+                    const obj = {
+                      groupName: '',
+                      teamName: '',
+                      name,
+                      time,
+                      details: '',
+                      duration,
+                      amount: '',
+                      price: '',
+                      wages: '',
+                      borrowing: '',
+                      univalent: '',
+                      userName: '',
+                      phone: '',
+                      workersWages: '0',
+                    }
+                    modales = obj;
+                  } else {
+                    modales = { ...modalObj, name, duration, time, details:'' };
+                  }
+                  console.log(modales, 'modales')
+                  // 设置班组长
+                  dispatch(setWorker([res.data[0]]))
+                  // 设置工资标准
+                  console.log(res.data[0].group_id + ',' + res.data[0].id, 'ccccc3')
+                  bkGetWorkerWage(res.data[0].group_id + ',' + res.data[0].id, '', modales)
+                  return;
+                  console.log(3213213213)
                 }
               })
               // 创建项目的时候

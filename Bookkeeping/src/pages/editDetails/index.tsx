@@ -1051,7 +1051,7 @@ export default function EditDetails() {
       <View className='publish-recruit-card'>
         <View className='publish-list-textTarea-item' onClick={() => { }}>
           <Text className='pulish-list-textTarea-title'>备注</Text>
-          <CoverView>
+          {/* <CoverView> */}
           <Textarea 
             className='textarea'
             value={val.note}
@@ -1059,7 +1059,7 @@ export default function EditDetails() {
             onInput={(e) => handleInput('note', e)}
             maxlength={400}
             />
-            </CoverView>
+            {/* </CoverView> */}
           <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
         </View>
       </View>
