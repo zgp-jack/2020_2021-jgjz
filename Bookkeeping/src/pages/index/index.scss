@@ -26,7 +26,11 @@
 }
 .heard-left {
   font-size: 32rpx;
-  margin-left: 60rpx;
+  // margin-left: 60rpx;
+}
+
+.flex-month{
+  display: flex;
 }
 
 .heard-middle{
@@ -290,12 +294,15 @@
   font-size: 24rpx;
 }
 .leftIcon{
-  margin-right: 26rpx;
+  // margin-right: 26rpx;
+  margin-left: 50rpx;
   height: 22rpx;
   width: 22rpx;
   background-size: cover;
+  margin-top: 55rpx;
 }
 .righticon {
+  margin-top: 55rpx;
   margin-left: 26rpx;
   height: 22rpx;
   width: 24rpx;

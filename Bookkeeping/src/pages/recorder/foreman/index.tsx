@@ -47,7 +47,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -81,24 +81,24 @@ export default function Foreman() {
     })
   }
   // 切换tabber
-  const handleClckTabber = (v) => {
-    console.log(v)
-    const recorderTypeArrList = JSON.parse(JSON.stringify(recorderTypeArr.item));
-    const data = recorderTypeArrList.map(val => {
-      if (val.id === v.id) {
-        val.click = true
-        setRecorderType(val.id)
-        // if(v.id===3){
-          // 设置日历rudux为空
-          dispatch(setClickTIme([]))
-        // }
-      } else {
-        val.click = false
-      }
-      return val;
-    });
-    setRecorderTypeArr({ item: data })
-  }
+  // const handleClckTabber = (v) => {
+  //   console.log(v)
+  //   const recorderTypeArrList = JSON.parse(JSON.stringify(recorderTypeArr.item));
+  //   const data = recorderTypeArrList.map(val => {
+  //     if (val.id === v.id) {
+  //       val.click = true
+  //       setRecorderType(val.id)
+  //       // if(v.id===3){
+  //         // 设置日历rudux为空
+  //         // dispatch(setClickTIme([]))
+  //       // }
+  //     } else {
+  //       val.click = false
+  //     }
+  //     return val;
+  //   });
+  //   setRecorderTypeArr({ item: data })
+  // }
   // 上传图片
   const userUploadImg = (i: number = -1) => {
     setRefresh(true);

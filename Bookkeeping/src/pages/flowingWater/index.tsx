@@ -254,11 +254,15 @@ export default function FlowingWater() {
 
     const num = dataItem.length;
     const delNum = ids.length;
+    if (!delNum){
+      Msg('请至少选择一条信息')
+      return
+    }
     // 总共多少笔
     console.log(ids);
     Taro.showModal({
       title: "提示",
-      content: `本页共记录<span className='bulue'>${num}</span>笔记工，记工删除<span className='bulue'>${delNum}</span>笔。数据一经删除将无法恢复。请谨慎操作哦！`,
+      content: `本页共记录${num}笔记工，记工删除${delNum}笔。数据一经删除将无法恢复。请谨慎操作哦！`,
       showCancel: true,
       confirmText: '确认删除',
       success: (res) => {

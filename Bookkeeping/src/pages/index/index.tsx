@@ -101,6 +101,8 @@ export default function Index() {
   const [lasted_business_identity, setLasted_business_identity]=useState<string>('')
   // 身份弹框不再提醒
   const [neverPrompt, setNeverPrompt] = useState<boolean>(false)
+  // 设置滑动状态
+  const [slide, setSlide] = useState<boolean>(false);
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
@@ -211,6 +213,7 @@ export default function Index() {
     }
   })
   useDidShow(()=>{
+    setSlide(false)
     let midData = Taro.getStorageSync(MidData);
     let creationTime = Taro.getStorageSync(CreationTime);
     let neverPromptType = Taro.getStorageSync(NeverPrompt);
@@ -501,7 +504,10 @@ export default function Index() {
   }
   const getNextPageData =()=>{
     // console.log(31231)
-    userRouteJump(`/pages/flowingWater/index`)
+    if (!slide){
+      setSlide(true);
+      userRouteJump(`/pages/flowingWater/index`)
+    }
   }
   // 跳转
   const userRouteJump = (url:string)=>{
@@ -694,6 +700,32 @@ export default function Index() {
     userRouteJump(url);
     // userRouteJump('/pages/flowingWater/index')
   }
+  // 选择项目
+  const handleLeft = (type:number)=>{
+    console.log(111);
+    const val = JSON.parse(JSON.stringify(vals));
+    console.log(val);
+    console.log(newTime,'time')
+    const date = new Date(newTime||'');
+    const nowD = date.getFullYear() + "." + (date.getMonth() + 1) + "." + date.getDate();
+    //减少/增加一个月
+    if(type ===0){
+      date.setMonth(date.getMonth() - 1);
+    }else{
+      date.setMonth(date.getMonth() + 1);
+    }
+    let month = date.getMonth();
+    month = ((month == 0) ? (12) : (month));
+    const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
+    console.log(befD,'befD')
+    getData(befD);
+    setTime(befD);
+    console.log(befD.substring(5,7))
+    // 月份
+    setMonth(befD.substring(5, 7))
+  }
+  console.log(newMonth,'newMonth');
+  console.log(start,'start')
   return (
     <View className='index-content'>
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
@@ -701,7 +733,9 @@ export default function Index() {
       <View className='top'>
         <Image src={`${IMGCDNURL}background.png`} className='top_img'/>
         <View className='heard'>
-          <View className='heard-left'>
+        <View className='flex-month'>
+          {newMonth > start && <Image onClick={()=>handleLeft(0)} src={`${IMGCDNURL}left.png`} className='leftIcon' />}
+            <View className='heard-left' style={newMonth > start ? '' : { marginLeft: '50rpx' }}>
             <Picker
               start={start}
               end={end}
@@ -712,9 +746,10 @@ export default function Index() {
               // range={timeList}
               // onColumnChange={(e) => handlebindcolumnchange(e)}
             >
-              {newMonth > start && <Image src={`${IMGCDNURL}left.png`} className='leftIcon' />}
-              {month}月{newMonth < start && <Image className='righticon' src={`${IMGCDNURL}right.png`}/>}
+              {month}月
             </Picker>
+          </View>
+            {newMonth < start && <Image onClick={() => handleLeft(1)} className='righticon' src={`${IMGCDNURL}right.png`}/>}
           </View>
           {/* <Image src={`${IMGCDNURL}user.png`}/> */}
           {type === 1 ? 
@@ -737,11 +772,11 @@ export default function Index() {
         </View>
         <View className='money'>
           <View className='money-left'>
-            {(item && item.money > 10000000 ? '一千万+' : item.money)||0}
+            {(item && item.money > 10000000 ? '1千万+' : item.money)||0}
           {/* {item && item.money || 0} */}
           </View>
           <View className=''>
-          {(item && item.borrow > 10000000 ? '一千万+' : item.borrow) || 0}
+          {(item && item.borrow > 10000000 ? '1千万+' : item.borrow) || 0}
           {/* {item && item.borrow || 0} */}
           </View>
         </View>

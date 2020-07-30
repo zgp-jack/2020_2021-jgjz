@@ -901,7 +901,9 @@ export default function AttendanceSheet() {
       {tebArr.length > 2 &&
         <View className='footer-btn'>
           <View className='footer-btn-box'>
-            <View className='footer-btn-box-left' onClick={handleShare}>
+            <View className='footer-btn-box-left'
+            //  onClick={handleShare}
+            >
               {/* <View>分享给微信好友</View> */}
               <Button open-type="share">分享给微信好友</Button>
               {/* <View className='footer-btn-box-left-title'>发送到工人微信群快速对工</View> */}
