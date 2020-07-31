@@ -97,10 +97,16 @@ export default function Notepad() {
               console.log(timeItem,'timeItem')
               console.log(res.data[i].list[j].created_time,'res.data[i].list[j].created_time')
               const newTime = timeItem.getFullYear() + '/' + addZero(timeItem.getMonth() + 1) + '/' + addZero(timeItem.getDate()) + ' ' + addZero(timeItem.getHours()) + ':'+addZero(timeItem.getMinutes());
-              res.data[i].list[j].newTime = newTime;
               const newDate = new Date();
               const newDateYears = newDate.getFullYear()-1;
               console.log(newDateYears,'newDateYears');
+              if (timeItem.getFullYear() > newDateYears){
+                res.data[i].time = time;
+              }else{
+                res.data[i].time = timeItem.getFullYear() + '年' + addZero(timeItem.getMonth() + 1) + '月' + addZero(timeItem.getDate()) + '日'
+                // res.data[i].list[j].newTime = newTime;
+              }
+              // console.log(timeItem.getFullYear(),'timeItem.getFullYear()')
             }
             // 去年的都显示年月日
             // const newDate = new Date()''
