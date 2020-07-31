@@ -57,12 +57,20 @@ export default function userCode(InitParams) {
         console.log(obj,'obj')
         let params ={
           note: obj.note,
-          time: obj.creatTime,
+          time: obj.created_time_string,
           image: obj.view_images,
           id: InitParams.id
         }
+        console.log(obj.created_time_string,'creatTime')
+        const time = obj.created_time_string.substring(0, 4) + '年' + obj.created_time_string.substring(5, 7) + '月' + obj.created_time_string.substring(8, 11) + '日';
+        const date = new Date(obj.created_time * 1000).getDay();
+        const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+        const week = weeks[date];
         setImage({item:obj.view_images})
         setModel(params);
+        Taro.setNavigationBarTitle({
+          title: time + ' ' + week
+        })
       }
     }else{
       // 获取当前时间
@@ -118,12 +126,15 @@ export default function userCode(InitParams) {
     console.log(params,'params');
     if (InitParams.id){
       bkUpdateNotePadAction(params).then(res=>{
-        console.log(res);
-        Msg('修改成功')
-        // Taro.navigateTo({ url:'/pages/notepad/index'})
-        setTimeout(()=>{
-          Taro.navigateBack({ delta:2});
-        },500)
+        if(res.code === 200){
+          Msg('修改成功')
+          // Taro.navigateTo({ url:'/pages/notepad/index'})
+          setTimeout(()=>{
+            Taro.navigateBack({ delta:2});
+          },500)
+        }else{
+          Msg(res.msg);
+        }
       })
     }else{
       bkAddNotepadAction(params).then(res=>{

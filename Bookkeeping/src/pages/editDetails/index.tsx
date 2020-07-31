@@ -76,7 +76,7 @@ export default function EditDetails() {
   // 内容
   const [wageStandard, setWageStandard] =useState<any>({
     data: [
-      { id: 1, name: '按小时计算', click: false },
+      { id: 1, name: '按小时算', click: false },
       { id: 2, name: '按天算', click: false },
     ],
     work: 0,
@@ -140,10 +140,10 @@ export default function EditDetails() {
           const newData = new Date();
           const newTime = newData.getFullYear() + '-' + addZero(newData.getMonth() + 1) + '-' + addZero(newData.getDate());
           obj.time = newTime;
-          data.work = res.data.worktime_define;
-          data.addWork = res.data.overtime_money;
-          data.money = res.data.worker_money;
-          data.day = res.data.overtime;
+          data.work = res.data.wage_worktime_define;
+          data.addWork = res.data.wage_overtime_money;
+          data.money = res.data.wage_money;
+          data.day = res.data.wage_overtime;
           data.worker_id = res.data.worker_id;
           data.group_info = res.data.group_info;
           if (parseInt(res.data.money) && parseInt(res.data.overtime)){
@@ -302,12 +302,15 @@ export default function EditDetails() {
   const handleRadioBorrowing = (v) => {
     console.log(v)
     const data = JSON.parse(JSON.stringify(borrowing.item));
+    console.log(data,'data');
     for(let i =0;i<data.length;i++){
-      if(v.id = data[i].id){
+      if(v.id == data[i].id){
         data[i].click = true;
+      }else{
+        data[i].click = false;
       }
     }
-    setBorrowing(data);
+    setBorrowing({item:data});
   }
   // 关闭
   const handleClose = ()=>{
@@ -510,20 +513,20 @@ export default function EditDetails() {
     //   type: 'wage'//后端说修改type传这个
     // };
     // 工人
-    if(identity === 2){
-      bkSetWorkerIdentityWageAction(params).then(res => {
-        if (res.code !== 200) {
-          Msg(res.msg)
-        }
-      })
-      //  班组长
-    }else{
-      bkUpdateWorkerAction(paramsData).then(res=>{
-        if(res.code !== 200){
-          Msg(res.msg)
-        }
-      })
-    }
+    // if(identity === 2){
+    //   bkSetWorkerIdentityWageAction(params).then(res => {
+    //     if (res.code !== 200) {
+    //       Msg(res.msg)
+    //     }
+    //   })
+    //   //  班组长
+    // }else{
+    //   bkUpdateWorkerAction(paramsData).then(res=>{
+    //     if(res.code !== 200){
+    //       Msg(res.msg)
+    //     }
+    //   })
+    // }
       // }
     // // 上班时间
     // let time = 0;
@@ -747,7 +750,8 @@ export default function EditDetails() {
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
     console.log(wages,'wages')
-    setVal({ ...val, duration: title,wages: wages })
+    const num = wages.toFixed(2);
+    setVal({ ...val, duration: title, wages: num })
     setDisplay(false);
   }
   // 关闭上班时长
@@ -788,44 +792,30 @@ export default function EditDetails() {
     const borrowingArr = JSON.parse(JSON.stringify(borrowing.item))
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
-    // 
-    console.log(businessTypes,'businessTypes')
-    console.log(borrowingArr,'borrowingArr');
     let type;
     if (businessTypes == 3){
-      console.log(32132131)
       for (let i = 0; i < borrowingArr.length;i++){
         console.log(borrowingArr[i],'111')
         if(borrowingArr[i].click){
-          console.log(borrowingArr[i].id,'x')
           type = borrowingArr[i].id
         }
       }
     }else{
       type = businessTypes;
     }
-    console.log(type,'type')
-    // 工资标准
-    // const Item = JSON.parse(JSON.stringify(wageStandard));
     // 时间
-    console.log(val,'val')
-    console.log(timeArr,'timaeArr')
-    console.log(addWorkArr,'addWorkArr')
-    console.log(items,'xxxeqweqw')
-    let times: number = 0, work_time_hour = 0;
+    let times: number = 0, work_time_hour = 0, work_time_type;
     timeArr.map(v => {
       if (v.click) {
         if (v.num) {
           if (v.id !== 4) {
-            console.log(v.num,'v.numv.numv.num');
-            console.log(items.work,'items.work')
             times = v.num;
             work_time_hour = items.work * v.num;
+            work_time_type = 'working_hour'
           } else {
-            console.log(items.work,'1111');
-            console.log(v.num,'2222');
             times = 1 / items.work * v.num;
             work_time_hour = v.num;
+            work_time_type = 'hour'
           }
         }
       }
@@ -844,8 +834,14 @@ export default function EditDetails() {
     console.log(val,'val');
     // return;
     // 图片
+    let money;
+    if (businessType ==3 ){
+      money = val.money
+    }else{
+      money =val.wages
+    }
     let params = {
-      money: val.wages,
+      money,
       time:data.time,
       type,
       img_url,
@@ -854,7 +850,8 @@ export default function EditDetails() {
       work_time: times||0,
       work_time_hour: work_time_hour||0,
       note: val.note,
-      group_info: items.group_info
+      group_info: items.group_info,
+      work_time_type,
     }
     updateBusinessAction(params).then(res=>{
       console.log(res);

@@ -38,7 +38,7 @@ export default function EditProject({ display, handleClose, data, handleEditProj
               />
             </View>
             <View className='createProject-complaintModal-footer'>
-              <View className='createProject-complaintModal-footer-btn' onClick={handleSubmit}>确认修改</View>
+              <View className='createProject-complaintModal-footer-btn' onClick={handleSubmit}>确定修改</View>
             </View>
           </View>
         </View>

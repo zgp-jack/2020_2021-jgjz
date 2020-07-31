@@ -1,5 +1,8 @@
 .foreman{
   height: 100vh;
+  .at-input-number__input, .at-input-number input{
+    color: red !important;
+  }
 }
 .tabber {
   display: flex;
@@ -312,6 +315,7 @@
   color: rgba(47, 53, 65, 1);
   font-size: 24rpx;
   margin-bottom: 15rpx;
+  margin-left: 10rpx;
 }
 .workerBox-list-title-origin-color{
   height: 19rpx;
@@ -329,6 +333,7 @@
   border-radius: 3rpx;
   text-align: center;
   color: #0099FF;
+  margin-top: 10rpx;
 }
 
 .workerBox-change {
@@ -774,4 +779,7 @@
   height: 43rpx;
   width: 43rpx;
   background-size: contain;
+}
+.blued{
+  color: #0099FF;
 }

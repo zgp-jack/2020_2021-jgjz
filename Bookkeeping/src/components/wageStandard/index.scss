@@ -70,7 +70,7 @@
 .formula-heard{
   display: flex;
   justify-content: space-around;
-  padding: 27rpx 35rpx;
+  padding: 27rpx 0rpx;
   color: rgba(151, 150, 149, 1);
   font-size: 28rpx;
 }
@@ -96,4 +96,25 @@
 .workList-add {
   margin-right: 20rpx;
   display: flex;
+}
+
+// .at-input-number__input, .at-input-number input{
+//   color: red !important
+// }
+// .atInputNumber{
+//   color: red !important;
+//   .at-input-number{
+//     .at-input-number__input,
+//     .at-input-number{
+//       color: red !important;
+//     }
+//   }
+// }
+.atInputNumberInput{
+  .at-input-number__input{
+    color: red !important;
+  }
+  .at-input-number{
+    color: red !important;
+  }
 }

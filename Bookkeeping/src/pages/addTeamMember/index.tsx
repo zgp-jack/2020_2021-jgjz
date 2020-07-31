@@ -74,13 +74,6 @@ export default function AddTeamMember() {
       const arr = JSON.parse(JSON.stringify(useSelectorItem.phoneList))
       console.log(item,'itemsdadsdsadsadas')
       console.log(arr,'arrrrrrrr')
-      // for(let i =0;i<item.length;i++){
-      //   if(item[i].list.length>0){
-      //     for(let j = 0;j<item[i].list.length;j++){
-      //       // item[i].list[j].click = true;
-      //     }
-      //   }
-      // }
       let itemData;
       if (item.length>0){
         itemData = item.map(v=>{
@@ -89,7 +82,6 @@ export default function AddTeamMember() {
               if (arr.length>0){
                 arr.map(value=>{
                   if(val.id == value.id){
-                    console.log(val,'valsdad')
                     val.click =true
                   }
                   return value;
@@ -309,11 +301,11 @@ export default function AddTeamMember() {
         ))}
       </View>
       <View className='add' onClick={() => setAddMemberDisplay(true)}>添加</View>
-      <View className='letter'>
+      {/* <View className='letter'>
         {letter.map((v=>(
           <View className='letter-list' id={`${v.name}`} onClick={()=>handleLetter(v)} key={v.id}>{v.name}</View>
         )))}
-      </View>
+      </View> */}
       {/* footer */}
       {type !== '2' && <View className='footer'><View className='footer-btn' onClick={handleStart}>开始记工</View></View>}
       {/* 添加成员 */}

@@ -9,8 +9,9 @@ import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setWorker } from '../../actions/workerList'
 import Auth from '../../components/auth';
-import { AtModal, AtBadge } from "taro-ui"
+import { AtModal, AtBadge, AtNavBar } from "taro-ui"
 import Msg from '../../utils/msg'
+// import useNavInfo from '../../components/nav';
 // import _ from 'lodash';
 import { setClickTIme } from '../../actions/clickTIme'
 import './index.scss'
@@ -213,6 +214,8 @@ export default function Index() {
     }
   })
   useDidShow(()=>{
+    // const { appHeaderHeight } = UseNavInfo()
+    // console.log(appHeadesrHeight,'appHeaderHeight')
     setSlide(false)
     let midData = Taro.getStorageSync(MidData);
     let creationTime = Taro.getStorageSync(CreationTime);
@@ -728,6 +731,8 @@ export default function Index() {
   console.log(start,'start')
   return (
     <View className='index-content'>
+      {/* <UseNavInfo/> */}
+      {/* <AtNavBar/> */}
       <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
       {/* 头部 */}
       <View className='top'>
@@ -736,7 +741,7 @@ export default function Index() {
         <View className='flex-month'>
           {newMonth > start && <Image onClick={()=>handleLeft(0)} src={`${IMGCDNURL}left.png`} className='leftIcon' />}
             <View className='heard-left' style={newMonth > start ? '' : { marginLeft: '50rpx' }}>
-            <Picker
+            <Picker 
               start={start}
               end={end}
               mode='date'
@@ -793,7 +798,7 @@ export default function Index() {
           <View className='textCenter'><View>按量记
             <View>
               {item.amount.type === 0 && <View className='num'>0平方米</View> }
-                {item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 10000 ? '一百万+' : item.amount.unit_num}{item.amount.unit}</View>}
+                {item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 1000000 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
                 {item.amount.type === 2 && <View className='num'>{item.amount.count > 999 ? '999+' : item.amount.count}笔</View>}
             </View>
           </View>

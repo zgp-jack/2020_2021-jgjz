@@ -202,6 +202,11 @@ export interface bkBusinessOneType extends Result{
     leaderName: string,
     leader_name:string,
     worker_overtime:string,
+    wage_money: string,
+    wage_overtime: string,
+    wage_overtime_money: string,
+    wage_overtime_type: string,
+    wage_worktime_define: string,
   }
 }
 

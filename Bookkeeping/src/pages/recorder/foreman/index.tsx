@@ -47,7 +47,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -166,6 +166,7 @@ export default function Foreman() {
   // 关闭工资标准
   const handleWageStandardClose = ()=>{
     setWageStandardDisplay(false)
+    setWagesModalDisplay(true)
   }
   // 关闭添加成员
   const handleAddMemberClose = ()=>{
@@ -217,7 +218,7 @@ export default function Foreman() {
     if (model.groupName){
       setCreateProjectDisplay(false), setProject(true) 
     }else{
-      Msg('请输入项目名称')
+      Msg('您还没有填写项目名称')
     }
   }
   // 填写班组关闭
@@ -232,9 +233,11 @@ export default function Foreman() {
     if (projectArr.length>9){
       // Msg('记工记账支持最多同时管理10个项目,请删除已结束项目,再添加新项目')
       Taro.showModal({
-        title:'系统提示',
+        // title:'系统提示',
+        title:'',
         content:'记工记账支持最多同时管理10个项目，请删除已结束项目，再添加新项目。',
-        showCancel:false
+        showCancel:false,
+        confirmColor:'#0099FF'
       })
       return
     }
@@ -315,7 +318,7 @@ export default function Foreman() {
                   <View>选择工人</View>
                   {/* <View className='workerBox-list-title-origin'>长按名字可修改/查看工资标准</View> */}
                   <View className='workerBox-list-title-origin-box'>
-                    <View className='workerBox-list-title-origin'>工资如有变动，请长按头像修改</View>
+                  <View className='workerBox-list-title-origin'>{!noSet ? '长按名字可修改/查看工资标准' :'工资如有变动，请长按头像修改'}</View>
                     <View className='workerBox-list-title-origin-tips'><Text className='workerBox-list-title-origin-color'></Text>表示当天已记过工</View>
                   </View>
                 </View>
@@ -429,7 +432,7 @@ export default function Foreman() {
       <View className='publish-recruit-card'>
         <View className='publish-list-item' onClick={() => setWorkOvertimeDisplay(true)}>
           <Text className='pulish-list-title'>上班时长</Text>
-          :<Input
+          <Input
             className='publish-list-input'
             type='text'
             disabled
@@ -467,7 +470,7 @@ export default function Foreman() {
           <View className='publish-recruit-card'>
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>工程量</Text>
-              :<Input
+              <Input
                 className='publish-list-input-amount'
                 type='digit'
                 maxLength={9}
@@ -481,7 +484,7 @@ export default function Foreman() {
           <View className='publish-recruit-card'>
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>单价</Text>
-              :<Input
+              <Input
                 className='publish-list-input'
                 type='digit'
                 maxLength={9}
@@ -494,7 +497,7 @@ export default function Foreman() {
           <View className='publish-recruit-card'>
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>工钱</Text>
-              :<Input
+              <Input
                 className='publish-list-input'
                 type='digit'
                 maxLength={16}
@@ -512,7 +515,7 @@ export default function Foreman() {
           <View className='publish-recruit-card'>
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>本次借支</Text>
-              :<Input
+              <Input
                 className='publish-list-input'
                 type='digit'
                 // disabled
@@ -554,7 +557,7 @@ export default function Foreman() {
           > */}
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>日期</Text>
-              :<Input
+              <Input
                 className='publish-list-input'
                 type='text'
                 disabled
@@ -588,7 +591,7 @@ export default function Foreman() {
       </View>
       <View className='clear'></View>
       <View className='foreman-footer'>
-        <View className='footer-left' onClick={() => handlePreservation(1)}>保存再记录一笔</View>
+          <View className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</View>
         <View className='footer-right' onClick={()=>handlePreservation(0)}>保存</View>
       </View>
       {/* 填写班组 */}
@@ -620,14 +623,14 @@ export default function Foreman() {
         right
         mask
         className='atDrawer'
-        onClose={()=>{setShow(false)}}
+          onClose={() => { setShow(false), setEdit(false)}}
         >
         <View className='atDrawer-box'>
           <View className='atDrawer-heard'>
           <View onClick={() => { setShow(false)}}>
             <Image src={`${IMGCDNURL}projectLeft.png`} className='addIcon'/>
           </View>
-            <View>项目名称</View>
+            <View>项目列表</View>
             {!edit &&<View className='atDrawer-heard-edit' onClick={()=>handleEdit(0)}>修改/删除</View>}
             {edit && <View className='atDrawer-heard-edit' onClick={()=>handleEdit(1)}>取消</View>}
           </View>
@@ -636,7 +639,7 @@ export default function Foreman() {
               <View className='atDrawer-list' onClick={()=>handleProject(v)}>
                 <View className='atDrawer-list-title'>{
                   // v.child.map(val=>(
-                  <Text>{v.group_name}-{v.name}</Text>
+                  <Text className={v.click?'blued':''}>{v.group_name}-{v.name}</Text>
                   // ))
                 }</View>
                 <View className='atDrawer-list-flex'>

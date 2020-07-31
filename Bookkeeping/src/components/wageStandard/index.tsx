@@ -27,8 +27,10 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
             <View className='wageStandard-content-listBox'> 
               <View className='wageStandard-content-listBox-list'>
                 <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>上班标准:</Text> {wageStandard.work}小时算一个工</View>
-                <View>
+                <View className='atInputNumber'>
                   <AtInputNumber
+                    // style='color:red'
+                    className='atInputNumberInput'
                     type='digit'
                     min={0}
                     max={10000}

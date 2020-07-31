@@ -16,7 +16,7 @@ export default function CreateProject({ display, handleClose, val, handleInput,h
         <View className='createProject-complaintModal'>
           <View className='createProject-complaintModal-content'>
             <View className='createProject-complaintModal-content-title'>
-              <View>创建项目 开始记工</View>
+              <View>创建项目</View>
             <View className='createProject-complaintModal-content-colse' onClick={handleClose}>x</View>
             </View>
             <View className='createProject-complaintModal-content-tips'>项目名称:</View>
@@ -29,7 +29,7 @@ export default function CreateProject({ display, handleClose, val, handleInput,h
                 onInput={(e) => handleInput('groupName',e)}
               />
             </View>
-          <View className='createProject-complaintModal-content-blued'>提示：填写您要记工的工程项目名称</View>
+          <View className='createProject-complaintModal-content-blued'>注：填写您要记工的工程项目名称</View>
             <View className='createProject-complaintModal-footer'>
             <View className='createProject-complaintModal-footer-btn' onClick={handleSubmit}>下一步</View>
             </View>

@@ -89,8 +89,11 @@ export default function Notepad() {
             const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
             const week = weeks[date];
             res.data[i].week = week;
-            const time = res.data[i].day.substring(0, 4) + '年' + res.data[i].day.substring(5, 7) + '月' + res.data[i].day.substring(8,11)+'日';
+            const time = res.data[i].day.substring(5, 7) + '月' + res.data[i].day.substring(8,11)+'日';
             res.data[i].time = time;
+            for (let j = 0; j < res.data[i].list.length;j++){
+              res.data[i].list[j].created_time_string = (res.data[i].list[j].created_time_string).replace('-', '/');
+            }
             // for(let j =0;j<res.data.list.length;j++){
             //   res.data[i].list[j].click = false;
             // }
@@ -227,6 +230,10 @@ export default function Notepad() {
     // getList(val)
     // setIsSheach(false)
   }
+  const handleJump = (id:string)=>{
+    if (del) return;
+    userRouteJump(`/pages/notepadDetails/index?id=${id}`)
+  }
   return(
     <context.Provider value={value}>
     <View className='notepad'>
@@ -294,7 +301,7 @@ export default function Notepad() {
               <View className='week'>{v.week}</View>
             </View>
             {v.list.map((values,index)=>(
-              <View className='box' key={index + index} onClick={() => userRouteJump(`/pages/notepadDetails/index?id=${values.id}`)}>
+              <View className='box' key={index + index} onClick={() => handleJump(values.id)}>
                 <View className='box-note'>{values.note}</View>
                 <View>
                   {values.view_images&&values.view_images.length>0 && <View className='flex'>

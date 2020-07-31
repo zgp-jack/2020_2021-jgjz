@@ -45,7 +45,8 @@ class App extends Component {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor:'#0099FF' ,
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'white'
+      navigationBarTextStyle: 'white',
+      // navigationStyle: 'custom',
     }
   }
 

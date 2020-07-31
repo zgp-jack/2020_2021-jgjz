@@ -63,7 +63,7 @@ export default function AddNotepad() {
           focus
           autoFocus
           auto-focus
-          cursor={0}
+          cursor={model.note.length||0}
           maxlength={400}
           onInput={(e) => handleContent(e)}
           className={id ? 'editTextarea' : 'textarea'} 

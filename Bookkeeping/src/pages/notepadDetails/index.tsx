@@ -24,8 +24,10 @@ export default function NotepadDetails() {
               const date = new Date(dataArr[i].list[j].created_time * 1000).getDay();
               const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
               const week = weeks[date];
+              dataArr[i].list[j].created_time_string = dataArr[i].list[j].created_time_string.replace('-', '/')
+              const time = dataArr[i].list[j].created_time_string.substring(0, 4) + '年'+ dataArr[i].list[j].created_time_string.substring(5, 7) + '月' + dataArr[i].list[j].created_time_string.substring(8, 11) + '日';
               Taro.setNavigationBarTitle({
-                title: dataArr[i].list[j].created_time_string + '   ' + week,
+                title: time + '   ' + week,
               })
             }
           }
@@ -66,7 +68,7 @@ export default function NotepadDetails() {
       id,
     }
     Taro.showModal({
-      title: "提示",
+      // title: "提示",
       content: '删除后,当前信息将无法恢复,确定删除？',
       showCancel: true,
       confirmText:'确认删除',
@@ -94,7 +96,7 @@ export default function NotepadDetails() {
   }
   return (
     <View className='notepadDetails'>
-      <View className='time'>{data.creatTime}</View>
+      <View className='time'>{data.created_time_string}</View>
       <View className='content'>
         {data.note}
       </View>
