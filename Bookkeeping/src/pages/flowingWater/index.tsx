@@ -43,6 +43,7 @@ export default function FlowingWater() {
     groupName: '',
     teamName: '',
   })
+  const [identity, setIdentity]= useState<number>(1)
   // 获取数据
   useDidShow(()=>{
     const date = JSON.stringify(new Date()).slice(1, 11)
@@ -55,6 +56,7 @@ export default function FlowingWater() {
     getList(times, lastM);
   })
   const type = Taro.getStorageSync(Type);
+  setIdentity(type)
   const getList = (times, lastM)=>{
     let params = {
       identity: type,
@@ -347,7 +349,7 @@ export default function FlowingWater() {
         // onColumnChange={(e) => handlebindcolumnchange(e)}
         >
             {/* <Text className='time-color'>{year}<View><Image className='leftIcon' src={`${IMGCDNURL}left.png`} /></View>{mon}<View><Image className='rightIcon' src={`${IMGCDNURL}right.png`}/></View></Text> */}
-            <View className='time-color'>{year}<Image src={`${IMGCDNURL}leftIcon.png`} className='leftIcon' />{mon}<Image className='righticon' src={`${IMGCDNURL}rightIcon.png`} /></View>
+            <View className='time-color'>{year}<Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' />{mon}<Image className='righticon' src={`${IMGCDNURL}greyRight.png`} /></View>
         </Picker>
       </View>
       <View className='content'>
@@ -400,12 +402,18 @@ export default function FlowingWater() {
                     <View key={val.id} className='content-list-subclass' onClick={(e)=>handleJump(e,v,val.id)}>
                       <View className='content-list-subclass-left'>
                             {isCheckOut && <View><Checkbox checked={val.checkClick} className='checkbox' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
+                        {identity == 1?
                         <View className=''>
-                              <View>{val.workername || '-'} {(val.note || val.view_images.length>0)&&<Text className='icon'>备</Text>}</View>
-                              <View className='content-list-subclass-left-title'>我在{val.group_info}对{val.workername || '-'}记了1笔
-                              {val.business_type == '1' ? '记工' : (val.business_type == '2'?'包工':'借支') }
-                              </View>
+                          <View>{val.workername || '-'} {(val.note || val.view_images.length>0)&&<Text className='icon'>备</Text>}</View>
+                          <View className='content-list-subclass-left-title'>我在{val.group_info}对{val.workername || '-'}记了1笔
+                          {val.business_type == '1' ? '记工' : (val.business_type == '2'?'包工':'借支') }
+                          </View>
                         </View>
+                        :<View>
+                          <View className='content-list-subclass-left-list'>我在{val.group_info}记了1笔
+                          {val.business_type == '1' ? '记工' : (val.business_type == '2' ? '包工' : '借支')}
+                          </View>
+                        </View>}
                       </View>
                       <View className='content-list-subclass-money'>¥{val.money}></View>
                     </View>

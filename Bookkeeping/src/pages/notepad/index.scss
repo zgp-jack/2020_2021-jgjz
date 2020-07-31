@@ -1,6 +1,21 @@
 .notepad{
   height: 100vh;
   overflow-y: scroll;
+  .at-search-bar__input{
+    position: relative;
+  }
+  .at-search-bar__action{
+    background: #fff;
+    color: #0099FF;
+    font-size: 28rpx;
+  }
+  .at-search-bar{
+    height:110rpx;
+    margin-bottom: 20rpx;
+  }
+  .at-search-bar__placeholder-wrap .at-icon{
+    margin-left: 12rpx;
+  }
 }
 .searchBar{
   height: 80rpx;
@@ -201,8 +216,14 @@
   width: 125rpx;
   margin-right: 30rpx;
 }
+.image:last-child {
+  height: 125rpx;
+  width: 125rpx;
+  margin-right: 0rpx;
+}
 .flex{
   display: flex;
+  justify-content: space-around;
 }
 .box{
   background: #fff;
@@ -210,6 +231,7 @@
 }
 .list{
   margin: 30rpx;
+  padding-top: 20rpx;
 }
 .title{
   margin-top: 10rpx;

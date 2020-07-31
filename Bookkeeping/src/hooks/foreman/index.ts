@@ -363,6 +363,9 @@ export default function userForeman() {
             arrList[i].click = false;
             if (data[j].worker_id === arrList[i].id) {
               arrList[i].set = true
+              setNoset(true)
+            }else{
+              setNoset(false)
             }
           }
         }
@@ -381,17 +384,17 @@ export default function userForeman() {
     }
   }, [useSelectorItem.workerList])
   // 关闭清空时间
-  useDidHide(()=>{
-    // setTimeData([]);
-    const calendar = JSON.parse(JSON.stringify(calendarDays));
-    for (let i = 0; i < calendar.length; i++) {
-      calendar[i].click = false
-    }
-    setCalendarDays(calendar);
-    setClickData([]);
-    // 设置日历rudux为空
-    dispatch(setClickTIme([]))
-  })
+  // useDidHide(()=>{
+  //   // setTimeData([]);
+  //   const calendar = JSON.parse(JSON.stringify(calendarDays));
+  //   for (let i = 0; i < calendar.length; i++) {
+  //     calendar[i].click = false
+  //   }
+  //   setCalendarDays(calendar);
+  //   setClickData([]);
+  //   // 设置日历rudux为空
+  //   dispatch(setClickTIme([]))
+  // })
   // 日历
   // 设置年月日小于0前面加0
   const addZero = (num) => {
@@ -1195,10 +1198,11 @@ export default function userForeman() {
                       }
                     })
                   }
+                  setNoset(true)
                 }
-                // else{
-                //   setNoset(true)
-                // }
+                else{
+                  setNoset(false)
+                }
               }
             }
             setWorkerItem(Item)
@@ -1836,12 +1840,12 @@ export default function userForeman() {
       let total;
       if (data.type === 1) {
         // 按小时算 加班小时* 模板加班金额
-        total = (moneyNum / workNum) * (time * workNum) + addWorkNum * addTime;
+        total = ((moneyNum / workNum) * (time * workNum) + addWorkNum * addTime).toFixed(2);
         // total = (moneyNum / workNum) * time + addWorkNum * addTime;
       } else {
         // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
         // total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);
-        total = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
+        total = (moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime)).toFixed(2);    
       }
       // const num = total.toFixed(2);
       // let num: any = 0;
@@ -2133,12 +2137,6 @@ export default function userForeman() {
     const item = JSON.parse(JSON.stringify(model));
     const workerItemArr = JSON.parse(JSON.stringify(workerItem));
     const types = Taro.getStorageSync(Type);
-    if(types === 2){
-      if (data.work == 0){
-        Msg('上班标准必须必须大于0')
-        return;
-      }
-    }
     // 时间
     let times: number = 0, work_time_hour=0,work_time_type;
     timeArr.map(v=>{
@@ -2194,6 +2192,19 @@ export default function userForeman() {
         tabData = v;
       }
     })
+    // 按量
+    let itemType;
+    for (let i = 0; i < contractorArr.item.length; i++) {
+      if (contractorArr.item[i].click) {
+        itemType = contractorArr.item[i].id;
+      }
+    }
+    if (types === 2 && (tabData.id != 3 || (tabData.id == 2 && itemType==2)) ){
+      if (data.work == 0){
+        Msg('上班标准必须必须大于0')
+        return;
+      }
+    }
     // 获取ID
     let workers:number[] = [];
     if(identity === 1){
@@ -2244,13 +2255,6 @@ export default function userForeman() {
         work_time_type,
       }
     } else if (tabData.id == 2){
-      // 按量
-      let itemType;
-      for (let i = 0; i < contractorArr.item.length;i++){
-        if (contractorArr.item[i].click){
-          itemType = contractorArr.item[i].id;
-        }
-      }
       // 按量
       if (itemType === 1 ){
         params = {
@@ -3356,8 +3360,9 @@ export default function userForeman() {
     const data = JSON.parse(JSON.stringify(model));
     Taro.showModal({
       title:'',
-      content:'确认删除',
+      content:'删除项目后,所有数据不能找回确定要删除吗？',
       showCancel:true,
+      confirmColor:'#0099FF',
       success:(res)=>{
         if (res.confirm == true){
           bkDeleteprojectTeamAction(params).then(res => {
@@ -3442,6 +3447,9 @@ export default function userForeman() {
             if (data[i].id == worker_ids[j]){
               data[i].set = true;
               data[i].del = false;
+              setNoset(true)
+            }else{
+              setNoset(false)
             }
           }
         }

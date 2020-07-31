@@ -93,6 +93,11 @@ export default function Notepad() {
             res.data[i].time = time;
             for (let j = 0; j < res.data[i].list.length;j++){
               res.data[i].list[j].created_time_string = (res.data[i].list[j].created_time_string).replace('-', '/');
+              const timeItem = new Date(res.data[i].list[j].created_time*1000);
+              console.log(timeItem,'timeItem')
+              console.log(res.data[i].list[j].created_time,'res.data[i].list[j].created_time')
+              const newTime = timeItem.getFullYear() + '/' + addZero(timeItem.getMonth() + 1) + '/' + addZero(timeItem.getDate()) + ' ' + addZero(timeItem.getHours()) + ':'+addZero(timeItem.getMinutes());
+              res.data[i].list[j].newTime = newTime;
             }
             // for(let j =0;j<res.data.list.length;j++){
             //   res.data[i].list[j].click = false;
@@ -108,6 +113,12 @@ export default function Notepad() {
       }
     })
   }
+  const addZero = (num) => {
+    if (parseInt(num) < 10) {
+      num = '0' + num;
+    }
+    return num;
+  }
   // 跳转
   const userRouteJump = (url: string) => {
     Taro.navigateTo({
@@ -121,6 +132,7 @@ export default function Notepad() {
   //handleCheckbox
   const handleCheckbox = (e)=>{
     const item = JSON.parse(JSON.stringify(ids));
+    const dataItem = JSON.parse(JSON.stringify(data));
     if(item.length === 0 ){
       item.push(e.id);
       for (let i = 0; i < data.length ;i++){
@@ -145,6 +157,17 @@ export default function Notepad() {
         }
       }
     }
+    dataItem.map((v)=>{
+      v.list.map(val=>{
+        if(val.id == e.id){
+          val.click = !val.click
+        } 
+        return val;
+      })
+      return v;
+    })
+    setData(dataItem)
+    console.log(item,'item')
     setIds(item);
   }
   // 删除
@@ -230,10 +253,15 @@ export default function Notepad() {
     // getList(val)
     // setIsSheach(false)
   }
-  const handleJump = (id:string)=>{
-    if (del) return;
-    userRouteJump(`/pages/notepadDetails/index?id=${id}`)
+  const handleJump = (v:any)=>{
+    if (del){
+      handleCheckbox(v)
+      return;
+    }else{
+      userRouteJump(`/pages/notepadDetails/index?id=${v.id}`)
+    }
   }
+  console.log(value,'value')
   return(
     <context.Provider value={value}>
     <View className='notepad'>
@@ -301,7 +329,7 @@ export default function Notepad() {
               <View className='week'>{v.week}</View>
             </View>
             {v.list.map((values,index)=>(
-              <View className='box' key={index + index} onClick={() => handleJump(values.id)}>
+              <View className='box' key={index + index} onClick={() => handleJump(values)}>
                 <View className='box-note'>{values.note}</View>
                 <View>
                   {values.view_images&&values.view_images.length>0 && <View className='flex'>
@@ -311,7 +339,7 @@ export default function Notepad() {
                   </View>}
                 </View>
                 <View className='title'>
-                  <View className='footerTime'>{values.created_time_string}</View>
+                  <View className='footerTime'>{values.newTime}</View>
                   <View>{del && <Checkbox checked={values.click} value={values.click} onClick={(e) => { e.stopPropagation(); handleCheckbox(values) }} className='checkboxButton-checkbox' color='#0099FF' />}</View>
                 </View>
               </View>

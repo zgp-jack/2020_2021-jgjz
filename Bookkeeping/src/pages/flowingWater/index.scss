@@ -94,6 +94,10 @@
   font-size: 22rpx;
   width: 93%;
 }
+.content-list-subclass-left-list{
+  color: rgba(139, 139, 139, 1);
+  font-size: 22rpx;
+}
 .content-list-subclass-money{
   margin: auto 0;
   color: rgba(254, 99, 43, 1);
@@ -199,7 +203,7 @@
   border-radius:5rpx
 }
 .leftIcon {
-  margin-right: 26rpx;
+  margin-right: 15rpx;
   height: 22rpx;
   width: 22rpx;
   background-size: cover;
@@ -207,9 +211,9 @@
 
 .righticon {
   margin-left: 3rpx;
-  height: 20rpx;
-  width: 24rpx;
-  display: inline-block;
+  height: 22rpx;
+  width: 22rpx;
+  // display: inline-block;
   // background: url(../../assets/images/right.png) no-repeat no-repeat;
   background-size: cover;
 }

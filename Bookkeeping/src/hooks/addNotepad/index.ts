@@ -115,7 +115,7 @@ export default function userCode(InitParams) {
     console.log(item)
     let images: string[] = image.item.map(item => item.url)
       if (!images && !item.note){
-        Msg('请选择图片或填写记事');
+        Msg('请填写内容或添加图片');
         return;
       }
     let params = {

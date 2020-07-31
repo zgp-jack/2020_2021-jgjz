@@ -72,6 +72,7 @@ export default function NotepadDetails() {
       content: '删除后,当前信息将无法恢复,确定删除？',
       showCancel: true,
       confirmText:'确认删除',
+      confirmColor:'#0099FF',
       success: (res) => {
         if (res.confirm == true) {
           bkDeleteNotePadAction(params).then(res => {
@@ -96,7 +97,7 @@ export default function NotepadDetails() {
   }
   return (
     <View className='notepadDetails'>
-      <View className='time'>{data.created_time_string}</View>
+      <View className='time'>{data.newTime}</View>
       <View className='content'>
         {data.note}
       </View>

@@ -467,6 +467,11 @@ export default function Index() {
   }
   // 点击提示
   const handelTps = ()=>{
+    let midData = Taro.getStorageSync(MidData);
+    if (!midData) {
+      Msg('放心使用，免费记工，数据永远不会丢失哟~');
+      return;
+    }
     let params = {
       identity: type
     }
@@ -475,7 +480,7 @@ export default function Index() {
         Msg(`您完成了[ ${res.data} ]条记工信息的备份，数据安全不丢失~`);
         setShow(true)
       }else{
-        Msg('放心使用，免费记工，数据永远不会丢失哟')
+        Msg('放心使用，免费记工，数据永远不会丢失哟~')
       }
     })
   }
@@ -677,18 +682,20 @@ export default function Index() {
     if (!midData) return;
   }
   // 跳流水
-  const handleJump = (url:string,state?:boolean)=>{
+  const handleJump = (url:string,state?:boolean|number)=>{
     if (loginType){
       userRouteJump('/pages/login/index?type=1');
       return;
     }
     let midData = Taro.getStorageSync(MidData);
     if (!midData){
+      // 游客点中间没反应
+      if (state == 2){ return}
       setDisplay(true)
       return;
     } 
     // 点击记工
-    if (state) {
+    if (state && state!=2) {
       // 判断不是0 然后与当前身份不同就是提示
       // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
@@ -710,6 +717,11 @@ export default function Index() {
   }
   // 选择项目
   const handleLeft = (type:number)=>{
+    let midData = Taro.getStorageSync(MidData);
+    if (!midData) {
+      setDisplay(true)
+      return;
+    } 
     console.log(111);
     const val = JSON.parse(JSON.stringify(vals));
     console.log(val);
@@ -775,7 +787,7 @@ export default function Index() {
             </Image>
           </View>
         </View>
-        <View onClick={() => handleJump('/pages/flowingWater/index')}>
+        <View onClick={() => handleJump('/pages/flowingWater/index',2)}>
         <View className='moneyList'>
           <View><Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱</View>
           <View><Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`}/>借支</View>
@@ -823,8 +835,8 @@ export default function Index() {
               </View>
           </View>
           <View className='btnBox'>
-            <View className='btn'>
-              {!item || (item && item.business_list.data.length === 0) ? <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`, true)}> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`,true)}> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
+            <View className='btn' onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`, true)}>
+              {!item || (item && item.business_list.data.length === 0) ? <Text> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text > 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
               <View className='notepad-Icon'><Image className='notepad-Icon-iamge' src={`${IMGCDNURL}notepad.png`}/></View>
@@ -843,6 +855,7 @@ export default function Index() {
             <View className='refresh'>刷新</View>
           </View>
         }
+        {/* 班组长 */}
         {type === 1 && list.length>0  && !busy && 
           <View className='scrollViewBox'>
             <ScrollView
@@ -868,9 +881,12 @@ export default function Index() {
                 </View>
               ))}
             </ScrollView>
-            {list.length>=3 && <View className='last'>更多</View>}
+            {list.length >= 3 && <View onClick={getNextPageData} className='last'>
+            <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}downIcon.png`} />
+            </View>}
           </View>
         }
+        {/* 工人 */}
         {type === 2 && list.length>0 && !busy && 
           <View className='scrollViewBox'>
             <ScrollView
@@ -890,7 +906,9 @@ export default function Index() {
                 </View>
               ))}
             </ScrollView>
-          {list.length >= 3 && <View className='last'>更多</View>}
+          {list.length >= 4 && <View onClick={getNextPageData} className='last'>
+            <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}downIcon.png`} />
+          </View>}
           </View>
         }
         {((item && list.length === 0)||!item) && !busy &&  

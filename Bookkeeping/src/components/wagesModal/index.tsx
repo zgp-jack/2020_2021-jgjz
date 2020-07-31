@@ -1,5 +1,6 @@
 import Taro, { useState } from '@tarojs/taro'
-import { View, Text, Checkbox,Switch, Button } from '@tarojs/components'
+import { View, Text, Checkbox, Image, Button } from '@tarojs/components'
+import { IMGCDNURL } from '../../config'
 import './index.scss'
 import classnames from 'classnames'
 
@@ -46,7 +47,9 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                   </View>
                   }
                 </View>
-                <View onClick={handleClose} className='wagesModal-content-close'>X</View>
+                <View onClick={handleClose} className='wagesModal-content-close'>
+                <Image src={`${IMGCDNURL}closeIcons.png`} className='closeIcons' />
+                </View>
               </View>
             </View>
             <View className='content'>
@@ -97,7 +100,9 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
             <View className='wagesModal-standard'>
               <View className='wagesModal-standard-flex'>
                 <View>工资标准</View>
-                  <View className='wagesModal-standard-flex-add' onClick={handleAddStandard}>+添加其他标准</View>
+                  <View className='wagesModal-standard-flex-add' onClick={handleAddStandard}>
+                    <Image src={`${IMGCDNURL}balckAdd.png`} className='balckAdd' />
+                    添加其他标准</View>
               </View>
               <View className='wagesModal-standard-box'>
                 {standard.map((v,i)=>(

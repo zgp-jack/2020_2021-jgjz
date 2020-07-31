@@ -259,6 +259,9 @@ export default function Foreman() {
           {recorderTypeArr.item.map(v => (
             <View className='tabber-list' key={v.id} onClick={() => handleClckTabber(v)}>
               <View className={v.click ? 'tabber-list-box' : ''}>
+                {v.click && 
+                <Image src={`${IMGCDNURL}groupIcon.png`} className='groupIcon' />
+                }
                 <View className={classnames({
                   'tabber-list-image-dian': v.id === 1,
                   'tabber-list-image-bao': v.id === 2,
@@ -632,7 +635,7 @@ export default function Foreman() {
         <View className='atDrawer-box'>
           <View className='atDrawer-heard'>
           <View onClick={() => { setShow(false)}}>
-            <Image src={`${IMGCDNURL}projectLeft.png`} className='addIcon'/>
+          <Image src={`${IMGCDNURL}leftIcons.png`} className='addIcon'/>
           </View>
             <View>项目列表</View>
             {!edit &&<View className='atDrawer-heard-edit' onClick={()=>handleEdit(0)}>修改/删除</View>}
@@ -668,7 +671,7 @@ export default function Foreman() {
         </View>
           <View className='atDrawer-footer'>
             <View className='atDrawer-footer-btn' onClick={handleAddProjectList}>
-                {/* <Image src={`${IMGCDNURL}add.png`} className='addIcon'/>  */}
+              <Image src={`${IMGCDNURL}whiteLeftAdd.png`} className='addIcon'/> 
                 创建项目</View>
           </View> 
         </AtDrawer>

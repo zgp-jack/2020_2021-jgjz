@@ -9,7 +9,7 @@
   justify-content: space-around;
   background: #ffffff;
   padding-top: 15rpx;
-  padding-bottom: 12rpx;
+  padding-bottom: 20rpx;
   color: rgba(47, 53, 65, 1);
   font-size: 28rpx;
 }
@@ -62,6 +62,7 @@
   background: rgba(243, 244, 245, 1);
   border-radius: 3px;
   padding: 5rpx;
+  position: relative;
 }
 
 .projectName {
@@ -761,10 +762,10 @@
 }
 
 .addIcon{
-  display: inline-block;
-  height: 20rpx;
-  width: 20rpx;
+  height: 25rpx;
+  width: 25rpx;
   background-size: contain;
+  margin-right: 10rpx;
 }
 .noText{
   text-align: center;
@@ -782,4 +783,11 @@
 }
 .blued{
   color: #0099FF;
+}
+.groupIcon{
+  position: absolute;
+  bottom: -20rpx;
+  left: -5rpx;
+  width: 100rpx;
+  height: 20rpx;
 }

@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro'
-import { View, Image, Text, Input } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
+import { IMGCDNURL } from '../../config'
 import './index.scss'
 
 interface dataType{
@@ -32,7 +33,11 @@ export default function WorkOvertime({ display, handleWorkOvertimeClose, handlew
                     className={v.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}   
                     key={v.id}
                     onClick={() => { handleworkOvertime(1,v)}}
-                    >{v.name}</View>
+                    >{v.name}
+                    {(v.id != 1 && v.id != 2 && v.id != 3) &&
+                      <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
+                    }
+                    </View>
                 ))}
               </View>
             <View className='workOvertime-complaintModal-content-box-title'>加班时长</View>
@@ -42,7 +47,11 @@ export default function WorkOvertime({ display, handleWorkOvertimeClose, handlew
                   className={v.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}
                   key={v.id}
                   onClick={() => { handleworkOvertime(0, v) }}
-                >{v.name}</View>
+                >{v.name}
+                  {v.id!=1 && 
+                    <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons'/>
+                  }
+                </View>
               ))}
             </View>
             {/* <View className='workOvertime-complaintModal-content-box-flex'><View className='workOvertime-complaintModal-content-box-list-click'>无加班</View><View className='workOvertime-complaintModal-content-box-list' onClick={()=>handleworkOvertime(0)}>0.0小时</View></View> */}
