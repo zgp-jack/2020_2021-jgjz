@@ -30,21 +30,25 @@
 }
 .evaluate{
   background: #fff;
-  height: 214rpx;
+  // height: 214rpx;
   font-size: 26rpx;
   padding: 20rpx 30rpx;
   color: rgba(128, 128, 128, 1);
-  margin-bottom: 18rpx;
+  // margin-bottom: 18rpx;
 }
 .evaluateRadio{
   display: flex;
-  margin-top: 48rpx;
+  font-size: 26rpx;
+  color: rgba(128, 128, 128, 1);
+  // margin-top: 48rpx;
+  background: #ffffff;
+  margin-bottom: 18rpx;
 }
 .RadioGroup{
   width: 100%;
 }
 .evaluateRadioList{
-  width: 25%;
+  width: 21%;
   margin:  0 auto;
   margin-bottom: 48rpx;
   text-align: center;
@@ -52,7 +56,7 @@
   font-size: 28rpx !important;
 }
 .opinion{
-  height: 644rpx;
+  // height: 644rpx;
   background: #fff;
   padding: 23rpx 20rpx;
 }
@@ -64,11 +68,14 @@
   padding-top: 20rpx;
   padding-left: 16rpx;
   font-size: 26rpx;
+  word-break:break-all;
+  word-wrap: break-word;
 }
 .tips{
   font-size:26rpx;
   color:rgba(254, 99, 43, 1);
   margin-bottom: 30rpx;
+  margin-left: 20rpx;
 }
 .image{
   display: block;
@@ -94,6 +101,9 @@
 .addImage{
   color: rgba(153, 153, 153, 1);
   font-size: 24rpx;
-  margin-left: 20rpx;
+  margin-left: 40rpx;
   margin-bottom: 20rpx;
+}
+.white{
+  background: #fff;
 }

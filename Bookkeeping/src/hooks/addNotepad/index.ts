@@ -139,7 +139,8 @@ export default function userCode(InitParams) {
     }else{
       bkAddNotepadAction(params).then(res=>{
         if(res.code === 200 ){
-          Msg(res.msg);
+          // Msg(res.msg);
+          Msg('保存成功')
           setTimeout(()=>{
             Taro.navigateBack({
               delta: 1

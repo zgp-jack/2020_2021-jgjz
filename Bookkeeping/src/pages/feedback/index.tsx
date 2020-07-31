@@ -107,6 +107,7 @@ export default function Feedback() {
       {/* 评价 */}
       <View className='evaluate'>
         <View>您觉得记工记账用起来怎么样？给个评价吧~</View>
+      </View>
         <View className='evaluateRadio'>
           <RadioGroup className='RadioGroup'>
           {evaluate.map(v=>(
@@ -114,10 +115,11 @@ export default function Feedback() {
           ))}
           </RadioGroup>
         </View>
-      </View>
       {/* 建议 */}
       <View className='opinion'>
         <Textarea className='opinionTextarea' maxlength={400} onInput={(e) => setNote(e.detail.value)} placeholder='请留下您的意见或建议' placeholder-style='color:rgba(167, 167, 167, 1)'/>
+      </View>
+      <View className='white'>
         <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} /></View>
         <View className='clear'></View>
         {image.item.length === 0 && <View className='addImage'>添加图片</View>}

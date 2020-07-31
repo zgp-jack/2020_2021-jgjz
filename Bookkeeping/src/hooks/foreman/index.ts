@@ -3362,9 +3362,10 @@ export default function userForeman() {
     const data = JSON.parse(JSON.stringify(model));
     Taro.showModal({
       title:'',
-      content:'删除项目后,所有数据不能找回确定要删除吗？',
+      content:'删除项目后,所有数据不能找回,确定要删除吗？',
       showCancel:true,
       confirmColor:'#0099FF',
+      cancelColor:'##797979',
       success:(res)=>{
         if (res.confirm == true){
           bkDeleteprojectTeamAction(params).then(res => {

@@ -2,6 +2,8 @@
   height: 100vh;
   overflow-y: scroll;
   .at-search-bar__input{
+    padding: 0rpx;
+    width: auto;
     position: relative;
   }
   .at-search-bar__action{
@@ -214,7 +216,14 @@
 .image{
   height: 125rpx;
   width: 125rpx;
-  margin-right: 30rpx;
+  margin-right: 42rpx;
+  // margin-left: 10rpx;
+}
+.image:first-child {
+  height: 125rpx;
+  width: 125rpx;
+  margin-right: 42rpx;
+  margin-left: 10rpx;
 }
 .image:last-child {
   height: 125rpx;
@@ -223,7 +232,7 @@
 }
 .flex{
   display: flex;
-  justify-content: space-around;
+  // justify-content: space-around;
 }
 .box{
   background: #fff;
@@ -255,10 +264,12 @@
   font-size:26rpx;
   font-weight:400;
   color:rgba(165, 165, 165, 1);
+  margin-left: 10rpx;
 }
 .box-note{
   margin-bottom: 10rpx;
   font-size:26rpx;
   font-weight:400;
   color:rgba(51, 51, 51, 1);
+  margin-left: 8rpx;
 }

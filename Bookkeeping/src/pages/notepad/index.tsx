@@ -98,7 +98,12 @@ export default function Notepad() {
               console.log(res.data[i].list[j].created_time,'res.data[i].list[j].created_time')
               const newTime = timeItem.getFullYear() + '/' + addZero(timeItem.getMonth() + 1) + '/' + addZero(timeItem.getDate()) + ' ' + addZero(timeItem.getHours()) + ':'+addZero(timeItem.getMinutes());
               res.data[i].list[j].newTime = newTime;
+              const newDate = new Date().getDate();
+              // const newDateYears = newDate.getFullYear();
+              // console.log(newDateYears,'newDateYears')
             }
+            // 去年的都显示年月日
+            // const newDate = new Date()''
             // for(let j =0;j<res.data.list.length;j++){
             //   res.data[i].list[j].click = false;
             // }
@@ -271,6 +276,7 @@ export default function Notepad() {
           showActionButton
           value={val}
           maxLength={10}
+          placeholder='快速搜索关键词'
           onClear={handleOnClear}
           onChange={(e)=>setVal(e)}
           onActionClick={handleSeach}

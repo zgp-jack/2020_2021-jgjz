@@ -71,8 +71,9 @@ export default function NotepadDetails() {
       // title: "提示",
       content: '删除后,当前信息将无法恢复,确定删除？',
       showCancel: true,
-      confirmText:'确认删除',
+      confirmText:'确定删除',
       confirmColor:'#0099FF',
+      cancelColor:'#797979',
       success: (res) => {
         if (res.confirm == true) {
           bkDeleteNotePadAction(params).then(res => {

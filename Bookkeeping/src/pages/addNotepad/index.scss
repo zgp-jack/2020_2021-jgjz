@@ -23,11 +23,15 @@
   padding: 30rpx;
   padding-top: 10rpx;
   width: auto;
+  word-break:break-all;
+  word-wrap: break-word;
 }
 .textarea{
   padding: 30rpx;
   padding-top: 10rpx;
   width: auto;
+  word-break:break-all;
+  word-wrap: break-word;
 }
 .footer-box-left{
   display: flex;
@@ -65,10 +69,12 @@
 
 .image {
   display: block;
+  display: flex;
+  // justify-content: space-around;
 }
 .footerbtn{
   width: 100%;
-  margin-top: 200rpx;
+  margin-top: 15rpx;
 }
 
 .footerbtn-btn{
