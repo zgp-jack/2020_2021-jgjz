@@ -55,6 +55,8 @@ export default function Index() {
   const [time,setTime]= useState<string>('')
   // 当前月份
   const [newMonth, setNewMonth] = useState<string>('')
+  //现在月份
+  const [nowMonth,setNowMonth] = useState<string>('')
   //显示月份
   const [month, setMonth] = useState<string>('')
   // 记工时间
@@ -115,7 +117,10 @@ export default function Index() {
     const newMonth = time.getFullYear() + '-' + addZero(time.getMonth() + 1) ;
     // setTime(newTime);
     setNewTime(newTime)
+    // 当前月份
     setNewMonth(newMonth)
+    // 现在月份
+    setNowMonth(newMonth)
     setMonth(addZero(time.getMonth() + 1))
     // 先写死
     setStart(newTime)

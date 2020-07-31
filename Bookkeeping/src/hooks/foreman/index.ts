@@ -1361,11 +1361,14 @@ export default function userForeman() {
                 }
               }
             // }
+            console.log(userData,'userDatauserData')
             // 设置蓝色底色
             if (type === 1){
               if (userData){
                   userData.map(v=>{
                     listArr.map(val=>{
+                      console.log(v.itemType,'vitemType');
+                      console.log(itemType,'itemType')
                       if (val.group_info == v.id && dataType == v.dataType && v.itemType == itemType) {
                         for(let d=0;d<v.data.length;d++){
                           if(v.data[d] == val.id){
@@ -2873,13 +2876,13 @@ export default function userForeman() {
     const timeArr = Taro.getStorageSync(Calendar);
     // 日历和工人都要分项目完成
     let itemType;
-    if (dataType == 2){
+    // if (dataType == 2){
       for (let i = 0; i < contractorArr.item.length; i++) {
         if (contractorArr.item[i].click) {
           itemType = contractorArr.item[i].id;
         }
       }
-    }
+    // }
     let arr:any;
     if (timeArr && timeArr.length>0 ) {
       for (let i = 0; i < timeArr.length;i++){

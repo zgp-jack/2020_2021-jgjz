@@ -22,6 +22,7 @@ import { setDataList } from '../../../actions/list'
 import { setClickTIme } from '../../../actions/clickTIme'
 import { IMGCDNURL } from '../../../config'
 import classnames from 'classnames'
+import { Type } from '../../../config/store'
 // import RecorderPopup from '../../../components/recorderPopup';
 import Msg from '../../../utils/msg';
 import './index.scss'
@@ -165,8 +166,11 @@ export default function Foreman() {
   }
   // 关闭工资标准
   const handleWageStandardClose = ()=>{
+    let type = Taro.getStorageSync(Type);
+    if(type === 1){
+      setWagesModalDisplay(true)
+    }
     setWageStandardDisplay(false)
-    setWagesModalDisplay(true)
   }
   // 关闭添加成员
   const handleAddMemberClose = ()=>{
