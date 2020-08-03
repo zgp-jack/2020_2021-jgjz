@@ -195,7 +195,8 @@ export default function Index() {
                 let midData = Taro.getStorageSync(UserInfo);
                 midData.worker_id = res.data.worker_id;
                 midData.yupao_id = res.data.yupao_id;
-                Taro.setStorageSync(MidData, midData)
+                Taro.setStorageSync(MidData, midData);
+                getData();
               }
             })
           } else if (res.code == 40003){
