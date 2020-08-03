@@ -890,11 +890,10 @@ export default function Index() {
         {type === 2 && list.length>0 && !busy && 
           <View className='scrollViewBox'>
             <ScrollView
-              className='content-list-box'
+              className='content-list-box scrollWorker'
               scrollY
-              refresherEnabled
               lowerThreshold={200}
-              onScrollToLower={getNextPageData}
+              onScroll={getNextPageData}
             >
             {list.map((v, i) => (
               <View key={i + i} className='content-list-type' onClick={getNextPageData}>
