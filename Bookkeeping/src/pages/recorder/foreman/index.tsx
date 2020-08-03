@@ -630,7 +630,7 @@ export default function Foreman() {
         right
         mask
         className='atDrawer'
-          onClose={() => { setShow(false), setEdit(false)}}
+        onClose={() => { setShow(false), setEdit(false)}}
         >
         <View className='atDrawer-box'>
           <View className='atDrawer-heard'>

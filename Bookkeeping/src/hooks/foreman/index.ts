@@ -3060,6 +3060,10 @@ export default function userForeman() {
       bkGetWorkerWage(v.group_id + ',' + v.id,'',data)
       return;
     }
+    setAllClick(false);
+    setClickNum(0);
+    setCheckAll(false);
+    setClickModalNum(0)
     // 选择项目的时候先获取设置工资标准员工
     bkGetWorker(v.group_id + ',' + v.id,true)
     // bkGetWorkerWage(groupInfo,true);
