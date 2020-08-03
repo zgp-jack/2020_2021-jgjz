@@ -121,12 +121,15 @@ export default function Login() {
               }
               console.log('返回上一夜')
             }else{
-              Msg(res.msg);
+              Taro.showModal({
+                content: res.msg
+              })
             }
           })
         }else{
           Taro.showModal({
-            content: res.msg
+            content: res.msg,
+            showCancel: true,
           })
           // Msg(res.msg);
         }
