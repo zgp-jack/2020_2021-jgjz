@@ -409,7 +409,7 @@ export default function userForeman() {
     const dates = (new Date(date)).valueOf();
     const newDate = (new Date()).valueOf();
     if (newDate < dates) {
-      Msg('请设置今天之前的日期');
+      // Msg('请设置今天之前的日期');
       return;
     }
     const clickDataItem = JSON.parse(JSON.stringify(clickData));
