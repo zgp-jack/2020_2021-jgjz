@@ -33,7 +33,7 @@ export interface User {
   type?:string,
 }
 export default function Auth({ display, handleClose, callback}: PROPS) {
-    const [data,setData] = useState<any>()
+  const [data,setData] = useState<any>()
     // 状态
   const [warrant,setWarrant] = useState<boolean>(false)
   const userAuthAction = (e)=>{
