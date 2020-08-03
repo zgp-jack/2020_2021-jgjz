@@ -262,10 +262,23 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           //   // console.log(res.errmsg,'res.errmsg1')
           // }
           // console.log(msg, 'msg')
-          Taro.showModal({
-            content: res.msg
-          })
+          // Taro.showModal({
+          //   content: res.msg
+          // })
           // Msg(res.msg || res.errmsg)
+          if (res.show_type == 'prompt') {
+            Msg(res.msg);
+          } else if (res.show_type == 'pop') {
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          } else {
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          }
         }
       })
     }else{

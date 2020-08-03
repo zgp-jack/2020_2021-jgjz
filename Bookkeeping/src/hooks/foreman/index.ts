@@ -1055,15 +1055,23 @@ export default function userForeman() {
                 }
                 if(changeData){
                   const data = JSON.parse(JSON.stringify(model));
-                  let dateParams ={
-                    group_info:'',
-                    business_type:'',
-                    date:'',
-                  }
-                  getWorkerHasBusinessByDateAction(dateParams).then(dateRes=>{
-                    
-                  })
                   bkGetWorker(changeData.group_id + ',' + changeData.id, true);
+                  // 获取以前设置的内容
+                  let dataType;
+                  recorderTypeArr.item.map((v) => {
+                    if (v.click) {
+                      dataType = v.id;
+                    }
+                  })
+                  // ========
+                  // let dateParams = {
+                  //   group_info:changeData.group_id + ',' + changeData.id,
+                  //   business_type: dataType,
+                  //   date:''
+                  // }
+                  // getWorkerHasBusinessByDateAction(dateParams).then(dateRes=>{
+                  //   console.log(dateRes,'dateRes');
+                  // })
                   name = changeData.group_name + '-' + changeData.name;
                   setModel({ ...data, name });
                   changeData.click = true;
@@ -1383,40 +1391,64 @@ export default function userForeman() {
               }
             // }
             console.log(userData,'userDatauserData')
+            // 设置今天
+            const years = new Date().getFullYear();
+            const months = new Date().getMonth() + 1;
+            const dates = new Date().getDate();
+            const time = years + '-' + months + '-' + dates;
             // 设置蓝色底色
-            if (type === 1){
-              if (userData){
-                  userData.map(v=>{
-                    listArr.map(val=>{
-                      console.log(v.itemType,'vitemType');
-                      console.log(itemType,'itemType')
-                      if (val.group_info == v.id && dataType == v.dataType && v.itemType == itemType) {
-                        for(let d=0;d<v.data.length;d++){
-                          if(v.data[d] == val.id){
-                            val.discipline = true;
-                          }
-                          if (v.data[d] == objs.id) {
-                            objs.discipline = true;
-                          }
-                        }
-                      }
-                      return val;
-                    })
-                    return v;
-                  })
+            if(type === 1){
+              let dateParams = {
+                group_info: groupInfos,
+                business_type: dataType,
+                date: time,
+              }
+              getWorkerHasBusinessByDateAction(dateParams).then(dateRes=>{
+                console.log(dateRes,'dateRes')
+                if(dateRes.code == 200){
+                  if(res.data){
+                    // 判断记录过
+                    if (res.data.days&&res.data.days.length>0){
+                      console.log(res.data.days,'231321')
+                    }
+                    if (res.data.worker&&res.data.worker.length>0){
+                      console.log(res.data.worker, '231321')
+                    }
+                  }
+                }else{
+                  Msg(res.msg);
+                  return;
                 }
+              })
             }
+            // if (type === 1){
+            //   if (userData){
+            //       userData.map(v=>{
+            //         listArr.map(val=>{
+            //           console.log(v.itemType,'vitemType');
+            //           console.log(itemType,'itemType')
+            //           if (val.group_info == v.id && dataType == v.dataType && v.itemType == itemType) {
+            //             for(let d=0;d<v.data.length;d++){
+            //               if(v.data[d] == val.id){
+            //                 val.discipline = true;
+            //               }
+            //               if (v.data[d] == objs.id) {
+            //                 objs.discipline = true;
+            //               }
+            //             }
+            //           }
+            //           return val;
+            //         })
+            //         return v;
+            //       })
+            //     }
+            // }
             setGroupInfo(groupInfos)
             console.log(arr,'获取到的数据11')
             console.log([objs, ...arr],'内容111')
             dispatch(setPhoneList([objs, ...arr]));
             dispatch(setWorker([objs, ...arr]))
             bkGetWorkerWage(groupInfos, [objs,...arr]);
-            // 设置今天
-            const years = new Date().getFullYear();
-            const months = new Date().getMonth() + 1;
-            const dates = new Date().getDate();
-            const time = years + '-' + months + '-' + dates;
             const clickDataArr = [{
                 year: years,
                 month: months,

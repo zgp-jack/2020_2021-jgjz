@@ -127,12 +127,20 @@ export default function Login() {
             }
           })
         }else{
-          Taro.showModal({
-            content: res.msg,
-            showCancel:false
-            // showCancel: true,
-          })
-          // Msg(res.msg);
+          // =========后端传个字段过来判断是弹框还是轻提示
+          if (res.show_type == 'prompt'){
+            Msg(res.msg);
+          } else if (res.show_type == 'pop'){
+            Taro.showModal({
+              content: res.msg,
+              showCancel:false
+            })
+          }else{
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          }
         }
       })
     }else{
@@ -173,7 +181,20 @@ export default function Login() {
             }
           })
         }else{
-          Msg(res.msg)
+          // Msg(res.msg)
+          if (res.show_type == 'prompt') {
+            Msg(res.msg);
+          } else if (res.show_type == 'pop') {
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          } else {
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          }
         }
       })
     }
