@@ -134,7 +134,8 @@ export default function EditDetails() {
           obj.workername = res.data.workername;
           obj.leaderName = res.data.leader_name;
           // 这里是工要获取到多少工资标里的设置的时间再算
-          const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
+          // const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
+          const duration = res.data.work_time + '小时' + res.data.overtime + '小时'
           obj.duration = duration;
           obj.money = res.data.money;
           const newData = new Date();
@@ -152,10 +153,10 @@ export default function EditDetails() {
             data.dayAddWork =0
           }
           data.group_info = res.data.group_info;
-          data.type = parseInt(res.data.overtime_type);
+          data.type = parseInt(res.data.wage_overtime_type);
           console.log(data.type,'xxxx111')
           for (let i = 0; i < data.data.length;i++){
-          if (data.data[i].id == res.data.overtime_type){
+            if (data.data[i].id == res.data.wage_overtime_type){
               data.data[i].click = true;
             }
           }
@@ -194,7 +195,9 @@ export default function EditDetails() {
             //   timeArrData[i].click = true
             // }else{
               // 返回的是工为单位的 小时为单位的数据
-            const setTime = ((+res.data.worktime_define) / (1 / (+res.data.work_time))).toFixed(1)
+            // const setTime = ((+res.data.worktime_define) / (1 / (+res.data.work_time))).toFixed(1);
+            console.log(res.data.work_time,'res.data.work_time');
+            const setTime = (+res.data.work_time).toFixed(2);
               console.log(setTime,'setTime')
               const obj = { id: 4, name: `${setTime}小时`, click: true, num: setTime };
               const index = [timeArrData.length-1];
@@ -809,12 +812,14 @@ export default function EditDetails() {
       if (v.click) {
         if (v.num) {
           if (v.id !== 4) {
-            times = v.num;
-            work_time_hour = items.work * v.num;
+            // times = v.num;
+            // work_time_hour = items.work * v.num;
+            times = items.work * v.num;
             work_time_type = 'working_hour'
           } else {
-            times = 1 / items.work * v.num;
-            work_time_hour = v.num;
+            // times = 1 / items.work * v.num;
+            // work_time_hour = v.num;
+            times = v.num;
             work_time_type = 'hour'
           }
         }
@@ -848,10 +853,16 @@ export default function EditDetails() {
       id,
       overtime: overtime||0,
       work_time: times||0,
-      work_time_hour: work_time_hour||0,
+      // work_time_hour: work_time_hour||0,
       note: val.note,
       group_info: items.group_info,
       work_time_type,
+      wage_money: items.money,
+      wage_overtime:items.day,
+      wage_overtime_money: items.addWork,
+      wage_worktime_define: items.work,
+      wage_overtime_type: items.type,
+      // work_time:
     }
     updateBusinessAction(params).then(res=>{
       console.log(res);

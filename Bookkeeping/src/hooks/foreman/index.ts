@@ -1146,15 +1146,24 @@ export default function userForeman() {
   }
   // 已设置工资标准标准
   const bkGetWorkerWage = (id?:string,Item?:any,models?:any)=>{
-    console.log(321312,id)
+    console.log(321312,id);
+    // 获取类型
+    let dataType;
+    recorderTypeArr.item.map((v) => {
+      if (v.click) {
+        dataType = v.id;
+      }
+    })
     let prams;
     if(id){
       prams = {
-        group_info:id
+        group_info:id,
+        business_type: dataType,
       }
     }else{
       prams = {
-        group_info: groupInfo
+        group_info: groupInfo,
+        business_type: dataType,
       }
     }
     // return;
@@ -2203,7 +2212,7 @@ export default function userForeman() {
     }
     if (types === 2 && (tabData.id != 3 || (tabData.id == 2 && itemType==2)) ){
       if (data.work == 0){
-        Msg('上班标准必须必须大于0')
+        Msg('上班标准必须大于0')
         return;
       }
     }
@@ -2314,6 +2323,11 @@ export default function userForeman() {
         }
       }
     }else if(tabData.id === 3){
+      // 借支没钱不能保存
+      if (!item.borrowing){
+        Msg('借支必须大于0')
+        return;
+      }
       params = {
         // 记工类型
         business_type: tabData.id,
@@ -2413,10 +2427,13 @@ export default function userForeman() {
                     if(type == 1){
                       // 再记录一笔的话需要清除内容
                       // 清空备注和图片
-                      dispatch(setWorker([]))
-                      setImage({ item: [] });
-                      bkGetProjectTeam('',true);
-                      handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+                      Msg('保存成功')
+                      setTimeout(()=>{
+                        dispatch(setWorker([]))
+                        setImage({ item: [] });
+                        bkGetProjectTeam('',true);
+                        handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+                      },800)
                       // 首选获取项目名称
                       // bkGetProjectTeam();
                       //直接保存
@@ -2451,10 +2468,13 @@ export default function userForeman() {
             if (type == 1) {
               // 再记录一笔的话需要清除内容
               // 清空备注和图片
-              dispatch(setWorker([]))
-              setImage({ item: [] });
-              bkGetProjectTeam('',true);
-              handleRecordTime(timeItem, workers, groupInfo,tabData.id);
+              Msg('保存成功')
+              setTimeout(()=>{
+                dispatch(setWorker([]))
+                setImage({ item: [] });
+                bkGetProjectTeam('',true);
+                handleRecordTime(timeItem, workers, groupInfo,tabData.id);
+              },800)
               //直接保存
             } else {
               dispatch(setWorker([]))
@@ -2831,13 +2851,16 @@ export default function userForeman() {
       bkAddBusinessAction(params).then(res => {
         if (res.code === 200) {
           if(type === 1){
-            dispatch(setWorker([]))
-            setImage({ item: [] });
-            bkGetProjectTeam('', true);
-            // handleRecordTime(timeItem, workers);
-            // 设置不刷新
-            setRefresh(true)
-            handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+            Msg('保存成功')
+            setTimeout(()=>{
+              dispatch(setWorker([]))
+              setImage({ item: [] });
+              bkGetProjectTeam('', true);
+              // handleRecordTime(timeItem, workers);
+              // 设置不刷新
+              setRefresh(true)
+              handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+            },800)
           }else{
             setDisplay(true)
             handleRecordTime(timeItem, workers, groupInfo, tabData.id);
@@ -3060,7 +3083,7 @@ export default function userForeman() {
     const dayNum = data.day;
     // 上班标准提示
     if (workNum == 0){
-      Msg('上班标准必须必须大于0')
+      Msg('上班标准必须大于0')
       return;
     }
     // 每个工多少钱提示
@@ -3221,6 +3244,12 @@ export default function userForeman() {
     }
     // 修改已设置的
     if(state === 1){
+      let dataType;
+      recorderTypeArr.item.map((v) => {
+        if (v.click) {
+          dataType = v.id;
+        }
+      })
       let params = {
         id: data.worker_id,
         group_info: groupInfos,
@@ -3229,6 +3258,7 @@ export default function userForeman() {
         overtime: data.day,
         overtime_money: data.addWork,
         money: data.money,
+        business_type: dataType,
         type: 'wage'//后端说修改type传这个
       };
       bkUpdateWorkerAction(params).then(res => {
@@ -3436,10 +3466,17 @@ export default function userForeman() {
         worker_ids.push(setWorkList[i].id);
       }
     }
+    let dataType;
+    recorderTypeArr.item.map((v) => {
+      if (v.click) {
+        dataType = v.id;
+      }
+    })
     const params={
       worker_ids: worker_ids.toString(),
       wage_id: templateId,
-      group_info: id
+      group_info: id,
+      business_type: dataType,
     };
     bkSetWorkerMoneyByWageAction(params).then(res=>{
       if(res.code === 200){
@@ -3479,6 +3516,14 @@ export default function userForeman() {
         clickData.push(data[i]);
       }
     }
+    let allClick = true;
+    for (let i = 0; i < data.length; i++) {
+      if (!data[i].click) {
+        allClick = false;
+      }
+    }
+    // checkAll
+    setCheckAll(allClick)
     setClickModalNum(clickData.length)
     setSetWorkList(data);
   }
@@ -3518,6 +3563,14 @@ export default function userForeman() {
           numData.push(data[i])
         }
       }
+      let allClick = true;
+      for (let i = 0; i < data.length; i++) {
+        if (!data[i].click) {
+          allClick = false;
+        }
+      }
+      setAllClick(allClick)
+      console.log(allClick)
       setClickNum(numData.length);
       setWorkerItem(data);
       // return;
@@ -3537,6 +3590,14 @@ export default function userForeman() {
           numData.push(data[i])
         }
       }
+      // 判断全部都点击了全选就变成
+      let allClick = true;
+      for (let i = 0; i < data.length;i++){
+        if(!data[i].click){
+          allClick = false;
+        }
+      }
+      setAllClick(allClick)
       setClickNum(numData.length);
       setWorkerItem(data);
     }
@@ -3549,9 +3610,16 @@ export default function userForeman() {
     // 借支和按量记
     if (recorderTypes === 3 || (recorderTypes === 2 && contractor==1 )){
       for (let i = 0; i < dataItemArr.length; i++) {
-        dataItemArr[i].click = !dataItemArr[i].click;
-        if (dataItemArr[i].click){
-          Itme.push(dataItemArr[i]);
+        if (allClick){
+          dataItemArr[i].click = false;
+          Itme = [];
+          setAllClick(false)
+        }else{
+          dataItemArr[i].click = true;
+          if (dataItemArr[i].click){
+            Itme.push(dataItemArr[i]);
+          }
+          setAllClick(true)
         }
       }
       setWorkerItem(dataItemArr);
