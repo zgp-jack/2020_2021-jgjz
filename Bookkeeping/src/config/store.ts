@@ -18,4 +18,6 @@ export const User:string ='user'
 // 记工时间
 export const RecordTime: string ='recordTime';
 // 记工第二天
-export const Tomorrow: string='tomorrow'
+export const Tomorrow: string='tomorrow';
+// 登陆成功
+export const LoginType:string = 'login'

@@ -4,7 +4,7 @@ import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProj
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, LoginType } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setWorker } from '../../actions/workerList'
@@ -220,6 +220,11 @@ export default function Index() {
     }
   })
   useDidShow(()=>{
+    // setCloseImage(false);
+    let logingTypes = Taro.getStorageSync(LoginType);
+    if (logingTypes){
+      setCloseImage(false)
+    }
     getDates();
     // const { appHeaderHeight } = UseNavInfo()
     // console.log(appHeadesrHeight,'appHeaderHeight')
@@ -618,6 +623,7 @@ export default function Index() {
         }
       }
     }else{
+      Taro.setStorageSync(LoginType, false);
       // 关闭
       setCloseImage(true);
       // 并开启选择身份

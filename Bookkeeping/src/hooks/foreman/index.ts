@@ -3964,9 +3964,9 @@ export default function userForeman() {
         // }
         // 设置日历今日已设置过的默认值
         // 工人
-        if(groupInfo){
-          bkGetWorker(groupInfo, true, '', val.id)
-        }
+        // if(groupInfo){
+        //   bkGetWorker(groupInfo, true, '', val.id)
+        // }
         // setUserId(val.id)
         const type = Taro.getStorageSync(Type);
         if(type === 1){

@@ -3,7 +3,7 @@ import { View, Text, Checkbox, Image, Input } from '@tarojs/components'
 import { AtInput } from 'taro-ui'
 import { bkGetCodeAction, GetUserInfoAction, bkMemberAuthAction, jumpBindTelAction } from '../../utils/request/index';
 import { isPhone } from '../../utils/v'
-import { UserInfo, MidData } from '../../config/store';
+import { UserInfo, MidData, LoginType } from '../../config/store';
 import Msg from '../../utils/msg';
 import './index.scss'
 
@@ -116,7 +116,8 @@ export default function Login() {
                 console.log(11111,'1111')
                 midData.worker_id = resData.data.worker_id;
                 midData.yupao_id = resData.data.yupao_id;
-                Taro.setStorageSync(MidData, midData)
+                Taro.setStorageSync(MidData, midData);
+                Taro.setStorageSync(LoginType,true);
                 Taro.navigateBack({delta:1});
               }
               console.log('返回上一夜')
