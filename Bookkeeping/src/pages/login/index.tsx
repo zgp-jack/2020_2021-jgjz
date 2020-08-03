@@ -117,7 +117,7 @@ export default function Login() {
                 midData.worker_id = resData.data.worker_id;
                 midData.yupao_id = resData.data.yupao_id;
                 Taro.setStorageSync(MidData, midData);
-                Taro.setStorageSync(LoginType,true);
+                Taro.setStorageSync(LoginType,1);
                 Taro.navigateBack({delta:1});
               }
               console.log('返回上一夜')

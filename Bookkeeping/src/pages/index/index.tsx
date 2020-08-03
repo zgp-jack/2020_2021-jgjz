@@ -366,7 +366,7 @@ export default function Index() {
   const getData = (e?:string)=>{
     let logingTypes = Taro.getStorageSync(LoginType);
     console.log(logingTypes, 'logingTypeslogingTypes')
-    if (logingTypes) {
+    if (logingTypes ==1) {
       setCloseImage(false)
     }
     // 没登录直接进来默认是工人
@@ -628,7 +628,7 @@ export default function Index() {
         }
       }
     }else{
-      Taro.setStorageSync(LoginType, false);
+      Taro.setStorageSync(LoginType, 2);
       // 关闭
       setCloseImage(true);
       // 并开启选择身份
