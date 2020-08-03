@@ -125,7 +125,10 @@ export default function Login() {
             }
           })
         }else{
-          Msg(res.msg);
+          Taro.showModal({
+            content: res.msg
+          })
+          // Msg(res.msg);
         }
       })
     }else{

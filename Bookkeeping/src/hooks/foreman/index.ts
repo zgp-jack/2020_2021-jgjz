@@ -1055,6 +1055,14 @@ export default function userForeman() {
                 }
                 if(changeData){
                   const data = JSON.parse(JSON.stringify(model));
+                  let dateParams ={
+                    group_info:'',
+                    business_type:'',
+                    date:'',
+                  }
+                  getWorkerHasBusinessByDateAction(dateParams).then(dateRes=>{
+                    
+                  })
                   bkGetWorker(changeData.group_id + ',' + changeData.id, true);
                   name = changeData.group_name + '-' + changeData.name;
                   setModel({ ...data, name });
