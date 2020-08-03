@@ -2188,16 +2188,16 @@ export default function userForeman() {
     const types = Taro.getStorageSync(Type);
     // 时间
     let times: number = 0, work_time_hour=0,work_time_type;
+    console.log(timeArr,'timeArr')
     timeArr.map(v=>{
       if(v.click){
-        if (v.num){
+        console.log(v.num)
+        if (v.num || v.num == 0){
           if(v.id!==4){
             times = v.num;
             work_time_hour = data.work * v.num;
-            work_time_type = 'working_hour'
+            work_time_type = 'working_hour';
           }else{
-            console.log(data.work,'xxx');
-            console.log(v.num,'xxxx1')
             work_time_hour= 1 / data.work * v.num;
             times= v.num;
             work_time_type = 'hour'
@@ -2205,10 +2205,6 @@ export default function userForeman() {
         }
       }
     })
-    console.log(times,'times');
-    console.log(work_time_hour,'work_time_hour')
-    console.log()
-    console.log(times,'times');
     // return;
     // const times = 1/data.work * work_time;
     // 加班时间

@@ -216,7 +216,7 @@ export default function Index() {
             // setLoginStatus(true);
             // loginType = true;
             setDisplay(true)
-            setLoginPhone(true)
+            // setLoginPhone(true)
             //console.log(login,'setlogin')
           }
         })
@@ -225,11 +225,6 @@ export default function Index() {
   })
   useDidShow(()=>{
     // setCloseImage(false);
-    let logingTypes = Taro.getStorageSync(LoginType);
-    console.log(logingTypes,'logingTypeslogingTypes')
-    if (logingTypes){
-      setCloseImage(false)
-    }
     getDates();
     // const { appHeaderHeight } = UseNavInfo()
     // console.log(appHeadesrHeight,'appHeaderHeight')
@@ -369,6 +364,11 @@ export default function Index() {
   }
   // 获取首页数据
   const getData = (e?:string)=>{
+    let logingTypes = Taro.getStorageSync(LoginType);
+    console.log(logingTypes, 'logingTypeslogingTypes')
+    if (logingTypes) {
+      setCloseImage(false)
+    }
     // 没登录直接进来默认是工人
     // =====
     // let type = Taro.getStorageSync(Type);

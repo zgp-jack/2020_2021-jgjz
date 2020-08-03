@@ -36,7 +36,7 @@ export interface User {
 export default function Auth({ display, handleClose, callback, loginPhone}: PROPS) {
   const [data,setData] = useState<any>()
     // 状态
-  const [warrant, setWarrant] = useState<boolean>(loginPhone)
+  const [warrant, setWarrant] = useState<boolean>(false)
   const userAuthAction = (e)=>{
     console.log(e,'e');
     if (e.detail.userInfo) {
