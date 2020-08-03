@@ -127,8 +127,9 @@ export default function Login() {
             }
           })
         }else{
+          console.log(31312)
           Taro.showModal({
-            content: res.msg,
+            content: '1111111',
             showCancel: true,
           })
           // Msg(res.msg);
