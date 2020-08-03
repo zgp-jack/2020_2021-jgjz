@@ -255,7 +255,6 @@ export default function AddTeamMember() {
       }
       bkAddWorkerInGroupAction(params).then(res=>{
         if(res.code === 200){
-          console.log(clickArr,'arrrr')
           dispatch(setPhoneList(clickArr));
           dispatch(setWorker(clickArr))
           Taro.navigateBack({ delta: 1 })

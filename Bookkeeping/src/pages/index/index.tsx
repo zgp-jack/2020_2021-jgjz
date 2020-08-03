@@ -106,6 +106,8 @@ export default function Index() {
   const [neverPrompt, setNeverPrompt] = useState<boolean>(false)
   // 设置滑动状态
   const [slide, setSlide] = useState<boolean>(false);
+  // 鱼泡网过来然后需要登录手机号
+  const [loginPhone,setLoginPhone] =useState<boolean>(false)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
@@ -214,6 +216,7 @@ export default function Index() {
             // setLoginStatus(true);
             // loginType = true;
             setDisplay(true)
+            setLoginPhone(true)
             //console.log(login,'setlogin')
           }
         })
@@ -223,6 +226,7 @@ export default function Index() {
   useDidShow(()=>{
     // setCloseImage(false);
     let logingTypes = Taro.getStorageSync(LoginType);
+    console.log(logingTypes,'logingTypeslogingTypes')
     if (logingTypes){
       setCloseImage(false)
     }
@@ -974,7 +978,7 @@ export default function Index() {
         </View>
       </AtModal>
       {/* 授权 */}
-      <Auth display={display} handleClose={handleClose} callback={handleCallback}/>
+      <Auth display={display} loginPhone={loginPhone} handleClose={handleClose} callback={handleCallback}/>
       {/* 创建项目 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
       {/* 填写班组 */}
