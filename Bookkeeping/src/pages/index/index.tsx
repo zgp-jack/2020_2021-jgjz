@@ -794,11 +794,11 @@ export default function Index() {
         </View>
         <View className='money'>
           <View className='money-left'>
-            {(item && item.money > 10000000 ? '1千万+' : item.money)||0}
+            {(item && item.money > 9999999 ? '1千万+' : item.money)||0}
           {/* {item && item.money || 0} */}
           </View>
           <View className=''>
-          {(item && item.borrow > 10000000 ? '1千万+' : item.borrow) || 0}
+          {(item && item.borrow > 9999999 ? '1千万+' : item.borrow) || 0}
           {/* {item && item.borrow || 0} */}
           </View>
         </View>
@@ -815,8 +815,8 @@ export default function Index() {
           <View className='textCenter'><View>按量记
             <View>
               {item.amount.type === 0 && <View className='num'>0平方米</View> }
-                {item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 1000000 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
-                {item.amount.type === 2 && <View className='num'>{item.amount.count > 999 ? '999+' : item.amount.count}笔</View>}
+                {item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 999999 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
+                {item.amount.type === 2 && <View className='num'>{item.amount.count > 999999 ? '1百万+' : item.amount.count}笔</View>}
             </View>
           </View>
           </View>
