@@ -83,3 +83,5 @@ export const shareExcelUrl = REQUESTURL +'bk-bookkeeping/share-excel/';
 export const appletJumpUrl = REQUESTURL +'bk-member/applet-jump/'
 // 小程序跳转后 添加绑定手机号
 export const jumpBindTelUrl = REQUESTURL + 'bk-member/applet-jump-bind-tel/'
+// 获取记工电话和日历
+export const getWorkerHasBusinessByDateUrl = REQUESTURL  +'bk-bookkeeping/get-worker-has-business-by-date/'

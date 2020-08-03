@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide,useRouter } from '@tarojs/taro'
-import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, bkAddBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction  } from '../../utils/request/index'
+import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, bkAddBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction, getWorkerHasBusinessByDateAction  } from '../../utils/request/index'
 import { MidData, Type, Calendar, RecordTime, User, Tomorrow } from '../../config/store'
 import { bkGetProjectTeamData } from '../../utils/request/index.d'
 import { useDispatch, useSelector } from '@tarojs/redux'
@@ -326,9 +326,9 @@ export default function userForeman() {
         setWorkerItem(workerItemData)
       // 获取项目名称
       console.log(noData,'noData')
-      if(!noData){
+      // if(!noData){
         bkGetProjectTeam();
-      }
+      // }
       // 获取工人列表
       // bkGetWorker(groupInfo);
       // 工资标准
@@ -2203,6 +2203,7 @@ export default function userForeman() {
         tabData = v;
       }
     })
+    console.log(tabData,'tabDatatabDatatabData')
     // 按量
     let itemType;
     for (let i = 0; i < contractorArr.item.length; i++) {
@@ -2398,6 +2399,7 @@ export default function userForeman() {
                 money: data.money,
                 overtime: data.day,
                 group_info: res.data,
+                business_type: tabData.id,
               }
               // 按天
             } else {
@@ -2409,6 +2411,7 @@ export default function userForeman() {
                 money: data.money,
                 overtime: data.day,
                 group_info: res.data,
+                business_type: tabData.id,
               }
             }
             bkSetWorkerIdentityWageAction(paramsData).then(resItem => {
@@ -3157,6 +3160,12 @@ export default function userForeman() {
       // }
       // 给工人自己设置工资标准
       // 传0会报错所以判断是按天还是按小时
+      let tabData;
+      recorderTypeArr.item.map((v) => {
+        if (v.click) {
+          tabData = v;
+        }
+      })
       let params;
       // 按小时
       if (data.type === 1){
@@ -3167,7 +3176,8 @@ export default function userForeman() {
           overtime_money: data.addWork,
           money: data.money,
           overtime: data.day,
-          group_info: groupInfos
+          group_info: groupInfos,
+          business_type: tabData.id,
         }
         // 按天
       }else{
@@ -3178,7 +3188,8 @@ export default function userForeman() {
           overtime_money: data.dayAddWork,
           money: data.money,
           overtime: data.day,
-          group_info: groupInfos
+          group_info: groupInfos,
+          business_type: tabData.id,
         }
       }
       // 工人项目大于0的时候修改工资标准
