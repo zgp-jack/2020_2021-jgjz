@@ -219,6 +219,7 @@ export default function Index() {
     }
   })
   useDidShow(()=>{
+    getDates();
     // const { appHeaderHeight } = UseNavInfo()
     // console.log(appHeadesrHeight,'appHeaderHeight')
     setSlide(false)
@@ -814,6 +815,7 @@ export default function Index() {
             </View></View>
           <View className='textCenter'><View>按量记
             <View>
+              {!item.amount && <View className='num'>0平方米</View>}
               {item.amount.type === 0 && <View className='num'>0平方米</View> }
                 {item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 1000000 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
                 {item.amount.type === 2 && <View className='num'>{item.amount.count > 999 ? '999+' : item.amount.count}笔</View>}
