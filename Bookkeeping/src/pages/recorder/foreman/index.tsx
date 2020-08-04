@@ -304,7 +304,7 @@ export default function Foreman() {
             />
             {/* IconRight */}
               <View className='rightIconsBox'>
-              <Image src={`${IMGCDNURL}leftIcons.png`} className='rightIcons'/>
+              <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons'/>
             </View>
             {/* <View className='rightIcon'/> */}
           </View>
@@ -322,7 +322,7 @@ export default function Foreman() {
               value={foremanTitle}
             />
               <View className='rightIconsBox'>
-                <Image src={`${IMGCDNURL}leftIcons.png`} className='rightIcons' />
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
               </View>
           </View>
         </View>
@@ -456,7 +456,7 @@ export default function Foreman() {
             value={model && model.duration}
           />
             <View className='rightIconsBox'>
-              <Image src={`${IMGCDNURL}leftIcons.png`} className='rightIcons' />
+              <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
             </View>
         </View>
       </View>
@@ -480,7 +480,7 @@ export default function Foreman() {
               value={model && model.workersWages}
             />
               <View className='money-rightIconsBox'>
-              <Image src={`${IMGCDNURL}leftIcons.png`} className='rightIcons' />
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
             </View>
           </View>
         </View>
@@ -501,7 +501,7 @@ export default function Foreman() {
                 value={model && model.amount}
               />
               <View className='rightIconsBox'>
-                <Image src={`${IMGCDNURL}leftIcons.png`} className='rightIcons' />
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
               </View>
             <View className='amountType' onClick={() => setQuantitiesDisplay(true)}>{unit}</View>
             </View>
@@ -518,7 +518,7 @@ export default function Foreman() {
                 value={model && model.price}
               />
               <View className='rightIconsBox'>
-                <Image src={`${IMGCDNURL}leftIcons.png`} className='rightIcons' />
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
               </View>
             </View>
           </View>
@@ -534,7 +534,7 @@ export default function Foreman() {
                 value={model && model.wages}
               />
               <View className='rightIconsBox'>
-                <Image src={`${IMGCDNURL}leftIcons.png`} className='rightIcons' />
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
               </View>
             </View>
           </View>
@@ -556,7 +556,7 @@ export default function Foreman() {
                 value={model && model.borrowing}
               />
               <View className='rightIconsBox'>
-                <Image src={`${IMGCDNURL}leftIcons.png`} className='rightIcons' />
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
               </View>
             </View>
           </View>
@@ -600,7 +600,7 @@ export default function Foreman() {
                 value={model && model.time}
               />
               <View className='rightIconsBox'>
-                <Image src={`${IMGCDNURL}leftIcons.png`} className='rightIcons' />
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
               </View>
             </View>
           {/* </Picker> */}
