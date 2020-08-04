@@ -224,6 +224,9 @@ export default function Index() {
     }
   })
   useDidShow(()=>{
+    let data = Taro.getStorageSync(IsLoginType);
+    console.log(data,'xxx')
+    // return
     // setCloseImage(false);
     getDates();
     // const { appHeaderHeight } = UseNavInfo()

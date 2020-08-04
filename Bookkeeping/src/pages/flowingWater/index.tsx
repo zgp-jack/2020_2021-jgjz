@@ -118,21 +118,21 @@ export default function FlowingWater() {
   }
   // 点击详情
   const handleJump = (e,v,id)=>{
-    const arr = JSON.parse(JSON.stringify(data.item));
-    console.log(arr, 'xxx')
-    let ids: any[] = [];
-    let dataItem: any[] = [];
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < arr[i].arr.length; j++) {
-        if (arr[i].arr[j]) {
-          dataItem.push(arr[i].arr[j]);
-        }
-        if (arr[i].arr[j].checkClick) {
-          ids.push(arr[i].arr[j].id);
-        }
-      }
-    }
-    if(ids.length>1){
+    // const arr = JSON.parse(JSON.stringify(data.item));
+    // console.log(arr, 'xxx')
+    // let ids: any[] = [];
+    // let dataItem: any[] = [];
+    // for (let i = 0; i < arr.length; i++) {
+    //   for (let j = 0; j < arr[i].arr.length; j++) {
+    //     if (arr[i].arr[j]) {
+    //       dataItem.push(arr[i].arr[j]);
+    //     }
+    //     if (arr[i].arr[j].checkClick) {
+    //       ids.push(arr[i].arr[j].id);
+    //     }
+    //   }
+    // }
+    if (isCheckOut){
       return;
     }else{
       Taro.navigateTo({
