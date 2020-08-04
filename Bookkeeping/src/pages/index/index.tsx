@@ -108,6 +108,10 @@ export default function Index() {
   const [slide, setSlide] = useState<boolean>(false);
   // 鱼泡网过来然后需要登录手机号
   const [loginPhone,setLoginPhone] =useState<boolean>(false)
+   // 判断左边是否需要icon
+  const [leftTime, setleftTime] = useState<boolean>(true)
+  // 判断右边是否需要icon
+  const [rightTime, setrightTime] = useState<boolean>(false)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
@@ -479,6 +483,19 @@ export default function Index() {
     setRepeat(true);
     getData(e.detail.value);
     setMonth(e.detail.value.substring(e.detail.value.length - 2))
+    changeIcon(e.detail.value);
+  }
+  // Icon图片显示
+  const changeIcon = (e) => {
+    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    if(Number(e.split('-')[0]) == yeartime){
+      setleftTime(true);
+      Number(e.split('-')[1])<montime?setrightTime(true):setrightTime(false);
+    }else if(Number(e.split('-')[0]) == yeartime-1) {
+      setrightTime(true);
+      Number(e.split('-')[1])>montime?setleftTime(true):setleftTime(false);
+    }
   }
   // 点击提示
   const handelTps = ()=>{
@@ -753,6 +770,7 @@ export default function Index() {
     let month = date.getMonth();
     month = ((month == 0) ? (12) : (month));
     const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
+    changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
     console.log(befD,'befD')
     getData(befD);
     setTime(befD);
@@ -772,8 +790,8 @@ export default function Index() {
         <Image src={`${IMGCDNURL}background.png`} className='top_img'/>
         <View className='heard'>
         <View className='flex-month'>
-          {newMonth > start && <Image onClick={()=>handleLeft(0)} src={`${IMGCDNURL}left.png`} className='leftIcon' />}
-            <View className='heard-left' style={newMonth > start ? '' : { marginLeft: '50rpx' }}>
+            <Image onClick={()=>handleLeft(0)} src={`${IMGCDNURL}left.png`} className='leftIcon' style={{visibility: leftTime?'visible':'hidden'}} />
+            {/* <View className='heard-left' style={newMonth > start ? '' : { marginLeft: '50rpx' }}> */}
             <Picker 
               start={start}
               end={end}
@@ -786,8 +804,8 @@ export default function Index() {
             >
               {month}月
             </Picker>
-          </View>
-            {newMonth < start && <Image onClick={() => handleLeft(1)} className='righticon' src={`${IMGCDNURL}right.png`}/>}
+          {/* </View> */}
+            <Image onClick={() => handleLeft(1)} className='righticon' src={`${IMGCDNURL}right.png`} style={{visibility: rightTime?'visible':'hidden'}} />
           </View>
           {/* <Image src={`${IMGCDNURL}user.png`}/> */}
           {type === 1 ? 
@@ -810,30 +828,30 @@ export default function Index() {
         </View>
         <View className='money'>
           <View className='money-left'>
-            {(item && item.money > 9999999 ? '1千万+' : item.money)||0}
+            {(item && item.money > 9999999.99 ? '1千万+' : item.money)||0}
           {/* {item && item.money || 0} */}
           </View>
           <View className=''>
-          {(item && item.borrow > 9999999 ? '1千万+' : item.borrow) || 0}
+          {(item && item.borrow > 9999999.99 ? '1千万+' : item.borrow) || 0}
           {/* {item && item.borrow || 0} */}
           </View>
         </View>
         <View className='typeList'>
           <View className='textCenter'>上班
             <View className='num'>
-            {(item && item.work_time > 999 ? '999+' : item.work_time)||0}个工
+            {(item && item.work_time > 998.99 ? '999+' : item.work_time)||0}个工
             </View>
           </View>
             <View className='textCenter'>加班<View className='num'>
             {/* {item && item.overtime || 0}小时 */}
-            {(item && item.overtime > 999 ? '999+' : item.overtime) || 0}小时
+            {(item && item.overtime > 998.99 ? '999+' : item.overtime) || 0}小时
             </View></View>
           <View className='textCenter'><View>按量记
             <View>
               {!item && !item.amount && <View className='num'>0平方米</View>}
               {item.amount.type === 0 && <View className='num'>0平方米</View> }
-                {item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 999999 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
-                {item.amount.type === 2 && <View className='num'>{item.amount.count > 999999 ? '1百万+' : item.amount.count}笔</View>}
+                {item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 999999.99 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
+                {item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>}
             </View>
           </View>
           </View>
