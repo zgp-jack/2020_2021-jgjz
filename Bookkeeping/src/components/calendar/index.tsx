@@ -483,12 +483,12 @@ export default function CalendarModal({
           <View className='icon-right'><Image src={`${IMGCDNURL}rili.png`} className='icon-right-image'/></View>
         <View className='calendarModal-complaintModal-content-top'>
             <View className='content-top-close' onClick={handleCalendarClose}>取消</View>
-            <View className='content-top-title'>选择日期(可选择多天)</View>
+            <View className='content-top-title'>选择日期(可选多天)</View>
             <View className='content-top-change' onClick={handleCalendarSub}>确定</View>
         </View>
         <View className='content-tips'>
           <View className='content-tips-time'> 
-              {time.year} <View className='leftIcon' onClick={() => handleChangeTime(0)} />{time.monent}<View className='righticon' onClick={() => handleChangeTime(1)}/>
+              {time.year}年 <View className='leftIcon' onClick={() => handleChangeTime(0)} />{time.monent}月<View className='righticon' onClick={() => handleChangeTime(1)}/>
           </View>
           <View><Text className='content-tips-box'></Text>表示当天已有记工</View>
         </View>

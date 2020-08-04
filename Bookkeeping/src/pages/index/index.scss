@@ -203,8 +203,11 @@
   color:rgba(128, 128, 128, 1)
 }
 .content-list-box{
-  height:290rpx;
+  height:300rpx;
   overflow-y: auto;
+}
+.scrollWorker{
+  height:240rpx;
 }
 .content-list{
   height: 100rpx;
