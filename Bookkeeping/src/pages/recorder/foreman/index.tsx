@@ -453,7 +453,8 @@ export default function Foreman() {
             type='text'
             disabled
             placeholder='请选择上班时长'
-            value={model && model.duration}
+            // value={model && model.duration}
+              value={'上班24小时，加班5小时'}
           />
             <View className='rightIconsBox'>
               <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
