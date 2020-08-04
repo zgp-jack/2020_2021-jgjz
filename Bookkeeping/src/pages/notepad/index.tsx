@@ -18,7 +18,7 @@ export default function Notepad() {
   // 输入框
   const [val,setVal]= useState<string>('');
   // 内容
-  const [data,setData] = useState<any>([])
+  const [data,setData] = useState<any[]>([])
   // 删除
   const [del,setDel] =useState<boolean>(false);
   // 系统繁忙
@@ -104,8 +104,8 @@ export default function Notepad() {
                 res.data[i].time = time;
               }else{
                 res.data[i].time = timeItem.getFullYear() + '年' + addZero(timeItem.getMonth() + 1) + '月' + addZero(timeItem.getDate()) + '日'
-                // res.data[i].list[j].newTime = newTime;
               }
+              res.data[i].list[j].newTime = newTime;
               // console.log(timeItem.getFullYear(),'timeItem.getFullYear()')
             }
             // 去年的都显示年月日

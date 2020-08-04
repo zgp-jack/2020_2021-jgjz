@@ -4,7 +4,7 @@ import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProj
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setWorker } from '../../actions/workerList'
@@ -106,6 +106,8 @@ export default function Index() {
   const [neverPrompt, setNeverPrompt] = useState<boolean>(false)
   // 设置滑动状态
   const [slide, setSlide] = useState<boolean>(false);
+  // 鱼泡网过来然后需要登录手机号
+  const [loginPhone,setLoginPhone] =useState<boolean>(false)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
@@ -195,7 +197,8 @@ export default function Index() {
                 let midData = Taro.getStorageSync(UserInfo);
                 midData.worker_id = res.data.worker_id;
                 midData.yupao_id = res.data.yupao_id;
-                Taro.setStorageSync(MidData, midData)
+                Taro.setStorageSync(MidData, midData);
+                getData();
               }
             })
           } else if (res.code == 40003){
@@ -211,7 +214,9 @@ export default function Index() {
             Taro.setStorageSync(UserInfo,obj);
             // 设置点击直接跳转到注册手机号页面
             // setLoginStatus(true);
-            loginType = true;
+            // loginType = true;
+            setDisplay(true)
+            setLoginPhone(true)
             //console.log(login,'setlogin')
           }
         })
@@ -219,6 +224,8 @@ export default function Index() {
     }
   })
   useDidShow(()=>{
+    // setCloseImage(false);
+    getDates();
     // const { appHeaderHeight } = UseNavInfo()
     // console.log(appHeadesrHeight,'appHeaderHeight')
     setSlide(false)
@@ -357,6 +364,11 @@ export default function Index() {
   }
   // 获取首页数据
   const getData = (e?:string)=>{
+    let isLoginType = Taro.getStorageSync(IsLoginType);
+    console.log(isLoginType, 'logingTypeslogingTypes')
+    if (isLoginType ==1) {
+      setCloseImage(false)
+    }
     // 没登录直接进来默认是工人
     // =====
     // let type = Taro.getStorageSync(Type);
@@ -616,6 +628,7 @@ export default function Index() {
         }
       }
     }else{
+      Taro.setStorageSync(IsLoginType, 2);
       // 关闭
       setCloseImage(true);
       // 并开启选择身份
@@ -814,6 +827,7 @@ export default function Index() {
             </View></View>
           <View className='textCenter'><View>按量记
             <View>
+              {!item && !item.amount && <View className='num'>0平方米</View>}
               {item.amount.type === 0 && <View className='num'>0平方米</View> }
                 {item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 999999 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
                 {item.amount.type === 2 && <View className='num'>{item.amount.count > 999999 ? '1百万+' : item.amount.count}笔</View>}
@@ -963,7 +977,7 @@ export default function Index() {
         </View>
       </AtModal>
       {/* 授权 */}
-      <Auth display={display} handleClose={handleClose} callback={handleCallback}/>
+      <Auth display={display} loginPhone={loginPhone} handleClose={handleClose} callback={handleCallback}/>
       {/* 创建项目 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
       {/* 填写班组 */}

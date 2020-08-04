@@ -18,16 +18,21 @@
   width: 80%;
   background: white;
   border-radius: 10rpx 10rpx 5rpx 5rpx;
-  padding-top: 20rpx;
+  // padding-top: 20rpx;
   box-shadow: #e7e6e4 0 0 10rpx;
 }
 
 .tabber-complaintModal-content-title {
-  position: relative;
   text-align: center;
-  font-size:36px;
-  font-weight:500;
-  color:rgba(51, 51, 51, 1);
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333333;
+  position: relative;
+  height: 93rpx;
+  line-height: 93rpx;
+  background: #f7f7f7;
+  border-radius: 10rpx 10rpx 0rpx 0rpx;
+
 }
 
 .tabber-complaintModal-content-tips {
@@ -94,12 +99,19 @@
 }
 
 .close{
+  height: 100rpx;
+  width: 100rpx;
   position: absolute;
-  right: 30rpx;
+  right: 0rpx;
   top: 0;
 }
 .close-img{
   height: 20rpx;
   width: 20rpx;
+  background-size: contain;
+}
+.closeIcons{
+  height: 25rpx;
+  width: 25rpx;
   background-size: contain;
 }

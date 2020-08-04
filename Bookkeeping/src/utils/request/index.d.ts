@@ -17,6 +17,7 @@ export interface InitUserInfo extends Result{
   data: InitUserInfoData,
   errcode:string,
   errmsg:string,
+  show_type?:string
 }
 
 export interface InitUserInfoData {
@@ -217,6 +218,7 @@ export interface bkWageStandGetWage extends Result{
 
 // 人员
 export interface bkGetWorker extends Result{
+  show_type?:string,
   data:any;
 }
 

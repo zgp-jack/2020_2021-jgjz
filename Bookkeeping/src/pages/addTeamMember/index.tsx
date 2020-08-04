@@ -10,6 +10,7 @@ import { Type } from '../../config/store';
 import { setPhoneList } from '../../actions/phoneList';
 import classnames from 'classnames'
 import './index.scss'
+import Msg from '../../utils/msg';
 
 
 export default function AddTeamMember() {
@@ -249,13 +250,16 @@ export default function AddTeamMember() {
         }
       }
       let ids: string[] = clickArr.map(item => item.id);
+      if (ids.length<1){
+        Msg('请选择工人')
+        return;
+      }
       let params = {
         worker_id: ids,
         group_info:groupInfo,
       }
       bkAddWorkerInGroupAction(params).then(res=>{
         if(res.code === 200){
-          console.log(clickArr,'arrrr')
           dispatch(setPhoneList(clickArr));
           dispatch(setWorker(clickArr))
           Taro.navigateBack({ delta: 1 })

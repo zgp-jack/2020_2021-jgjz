@@ -3,7 +3,7 @@ import { View, Text, Checkbox, Image, Input } from '@tarojs/components'
 import { AtInput } from 'taro-ui'
 import { bkGetCodeAction, GetUserInfoAction, bkMemberAuthAction, jumpBindTelAction } from '../../utils/request/index';
 import { isPhone } from '../../utils/v'
-import { UserInfo, MidData } from '../../config/store';
+import { UserInfo, MidData, IsLoginType } from '../../config/store';
 import Msg from '../../utils/msg';
 import './index.scss'
 
@@ -116,16 +116,32 @@ export default function Login() {
                 console.log(11111,'1111')
                 midData.worker_id = resData.data.worker_id;
                 midData.yupao_id = resData.data.yupao_id;
-                Taro.setStorageSync(MidData, midData)
+                Taro.setStorageSync(MidData, midData);
+                Taro.setStorageSync(IsLoginType,1);
                 Taro.navigateBack({delta:1});
               }
               console.log('返回上一夜')
             }else{
-              Msg(res.msg);
+              Taro.showModal({
+                content: res.msg
+              })
             }
           })
         }else{
-          Msg(res.msg);
+          // =========后端传个字段过来判断是弹框还是轻提示
+          if (res.show_type == 'prompt'){
+            Msg(res.msg);
+          } else if (res.show_type == 'pop'){
+            Taro.showModal({
+              content: res.msg,
+              showCancel:false
+            })
+          }else{
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          }
         }
       })
     }else{
@@ -166,7 +182,20 @@ export default function Login() {
             }
           })
         }else{
-          Msg(res.msg)
+          // Msg(res.msg)
+          if (res.show_type == 'prompt') {
+            Msg(res.msg);
+          } else if (res.show_type == 'pop') {
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          } else {
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          }
         }
       })
     }

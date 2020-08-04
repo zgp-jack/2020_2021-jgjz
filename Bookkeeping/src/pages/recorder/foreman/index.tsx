@@ -150,7 +150,8 @@ export default function Foreman() {
   }
   // 关闭上班时长
   const handleWorkingHoursClose = ()=>{
-    setWorkingHoursDisplay(false)
+    setWorkingHoursDisplay(false);
+    setWorkOvertimeDisplay(true)
   }
   // 引导创建项目
   const handleCreateProjectClose = ()=>{
@@ -294,13 +295,18 @@ export default function Foreman() {
         <View className='publish-recruit-card'>
             <View className='publish-list-item' onClick={() => {bkGetProjectTeam(),setShow(true)}}>
             <Text className='pulish-list-title'>项目名称</Text>
-            :<Input
+            <Input
               className='publish-list-input'
               type='text'
               disabled
               placeholder='请选择项目名称'
               value={model && model.name}
             />
+            {/* IconRight */}
+              <View className='rightIconsBox'>
+              <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons'/>
+            </View>
+            {/* <View className='rightIcon'/> */}
           </View>
         </View>
         {/* ===== */}
@@ -308,13 +314,16 @@ export default function Foreman() {
         <View className='publish-recruit-card'>
             <View className='publish-list-item' onClick={() => { bkGetWorker(), userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}&type=2`)}}>
             <Text className='pulish-list-title'>班组长</Text>
-            :<Input
+            <Input
               className='publish-list-input'
               type='text'
               disabled
               placeholder='请选择班组长'
               value={foremanTitle}
             />
+              <View className='rightIconsBox'>
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+              </View>
           </View>
         </View>
         }
@@ -444,8 +453,12 @@ export default function Foreman() {
             type='text'
             disabled
             placeholder='请选择上班时长'
-            value={model && model.duration}
+            // value={model && model.duration}
+              value={'上班24小时，加班5小时'}
           />
+            <View className='rightIconsBox'>
+              <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+            </View>
         </View>
       </View>
       }
@@ -467,6 +480,9 @@ export default function Foreman() {
               placeholder='请选择工钱'
               value={model && model.workersWages}
             />
+              <View className='money-rightIconsBox'>
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+            </View>
           </View>
         </View>
       </View>}
@@ -485,7 +501,12 @@ export default function Foreman() {
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
               />
-            <View className='amountType' onClick={() => setQuantitiesDisplay(true)}>{unit}</View>
+            <View className='amountType' onClick={() => setQuantitiesDisplay(true)}>{unit}
+                <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
+            </View>
+              {/* <View className='rightIconsBox'>
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+              </View> */}
             </View>
           </View>
           <View className='publish-recruit-card'>
@@ -499,6 +520,9 @@ export default function Foreman() {
                 onInput={(e) => handleInput('price', e)}
                 value={model && model.price}
               />
+              <View className='rightIconsBox'>
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+              </View>
             </View>
           </View>
           <View className='publish-recruit-card'>
@@ -512,6 +536,9 @@ export default function Foreman() {
                 placeholder='工程量和单价未知时，可直接填写'
                 value={model && model.wages}
               />
+              <View className='rightIconsBox'>
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+              </View>
             </View>
           </View>
         </View>
@@ -531,6 +558,9 @@ export default function Foreman() {
                 placeholder='请输入本次借支金额'
                 value={model && model.borrowing}
               />
+              <View className='rightIconsBox'>
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+              </View>
             </View>
           </View>
           <View className='publish-recruit-card'>
@@ -572,6 +602,9 @@ export default function Foreman() {
                 placeholder='请选择日期'
                 value={model && model.time}
               />
+              <View className='rightIconsBox'>
+                <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+              </View>
             </View>
           {/* </Picker> */}
         </View>
@@ -630,7 +663,7 @@ export default function Foreman() {
         right
         mask
         className='atDrawer'
-          onClose={() => { setShow(false), setEdit(false)}}
+        onClose={() => { setShow(false), setEdit(false)}}
         >
         <View className='atDrawer-box'>
           <View className='atDrawer-heard'>

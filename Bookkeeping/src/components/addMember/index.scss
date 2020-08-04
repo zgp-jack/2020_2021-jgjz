@@ -31,9 +31,10 @@
   text-align: center;
 }
 .addMember-content-heard-close{
-  position: absolute;
-  right: 20rpx;
-  top: 0;
+ 
+  height: 25rpx;
+  width: 25rpx;
+  background-size: contain;
 }
 .addMember-content-listBox{
   background: #fff;
@@ -64,4 +65,19 @@
   width: 90%;
   margin: 0 auto;
   margin-bottom: 20rpx;
+}
+.closeIcons {
+  position: absolute;
+  right: 20rpx;
+  top: 0;
+  height: 25rpx;
+  width: 25rpx;
+  background-size: contain;
+}
+.addMember-content-heard-box{
+  position: absolute;
+  right: 0rpx;
+  top: 0rpx;
+  width: 100rpx;
+  height: 100rpx;
 }

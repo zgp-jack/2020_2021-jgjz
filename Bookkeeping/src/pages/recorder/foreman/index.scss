@@ -632,7 +632,7 @@
 .publish-list-input-amount{
   position: relative;
   width: 100%;
-  margin-right: 100rpx;
+  margin-right: 125rpx;
   height: 125px;
   line-height: 125px;
   display: block;
@@ -790,4 +790,26 @@
   left: -5rpx;
   width: 100rpx;
   height: 20rpx;
+}
+.rightIcons {
+  height: 25rpx;
+  width: 25rpx;
+  background-size: contain;
+}
+
+.rightIconsBox{
+  line-height: 125rpx;
+  height: 125rpx;
+  margin-left: 10rpx;
+}
+.money-rightIconsBox{
+  line-height: 125rpx;
+  height: 125rpx;
+  margin-left: 10rpx;
+  margin-top: 18rpx;
+}
+.downIcons{
+  height: 25rpx;
+  width: 25rpx;
+  background-size: contain;
 }

@@ -4,6 +4,7 @@ import UploadImgAction from '../../utils/upload'
 import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageAction, bkUpdateWorkerAction } from '../../utils/request/index';
 import { View, Text, Input, Textarea, RadioGroup, Radio, CoverView } from '@tarojs/components';
 import WageStandard  from '../../components/wageStandard'
+import Quantities from '../../components/quantities';
 import Msg from '../../utils/msg'
 import WorkingHours from '../../components/workingHours';
 import WorkOvertime from '../../components/workOvertime';
@@ -47,6 +48,8 @@ export default function EditDetails() {
   const [unit, setUnit] = useState<string>('平方米')
   // 上班时长选择类型
   const [timeType, setTimeType] = useState<number>(0)
+  // 单位弹框
+  const [quantitiesDisplay, setQuantitiesDisplay] = useState<boolean>(false)
   // 借支
   const [borrowing, setBorrowing] = useState<BorrowingType>({
     item: [
@@ -125,7 +128,7 @@ export default function EditDetails() {
           const data = JSON.parse(JSON.stringify(wageStandard));
           const obj = JSON.parse(JSON.stringify(val));
           const standardObj = JSON.parse(JSON.stringify(standard));
-          // setType((parseInt(res.data.type)));
+          setType((parseInt(res.data.type)));
           setBusinessType(parseInt(res.data.business_type));
           setIdentity(parseInt(res.data.identity));
           setImage({ item: res.data.view_images })
@@ -134,7 +137,8 @@ export default function EditDetails() {
           obj.workername = res.data.workername;
           obj.leaderName = res.data.leader_name;
           // 这里是工要获取到多少工资标里的设置的时间再算
-          const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
+          // const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
+          const duration = res.data.work_time + '小时' + res.data.overtime + '小时'
           obj.duration = duration;
           obj.money = res.data.money;
           const newData = new Date();
@@ -152,10 +156,10 @@ export default function EditDetails() {
             data.dayAddWork =0
           }
           data.group_info = res.data.group_info;
-          data.type = parseInt(res.data.overtime_type);
+          data.type = parseInt(res.data.wage_overtime_type);
           console.log(data.type,'xxxx111')
           for (let i = 0; i < data.data.length;i++){
-          if (data.data[i].id == res.data.overtime_type){
+            if (data.data[i].id == res.data.wage_overtime_type){
               data.data[i].click = true;
             }
           }
@@ -194,7 +198,9 @@ export default function EditDetails() {
             //   timeArrData[i].click = true
             // }else{
               // 返回的是工为单位的 小时为单位的数据
-            const setTime = ((+res.data.worktime_define) / (1 / (+res.data.work_time))).toFixed(1)
+            // const setTime = ((+res.data.worktime_define) / (1 / (+res.data.work_time))).toFixed(1);
+            console.log(res.data.work_time,'res.data.work_time');
+            const setTime = (+res.data.work_time).toFixed(2);
               console.log(setTime,'setTime')
               const obj = { id: 4, name: `${setTime}小时`, click: true, num: setTime };
               const index = [timeArrData.length-1];
@@ -792,7 +798,7 @@ export default function EditDetails() {
     const borrowingArr = JSON.parse(JSON.stringify(borrowing.item))
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
-    let type;
+    let type=0;
     if (businessTypes == 3){
       for (let i = 0; i < borrowingArr.length;i++){
         console.log(borrowingArr[i],'111')
@@ -809,12 +815,14 @@ export default function EditDetails() {
       if (v.click) {
         if (v.num) {
           if (v.id !== 4) {
-            times = v.num;
-            work_time_hour = items.work * v.num;
+            // times = v.num;
+            // work_time_hour = items.work * v.num;
+            times = items.work * v.num;
             work_time_type = 'working_hour'
           } else {
-            times = 1 / items.work * v.num;
-            work_time_hour = v.num;
+            // times = 1 / items.work * v.num;
+            // work_time_hour = v.num;
+            times = v.num;
             work_time_type = 'hour'
           }
         }
@@ -848,10 +856,16 @@ export default function EditDetails() {
       id,
       overtime: overtime||0,
       work_time: times||0,
-      work_time_hour: work_time_hour||0,
+      // work_time_hour: work_time_hour||0,
       note: val.note,
       group_info: items.group_info,
       work_time_type,
+      wage_money: items.money,
+      wage_overtime:items.day,
+      wage_overtime_money: items.addWork,
+      wage_worktime_define: items.work,
+      wage_overtime_type: items.type,
+      // work_time:
     }
     updateBusinessAction(params).then(res=>{
       console.log(res);
@@ -875,6 +889,8 @@ export default function EditDetails() {
   const handleWageStandardDisplay = ()=>{
     setWageStandardDisplay(false);
   }
+  console.log(businessType,'businessType');
+  console.log(type,'type')
   return (
     <View className='content'>
       {businessType == 2 &&type === 1 && 
@@ -931,7 +947,7 @@ export default function EditDetails() {
         </View>
       </View>
       } 
-      {businessType === 2 && type === 2&& 
+      {businessType === 2 && type == 2&& 
       <View>
         <View className='publish-recruit-card'>
           <View className='publish-list-item'>
@@ -1064,6 +1080,8 @@ export default function EditDetails() {
       <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio}/>
       <WorkOvertime display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
+      {/* 工程量选择单位 */}
+      {/* <Quantities display={quantitiesDisplay} handleClose={handleClose} data={company} handleQuantities={handleQuantities} /> */}
     </View>
   )
 }

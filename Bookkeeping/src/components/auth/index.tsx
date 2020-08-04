@@ -11,6 +11,7 @@ interface PROPS {
   handleClose:(e)=>void
   // page?: boolean //是否跳转到页面授权
   callback?: () => void,
+  loginPhone:boolean,
   // userCancelAuth?: () => void
 }
 export interface AuthData {
@@ -32,10 +33,10 @@ export interface User {
   login: boolean,
   type?:string,
 }
-export default function Auth({ display, handleClose, callback}: PROPS) {
-    const [data,setData] = useState()
+export default function Auth({ display, handleClose, callback, loginPhone}: PROPS) {
+  const [data,setData] = useState<any>()
     // 状态
-  const [warrant,setWarrant] = useState<boolean>(false)
+  const [warrant, setWarrant] = useState<boolean>(loginPhone)
   const userAuthAction = (e)=>{
     console.log(e,'e');
     if (e.detail.userInfo) {
@@ -262,10 +263,23 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
           //   // console.log(res.errmsg,'res.errmsg1')
           // }
           // console.log(msg, 'msg')
-          Taro.showModal({
-            content: res.msg
-          })
+          // Taro.showModal({
+          //   content: res.msg
+          // })
           // Msg(res.msg || res.errmsg)
+          if (res.show_type == 'prompt') {
+            Msg(res.msg);
+          } else if (res.show_type == 'pop') {
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          } else {
+            Taro.showModal({
+              content: res.msg,
+              showCancel: false
+            })
+          }
         }
       })
     }else{
