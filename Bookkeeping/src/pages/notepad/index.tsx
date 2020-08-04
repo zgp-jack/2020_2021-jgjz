@@ -18,7 +18,7 @@ export default function Notepad() {
   // 输入框
   const [val,setVal]= useState<string>('');
   // 内容
-  const [data,setData] = useState<any>([])
+  const [data,setData] = useState<any[]>([])
   // 删除
   const [del,setDel] =useState<boolean>(false);
   // 系统繁忙

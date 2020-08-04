@@ -12,7 +12,9 @@ export default function NotepadDetails() {
   // 父级的值
   const { dataArr } = useContext(context);
   // 内容
-  const [data, setData] = useState<any>()
+  const [data, setData] = useState<any>({
+    view_images:[]
+  })
   useEffect(()=>{
     if(dataArr){
       console.log(dataArr)

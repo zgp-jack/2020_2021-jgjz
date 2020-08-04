@@ -12,7 +12,9 @@ export default function FlowingWaterDetails() {
   const { time, id, week } = router.params;
   // 父级的值
   const { dataArr } = useContext(context);
-  const [obj,setObj]=useState<any>()
+  const [obj,setObj]=useState<any>({
+    view_images:[]
+  })
   // 获取存入的公用内容
   useEffect(()=>{
     let data;
