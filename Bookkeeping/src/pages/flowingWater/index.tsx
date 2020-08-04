@@ -44,6 +44,10 @@ export default function FlowingWater() {
     teamName: '',
   })
   const [identity, setIdentity]= useState<number>(1)
+  // 判断左边是否需要icon
+  const [leftTime, setleftTime] = useState<boolean>(true)
+  // 判断右边是否需要icon
+  const [rightTime, setrightTime] = useState<boolean>(false)
   // 获取数据
   useDidShow(()=>{
     const date = JSON.stringify(new Date()).slice(1, 11)
@@ -199,8 +203,17 @@ export default function FlowingWater() {
     setTime(e.detail.value);
     let lastM = JSON.stringify(new Date(new Date(e.detail.value).setMonth(new Date(e.detail.value).getMonth() + 1))).slice(1, 11);
     setLastTime(lastM);
-    setYear(e.detail.value.slice(0,4)+'年');
-    setmon(e.detail.value.slice(6, 8)+'月')
+    setYear(e.detail.value.split('-')[0]+'年');
+    setmon(e.detail.value.split('-')[1]+'月')
+    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    if(Number(e.detail.value.split('-')[0]) == yeartime){
+      setleftTime(true);
+      Number(e.detail.value.split('-')[1])<montime?setrightTime(true):setrightTime(false);
+    }else if(Number(e.detail.value.split('-')[0]) == yeartime-1) {
+      setrightTime(true);
+      Number(e.detail.value.split('-')[1])>montime?setleftTime(true):setleftTime(false);
+    }
     getList(e.detail.value, lastM)
   }
   // 全选
@@ -349,7 +362,10 @@ export default function FlowingWater() {
         // onColumnChange={(e) => handlebindcolumnchange(e)}
         >
             {/* <Text className='time-color'>{year}<View><Image className='leftIcon' src={`${IMGCDNURL}left.png`} /></View>{mon}<View><Image className='rightIcon' src={`${IMGCDNURL}right.png`}/></View></Text> */}
-            <View className='time-color'>{year}<Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' />{mon}<Image className='righticon' src={`${IMGCDNURL}greyRight.png`} /></View>
+        <View className='time-color'>
+          {year}<Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' style={{visibility: leftTime?'visible':'hidden'}} />
+          {mon}<Image className='righticon' src={`${IMGCDNURL}greyRight.png`} style={{visibility: rightTime?'visible':'hidden'}} />
+        </View>
         </Picker>
       </View>
       <View className='content'>
