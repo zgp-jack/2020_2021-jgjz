@@ -19,7 +19,7 @@ export default function AddTeamMember() {
   const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
   const { groupInfo,type } = router.params;
-  const { handleInput, handleEstablish, addMemberDisplay, setAddMemberDisplay, workerList, setWorkerList, storagelist, setStoragelist} = userForeman()
+  const { handleInput, handleEstablish, addMemberDisplay, setAddMemberDisplay,model, setModel,workerList, setWorkerList, storagelist, setStoragelist} = userForeman()
   // 列表数据
   const [data, setData] = useState<any[]>([]);
   // 默认值
@@ -30,7 +30,9 @@ export default function AddTeamMember() {
   const [valData,setValData]= useState<string>('');
   // 关闭添加成员
   const handleAddMemberClose = () => {
-    setAddMemberDisplay(false)
+    setAddMemberDisplay(false);
+    const itme = JSON.parse(JSON.stringify(model));
+    setModel({...itme, phone: '', userName:''})
   }
   // const handleCheckbox = (e)=>{
   //   console.log('checkout')

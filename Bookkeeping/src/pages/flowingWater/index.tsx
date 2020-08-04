@@ -118,10 +118,27 @@ export default function FlowingWater() {
   }
   // 点击详情
   const handleJump = (e,v,id)=>{
-    e.stopPropagation();
-    Taro.navigateTo({
-      url: `/pages/flowingWaterDetails/index?time=${v.time}&id=${id}&week=${v.week}`
-    })
+    const arr = JSON.parse(JSON.stringify(data.item));
+    console.log(arr, 'xxx')
+    let ids: any[] = [];
+    let dataItem: any[] = [];
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr[i].arr.length; j++) {
+        if (arr[i].arr[j]) {
+          dataItem.push(arr[i].arr[j]);
+        }
+        if (arr[i].arr[j].checkClick) {
+          ids.push(arr[i].arr[j].id);
+        }
+      }
+    }
+    if(ids.length>1){
+      return;
+    }else{
+      Taro.navigateTo({
+        url: `/pages/flowingWaterDetails/index?time=${v.time}&id=${id}&week=${v.week}`
+      })
+    }
   }
   // 点击选择框
   const handleCheckbox = (val)=>{
@@ -242,12 +259,10 @@ export default function FlowingWater() {
     let dataItem:any[] = [];
     for(let i =0;i<arr.length;i++){
       for (let j=0;j<arr[i].arr.length;j++){
-        console.log(arr[i].arr[j])
         if(arr[i].arr[j]){
           dataItem.push(arr[i].arr[j]);
         }
         if(arr[i].arr[j].checkClick){
-          console.log(arr[i].arr[j].checkClick)
           ids.push(arr[i].arr[j].id);
         }
       }
@@ -263,7 +278,6 @@ export default function FlowingWater() {
       return
     }
     // 总共多少笔
-    console.log(ids);
     Taro.showModal({
       title: "提示",
       content: `本页共${num}笔记工，即将删除选中的${delNum}笔。数据一经删除将无法恢复。请谨慎操作哦！`,
