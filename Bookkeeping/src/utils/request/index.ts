@@ -932,7 +932,7 @@ export function getWorkerHasBusinessByDateAction(data): Promise<Inter.bkGetWorke
   let userInfo = Taro.getStorageSync(UserInfo);
   return doRequestAction({
     url: api.getWorkerHasBusinessByDateUrl,
-    method: 'POST',
+    // method: 'POST',
     header: {
       // 'content-type': 'application/json',
       'content-type': 'application/x-www-form-urlencoded',

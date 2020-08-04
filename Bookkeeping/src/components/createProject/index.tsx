@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro'
 import { View, Image, Text, Input } from '@tarojs/components'
+import { IMGCDNURL } from '../../config'
 import './index.scss'
 
 interface PROPS {
@@ -17,7 +18,9 @@ export default function CreateProject({ display, handleClose, val, handleInput,h
           <View className='createProject-complaintModal-content'>
             <View className='createProject-complaintModal-content-title'>
               <View>创建项目</View>
-            <View className='createProject-complaintModal-content-colse' onClick={handleClose}>x</View>
+            <View className='createProject-complaintModal-content-colse' onClick={handleClose}>
+              <Image src={`${IMGCDNURL}closeIcons.png`} className='closeIcons' />
+            </View>
             </View>
             <View className='createProject-complaintModal-content-tips'>项目名称:</View>
             <View className='createProject-complaintModal-content-textareaBox'>

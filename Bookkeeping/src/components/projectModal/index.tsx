@@ -19,7 +19,9 @@ export default function ProjectModal({ display, teamName, handleSubmit, handleIn
       {display &&
         <View className='tabber-complaintModal'>
           <View className='tabber-complaintModal-content'>
-          <View className='tabber-complaintModal-content-title'>填写班组<View className='close' onClick={handleClose}>x</View></View>
+          <View className='tabber-complaintModal-content-title'>填写班组<View className='close' onClick={handleClose}>
+            <Image src={`${IMGCDNURL}closeIcons.png`} className='closeIcons' />
+            </View></View>
             <View className='tabber-complaintModal-content-tips'>班组名称:</View>
             <View className='tabber-complaintModal-content-textareaBox'>
             <Input

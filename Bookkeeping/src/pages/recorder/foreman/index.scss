@@ -791,3 +791,21 @@
   width: 100rpx;
   height: 20rpx;
 }
+.rightIcons {
+  height: 25rpx;
+  width: 25rpx;
+  // background: url(../../../assets/images/IconRight.png) no-repeat no-repeat;
+  background-size: contain;
+}
+
+.rightIconsBox{
+  line-height: 125rpx;
+  height: 125rpx;
+  margin-left: 10rpx;
+}
+.money-rightIconsBox{
+  line-height: 125rpx;
+  height: 125rpx;
+  margin-left: 10rpx;
+  margin-top: 18rpx;
+}

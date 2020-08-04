@@ -4,7 +4,7 @@ import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProj
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, LoginType } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setWorker } from '../../actions/workerList'
@@ -216,7 +216,7 @@ export default function Index() {
             // setLoginStatus(true);
             // loginType = true;
             setDisplay(true)
-            // setLoginPhone(true)
+            setLoginPhone(true)
             //console.log(login,'setlogin')
           }
         })
@@ -364,9 +364,9 @@ export default function Index() {
   }
   // 获取首页数据
   const getData = (e?:string)=>{
-    let logingTypes = Taro.getStorageSync(LoginType);
-    console.log(logingTypes, 'logingTypeslogingTypes')
-    if (logingTypes ==1) {
+    let isLoginType = Taro.getStorageSync(IsLoginType);
+    console.log(isLoginType, 'logingTypeslogingTypes')
+    if (isLoginType ==1) {
       setCloseImage(false)
     }
     // 没登录直接进来默认是工人
@@ -628,7 +628,7 @@ export default function Index() {
         }
       }
     }else{
-      Taro.setStorageSync(LoginType, 2);
+      Taro.setStorageSync(IsLoginType, 2);
       // 关闭
       setCloseImage(true);
       // 并开启选择身份

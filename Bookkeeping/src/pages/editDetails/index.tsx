@@ -125,7 +125,7 @@ export default function EditDetails() {
           const data = JSON.parse(JSON.stringify(wageStandard));
           const obj = JSON.parse(JSON.stringify(val));
           const standardObj = JSON.parse(JSON.stringify(standard));
-          // setType((parseInt(res.data.type)));
+          setType((parseInt(res.data.type)));
           setBusinessType(parseInt(res.data.business_type));
           setIdentity(parseInt(res.data.identity));
           setImage({ item: res.data.view_images })
@@ -795,7 +795,7 @@ export default function EditDetails() {
     const borrowingArr = JSON.parse(JSON.stringify(borrowing.item))
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
-    let type;
+    let type=0;
     if (businessTypes == 3){
       for (let i = 0; i < borrowingArr.length;i++){
         console.log(borrowingArr[i],'111')
@@ -886,6 +886,8 @@ export default function EditDetails() {
   const handleWageStandardDisplay = ()=>{
     setWageStandardDisplay(false);
   }
+  console.log(businessType,'businessType');
+  console.log(type,'type')
   return (
     <View className='content'>
       {businessType == 2 &&type === 1 && 
@@ -942,7 +944,7 @@ export default function EditDetails() {
         </View>
       </View>
       } 
-      {businessType === 2 && type === 2&& 
+      {businessType === 2 && type == 2&& 
       <View>
         <View className='publish-recruit-card'>
           <View className='publish-list-item'>

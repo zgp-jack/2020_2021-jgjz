@@ -83,6 +83,8 @@ export default function FlowingWater() {
           for (let i = 0; i < res.data.data.length;i++){
             if (res.data.data[i].time == newTime){
               res.data.data[i].click = true;
+            }else{
+              res.data.data[0].click = true;
             }
           }
           setData({item:res.data.data})

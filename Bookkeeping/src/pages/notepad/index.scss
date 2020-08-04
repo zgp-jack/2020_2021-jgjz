@@ -1,23 +1,27 @@
 .notepad{
   height: 100vh;
   overflow-y: scroll;
-  .at-search-bar__input{
-    padding: 0rpx;
-    width: auto;
-    position: relative;
-  }
-  .at-search-bar__action{
-    background: #fff;
-    color: #0099FF;
-    font-size: 28rpx;
-  }
-  .at-search-bar{
-    height:110rpx;
-    margin-bottom: 20rpx;
-  }
-  .at-search-bar__placeholder-wrap .at-icon{
-    margin-left: 12rpx;
-  }
+  // .at-search-bar__placeholder-wrap{
+  //   flex-grow:0
+  // }
+  // .at-search-bar__input{
+  //   flex-grow:0;
+  //   // padding: 0rpx;
+  //   // width: auto;
+  //   // position: relative;
+  // }
+  // .at-search-bar__action{
+  //   background: #fff;
+  //   color: #0099FF;
+  //   font-size: 28rpx;
+  // }
+  // .at-search-bar{
+  //   height:110rpx;
+  //   margin-bottom: 20rpx;
+  // }
+  // .at-search-bar__placeholder-wrap .at-icon{
+  //   margin-left: 12rpx;
+  // }
 }
 .searchBar{
   height: 80rpx;

@@ -300,12 +300,16 @@ export default function userForeman() {
   const [reduxTime, setReduxTime] = useState<any[]>([])
   // 工资标准全选
   const [checkAll, setCheckAll] = useState<boolean>(false)
+  // 缓存日历
+  const [cacheDays,setcacheDays]= useState<string[]>([]);
+  // 缓存工人
+  const [cacheWorker, setcacheWorker] = useState<string[]>([])
   useEffect(()=>{
     console.log('发了')
     // 获取角色
     let type = Taro.getStorageSync(Type);
     setIdentity(type);
-    handleUser();
+    // handleUser();
     // 获取用户信息
     let midData = Taro.getStorageSync(MidData)
     // }
@@ -481,7 +485,8 @@ export default function userForeman() {
     }
   }
   // 对应月份日期
-  const getMonthDaysCurrent = (e,val?:any,ids?:any,typeId?:string,) => {
+  const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?:string[]) => {
+    console.log(cacheDaysArrList,'日历日期')
     const groupInfos = JSON.parse(JSON.stringify(groupInfo));
     let id ;
     if (ids){
@@ -601,26 +606,44 @@ export default function userForeman() {
       }
     }
       // 获取记录过的日历
-    const calendarItem = Taro.getStorageSync(Calendar);
-    // 获取项目类型
-    if (calendarItem.length>0){
-      for (let i = 0, len = calendarItem.length;i<len;i++){
-        // 判断日历ID与项目ID相同
-        if (calendarItem[i].id == id && calendarItem[i].dataType == dataType) { 
-          if (calendarItem[i].data.length>0){
-            calendarItem[i].data.map(v=>{
-              calendarDaysArr.map(val => {
-                if (v.date == val.date && v.month == val.month && v.year == val.year) {
-                  val.record = true;
-                }
-                return val;
-              })
-              return v;
-            })
-          }
-        }
-      }
+    // const calendarItem = Taro.getStorageSync(Calendar);
+    const cacheDaysArr = JSON.parse(JSON.stringify(cacheDays));
+    let List;
+    if (cacheDaysArrList){
+      List = cacheDaysArrList;
+    }else{
+      List = cacheDaysArr;
     }
+    if (List.length>0){
+      List.map(v=>{
+        calendarDaysArr.map(val=>{
+          if(v === val.id){
+            val.record = true;
+          }
+          return val;
+        })
+        return v;
+      })
+    }
+    // 获取项目类型
+    // if (cacheDaysArr.length>0){
+    //   for (let i = 0, len = cacheDaysArr.length;i<len;i++){
+    //     // 判断日历ID与项目ID相同
+    //     if (cacheDaysArr[i] == id && cacheDaysArr[i].dataType == dataType) { 
+    //       if (cacheDaysArr[i].data.length>0){
+    //         cacheDaysArr[i].data.map(v=>{
+    //           calendarDaysArr.map(val => {
+    //             if (v.date == val.date && v.month == val.month && v.year == val.year) {
+    //               val.record = true;
+    //             }
+    //             return val;
+    //           })
+    //           return v;
+    //         })
+    //       }
+    //     }
+    //   }
+    // }
     setCalendarDays(calendarDaysArr)
   }
   // 公历转农历函数
@@ -1316,8 +1339,9 @@ export default function userForeman() {
     })
   }
   // 工人列表
-  const bkGetWorker = (groupInfos?:any, val?:any,dataItem?:any,id?:string)=>{
-    console.log(groupInfos,'groupInfosgroupInfos')
+  const bkGetWorker = (groupInfos?: any, val?: any, dataItem?: any, id?: string, TabberType?:number)=>{
+    console.log(groupInfos,'groupInfosgroupInfos');
+    console.log(TabberType,'TabberTypeTabberTypeTabberType')
     // 不传group_info获取通讯录里的所有人
     const type = Taro.getStorageSync(Type);
     let params;
@@ -1357,6 +1381,7 @@ export default function userForeman() {
             }
             dispatch(setmailList(res.data))
           }else{
+            console.log(231312321312)
             // const objs = JSON.parse(JSON.stringify(obj));
             let midData = Taro.getStorageSync(MidData)
             let objs:any={};
@@ -1373,7 +1398,10 @@ export default function userForeman() {
             const userData = Taro.getStorageSync(User);
             // 获取当前点击的项目类型状态
             let dataType;
-            if (id){
+            console.log(TabberType,'TabberType')
+            if(TabberType){
+              dataType = TabberType;
+            }else if (id){
               dataType = id;
             }else{
               recorderTypeArr.item.map((v) => {
@@ -1382,6 +1410,7 @@ export default function userForeman() {
                 }
               })
             }
+            console.log(dataType,'dataTypedataType')
             let itemType;
             // if (dataType == 2) {
               for (let i = 0; i < contractorArr.item.length; i++) {
@@ -1397,6 +1426,8 @@ export default function userForeman() {
             const dates = new Date().getDate();
             const time = years + '-' + months + '-' + dates;
             // 设置蓝色底色
+            let ArrList = [objs, ...arr];
+            let cacheDaysArr = [];
             if(type === 1){
               let dateParams = {
                 group_info: groupInfos,
@@ -1404,23 +1435,37 @@ export default function userForeman() {
                 date: time,
               }
               getWorkerHasBusinessByDateAction(dateParams).then(dateRes=>{
-                console.log(dateRes,'dateRes')
                 if(dateRes.code == 200){
-                  if(res.data){
+                  if (dateRes.data){
                     // 判断记录过
-                    if (res.data.days&&res.data.days.length>0){
-                      console.log(res.data.days,'231321')
+                    // 时间
+                    if (dateRes.data.days && dateRes.data.days.length>0){
+                      setcacheDays(dateRes.data.days);
+                      console.log(dateRes.data.days,'工人1111');
+                      cacheDaysArr = dateRes.data.days;
                     }
-                    if (res.data.worker&&res.data.worker.length>0){
-                      console.log(res.data.worker, '231321')
+                    // 工人
+                    if (dateRes.data.worker && dateRes.data.worker.length>0){
+                      // setcacheWorker(dateRes.data.worker);
+                      ArrList.map(v => {
+                        dateRes.data.worker.map(val => {
+                          if (val == v.id) {
+                            v.discipline = true;
+                          }
+                          return val;
+                        })
+                        return v;
+                      })
                     }
                   }
                 }else{
-                  Msg(res.msg);
+                  Msg(dateRes.msg);
                   return;
                 }
               })
             }
+            console.log(cacheDaysArr,'cacheDaysArr');
+            // return;
             // if (type === 1){
             //   if (userData){
             //       userData.map(v=>{
@@ -1445,10 +1490,10 @@ export default function userForeman() {
             // }
             setGroupInfo(groupInfos)
             console.log(arr,'获取到的数据11')
-            console.log([objs, ...arr],'内容111')
-            dispatch(setPhoneList([objs, ...arr]));
-            dispatch(setWorker([objs, ...arr]))
-            bkGetWorkerWage(groupInfos, [objs,...arr]);
+            console.log(ArrList,'内容111')
+            dispatch(setPhoneList(ArrList));
+            dispatch(setWorker(ArrList))
+            bkGetWorkerWage(groupInfos, ArrList);
             const clickDataArr = [{
                 year: years,
                 month: months,
@@ -1457,7 +1502,8 @@ export default function userForeman() {
               }];
             setOpenClickTime(clickDataArr)
             setClickData(clickDataArr);
-            getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id);
+            console.log(cacheDaysArr,'日历传送')
+            getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr);
             return;
         }
       }
@@ -2247,7 +2293,7 @@ export default function userForeman() {
         itemType = contractorArr.item[i].id;
       }
     }
-    if (types === 2 && (tabData.id != 3 || (tabData.id == 2 && itemType==2)) ){
+    if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType==0)) ){
       if (data.work == 0){
         Msg('上班标准必须大于0')
         return;
@@ -2471,14 +2517,14 @@ export default function userForeman() {
                         dispatch(setWorker([]))
                         setImage({ item: [] });
                         bkGetProjectTeam('',true);
-                        handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+                        // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
                       },800)
                       // 首选获取项目名称
                       // bkGetProjectTeam();
                       //直接保存
                     }else{
                       dispatch(setWorker([]))
-                      handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+                      // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
                       setDisplay(true)
                     }
                   }else{
@@ -2512,12 +2558,12 @@ export default function userForeman() {
                 dispatch(setWorker([]))
                 setImage({ item: [] });
                 bkGetProjectTeam('',true);
-                handleRecordTime(timeItem, workers, groupInfo,tabData.id);
+                // handleRecordTime(timeItem, workers, groupInfo,tabData.id);
               },800)
               //直接保存
             } else {
               dispatch(setWorker([]))
-              handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+              // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
               setDisplay(true)
             }
           }else{
@@ -2898,11 +2944,11 @@ export default function userForeman() {
               // handleRecordTime(timeItem, workers);
               // 设置不刷新
               setRefresh(true)
-              handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+              // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
             },800)
           }else{
             setDisplay(true)
-            handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+            // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
           }
         }else{
           Msg(res.msg)
@@ -3972,12 +4018,65 @@ export default function userForeman() {
         if(type === 1){
           getMonthDaysCurrent(new Date(), '', '', val.id);
         }
+        // const timeItem = JSON.parse(JSON.stringify(openClickTime));
+        // let time: string[] = timeItem.map(item => (item.year + '-' + item.month + '-' + item.date));
+        // 发起请求
+        // let dateParams = {
+        //   group_info: groupInfo,
+        //   business_type: val.id,
+        //   date: time,
+        // }
+        console.log(v.id,'v.id')
+        bkGetWorker(groupInfo, true,'','',v.id)
+        // getWorkerHasBusinessByDateAction(dateParams).then(res=>{
+        //   console.log(res,'ressss');
+
+        // })
       } else {
         val.click = false
       }
       return val;
     });
     setRecorderTypeArr({ item: data })
+  }
+  // 获取缓存
+  const getWorkerHasBusinessByDate=()=>{
+    let dataType;
+    recorderTypeArr.item.map((v) => {
+      if (v.click) {
+        dataType = v.id;
+      }
+    })
+    const timeItem = JSON.parse(JSON.stringify(openClickTime));
+    let time: string[] = timeItem.map(item => (item.year + '-' + item.month + '-' + item.date));
+    let dateParams = {
+      group_info: groupInfo,
+      business_type: dataType,
+      date: time,
+    }
+    getWorkerHasBusinessByDateAction(dateParams).then(dateRes=>{
+        if(dateRes.code == 200){
+          if (dateRes.data) {
+            if (dateRes.data.days && dateRes.data.days.length > 0) {
+              setcacheDays(dateRes.data.days);
+              // cacheDaysArr = dateRes.data.days;
+            }
+            if (dateRes.data.worker && dateRes.data.worker.length > 0) {
+              setcacheWorker(dateRes.data.worker);
+              // ArrList.map(v => {
+              //   dateRes.data.worker.map(val => {
+              //     if (val == v.id) {
+              //       v.discipline = true;
+              //     }
+              //     return val;
+              //   })
+              //   return v;
+              // })
+            }
+
+          }
+        }
+    })
   }
   return {
     model,
