@@ -4,6 +4,7 @@ import UploadImgAction from '../../utils/upload'
 import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageAction, bkUpdateWorkerAction } from '../../utils/request/index';
 import { View, Text, Input, Textarea, RadioGroup, Radio, CoverView } from '@tarojs/components';
 import WageStandard  from '../../components/wageStandard'
+import Quantities from '../../components/quantities';
 import Msg from '../../utils/msg'
 import WorkingHours from '../../components/workingHours';
 import WorkOvertime from '../../components/workOvertime';
@@ -47,6 +48,8 @@ export default function EditDetails() {
   const [unit, setUnit] = useState<string>('平方米')
   // 上班时长选择类型
   const [timeType, setTimeType] = useState<number>(0)
+  // 单位弹框
+  const [quantitiesDisplay, setQuantitiesDisplay] = useState<boolean>(false)
   // 借支
   const [borrowing, setBorrowing] = useState<BorrowingType>({
     item: [
@@ -1077,6 +1080,8 @@ export default function EditDetails() {
       <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio}/>
       <WorkOvertime display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
+      {/* 工程量选择单位 */}
+      {/* <Quantities display={quantitiesDisplay} handleClose={handleClose} data={company} handleQuantities={handleQuantities} /> */}
     </View>
   )
 }

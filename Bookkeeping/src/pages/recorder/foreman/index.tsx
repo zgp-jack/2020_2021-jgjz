@@ -500,10 +500,12 @@ export default function Foreman() {
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
               />
-              <View className='rightIconsBox'>
+            <View className='amountType' onClick={() => setQuantitiesDisplay(true)}>{unit}
+                <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
+            </View>
+              {/* <View className='rightIconsBox'>
                 <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
-              </View>
-            <View className='amountType' onClick={() => setQuantitiesDisplay(true)}>{unit}</View>
+              </View> */}
             </View>
           </View>
           <View className='publish-recruit-card'>

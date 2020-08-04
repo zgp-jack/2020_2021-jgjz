@@ -10,11 +10,11 @@
   //   // width: auto;
   //   // position: relative;
   // }
-  // .at-search-bar__action{
-  //   background: #fff;
-  //   color: #0099FF;
-  //   font-size: 28rpx;
-  // }
+  .at-search-bar__action{
+    background: #fff;
+    color: #0099FF;
+    font-size: 28rpx;
+  }
   // .at-search-bar{
   //   height:110rpx;
   //   margin-bottom: 20rpx;
@@ -251,6 +251,7 @@
   margin-top: 10rpx;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10rpx;
 }
 .day{
   font-size:36rpx;
