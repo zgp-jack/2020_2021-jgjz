@@ -68,9 +68,8 @@
 }
 
 .image {
-  display: block;
   display: flex;
-  // justify-content: space-around;
+  flex-direction: column;
 }
 .footerbtn{
   width: 100%;

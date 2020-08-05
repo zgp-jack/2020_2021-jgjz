@@ -127,6 +127,10 @@ export default function userCode(InitParams) {
     }
     console.log(params,'params');
     if (InitParams.id){
+      if (!params.img.length && !params.note){
+        Msg('请填写内容或添加图片');
+        return;
+      }
       bkUpdateNotePadAction(params).then(res=>{
         if(res.code === 200){
           Msg('修改成功')

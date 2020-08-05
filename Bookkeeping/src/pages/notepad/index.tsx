@@ -188,9 +188,11 @@ export default function Notepad() {
       return
     }
     Taro.showModal({
-      title:'提示',
+      // title:'提示',
       content:'删除后，当前信息将无法恢复，确定删除？',
       showCancel: true,
+      confirmColor:'#0099FF',
+      cancelColor:'#797979',
       success: (res) => {
         if (res.confirm == true) {
           // if(ids.length === 0){
@@ -203,6 +205,7 @@ export default function Notepad() {
           bkDeleteNotePadAction(params).then(res=>{
             if(res.code === 200 ){
               Msg('删除成功')
+              setIds([]);
               setTimeout(()=>{
                 getList(val);
               },500)

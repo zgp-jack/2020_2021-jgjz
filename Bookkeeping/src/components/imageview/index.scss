@@ -1,5 +1,8 @@
 .uploads-imgs-lists {
   position: relative;
+  .uploads-img-item:first-child{
+    margin-left: 10rpx;
+  }
   .uploads-img-item {
     position: relative;
     width:145rpx;
@@ -7,8 +10,7 @@
     // width: 100rpx;
     padding: 20rpx;
     float: left;
-    margin-bottom: 15rpx;
-    margin-right: 3.9rpx;
+    // margin-bottom: 15rpx;
     .uploads-img-imgbox {
       position: relative;
       display: block;

@@ -4,7 +4,7 @@ import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProj
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType,Earliest_month } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setWorker } from '../../actions/workerList'
@@ -109,7 +109,7 @@ export default function Index() {
   // 鱼泡网过来然后需要登录手机号
   const [loginPhone,setLoginPhone] =useState<boolean>(false)
    // 判断左边是否需要icon
-  const [leftTime, setleftTime] = useState<boolean>(true)
+  const [leftTime, setleftTime] = useState<boolean>()
   // 判断右边是否需要icon
   const [rightTime, setrightTime] = useState<boolean>(false)
   // 今天
@@ -453,8 +453,13 @@ export default function Index() {
           const date = new Date();
           const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
           if (res.data.earliest_month) {
+            Taro.setStorageSync(Earliest_month,res.data.earliest_month)
             setStart(res.data.earliest_month);
-            if ( !type && new Date(res.data.earliest_month).getTime()< new Date().getTime()){
+            let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+            let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+            if(!type && Number(res.data.earliest_month.split('-')[0]) == yeartime){
+              Number(res.data.earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
+            }else if(!type && Number(res.data.earliest_month.split('-')[0]) < yeartime) {
               setleftTime(true);
             }
           } else {
@@ -505,31 +510,37 @@ export default function Index() {
   }
   // Icon图片显示
   const changeIcon = (e) => {
-    console.log(e,'xxx')
+    let earliest_month = Taro.getStorageSync(Earliest_month);
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    console.log(Number(e.split('-')[0]),'nunewqje wkj')
-    console.log(yeartime - 1,'231321')
-    console.log(Number(e.split('-')[1]),'111');
-    // 第一个项目时间
-    const startTime = new Date(start).getTime();
-    console.log(new Date(e).getTime(),'31321312')
-    console.log(startTime,'startTIme')
-    // 第一个项目时间大于等于现在的时间就不显示左边
-    if (startTime >= new Date(e).getTime()){
+    if(!earliest_month){
       setleftTime(false);
-      setrightTime(true);
-    }else{
-      setleftTime(true);
       setrightTime(false);
+    }else{
+      if(yeartime == Number(earliest_month.split('-')[0])){
+        if(Number(e.split('-')[1])<=Number(earliest_month.split('-')[1])){
+          setrightTime(true);
+          setleftTime(false);
+        }else if(Number(e.split('-')[1])>=montime){
+          setrightTime(false);
+          setleftTime(true);
+        }else{
+          setrightTime(true);
+          setleftTime(true);
+        }
+      }else{
+        if(Number(earliest_month.split('-')[0])==Number(e.split('-')[0])){
+          setrightTime(true);
+          Number(e.split('-')[1])>Number(earliest_month.split('-')[1])?setleftTime(true):setleftTime(false);
+        }else if(Number(e.split('-')[0])==yeartime){
+          setleftTime(true);
+          Number(e.split('-')[1])<montime?setrightTime(true):setrightTime(false);
+        }else{
+          setleftTime(true);
+          setrightTime(true);
+        }
+      }
     }
-    // if (startTime >= new Date(e).getTime()){
-    //   setleftTime(true);
-    //   Number(e.split('-')[1])<montime?setrightTime(true):setrightTime(false);
-    // }else if(Number(e.split('-')[0]) == yeartime-1) {
-    //   setrightTime(true);
-    //   Number(e.split('-')[1])>montime?setleftTime(true):setleftTime(false);
-    // }
   }
   // 点击提示
   const handelTps = ()=>{
@@ -866,13 +877,13 @@ export default function Index() {
           <View><Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱</View>
           <View><Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`}/>借支</View>
         </View>
-        <View className='money'>
+        <View className={!item && !item.amount ? 'money moneyv':'money'}>
           <View className='money-left'>
-            {(item && item.money > 9999999.99 ? '1千万+' : item.money)||0}
+            {item && (item.money > 9999999.99 ? '1千万+' : item.money)||'0.00'}
           {/* {item && item.money || 0} */}
           </View>
           <View className=''>
-          {(item && item.borrow > 9999999.99 ? '1千万+' : item.borrow) || 0}
+          {(item && item.borrow > 9999999.99 ? '1千万+' : item.borrow) || '0.00'}
           {/* {item && item.borrow || 0} */}
           </View>
         </View>
