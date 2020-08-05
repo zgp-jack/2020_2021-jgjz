@@ -141,6 +141,10 @@ export default function EditDetails() {
   const [wageStandardDisplay, setWageStandardDisplay] = useState<boolean>(false)
   // 日期显示
   const [date,setDate] = useState<string>('')
+  // 点击上班时长
+  const [clickDay, setClickDay] = useState<any>();
+  // 点击加班时长
+  const [clickTime, setClickTime] = useState<any>()
   useEffect(()=>{
     if(id){
       bkBusinessOneAction({ id }).then(res => {
@@ -344,6 +348,47 @@ export default function EditDetails() {
   // 关闭
   const handleClose = ()=>{
     setDisplay(false);
+    const data = JSON.parse(JSON.stringify(val));
+    const title = data.duration;
+    setVal({ ...data, modalDuration: title});
+    const clickDayItem = JSON.parse(JSON.stringify(clickDay));
+    const clickTimeItem = JSON.parse(JSON.stringify(clickTime));
+    console.log(clickDayItem,'clickDayItem');
+    console.log(clickTimeItem,'clickTimeItem');
+    // 上班时长
+    const timeArrs = JSON.parse(JSON.stringify(timeArr));
+    // 获取加班时长
+    const addWorkArrs = JSON.parse(JSON.stringify(addWorkArr));
+    // 上班时长
+    if (clickDayItem){
+      for (let i = 0; i < timeArrs.length; i++) {
+        timeArrs[i].click = false
+        if (timeArrs[i].id == clickDayItem.id){
+          if (clickDayItem.id !==4 ){
+            timeArrs[i].click = true
+          }else{
+            timeArrs[i] = { id: 4, name: clickDayItem.name, click: true, num: clickDayItem };
+          }
+        }
+      }
+    }
+    console.log(timeArrs,'timeArrs');
+    // 加班时长
+    if (clickTimeItem) {
+      for (let i = 0; i < addWorkArrs.length; i++) {
+        addWorkArrs[i].click = false
+        if (addWorkArrs[i].id == clickTimeItem.id) {
+          if (clickTimeItem.id !== 2) {
+            addWorkArrs[i].click = true
+          } else {
+            addWorkArrs[i] = { id: 2, name: clickTimeItem.name, click: true, num: clickTimeItem };
+          }
+        }
+      }
+    }
+    console.log(addWorkArrs,'addWorkArrs')
+    setTimeArr(timeArrs);
+    setAddWorkArr(addWorkArrs)
   }
   // 输入框
   const handleWageStandard = (type,e)=>{
@@ -747,15 +792,15 @@ export default function EditDetails() {
       }
       if (data.length > 0 && dataList.length > 0) {
         if (data[0].name == '休息' && dataList[0].name == '无加班') {
-          title = '上班'+ data[0].name +'，加班'+ dataList[0].name
+          title = data[0].name +'，'+ dataList[0].name
         } else {
           if (data[0].name == '休息') {
-            title = '加班' + dataList[0].name
+            title = '上班' + data[0].name+ '，加班' + dataList[0].name
+          }else if (dataList[0].name == '无加班') {
+            title = '上班' + data[0].name +'，'+ dataList[0].name;
+          }else{
+            title = '上班' + data[0].name + '，加班' + dataList[0].name
           }
-          if (dataList[0].name == '无加班') {
-            title = '上班' + data[0].name +'，'+ dataList[0].name
-          }
-          title = '上班' + data[0].name + '，加班' + dataList[0].name
         }
       }
     }
@@ -780,8 +825,12 @@ export default function EditDetails() {
     // 加班时间
     const dayNum = item.day;
     let time: number = 0;
+    // let clickDay:any = {};
+    // let clickTime:any = {};
     for (let i = 0; i < timeArrs.length; i++) {
       if (timeArrs[i].click) {
+        // clickDay = timeArrs[i];
+        setClickDay(timeArrs[i])
         // 选择工
         if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
           time = 1 / workNum * timeArrs[i].num
@@ -803,6 +852,8 @@ export default function EditDetails() {
     let addTime: number = 0;
     for (let i = 0; i < addWorkArrs.length; i++) {
       if (addWorkArrs[i].click) {
+        setClickTime(addWorkArrs[i])
+        // clickTime = addWorkArrs[i];
         addTime = addWorkArrs[i].num
       }
     }
@@ -816,7 +867,6 @@ export default function EditDetails() {
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
     const num = wages.toFixed(2);
-    console.log(1111,title,'111')
     setVal({ ...val, duration: title, wages: num })
     setDisplay(false);
   }

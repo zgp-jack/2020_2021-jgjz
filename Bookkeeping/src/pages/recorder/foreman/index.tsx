@@ -616,7 +616,7 @@ export default function Foreman() {
         <View className='publish-recruit-card'>
           <View className='publish-list-ditals'>
             <View>备注</View>
-            {/* <CoverView> */}
+              <CoverView className={wageStandardDisplay || display || workingHoursDisplay ? 'coverView' : ''}>
             <Textarea
               className='textarea'
               placeholder='请填写备注...'
@@ -624,7 +624,7 @@ export default function Foreman() {
               onInput={(e) => handleInput('details',e)}
               maxlength={400}
             />
-            {/* </CoverView> */}
+            </CoverView>
           </View>
           <View>
             <WordsTotal num={num} />
