@@ -203,6 +203,7 @@ export default function Notepad() {
           bkDeleteNotePadAction(params).then(res=>{
             if(res.code === 200 ){
               Msg('删除成功')
+              setIds([]);
               setTimeout(()=>{
                 getList(val);
               },500)
