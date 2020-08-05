@@ -1621,11 +1621,24 @@ export default function userForeman() {
     // 工钱12位保留两个小数
     if (type == 'amount' || type == 'price'|| type == 'borrowing'){
       if (/^(\d?)+(\.\d{0,2})?$/.test(e.detail.value)) { //正则验证，提现金额小数点后不能大于两位数字
-        data[type] = e.detail.value;
+        let item = e.detail.value;
+        if (e.detail.value.toString().length > 7) {
+          item = (e.detail.value.toString()).substring(0, 7);
+          console.log((e.detail.value.toString()).substring(0, 7), '1111item')
+        }
+        console.log(item,'item')
+        data[type] = item;
       } else {
         Msg('请输入两位小数或整数')
-        data[type] = e.detail.value;
+        let ab_num:string|number = parseInt(e.detail.value.substring(0, e.detail.value.indexOf('.')));
+        const num_data = e.detail.value.replace(/\d+\.(\d*)/, '$1').substring(0, 2);
+        console.log(ab_num.toString().length,'ab_num.toString().length')
+        if (ab_num.toString().length>7){
+          ab_num = (ab_num.toString()).substring(0, 7);
+        }
+        data[type] = parseFloat(ab_num +'.'+ num_data);
       }
+      console.log(data,'data')
       setModel(data);
       return;
     }

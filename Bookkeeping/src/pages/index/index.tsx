@@ -1,4 +1,4 @@
-import Taro, { useEffect, useState, useDidShow, onAppShow, login } from '@tarojs/taro'
+import Taro, { useEffect, useState, useDidShow, onAppShow, getLaunchOptionsSync } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction, appletJumpAction } from '../../utils/request/index';
 import { useDispatch } from '@tarojs/redux'
@@ -84,7 +84,7 @@ export default function Index() {
   const [list,setList] = useState<any[]>([])
   // 云朵
   const [num,setNum] = useState<string>('0');  
-  const [newTime,setNewTime] = useState<string>()
+  const [newTime,setNewTime] = useState<string>('')
   // 数据
   const [item,setItme] = useState<any>()
   const [image, setImage] = useState<any>(Images[0].url)
@@ -112,6 +112,8 @@ export default function Index() {
   const [leftTime, setleftTime] = useState<boolean>(true)
   // 判断右边是否需要icon
   const [rightTime, setrightTime] = useState<boolean>(false)
+  // 今天
+  const [toDay,setToDay] = useState<string>('')
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
@@ -127,6 +129,7 @@ export default function Index() {
     setNewMonth(newMonth)
     // 现在月份
     setNowMonth(newMonth)
+    setToDay(newTime)
     setMonth(addZero(time.getMonth() + 1))
     // 先写死
     setStart(newTime)
@@ -140,6 +143,8 @@ export default function Index() {
     }
     return num;
   }
+  // 与小程序onLaunch一样
+  // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
     console.log(e,'返回内容')
@@ -370,7 +375,7 @@ export default function Index() {
     })
   }
   // 获取首页数据
-  const getData = (e?:string)=>{
+  const getData = (e?:string,type?:number)=>{
     let isLoginType = Taro.getStorageSync(IsLoginType);
     console.log(isLoginType, 'logingTypeslogingTypes')
     if (isLoginType ==1) {
@@ -390,6 +395,9 @@ export default function Index() {
     // }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
+    if(!midData){
+      setleftTime(false)
+    }
     if(midData){
       let type = Taro.getStorageSync(Type);
         if(!type){
@@ -411,6 +419,7 @@ export default function Index() {
       // console.log(2);
       // console.log(time,'time')
       changeTime = e;
+      setNewTime(e);
       // 设置时间
       // const date = new Date(vals);
       // const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
@@ -438,7 +447,10 @@ export default function Index() {
           const date = new Date();
           const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
           if (res.data.earliest_month) {
-            setStart(res.data.earliest_month)
+            setStart(res.data.earliest_month);
+            if ( !type && new Date(res.data.earliest_month).getTime()< new Date().getTime()){
+              setleftTime(true);
+            }
           } else {
             setStart(newMonth)
           }
@@ -487,15 +499,31 @@ export default function Index() {
   }
   // Icon图片显示
   const changeIcon = (e) => {
+    console.log(e,'xxx')
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    if(Number(e.split('-')[0]) == yeartime){
-      setleftTime(true);
-      Number(e.split('-')[1])<montime?setrightTime(true):setrightTime(false);
-    }else if(Number(e.split('-')[0]) == yeartime-1) {
+    console.log(Number(e.split('-')[0]),'nunewqje wkj')
+    console.log(yeartime - 1,'231321')
+    console.log(Number(e.split('-')[1]),'111');
+    // 第一个项目时间
+    const startTime = new Date(start).getTime();
+    console.log(new Date(e).getTime(),'31321312')
+    console.log(startTime,'startTIme')
+    // 第一个项目时间大于等于现在的时间就不显示左边
+    if (startTime >= new Date(e).getTime()){
+      setleftTime(false);
       setrightTime(true);
-      Number(e.split('-')[1])>montime?setleftTime(true):setleftTime(false);
+    }else{
+      setleftTime(true);
+      setrightTime(false);
     }
+    // if (startTime >= new Date(e).getTime()){
+    //   setleftTime(true);
+    //   Number(e.split('-')[1])<montime?setrightTime(true):setrightTime(false);
+    // }else if(Number(e.split('-')[0]) == yeartime-1) {
+    //   setrightTime(true);
+    //   Number(e.split('-')[1])>montime?setleftTime(true):setleftTime(false);
+    // }
   }
   // 点击提示
   const handelTps = ()=>{
@@ -751,18 +779,23 @@ export default function Index() {
   // 选择项目
   const handleLeft = (type:number)=>{
     let midData = Taro.getStorageSync(MidData);
+    // 没有个人信息的时候出现授权
     if (!midData) {
       setDisplay(true)
       return;
     } 
-    console.log(111);
-    const val = JSON.parse(JSON.stringify(vals));
-    console.log(val);
-    console.log(newTime,'time')
+    // 判断时间大于项目创建时间就不可以点击
+    // 现在的时间
     const date = new Date(newTime||'');
-    const nowD = date.getFullYear() + "." + (date.getMonth() + 1) + "." + date.getDate();
+    // 第一次记工时间
+    const startTime = new Date(start).getTime();
+    // 现在的时间
+    const newTimes = new Date(newTime.substring(0, 7)).getTime();
     //减少/增加一个月
     if(type ===0){
+      if (startTime >= newTimes) {
+        return;
+      }
       date.setMonth(date.getMonth() - 1);
     }else{
       date.setMonth(date.getMonth() + 1);
@@ -770,13 +803,16 @@ export default function Index() {
     let month = date.getMonth();
     month = ((month == 0) ? (12) : (month));
     const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
-    changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
+    console.log(date.getFullYear() + "-" + addZero(date.getMonth() + 1),'======')
     console.log(befD,'befD')
-    getData(befD);
+    getData(befD,1);
     setTime(befD);
     console.log(befD.substring(5,7))
     // 月份
     setMonth(befD.substring(5, 7))
+    setTimeout(()=>{
+      changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
+    },0)
   }
   console.log(newMonth,'newMonth');
   console.log(start,'start')
@@ -883,7 +919,7 @@ export default function Index() {
       </View>
       <View className='content'>
         <View className='backgroundCloud'></View>
-        <View className='content-title'>今日 <Text className='content-time'>{newTime} {week}</Text></View>
+        <View className='content-title'>今日 <Text className='content-time'>{toDay} {week}</Text></View>
         {busy && 
           <View className='busyBox'>
             <View>系统繁忙，刷新试试</View>
@@ -973,7 +1009,7 @@ export default function Index() {
           <View className='mtList'>与上一次记工身份不一致，是否<Text className='atModal-change'>切换?</Text></View>
           <View className='atModal-list' onClick={()=>handleType(0)}>不切换</View>
           <View className='atModal-list' onClick={() => handleType(1)}>切换成【{type == 1?'工人':'班组长'}】</View>
-          <View className='atModal-list' onClick={() => handleType(2)}>不再提醒</View>
+          <View className='atModal-list' onClick={() => handleType(2)}><Text className='blued'>不再提醒</Text></View>
         </View>
       </AtModal>
       {/* 选择身份弹窗 */}

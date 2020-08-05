@@ -331,7 +331,8 @@
   padding-top: 10rpx;
 }
 .AtModal {
-  height: 449rpx;
+  height: 542rpx;
+  width: 582rpx;
   text-align: center;
   color: rgba(123, 123, 123, 1);
   font-size: 30rpx;
@@ -346,7 +347,12 @@
   height: 80rpx;
   line-height: 80rpx;
   background:rgba(247, 247, 247, 1);
-  margin-bottom: 12rpx;
+  border-radius: 36rpx;
+  // margin-left: 10rpx;
+  // margin-right: 10rpx;
+  width: 414rpx;
+  margin: 0 auto;
+  margin-bottom: 41rpx;
 }
 .mtList {
   text-align: left;
@@ -521,4 +527,7 @@
   height: 32rpx;
   width: 32rpx;
   background-size: contain;
+}
+.blued{
+  color: #0099FF;
 }
