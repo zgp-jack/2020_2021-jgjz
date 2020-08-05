@@ -57,10 +57,73 @@ export default function AttendanceSheet() {
     const months = addZero(time.getMonth() + 1);
     setYear(years)
     setMonth(months)
-    setDate(newTime);
-    getList(newTime);
-    
+    // setDate(newTime);
+    getList(newTime)
+    // getDateList(newTime);
   }, [])
+  // 获取数据
+  const getDateList = (newTime:string)=>{
+    console.log(newTime,'newTime')
+    let params = {
+      date: newTime
+    };
+    bkgetExcelDataAction(params).then(res => {
+      if(res.code === 200){
+      // 设置内容
+      if (res.data.length > 0) {
+      const curDate = new Date(newTime);
+      /* 获取当前月份 */
+      const curMonth = curDate.getMonth();
+      /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
+      curDate.setMonth(curMonth + 1);
+      /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
+      curDate.setDate(0);
+      const day = curDate.getDate();
+      console.log(day,'xxx')
+      //  设置第一列
+      const dayArr: any[] = [];
+      for (var k = 1; k <= day; k++) {
+        let obj: any = {
+          id: k,
+          name: k,
+          default:true
+        }
+        dayArr.push(obj);
+      }
+      console.log(dayArr,'dayarr')
+      // 设置列表左边
+      const defaultArr = [
+        { id: 1, name: '工人',default:true },
+        { id: 2, name: '记工类型',default:true },
+        { id: 3, name: '本月统计', default: true },
+      ]
+        let arrObj = {
+          list: dayArr,
+        }
+        let List:any[] = [];
+        List.push(arrObj);
+        const fixedTabObj = {
+          list: defaultArr
+        }
+        // 左边第一行
+        let leftArr:any[] = [];
+        leftArr.push(fixedTabObj);
+        // 右边第一行
+        let rightArr:any[] = [];
+        let firstArr:any=[];
+        firstArr = dayArr;
+        let first ={list:firstArr};
+        rightArr.push(first);
+        setFixedTab(leftArr);
+        setTabArr(rightArr);
+        // 设置里面的内容
+
+      }
+      }else{
+        Msg(res.msg)
+      }
+    })
+  }
   // 获取数据
   const getList = (newTime: string) => {
     console.log(identity,'identity')
@@ -103,6 +166,7 @@ export default function AttendanceSheet() {
     const defaultArr = [
       { id: 1, name: '工人',default:true },
       { id: 2, name: '记工类型',default:true },
+      // { id: 3, name: '本月统计', default: true },
     ]
     const fixedTabObj = {
       list: defaultArr
@@ -122,6 +186,7 @@ export default function AttendanceSheet() {
           borrow: true,
         }, id: Math.random()
       }
+
     ]
     let tatalLeftObj: any = {};
     tatalLeftObj.list = tatalLeft;
@@ -682,6 +747,7 @@ export default function AttendanceSheet() {
       if (identity === 1){
         obj.list.push(...dayArrItme);
       }
+      console.log(obj,'obj23123')
       rightData.push(obj)
         console.log(tebArrList,'tebArrList');
         console.log(rightData,'rightData')
@@ -707,7 +773,7 @@ export default function AttendanceSheet() {
     setTabArr([]);
     setYear(e.detail.value.slice(0, 4));
     setMonth(e.detail.value.slice(5, 8));
-    getList(time);
+    getDateList(time);
   }
   // 跳转
   const userRouteJump = (url: string) => {
@@ -768,6 +834,8 @@ export default function AttendanceSheet() {
     setProject(false)
     setCreateProjectDisplay(true)
   }
+  console.log(tebArr,'tebArr');
+  console.log(fixedTab,'fixedTab')
   // 分享
   return (
     <View className='AttendanceSheetContent'>
@@ -784,7 +852,7 @@ export default function AttendanceSheet() {
         </View>
         <View>以下是你的记工，点击可查看详情</View>
       </View>
-      {tebArr.length>2&&
+      {/* {tebArr.length>2&& */}
       <View className='box'>
         {/* 左边固定 */}
         <View>

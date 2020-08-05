@@ -134,37 +134,37 @@
 .box{
   display: flex;
   margin-bottom: 200rpx;
-  // button {
-  //   position: relative;
-  //   display: inline-block;
-  //   margin-left: auto;
-  //   margin-right: auto;
-  //   padding: 0 !important;
-  //   box-sizing: border-box;
-  //   text-align: center;
-  //   text-decoration: none;
-  //   line-height: 2.55555556;
-  //   border-radius: 0rpx;
-  //   border: none;
-  //   color: rgba(0, 153, 255, 1);
-  //   -webkit-tap-highlight-color: transparent;
-  //   overflow: hidden;
-  //   font-size: 18rpx;
-  //   background-color: #f7f6f9;
-  //   // z-index: -1;
-  // }
+  button {
+    position: relative;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 !important;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
+    line-height: 2.55555556;
+    border-radius: 0rpx;
+    border: none;
+    color: rgba(0, 153, 255, 1);
+    -webkit-tap-highlight-color: transparent;
+    overflow: hidden;
+    font-size: 18rpx;
+    background-color: #f7f6f9;
+    // z-index: -1;
+  }
 
-  // button::after {
-  //   border: none !important;
-  // }
+  button::after {
+    border: none !important;
+  }
 
-  // button {
-  //   background-color: #f7f6f9;
-  // }
+  button {
+    background-color: #f7f6f9;
+  }
 
-  // button {
-  //   border-radius: 0;
-  // }
+  button {
+    border-radius: 0;
+  }
 }
 .box-left{
   height:  auto;
@@ -295,4 +295,8 @@
 }
 .title{
   font-size: 30rpx;
+}
+.shareBtn{
+  height: 80rpx;
+  line-height: 80rpx;
 }

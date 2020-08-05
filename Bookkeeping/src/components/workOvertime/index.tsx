@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { IMGCDNURL } from '../../config'
+import classnames from 'classnames'
 import './index.scss'
 
 interface dataType{
@@ -25,12 +26,17 @@ export default function WorkOvertime({ display, handleWorkOvertimeClose, handlew
           <View className='workOvertime-complaintModal-content'>
           <View className='workOvertime-complaintModal-content-title'><Text className='close' onClick={handleWorkOvertimeClose}>取消</Text><Text className='title'>选择上班时长</Text><Text onClick={handleWorkOvertimeOk} className='workOvertime-complaintModal-content-close'>确定</Text></View>
           <View className='workOvertime-complaintModal-content-timeBox'>
-            <View className='workOvertime-complaintModal-content-tips'>{model.duration}</View>
+            <View className='workOvertime-complaintModal-content-tips'>{model.modalDuration}</View>
             <View>上班时长</View>
             <View className='workOvertime-complaintModal-content-box'>
                 {data.map(v => (
                   <View 
-                    className={v.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}   
+                    className={classnames({
+                      'workOvertime-complaintModal-content-box-list-margin':v.id == 1 && v.click,
+                      'workOvertime-complaintModal-content-box-list-click': v.id != 1 && v.click,
+                      'workOvertime-complaintModal-content-box-list':!v.click,
+                    })}
+                    // className={v.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}   
                     key={v.id}
                     onClick={() => { handleworkOvertime(1,v)}}
                     >{v.name}
@@ -44,7 +50,12 @@ export default function WorkOvertime({ display, handleWorkOvertimeClose, handlew
             <View className='workOvertime-complaintModal-content-box-add'>
               {dataArr.map(v => (
                 <View
-                  className={v.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}
+                  className={classnames({
+                    'workOvertime-complaintModal-content-box-list-margin': v.id == 1 && v.click,
+                    'workOvertime-complaintModal-content-box-list-click': v.id != 1 && v.click,
+                    'workOvertime-complaintModal-content-box-list': !v.click,
+                  })}
+                  // className={v.click ? 'workOvertime-complaintModal-content-box-list-click' : 'workOvertime-complaintModal-content-box-list'}
                   key={v.id}
                   onClick={() => { handleworkOvertime(0, v) }}
                 >{v.name}

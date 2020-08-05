@@ -208,6 +208,7 @@ export interface bkBusinessOneType extends Result{
     wage_overtime_money: string,
     wage_overtime_type: string,
     wage_worktime_define: string,
+    work_time_hour:string,
   }
 }
 

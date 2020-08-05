@@ -31,6 +31,7 @@ export default function UploadImgAction(url: string = UPLOADIMGURL): Promise<Res
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
       success: res => {
+        console.log(res,'res');
         AppUploadImg(resolve, res, uploadUrl)
       }
     })

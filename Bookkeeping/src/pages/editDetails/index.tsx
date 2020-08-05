@@ -2,10 +2,11 @@ import Taro, { useState,useRouter,useEffect} from '@tarojs/taro'
 import ImageView from '../../components/imageview';
 import UploadImgAction from '../../utils/upload'
 import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageAction, bkUpdateWorkerAction } from '../../utils/request/index';
-import { View, Text, Input, Textarea, RadioGroup, Radio, CoverView } from '@tarojs/components';
+import { View, Text, Input, Textarea, RadioGroup, Radio, Image, CoverView } from '@tarojs/components';
 import WageStandard  from '../../components/wageStandard'
 import Quantities from '../../components/quantities';
 import Msg from '../../utils/msg'
+import { IMGCDNURL } from '../../config'
 import WorkingHours from '../../components/workingHours';
 import WorkOvertime from '../../components/workOvertime';
 import './index.scss'
@@ -60,6 +61,23 @@ export default function EditDetails() {
       { id: 7, name: '其他', click: false },
     ]
   })
+  // 选择大单位
+  const [company, setCompany] = useState<DataType[]>([
+    { id: 1, name: '平方米', click: true },
+    { id: 2, name: '立方米', click: false },
+    { id: 3, name: '吨', click: false },
+    { id: 4, name: '米', click: false },
+    { id: 5, name: '个', click: false },
+    { id: 6, name: '次', click: false },
+    { id: 7, name: '天', click: false },
+    { id: 8, name: '块', click: false },
+    { id: 9, name: '组', click: false },
+    { id: 10, name: '台', click: false },
+    { id: 11, name: '捆', click: false },
+    { id: 12, name: '宗', click: false },
+    { id: 13, name: '项', click: false },
+    { id: 14, name: '株', click: false },
+  ])
   // 上班时长
   const [timeArr, setTimeArr] = useState<DataType[]>([
     { id: 1, name: '一个工', click: false, num: 1 },
@@ -102,6 +120,7 @@ export default function EditDetails() {
     workingHours:'',
     working:'',
     duration:'',
+    modalDuration:'',
     wages:'',
     unitNum:'',
     unit:'',
@@ -120,8 +139,9 @@ export default function EditDetails() {
   })
   // 工资标准
   const [wageStandardDisplay, setWageStandardDisplay] = useState<boolean>(false)
+  // 日期显示
+  const [date,setDate] = useState<string>('')
   useEffect(()=>{
-    console.log(id,'xxxx')
     if(id){
       bkBusinessOneAction({ id }).then(res => {
         if(res.code === 200){
@@ -138,11 +158,28 @@ export default function EditDetails() {
           obj.leaderName = res.data.leader_name;
           // 这里是工要获取到多少工资标里的设置的时间再算
           // const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
-          const duration = res.data.work_time + '小时' + res.data.overtime + '小时'
+          const duration = '上班'+res.data.work_time_hour + '小时' +'，加班'+ res.data.overtime + '小时'
           obj.duration = duration;
+          obj.modalDuration = duration;
           obj.money = res.data.money;
-          const newData = new Date();
+          console.log(res.data.time)
+          console.log(res.data.money,'sdadasdas')
+          const toDay = new Date();
+          const newData = new Date(parseInt(res.data.time)*1000);
+          // 判断如果与今天相同就加今天
+          let toDate;
           const newTime = newData.getFullYear() + '-' + addZero(newData.getMonth() + 1) + '-' + addZero(newData.getDate());
+          const toDayDate = toDay.getFullYear() + '-' + addZero(toDay.getMonth() + 1) + '-' + addZero(toDay.getDate());
+          console.log(new Date(newTime).getTime(),'new Date(newData).getTime()')
+          console.log(new Date(toDayDate).getTime(),'new Date(toDayDate).getTime()')
+          // 后台返回的数据时时8点需要自己修改
+          
+          if (new Date(toDayDate).getTime() == new Date(newTime).getTime()){
+            toDate = newTime+`(今天)`;
+          }else{
+            toDate = newTime  
+          }
+          setDate(toDate)
           obj.time = newTime;
           data.work = res.data.wage_worktime_define;
           data.addWork = res.data.wage_overtime_money;
@@ -157,7 +194,6 @@ export default function EditDetails() {
           }
           data.group_info = res.data.group_info;
           data.type = parseInt(res.data.wage_overtime_type);
-          console.log(data.type,'xxxx111')
           for (let i = 0; i < data.data.length;i++){
             if (data.data[i].id == res.data.wage_overtime_type){
               data.data[i].click = true;
@@ -183,12 +219,11 @@ export default function EditDetails() {
             // 每个工多少钱/上班时间*选择的上班时长 + 每个工多少钱/多少钱算一个工*加班时长
             wages = ((+res.data.worker_money)* (+res.data.work_time)) + (((+res.data.worker_money) / (+res.data.worker_overtime)) * (+res.data.overtime))
           }
-          obj.wages = wages;
+          obj.wages = wages.toFixed(2);
           obj.unitNum = res.data.unit_num;
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
           setVal(obj);
-          console.log(data,'3213213')
           setWageStandard(data)
           // 设置数据上班时长数据
           const timeArrData = JSON.parse(JSON.stringify(timeArr));
@@ -199,9 +234,7 @@ export default function EditDetails() {
             // }else{
               // 返回的是工为单位的 小时为单位的数据
             // const setTime = ((+res.data.worktime_define) / (1 / (+res.data.work_time))).toFixed(1);
-            console.log(res.data.work_time,'res.data.work_time');
-            const setTime = (+res.data.work_time).toFixed(2);
-              console.log(setTime,'setTime')
+            const setTime = (+res.data.work_time_hour).toFixed(2);
               const obj = { id: 4, name: `${setTime}小时`, click: true, num: setTime };
               const index = [timeArrData.length-1];
               if(i === index[0]){
@@ -209,7 +242,6 @@ export default function EditDetails() {
               }
             // }
           }
-          console.log(timeArrData,'timeArrData')
           setTimeArr(timeArrData)
           // 修改加班时长数据
           const addWorkArrData = JSON.parse(JSON.stringify(addWorkArr));
@@ -218,8 +250,6 @@ export default function EditDetails() {
               addWorkArrData[0].click = true;
             }else{
               const obj = { id: 2, name: `${res.data.overtime}小时`, click: true, num: res.data.overtime };
-              console.log(obj);
-              console.log(res.data.overtime,'overtime')
               const index = [addWorkArrData.length - 1];
               if (i === index[0]) {
                 addWorkArrData[i] = obj;
@@ -229,30 +259,25 @@ export default function EditDetails() {
             //   addWorkArrData[i].click = true;
             // }
           }
-          console.log(addWorkArrData,'toFixed')
           setAddWorkArr(addWorkArrData);
           // data.dayAddWork = res.data.
           if(res.data.business_type === '1'){
             // setTypeName('点工')
             Taro.setNavigationBarTitle({
-              title:'点工'
+              title:'修改点工'
             })
           } else if (res.data.business_type === '2'){
-            // setTypeName('包工')
             if(res.data.type === '1'){
-              setTypeName('按天记')
-              Taro.setNavigationBarTitle({
-                title: '包工按天计'
-              })
+              setTypeName('按天记工')
             }else{
-              setTypeName('按量记')
-              Taro.setNavigationBarTitle({
-                title: '包工按量计'
-              })
+              setTypeName('按量记工')
             }
+            Taro.setNavigationBarTitle({
+                title: '修改包工'
+              })
           } else if (res.data.business_type === '3'){
             Taro.setNavigationBarTitle({
-              title: '借支'
+              title: '修改借支'
             })
             const borrowingArr = JSON.parse(JSON.stringify(borrowing.item));
             for (let i = 0; i < borrowingArr.length ;i++){
@@ -306,9 +331,7 @@ export default function EditDetails() {
   }
   // 支借Radio
   const handleRadioBorrowing = (v) => {
-    console.log(v)
     const data = JSON.parse(JSON.stringify(borrowing.item));
-    console.log(data,'data');
     for(let i =0;i<data.length;i++){
       if(v.id == data[i].id){
         data[i].click = true;
@@ -456,7 +479,6 @@ export default function EditDetails() {
     let num: any = 0;
     // if (num && !Object.is(num, NaN)){
     num = sum.toFixed(2);
-    console.log(num)
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
     let params;
@@ -594,26 +616,27 @@ export default function EditDetails() {
     setWageStandard(data)
   }
   // 选择加班时长
-  console.log(identity,'identity')
-  const handleworkOvertime = (type: number, val: any) => {
+  const handleworkOvertime = (type: number, e: any) => {
+    console.log(3213,'1111');
+    console.log(val,'xxx')
     setTimeType(type)
     if (type === 1) {
-      if (val.id === 4) {
-        const arr = timeArr.map(v => {
-          if (v.id === val.id) {
-            v.click = !v.click;
-          } else {
-            v.click = false
-          }
-          return v;
-        })
-        setTimeArr(arr)
+      if (e.id === 4) {
+        // const arr = timeArr.map(v => {
+        //   if (v.id === e.id) {
+        //     v.click = !v.click;
+        //   } else {
+        //     v.click = false
+        //   }
+        //   return v;
+        // })
+        // setTimeArr(arr)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
       } else {
         const arr = timeArr.map(v => {
-          if (v.id === val.id) {
+          if (v.id === e.id) {
             v.click = !v.click;
           } else {
             if (v.id === 4) {
@@ -623,12 +646,34 @@ export default function EditDetails() {
           }
           return v;
         })
-        setTimeArr(arr)
+        setTimeArr(arr);
+      }
+      let addTime;
+      for (let i = 0; i < addWorkArr.length; i++) {
+        if (addWorkArr[i].click) {
+          if (addWorkArr[i].id !== 1) {
+            addTime = '，加班' + addWorkArr[i].name
+          } else {
+            addTime = '，无加班'
+          }
+        } else {
+          addTime = '，无加班'
+        }
+      }
+      let duration;
+      if (e.id == 3) {
+        duration = '上班'+e.name +addTime;
+      } else {
+        duration = '上班' + e.name +addTime;
+      }
+      console.log(duration,'durationduration')
+      if (e.id != 4) {
+        setVal({ ...val, modalDuration: duration })
       }
     } else {
-      if (val.id != 2) {
+      if (e.id != 2) {
         const arr = addWorkArr.map(v => {
-          if (v.id === val.id) {
+          if (v.id === e.id) {
             v.click = !v.click
           } else {
             if (v.id === 2) {
@@ -640,18 +685,41 @@ export default function EditDetails() {
         })
         setAddWorkArr(arr);
       } else {
-        const arr = addWorkArr.map(v => {
-          if (v.id === val.id) {
-            v.click = !v.click;
-          } else {
-            v.click = false
-          }
-          return v;
-        })
-        setAddWorkArr(arr)
+        // const arr = addWorkArr.map(v => {
+        //   if (v.id === e.id) {
+        //     v.click = !v.click;
+        //   } else {
+        //     v.click = false
+        //   }
+        //   return v;
+        // })
+        // setAddWorkArr(arr)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
+      }
+      let Time;
+      for (let i = 0; i < timeArr.length; i++) {
+        if (timeArr[i].click) {
+          if (timeArr[i].id == 3) {
+            Time = '上班休息，'
+          } else {
+            Time = '上班' + timeArr[i].name
+          }
+          break;
+        } else {
+          Time = '上班休息，'
+        }
+      }
+      let duration;
+      if (e.id == 1) {
+        duration = Time + ',无加班';
+      } else {
+        duration = Time + e.name;
+      }
+      console.log(duration,'duration1')
+      if (e.id != 2) {
+        setVal({ ...val, modalDuration:duration })
       }
     }
   }
@@ -660,13 +728,12 @@ export default function EditDetails() {
     const data: any = timeArr.filter(v => v.click);
     const dataList: any = addWorkArr.filter(v => v.click);
     const item = JSON.parse(JSON.stringify(wageStandard));
-    console.log(item);
     // return;
     let title;
     if (data || dataList) {
       if (data.length > 0) {
         if (data[0].name == '休息') {
-          title = data[0].name
+          title = '上班'+data[0].name
         } else {
           title = '上班' + data[0].name
         }
@@ -675,21 +742,20 @@ export default function EditDetails() {
         if (dataList[0].name !== '无加班') {
           title = '加班' + dataList[0].name
         } else {
-          title = dataList[0].name
+          title = '加班'+dataList[0].name
         }
       }
       if (data.length > 0 && dataList.length > 0) {
         if (data[0].name == '休息' && dataList[0].name == '无加班') {
-          title = data[0].name + dataList[0].name
+          title = '上班'+ data[0].name +'，加班'+ dataList[0].name
         } else {
-
           if (data[0].name == '休息') {
             title = '加班' + dataList[0].name
           }
           if (dataList[0].name == '无加班') {
-            title = '上班' + data[0].name + dataList[0].name
+            title = '上班' + data[0].name +'，'+ dataList[0].name
           }
-          title = '上班' + data[0].name + '加班' + dataList[0].name
+          title = '上班' + data[0].name + '，加班' + dataList[0].name
         }
       }
     }
@@ -714,7 +780,6 @@ export default function EditDetails() {
     // 加班时间
     const dayNum = item.day;
     let time: number = 0;
-    console.log(timeArrs, 'timeArrstimeArrs')
     for (let i = 0; i < timeArrs.length; i++) {
       if (timeArrs[i].click) {
         // 选择工
@@ -724,13 +789,10 @@ export default function EditDetails() {
         } else {
           if (timeArrs[i].id == 1) {
             // 等于模板时间
-            console.log(workNum,'workNum')
-            console.log(timeArrs[i].num)
             time = 1 / workNum * workNum;
           } else if (timeArrs[i].id == 2) {
             // 等于模板时间的一半
             time = 1 / workNum * workNum/ 2;
-            console.log(time,'timedsadasd')
           } else if (timeArrs[i].id == 3) {
             // 等于0 
             time = 0;
@@ -744,8 +806,6 @@ export default function EditDetails() {
         addTime = addWorkArrs[i].num
       }
     }
-    console.log(time,'time');
-    console.log(workNum,'workNum')
     // return;
     if (item.type  == '1'){
       wages = (moneyNum / workNum) * (time * workNum) + addWorkNum * addTime;
@@ -755,8 +815,8 @@ export default function EditDetails() {
       wages = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
-    console.log(wages,'wages')
     const num = wages.toFixed(2);
+    console.log(1111,title,'111')
     setVal({ ...val, duration: title, wages: num })
     setDisplay(false);
   }
@@ -772,20 +832,55 @@ export default function EditDetails() {
           v.name = e.name;
           v.click = true;
           v.num = e.num
+        }else{
+          v.click = false;
         }
         return v;
       })
       setTimeArr(data);
+      let addTime;
+      for (let i = 0; i < addWorkArr.length; i++) {
+        if (addWorkArr[i].click) {
+          if (addWorkArr[i].id !== 1) {
+            addTime = ',加班' + addWorkArr[i].name
+          } else {
+            addTime = ',无加班'
+          }
+        } else {
+          addTime = ',无加班'
+        }
+      }
+      let duration;
+      duration = '上班' + e.name + addTime;
+      setVal({ ...val, modalDuration:duration })
     } else {
       const data = addWorkArr.map((v) => {
         if (v.id === 2) {
           v.name = e.name;
           v.click = true;
           v.num = e.num
+        }else{
+          v.click = false;
         }
         return v;
       })
       setAddWorkArr(data);
+      let Time;
+      for (let i = 0; i < timeArr.length; i++) {
+        if (timeArr[i].click) {
+          if (timeArr[i].id == 3) {
+            Time = '上班休息,'
+          } else {
+            Time = '上班' + timeArr[i].name
+          }
+          break;
+        } else {
+          Time = '上班休息,'
+        }
+      }
+      let duration;
+      duration = Time + '，加班' + e.name;
+      setVal({ ...val, modalDuration:duration })
     }
     setWorkingHoursDisplay(false);
     setWorkOvertimeDisplay(true);
@@ -837,38 +932,71 @@ export default function EditDetails() {
         }
       }
     })
-    console.log(times, work_time_hour, overtime);
     // return;
-    console.log(val,'val');
     // return;
+    //单位
+    let unit;
+    company.map(v => {
+      if (v.click) {
+        unit = v.name;
+      }
+    })
     // 图片
     let money;
-    if (businessType ==3 ){
+    if (businessType == 3 || (businessType == 2 && type == 2) ){
       money = val.money
     }else{
       money =val.wages
     }
-    let params = {
-      money,
-      time:data.time,
-      type,
-      img_url,
-      id,
-      overtime: overtime||0,
-      work_time: times||0,
-      // work_time_hour: work_time_hour||0,
-      note: val.note,
-      group_info: items.group_info,
-      work_time_type,
-      wage_money: items.money,
-      wage_overtime:items.day,
-      wage_overtime_money: items.addWork,
-      wage_worktime_define: items.work,
-      wage_overtime_type: items.type,
-      // work_time:
+    // 判断按量记录
+    let params;
+    if (businessType == 2 && type == 2){
+      // unit
+      params = {
+        money,
+        time: data.time,
+        type,
+        img_url,
+        id,
+        // overtime: overtime || 0,
+        // work_time: times || 0,
+        // work_time_hour: work_time_hour||0,
+        note: val.note,
+        group_info: items.group_info,
+        work_time_type,
+        unit,
+        unit_num: data.unitNum,
+        unit_price: data.unitPrice,
+        // wage_money: items.money,
+        // wage_overtime: items.day,
+        // wage_overtime_money: items.addWork,
+        // wage_worktime_define: items.work,
+        // wage_overtime_type: items.type,
+        // work_time:
+      }
+    }else{
+      params = {
+        money,
+        time: data.time,
+        type,
+        img_url,
+        id,
+        overtime: overtime || 0,
+        work_time: times || 0,
+        // work_time_hour: work_time_hour||0,
+        note: val.note,
+        group_info: items.group_info,
+        work_time_type,
+        wage_money: items.money,
+        wage_overtime: items.day,
+        wage_overtime_money: items.addWork,
+        wage_worktime_define: items.work,
+        wage_overtime_type: items.type,
+        // work_time:
+      }
     }
+    console.log(params,'params')
     updateBusinessAction(params).then(res=>{
-      console.log(res);
       if(res.code === 200){
         Msg(res.msg);
         setTimeout(()=>{
@@ -889,11 +1017,26 @@ export default function EditDetails() {
   const handleWageStandardDisplay = ()=>{
     setWageStandardDisplay(false);
   }
-  console.log(businessType,'businessType');
-  console.log(type,'type')
+  // 选择单位
+  const handleQuantities = (val) => {
+    const arr = company.map((v) => {
+      if (v.id === val.id) {
+        v.click = !v.click
+        if (v.click) {
+          setUnit(v.name)
+          setQuantitiesDisplay(false)
+        }
+      } else {
+        v.click = false
+      }
+      return v;
+    })
+    setCompany(arr)
+  }
+  console.log(val,'data')
   return (
     <View className='content'>
-      {businessType == 2 &&type === 1 && 
+      {businessType == 2 && 
         <View className='publish-recruit-card'>
           <View className='publish-list-item' onClick={() => { }}>
             <Text className='pulish-list-title'>包工类型</Text>
@@ -947,6 +1090,18 @@ export default function EditDetails() {
         </View>
       </View>
       } 
+      <View className='publish-recruit-card'>
+        <View className='publish-list-item'>
+          <Text className='pulish-list-title'>日期</Text>
+          <Input
+            className='publish-list-input-disabled'
+            type='text'
+            disabled
+            placeholder='请选择日期'
+            value={date}
+          />
+        </View>
+      </View>
       {businessType === 2 && type == 2&& 
       <View>
         <View className='publish-recruit-card'>
@@ -959,14 +1114,16 @@ export default function EditDetails() {
               onInput={(e) => { handleInput('unitNum',e)}}
               value={val.unitNum}
             />
-            <View className='amountType' onClick={() =>{}}>{unit}</View>
+            <View className='amountType' onClick={()=>setQuantitiesDisplay(true)}>{unit}
+              <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
+            </View>
           </View>
         </View>
         <View className='publish-recruit-card'>
           <View className='publish-list-item'>
             <Text className='pulish-list-title'>单价</Text>
             :<Input
-              className='publish-list-input'
+              className='publish-list-input-color'
               type='digit'
               placeholder='请填写单价'
               onInput={(e) => { handleInput('unitPrice', e) }}
@@ -978,7 +1135,7 @@ export default function EditDetails() {
           <View className='publish-list-item'>
             <Text className='pulish-list-title'>工钱</Text>
             :<Input
-              className='publish-list-input'
+              className='publish-list-input-color'
               type='digit'
               onInput={(e) => { handleInput('money', e) }}
               placeholder='工程量和单价未知时，可直接填写'
@@ -994,7 +1151,7 @@ export default function EditDetails() {
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>本次借支</Text>
               :<Input
-                className='publish-list-input'
+              className='publish-list-input-borrowing'
                 type='digit'
                 // disabled
                 onInput={(e) => { handleInput('money', e) }}
@@ -1019,18 +1176,6 @@ export default function EditDetails() {
       }
       {(businessType === 1 || (businessType === 2 && type === 1)) && 
       <View>
-        <View className='publish-recruit-card'>
-          <View className='publish-list-item'>
-            <Text className='pulish-list-title'>日期</Text>
-            <Input
-              className='publish-list-input-disabled'
-              type='text'
-              disabled
-              placeholder='请选择日期'
-              value={val.time}
-            />
-          </View>
-        </View>
         <View className='publish-recruit-card' onClick={() => {setDisplay(true)}}>
           <View className='publish-list-item'>
             <Text className='pulish-list-title'>上班时长</Text>
@@ -1041,22 +1186,28 @@ export default function EditDetails() {
               placeholder='请选择上班时长'
               value={val.duration}
             />
+            <View className='rightIconsBox'>
+              <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+            </View>
           </View>
         </View>
         <View className='publish-recruit-card' onClick={() => { setWageStandardDisplay(true)}}>
           <View className='publish-list-item-money'>
             <View className='pulish-list-title-money'>
-              <View>工人工钱
+              <View>工人工钱(点击修改工人的工资标准)
                 <View className='mt10'>(自动计算)</View> 
               </View>
             </View>
             <Input
-              className='publish-list-input'
+              className='publish-list-input-money'
               type='text'
               disabled
               placeholder='请选择工钱'
               value={val.wages}
             />
+            <View className='rightIconsBox'>
+              <Image src={`${IMGCDNURL}iconsRIght.png`} className='money-rightIcons' />
+            </View>
           </View>
         </View>
       </View>
@@ -1064,7 +1215,7 @@ export default function EditDetails() {
       <View className='publish-recruit-card'>
         <View className='publish-list-textTarea-item' onClick={() => { }}>
           <Text className='pulish-list-textTarea-title'>备注</Text>
-          {/* <CoverView> */}
+          <CoverView className={wageStandardDisplay || display || workingHoursDisplay ? 'coverView':'' }>
           <Textarea 
             className='textarea'
             value={val.note}
@@ -1072,8 +1223,10 @@ export default function EditDetails() {
             onInput={(e) => handleInput('note', e)}
             maxlength={400}
             />
-            {/* </CoverView> */}
-          <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
+            </CoverView>
+          <View className='imageBox'>
+            <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
+          </View>
         </View>
       </View>
       <View className='footer'><View className='footerBtn' onClick={handlesub}>保存</View></View>
@@ -1081,7 +1234,7 @@ export default function EditDetails() {
       <WorkOvertime display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}
-      {/* <Quantities display={quantitiesDisplay} handleClose={handleClose} data={company} handleQuantities={handleQuantities} /> */}
+      <Quantities display={quantitiesDisplay} handleClose={() => { setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />
     </View>
   )
 }

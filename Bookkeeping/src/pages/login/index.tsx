@@ -83,9 +83,6 @@ export default function Login() {
     setModel(data);
   }
   const handleLogin =()=>{
-    // Taro.setStorageSync(IsLoginType, 1);
-    // Taro.navigateBack({ delta: 1 });
-    // return
     if (!isPhone(model.phone)) {
       Msg('请先输入正确的手机号码')
       return

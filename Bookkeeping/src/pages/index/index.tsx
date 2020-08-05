@@ -143,6 +143,12 @@ export default function Index() {
     }
     return num;
   }
+  useEffect(()=>{
+    Taro.onNetworkStatusChange(function (res) {
+      console.log(res.isConnected,'isConnected')
+      console.log(res.networkType,'networkType')
+    })
+  },[])
   // 与小程序onLaunch一样
   // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
@@ -814,8 +820,6 @@ export default function Index() {
       changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
     },0)
   }
-  console.log(newMonth,'newMonth');
-  console.log(start,'start')
   return (
     <View className='index-content'>
       {/* <UseNavInfo/> */}
@@ -990,6 +994,7 @@ export default function Index() {
       </View>
       <View className='jumpBox'>
         <View className='jumpItem' onClick={() => userRouteJump('/pages/feedback/index')}>
+        {/* <View className='jumpItem' onClick={() => userRouteJump('/pages/login/index')}> */}
           <View className='ptBox'>
             <View className='jumpItem-icon'><Image className='jumpItem-icon-image' src={`${IMGCDNURL}work.png`}/></View>
             <View className='jumpItem-title'>意见</View>
@@ -998,7 +1003,7 @@ export default function Index() {
         <View className='jumpItem'>
           <View className='ptBox'>
             <View className='jumpItem-icon-goback'><Image className='jumpItem-icon-goback-image' src={`${IMGCDNURL}goBack.png`}/></View>
-          <View className='jumpItem-title' onClick={handleGoback}>鱼泡网</View>
+            <View className='jumpItem-title' onClick={handleGoback}>鱼泡网</View>
           </View>
         </View>
       </View>
