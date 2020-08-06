@@ -215,6 +215,7 @@ export default function Index() {
                 Taro.setStorageSync(MidData, midData);
                 // ==== 默认先写死
                 Taro.setStorageSync(Type,1);
+                debugger
                 console.log('有数据')
                 getData();
               }
@@ -410,6 +411,7 @@ export default function Index() {
     }
     if(midData){
       let type = Taro.getStorageSync(Type);
+      debugger;
       console.log(type,'typetype')
         if(!type){
         setIdentity(true)
