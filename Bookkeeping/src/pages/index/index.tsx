@@ -409,6 +409,7 @@ export default function Index() {
       setleftTime(false)
     }
     if(midData){
+      console.log(type,'typetype')
       let type = Taro.getStorageSync(Type);
         if(!type){
         setIdentity(true)
@@ -421,6 +422,7 @@ export default function Index() {
         setIdentity(true)
       }
     }
+    console.log(312321)
     // 判断选没有选择时间
     let changeTime;
     if (!e){
