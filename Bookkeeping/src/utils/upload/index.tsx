@@ -83,11 +83,13 @@ function AppUploadImg(resolve, res: any, url: string = UPLOADIMGURL) {
       }
     },
     fail: function () {
-      Taro.showToast({
-        title: "网络错误，上传失败！",
-        icon: "none",
-        duration: 4000
-      })
+      setTimeout(()=>{
+        Taro.showToast({
+          title: "网络错误，上传失败！",
+          icon: "none",
+          duration: 4000
+        })
+      },2000)
     },
     complete: function () {
       Taro.hideLoading()
