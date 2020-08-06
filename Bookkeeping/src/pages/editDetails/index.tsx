@@ -1092,6 +1092,13 @@ export default function EditDetails() {
     setCompany(arr)
   }
   console.log(val,'data')
+  // 点击多行
+  const handleTextare = () => {
+    console.log(321312);
+    console.log(val.note.length,'val.note.length')
+    
+    setAutoFocus(true)
+  }
   return (
     <View className='content'>
       {businessType == 2 && 
@@ -1272,11 +1279,13 @@ export default function EditDetails() {
       </View>
       }
       <View className='publish-recruit-card'>
-        <View className='publish-list-textTarea-item' onClick={() => setAutoFocus(true)}>
+        <View className='publish-list-textTarea-item' onClick={() => handleTextare() }>
           <Text className='pulish-list-textTarea-title'>备注</Text>
           <CoverView className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView':'' }>
           <Textarea
+            focus={autoFocus}
             autoFocus={autoFocus}
+            auto-focus={autoFocus}
             className='textarea'
             cursor={val.note.length||0}
             value={val.note}
