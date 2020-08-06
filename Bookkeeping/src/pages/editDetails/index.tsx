@@ -1315,23 +1315,23 @@ export default function EditDetails() {
       </View>
       }
       <View className='publish-recruit-card'>
-        <View className='publish-list-textTarea-item' onClick={() => handleTextare() }>
+        <View className='publish-list-textTarea-item' >
           <Text className='pulish-list-textTarea-title'>备注</Text>
-          <CoverView className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView':'' }>
-          <Textarea
-            focus={autoFocus}
-            autoFocus={autoFocus}
-            auto-focus={autoFocus}
-            className='textarea'
-            cursor={val.note.length||0}
-            value={val.note}
-            onFocus={() => setAutoFocus(false)}
-            placeholder='请填写备注...'
-            onInput={(e) => handleInput('note', e)}
-            maxlength={400}
-            />
-            </CoverView>
         </View>
+        <CoverView onClick={() => handleTextare()} className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView':'' }>
+        <Textarea
+          focus={autoFocus}
+          autoFocus={autoFocus}
+          auto-focus={autoFocus}
+          className='textarea'
+          cursor={val.note.length||0}
+          value={val.note}
+          onFocus={() => setAutoFocus(false)}
+          placeholder='请填写备注...'
+          onInput={(e) => handleInput('note', e)}
+          maxlength={400}
+          />
+          </CoverView>
       <View className='white'>
       <View className='imageBox'>
         <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
