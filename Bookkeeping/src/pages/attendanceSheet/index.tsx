@@ -31,6 +31,8 @@ export default function AttendanceSheet() {
     groupName: '',
     teamName: '',
   })
+  // 异常界面
+  const [busy,setBusy] = useState<boolean>(false);
   // const [refresh, setRefresh] = useState<number>(0)
   // 一键对公
   const handleShare = () => {
@@ -69,6 +71,7 @@ export default function AttendanceSheet() {
     };
     bkgetExcelDataAction(params).then(res => {
       if(res.code === 200){
+        setBusy(false)
       // 设置内容
       if (res.data.length > 0) {
       const curDate = new Date(newTime);
@@ -122,6 +125,9 @@ export default function AttendanceSheet() {
       }else{
         Msg(res.msg)
       }
+    })
+    .catch((e)=>{
+      setBusy(true)
     })
   }
   // 获取数据
@@ -195,6 +201,7 @@ export default function AttendanceSheet() {
     }
     bkgetExcelDataAction(params).then(res => {
       if(res.code === 200 ){
+      setBusy(false)
       if(res.data.length>0){
       const data = res.data;
       let leftData: any = [];
@@ -765,6 +772,9 @@ export default function AttendanceSheet() {
       }
     }
     })
+    .catch((e)=>{
+      setBusy(true)
+    })
   }
   // 设置时间
   const handleTime = (e) => {
@@ -853,120 +863,129 @@ export default function AttendanceSheet() {
         <View>以下是你的记工，点击可查看详情</View>
       </View>
       {/* {tebArr.length>2&& */}
-      <View className='box'>
-        {/* 左边固定 */}
-        <View>
-          {fixedTab.map(v => (
-            <View className='box-left'>
-              {v.list.map(val => (
-                <View className='box-border'>
-                  {!val.type && <View className={val.default ? 'box-list-default' :'box-list'}>
-                    <View className='name'>{val.name}</View>
-                    {!val.default && 
-                      <View open-type="share">
-                      <Button className='blued'  open-type="share">
-                        微信对工
-                      </Button>
-                    </View>
-                    }
-                  </View>}
-                  {val.type &&
-                    <View className='box-list-type'>
-                      {val.type.hour && <View className='box-list'>点工</View>}
-                      {val.type.work && <View className='box-list-bao'>包工<View>（按天记）</View></View>}
-                      {val.type.amount && <View className='box-list-bao'>包工<View>（按量记）</View></View>}
-                      {val.type.borrow && <View className='box-list'>借支</View>}
-                    </View>
-                  }
-                </View>
-              ))}
-            </View>
-          ))}
+      <View>
+        {busy && 
+        <View className='busyBox'>
+          <View>系统繁忙，刷新试试</View>
+          <View className='refresh' onClick={() => getList(year + '-' + month)}>刷新</View>
         </View>
-        {/* 右边 */}
-        <View className='box-scroll'>
-          {tebArr.map(v => (
-            <View>
-              <View className='box-right'>
+        }
+        {!busy && 
+        <View className='box'>
+          {/* 左边固定 */}
+          <View>
+            {fixedTab.map(v => (
+              <View className='box-left'>
                 {v.list.map(val => (
                   <View className='box-border'>
-                    {!val.type && <View className={val.default ?'box-list-default':'box-list'}>{val.name}</View>}
+                    {!val.type && <View className={val.default ? 'box-list-default' :'box-list'}>
+                      <View className='name'>{val.name}</View>
+                      {!val.default && 
+                        <View open-type="share">
+                        <Button className='blued'  open-type="share">
+                          微信对工
+                        </Button>
+                      </View>
+                      }
+                    </View>}
                     {val.type &&
-                      <View >
-                        {val.name == 0 && <View>
-                        {val.type.hour && val.type.hour.work_time && <View className='box-list-bao'>
-                          {/* {val.type.hour.work_time && */}
-                            <View>{val.type.hour.work_time}个工</View>
-                             {/* } */}
-                          {/* {val.type.hour.over_time && */}
-                            <View>{val.type.hour.over_time}小时</View>
-                             {/* } */}
-                          </View>
-                        }
-                        {val.type.work && val.type.work.work_time && <View className='box-list-bao'>
-                          {/* {val.type.work.work_time &&  */}
-                          <View>{val.type.work.work_time}个工</View>
-                          {/* } */}
-                          {/* {val.type.work.over_time &&  */}
-                          <View>{val.type.work.over_time}小时</View>
-                          {/* } */}
-                        </View>
-                        }
-                        {val.type.amount && <View className='box-list-bao'>
-                            <View>{val.type.amount.sum}</View>
-                            <View>{val.type.amount.unit_name}</View> 
-                        </View>
-                        }
-                        {val.type.borrow && <View className='box-list-money'>{val.type.borrow}</View>}
-                        </View>}
-                        {val.name != 0 && <View>
-                          <View className='box-list-type'>
-                            {val.type.hour && <View className='box-list-bao'>
-                              {val.type.hour.num && <View>{val.type.hour.num}</View>}
-                              {(val.type.hour.work_time || val.type.hour.over_time) &&
-                              <View >
-                                <View>{val.type.hour.work_time}个工</View>
-                                <View>{val.type.hour.over_time}小时</View>
-                              </View>
-                              }
-                            </View>}
-                            {val.type.work && <View className='box-list-bao'>
-                              {val.type.work.num && <View>{val.type.work.num}</View>}
-                            {(val.type.work.work_time || val.type.work.over_time) &&
-                                <View>
-                                  <View>{val.type.work.work_time}个工</View>
-                                  <View>{val.type.work.over_time}小时</View>
-                                </View>
-                              }
-                            </View>}
-                            {val.type.amount &&<View className='box-list-bao'>
-                              {val.type.amount.num && <View>{val.type.amount.num}</View>}
-                              {(val.type.amount.sum || val.type.amount.unit_name) && <View>
-                                {/* {val.type.amount.sum && */}
-                                <View >{val.type.amount.sum}</View>
-                                {/* // } */}
-                                {/* {val.type.amount.unit_name &&  */}
-                                <View >{val.type.amount.unit_name}</View>
-                                {/* } */}
-                              </View>}
-                            </View>}
-                          {val.type.borrow && <View className='box-list-bao'>{val.type.borrow.money}</View>}
-                          </View>
-                        </View>}
+                      <View className='box-list-type'>
+                        {val.type.hour && <View className='box-list'>点工</View>}
+                        {val.type.work && <View className='box-list-bao'>包工<View>（按天记）</View></View>}
+                        {val.type.amount && <View className='box-list-bao'>包工<View>（按量记）</View></View>}
+                        {val.type.borrow && <View className='box-list'>借支</View>}
                       </View>
                     }
                   </View>
                 ))}
               </View>
-            </View>
-          ))}
+            ))}
+          </View>
+          {/* 右边 */}
+          <View className='box-scroll'>
+            {tebArr.map(v => (
+              <View>
+                <View className='box-right'>
+                  {v.list.map(val => (
+                    <View className='box-border'>
+                      {!val.type && <View className={val.default ?'box-list-default':'box-list'}>{val.name}</View>}
+                      {val.type &&
+                        <View >
+                          {val.name == 0 && <View>
+                          {val.type.hour && val.type.hour.work_time && <View className='box-list-bao'>
+                            {/* {val.type.hour.work_time && */}
+                              <View>{val.type.hour.work_time}个工</View>
+                               {/* } */}
+                            {/* {val.type.hour.over_time && */}
+                              <View>{val.type.hour.over_time}小时</View>
+                               {/* } */}
+                            </View>
+                          }
+                          {val.type.work && val.type.work.work_time && <View className='box-list-bao'>
+                            {/* {val.type.work.work_time &&  */}
+                            <View>{val.type.work.work_time}个工</View>
+                            {/* } */}
+                            {/* {val.type.work.over_time &&  */}
+                            <View>{val.type.work.over_time}小时</View>
+                            {/* } */}
+                          </View>
+                          }
+                          {val.type.amount && <View className='box-list-bao'>
+                              <View>{val.type.amount.sum}</View>
+                              <View>{val.type.amount.unit_name}</View> 
+                          </View>
+                          }
+                          {val.type.borrow && <View className='box-list-money'>{val.type.borrow}</View>}
+                          </View>}
+                          {val.name != 0 && <View>
+                            <View className='box-list-type'>
+                              {val.type.hour && <View className='box-list-bao'>
+                                {val.type.hour.num && <View>{val.type.hour.num}</View>}
+                                {(val.type.hour.work_time || val.type.hour.over_time) &&
+                                <View >
+                                  <View>{val.type.hour.work_time}个工</View>
+                                  <View>{val.type.hour.over_time}小时</View>
+                                </View>
+                                }
+                              </View>}
+                              {val.type.work && <View className='box-list-bao'>
+                                {val.type.work.num && <View>{val.type.work.num}</View>}
+                              {(val.type.work.work_time || val.type.work.over_time) &&
+                                  <View>
+                                    <View>{val.type.work.work_time}个工</View>
+                                    <View>{val.type.work.over_time}小时</View>
+                                  </View>
+                                }
+                              </View>}
+                              {val.type.amount &&<View className='box-list-bao'>
+                                {val.type.amount.num && <View>{val.type.amount.num}</View>}
+                                {(val.type.amount.sum || val.type.amount.unit_name) && <View>
+                                  {/* {val.type.amount.sum && */}
+                                  <View >{val.type.amount.sum}</View>
+                                  {/* // } */}
+                                  {/* {val.type.amount.unit_name &&  */}
+                                  <View >{val.type.amount.unit_name}</View>
+                                  {/* } */}
+                                </View>}
+                              </View>}
+                            {val.type.borrow && <View className='box-list-bao'>{val.type.borrow.money}</View>}
+                            </View>
+                          </View>}
+                        </View>
+                      }
+                    </View>
+                  ))}
+                </View>
+              </View>
+            ))}
+          </View>
         </View>
+        }
       </View>
-      }
       {
-        tebArr.length<=2&&<View className='noData'>暂无数据哦～</View>
+        !busy &&tebArr.length<=2&&<View className='noData'>暂无数据哦～</View>
       }
-      {tebArr.length > 2 &&
+      {!busy && tebArr.length > 2 &&
         <View className='footer-btn'>
           <View className='footer-btn-box'>
             <View className='footer-btn-box-left'
@@ -984,7 +1003,7 @@ export default function AttendanceSheet() {
         </View>
       }
       {
-        tebArr.length <= 2 && <View className='btnBox'>
+        !busy &&tebArr.length <= 2 && <View className='btnBox'>
           <View className='btn' onClick={handleJump}>
             <View>记工<Text className='title'>(点工 包工 借支)</Text></View>
           </View>

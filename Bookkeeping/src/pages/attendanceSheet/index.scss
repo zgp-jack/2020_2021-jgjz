@@ -300,3 +300,22 @@
   height: 80rpx;
   line-height: 80rpx;
 }
+.busyBox {
+  margin: auto;
+  margin-top: 50%;
+  text-align: center;
+  color: rgba(131, 131, 131, 1);
+  font-size: 28rpx;
+}
+
+.refresh {
+  width: 193rpx;
+  height: 54rpx;
+  line-height: 54rpx;
+  color: rgba(132, 132, 132, 1);
+  font-size: 28rpx;
+  border: 1rpx solid rgba(219, 219, 219, 1);
+  border-radius: 5rpx;
+  margin: 0 auto;
+  margin-top: 33rpx;
+}

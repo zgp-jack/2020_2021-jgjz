@@ -67,6 +67,7 @@ export default function Notepad() {
     }
     bkGetNotePadAction(params).then(res => {
       if (res.code === 200) {
+        setBusy(false)
         // if (res.data.length > 0) {
         //   for (let i = 0; i < res.data.length; i++) {
         //     let times;
@@ -122,6 +123,10 @@ export default function Notepad() {
         dispatch(setNotepad(res))
         setData(res.data)
       }
+    })
+    .catch((e)=>{
+      setBusy(true)
+      console.log(e,'213123')
     })
   }
   const addZero = (num) => {
@@ -275,7 +280,7 @@ export default function Notepad() {
       userRouteJump(`/pages/notepadDetails/index?id=${v.id}`)
     }
   }
-  console.log(value,'value')
+  console.log(busy,'value')
   return(
     <context.Provider value={value}>
     <View className='notepad'>
@@ -292,7 +297,7 @@ export default function Notepad() {
         />
       </View>
       {/* 内容 */}
-        {data.length === 0 && !isSheach && 
+      {data.length === 0 && !isSheach && !busy &&
       <View className='content'>
         <View className='noData'>
           <View>您今天还没有填写过记事本哦~</View>
@@ -308,35 +313,9 @@ export default function Notepad() {
         {busy && 
         <View className='busyBox'>
         <View>系统繁忙，刷新试试</View>
-        <View className='refresh'>刷新</View>
+        <View className='refresh' onClick={()=>getList()}>刷新</View>
         </View>}
         {data.length > 0 && !busy  && <View className='dataMT'>
-        {/* {data.map((v)=>(
-          <View className='dataContent' key={v.id} onClick={() => userRouteJump(`/pages/notepadDetails/index?id=${v.id}`)}>
-          <View className='timeTop'>
-              <View className='timeTop-time'>{v.time}</View>
-            <View className='timeTop-week'>{v.week}</View>
-          </View>
-          <View className='dataContent-details'>
-              <Text className='dataContent-details-title'>{v.note}</Text>
-              {v.view_images.length>0 && 
-              <View className='flex'>
-              {v.view_images.map((item) => (
-                <View className='dataContent-imageList'>
-                  <View className='dataContent-imageList-image'>
-                    <Image src={item.httpurl} className='image'/>
-                  </View>
-                </View>
-              ))}
-              </View>
-              }
-            <View className='dataContent-imageList-footer'>
-              <View className='dataContent-imageList-time'>{v.creatTime}</View>
-                <View>{del && <Checkbox checked={v.click} value={v.click} onClick={(e) => { e.stopPropagation(); handleCheckbox(v)}} className='checkboxButton-checkbox' color='#0099FF' />}</View>
-            </View>
-          </View>
-        </View>
-        ))} */}
         {data.map((v,i)=>(
           <View key={i+i} className='list'>
             <View className='title'>
@@ -364,11 +343,11 @@ export default function Notepad() {
         </View>}
       {/* footer */}
       {/* 记事 */}
-      {!del && <View className='footer'><View className='footer-btn' onClick={() => userRouteJump('/pages/addNotepad/index')}>记事</View></View>}
+      {!busy &&!del && <View className='footer'><View className='footer-btn' onClick={() => userRouteJump('/pages/addNotepad/index')}>记事</View></View>}
       {/* 全选 */}
-        {!del && data.length > 0 && <View className='checkbox-notepad' onClick={handleDel}><View className='checkbox-box'><View className='checkbox-image'><Image className='checkbox-image-image' src={`${IMGCDNURL}checkout.png`}/></View>多选</View></View>}
+      {!busy &&!del && data.length > 0 && <View className='checkbox-notepad' onClick={handleDel}><View className='checkbox-box'><View className='checkbox-image'><Image className='checkbox-image-image' src={`${IMGCDNURL}checkout.png`}/></View>多选</View></View>}
       {/* 多选按钮 */}
-      {del && <View className='checkboxButton'>
+      {!busy && del && <View className='checkboxButton'>
         <View className='checkboxButton-box'>
             <View><Checkbox value='' checked={selectAll} onClick={handleAllCheckbox} className='checkboxButton-checkbox' color='#0099FF'/>全选</View>
           <View className='checkboxButton-right'>

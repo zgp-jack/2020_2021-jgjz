@@ -48,6 +48,8 @@ export default function FlowingWater() {
   const [leftTime, setleftTime] = useState<boolean>(true)
   // 判断右边是否需要icon
   const [rightTime, setrightTime] = useState<boolean>(false)
+  // 数据异常
+  const [busy, setBusy] = useState<boolean>(false)
   // 获取数据
   useDidShow(()=>{
     const date = JSON.stringify(new Date()).slice(1, 11)
@@ -61,14 +63,24 @@ export default function FlowingWater() {
   })
   const type = Taro.getStorageSync(Type);
   setIdentity(type)
-  const getList = (times, lastM)=>{
+  const getList = (times?:string, lastM?:string)=>{
+    console.log(times, lastM);
+    let start_date, end_date;
+    if (times && lastM){
+      start_date = times;
+      end_date = lastM;
+    }else{
+      start_date = time;
+      end_date = lastTime;
+    }
     let params = {
       identity: type,
-      start_date: times,
-      end_date: lastM,
+      start_date,
+      end_date,
     }
     bkBusinessAction(params).then(res=>{
       if(res.code === 200){
+        setBusy(false)
         console.log(res.data);
         if (res.data.data && res.data.data.length>0){
           for(let i =0 ;i<res.data.data.length;i++){
@@ -100,6 +112,9 @@ export default function FlowingWater() {
       }else{
         Msg(res.msg)
       }
+    })
+    .catch((e)=>{
+      setBusy(true)
     })
   }
   // 时间小于10增加0
@@ -386,7 +401,12 @@ export default function FlowingWater() {
       </View>
       <View className='content'>
         <View>
-            {data.item && data.item.length>0 && data.item.map((v,i)=>(
+          {busy && 
+          <View className='busyBox'>
+            <View>系统繁忙，刷新试试</View>
+              <View className='refresh' onClick={() =>getList()}>刷新</View>
+          </View>}
+            {!busy && data.item && data.item.length>0 && data.item.map((v,i)=>(
             <View key={i+i} onClick={()=>handleClick(v)}>
               <View className='content-list'>
                 <View className='content-list-left'>
@@ -457,7 +477,7 @@ export default function FlowingWater() {
             </View>
           ))}
         </View>
-        {data.item.length === 0 &&
+        {! busy && data.item.length === 0 &&
         <View className='noData-box'>
           <View className='noData'>
             <View>本月您还没有记工哦~</View>
@@ -468,13 +488,13 @@ export default function FlowingWater() {
         }
       </View>
       {/* 多选 */}
-      {!isCheckOut && data.item.length > 0 &&
+      {!busy && !isCheckOut && data.item.length > 0 &&
         <View className='icon-box' onClick={()=>handleCheckboxBtn(0)}>
           <View className='icon-box-icon' ><Image className='icon-box-icon-image' src={`${IMGCDNURL}checkout.png`}/></View>
         <View>多选</View>
       </View>
       }
-      {isCheckOut && 
+      {!busy &&isCheckOut && 
       <View className='footer-box'>
           <View className='footer-box-left'><Checkbox className='checkbox' checked={allcheck} value='' onClick={handleAllCheck}/>全选</View>
         <View className='footer-box-flex'>

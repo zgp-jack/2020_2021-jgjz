@@ -1244,7 +1244,7 @@ export default function EditDetails() {
         <View className='publish-recruit-card' onClick={() => { setWageStandardDisplay(true)}}>
           <View className='publish-list-item-money'>
             <View className='pulish-list-title-money'>
-              <View>工人工钱(点击修改工人的工资标准)
+              <View>{identity == 1 ? '工人工钱' : '我的工钱'}(点击修改{identity == 1 ? '工人' : '自己'}的工资标准)
                 <View className='mt10'>(自动计算)</View> 
               </View>
             </View>
