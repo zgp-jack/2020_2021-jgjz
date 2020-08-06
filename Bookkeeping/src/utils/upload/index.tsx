@@ -89,7 +89,7 @@ function AppUploadImg(resolve, res: any, url: string = UPLOADIMGURL) {
           icon: "none",
           duration: 4000
         })
-      },2000)
+      },1000)
     },
     complete: function () {
       Taro.hideLoading()
