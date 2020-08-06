@@ -5,7 +5,7 @@ import Msg from '../../utils/msg'
 import { AtSwipeAction } from "taro-ui"
 import { useDispatch } from '@tarojs/redux'
 import { IMGCDNURL } from '../../config';
-import { Type } from '../../config/store'
+import { Type, Earliest_month } from '../../config/store'
 import { setFlowingWater } from '../../actions/flowingWater';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
@@ -44,14 +44,33 @@ export default function FlowingWater() {
     teamName: '',
   })
   const [identity, setIdentity]= useState<number>(1)
+  // 日期需要的开始时间
+  const [datestart,setDatestart] = useState<string>()
+  // 日期需要的结束时间
+  const [dateEnd,setdateEnd] = useState<string>()
   // 判断左边是否需要icon
-  const [leftTime, setleftTime] = useState<boolean>(true)
+  const [leftTime, setleftTime] = useState<boolean>()
   // 判断右边是否需要icon
   const [rightTime, setrightTime] = useState<boolean>(false)
   // 数据异常
   const [busy, setBusy] = useState<boolean>(false)
   // 获取数据
   useDidShow(()=>{
+    let earliest_month = Taro.getStorageSync(Earliest_month);
+    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    setdateEnd(yeartime+'-'+montime);
+    if(!earliest_month){
+      setleftTime(false);
+      setDatestart(yeartime+'-'+montime);
+    }else{
+      setDatestart(earliest_month);
+      if(Number(earliest_month.split('-')[0]) == yeartime){
+        Number(earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
+      }else if(Number(earliest_month.split('-')[0]) < yeartime) {
+        setleftTime(true);
+      }
+    }
     const date = JSON.stringify(new Date()).slice(1, 11)
     setYear(date.slice(0, 4) + '年');
     setmon(date.slice(5, 7) + '月')
@@ -241,16 +260,46 @@ export default function FlowingWater() {
     setLastTime(lastM);
     setYear(e.detail.value.split('-')[0]+'年');
     setmon(e.detail.value.split('-')[1]+'月')
+    changeIcon(e.detail.value)
+    getList(e.detail.value, lastM)
+  }
+  const changeIcon = (e) => {
+    let earliest_month = Taro.getStorageSync(Earliest_month);
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    if(Number(e.detail.value.split('-')[0]) == yeartime){
-      setleftTime(true);
-      Number(e.detail.value.split('-')[1])<montime?setrightTime(true):setrightTime(false);
-    }else if(Number(e.detail.value.split('-')[0]) == yeartime-1) {
-      setrightTime(true);
-      Number(e.detail.value.split('-')[1])>montime?setleftTime(true):setleftTime(false);
+    if(!earliest_month){
+      setleftTime(false);
+      setrightTime(false);
+    }else{
+      if(yeartime == Number(earliest_month.split('-')[0])){
+        if(Number(earliest_month.split('-')[1])==montime){
+          setleftTime(false);
+          setrightTime(false);
+        }else{
+          if(Number(e.split('-')[1])==Number(earliest_month.split('-')[1])){
+            setrightTime(true);
+            setleftTime(false);
+          }else if(Number(e.split('-')[1])==montime){
+            setrightTime(false);
+            setleftTime(true);
+          }else{
+            setrightTime(true);
+            setleftTime(true);
+          }
+        }
+      }else{
+        if(Number(earliest_month.split('-')[0])==Number(e.split('-')[0])){
+          setrightTime(true);
+          Number(e.split('-')[1])>Number(earliest_month.split('-')[1])?setleftTime(true):setleftTime(false);
+        }else if(Number(e.split('-')[0])==yeartime){
+          setleftTime(true);
+          Number(e.split('-')[1])<montime?setrightTime(true):setrightTime(false);
+        }else{
+          setleftTime(true);
+          setrightTime(true);
+        }
+      }
     }
-    getList(e.detail.value, lastM)
   }
   // 全选
   const handleAllCheck = ()=>{
@@ -389,6 +438,8 @@ export default function FlowingWater() {
         <Picker
           mode='date'
           fields='month'
+          start={datestart}
+          end={dateEnd}
           onChange={(e) =>handelChangeTime(e)}
           value={''}
         // range={timeList}
