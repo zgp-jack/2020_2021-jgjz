@@ -1266,7 +1266,7 @@ export default function EditDetails() {
       <View className='publish-recruit-card'>
         <View className='publish-list-textTarea-item' onClick={() => { }}>
           <Text className='pulish-list-textTarea-title'>备注</Text>
-          <CoverView className={wageStandardDisplay || display || workingHoursDisplay ? 'coverView':'' }>
+          <CoverView className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView':'' }>
           <Textarea 
             className='textarea'
             value={val.note}
