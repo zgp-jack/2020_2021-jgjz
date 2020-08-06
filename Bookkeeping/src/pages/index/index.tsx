@@ -41,6 +41,7 @@ const Images = [
   }
 ]
 export default function Index() {
+  let identityType = '';
   const dispatch = useDispatch()
   // 弹框内容
   const [model,setModel]= useState<any>({
@@ -215,7 +216,7 @@ export default function Index() {
                 Taro.setStorageSync(MidData, midData);
                 // ==== 默认先写死
                 Taro.setStorageSync(Type,1);
-                
+                identityType = '1';
                 console.log('有数据')
                 getData();
               }
@@ -390,6 +391,9 @@ export default function Index() {
     console.log(isLoginType, 'logingTypeslogingTypes')
     if (isLoginType ==1) {
       setCloseImage(false)
+    }
+    if (identityType){
+      Taro.setStorageSync(Type, identityType );
     }
     // 没登录直接进来默认是工人
     // =====
