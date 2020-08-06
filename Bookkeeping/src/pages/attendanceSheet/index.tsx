@@ -1,8 +1,9 @@
 import Taro, { Config, useEffect, useState, useRouter, useShareAppMessage } from '@tarojs/taro'
-import { View, Text, Picker, Button } from '@tarojs/components'
+import { View, Text, Picker, Button, Image } from '@tarojs/components'
 import CalendarModal from '../../components/attendanceModal';
 import { bkgetExcelDataAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
 import Msg from '../../utils/msg';
+import { IMGCDNURL } from '../../config';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
 import {Type} from '../../config/store'
@@ -24,6 +25,10 @@ export default function AttendanceSheet() {
   const [createProjectDisplay, setCreateProjectDisplay] = useState<boolean>(false)
   // 项目班组
   const [project, setProject] = useState<boolean>(false)
+  // 判断左边是否需要icon
+  const [leftTime, setleftTime] = useState<boolean>(false)
+  // 判断右边是否需要icon
+  const [rightTime, setrightTime] = useState<boolean>(false)
   //判断是否追加
   const [additional, setAdditional]= useState<number>(0)
   // 弹框内容
@@ -857,7 +862,13 @@ export default function AttendanceSheet() {
             onChange={(e) => handleTime(e)}
             value={''}
           >
-            <Text>{year}年<Text>   {month}</Text></Text>
+            <Text>{year}年<Text>
+              <Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' style={{ visibility: leftTime ? 'visible' : 'hidden' }} />
+            {month}
+              <Image className='righticon' src={`${IMGCDNURL}greyRight.png`} style={{ visibility: rightTime ? 'visible' : 'hidden' }} />
+            </Text>
+            
+            </Text>
           </Picker>
         </View>
         <View>以下是你的记工，点击可查看详情</View>
