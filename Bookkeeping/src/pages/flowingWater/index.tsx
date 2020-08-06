@@ -115,6 +115,7 @@ export default function FlowingWater() {
     })
     .catch((e)=>{
       setBusy(true)
+      setleftTime(false)
     })
   }
   // 时间小于10增加0

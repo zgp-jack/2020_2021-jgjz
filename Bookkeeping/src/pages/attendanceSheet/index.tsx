@@ -857,7 +857,7 @@ export default function AttendanceSheet() {
             onChange={(e) => handleTime(e)}
             value={''}
           >
-            <Text>{year}年<Text>{month}</Text></Text>
+            <Text>{year}年<Text>   {month}</Text></Text>
           </Picker>
         </View>
         <View>以下是你的记工，点击可查看详情</View>
