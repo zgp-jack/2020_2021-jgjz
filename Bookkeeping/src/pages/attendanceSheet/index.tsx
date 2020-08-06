@@ -6,14 +6,14 @@ import Msg from '../../utils/msg';
 import { IMGCDNURL } from '../../config';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import {Type} from '../../config/store'
+import {Type,Earliest_month} from '../../config/store'
 import './index.scss'
 
 export default function AttendanceSheet() {
   // 月份
   const [date, setDate] = useState('');
   // 年
-  const [year, setYear] = useState();
+  const [year, setYear] = useState<string|number>('');
   //月
   const [month, setMonth] = useState('');
   const [fixedTab, setFixedTab] = useState<any[]>([])
@@ -25,6 +25,10 @@ export default function AttendanceSheet() {
   const [createProjectDisplay, setCreateProjectDisplay] = useState<boolean>(false)
   // 项目班组
   const [project, setProject] = useState<boolean>(false)
+  // 日期需要的开始时间
+  const [datestart,setDatestart] = useState<string>()
+  // 日期需要的结束时间
+  const [dateEnd,setdateEnd] = useState<string>()
   // 判断左边是否需要icon
   const [leftTime, setleftTime] = useState<boolean>(false)
   // 判断右边是否需要icon
@@ -62,6 +66,21 @@ export default function AttendanceSheet() {
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
     const years = time.getFullYear();
     const months = addZero(time.getMonth() + 1);
+    let earliest_month = Taro.getStorageSync(Earliest_month);
+    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    setdateEnd(yeartime+'-'+montime);
+    if(!earliest_month){
+      setleftTime(false);
+      setDatestart(yeartime+'-'+montime);
+    }else{
+      setDatestart(earliest_month);
+      if(Number(earliest_month.split('-')[0]) == yeartime){
+        Number(earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
+      }else if(Number(earliest_month.split('-')[0]) < yeartime) {
+        setleftTime(true);
+      }
+    }
     setYear(years)
     setMonth(months)
     // setDate(newTime);
@@ -788,7 +807,47 @@ export default function AttendanceSheet() {
     setTabArr([]);
     setYear(e.detail.value.slice(0, 4));
     setMonth(e.detail.value.slice(5, 8));
+    changeIcon(e.detail.value);
     getDateList(time);
+  }
+  const changeIcon = (e) => {
+    console.log("zgsdfasdfasdf",e);
+    let earliest_month = Taro.getStorageSync(Earliest_month);
+    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    if(!earliest_month){
+      setleftTime(false);
+      setrightTime(false);
+    }else{
+      if(yeartime == Number(earliest_month.split('-')[0])){
+        if(Number(earliest_month.split('-')[1])==montime){
+          setleftTime(false);
+          setrightTime(false);
+        }else{
+          if(Number(e.split('-')[1])==Number(earliest_month.split('-')[1])){
+            setrightTime(true);
+            setleftTime(false);
+          }else if(Number(e.split('-')[1])==montime){
+            setrightTime(false);
+            setleftTime(true);
+          }else{
+            setrightTime(true);
+            setleftTime(true);
+          }
+        }
+      }else{
+        if(Number(earliest_month.split('-')[0])==Number(e.split('-')[0])){
+          setrightTime(true);
+          Number(e.split('-')[1])>Number(earliest_month.split('-')[1])?setleftTime(true):setleftTime(false);
+        }else if(Number(e.split('-')[0])==yeartime){
+          setleftTime(true);
+          Number(e.split('-')[1])<montime?setrightTime(true):setrightTime(false);
+        }else{
+          setleftTime(true);
+          setrightTime(true);
+        }
+      }
+    }
   }
   // 跳转
   const userRouteJump = (url: string) => {
@@ -862,13 +921,11 @@ export default function AttendanceSheet() {
             onChange={(e) => handleTime(e)}
             value={''}
           >
-            <Text>{year}年<Text>
-              <Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' style={{ visibility: leftTime ? 'visible' : 'hidden' }} />
+            <View>{year}年
+              <Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' style={{visibility: leftTime?'visible':'hidden'}} />
             {month}
-              <Image className='righticon' src={`${IMGCDNURL}greyRight.png`} style={{ visibility: rightTime ? 'visible' : 'hidden' }} />
-            </Text>
-            
-            </Text>
+              <Image className='righticon' src={`${IMGCDNURL}greyRight.png`} style={{visibility: rightTime?'visible':'hidden'}} />
+            </View>
           </Picker>
         </View>
         <View>以下是你的记工，点击可查看详情</View>

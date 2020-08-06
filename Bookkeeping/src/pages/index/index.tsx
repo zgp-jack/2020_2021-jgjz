@@ -110,7 +110,7 @@ export default function Index() {
   // 鱼泡网过来然后需要登录手机号
   const [loginPhone,setLoginPhone] =useState<boolean>(false)
    // 判断左边是否需要icon
-  const [leftTime, setleftTime] = useState<boolean>()
+  const [leftTime, setleftTime] = useState<boolean>(false)
   // 判断右边是否需要icon
   const [rightTime, setrightTime] = useState<boolean>(false)
   // 今天
@@ -467,15 +467,17 @@ export default function Index() {
           const date = new Date();
           const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
           if (res.data.earliest_month) {
-            Taro.setStorageSync(Earliest_month,res.data.earliest_month);
-            let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
-            let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-            if(!type && Number(res.data.earliest_month.split('-')[0]) == yeartime){
-              setStart(res.data.earliest_month);
-              Number(res.data.earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
-            }else if(!type && Number(res.data.earliest_month.split('-')[0]) < yeartime) {
-              setStart(yeartime+'-'+'01');
-              montime == 1?setleftTime(false):setleftTime(true);
+            if(!e){
+              Taro.setStorageSync(Earliest_month,res.data.earliest_month);
+              let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+              let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+              if(!type && Number(res.data.earliest_month.split('-')[0]) == yeartime){
+                setStart(res.data.earliest_month);
+                Number(res.data.earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
+              }else if(!type && Number(res.data.earliest_month.split('-')[0]) < yeartime) {
+                setStart(yeartime+'-'+'01');
+                montime == 1?setleftTime(false):setleftTime(true);
+              }
             }
           } else {
             setStart(newMonth)
@@ -848,10 +850,9 @@ export default function Index() {
     console.log(befD.substring(5,7))
     // 月份
     setMonth(befD.substring(5, 7))
-    setTimeout(()=>{
-      changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
-    },0)
+    changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1))
   }
+  console.log(leftTime,rightTime);
   return (
     <View className='index-content'>
       {/* <UseNavInfo/> */}
@@ -895,19 +896,17 @@ export default function Index() {
         </View>
         <View onClick={() => handleJump('/pages/flowingWater/index',2)}>
         <View className='moneyList'>
-          <View><Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱</View>
-          <View><Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`}/>借支</View>
-        </View>
-        <View className={!item && !item.amount ? 'money moneyv':'money'}>
-          <View className='money-left'>
-            {busy ? '-' : (item && (item.money > 9999999.99 ? '1千万+' : item.money) || '0.00')}
-            {/* {item && (item.money > 9999999.99 ? '1千万+' : item.money)||'0.00'} */}
-          {/* {item && item.money || 0} */}
+          <View>
+            <Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱
+            <View className='money'>
+                {busy ? '-' : (item && (item.money > 9999999.99 ? '1千万+' : item.money) || '0.00')}
+            </View>
           </View>
-          <View className='money-right'>
-          {busy ? '-' : (item && (item.borrow > 9999999.99 ? '1千万+' : item.borrow) || '0.00')}
-          {/* {(item && item.borrow > 9999999.99 ? '1千万+' : item.borrow) || '0.00'} */}
-          {/* {item && item.borrow || 0} */}
+          <View>
+            <Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`}/>借支
+            <View className='money'>
+                {busy ? '-' : (item && (item.borrow > 9999999.99 ? '1千万+' : item.borrow) || '0.00')}
+            </View>
           </View>
         </View>
         <View className='typeList'>
