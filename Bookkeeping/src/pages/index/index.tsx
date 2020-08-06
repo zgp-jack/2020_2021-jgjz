@@ -447,14 +447,15 @@ export default function Index() {
           const date = new Date();
           const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
           if (res.data.earliest_month) {
-            Taro.setStorageSync(Earliest_month,res.data.earliest_month)
-            setStart(res.data.earliest_month);
+            Taro.setStorageSync(Earliest_month,res.data.earliest_month);
             let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
             let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
             if(!type && Number(res.data.earliest_month.split('-')[0]) == yeartime){
+              setStart(res.data.earliest_month);
               Number(res.data.earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
             }else if(!type && Number(res.data.earliest_month.split('-')[0]) < yeartime) {
-              setleftTime(true);
+              setStart(yeartime+'-'+'01');
+              montime == 1?setleftTime(false):setleftTime(true);
             }
           } else {
             setStart(newMonth)
@@ -504,35 +505,21 @@ export default function Index() {
   }
   // Icon图片显示
   const changeIcon = (e) => {
-    let earliest_month = Taro.getStorageSync(Earliest_month);
-    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+    let startmon = parseInt(start.split('-')[1]);
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    if(!earliest_month){
+    if(startmon==montime){
       setleftTime(false);
       setrightTime(false);
     }else{
-      if(yeartime == Number(earliest_month.split('-')[0])){
-        if(Number(e.split('-')[1])<=Number(earliest_month.split('-')[1])){
-          setrightTime(true);
-          setleftTime(false);
-        }else if(Number(e.split('-')[1])>=montime){
-          setrightTime(false);
-          setleftTime(true);
-        }else{
-          setrightTime(true);
-          setleftTime(true);
-        }
+      if(Number(e.split('-')[1])==startmon){
+        setleftTime(false);
+        setrightTime(true);
+      }else if(Number(e.split('-')[1])==montime){
+        setleftTime(true);
+        setrightTime(false);
       }else{
-        if(Number(earliest_month.split('-')[0])==Number(e.split('-')[0])){
-          setrightTime(true);
-          Number(e.split('-')[1])>Number(earliest_month.split('-')[1])?setleftTime(true):setleftTime(false);
-        }else if(Number(e.split('-')[0])==yeartime){
-          setleftTime(true);
-          Number(e.split('-')[1])<montime?setrightTime(true):setrightTime(false);
-        }else{
-          setleftTime(true);
-          setrightTime(true);
-        }
+        setleftTime(true);
+        setrightTime(true);
       }
     }
   }
@@ -825,8 +812,6 @@ export default function Index() {
       changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
     },0)
   }
-  console.log(newMonth,'newMonth');
-  console.log(start,'start')
   return (
     <View className='index-content'>
       {/* <UseNavInfo/> */}
