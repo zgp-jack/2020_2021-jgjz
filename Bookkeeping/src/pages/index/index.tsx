@@ -440,7 +440,9 @@ export default function Index() {
     // if(! )
     if (midData){
       bkIndexAction(params).then(res => {
+        console.log(res,'ressss')
         if (res.code === 200) {
+          setBusy(false)
           setItme(res.data);
           setNum(res.data.count_is_new);
           if (parseInt(res.data.count_is_new) == 0) {
@@ -492,7 +494,17 @@ export default function Index() {
           Msg(res.msg);
         }
       })
+      .catch((e)=>{
+        if(e){
+          setBusy(true)
+        }
+        console.log(e)
+      })
     }
+  }
+  // 请求失败返回数据
+  const backFunction = (e?:any)=>{
+    console.log(e,'312312');
   }
   // 选择时间
   const handleChangeTime = (e)=>{
@@ -879,30 +891,37 @@ export default function Index() {
         </View>
         <View className={!item && !item.amount ? 'money moneyv':'money'}>
           <View className='money-left'>
-            {item && (item.money > 9999999.99 ? '1千万+' : item.money)||'0.00'}
+            {busy ? '-' : (item && (item.money > 9999999.99 ? '1千万+' : item.money) || '0.00')}
+            {/* {item && (item.money > 9999999.99 ? '1千万+' : item.money)||'0.00'} */}
           {/* {item && item.money || 0} */}
           </View>
-          <View className=''>
-          {(item && item.borrow > 9999999.99 ? '1千万+' : item.borrow) || '0.00'}
+          <View className='money-right'>
+          {busy ? '-' : (item && (item.borrow > 9999999.99 ? '1千万+' : item.borrow) || '0.00')}
+          {/* {(item && item.borrow > 9999999.99 ? '1千万+' : item.borrow) || '0.00'} */}
           {/* {item && item.borrow || 0} */}
           </View>
         </View>
         <View className='typeList'>
           <View className='textCenter'>上班
             <View className='num'>
-            {(item && item.work_time > 998.99 ? '999+' : item.work_time)||0}个工
+              {busy ? '-' : ((item && item.work_time > 998.99 ? '999+' : item.work_time) || 0)}
+            {/* {(item && item.work_time > 998.99 ? '999+' : item.work_time)||0} */}
+            个工
             </View>
           </View>
             <View className='textCenter'>加班<View className='num'>
             {/* {item && item.overtime || 0}小时 */}
-            {(item && item.overtime > 998.99 ? '999+' : item.overtime) || 0}小时
+              {busy ? '-' : ((item && item.overtime > 998.99 ? '999+' : item.overtime) || 0)}
+            {/* {(item && item.overtime > 998.99 ? '999+' : item.overtime) || 0} */}
+            小时
             </View></View>
           <View className='textCenter'><View>按量记
             <View>
-              {!item && !item.amount && <View className='num'>0平方米</View>}
-              {item.amount.type === 0 && <View className='num'>0平方米</View> }
-                {item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 999999.99 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
-                {item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>}
+              {busy && <View className='num'>-平方米</View>}
+              {!busy &&!item && !item.amount && <View className='num'>0平方米</View>}
+              {!busy &&item.amount.type === 0 && <View className='num'>0平方米</View> }
+                {!busy && item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 999999.99 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
+                {!busy && item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>}
             </View>
           </View>
           </View>
@@ -938,7 +957,7 @@ export default function Index() {
         {busy && 
           <View className='busyBox'>
             <View>系统繁忙，刷新试试</View>
-            <View className='refresh'>刷新</View>
+          <View className='refresh' onClick={() => getData()}>刷新</View>
           </View>
         }
         {/* 班组长 */}

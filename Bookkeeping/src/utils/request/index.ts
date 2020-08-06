@@ -26,7 +26,7 @@ interface RequestBase {
   data: any,
   failToast: boolean,
   loading: boolean,
-  title: string
+  title: string,
 }
 // 请求失败提示信息
 function requestShowToast(show: boolean): void {
@@ -160,7 +160,7 @@ export function GetUserInfoAction(data: any): Promise<Inter.InitUserInfo> {
 export function bkIndexAction(data): Promise<Inter.bkIndexType> {
   // let userInfo: User = Taro.getStorageSync(UserInfo)
   let type = Taro.getStorageSync(Type)
-  data.identity = type
+  data.identity = type;
   let midData = Taro.getStorageSync(MidData);
   return doRequestAction({
     url: api.bkIndexUrl,
@@ -175,7 +175,7 @@ export function bkIndexAction(data): Promise<Inter.bkIndexType> {
       time: midData.sign.time,
       uuid: midData.uuid
     },
-    data: data
+    data: data,
   })
 }
 
