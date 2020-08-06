@@ -213,6 +213,8 @@ export default function Index() {
                 midData.worker_id = res.data.worker_id;
                 midData.yupao_id = res.data.yupao_id;
                 Taro.setStorageSync(MidData, midData);
+                // ==== 默认先写死
+                Taro.setStorageSync(Type,1);
                 console.log('有数据')
                 getData();
               }
