@@ -145,6 +145,8 @@ export default function EditDetails() {
   const [clickDay, setClickDay] = useState<any>();
   // 点击加班时长
   const [clickTime, setClickTime] = useState<any>()
+  // 设置光标
+  const [autoFocus, setAutoFocus] = useState<boolean>(false)
   useEffect(()=>{
     if(id){
       bkBusinessOneAction({ id }).then(res => {
@@ -1270,11 +1272,13 @@ export default function EditDetails() {
       </View>
       }
       <View className='publish-recruit-card'>
-        <View className='publish-list-textTarea-item' onClick={() => { }}>
+        <View className='publish-list-textTarea-item' onClick={() => setAutoFocus(true)}>
           <Text className='pulish-list-textTarea-title'>备注</Text>
           <CoverView className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView':'' }>
-          <Textarea 
+          <Textarea
+            autoFocus={autoFocus}
             className='textarea'
+            cursor={val.note.length||0}
             value={val.note}
             placeholder='请填写备注...'
             onInput={(e) => handleInput('note', e)}
