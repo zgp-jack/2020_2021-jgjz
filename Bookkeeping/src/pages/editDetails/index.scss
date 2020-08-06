@@ -60,6 +60,7 @@
 }
 .pulish-list-title-money{
   // width: 200rpx;
+  width: 100%;
   display: block;
   text-align: justify;
   font-size: 30rpx;
@@ -290,12 +291,16 @@
   width: 25rpx;
   background-size: contain;
 }
+.rightIconsBox{
+  position: relative;
+  margin: auto 0;
+}
 .money-rightIcons{
-  margin-top: 20rpx;
+  display: block;
+  margin: auto 0;
   height: 25rpx;
   width: 25rpx;
   background-size: contain;
-  margin-top: 48rpx;
 }
 .imageBox{
   background: #fff;

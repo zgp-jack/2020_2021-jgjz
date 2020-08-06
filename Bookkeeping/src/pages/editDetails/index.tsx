@@ -224,7 +224,7 @@ export default function EditDetails() {
             wages = ((+res.data.worker_money)* (+res.data.work_time)) + (((+res.data.worker_money) / (+res.data.worker_overtime)) * (+res.data.overtime))
           }
           obj.wages = wages.toFixed(2);
-          obj.unitNum = res.data.unit_num;
+          obj.unitNum = parseInt(res.data.unit_num);
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
           setVal(obj);
@@ -1254,6 +1254,7 @@ export default function EditDetails() {
               disabled
               placeholder='请选择工钱'
               value={val.wages}
+              // value={val.wages}
             />
             <View className='rightIconsBox'>
               <Image src={`${IMGCDNURL}iconsRIght.png`} className='money-rightIcons' />
