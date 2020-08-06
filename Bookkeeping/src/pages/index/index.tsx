@@ -115,6 +115,7 @@ export default function Index() {
   const [rightTime, setrightTime] = useState<boolean>(false)
   // 今天
   const [toDay,setToDay] = useState<string>('')
+  const [hidden,setHidden]= useState<boolean>(false)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
@@ -154,6 +155,7 @@ export default function Index() {
   // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
+    setHidden(false);
     console.log(e,'返回内容')
     if (e.scene === 1037){
       //return false
@@ -390,6 +392,7 @@ export default function Index() {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     console.log(isLoginType, 'logingTypeslogingTypes')
     if (isLoginType ==1) {
+      setHidden(true)
       setCloseImage(false)
     }
     if (identityType){
@@ -713,6 +716,7 @@ export default function Index() {
       Taro.setStorageSync(IsLoginType, 2);
       // 关闭
       setCloseImage(true);
+      setHidden(false)
       // 并开启选择身份
       getData();
     }
@@ -726,6 +730,7 @@ export default function Index() {
     // userRouteJump(`/pages/login/index`)
     // return;
     // 打开新手指引
+    setHidden(true)
     setCloseImage(false);
     setDisplay(false)
   }
@@ -856,7 +861,10 @@ export default function Index() {
     <View className='index-content'>
       {/* <UseNavInfo/> */}
       {/* <AtNavBar/> */}
-      <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
+      {<View style={{ visibility: hidden ? 'visible' : 'hidden' }} >
+        <Image src={image} className={closeImage ?'noImages':'images'} onClick={()=>{hanleImage(image)}}/>
+      </View>
+      }
       {/* 头部 */}
       <View className='top'>
         <Image src={`${IMGCDNURL}background.png`} className='top_img'/>
