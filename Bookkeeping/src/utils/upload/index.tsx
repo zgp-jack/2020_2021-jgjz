@@ -86,7 +86,7 @@ function AppUploadImg(resolve, res: any, url: string = UPLOADIMGURL) {
       Taro.showToast({
         title: "网络错误，上传失败！",
         icon: "none",
-        duration: 2000
+        duration: 4000
       })
     },
     complete: function () {
