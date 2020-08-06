@@ -443,6 +443,7 @@ export default function Index() {
     }
     // if(! )
     if (midData){
+      console.log('有midData，发请求')
       bkIndexAction(params).then(res => {
         console.log(res,'ressss')
         if (res.code === 200) {
