@@ -943,16 +943,16 @@ export default function EditDetails() {
     const borrowingArr = JSON.parse(JSON.stringify(borrowing.item))
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
-    let type=0;
+    let typeState=0;
     if (businessTypes == 3){
       for (let i = 0; i < borrowingArr.length;i++){
         console.log(borrowingArr[i],'111')
         if(borrowingArr[i].click){
-          type = borrowingArr[i].id
+          typeState = borrowingArr[i].id
         }
       }
     }else{
-      type = businessTypes;
+      typeState = businessTypes;
     }
     // 时间
     let times: number = 0, work_time_hour = 0, work_time_type;
@@ -1000,12 +1000,15 @@ export default function EditDetails() {
     }
     // 判断按量记录
     let params;
-    if (businessType == 2 && type == 2){
+    console.log(businessType,'businessType');
+    console.log(type,'213123')
+    let types= JSON.parse(JSON.stringify(type));
+    if (businessType == 2 && types == 2){
       // unit
       params = {
         money,
         time: data.time,
-        type,
+        type: typeState,
         img_url,
         id,
         // overtime: overtime || 0,
@@ -1028,7 +1031,7 @@ export default function EditDetails() {
       params = {
         money,
         time: data.time,
-        type,
+        type: typeState,
         img_url,
         id,
         overtime: overtime || 0,
@@ -1050,7 +1053,10 @@ export default function EditDetails() {
       if(res.code === 200){
         Msg(res.msg);
         setTimeout(()=>{
-          Taro.navigateBack({delta:2});
+          // Taro.navigateBack({delta:2});
+          Taro.redirectTo({
+            url: '/pages/flowingWater/index'
+          })
         },1000)
       }else{
         Msg(res.msg)
@@ -1275,10 +1281,13 @@ export default function EditDetails() {
             maxlength={400}
             />
             </CoverView>
-          <View className='imageBox'>
-            <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
-          </View>
         </View>
+      <View className='white'>
+      <View className='imageBox'>
+        <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
+        <View className='clear'></View>
+      </View>
+      </View>
       </View>
       <View className='footer'><View className='footerBtn' onClick={handlesub}>保存</View></View>
       <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio}/>

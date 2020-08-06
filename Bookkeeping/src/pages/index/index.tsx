@@ -213,6 +213,7 @@ export default function Index() {
                 midData.worker_id = res.data.worker_id;
                 midData.yupao_id = res.data.yupao_id;
                 Taro.setStorageSync(MidData, midData);
+                console.log('有数据')
                 getData();
               }
             })
@@ -401,6 +402,7 @@ export default function Index() {
     // }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
+    console.log(midData,'midDatamidDatamidData')
     if(!midData){
       setleftTime(false)
     }

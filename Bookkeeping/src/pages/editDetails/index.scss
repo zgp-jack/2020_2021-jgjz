@@ -27,7 +27,7 @@
   position: relative;
   width: 90%;
   margin-left: 30rpx;
-  border-bottom: 1rpx solid #F1F1F1;
+  // border-bottom: 1rpx solid #F1F1F1;
 }
 .pulish-list-title {
   width: 180rpx;
@@ -314,4 +314,11 @@
 }
 .coverView{
   display: none;
+}
+.white{
+  background: #fff;
+  word-wrap: normal;
+}
+.clear {
+  clear: both;
 }
