@@ -409,8 +409,8 @@ export default function Index() {
       setleftTime(false)
     }
     if(midData){
-      console.log(type,'typetype')
       let type = Taro.getStorageSync(Type);
+      console.log(type,'typetype')
         if(!type){
         setIdentity(true)
         return
