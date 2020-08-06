@@ -224,6 +224,7 @@ export default function Index() {
               }
             })
           } else if (res.code == 40003){
+            console.log(4000333333)
             let obj:any={};
             obj.userId = e.referrerInfo.extraData.userId;
             obj.token = e.referrerInfo.extraData.token;
