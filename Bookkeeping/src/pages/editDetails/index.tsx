@@ -1094,9 +1094,6 @@ export default function EditDetails() {
   console.log(val,'data')
   // 点击多行
   const handleTextare = () => {
-    console.log(321312);
-    console.log(val.note.length,'val.note.length')
-    
     setAutoFocus(true)
   }
   return (
@@ -1289,6 +1286,7 @@ export default function EditDetails() {
             className='textarea'
             cursor={val.note.length||0}
             value={val.note}
+            onFocus={() => setAutoFocus(false)}
             placeholder='请填写备注...'
             onInput={(e) => handleInput('note', e)}
             maxlength={400}
