@@ -1,4 +1,4 @@
-import Taro, { useEffect, useState, useDidShow, onAppShow, getLaunchOptionsSync } from '@tarojs/taro'
+import Taro, { useEffect, useState, useDidShow, onAppShow } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction, appletJumpAction } from '../../utils/request/index';
 import { useDispatch } from '@tarojs/redux'
@@ -181,6 +181,17 @@ export default function Index() {
   // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
+    const newTime = new Date().getTime() / 1000;
+    let creationTime = Taro.getStorageSync(CreationTime);
+    // const time = 
+    // 七天显示内容
+    const state = Taro.getStorageSync(Tips);
+    if (!state) {
+      if (creationTime && (creationTime + 86400 * 7) > newTime) {
+        Taro.setStorageSync(Tips, true);
+      }
+      setPrompt(true)
+    }
     if (noRequest)return;
     setHidden(false);
     console.log(e,'返回内容')
@@ -283,7 +294,6 @@ export default function Index() {
     // console.log(appHeadesrHeight,'appHeaderHeight')
     setSlide(false)
     let midData = Taro.getStorageSync(MidData);
-    let creationTime = Taro.getStorageSync(CreationTime);
     let neverPromptType = Taro.getStorageSync(NeverPrompt);
     if (neverPromptType){
       setNeverPrompt(true);
@@ -292,16 +302,6 @@ export default function Index() {
     if (midData){
       setDisplay(false)
       loginType=false;
-    }
-    const newTime = new Date().getTime()/1000;
-    // const time = 
-    // 七天显示内容
-    const state = Taro.getStorageSync(Tips);
-    if (!state){
-      if (creationTime && (creationTime + 86400 * 7) > newTime ){
-        Taro.setStorageSync(Tips,true);
-      }
-      setPrompt(true)
     }
     // 设置首页时间选择器时间
     // if (creationTime){
