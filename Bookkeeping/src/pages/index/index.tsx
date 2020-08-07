@@ -181,17 +181,6 @@ export default function Index() {
   // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
-    const newTime = new Date().getTime() / 1000;
-    let creationTime = Taro.getStorageSync(CreationTime);
-    // const time = 
-    // 七天显示内容
-    const state = Taro.getStorageSync(Tips);
-    if (!state) {
-      if (creationTime && (creationTime + 86400 * 7) > newTime) {
-        Taro.setStorageSync(Tips, true);
-      }
-      setPrompt(true)
-    }
     if (noRequest)return;
     setHidden(false);
     console.log(e,'返回内容')
@@ -221,11 +210,11 @@ export default function Index() {
               obj.sign = {
                 token : e.referrerInfo.extraData.token,
                 time : e.referrerInfo.extraData.tokenTime
-              }
+              } 
               Taro.setStorageSync(MidData, obj);
               // ==== 默认先写死
-              Taro.setStorageSync(Type, 1);
-              identityType = '1';
+              Taro.setStorageSync(Type, lasted_business_identity);
+              identityType = lasted_business_identity;
               console.log('有数据')
               getData();
             }
@@ -285,6 +274,17 @@ export default function Index() {
     }
   })
   useDidShow(()=>{
+    const newTime = new Date().getTime() / 1000;
+    let creationTime = Taro.getStorageSync(CreationTime);
+    // const time = 
+    // 七天显示内容
+    const state = Taro.getStorageSync(Tips);
+    if (!state) {
+      if (creationTime && (creationTime + 86400 * 7) > newTime) {
+        Taro.setStorageSync(Tips, true);
+      }
+      setPrompt(true)
+    }
     let data = Taro.getStorageSync(IsLoginType);
     console.log(data,'xxx')
     // return
@@ -347,7 +347,7 @@ export default function Index() {
     //   setDisplay(false)
     // }
     dispatch(setTypes(type))
-    getData();
+    // getData();
     // let midParams = {
     //   mid: userInfo.userId,
     // }
