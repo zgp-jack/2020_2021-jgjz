@@ -173,12 +173,12 @@ export default function Index() {
     }
     return num;
   }
-  useEffect(()=>{
-    if (ContentItem){
-      console.log(111);
-      setItem(ContentItem)
-    }
-  }, [ContentItem])
+  // useEffect(()=>{
+  //   if (ContentItem){
+  //     console.log(111);
+  //     setItem(ContentItem)
+  //   }
+  // }, [ContentItem])
   useEffect(() => {
     Taro.onNetworkStatusChange(function (res) {
       console.log(res.isConnected, 'isConnected')
@@ -898,6 +898,7 @@ export default function Index() {
     Taro.setStorageSync(Tips, true)
   }
   console.log(item, '打印数据')
+  console.log(ContentItem,'ContentItem');
   return (
     <View className='index-content'>
       {/* <UseNavInfo/> */}
