@@ -821,7 +821,7 @@ export default function EditDetails() {
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
           if (timeArr[i].id == 3) {
-            Time = '休息'
+            Time = '休息,'
           } else {
             Time = '上班' + timeArr[i].name
           }
@@ -862,7 +862,7 @@ export default function EditDetails() {
         if (dataList[0].name !== '无加班') {
           title = '加班' + dataList[0].name
         } else {
-          title = '加班'+dataList[0].name
+          title = dataList[0].name
         }
       }
       if (data.length > 0 && dataList.length > 0) {
