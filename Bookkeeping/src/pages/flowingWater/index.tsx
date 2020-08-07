@@ -157,7 +157,7 @@ export default function FlowingWater() {
     setData({ item: dataClick})
   }
   // 点击详情
-  const handleJump = (e,v,id)=>{
+  const handleJump = (e,v,val)=>{
     // const arr = JSON.parse(JSON.stringify(data.item));
     // console.log(arr, 'xxx')
     // let ids: any[] = [];
@@ -173,10 +173,11 @@ export default function FlowingWater() {
     //   }
     // }
     if (isCheckOut){
+      handleCheckbox(val);
       return;
     }else{
       Taro.navigateTo({
-        url: `/pages/flowingWaterDetails/index?time=${v.time}&id=${id}&week=${v.week}`
+        url: `/pages/flowingWaterDetails/index?time=${v.time}&id=${val.id}&week=${v.week}`
       })
     }
   }
@@ -198,6 +199,16 @@ export default function FlowingWater() {
     if(type === 0){
       setIsCheckOut(true)
     }else{
+      const arr = JSON.parse(JSON.stringify(data.item));
+      const list = arr.map(v => {
+        v.arr.map(val => {
+          val.checkClick = false;
+          return val;
+        })
+        return v;
+      })
+      setData({ item: list })
+      setAllcheck(false);
       setIsCheckOut(false)
     }
   }
@@ -472,11 +483,11 @@ export default function FlowingWater() {
                 </View>
                 <View className='content-td'>
                   <View className='content-list-right-title'>借支</View>
-                  <View className='content-list-right-money'>¥{v.total_borrow && v.total_borrow.toFixed(2)||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_borrow && (parseFloat(v.total_borrow)>9999999.99)?String(v.total_borrow).slice(0,9)+'...':Number(v.total_borrow).toFixed(2)||'0.00'}</View>
                 </View>
                 <View className="content-td">
                   <View className='content-list-right-title'>工钱</View>
-                  <View className='content-list-right-money'>¥{v.total_money && v.total_money.toFixed(2)||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_money && (parseFloat(v.total_money)>9999999.99)?String(v.total_money).slice(0,9)+'...':Number(v.total_money).toFixed(2)||'0.00'}</View>
                 </View>
               </View>
               {v.click && 
@@ -491,7 +502,7 @@ export default function FlowingWater() {
                         { 
                           text: '修改',
                           style: {
-                            backgroundColor: '#FFC82C'
+                            backgroundColor: '#C8C7CF'
                           },
                         },
                         {
@@ -502,23 +513,24 @@ export default function FlowingWater() {
                         }
                       ]}
                     >
-                    <View key={val.id} className='content-list-subclass' onClick={(e)=>handleJump(e,v,val.id)}>
+                    <View key={val.id} className='content-list-subclass' onClick={(e)=>handleJump(e,v,val)}>
                       <View className='content-list-subclass-left'>
-                            {isCheckOut && <View><Checkbox checked={val.checkClick} className='checkbox' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
+                            {isCheckOut && <View><Checkbox checked={val.checkClick} className='checkbox' color='#0099FF' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
                         {identity == 1?
                         <View className=''>
                           <View>{val.workername || '-'} {(val.note || val.view_images.length>0)&&<Text className='icon'>备</Text>}</View>
-                          <View className='content-list-subclass-left-title'>我在{val.group_info}对{val.workername || '-'}记了1笔
-                          {val.business_type == '1' ? '记工' : (val.business_type == '2'?'包工':'借支') }
+                          <View className='content-list-subclass-left-title'>我在{val.group_info}对Ta记了一笔
+                          {val.business_type == '1' ? '点工' : (val.business_type == '2'?'包工':'借支') }
                           </View>
                         </View>
-                        :<View>
-                          <View className='content-list-subclass-left-list'>我在{val.group_info}记了1笔
-                          {val.business_type == '1' ? '记工' : (val.business_type == '2' ? '包工' : '借支')}
+                        :<View className="worker">
+                          <View className='content-list-subclass-left-list'>我在{val.group_info}记了一笔
+                          {val.business_type == '1' ? '点工' : (val.business_type == '2' ? '包工' : '借支')}
                           </View>
+                          {(val.note || val.view_images.length>0)&&<Text className='icon workericon'>备</Text>}
                         </View>}
                       </View>
-                      <View className='content-list-subclass-money'>¥{val.money}></View>
+                      <View className={val.business_type == '3'?'content-list-subclass-borrow':'content-list-subclass-money'}>¥{val.money && (parseFloat(val.money)>9999999.99)?String(val.money).slice(0,9)+'...':val.money||'0.00'}<View className="moneyicon">></View></View>
                     </View>
                     </AtSwipeAction>
                     </View>
@@ -547,7 +559,7 @@ export default function FlowingWater() {
       }
       {!busy &&isCheckOut && 
       <View className='footer-box'>
-          <View className='footer-box-left'><Checkbox className='checkbox' checked={allcheck} value='' onClick={handleAllCheck}/>全选</View>
+          <View className='footer-box-left'><Checkbox className='checkbox' checked={allcheck} value='' color='#0099FF' onClick={handleAllCheck}/>全选</View>
         <View className='footer-box-flex'>
           <View className='allDel' onClick={handleAllDel}>批量删除</View>
           <View className='close' onClick={()=>handleCheckboxBtn(1)}>取消</View>

@@ -65,10 +65,13 @@
   width: 44rpx;
 }
 .moneyList{
+  &>view{
+    text-align: center;
+    width: 42%
+  }
   display: flex;
-  justify-content: space-between;
-  margin-left: 95rpx;
-  margin-right: 98rpx;
+  justify-content: center;
+  align-items: center;
   font-size: 28rpx;
   text-align: center;
 }
@@ -80,9 +83,8 @@
 .typeList{
   margin-top: 50rpx;
   display: flex;
-  justify-content: space-between;
-  margin-left: 60rpx;
-  margin-right: 61rpx;
+  justify-content: center;
+  align-items: center;
   font-size: 34rpx;
   margin-bottom: 55rpx;
 }
@@ -508,9 +510,10 @@
 .last{
   position: absolute;
   left: 48%;
-  bottom: -32rpx;
+  bottom: -45rpx;
 }
 .textCenter{
+  width: 33%;
   text-align: center;
   font-size: 30rpx;
 }

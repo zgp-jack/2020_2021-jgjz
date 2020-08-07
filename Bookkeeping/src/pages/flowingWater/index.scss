@@ -62,6 +62,9 @@
   background-size: contain;
 }
 .content-list-left{
+  Image{
+    margin-top: 20rpx;
+  }
   display: flex;
   width: 50%;
   justify-content: flex-start
@@ -73,6 +76,7 @@
 .content-list-left-time{
   font-size: 20rpx;
   color: rgba(166, 166, 166, 1);
+  text-align: left;
 }
 .content-list-right-title{
   color: rgba(111, 111, 111, 1);
@@ -90,6 +94,9 @@
   border-bottom: 1rpx solid rgba(231, 231, 231, 1);
 }
 .content-list-subclass-left{
+  &>.worker{
+    display: flex;
+  }
   display: flex;
   color: rgba(106, 106, 106, 1);
   font-size: 26rpx;
@@ -98,17 +105,32 @@
 .content-list-subclass-left-title{
   color: rgba(139, 139, 139, 1);
   font-size: 22rpx;
-  width: 93%;
+  // width: 93%;
 }
 .content-list-subclass-left-list{
   color: rgba(139, 139, 139, 1);
   font-size: 22rpx;
   margin-top: 20rpx;
+  display: inline-block;
 }
 .content-list-subclass-money{
   margin: auto 0;
   color: rgba(254, 99, 43, 1);
   font-size: 24rpx;
+  width: 25%;
+  text-align: right;
+}
+.content-list-subclass-borrow{
+  margin: auto 0;
+  color: #0099FF;
+  font-size: 24rpx;
+  width: 39%;
+  text-align: right;
+}
+.moneyicon{
+  display: inline-block;
+  color: #A2A2A2;
+  margin-left: 5rpx;
 }
 .checkbox{
   z-index: 20;
@@ -226,15 +248,19 @@
 }
 .icon{
   display: inline-block;
-  width:24rpx;
-  height:24rpx;
+  width:26rpx;
+  height:26rpx;
+  margin-left: 10rpx;
   background:rgba(20, 146, 255, 1);
   border-radius:6rpx;
   font-size:20rpx;
   font-weight:500;
   text-align: center;
-  line-height: 24rpx;
+  line-height: 26rpx;
   color:rgba(255, 255, 255, 1);
+}
+.workericon{
+  margin-top:24rpx;
 }
 .bulue{
   color: rgba(20, 146, 255, 1);

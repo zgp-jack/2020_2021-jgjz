@@ -137,7 +137,6 @@ export default function Index() {
   const [leftTime, setleftTime] = useState<boolean>(false)
   // 判断右边是否需要icon
   const [rightTime, setrightTime] = useState<boolean>(false)
-  const [this_year_business_month,setBusiness_month] = useState<string>()
   // 今天
   const [toDay,setToDay] = useState<string>('')
   const [hidden,setHidden]= useState<boolean>(false)
@@ -350,12 +349,6 @@ export default function Index() {
     dispatch(setTypes(type))
     // getData();
     getData();
-    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    if(Number(this_year_business_month)==montime){
-      setleftTime(false);
-    }else{
-      setleftTime(true);
-    }
     // let midParams = {
     //   mid: userInfo.userId,
     // }
@@ -515,9 +508,15 @@ export default function Index() {
           let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
           let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
           if (res.data.earliest_month) {
-            Taro.setStorageSync(Earliest_month,res.data.earliest_month);
-            setBusiness_month(res.data.this_year_business_month);
             setStart(yeartime+'-'+res.data.this_year_business_month);
+            if(!e){
+              Taro.setStorageSync(Earliest_month,res.data.earliest_month);
+              if(Number(res.data.this_year_business_month)==montime){
+                setleftTime(false);
+              }else{
+                setleftTime(true);
+              }
+            }
           } else {
             setStart(yeartime+'-'+montime)
           }
@@ -1053,7 +1052,7 @@ export default function Index() {
               ))}
             </ScrollView>
             {list.length >= 3 && <View onClick={getNextPageData} className='last'>
-            <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}downIcon.png`} />
+            <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}newdownIcon.png`} />
             </View>}
           </View>
         }
@@ -1077,7 +1076,7 @@ export default function Index() {
               ))}
             </ScrollView>
           {list.length >= 4 && <View onClick={getNextPageData} className='last'>
-            <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}downIcon.png`} />
+            <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}newdownIcon.png`} />
           </View>}
           </View>
         }
