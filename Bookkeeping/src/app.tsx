@@ -1,4 +1,4 @@
-import Taro, { Component, Config } from '@tarojs/taro'
+import Taro, { Component, Config,onAppShow } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 
 import Index from './pages/index'
@@ -53,7 +53,8 @@ class App extends Component {
   componentDidMount () {}
 
   componentDidShow () {
-    console.log(32131231,'3213')
+    const e = Taro.onAppShow;
+    console.log(e,'2131');
   }
 
   componentDidHide () {}
