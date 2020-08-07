@@ -214,8 +214,8 @@ export default function Index() {
               } 
               Taro.setStorageSync(MidData, obj);
               // ==== 默认先写死
-              Taro.setStorageSync(Type, lasted_business_identity);
-              identityType = lasted_business_identity;
+              Taro.setStorageSync(Type, res.data.lasted_business_identity);
+              identityType = res.data.lasted_business_identity;
               console.log('有数据')
               getData();
             }
