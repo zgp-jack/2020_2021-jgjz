@@ -349,7 +349,7 @@ export default function Index() {
     // }
     dispatch(setTypes(type))
     // getData();
-    getData();
+    // getData();
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     if(Number(this_year_business_month)==montime){
       setleftTime(false);
