@@ -25,3 +25,5 @@ export const IsLoginType:string = 'isLoginType'
 export const Earliest_month:string ='earliest_month'
 // 记工切换下面的提示
 export const Tips: string = 'tips'
+// 小程序跳转
+export const Res:string = 'res';

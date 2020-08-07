@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Earliest_month, Tips } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Earliest_month, Tips, Res } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setWorker } from '../../actions/workerList'
@@ -313,7 +313,8 @@ export default function Index() {
   // })
   
   const getAppShowData = ()=>{
-    if (useSelectorItem.appShowData) {
+    const data = Taro.getStorageSync(Res)
+    if (data) {
       const e = useSelectorItem.appShowData;
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
@@ -402,8 +403,8 @@ export default function Index() {
           })
         }
       }
+      return;
     }
-    return;
   }
   useDidShow(() => {
     getAppShowData();
