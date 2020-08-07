@@ -250,6 +250,13 @@ export default function EditDetails() {
           obj.unitNum = parseInt(res.data.unit_num);
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
+          setUnit(res.data.unit);
+          for (let i = 0; i < company.length;i++){
+            if (company[i].name === res.data.unit){
+              company[i].click = true
+            }
+          }
+          setCompany(company)
           setVal(obj);
           setWageStandard(data)
           // 设置数据上班时长数据
