@@ -859,7 +859,7 @@ export default function Index() {
     setMonth(befD.substring(5, 7))
     changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1))
   }
-  console.log(leftTime,rightTime);
+  console.log(item,'打印数据')
   return (
     <View className='index-content'>
       {/* <UseNavInfo/> */}
