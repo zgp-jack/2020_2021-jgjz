@@ -254,7 +254,7 @@ export default function FlowingWater() {
     }
   }
   const handelChangeTime = (e)=>{
-    if(!busy) return;
+    if(busy) return;
     console.log(e);
     setTime(e.detail.value);
     let lastM = JSON.stringify(new Date(new Date(e.detail.value).setMonth(new Date(e.detail.value).getMonth() + 1))).slice(1, 11);
