@@ -207,7 +207,7 @@ export default function Index() {
               // ==== 默认先写死
               Taro.setStorageSync(Type, res.data.lasted_business_identity);
               identityType = res.data.lasted_business_identity;
-              console.log('有数据')
+              console.log('有数据12321312321')
               getData();
             }
             // 没有鱼泡账号
