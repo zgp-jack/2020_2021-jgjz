@@ -210,11 +210,15 @@ export default function EditDetails() {
           data.day = res.data.wage_overtime;
           data.worker_id = res.data.worker_id;
           data.group_info = res.data.group_info;
-          if (parseInt(res.data.wage_money) && parseInt(res.data.wage_overtime)){
-            data.dayAddWork = parseInt(res.data.wage_money) / parseInt(res.data.wage_overtime)||0;
+          let sum;
+          if (parseFloat(res.data.wage_money) && parseFloat(res.data.wage_overtime)){
+            sum = (parseFloat(res.data.wage_money) / parseFloat(res.data.wage_overtime))
           }else{
-            data.dayAddWork =0
+            sum =0
           }
+          data.dayAddWork = (Math.floor(sum * 100) / 100).toFixed(2)
+          console.log(res.data.wage_money,'res.data.wage_money');
+          console.log(res.data.wage_overtime,'res.data.wage_overtime')
           console.log(data.dayAddWork,'dayAddWorkdayAddWork')
           data.group_info = res.data.group_info;
           data.type = parseInt(res.data.wage_overtime_type);
@@ -454,8 +458,14 @@ export default function EditDetails() {
     if (type === 'money') {
       const item = JSON.parse(JSON.stringify(wageStandard));
       const dayAddWork = e / item.day;
-      item[type] = e||0;
+      item[type] = e.toFixed(2)||0;
       item.dayAddWork = dayAddWork.toFixed(2);
+      setWageStandard(item);
+      return;
+    }
+    if (type === 'addWork'){
+      const item = JSON.parse(JSON.stringify(wageStandard));
+      item[type] = e.toFixed(2);
       setWageStandard(item);
       return;
     }
@@ -715,22 +725,26 @@ export default function EditDetails() {
     setTimeType(type)
     if (type === 1) {
       if (e.id === 4) {
-        // const arr = timeArr.map(v => {
-        //   if (v.id === e.id) {
-        //     v.click = !v.click;
-        //   } else {
-        //     v.click = false
-        //   }
-        //   return v;
-        // })
-        // setTimeArr(arr)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
       } else {
+        let titlework='';
         const arr = timeArr.map(v => {
           if (v.id === e.id) {
             v.click = !v.click;
+            if(!v.click){
+              console.log(addWorkArr,'addWorkArr')
+              for (let i = 0; i < addWorkArr.length; i++) {
+                if (addWorkArr[i].click) {
+                  if (addWorkArr[i].id !== 1) {
+                    titlework = '加班' + addWorkArr[i].name
+                  } else {
+                    titlework = '无加班'
+                  }
+                }
+              } 
+            }
           } else {
             if (v.id === 4) {
               v.name = '0.0小时';
@@ -740,8 +754,12 @@ export default function EditDetails() {
           return v;
         })
         setTimeArr(arr);
+        if (titlework){
+          setVal({ ...val, modalDuration: titlework })
+          return;
+        }
       }
-      let addTime;
+      let addTime='';
       for (let i = 0; i < addWorkArr.length; i++) {
         if (addWorkArr[i].click) {
           if (addWorkArr[i].id !== 1) {
@@ -749,15 +767,15 @@ export default function EditDetails() {
           } else {
             addTime = '，无加班'
           }
-        } else {
-          addTime = '，无加班'
         }
       }
       let duration;
-      if (e.id == 3) {
-        duration = e.name +addTime;
-      } else {
-        duration = '上班' + e.name +addTime;
+      if(e.click){
+        if (e.id == 3) {
+          duration = e.name +addTime;
+        } else {
+          duration = '上班' + e.name +addTime;
+        }
       }
       console.log(duration,'durationduration')
       if (e.id != 4) {
@@ -765,9 +783,22 @@ export default function EditDetails() {
       }
     } else {
       if (e.id != 2) {
+        let addworkTitle='';
         const arr = addWorkArr.map(v => {
           if (v.id === e.id) {
-            v.click = !v.click
+            v.click = !v.click;
+            if(!v.click){
+              for (let i = 0; i < timeArr.length; i++) {
+                if (timeArr[i].click) {
+                  if (timeArr[i].id == 3) {
+                    addworkTitle = '休息'
+                  } else {
+                    addworkTitle = '上班' + timeArr[i].name
+                  }
+                  break;
+                }
+              }
+            }
           } else {
             if (v.id === 2) {
               v.name = '0.0小时';
@@ -777,39 +808,35 @@ export default function EditDetails() {
           return v;
         })
         setAddWorkArr(arr);
+        if (addworkTitle){
+          setVal({ ...val, modalDuration: addworkTitle })
+          return;
+        }
       } else {
-        // const arr = addWorkArr.map(v => {
-        //   if (v.id === e.id) {
-        //     v.click = !v.click;
-        //   } else {
-        //     v.click = false
-        //   }
-        //   return v;
-        // })
-        // setAddWorkArr(arr)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
       }
-      let Time;
+      let Time='';
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
           if (timeArr[i].id == 3) {
-            Time = '休息，'
+            Time = '休息'
           } else {
             Time = '上班' + timeArr[i].name
           }
           break;
-        } else {
-          Time = '休息，'
         }
       }
-      let duration;
-      if (e.id == 1) {
-        duration = Time + '无加班';
-      } else {
+      let duration='';
+      if(e.click){
         duration = Time + e.name;
       }
+      // if (e.id == 1) {
+      //   duration = Time + '，无加班';
+      // } else {
+      
+      // }
       console.log(duration,'duration1')
       if (e.id != 2) {
         setVal({ ...val, modalDuration:duration })
@@ -845,9 +872,9 @@ export default function EditDetails() {
           if (data[0].name == '休息') {
             title = data[0].name+ '，加班' + dataList[0].name
           }else if (dataList[0].name == '无加班') {
-            title = data[0].name +'，'+ dataList[0].name;
+            title = '上班'+data[0].name +'，'+ dataList[0].name;
           }else{
-            title = data[0].name + '，加班' + dataList[0].name
+            title = '上班'+data[0].name + '，加班' + dataList[0].name
           }
         }
       }

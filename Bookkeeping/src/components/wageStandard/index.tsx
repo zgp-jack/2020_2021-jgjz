@@ -26,7 +26,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
           <View className='wageStandard-box'>
             <View className='wageStandard-content-listBox'> 
               <View className='wageStandard-content-listBox-list'>
-                <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>上班标准:</Text> {wageStandard.work}小时算一个工</View>
+                <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>上班标准:</Text> {parseFloat(wageStandard.work)}小时算一个工</View>
                 <View className='atInputNumber'>
                   <AtInputNumber
                     // style='color:red'
@@ -41,7 +41,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                 </View>
               </View>
               <View className='wageStandard-content-listBox-list'>
-                <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>每个工多少钱:</Text> {wageStandard.money}/个工</View>
+                <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>每个工多少钱:</Text> {wageStandard.money}元/个工</View>
                 <View>
                   <AtInputNumber
                     type='digit'
@@ -83,7 +83,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
               <View>
                 <View className='workList'>
                   {/* <View className='workList-title'>加班6小时算一个工</View> */}
-                  <View className='workList-title'>加班{wageStandard.day}小时算一个工</View>
+                  <View className='workList-title'>加班{parseFloat(wageStandard.day)}小时算一个工</View>
                   <View className='workList-add'>
                     <AtInputNumber
                       type='digit'

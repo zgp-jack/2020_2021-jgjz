@@ -798,8 +798,10 @@ export default function AttendanceSheet() {
       }
     }
     })
-    .catch((e)=>{
+    .catch((e) => {
       setBusy(true)
+      setleftTime(false);
+      setrightTime(false);
     })
   }
   // 设置时间
