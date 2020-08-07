@@ -1,7 +1,8 @@
 import Taro, { useEffect, useState, useDidShow, onAppShow } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView, Image } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction, appletJumpAction } from '../../utils/request/index';
-import { useDispatch } from '@tarojs/redux'
+import { useDispatch, useSelector } from '@tarojs/redux'
+import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
 import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Earliest_month, Tips } from '../../config/store'
@@ -18,6 +19,7 @@ import { setClickTIme } from '../../actions/clickTIme'
 import './index.scss'
 
 let loginType = false;
+let isJump = false;
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -68,6 +70,7 @@ const Images = [
 export default function Index() {
   let identityType = '';
   const dispatch = useDispatch()
+  const useSelectorItem = useSelector<any, any>(state => state)
   // 弹框内容
   const [model, setModel] = useState<any>({
     groupName: '',
@@ -194,11 +197,10 @@ export default function Index() {
     return num;
   }
   useEffect(()=>{
-    if (ContentItem){
-      console.log(111);
-      setItem(ContentItem)
+    if (useSelectorItem.content){
+      setItem(useSelectorItem.content)
     }
-  }, [ContentItem])
+  }, [])
   useEffect(() => {
     Taro.onNetworkStatusChange(function (res) {
       console.log(res.isConnected, 'isConnected')
@@ -244,6 +246,7 @@ export default function Index() {
               Taro.setStorageSync(Type, res.data.lasted_business_identity);
               identityType = res.data.lasted_business_identity;
               console.log('有数据')
+              isJump = true;
               getData();
             }
             // 没有鱼泡账号
@@ -514,6 +517,9 @@ export default function Index() {
         if (res.code === 200) {
           setNoRequest(true)
           setBusy(false)
+          if (isJump){
+            dispatch(setContent(res.data))
+          }
           ContentItem = res.data;
           console.log(res.data, 'res.datata')
           setItem(res.data);

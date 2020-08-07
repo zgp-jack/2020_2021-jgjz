@@ -10,6 +10,7 @@ import mailList from './mailList'
 import type from './type'
 import userList from './userList'
 import phoneList from './phoneList'
+import content from './content'
 
 export default combineReducers({
   counter,
@@ -23,4 +24,5 @@ export default combineReducers({
   userList,
   type,
   phoneList,
+  content,
 })
