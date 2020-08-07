@@ -172,14 +172,6 @@ export default function Index() {
     }
     return num;
   }
-  useEffect(()=>{
-    Taro.onNetworkStatusChange(function (res) {
-      console.log(res.isConnected,'isConnected')
-      console.log(res.networkType,'networkType')
-    })
-  },[])
-  // 与小程序onLaunch一样
-  // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
     if (noRequest)return;
@@ -685,6 +677,7 @@ export default function Index() {
   console.log(item,'打印数据')
   return (
     <View className='index-content'>
+      <View>{ num }</View>
       {/* <UseNavInfo/> */}
       {/* <AtNavBar/> */}
       {<View style={{ visibility: hidden ? 'visible' : 'hidden' }} >
