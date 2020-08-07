@@ -113,6 +113,7 @@ export default function Index() {
   const [leftTime, setleftTime] = useState<boolean>(false)
   // 判断右边是否需要icon
   const [rightTime, setrightTime] = useState<boolean>(false)
+  const [this_year_business_month,setBusiness_month] = useState<string>()
   // 今天
   const [toDay,setToDay] = useState<string>('')
   // 点击记工跳转到注册手机号
@@ -314,6 +315,12 @@ export default function Index() {
     // }
     dispatch(setTypes(type))
     getData();
+    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    if(Number(this_year_business_month)==montime){
+      setleftTime(false);
+    }else{
+      setleftTime(true);
+    }
     // let midParams = {
     //   mid: userInfo.userId,
     // }
@@ -466,21 +473,14 @@ export default function Index() {
           // 设置最早时间
           const date = new Date();
           const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+          let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+          let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
           if (res.data.earliest_month) {
-            if(!e){
-              Taro.setStorageSync(Earliest_month,res.data.earliest_month);
-              let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
-              let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-              if(!type && Number(res.data.earliest_month.split('-')[0]) == yeartime){
-                setStart(res.data.earliest_month);
-                Number(res.data.earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
-              }else if(!type && Number(res.data.earliest_month.split('-')[0]) < yeartime) {
-                setStart(yeartime+'-'+'01');
-                montime == 1?setleftTime(false):setleftTime(true);
-              }
-            }
+            Taro.setStorageSync(Earliest_month,res.data.earliest_month);
+            setBusiness_month(res.data.this_year_business_month);
+            setStart(yeartime+'-'+res.data.this_year_business_month);
           } else {
-            setStart(newMonth)
+            setStart(yeartime+'-'+montime)
           }
           // 最晚时间
           setEnd(newMonth)
@@ -831,6 +831,7 @@ export default function Index() {
     const startTime = new Date(start).getTime();
     // 现在的时间
     const newTimes = new Date(newTime.substring(0, 7)).getTime();
+    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     //减少/增加一个月
     if(type ===0){
       if (startTime >= newTimes) {
@@ -838,6 +839,9 @@ export default function Index() {
       }
       date.setMonth(date.getMonth() - 1);
     }else{
+      if (addZero(date.getMonth() + 1) >= montime) {
+        return;
+      }
       date.setMonth(date.getMonth() + 1);
     }
     let month = date.getMonth();
