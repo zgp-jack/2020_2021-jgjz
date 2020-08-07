@@ -8,6 +8,7 @@ import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType,Earlies
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setWorker } from '../../actions/workerList'
+import { bkIndexTypeData } from '../../utils/request/index.d'
 import Auth from '../../components/auth';
 import { AtModal, AtBadge, AtNavBar } from "taro-ui"
 import Msg from '../../utils/msg'
@@ -40,6 +41,9 @@ const Images = [
     id: 5
   }
 ]
+// export interface Item {
+
+// }
 export default function Index() {
   let identityType = '';
   const dispatch = useDispatch()
@@ -87,7 +91,27 @@ export default function Index() {
   const [num,setNum] = useState<string>('0');  
   const [newTime,setNewTime] = useState<string>('')
   // 数据
-  const [item,setItme] = useState<any>()
+  const [item, setItme] = useState<bkIndexTypeData>({
+    amount: { 
+      type: 0, 
+      unit_num: 0, 
+      count:0,
+      unit:'',
+    },
+    borrow: '',
+    business_list: {
+      code: 0,
+      msg: '',
+      data: [],
+    },
+    money: '',
+    overtime: 0,
+    work_time: 0,
+    count_is_new: '',
+    earliest_month: '',
+    setLasted_business_identity: 0,
+    lasted_business_identity: '',
+  })
   const [image, setImage] = useState<any>(Images[0].url)
   // 设置不是第一次获取数据
   const [repeat, setRepeat] = useState<boolean>(false)
@@ -909,37 +933,37 @@ export default function Index() {
           <View>
             <Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱
             <View className='money'>
-                {busy ? '-' : (item && (item.money > 9999999.99 ? '1千万+' : item.money) || '0.00')}
+                {busy ? '-' : (item && (parseFloat(item.money) > 9999999.99 ? '1千万+' : item.money) || '0.00')}
             </View>
           </View>
           <View>
             <Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`}/>借支
             <View className='money'>
-                {busy ? '-' : (item && (item.borrow > 9999999.99 ? '1千万+' : item.borrow) || '0.00')}
+                {busy ? '-' : (item && (parseFloat(item.borrow) > 9999999.99 ? '1千万+' : item.borrow) || '0.00')}
             </View>
           </View>
         </View>
         <View className='typeList'>
           <View className='textCenter'>上班
             <View className='num'>
-              {busy ? '-' : ((item && item.work_time > 998.99 ? '999+' : item.work_time) || 0)}
+              {busy ? '-' : ((item && item.work_time > 998.99 ? '999+' : item&&item.work_time) || 0)}
             {/* {(item && item.work_time > 998.99 ? '999+' : item.work_time)||0} */}
             个工
             </View>
           </View>
             <View className='textCenter'>加班<View className='num'>
             {/* {item && item.overtime || 0}小时 */}
-              {busy ? '-' : ((item && item.overtime > 998.99 ? '999+' : item.overtime) || 0)}
+              {busy ? '-' : ((item && item.overtime > 998.99 ? '999+' : item&&item.overtime) || 0)}
             {/* {(item && item.overtime > 998.99 ? '999+' : item.overtime) || 0} */}
             小时
             </View></View>
           <View className='textCenter'><View>按量记
             <View>
               {busy && <View className='num'>-平方米</View>}
-              {!busy &&!item && !item.amount && <View className='num'>0平方米</View>}
+                {!busy && !item && <View className='num'>0平方米</View>}
               {!busy &&item.amount.type === 0 && <View className='num'>0平方米</View> }
-                {!busy && item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 999999.99 ? '1百万+' : item.amount.unit_num}{item.amount.unit}</View>}
-                {!busy && item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>}
+                {!busy && item.amount.type === 1 && <View className='num'>{item && item.amount.unit_num > 999999.99 ? '1百万+' : item&&item.amount.unit_num}{item.amount.unit}</View>}
+                {!busy && item.amount.type === 2 && <View className='num'>{item&&item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>}
             </View>
           </View>
           </View>

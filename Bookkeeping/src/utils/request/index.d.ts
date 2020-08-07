@@ -41,7 +41,12 @@ export interface bkIndexType extends Result {
   data: bkIndexTypeData,
 }
 export interface bkIndexTypeData {
-  amount: { type: number }
+  amount: { 
+    type: number, 
+    unit_num:number,
+    count:number,
+    unit:string,
+  }
   borrow: string,
   business_list: bkIndexTypeDataList,
   money: string
