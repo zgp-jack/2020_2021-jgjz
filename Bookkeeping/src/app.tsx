@@ -54,7 +54,7 @@ class App extends Component {
 
   componentDidShow () {
     Taro.onAppShow((o)=>{
-      console.log(o,'111')
+      console.log(o,'1111111')
     })
   }
 
