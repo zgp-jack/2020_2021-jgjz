@@ -1,6 +1,5 @@
 import Taro, { Component, Config,onAppShow,offAppShow } from '@tarojs/taro'
-import { Provider, useDispatch } from '@tarojs/redux'
-import { setAppShowData } from './actions/appShowData'
+import { Provider } from '@tarojs/redux'
 import Index from './pages/index'
 import { Res } from './config/store';
 
@@ -15,7 +14,6 @@ import './app.scss'
 // }
 
 const store = configStore()
-const dispatch = useDispatch()
 class App extends Component {
 
   /**
