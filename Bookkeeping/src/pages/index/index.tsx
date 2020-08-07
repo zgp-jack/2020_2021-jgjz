@@ -188,6 +188,7 @@ export default function Index() {
           tokenTime: e.referrerInfo.extraData.tokenTime
         }
         appletJumpAction(params).then(res=>{
+          console.log(res,'后台返回数据')
           // 直接返回记工记账用户信息
           if(res.code == 200){
             if(res.data){
