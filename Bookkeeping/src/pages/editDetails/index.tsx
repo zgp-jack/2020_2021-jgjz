@@ -29,7 +29,7 @@ interface DataType {
 }
 export default function EditDetails() {
   const router: Taro.RouterInfo = useRouter();
-  const { id } = router.params;
+  const { id,typeItem } = router.params;
   // 班组长还是工人
   const [identity, setIdentity] = useState<number>(1)
   // 图片
@@ -1090,14 +1090,19 @@ export default function EditDetails() {
       }
     }
     console.log(params,'params');
+    // return;
     updateBusinessAction(params).then(res=>{
       if(res.code === 200){
         Msg(res.msg);
         setTimeout(()=>{
-          // Taro.navigateBack({delta:2});
-          Taro.redirectTo({
-            url: '/pages/flowingWater/index'
-          })
+          if (typeItem){
+            Taro.navigateBack({delta:2});
+          }else{
+            Taro.navigateBack({ delta: 1 });
+          }
+          // Taro.redirectTo({
+          //   url: '/pages/flowingWater/index'
+          // })
         },1000)
       }else{
         Msg(res.msg)
