@@ -299,6 +299,30 @@ export default function Index() {
     if (creationTime && (creationTime + 86400 * 7) > newTime){
       setPrompt(true)
     }
+    // 设置首页时间选择器时间
+    // if (creationTime){
+    //   // 开始时间
+    //   let myDate = new Date(creationTime*1000);
+    //   const nowY = myDate.getFullYear()-1;
+    //   const nowM = myDate.getMonth();
+    //   const time = nowY + '-' + nowM;
+    //   setStart(time)
+    //   console.log(nowY,'nowT')
+    //   // 结束时间
+    //   const date = new Date();
+    //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+    //   setTime(newMonth);
+    // }else{
+    //   const date = new Date();
+    //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
+    //   const nowY = date.getFullYear() - 1;
+    //   const nowM = date.getMonth();
+    //   const time = nowY + '-' + nowM;
+    //   setStart(time)
+    //   setTime(newMonth);
+    // }
+    // 结束时间
+    // const time = 
     // 清楚日历缓存
     dispatch(setClickTIme([]))
     //清楚
@@ -310,9 +334,73 @@ export default function Index() {
     if (type){
       setType(type)
     }
+    let userInfo = Taro.getStorageSync(UserInfo);
+    // =======
+    // if (!userInfo) {
+    //   setDisplay(false);
+    //   return
+    // } else {
+    //   setDisplay(false)
+    // }
     dispatch(setTypes(type))
     // getData();
+    // let midParams = {
+    //   mid: userInfo.userId,
+    // }
+    // 登陆了就获取信息
+    // let midData = Taro.getStorageSync(MidData);
+    // if (midData) {
+    //   bkMemberAuthAction(midParams).then(res => {
+    //     if (res.code !== 200) {
+    //       Msg(res.msg)
+    //     } else {
+    //       console.log(res, 'ressssssssssss')
+    //       let userInfo = Taro.getStorageSync(UserInfo)
+    //       res.data.sign = {}
+    //       res.data.sign.token = userInfo.token;
+    //       res.data.sign.time = res.data.created_time;
+    //       res.data.uuid = userInfo.uuid;
+    //       // res.data.worker_id = res.data.worker_id;
+    //       Taro.setStorageSync(MidData, res.data)
+    //     }
+    //   })
+    // }
   })
+  // useEffect(()=>{
+  //   // 判断有没有用户信息没有就显示
+  //   // 获取缓存信息
+  //   let type = Taro.getStorageSync(Type);
+  //   setType(type)
+  //   let userInfo = Taro.getStorageSync(UserInfo);
+  //   if(!userInfo){
+  //     setDisplay(true);
+  //     return
+  //   }else{
+  //     setDisplay(false)
+  //   }
+  //   dispatch(setTypes(type))
+  //   let midParams={
+  //     mid: userInfo.userId,
+  //   }
+  //   let midData = Taro.getStorageSync(MidData);
+  //   if (!midData){
+  //     bkMemberAuthAction(midParams).then(res=>{
+  //       if(res.code !== 200){
+  //         Msg(res.msg)
+  //       }else{
+  //         console.log(res,'ressssssssssss')
+  //         let userInfo = Taro.getStorageSync(UserInfo)
+  //         res.data.sign={}
+  //         res.data.sign.token = userInfo.token;
+  //         res.data.sign.time = res.data.created_time;
+  //         res.data.uuid = userInfo.uuid;
+  //         // res.data.worker_id = res.data.worker_id;
+  //         Taro.setStorageSync(MidData, res.data)
+  //       }
+  //     })
+  //   }
+  //   getData();
+  // },[])
   // 获取项目名称
   const bkGetProjectTeam = (dignity,state?:number)=>{
     bkGetProjectTeamAction({}).then(res=>{
@@ -461,6 +549,7 @@ export default function Index() {
           setleftTime(false);
           setNum('')
         }
+        console.log(e)
       })
     }
   }
