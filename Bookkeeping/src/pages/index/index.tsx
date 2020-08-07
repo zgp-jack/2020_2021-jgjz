@@ -18,6 +18,7 @@ import { setClickTIme } from '../../actions/clickTIme'
 import './index.scss'
 
 let loginType = false;
+let ContentItem: any = {} ;
 // 设置新手指引图片
 const Images = [
   {
@@ -172,6 +173,12 @@ export default function Index() {
     }
     return num;
   }
+  useEffect(()=>{
+    if (ContentItem){
+      console.log(111);
+      setItem(ContentItem)
+    }
+  }, [ContentItem])
   useEffect(() => {
     Taro.onNetworkStatusChange(function (res) {
       console.log(res.isConnected, 'isConnected')
@@ -485,6 +492,7 @@ export default function Index() {
         if (res.code === 200) {
           setNoRequest(true)
           setBusy(false)
+          ContentItem = res.data;
           console.log(res.data, 'res.datata')
           setItem(res.data);
           console.log('设置内容后')
