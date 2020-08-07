@@ -196,50 +196,166 @@ export default function Index() {
     }
     return num;
   }
-  useEffect(()=>{
-    console.log(useSelectorItem.content,'contentcontentcontent')
-    if (useSelectorItem.content){
-      setItem(useSelectorItem.content)
-    }
-  }, [])
-  useEffect(() => {
-    Taro.onNetworkStatusChange(function (res) {
-      console.log(res.isConnected, 'isConnected')
-      console.log(res.networkType, 'networkType')
-    })
-  }, [])
-  useEffect(()=>{
-    if (ContentItem){
-      console.log(ContentItem,'ContentItem')
-      setItem(ContentItem)
-    }
-  }, [ContentItem])
+  // useEffect(()=>{
+  //   console.log(useSelectorItem.content,'contentcontentcontent')
+  //   if (useSelectorItem.content){
+  //     setItem(useSelectorItem.content)
+  //   }
+  // }, [])
+  // useEffect(() => {
+  //   Taro.onNetworkStatusChange(function (res) {
+  //     console.log(res.isConnected, 'isConnected')
+  //     console.log(res.networkType, 'networkType')
+  //   })
+  // }, [])
+  // useEffect(()=>{
+  //   if (ContentItem){
+  //     console.log(ContentItem,'ContentItem')
+  //     setItem(ContentItem)
+  //   }
+  // }, [ContentItem])
   // 与小程序onLaunch一样
   // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
-  onAppShow((e) => {
-    if (noRequest) return;
-    setHidden(false);
-    console.log(e, '返回内容')
-    if (e.scene === 1037) {
-      //return false
-      // 返回token ，tokenTime ,userId
-      if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
-        // 验证有没有手机号
-        let params = {
-          userId: e.referrerInfo.extraData.userId,
-          token: e.referrerInfo.extraData.token,
-          tokenTime: e.referrerInfo.extraData.tokenTime
-        }
-        appletJumpAction(params).then(res => {
-          console.log(res, '请求返回数据')
-          // 直接返回记工记账用户信息
-          if (res.code == 200) {
-            if (res.data) {
+  // onAppShow((e) => {
+  //   if (noRequest) return;
+  //   setHidden(false);
+  //   console.log(e, '返回内容')
+  //   if (e.scene === 1037) {
+  //     //return false
+  //     // 返回token ，tokenTime ,userId
+  //     if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
+  //       // 验证有没有手机号
+  //       let params = {
+  //         userId: e.referrerInfo.extraData.userId,
+  //         token: e.referrerInfo.extraData.token,
+  //         tokenTime: e.referrerInfo.extraData.tokenTime
+  //       }
+  //       appletJumpAction(params).then(res => {
+  //         console.log(res, '请求返回数据')
+  //         // 直接返回记工记账用户信息
+  //         if (res.code == 200) {
+  //           if (res.data) {
+  //             let obj: any = {
+  //               sign: {},
+  //             };
+  //             obj = res.data;
+  //             obj.userId = e.referrerInfo.extraData.userId;
+  //             obj.token = e.referrerInfo.extraData.token;
+  //             obj.tokenTime = e.referrerInfo.extraData.tokenTime;
+  //             obj.uuid = e.referrerInfo.extraData.userUuid;
+  //             obj.sign = {
+  //               token: e.referrerInfo.extraData.token,
+  //               time: e.referrerInfo.extraData.tokenTime
+  //             }
+  //             Taro.setStorageSync(MidData, obj);
+  //             // ==== 默认先写死
+  //             Taro.setStorageSync(Type, res.data.lasted_business_identity);
+  //             identityType = res.data.lasted_business_identity;
+  //             console.log('有数据')
+  //             isJump = true;
+  //             getData();
+  //           }
+  //           // 没有鱼泡账号
+  //         } else if (res.code == 40001) {
+  //           //  有鱼泡账号
+  //         } else if (res.code == 40000) {
+  //           console.log(res.data, 'res.dafdsda')
+  //           let obj: any = {
+  //             sign: {}
+  //           }
+  //           obj.userId = e.referrerInfo.extraData.userId;
+  //           obj.token = e.referrerInfo.extraData.token;
+  //           obj.tokenTime = e.referrerInfo.extraData.tokenTime;
+  //           obj.uuid = e.referrerInfo.extraData.userUuid;
+  //           obj.sign = {
+  //             token: e.referrerInfo.extraData.token,
+  //             time: e.referrerInfo.extraData.tokenTime
+  //           }
+  //           // 要存UserInfo
+  //           Taro.setStorageSync(UserInfo, obj);
+  //           let params = {
+  //             mid: e.referrerInfo.extraData.userId,
+  //           }
+  //           bkMemberAuthAction(params).then(res => {
+  //             if (res.code !== 200) {
+  //               Msg(res.msg);
+  //             } else {
+  //               let midData = Taro.getStorageSync(UserInfo);
+  //               midData.worker_id = res.data.worker_id;
+  //               midData.yupao_id = res.data.yupao_id;
+  //               Taro.setStorageSync(MidData, midData);
+  //               getData();
+  //             }
+  //           })
+  //         } else if (res.code == 40003) {
+  //           console.log(4000333333)
+  //           let obj: any = {};
+  //           obj.userId = e.referrerInfo.extraData.userId;
+  //           obj.token = e.referrerInfo.extraData.token;
+  //           obj.uuid = e.referrerInfo.extraData.userUuid;
+  //           obj.sign = {
+  //             token: e.referrerInfo.extraData.token,
+  //             time: e.referrerInfo.extraData.tokenTime
+  //           }
+  //           obj.tokenTime = e.referrerInfo.extraData.tokenTime;
+  //           Taro.setStorageSync(UserInfo, obj);
+  //           // 设置点击直接跳转到注册手机号页面
+  //           // setLoginStatus(true);
+  //           // loginType = true;
+  //           setDisplay(true)
+  //           setLoginPhone(true)
+  //           //console.log(login,'setlogin')
+  //         }
+  //       })
+  //     }
+  //   }
+  // })
+  
+  const getAppShowData = ()=>{
+    if (useSelectorItem.appShowData) {
+      const e = useSelectorItem.appShowData;
+      if (e.scene === 1037) {
+        if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
+          // 验证有没有手机号
+          let params = {
+            userId: e.referrerInfo.extraData.userId,
+            token: e.referrerInfo.extraData.token,
+            tokenTime: e.referrerInfo.extraData.tokenTime
+          }
+          appletJumpAction(params).then(res => {
+            console.log(res, '请求返回数据')
+            // 直接返回记工记账用户信息
+            if (res.code == 200) {
+              if (res.data) {
+                let obj: any = {
+                  sign: {},
+                };
+                obj = res.data;
+                obj.userId = e.referrerInfo.extraData.userId;
+                obj.token = e.referrerInfo.extraData.token;
+                obj.tokenTime = e.referrerInfo.extraData.tokenTime;
+                obj.uuid = e.referrerInfo.extraData.userUuid;
+                obj.sign = {
+                  token: e.referrerInfo.extraData.token,
+                  time: e.referrerInfo.extraData.tokenTime
+                }
+                Taro.setStorageSync(MidData, obj);
+                // ==== 默认先写死
+                Taro.setStorageSync(Type, res.data.lasted_business_identity);
+                identityType = res.data.lasted_business_identity;
+                console.log('有数据')
+                isJump = true;
+                getData();
+              }
+              // 没有鱼泡账号
+            } else if (res.code == 40001) {
+              //  有鱼泡账号
+            } else if (res.code == 40000) {
+              console.log(res.data, 'res.dafdsda')
               let obj: any = {
-                sign: {},
-              };
-              obj = res.data;
+                sign: {}
+              }
               obj.userId = e.referrerInfo.extraData.userId;
               obj.token = e.referrerInfo.extraData.token;
               obj.tokenTime = e.referrerInfo.extraData.tokenTime;
@@ -248,70 +364,49 @@ export default function Index() {
                 token: e.referrerInfo.extraData.token,
                 time: e.referrerInfo.extraData.tokenTime
               }
-              Taro.setStorageSync(MidData, obj);
-              // ==== 默认先写死
-              Taro.setStorageSync(Type, res.data.lasted_business_identity);
-              identityType = res.data.lasted_business_identity;
-              console.log('有数据')
-              isJump = true;
-              getData();
-            }
-            // 没有鱼泡账号
-          } else if (res.code == 40001) {
-            //  有鱼泡账号
-          } else if (res.code == 40000) {
-            console.log(res.data, 'res.dafdsda')
-            let obj: any = {
-              sign: {}
-            }
-            obj.userId = e.referrerInfo.extraData.userId;
-            obj.token = e.referrerInfo.extraData.token;
-            obj.tokenTime = e.referrerInfo.extraData.tokenTime;
-            obj.uuid = e.referrerInfo.extraData.userUuid;
-            obj.sign = {
-              token: e.referrerInfo.extraData.token,
-              time: e.referrerInfo.extraData.tokenTime
-            }
-            // 要存UserInfo
-            Taro.setStorageSync(UserInfo, obj);
-            let params = {
-              mid: e.referrerInfo.extraData.userId,
-            }
-            bkMemberAuthAction(params).then(res => {
-              if (res.code !== 200) {
-                Msg(res.msg);
-              } else {
-                let midData = Taro.getStorageSync(UserInfo);
-                midData.worker_id = res.data.worker_id;
-                midData.yupao_id = res.data.yupao_id;
-                Taro.setStorageSync(MidData, midData);
-                getData();
+              // 要存UserInfo
+              Taro.setStorageSync(UserInfo, obj);
+              let params = {
+                mid: e.referrerInfo.extraData.userId,
               }
-            })
-          } else if (res.code == 40003) {
-            console.log(4000333333)
-            let obj: any = {};
-            obj.userId = e.referrerInfo.extraData.userId;
-            obj.token = e.referrerInfo.extraData.token;
-            obj.uuid = e.referrerInfo.extraData.userUuid;
-            obj.sign = {
-              token: e.referrerInfo.extraData.token,
-              time: e.referrerInfo.extraData.tokenTime
+              bkMemberAuthAction(params).then(res => {
+                if (res.code !== 200) {
+                  Msg(res.msg);
+                } else {
+                  let midData = Taro.getStorageSync(UserInfo);
+                  midData.worker_id = res.data.worker_id;
+                  midData.yupao_id = res.data.yupao_id;
+                  Taro.setStorageSync(MidData, midData);
+                  getData();
+                }
+              })
+            } else if (res.code == 40003) {
+              console.log(4000333333)
+              let obj: any = {};
+              obj.userId = e.referrerInfo.extraData.userId;
+              obj.token = e.referrerInfo.extraData.token;
+              obj.uuid = e.referrerInfo.extraData.userUuid;
+              obj.sign = {
+                token: e.referrerInfo.extraData.token,
+                time: e.referrerInfo.extraData.tokenTime
+              }
+              obj.tokenTime = e.referrerInfo.extraData.tokenTime;
+              Taro.setStorageSync(UserInfo, obj);
+              // 设置点击直接跳转到注册手机号页面
+              // setLoginStatus(true);
+              // loginType = true;
+              setDisplay(true)
+              setLoginPhone(true)
+              //console.log(login,'setlogin')
             }
-            obj.tokenTime = e.referrerInfo.extraData.tokenTime;
-            Taro.setStorageSync(UserInfo, obj);
-            // 设置点击直接跳转到注册手机号页面
-            // setLoginStatus(true);
-            // loginType = true;
-            setDisplay(true)
-            setLoginPhone(true)
-            //console.log(login,'setlogin')
-          }
-        })
+          })
+        }
       }
     }
-  })
+    return;
+  }
   useDidShow(() => {
+    getAppShowData();
     const newTime = new Date().getTime() / 1000;
     let creationTime = Taro.getStorageSync(CreationTime);
     // const time = 

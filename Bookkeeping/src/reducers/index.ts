@@ -11,6 +11,7 @@ import type from './type'
 import userList from './userList'
 import phoneList from './phoneList'
 import content from './content'
+import appShowData from './appShowData'
 
 export default combineReducers({
   counter,
@@ -25,4 +26,5 @@ export default combineReducers({
   type,
   phoneList,
   content,
+  appShowData,
 })

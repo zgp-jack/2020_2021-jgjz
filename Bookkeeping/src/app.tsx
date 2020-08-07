@@ -1,6 +1,6 @@
 import Taro, { Component, Config,onAppShow,offAppShow } from '@tarojs/taro'
-import { Provider } from '@tarojs/redux'
-
+import { Provider, useDispatch } from '@tarojs/redux'
+import { setAppShowData } from './actions/appShowData'
 import Index from './pages/index'
 
 import configStore from './store'
@@ -14,7 +14,7 @@ import './app.scss'
 // }
 
 const store = configStore()
-
+const dispatch = useDispatch()
 class App extends Component {
 
   /**
@@ -53,11 +53,8 @@ class App extends Component {
   componentDidMount () {}
 
   componentDidShow () {
-    Taro.onAppShow((o)=>{
-      console.log(o,'1111111')
-    })
     onAppShow((res)=>{
-      console.log(res,'res');
+      dispatch(setAppShowData(res))
     })
   }
 
