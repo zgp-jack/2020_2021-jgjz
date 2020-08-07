@@ -677,7 +677,7 @@ export default function Index() {
   console.log(item,'打印数据')
   return (
     <View className='index-content'>
-      <View>{ num }</View>
+      <View>{num}-{noRequest}-{busy}----{start} </View>
       {/* <UseNavInfo/> */}
       {/* <AtNavBar/> */}
       {<View style={{ visibility: hidden ? 'visible' : 'hidden' }} >
