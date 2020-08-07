@@ -43,7 +43,7 @@ export interface bkIndexType extends Result {
 export interface bkIndexTypeData {
   amount: { 
     type: number, 
-    unit_num:number,
+    unit_num:string,
     count:number,
     unit:string,
   }
@@ -54,7 +54,7 @@ export interface bkIndexTypeData {
   work_time: number,
   count_is_new:string,
   earliest_month:string,
-  this_year_business_month:string,
+  this_year_business_month?:string,
   setLasted_business_identity:number,
   lasted_business_identity:string,
 }
