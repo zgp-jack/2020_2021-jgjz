@@ -23,3 +23,5 @@ export const Tomorrow: string='tomorrow';
 export const IsLoginType:string = 'isLoginType'
 // 第一次记工时间
 export const Earliest_month:string ='earliest_month'
+// 记工切换下面的提示
+export const Tips: string = 'tips'

@@ -41,7 +41,12 @@ export interface bkIndexType extends Result {
   data: bkIndexTypeData,
 }
 export interface bkIndexTypeData {
-  amount: { type: number }
+  amount: { 
+    type: number, 
+    unit_num:string,
+    count:number,
+    unit:string,
+  }
   borrow: string,
   business_list: bkIndexTypeDataList,
   money: string
@@ -49,7 +54,7 @@ export interface bkIndexTypeData {
   work_time: number,
   count_is_new:string,
   earliest_month:string,
-  this_year_business_month:string,
+  this_year_business_month?:string,
   setLasted_business_identity:number,
   lasted_business_identity:string,
 }
@@ -210,6 +215,8 @@ export interface bkBusinessOneType extends Result{
     wage_overtime_type: string,
     wage_worktime_define: string,
     work_time_hour:string,
+    typeDes?:string,
+    addTime?:string
   }
 }
 

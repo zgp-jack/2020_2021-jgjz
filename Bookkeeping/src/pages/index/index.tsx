@@ -1,13 +1,14 @@
-import Taro, { useEffect, useState, useDidShow, onAppShow, getLaunchOptionsSync } from '@tarojs/taro'
+import Taro, { useEffect, useState, useDidShow, onAppShow } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView,Image } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction, appletJumpAction } from '../../utils/request/index';
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType,Earliest_month } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType,Earliest_month,Tips } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setWorker } from '../../actions/workerList'
+import { bkIndexTypeData } from '../../utils/request/index.d'
 import Auth from '../../components/auth';
 import { AtModal, AtBadge, AtNavBar } from "taro-ui"
 import Msg from '../../utils/msg'
@@ -40,6 +41,9 @@ const Images = [
     id: 5
   }
 ]
+// export interface Item {
+
+// }
 export default function Index() {
   let identityType = '';
   const dispatch = useDispatch()
@@ -87,7 +91,27 @@ export default function Index() {
   const [num,setNum] = useState<string>('0');  
   const [newTime,setNewTime] = useState<string>('')
   // 数据
-  const [item,setItme] = useState<any>()
+  const [item, setItme] = useState<bkIndexTypeData>({
+    amount: { 
+      type: 0, 
+      unit_num: '0', 
+      count:0,
+      unit:'',
+    },
+    borrow: '',
+    business_list: {
+      code: 0,
+      msg: '',
+      data: [],
+    },
+    money: '',
+    overtime: 0,
+    work_time: 0,
+    count_is_new: '',
+    earliest_month: '',
+    setLasted_business_identity: 0,
+    lasted_business_identity: '',
+  })
   const [image, setImage] = useState<any>(Images[0].url)
   // 设置不是第一次获取数据
   const [repeat, setRepeat] = useState<boolean>(false)
@@ -117,6 +141,8 @@ export default function Index() {
   // 今天
   const [toDay,setToDay] = useState<string>('')
   const [hidden,setHidden]= useState<boolean>(false)
+  // 不请求
+  const [noRequest, setNoRequest] = useState<boolean>(false)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
@@ -156,6 +182,7 @@ export default function Index() {
   // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
+    if (noRequest)return;
     setHidden(false);
     console.log(e,'返回内容')
     if (e.scene === 1037){
@@ -184,11 +211,11 @@ export default function Index() {
               obj.sign = {
                 token : e.referrerInfo.extraData.token,
                 time : e.referrerInfo.extraData.tokenTime
-              }
+              } 
               Taro.setStorageSync(MidData, obj);
               // ==== 默认先写死
-              Taro.setStorageSync(Type, 1);
-              identityType = '1';
+              Taro.setStorageSync(Type, lasted_business_identity);
+              identityType = lasted_business_identity;
               console.log('有数据')
               getData();
             }
@@ -248,6 +275,17 @@ export default function Index() {
     }
   })
   useDidShow(()=>{
+    const newTime = new Date().getTime() / 1000;
+    let creationTime = Taro.getStorageSync(CreationTime);
+    // const time = 
+    // 七天显示内容
+    const state = Taro.getStorageSync(Tips);
+    if (!state) {
+      if (creationTime && (creationTime + 86400 * 7) > newTime) {
+        Taro.setStorageSync(Tips, true);
+      }
+      setPrompt(true)
+    }
     let data = Taro.getStorageSync(IsLoginType);
     console.log(data,'xxx')
     // return
@@ -257,7 +295,6 @@ export default function Index() {
     // console.log(appHeadesrHeight,'appHeaderHeight')
     setSlide(false)
     let midData = Taro.getStorageSync(MidData);
-    let creationTime = Taro.getStorageSync(CreationTime);
     let neverPromptType = Taro.getStorageSync(NeverPrompt);
     if (neverPromptType){
       setNeverPrompt(true);
@@ -266,12 +303,6 @@ export default function Index() {
     if (midData){
       setDisplay(false)
       loginType=false;
-    }
-    const newTime = new Date().getTime()/1000;
-    // const time = 
-    // 七天显示内容
-    if (creationTime && (creationTime + 86400 * 7) > newTime){
-      setPrompt(true)
     }
     // 设置首页时间选择器时间
     // if (creationTime){
@@ -317,6 +348,7 @@ export default function Index() {
     //   setDisplay(false)
     // }
     dispatch(setTypes(type))
+    // getData();
     getData();
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     if(Number(this_year_business_month)==montime){
@@ -465,8 +497,11 @@ export default function Index() {
       bkIndexAction(params).then(res => {
         console.log(res,'ressss')
         if (res.code === 200) {
+          setNoRequest(true)
           setBusy(false)
+          console.log(res.data,'res.datata')
           setItme(res.data);
+          console.log('设置内容后')
           setNum(res.data.count_is_new);
           if (parseInt(res.data.count_is_new) == 0) {
             setShow(true)
@@ -862,7 +897,12 @@ export default function Index() {
     setMonth(befD.substring(5, 7))
     changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1))
   }
-  console.log(leftTime,rightTime);
+  // 关闭身份显示
+  const handlewhiteClose = ()=>{
+    setPrompt(false);
+    Taro.setStorageSync(Tips,true)
+  }
+  console.log(item,'打印数据')
   return (
     <View className='index-content'>
       {/* <UseNavInfo/> */}
@@ -896,10 +936,14 @@ export default function Index() {
           {/* <Image src={`${IMGCDNURL}user.png`}/> */}
           {type === 1 ? 
             <View className='heard-middle' onClick={() => { handelChange(2) }}>我是班组长<Text className='switch'><Text className='test'/>切换 </Text>
-              {prompt && <View className='tipes'>工人记工点这里哦</View>}
+              {prompt && <View className='tipes' onClick={(e) => { e.stopPropagation(), handlewhiteClose()}}>工人记工点这里哦 
+                <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons' />
+              </View>}
             </View> : 
             <View className='heard-middle' onClick={() => { handelChange(1) }}>我是工人<Text className='switch'><Text className='test'/>切换</Text>
-              {prompt && <View className='tipes'>班组长记工点这里哦</View>}
+              {prompt && <View onClick={(e) => { e.stopPropagation(), handlewhiteClose()}} className='tipes'>班组长记工点这里哦 
+                <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons'/>
+              </View>}
             </View>}
           <View onClick={handelTps} className='cloud'>
             {item &&!show &&<AtBadge value={num} maxValue={99} className='AtBadge'/>}
@@ -912,37 +956,38 @@ export default function Index() {
           <View>
             <Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱
             <View className='money'>
-                {busy ? '-' : (item && (item.money > 9999999.99 ? '1千万+' : item.money) || '0.00')}
+              {/* {item.money} -- { item.overtime } -- {item.borrow} */}
+                {busy ? '-' : (item && (parseFloat(item.money) > 9999999.99 ? '1千万+' : item.money) || '0.00')}
             </View>
           </View>
           <View>
             <Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`}/>借支
             <View className='money'>
-                {busy ? '-' : (item && (item.borrow > 9999999.99 ? '1千万+' : item.borrow) || '0.00')}
+                {busy ? '-' : (item && (parseFloat(item.borrow) > 9999999.99 ? '1千万+' : item.borrow) || '0.00')}
             </View>
           </View>
         </View>
         <View className='typeList'>
           <View className='textCenter'>上班
             <View className='num'>
-              {busy ? '-' : ((item && item.work_time > 998.99 ? '999+' : item.work_time) || 0)}
+              {busy ? '-' : ((item && item.work_time > 998.99 ? '999+' : item&&item.work_time) || 0)}
             {/* {(item && item.work_time > 998.99 ? '999+' : item.work_time)||0} */}
             个工
             </View>
           </View>
             <View className='textCenter'>加班<View className='num'>
             {/* {item && item.overtime || 0}小时 */}
-              {busy ? '-' : ((item && item.overtime > 998.99 ? '999+' : item.overtime) || 0)}
+              {busy ? '-' : ((item && item.overtime > 998.99 ? '999+' : item&&item.overtime) || 0)}
             {/* {(item && item.overtime > 998.99 ? '999+' : item.overtime) || 0} */}
             小时
             </View></View>
           <View className='textCenter'><View>按量记
             <View>
               {busy && <View className='num'>-平方米</View>}
-              {!busy &&!item && !item.amount && <View className='num'>0平方米</View>}
+                {!busy && !item && <View className='num'>0平方米</View>}
               {!busy &&item.amount.type === 0 && <View className='num'>0平方米</View> }
-                {!busy && item.amount.type === 1 && <View className='num'>{item.amount.unit_num > 999999.99 ? '1百万+' : parseFloat(item.amount.unit_num)}{item.amount.unit}</View>}
-                {!busy && item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : parseFloat(item.amount.count)}笔</View>}
+                {!busy && item.amount.type === 1 && <View className='num'>{parseFloat(item.amount.unit_num) > 999999.99 ? '1百万+' :parseFloat(item.amount.unit_num)}{item.amount.unit}</View>}
+                {!busy && item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>}
             </View>
           </View>
           </View>
