@@ -162,9 +162,26 @@ export default function EditDetails() {
           obj.note = res.data.note;
           obj.workername = res.data.workername;
           obj.leaderName = res.data.leader_name;
+          // 判断弹框显示
+          let title;
+          if (res.data.work_time == '1.00'){
+            title= '一个工'
+          }else if(res.data.work_time =='0.50'){
+            title = '半个工'
+          }else if(res.data.wage_money == '0.00'){
+            title = '修改'
+          }else{
+            title = res.data.work_time_hour + '小时'
+          }
+          let addTitle;
+          if (res.data.overtime == '0.00'){
+            addTitle = '，无加班'
+          }else{
+            addTitle = '，加班' + res.data.overtime + '小时'
+          }
           // 这里是工要获取到多少工资标里的设置的时间再算
           // const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
-          const duration = '上班'+res.data.work_time_hour + '小时' +'，加班'+ res.data.overtime + '小时'
+          const duration = title + addTitle
           obj.duration = duration;
           obj.modalDuration = duration;
           obj.money = res.data.money;
@@ -240,12 +257,28 @@ export default function EditDetails() {
             // }else{
               // 返回的是工为单位的 小时为单位的数据
             // const setTime = ((+res.data.worktime_define) / (1 / (+res.data.work_time))).toFixed(1);
-            const setTime = (+res.data.work_time_hour).toFixed(2);
+            if (res.data.work_time == '1.00' || res.data.work_time == '0.50' || res.data.wage_money == '0.00'){
+              if (res.data.work_time == '1.00'){
+                timeArrData[0].click = true;
+              } else if (res.data.work_time == '0.50'){
+                timeArrData[1].click = true;
+              } else if (res.data.work_time == '0.00'){
+                timeArrData[3].click = true;
+              }
+            }else{
+              const setTime = (+res.data.work_time_hour).toFixed(2);
               const obj = { id: 4, name: `${setTime}小时`, click: true, num: setTime };
-              const index = [timeArrData.length-1];
-              if(i === index[0]){
+              const index = [timeArrData.length - 1];
+              if (i === index[0]) {
                 timeArrData[i] = obj;
               }
+            }
+            // const setTime = (+res.data.work_time_hour).toFixed(2);
+              // const obj = { id: 4, name: `${setTime}小时`, click: true, num: setTime };
+              // const index = [timeArrData.length-1];
+              // if(i === index[0]){
+              //   timeArrData[i] = obj;
+              // }
             // }
           }
           setTimeArr(timeArrData)
@@ -964,17 +997,23 @@ export default function EditDetails() {
           if (v.id !== 4) {
             // times = v.num;
             // work_time_hour = items.work * v.num;
-            times = items.work * v.num;
+            // times = items.work * v.num;
+            // work_time_hour = items.work * v.num;
+            times = v.num;
             work_time_type = 'working_hour'
           } else {
             // times = 1 / items.work * v.num;
             // work_time_hour = v.num;
+            // work_time_hour = 1 / items.work * v.num;
             times = v.num;
             work_time_type = 'hour'
           }
         }
       }
     })
+    console.log(times,'e2')
+    console.log(work_time_type,'work_time_type')
+    console.log(timeArr,'timeArr')
     // 加班时间
     let overtime: number = 0;
     addWorkArr.map(v => {
@@ -1050,7 +1089,7 @@ export default function EditDetails() {
         // work_time:
       }
     }
-    console.log(params,'params')
+    console.log(params,'params');
     updateBusinessAction(params).then(res=>{
       if(res.code === 200){
         Msg(res.msg);
@@ -1266,7 +1305,7 @@ export default function EditDetails() {
               disabled
               placeholder='请选择工钱'
               value={val.wages}
-              // value={val.wages}
+              // value={'11111111111111'}
             />
             <View className='rightIconsBox'>
               <Image src={`${IMGCDNURL}iconsRIght.png`} className='money-rightIcons' />
@@ -1276,23 +1315,23 @@ export default function EditDetails() {
       </View>
       }
       <View className='publish-recruit-card'>
-        <View className='publish-list-textTarea-item' onClick={() => handleTextare() }>
+        <View className='publish-list-textTarea-item' >
           <Text className='pulish-list-textTarea-title'>备注</Text>
-          <CoverView className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView':'' }>
-          <Textarea
-            focus={autoFocus}
-            autoFocus={autoFocus}
-            auto-focus={autoFocus}
-            className='textarea'
-            cursor={val.note.length||0}
-            value={val.note}
-            onFocus={() => setAutoFocus(false)}
-            placeholder='请填写备注...'
-            onInput={(e) => handleInput('note', e)}
-            maxlength={400}
-            />
-            </CoverView>
         </View>
+        <CoverView onClick={() => handleTextare()} className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView':'' }>
+        <Textarea
+          focus={autoFocus}
+          autoFocus={autoFocus}
+          auto-focus={autoFocus}
+          className='textarea'
+          cursor={val.note.length||0}
+          value={val.note}
+          onFocus={() => setAutoFocus(false)}
+          placeholder='请填写备注...'
+          onInput={(e) => handleInput('note', e)}
+          maxlength={400}
+          />
+          </CoverView>
       <View className='white'>
       <View className='imageBox'>
         <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>

@@ -61,7 +61,7 @@
 }
 .pulish-list-title-money{
   // width: 200rpx;
-  width: 100%;
+  width: 160%;
   display: block;
   text-align: justify;
   font-size: 30rpx;
@@ -126,10 +126,10 @@
   // line-height: 125px;
   display: block;
   font-size: 30px;
-  margin-left: 30px;
+  // margin-left: 30px;
   text-align: right;
-  color: red;
-  width: 100rpx;
+  color: rgba(0, 153, 255, 1);
+  // width: 100rpx;
 
   .publish-input-list {
     position: relative;
@@ -283,6 +283,7 @@
   }
 }
 .textarea{
+  margin-left: 25rpx;
   textarea {
     z-index: 1;
   }
