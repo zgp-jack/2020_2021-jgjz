@@ -342,10 +342,11 @@ export default function Index() {
                   time: e.referrerInfo.extraData.tokenTime
                 }
                 Taro.setStorageSync(MidData, obj);
+                console.log(MidData,'设置MidData')
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
-                isJump = true;
+                // isJump = true;
                 getData();
               }
               // 没有鱼泡账号
@@ -609,12 +610,13 @@ export default function Index() {
     console.log(midData,'内容midData')
     if (midData) {
       bkIndexAction(params).then(res => {
+        console.log('请求')
         if (res.code === 200) {
           setNoRequest(true)
           setBusy(false)
-          if (isJump){
-            dispatch(setContent(res.data))
-          }
+          // if (isJump){
+          //   dispatch(setContent(res.data))
+          // }
           // ContentItem = res.data;
           console.log(res.data, 'res.datata')
           setItem(res.data);
