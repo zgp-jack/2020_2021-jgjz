@@ -140,6 +140,8 @@ export default function Index() {
   // 今天
   const [toDay,setToDay] = useState<string>('')
   const [hidden,setHidden]= useState<boolean>(false)
+  // 不请求
+  const [noRequest, setNoRequest] = useState<boolean>(false)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = ()=>{
@@ -179,6 +181,7 @@ export default function Index() {
   // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
   onAppShow((e)=>{
+    if (noRequest)return;
     setHidden(false);
     console.log(e,'返回内容')
     if (e.scene === 1037){
@@ -482,6 +485,7 @@ export default function Index() {
       bkIndexAction(params).then(res => {
         console.log(res,'ressss')
         if (res.code === 200) {
+          setNoRequest(true)
           setBusy(false)
           console.log(res.data,'res.datata')
           setItme(res.data);
