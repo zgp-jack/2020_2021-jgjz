@@ -18,7 +18,27 @@ import { setClickTIme } from '../../actions/clickTIme'
 import './index.scss'
 
 let loginType = false;
-let ContentItem: any = {} ;
+let ContentItem: bkIndexTypeData = {
+  amount: {
+    type: 0,
+    unit_num: '0',
+    count: 0,
+    unit: '',
+  },
+  borrow: '',
+  business_list: {
+    code: 0,
+    msg: '',
+    data: [],
+  },
+  money: '',
+  overtime: 0,
+  work_time: 0,
+  count_is_new: '',
+  earliest_month: '',
+  setLasted_business_identity: 0,
+  lasted_business_identity: '',
+} ;
 // 设置新手指引图片
 const Images = [
   {
