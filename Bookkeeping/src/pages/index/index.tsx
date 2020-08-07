@@ -313,7 +313,8 @@ export default function Index() {
   // })
   
   const getAppShowData = ()=>{
-    const data = Taro.getStorageSync(Res)
+    const data = Taro.getStorageSync(Res);
+    console.log(data,'缓存支支招hi')
     if (data) {
       const e = useSelectorItem.appShowData;
       if (e.scene === 1037) {
@@ -325,7 +326,6 @@ export default function Index() {
             tokenTime: e.referrerInfo.extraData.tokenTime
           }
           appletJumpAction(params).then(res => {
-            console.log(res, '请求返回数据')
             // 直接返回记工记账用户信息
             if (res.code == 200) {
               if (res.data) {
@@ -345,7 +345,6 @@ export default function Index() {
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
-                console.log('有数据')
                 isJump = true;
                 getData();
               }
@@ -353,7 +352,6 @@ export default function Index() {
             } else if (res.code == 40001) {
               //  有鱼泡账号
             } else if (res.code == 40000) {
-              console.log(res.data, 'res.dafdsda')
               let obj: any = {
                 sign: {}
               }
@@ -382,7 +380,6 @@ export default function Index() {
                 }
               })
             } else if (res.code == 40003) {
-              console.log(4000333333)
               let obj: any = {};
               obj.userId = e.referrerInfo.extraData.userId;
               obj.token = e.referrerInfo.extraData.token;
@@ -420,7 +417,6 @@ export default function Index() {
       setPrompt(true)
     }
     let data = Taro.getStorageSync(IsLoginType);
-    console.log(data, 'xxx')
     // return
     // setCloseImage(false);
     getDates();
@@ -563,7 +559,6 @@ export default function Index() {
   // 获取首页数据
   const getData = (e?: string, type?: number) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
-    console.log(isLoginType, 'logingTypeslogingTypes')
     if (isLoginType == 1) {
       setHidden(true)
       setCloseImage(false)
@@ -573,7 +568,6 @@ export default function Index() {
     }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
-    console.log(midData, 'midDatamidDatamidData')
     if (!midData) {
       setleftTime(false)
     }
@@ -592,7 +586,6 @@ export default function Index() {
         setType(type);
       }
     }
-    console.log(312321)
     // 判断选没有选择时间
     let changeTime;
     if (!e) {
@@ -615,7 +608,6 @@ export default function Index() {
     }
     console.log(midData,'内容midData')
     if (midData) {
-      console.log('设置in诶荣2俄12')
       bkIndexAction(params).then(res => {
         if (res.code === 200) {
           setNoRequest(true)
@@ -623,11 +615,9 @@ export default function Index() {
           if (isJump){
             dispatch(setContent(res.data))
           }
-          ContentItem = res.data;
-          console.log(ContentItem,'ContentItem')
+          // ContentItem = res.data;
           console.log(res.data, 'res.datata')
           setItem(res.data);
-          console.log('设置内容后')
           setNum(res.data.count_is_new);
           if (parseInt(res.data.count_is_new) == 0) {
             setShow(true)
@@ -683,10 +673,6 @@ export default function Index() {
           console.log(e)
         })
     }
-  }
-  // 请求失败返回数据
-  const backFunction = (e?: any) => {
-    console.log(e, '312312');
   }
   // 选择时间
   const handleChangeTime = (e) => {
@@ -798,7 +784,6 @@ export default function Index() {
     // dignity ===2 为班组长
     // 切换
     if (state === 1) {
-      console.log(type, 'typenjdskajdkjab')
       // 班组长
       if (dignity == 1) {
         setTips(false)
@@ -812,7 +797,6 @@ export default function Index() {
       }
       let msg = dignity === 1 ? '开始为自己记工吧' : '开始为工人记工吧';
       Msg(msg)
-      console.log(dignity, 'neverPromptneverPrompt')
       // return;
       setType(dignity);
       Taro.setStorageSync(Type, dignity);
@@ -826,7 +810,6 @@ export default function Index() {
       setNeverPrompt(true)
       // 切换的时候如果是班组要判断有没有项目
     } else {
-      console.log(dignity, 'dignitydignity')
       // 班组长
       if (dignity === 2) {
         bkGetProjectTeam(dignity);
@@ -1015,11 +998,8 @@ export default function Index() {
     let month = date.getMonth();
     month = ((month == 0) ? (12) : (month));
     const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
-    console.log(date.getFullYear() + "-" + addZero(date.getMonth() + 1), '======')
-    console.log(befD, 'befD')
     getData(befD, 1);
     setTime(befD);
-    console.log(befD.substring(5, 7))
     // 月份
     setMonth(befD.substring(5, 7))
     changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1))
@@ -1029,8 +1009,6 @@ export default function Index() {
     setPrompt(false);
     Taro.setStorageSync(Tips, true)
   }
-  console.log(item, '打印数据')
-  console.log(ContentItem,'ContentItem');
   return (
     <View className='index-content'>
       {/* <UseNavInfo/> */}
