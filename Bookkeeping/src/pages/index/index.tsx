@@ -209,7 +209,7 @@ export default function Index() {
               Taro.setStorageSync(Type, res.data.lasted_business_identity);
               identityType = res.data.lasted_business_identity;
               console.log('有数据12321312321')
-              getData();
+              // getData();
             }
             // 没有鱼泡账号
           }
@@ -234,7 +234,6 @@ export default function Index() {
   // 获取首页数据
   const getData = (e?:string,type?:number)=>{
     let isLoginType = Taro.getStorageSync(IsLoginType);
-    console.log(isLoginType, 'logingTypeslogingTypes')
     if (isLoginType ==1) {
       setHidden(true)
       setCloseImage(false)
@@ -269,16 +268,8 @@ export default function Index() {
     if (!e){
       changeTime = getDates();
     }else{
-      // console.log(2);
-      // console.log(time,'time')
       changeTime = e;
       setNewTime(e);
-      // 设置时间
-      // const date = new Date(vals);
-      // const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
-      // console.log(newMonth,'newMonthnewMonthnewMonthnewMonth')
-      // setStart(newMonth)
-      // setEnd(newMonth)
     }
     let params = {
       time: changeTime,
@@ -289,9 +280,7 @@ export default function Index() {
         if (res.code === 200) {
           setNoRequest(true)
           setBusy(false)
-          console.log(res.data,'res.datata')
           setItem(res.data);
-          console.log('设置内容后')
           setNum('123');
           if (parseInt(res.data.count_is_new) == 0) {
             setShow(true)
@@ -328,12 +317,6 @@ export default function Index() {
           }
           // 存在缓存里用来判断是否新增时间
           setLasted_business_identity(res.data.lasted_business_identity);
-          // 获取信息
-          // 判断是班组长的时候出现弹框
-          // let type = Taro.getStorageSync(Type);
-          // if (type === 1) {
-          //   bkGetProjectTeam()
-          // }
         } else {
           Msg(res.msg);
         }
