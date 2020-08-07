@@ -152,6 +152,8 @@ export default function AttendanceSheet() {
     })
     .catch((e)=>{
       setBusy(true)
+      setleftTime(false);
+      setrightTime(false);
     })
   }
   // 获取数据
@@ -802,6 +804,7 @@ export default function AttendanceSheet() {
   }
   // 设置时间
   const handleTime = (e) => {
+    if(busy)return;
     const time = e.detail.value;
     setFixedTab([]);
     setTabArr([]);

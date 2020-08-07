@@ -254,6 +254,8 @@ export default function EditDetails() {
           for (let i = 0; i < company.length;i++){
             if (company[i].name === res.data.unit){
               company[i].click = true
+            }else{
+              company[i].click = false
             }
           }
           setCompany(company)

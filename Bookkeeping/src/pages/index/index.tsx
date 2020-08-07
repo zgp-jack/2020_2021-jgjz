@@ -550,6 +550,7 @@ export default function Index() {
   }
   // 选择时间
   const handleChangeTime = (e) => {
+    if (busy) return;
     let midData = Taro.getStorageSync(MidData);
     if (!midData) {
       setDisplay(true)
