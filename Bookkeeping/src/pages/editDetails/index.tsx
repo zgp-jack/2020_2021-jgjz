@@ -823,7 +823,7 @@ export default function EditDetails() {
           if (timeArr[i].id == 3) {
             Time = '休息,'
           } else {
-            Time = '上班' + timeArr[i].name
+            Time = '上班' + timeArr[i].name+','
           }
           break;
         }
