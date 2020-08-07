@@ -53,8 +53,9 @@ class App extends Component {
   componentDidMount () {}
 
   componentDidShow () {
-    const e = Taro.onAppShow;
-    console.log(e,'2131');
+    Taro.onAppShow((o)=>{
+      console.log(o,'111')
+    })
   }
 
   componentDidHide () {}
