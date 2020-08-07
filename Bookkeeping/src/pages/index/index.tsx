@@ -459,6 +459,7 @@ export default function Index() {
         console.log(res,'ressss')
         if (res.code === 200) {
           setBusy(false)
+          console.log(res.data,'res.datata')
           setItme(res.data);
           setNum(res.data.count_is_new);
           if (parseInt(res.data.count_is_new) == 0) {
