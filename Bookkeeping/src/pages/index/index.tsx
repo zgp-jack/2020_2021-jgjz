@@ -208,6 +208,12 @@ export default function Index() {
       console.log(res.networkType, 'networkType')
     })
   }, [])
+  useEffect(()=>{
+    if (ContentItem){
+      console.log(ContentItem,'ContentItem')
+      setItem(ContentItem)
+    }
+  }, [ContentItem])
   // 与小程序onLaunch一样
   // getLaunchOptionsSync()
   // 获取上个小程序传过来的值
@@ -522,6 +528,7 @@ export default function Index() {
             dispatch(setContent(res.data))
           }
           ContentItem = res.data;
+          console.log(ContentItem,'ContentItem')
           console.log(res.data, 'res.datata')
           setItem(res.data);
           console.log('设置内容后')

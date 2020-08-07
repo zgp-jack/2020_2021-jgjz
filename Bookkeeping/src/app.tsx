@@ -52,7 +52,9 @@ class App extends Component {
 
   componentDidMount () {}
 
-  componentDidShow () {}
+  componentDidShow () {
+    console.log(32131231,'3213')
+  }
 
   componentDidHide () {}
 
