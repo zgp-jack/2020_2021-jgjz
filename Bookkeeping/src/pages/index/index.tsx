@@ -938,6 +938,7 @@ export default function Index() {
           <View>
             <Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱
             <View className='money'>
+              {item.money} -- { item.overtime } -- {item.borrow}
                 {busy ? '-' : (item && (parseFloat(item.money) > 9999999.99 ? '1千万+' : item.money) || '0.00')}
             </View>
           </View>
