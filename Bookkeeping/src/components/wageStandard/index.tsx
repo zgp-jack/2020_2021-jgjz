@@ -96,7 +96,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                   </View>
                 </View>
                 <View className='workList'>
-                <View className='workList-title'>加班{wageStandard.dayAddWork}元/小时</View>
+                <View className='workList-title'>加班{wageStandard.dayAddWork||0}元/小时</View>
                 </View>
               </View>
             }

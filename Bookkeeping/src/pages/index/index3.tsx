@@ -172,108 +172,6 @@ export default function Index() {
     }
     return num;
   }
-  useEffect(() => {
-    Taro.onNetworkStatusChange(function (res) {
-      console.log(res.isConnected, 'isConnected')
-      console.log(res.networkType, 'networkType')
-    })
-  }, [])
-  // 与小程序onLaunch一样
-  // getLaunchOptionsSync()
-  // 获取上个小程序传过来的值
-  onAppShow((e) => {
-    if (noRequest) return;
-    setHidden(false);
-    console.log(e, '返回内容')
-    if (e.scene === 1037) {
-      //return false
-      // 返回token ，tokenTime ,userId
-      if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
-        // 验证有没有手机号
-        let params = {
-          userId: e.referrerInfo.extraData.userId,
-          token: e.referrerInfo.extraData.token,
-          tokenTime: e.referrerInfo.extraData.tokenTime
-        }
-        appletJumpAction(params).then(res => {
-          console.log(res, '请求返回数据')
-          // 直接返回记工记账用户信息
-          if (res.code == 200) {
-            if (res.data) {
-              let obj: any = {
-                sign: {},
-              };
-              obj = res.data;
-              obj.userId = e.referrerInfo.extraData.userId;
-              obj.token = e.referrerInfo.extraData.token;
-              obj.tokenTime = e.referrerInfo.extraData.tokenTime;
-              obj.uuid = e.referrerInfo.extraData.userUuid;
-              obj.sign = {
-                token: e.referrerInfo.extraData.token,
-                time: e.referrerInfo.extraData.tokenTime
-              }
-              Taro.setStorageSync(MidData, obj);
-              // ==== 默认先写死
-              Taro.setStorageSync(Type, res.data.lasted_business_identity);
-              identityType = res.data.lasted_business_identity;
-              console.log('有数据')
-              getData();
-            }
-            // 没有鱼泡账号
-          } else if (res.code == 40001) {
-            //  有鱼泡账号
-          } else if (res.code == 40000) {
-            console.log(res.data, 'res.dafdsda')
-            let obj: any = {
-              sign: {}
-            }
-            obj.userId = e.referrerInfo.extraData.userId;
-            obj.token = e.referrerInfo.extraData.token;
-            obj.tokenTime = e.referrerInfo.extraData.tokenTime;
-            obj.uuid = e.referrerInfo.extraData.userUuid;
-            obj.sign = {
-              token: e.referrerInfo.extraData.token,
-              time: e.referrerInfo.extraData.tokenTime
-            }
-            // 要存UserInfo
-            Taro.setStorageSync(UserInfo, obj);
-            let params = {
-              mid: e.referrerInfo.extraData.userId,
-            }
-            bkMemberAuthAction(params).then(res => {
-              if (res.code !== 200) {
-                Msg(res.msg);
-              } else {
-                let midData = Taro.getStorageSync(UserInfo);
-                midData.worker_id = res.data.worker_id;
-                midData.yupao_id = res.data.yupao_id;
-                Taro.setStorageSync(MidData, midData);
-                getData();
-              }
-            })
-          } else if (res.code == 40003) {
-            console.log(4000333333)
-            let obj: any = {};
-            obj.userId = e.referrerInfo.extraData.userId;
-            obj.token = e.referrerInfo.extraData.token;
-            obj.uuid = e.referrerInfo.extraData.userUuid;
-            obj.sign = {
-              token: e.referrerInfo.extraData.token,
-              time: e.referrerInfo.extraData.tokenTime
-            }
-            obj.tokenTime = e.referrerInfo.extraData.tokenTime;
-            Taro.setStorageSync(UserInfo, obj);
-            // 设置点击直接跳转到注册手机号页面
-            // setLoginStatus(true);
-            // loginType = true;
-            setDisplay(true)
-            setLoginPhone(true)
-            //console.log(login,'setlogin')
-          }
-        })
-      }
-    }
-  })
   useDidShow(() => {
     const newTime = new Date().getTime() / 1000;
     let creationTime = Taro.getStorageSync(CreationTime);
@@ -378,41 +276,51 @@ export default function Index() {
     //   })
     // }
   })
-  // useEffect(()=>{
-  //   // 判断有没有用户信息没有就显示
-  //   // 获取缓存信息
-  //   let type = Taro.getStorageSync(Type);
-  //   setType(type)
-  //   let userInfo = Taro.getStorageSync(UserInfo);
-  //   if(!userInfo){
-  //     setDisplay(true);
-  //     return
-  //   }else{
-  //     setDisplay(false)
-  //   }
-  //   dispatch(setTypes(type))
-  //   let midParams={
-  //     mid: userInfo.userId,
-  //   }
-  //   let midData = Taro.getStorageSync(MidData);
-  //   if (!midData){
-  //     bkMemberAuthAction(midParams).then(res=>{
-  //       if(res.code !== 200){
-  //         Msg(res.msg)
-  //       }else{
-  //         console.log(res,'ressssssssssss')
-  //         let userInfo = Taro.getStorageSync(UserInfo)
-  //         res.data.sign={}
-  //         res.data.sign.token = userInfo.token;
-  //         res.data.sign.time = res.data.created_time;
-  //         res.data.uuid = userInfo.uuid;
-  //         // res.data.worker_id = res.data.worker_id;
-  //         Taro.setStorageSync(MidData, res.data)
-  //       }
-  //     })
-  //   }
-  //   getData();
-  // },[])
+  // 获取上个小程序传过来的值
+  onAppShow((e) => {
+    if (noRequest) return;
+    setHidden(false);
+    console.log(e, '返回内容')
+    if (e.scene === 1037) {
+      //return false
+      // 返回token ，tokenTime ,userId
+      if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
+        // 验证有没有手机号
+        let params = {
+          userId: e.referrerInfo.extraData.userId,
+          token: e.referrerInfo.extraData.token,
+          tokenTime: e.referrerInfo.extraData.tokenTime
+        }
+        appletJumpAction(params).then(res => {
+          console.log(res, '后台返回数据')
+          // 直接返回记工记账用户信息
+          if (res.code == 200) {
+            if (res.data) {
+              let obj: any = {
+                sign: {},
+              };
+              obj = res.data;
+              obj.userId = e.referrerInfo.extraData.userId;
+              obj.token = e.referrerInfo.extraData.token;
+              obj.tokenTime = e.referrerInfo.extraData.tokenTime;
+              obj.uuid = e.referrerInfo.extraData.userUuid;
+              obj.sign = {
+                token: e.referrerInfo.extraData.token,
+                time: e.referrerInfo.extraData.tokenTime
+              }
+              Taro.setStorageSync(MidData, obj);
+              // ==== 默认先写死
+              Taro.setStorageSync(Type, res.data.lasted_business_identity);
+              identityType = res.data.lasted_business_identity;
+              console.log('有数据12321312321')
+              // getData();
+            }
+            // 没有鱼泡账号
+          }
+        })
+      }
+    }
+  })
   // 获取项目名称
   const bkGetProjectTeam = (dignity, state?: number) => {
     bkGetProjectTeamAction({}).then(res => {
@@ -430,7 +338,6 @@ export default function Index() {
   // 获取首页数据
   const getData = (e?: string, type?: number) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
-    console.log(isLoginType, 'logingTypeslogingTypes')
     if (isLoginType == 1) {
       setHidden(true)
       setCloseImage(false)
@@ -465,16 +372,8 @@ export default function Index() {
     if (!e) {
       changeTime = getDates();
     } else {
-      // console.log(2);
-      // console.log(time,'time')
       changeTime = e;
       setNewTime(e);
-      // 设置时间
-      // const date = new Date(vals);
-      // const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
-      // console.log(newMonth,'newMonthnewMonthnewMonthnewMonth')
-      // setStart(newMonth)
-      // setEnd(newMonth)
     }
     let params = {
       time: changeTime,
@@ -485,10 +384,8 @@ export default function Index() {
         if (res.code === 200) {
           setNoRequest(true)
           setBusy(false)
-          console.log(res.data, 'res.datata')
           setItem(res.data);
-          console.log('设置内容后')
-          setNum(res.data.count_is_new);
+          setNum('123');
           if (parseInt(res.data.count_is_new) == 0) {
             setShow(true)
           } else {
@@ -524,12 +421,6 @@ export default function Index() {
           }
           // 存在缓存里用来判断是否新增时间
           setLasted_business_identity(res.data.lasted_business_identity);
-          // 获取信息
-          // 判断是班组长的时候出现弹框
-          // let type = Taro.getStorageSync(Type);
-          // if (type === 1) {
-          //   bkGetProjectTeam()
-          // }
         } else {
           Msg(res.msg);
         }
@@ -550,17 +441,6 @@ export default function Index() {
   }
   // 选择时间
   const handleChangeTime = (e) => {
-    let midData = Taro.getStorageSync(MidData);
-    if (!midData) {
-      setDisplay(true)
-      return;
-    }
-    setVal(e.detail.value)
-    setTime(e.detail.value);
-    setRepeat(true);
-    getData(e.detail.value);
-    setMonth(e.detail.value.substring(e.detail.value.length - 2))
-    changeIcon(e.detail.value);
   }
   // Icon图片显示
   const changeIcon = (e) => {
@@ -625,9 +505,6 @@ export default function Index() {
     Taro.setStorageSync(Type, e);
     if (!type) {
       Msg(msg)
-      setTimeout(() => {
-        getData();
-      }, 1000)
     }
     // return;
     // }
@@ -742,7 +619,6 @@ export default function Index() {
       setCloseImage(true);
       setHidden(false)
       // 并开启选择身份
-      getData();
     }
     setImage(url)
   }
@@ -763,7 +639,6 @@ export default function Index() {
     setType(e);
     setIdentity(false)
     Taro.setStorageSync(Type, e);
-    getData();
   }
   // 关闭创建项目
   const handleCreateProjectClose = () => {
@@ -876,7 +751,6 @@ export default function Index() {
     const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
     console.log(date.getFullYear() + "-" + addZero(date.getMonth() + 1), '======')
     console.log(befD, 'befD')
-    getData(befD, 1);
     setTime(befD);
     console.log(befD.substring(5, 7))
     // 月份
@@ -888,9 +762,10 @@ export default function Index() {
     setPrompt(false);
     Taro.setStorageSync(Tips, true)
   }
-  console.log(item, '打印数据')
+  console.log(item, '打印数据111')
   return (
     <View className='index-content'>
+      <View>{num}-{noRequest}-{busy}----{start} </View>
       {/* <UseNavInfo/> */}
       {/* <AtNavBar/> */}
       {<View style={{ visibility: hidden ? 'visible' : 'hidden' }} >
