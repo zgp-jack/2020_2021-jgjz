@@ -487,6 +487,7 @@ export default function Index() {
       time: changeTime,
       identity
     }
+    console.log(midData,'内容midData')
     if (midData) {
       console.log('设置in诶荣2俄12')
       bkIndexAction(params).then(res => {
