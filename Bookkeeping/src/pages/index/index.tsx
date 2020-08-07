@@ -248,7 +248,7 @@ export default function Index() {
                 midData.worker_id = res.data.worker_id;
                 midData.yupao_id = res.data.yupao_id;
                 Taro.setStorageSync(MidData, midData);
-                getData();
+                // getData();
               }
             })
           } else if (res.code == 40003){
@@ -348,7 +348,6 @@ export default function Index() {
     //   setDisplay(false)
     // }
     dispatch(setTypes(type))
-    // getData();
     // getData();
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     if(Number(this_year_business_month)==montime){
@@ -572,7 +571,7 @@ export default function Index() {
     setVal(e.detail.value)
     setTime(e.detail.value);
     setRepeat(true);
-    getData(e.detail.value);
+    // getData(e.detail.value);
     setMonth(e.detail.value.substring(e.detail.value.length - 2))
     changeIcon(e.detail.value);
   }
@@ -640,7 +639,7 @@ export default function Index() {
       if(!type){
         Msg(msg)
         setTimeout(()=>{
-          getData();
+          // getData();
         },1000)
       }
       // return;
@@ -756,7 +755,7 @@ export default function Index() {
       setCloseImage(true);
       setHidden(false)
       // 并开启选择身份
-      getData();
+      // getData();
     }
     setImage(url)
   }
@@ -777,7 +776,7 @@ export default function Index() {
     setType(e);
     setIdentity(false)
     Taro.setStorageSync(Type,e);
-    getData();
+    // getData();
   }
   // 关闭创建项目
   const handleCreateProjectClose = ()=>{
@@ -890,7 +889,7 @@ export default function Index() {
     const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
     console.log(date.getFullYear() + "-" + addZero(date.getMonth() + 1),'======')
     console.log(befD,'befD')
-    getData(befD,1);
+    // getData(befD,1);
     setTime(befD);
     console.log(befD.substring(5,7))
     // 月份
