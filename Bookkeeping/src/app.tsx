@@ -1,4 +1,4 @@
-import Taro, { Component, Config,onAppShow } from '@tarojs/taro'
+import Taro, { Component, Config,onAppShow,offAppShow } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 
 import Index from './pages/index'
@@ -56,12 +56,14 @@ class App extends Component {
     Taro.onAppShow((o)=>{
       console.log(o,'1111111')
     })
+    onAppShow((res)=>{
+      console.log(res,'res');
+    })
   }
 
   componentDidHide () {}
 
   componentDidCatchError () {}
-
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render () {
