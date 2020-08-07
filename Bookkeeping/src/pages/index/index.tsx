@@ -485,6 +485,7 @@ export default function Index() {
           setBusy(false)
           console.log(res.data,'res.datata')
           setItme(res.data);
+          console.log('设置内容后')
           setNum(res.data.count_is_new);
           if (parseInt(res.data.count_is_new) == 0) {
             setShow(true)
