@@ -674,7 +674,7 @@ export default function Index() {
     setPrompt(false);
     Taro.setStorageSync(Tips,true)
   }
-  console.log(item,'打印数据')
+  console.log(item,'打印数据111')
   return (
     <View className='index-content'>
       <View>{num}-{noRequest}-{busy}----{start} </View>
