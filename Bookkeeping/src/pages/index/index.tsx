@@ -488,6 +488,7 @@ export default function Index() {
       identity
     }
     if (midData) {
+      console.log('设置in诶荣2俄12')
       bkIndexAction(params).then(res => {
         if (res.code === 200) {
           setNoRequest(true)
