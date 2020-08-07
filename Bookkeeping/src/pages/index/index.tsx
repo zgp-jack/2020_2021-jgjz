@@ -197,6 +197,7 @@ export default function Index() {
     return num;
   }
   useEffect(()=>{
+    console.log(useSelectorItem.content,'contentcontentcontent')
     if (useSelectorItem.content){
       setItem(useSelectorItem.content)
     }
