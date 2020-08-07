@@ -462,23 +462,21 @@ export default function FlowingWater() {
             {!busy && data.item && data.item.length>0 && data.item.map((v,i)=>(
             <View key={i+i} onClick={()=>handleClick(v)}>
               <View className='content-list'>
-                <View className='content-list-left'>
+                <View className='content-list-left content-td'>
                   {v.click && <View className='content-list-icon-lowerIcon'><Image className='content-list-icon-lowerIcon-image' src={`${IMGCDNURL}lowerIcon.png`}/></View>}
                   {!v.click && <View className='content-list-icon-rightIcon'><Image className='content-list-icon-rightIcon-image' src={`${IMGCDNURL}rightIcon.png`}/></View>}
                   <View>
-                    <View className='content-list-left-week'><Text>{v.day}</Text>{v.week}</View>
+                    <View className='content-list-left-week'><Text>{v.day}</Text> {v.week}</View>
                     <View className='content-list-left-time'>{v.month}</View>
                   </View>
                 </View>
-                <View className='content-list-right'>
-                  <View className='content-list-right-list'>
-                    <View className='content-list-right-title'>借支</View>
-                    <View className='content-list-right-money'>¥{v.total_borrow && v.total_borrow.toFixed(2)}</View>
-                  </View>
-                  <View>
-                    <View className='content-list-right-title'>工钱</View>
-                    <View className='content-list-right-money'>¥{v.total_money && v.total_money.toFixed(2)}</View>
-                  </View>
+                <View className='content-td'>
+                  <View className='content-list-right-title'>借支</View>
+                  <View className='content-list-right-money'>¥{v.total_borrow && v.total_borrow.toFixed(2)||'0.00'}</View>
+                </View>
+                <View className="content-td">
+                  <View className='content-list-right-title'>工钱</View>
+                  <View className='content-list-right-money'>¥{v.total_money && v.total_money.toFixed(2)||'0.00'}</View>
                 </View>
               </View>
               {v.click && 

@@ -26,14 +26,21 @@
 .content-list{
   background: #fff;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  // text-align: center;
   padding: 25rpx 30rpx;
+}
+.content-td{
+  width:25%;
+ justify-content: center;
+ text-align: center;
 }
 .content-list-right{
   display: flex;
 }
 .content-list-icon-lowerIcon {
-  margin: auto;
+  // margin: auto;
   height: 30rpx;
   width: 30rpx;
   margin-right: 16rpx;
@@ -44,7 +51,7 @@
   background-size: contain;
 }
 .content-list-icon-rightIcon {
-  margin: auto;
+  // margin: auto;
   height: 30rpx;
   width: 30rpx;
   margin-right: 16rpx;
@@ -56,6 +63,8 @@
 }
 .content-list-left{
   display: flex;
+  width: 50%;
+  justify-content: flex-start
 }
 .content-list-left-week{
   color: rgba(111, 111, 111, 1);
@@ -72,9 +81,6 @@
 .content-list-right-money {
   color: rgba(9, 159, 255, 1);
   font-size: 24rpx;
-}
-.content-list-right-list{
-  margin-right: 47rpx;
 }
 .content-list-subclass{
   display: flex;
