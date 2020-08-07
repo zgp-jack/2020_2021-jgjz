@@ -291,7 +291,7 @@ export default function Index() {
           console.log(res.data,'res.datata')
           setItem(res.data);
           console.log('设置内容后')
-          setNum(res.data.count_is_new);
+          setNum('123');
           if (parseInt(res.data.count_is_new) == 0) {
             setShow(true)
           } else {
