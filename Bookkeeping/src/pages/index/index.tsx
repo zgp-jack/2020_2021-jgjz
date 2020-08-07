@@ -1008,11 +1008,11 @@ export default function Index() {
             </View></View>
             <View className='textCenter'><View>按量记
             <View>
-                {busy && <View className='num'>-平方米</View>}
+                {/* {busy && <View className='num'>-平方米</View>}
                 {!busy && !item && <View className='num'>0平方米</View>}
                 {!busy && item && item.amount.type === 0 && <View className='num'>0平方米</View>}
                 {!busy && item && item.amount.type === 1 && <View className='num'>{parseFloat(item.amount.unit_num) > 999999.99 ? '1百万+' : parseFloat(item.amount.unit_num)}{item.amount.unit}</View>}
-                {!busy && item &&item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>}
+                {!busy && item &&item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>} */}
               </View>
             </View>
             </View>
