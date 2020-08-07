@@ -4,7 +4,7 @@ import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProj
 import { useDispatch } from '@tarojs/redux'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType,Earliest_month } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType,Earliest_month,Tips } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setWorker } from '../../actions/workerList'
@@ -296,7 +296,11 @@ export default function Index() {
     const newTime = new Date().getTime()/1000;
     // const time = 
     // 七天显示内容
-    if (creationTime && (creationTime + 86400 * 7) > newTime){
+    const state = Taro.getStorageSync(Tips);
+    if (!state){
+      if (creationTime && (creationTime + 86400 * 7) > newTime ){
+        Taro.setStorageSync(Tips,true);
+      }
       setPrompt(true)
     }
     // 设置首页时间选择器时间
@@ -888,6 +892,11 @@ export default function Index() {
     setMonth(befD.substring(5, 7))
     changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1))
   }
+  // 关闭身份显示
+  const handlewhiteClose = ()=>{
+    setPrompt(false);
+    Taro.setStorageSync(Tips,true)
+  }
   console.log(item,'打印数据')
   return (
     <View className='index-content'>
@@ -922,10 +931,14 @@ export default function Index() {
           {/* <Image src={`${IMGCDNURL}user.png`}/> */}
           {type === 1 ? 
             <View className='heard-middle' onClick={() => { handelChange(2) }}>我是班组长<Text className='switch'><Text className='test'/>切换 </Text>
-              {prompt && <View className='tipes'>工人记工点这里哦</View>}
+              {prompt && <View className='tipes' onClick={(e) => { e.stopPropagation(), handlewhiteClose()}}>工人记工点这里哦 
+                <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons' />
+              </View>}
             </View> : 
             <View className='heard-middle' onClick={() => { handelChange(1) }}>我是工人<Text className='switch'><Text className='test'/>切换</Text>
-              {prompt && <View className='tipes'>班组长记工点这里哦</View>}
+              {prompt && <View onClick={(e) => { e.stopPropagation(), handlewhiteClose()}} className='tipes'>班组长记工点这里哦 
+                <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons'/>
+              </View>}
             </View>}
           <View onClick={handelTps} className='cloud'>
             {item &&!show &&<AtBadge value={num} maxValue={99} className='AtBadge'/>}
@@ -938,7 +951,7 @@ export default function Index() {
           <View>
             <Image className='moneyIcon' src={`${IMGCDNURL}money.png`}/>工钱
             <View className='money'>
-              {item.money} -- { item.overtime } -- {item.borrow}
+              {/* {item.money} -- { item.overtime } -- {item.borrow} */}
                 {busy ? '-' : (item && (parseFloat(item.money) > 9999999.99 ? '1千万+' : item.money) || '0.00')}
             </View>
           </View>
