@@ -314,8 +314,8 @@ export default function Index() {
   
   const getAppShowData = ()=>{
     const data = Taro.getStorageSync(Res);
-    console.log(data,'缓存支支招hi')
     if (data) {
+      if (isJump)return;
       const e = data;
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
@@ -346,7 +346,7 @@ export default function Index() {
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
-                // isJump = true;
+                isJump = true;
                 getData();
               }
               // 没有鱼泡账号
