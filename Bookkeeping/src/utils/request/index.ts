@@ -943,3 +943,20 @@ export function getWorkerHasBusinessByDateAction(data): Promise<Inter.bkGetWorke
     data: data,
   })
 }
+
+// 初始化记工界面数据 
+export function getBookkeepingDataAction(data): Promise < Inter.bkGetWorker > {
+  let userInfo = Taro.getStorageSync(UserInfo);
+  return doRequestAction({
+    url: api.getBookkeepingDataUrl,
+    // method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+    },
+    data: data,
+  })
+}

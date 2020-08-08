@@ -42,7 +42,7 @@ export default function Foreman() {
     workingHoursDisplay, setWorkingHoursDisplay, timeType, handleWorkingHours, timeArr, addWorkArr, handleWorkOvertimeOk, company, handleQuantities,
     quantitiesDisplay, setQuantitiesDisplay, unit, borrowing, setBorrowing, handleRadioBorrowing, workerItem, setWorkerItem, handleEstablish,
     addMemberDisplay, setAddMemberDisplay, handleDel, handleDelList, delType, setDeldelType, handleAddStandard, wagesModalDisplay, setWagesModalDisplay, wageStandardDisplay, setWageStandardDisplay, wageStandard, handleWageStandard, handlePreservation, recorderTypeArr,
-    setRecorderTypeArr, handleCalendar, projectArr, handleProject, show, setShow, workerList, setWorkerList, handleCheckbox, memberList, setMemberList, standard, handleAddWage, handleWageStandardRadio, handleOpenWagesModal, moneyList, handleEditWages, handleEditWageStandard,
+    setRecorderTypeArr, handleCalendar, setProjectArr,projectArr, handleProject, show, setShow, workerList, setWorkerList, handleCheckbox, memberList, setMemberList, standard, handleAddWage, handleWageStandardRadio, handleOpenWagesModal, moneyList, handleEditWages, handleEditWageStandard,
     tab, handleAtSwitch, handleDelProject, editProjectDisplay, setEditProjectDisplay, handleEditProject, handleEditProjectModal, editProjectData,
     handleEditProjectData, handleSetWagesModal, handleWagesList, setWorkList, handleCheckboxStandard, groupInfo, image, setImage, bkGetWorker,
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
@@ -78,7 +78,9 @@ export default function Foreman() {
   const bkGetProjectTeam = ()=>{
     let params={}
     bkGetProjectTeamAction(params).then(res=>{
-      console.log(res);
+      if(res.code === 200){
+        setProjectArr(res.data);
+      }
     })
   }
   // 切换tabber

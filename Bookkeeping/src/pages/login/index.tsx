@@ -41,11 +41,11 @@ export default function Login() {
       setTime(60);
       setLike(true)
     }else{
-      if (times === 60){
-        console.log(1);
-        // 获取验证码
-        getVcode();
-      }
+      // if (times === 60){
+      //   console.log(1);
+      //   // 获取验证码
+      //   getVcode();
+      // }
       setLike(false)
       setTime(times-1)
       setTimeout(() => { countDown(times - 1)}, 1000);
@@ -56,7 +56,12 @@ export default function Login() {
     if (!liked) {
       return
     }
-    countDown(60);
+    if (!isPhone(model.phone)) {
+      Msg('请先输入正确的手机号码')
+      return
+    }
+    getVcode();
+    // countDown(60);
   }
   // 验证码请求
   const getVcode = ()=>{
@@ -72,8 +77,16 @@ export default function Login() {
     }
     // 验证码
     bkGetCodeAction(params).then(res=>{
+      if (res.errcode !== 'ok' ){
+        // setTime(1);
+        // countDown(1)
+        // setLike(true)
+      }else{
+        countDown(60)
+      }
       Msg(res.errmsg, 2500)
     })
+    return;
   }
   // 获取验证码
   const handleInput = (type:string,e:any)=>{
