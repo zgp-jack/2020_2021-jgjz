@@ -283,7 +283,9 @@ export default function Index() {
               // setLoginStatus(true);
               // loginType = true;
               authType=true;
-              setDisplay(true)
+              setTimeout(()=>{
+                setDisplay(true)
+              },0)
               // setLoginPhone(true)
               console.log(3123213213)
               return;
