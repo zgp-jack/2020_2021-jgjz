@@ -201,6 +201,7 @@ export default function Index() {
     if (data) {
       if (isJump)return;
       const e = data;
+      console.log(e,'传过来的值')
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
           // 验证有没有手机号
@@ -210,6 +211,7 @@ export default function Index() {
             tokenTime: e.referrerInfo.extraData.tokenTime
           }
           appletJumpAction(params).then(res => {
+            console.log(res,'跳转获取的值')
             // 直接返回记工记账用户信息
             if (res.code == 200) {
               if (res.data) {

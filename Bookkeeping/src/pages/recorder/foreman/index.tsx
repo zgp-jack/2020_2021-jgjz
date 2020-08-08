@@ -48,7 +48,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -69,6 +69,7 @@ export default function Foreman() {
     team_name:'',
     group_name:'',
   })
+  const [autoFocus, setAutoFocus] = useState<boolean>(false)
   // 获取数据
   // useEffect(()=>{
   //   // 获取项目列表
@@ -148,7 +149,46 @@ export default function Foreman() {
   }
   //关闭加班时长
   const handleWorkOvertimeClose = ()=>{
+    const data = JSON.parse(JSON.stringify(model));
+    const title = data.duration;
+    setModel({ ...data, modalDuration: title });
     setWorkOvertimeDisplay(false)
+    // 上班时长
+    const timeArrs = JSON.parse(JSON.stringify(timeArr));
+    // 获取加班时长
+    const addWorkArrs = JSON.parse(JSON.stringify(addWorkArr));
+    const clickDayItem = JSON.parse(JSON.stringify(clickDay));
+    const clickTimeItem = JSON.parse(JSON.stringify(clickTime));
+    // 上班时长
+    if (clickDayItem){
+      for (let i = 0; i < timeArrs.length; i++) {
+        timeArrs[i].click = false
+        if (timeArrs[i].id == clickDayItem.id){
+          if (clickDayItem.id !==4 ){
+            timeArrs[i].click = true
+          }else{
+            timeArrs[i] = { id: 4, name: clickDayItem.name, click: true, num: clickDayItem };
+          }
+        }
+      }
+    }
+    console.log(timeArrs,'timeArrs');
+    // 加班时长
+    if (clickTimeItem) {
+      for (let i = 0; i < addWorkArrs.length; i++) {
+        addWorkArrs[i].click = false
+        if (addWorkArrs[i].id == clickTimeItem.id) {
+          if (clickTimeItem.id !== 2) {
+            addWorkArrs[i].click = true
+          } else {
+            addWorkArrs[i] = { id: 2, name: clickTimeItem.name, click: true, num: clickTimeItem };
+          }
+        }
+      }
+    }
+    console.log(addWorkArrs,'addWorkArrs')
+    setTimeArr(timeArrs);
+    setAddWorkArr(addWorkArrs)
   }
   // 关闭上班时长
   const handleWorkingHoursClose = ()=>{
@@ -256,6 +296,10 @@ export default function Foreman() {
     setCreateProjectDisplay(true), setShow(false)
   }
   console.log(foremanTitle,'foremanTitle')
+  // 多行文本框层级问题
+  const handleTextare = ()=>{
+    setAutoFocus(true)
+  }
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -618,8 +662,13 @@ export default function Foreman() {
         <View className='publish-recruit-card'>
           <View className='publish-list-ditals'>
             <View>备注</View>
-              <CoverView className={wageStandardDisplay || display || workingHoursDisplay ? 'coverView' : ''}>
+            <CoverView onClick={() => handleTextare()} className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView' : ''}>
             <Textarea
+              focus={autoFocus}
+              autoFocus={autoFocus}
+              auto-focus={autoFocus}
+              cursor={model.details.length || 0}
+              onFocus={() => setAutoFocus(false)}
               className='textarea'
               placeholder='请填写备注...'
               value={model && model.details}

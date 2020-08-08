@@ -28,6 +28,7 @@ interface ModelType {
   userName: string,
   phone: string,
   workersWages: string,
+  modalDuration:string,
 }
 interface DataType {
   id: number,
@@ -121,6 +122,7 @@ export default function userForeman() {
     time: '',
     details: '',
     duration: '',
+    modalDuration:'',
     amount: '',
     price: '',
     wages: '',
@@ -265,6 +267,10 @@ export default function userForeman() {
   const [arr, setArr] = useState<any[]>([]);
   // 设置打开日时点击的值
   const [openClickTime, setOpenClickTime] = useState<any[]>([])
+  // 点击上班时长
+  const [clickDay, setClickDay] = useState<any>();
+  // 点击加班时长
+  const [clickTime, setClickTime] = useState<any>()
   // const [noData, setNoData] = useState<boolean>(false)
   // 刷新
   //农历1949-2100年查询表
@@ -313,7 +319,7 @@ export default function userForeman() {
     getList();
   },[])
   // 设置默认数据
-  const getList = ()=>{
+  const getList = (businessType?:number)=>{
     // 缓存数据
     let midData = Taro.getStorageSync(MidData)
     // 获取通讯里信息
@@ -321,15 +327,20 @@ export default function userForeman() {
     // 数据
     const modelData = JSON.parse(JSON.stringify(model));
     let paramsId;
-    recorderTypeArr.item.map((v)=>{
-      if(v.click){
-        paramsId = v.id;
-      }
-    })
+    if(businessType){
+      paramsId = businessType; 
+    }else{
+      recorderTypeArr.item.map((v)=>{
+        if(v.click){
+          paramsId = v.id;
+        }
+      })
+    }
     let params = {
       identity,
       business_type: paramsId,
     }
+    getMonthDaysCurrent(new Date());
     // 首先定义自己
     const objs = JSON.parse(JSON.stringify(obj))
     objs.name = midData.nickname || '未命名';
@@ -345,7 +356,11 @@ export default function userForeman() {
         // 记录过的日子和工人
         // 项目
         let title,id;
-        if (res.data.latest_group_info){
+        // 没有返回空数组
+        if (res.data.latest_group_info.constructor === Array){
+          title = '';
+          id = '';
+        }else{
           title = res.data.latest_group_info.name[0] + '-' + res.data.latest_group_info.name[1];
           id = res.data.latest_group_info.id;
         }
@@ -359,9 +374,6 @@ export default function userForeman() {
             const workArr = [objs, ...res.data.latest_group_workers];
             // 设置是够设置工资标准
             if (res.data.latest_group_workers_has_wage.length > 0) {
-              console.log(3213123)
-              console.log(workArr);
-              console.log(res.data.latest_group_workers_has_wage,'res.data.latest_group_workers_has_wage')
               for (let i = 0; i < workArr.length; i++) {
                 for (let j = 0; j < res.data.latest_group_workers_has_wage.length; j++) {
                   if (workArr[i].id == res.data.latest_group_workers_has_wage[j].worker_id) {
@@ -371,36 +383,44 @@ export default function userForeman() {
               }
             }
             // 设置是否记过工
-            if (res.data.worker_has_business) {
-              // 工人
-              if (res.data.worker_has_business.worker.length > 0) {
-                for (let i = 0, len = workArr.length; i < len; i++) {
-                  for (let j = 0, setLen = res.data.res.data.worker_has_business.worker; j < setLen; j++) {
-                    if (res.data.res.data.worker_has_business.worker[j].id == workArr[i].id) {
-                      workArr[i].discipline = true;
+            if (res.data.latest_group_info.constructor === Array){
+              console.log(32132)
+              for (let i = 0, len = workArr.length; i < len; i++) {
+                workArr[i].discipline = false;
+              }
+            }else{
+              if (res.data.worker_has_business) {
+                // 工人
+                if (res.data.worker_has_business.worker.length > 0) {
+                  for (let i = 0, len = workArr.length; i < len; i++) {
+                    for (let j = 0, setLen = res.data.worker_has_business.worker; j < setLen; j++) {
+                      if (res.data.worker_has_business.worker[j] == workArr[i].id) {
+                        workArr[i].discipline = true;
+                      }
                     }
                   }
                 }
-              }
-              // 日历
-              if (res.data.worker_has_business.days.length > 0) {
-                console.log(res.data.worker_has_business.days, 'res.data.worker_has_business.days')
+                // 日历
+                if (res.data.worker_has_business.days.length > 0) {
+                  console.log(res.data.worker_has_business.days, 'res.data.worker_has_business.days')
+                }
               }
             }
             console.log(workArr,'workArr')
             setWorkerItem(workArr);
-          // } else {
-          //   // 往工人里push自己
-          //   let arr: any = [];
-          //   arr.push(objs);
-            
-          //   setWorkerItem(arr);
-          // }
         }else{
 
         }
+        // 设置加班时长默认值
+        const timeTitle = '上班一个工，无加班';
+        // 一个工
+        timeArr[0].click = true;
+        // 无加班
+        addWorkArr[0].click = true;
+        setTimeArr(timeArr);
+        setAddWorkArr(addWorkArr)
         setGroupInfo(id)
-        setModel({ ...model, name:title})
+        setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle})
       }
     })
   }
@@ -1678,28 +1698,138 @@ export default function userForeman() {
     })
   }
   // 选择加班时长
-  const handleworkOvertime = (type: number, val: any) => {
-    const data = JSON.parse(JSON.stringify(model));
+  // const handleworkOvertime = (type: number, val: any) => {
+  //   const data = JSON.parse(JSON.stringify(model));
+  //   setTimeType(type)
+  //   if (type === 1) {
+  //     let arr;
+  //     if (val.id === 4) {
+  //       arr = timeArr.map(v => {
+  //         if (v.id === val.id) {
+  //           v.click = !v.click;
+  //         } else {
+  //           v.click = false
+  //         }
+  //         return v;
+  //       })
+  //       setTimeArr(arr)
+  //       setWorkOvertimeDisplay(false)
+  //       setWorkingHoursDisplay(true);
+  //       // return;
+  //     } else {
+  //       arr = timeArr.map(v => {
+  //         if (v.id === val.id) {
+  //           v.click = !v.click;
+  //         } else {
+  //           if (v.id === 4) {
+  //             v.name = '0.0小时';
+  //           }
+  //           v.click = false
+  //         }
+  //         return v;
+  //       })
+  //       setTimeArr(arr)
+  //     }
+  //     let addTime;
+  //     for (let i = 0; i < addWorkArr.length; i++) {
+  //       if (addWorkArr[i].click) {
+  //         if (addWorkArr[i].id !== 1) {
+  //           addTime = '加班' + addWorkArr[i].name
+  //         } else {
+  //           addTime = '无加班'
+  //         }
+  //       } else {
+  //         addTime = '无加班'
+  //       }
+  //     }
+  //     let duration;
+  //     if (val.id == 3) {
+  //       duration = val.name + addTime;
+  //     } else {
+  //       duration = '上班' + val.name + addTime;
+  //     }
+  //     if (val.id != 4) {
+  //       setModel({ ...data, duration })
+  //     }
+  //   } else {
+  //     //加班时长
+  //     let arr;
+  //     if (val.id != 2) {
+  //       arr = addWorkArr.map(v => {
+  //         if (v.id === val.id) {
+  //           v.click = !v.click
+  //         } else {
+  //           if (v.id === 2) {
+  //             v.name = '0.0小时';
+  //           }
+  //           v.click = false
+  //         }
+  //         return v;
+  //       })
+  //       setAddWorkArr(arr);
+  //     } else {
+  //       arr = addWorkArr.map(v => {
+  //         if (v.id === val.id) {
+  //           v.click = !v.click;
+  //         } else {
+  //           v.click = false
+  //         }
+  //         return v;
+  //       })
+  //       setAddWorkArr(arr)
+  //       setWorkOvertimeDisplay(false)
+  //       setWorkingHoursDisplay(true);
+  //       return;
+  //     }
+  //     let Time;
+  //     for (let i = 0; i < timeArr.length; i++) {
+  //       if (timeArr[i].click) {
+  //         if (timeArr[i].id == 3) {
+  //           Time = '休息'
+  //         } else {
+  //           Time = '上班' + timeArr[i].name
+  //         }
+  //         break;
+  //       } else {
+  //         Time = '休息'
+  //       }
+  //     }
+  //     let duration;
+  //     if (val.id == 1) {
+  //       duration = Time + '无加班';
+  //     } else {
+  //       duration = '上班' + Time + val.name;
+  //     }
+  //     if (val.id != 2) {
+  //       setModel({ ...data, duration })
+  //     }
+  //   }
+  // }
+  const handleworkOvertime = (type: number, e: any) => {
+    console.log(3213, '1111');
     setTimeType(type)
     if (type === 1) {
-      let arr;
-      if (val.id === 4) {
-        arr = timeArr.map(v => {
-          if (v.id === val.id) {
-            v.click = !v.click;
-          } else {
-            v.click = false
-          }
-          return v;
-        })
-        setTimeArr(arr)
+      if (e.id === 4) {
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
-        // return;
+        return;
       } else {
-        arr = timeArr.map(v => {
-          if (v.id === val.id) {
+        let titlework = '';
+        const arr = timeArr.map(v => {
+          if (v.id === e.id) {
             v.click = !v.click;
+            if (!v.click) {
+              console.log(addWorkArr, 'addWorkArr')
+              for (let i = 0; i < addWorkArr.length; i++) {
+                if (addWorkArr[i].click) {
+                  if (addWorkArr[i].id !== 1) {
+                    titlework = '加班' + addWorkArr[i].name
+                  } else {
+                    titlework = '无加班'
+                  }
+                }
+              }
+            }
           } else {
             if (v.id === 4) {
               v.name = '0.0小时';
@@ -1708,36 +1838,52 @@ export default function userForeman() {
           }
           return v;
         })
-        setTimeArr(arr)
+        setTimeArr(arr);
+        if (titlework) {
+          setModel({ ...model, modalDuration: titlework })
+          return;
+        }
       }
-      let addTime;
+      let addTime = '';
       for (let i = 0; i < addWorkArr.length; i++) {
         if (addWorkArr[i].click) {
           if (addWorkArr[i].id !== 1) {
-            addTime = '加班' + addWorkArr[i].name
+            addTime = '，加班' + addWorkArr[i].name
           } else {
-            addTime = '无加班'
+            addTime = '，无加班'
           }
-        } else {
-          addTime = '无加班'
         }
       }
       let duration;
-      if (val.id == 3) {
-        duration = val.name + addTime;
-      } else {
-        duration = '上班' + val.name + addTime;
+      if (e.click) {
+        if (e.id == 3) {
+          duration = e.name + addTime;
+        } else {
+          duration = '上班' + e.name + addTime;
+        }
       }
-      if (val.id != 4) {
-        setModel({ ...data, duration })
+      console.log(duration, 'durationduration')
+      if (e.id != 4) {
+        setModel({ ...model, modalDuration: duration })
       }
     } else {
-      //加班时长
-      let arr;
-      if (val.id != 2) {
-        arr = addWorkArr.map(v => {
-          if (v.id === val.id) {
-            v.click = !v.click
+      if (e.id != 2) {
+        let addworkTitle = '';
+        const arr = addWorkArr.map(v => {
+          if (v.id === e.id) {
+            v.click = !v.click;
+            if (!v.click) {
+              for (let i = 0; i < timeArr.length; i++) {
+                if (timeArr[i].click) {
+                  if (timeArr[i].id == 3) {
+                    addworkTitle = '休息'
+                  } else {
+                    addworkTitle = '上班' + timeArr[i].name
+                  }
+                  break;
+                }
+              }
+            }
           } else {
             if (v.id === 2) {
               v.name = '0.0小时';
@@ -1747,53 +1893,51 @@ export default function userForeman() {
           return v;
         })
         setAddWorkArr(arr);
+        if (addworkTitle) {
+          setModel({ ...model, modalDuration: addworkTitle })
+          return;
+        }
       } else {
-        arr = addWorkArr.map(v => {
-          if (v.id === val.id) {
-            v.click = !v.click;
-          } else {
-            v.click = false
-          }
-          return v;
-        })
-        setAddWorkArr(arr)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
       }
-      let Time;
+      let Time = '';
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
           if (timeArr[i].id == 3) {
-            Time = '休息'
+            Time = '休息,'
           } else {
-            Time = '上班' + timeArr[i].name
+            Time = '上班' + timeArr[i].name + ','
           }
           break;
-        } else {
-          Time = '休息'
         }
       }
-      let duration;
-      if (val.id == 1) {
-        duration = Time + '无加班';
-      } else {
-        duration = '上班' + Time + val.name;
+      let duration = '';
+      if (e.click) {
+        duration = Time + e.name;
       }
-      if (val.id != 2) {
-        setModel({ ...data, duration })
+      // if (e.id == 1) {
+      //   duration = Time + '，无加班';
+      // } else {
+
+      // }
+      console.log(duration, 'duration1')
+      if (e.id != 2) {
+        setModel({ ...model, modalDuration: duration })
       }
     }
   }
   // 加班时长弹框选择
   const handleWorkingHours = (type: number, e: any) => {
-    const Item = JSON.parse(JSON.stringify(model));
     if (type === 1) {
       const data = timeArr.map((v) => {
         if (v.id === 4) {
           v.name = e.name;
           v.click = true;
           v.num = e.num
+        } else {
+          v.click = false;
         }
         return v;
       })
@@ -1802,23 +1946,25 @@ export default function userForeman() {
       for (let i = 0; i < addWorkArr.length; i++) {
         if (addWorkArr[i].click) {
           if (addWorkArr[i].id !== 1) {
-            addTime = '加班' + addWorkArr[i].name
+            addTime = ',加班' + addWorkArr[i].name
           } else {
-            addTime = '无加班'
+            addTime = ',无加班'
           }
         } else {
-          addTime = '无加班'
+          addTime = ',无加班'
         }
       }
       let duration;
       duration = '上班' + e.name + addTime;
-      setModel({ ...Item, duration })
+      setModel({ ...model, modalDuration: duration })
     } else {
       const data = addWorkArr.map((v) => {
         if (v.id === 2) {
           v.name = e.name;
           v.click = true;
           v.num = e.num
+        } else {
+          v.click = false;
         }
         return v;
       })
@@ -1837,8 +1983,8 @@ export default function userForeman() {
         }
       }
       let duration;
-      duration = Time + '加班' + e.name;
-      setModel({ ...Item, duration })
+      duration = Time + '，加班' + e.name;
+      setModel({ ...model, modalDuration: duration })
     }
     setWorkingHoursDisplay(false);
     setWorkOvertimeDisplay(true);
@@ -1847,6 +1993,37 @@ export default function userForeman() {
   const handleWorkOvertimeOk = () => {
     const data: any = timeArr.filter(v => v.click);
     const dataList: any = addWorkArr.filter(v => v.click);
+    // let title;
+    // if (data || dataList) {
+    //   if (data.length > 0) {
+    //     if (data[0].name == '休息') {
+    //       title = data[0].name
+    //     } else {
+    //       title = '上班' + data[0].name
+    //     }
+    //   }
+    //   if (dataList.length > 0) {
+    //     if (dataList[0].name !== '无加班') {
+    //       title = '加班' + dataList[0].name
+    //     } else {
+    //       title = dataList[0].name
+    //     }
+    //   }
+    //   if (data.length > 0 && dataList.length > 0) {
+    //     if (data[0].name == '休息' && dataList[0].name == '无加班') {
+    //       title = data[0].name + dataList[0].name
+    //     } else {
+
+    //       if (data[0].name == '休息') {
+    //         title = '加班' + dataList[0].name
+    //       }
+    //       if (dataList[0].name == '无加班') {
+    //         title = '上班' + data[0].name + dataList[0].name
+    //       }
+    //       title = '上班' + data[0].name + '加班' + dataList[0].name
+    //     }
+    //   }
+    // }
     let title;
     if (data || dataList) {
       if (data.length > 0) {
@@ -1865,16 +2042,15 @@ export default function userForeman() {
       }
       if (data.length > 0 && dataList.length > 0) {
         if (data[0].name == '休息' && dataList[0].name == '无加班') {
-          title = data[0].name + dataList[0].name
+          title = data[0].name + '，' + dataList[0].name
         } else {
-
           if (data[0].name == '休息') {
-            title = '加班' + dataList[0].name
+            title = data[0].name + '，加班' + dataList[0].name
+          } else if (dataList[0].name == '无加班') {
+            title = '上班' + data[0].name + '，' + dataList[0].name;
+          } else {
+            title = '上班' + data[0].name + '，加班' + dataList[0].name
           }
-          if (dataList[0].name == '无加班') {
-            title = '上班' + data[0].name + dataList[0].name
-          }
-          title = '上班' + data[0].name + '加班' + dataList[0].name
         }
       }
     }
@@ -2943,7 +3119,7 @@ export default function userForeman() {
               setTimeArr(itemArr)
               setForemanTitle('');
               setImage({ item: [] })
-              setModel(data);
+              // setModel(data);
               // 设置不刷新
               setRefresh(true)
             } else {
@@ -4028,33 +4204,18 @@ export default function userForeman() {
   }
   // 切换类型
   const handleClckTabber = (v) => {
-    // const recorderTypeArrList = JSON.parse(JSON.stringify(recorderTypeArr.item));
-    // const data = recorderTypeArrList.map(val => {
-    //   if (val.id === v.id) {
-    //     val.click = true
-    //     setRecorderType(val.id)
-    //     const type = Taro.getStorageSync(Type);
-    //     if (type === 1) {
-    //       getMonthDaysCurrent(new Date(), '', '', val.id);
-    //     }
-    //     bkGetWorker(groupInfo, true, '', '', v.id)
-    //     // getWorkerHasBusinessByDateAction(dateParams).then(res=>{
-    //     //   console.log(res,'ressss');
-
-    //     // })
-    //   } else {
-    //     val.click = false
-    //   }
-    //   return val;
-    // });
-    // setRecorderTypeArr({ item: data })
     const recorderTypeArrList = JSON.parse(JSON.stringify(recorderTypeArr.item));
     const data = recorderTypeArrList.map(val => {
       if (val.id === v.id) {
         val.click = true;
         setRecorderType(val.id)
+        getList(val.id);
+      }else{
+        val.click = false;
       }
+      return val;
     })
+    setRecorderTypeArr({ item: data })
   }
   // 获取缓存
   const getWorkerHasBusinessByDate = () => {
@@ -4226,5 +4387,11 @@ export default function userForeman() {
     handleClckTabber,
     noSet,
     setProjectArr,
+    clickDay, 
+    setClickDay,
+    clickTime, 
+    setClickTime,
+    setTimeArr,
+    setAddWorkArr
   }
 }
