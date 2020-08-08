@@ -286,6 +286,7 @@ export default function Auth({ display, handleClose, callback, loginPhone}: PROP
       userRouteJump(`/pages/login/index?session_key=${item.session_key}&encryptedData=${item.encryptedData}&iv=${item.iv}`)
     }
   }
+  console.log(warrant,'warrant啊啊啊是谁')
   return(
     <View>
       { display && 
