@@ -39,7 +39,7 @@ list-img
 .list-img{
   width: 125rpx;
   height: 125rpx;
-  margin: 28rpx;
+  margin: 28rpx 65rpx 28rpx 0;
 }
 .list-img-img{
   width: 125rpx;
@@ -57,12 +57,12 @@ list-img
 }
 
 .footer-box{
-  margin-top: 30%;
-  // margin-top: 100rpx;
-  width: 100%;
   display: flex;
   justify-content: space-around;
-  margin-bottom: 10rpx;
+  position: fixed;
+  bottom: 20rpx;
+  width: 100%;
+  z-index: 2;
 }
 
 .footer-box-del{
