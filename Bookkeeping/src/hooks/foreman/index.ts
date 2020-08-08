@@ -2095,6 +2095,7 @@ export default function userForeman() {
       let time = 0;
       for (let i = 0; i < timeArrs.length; i++) {
         if (timeArrs[i].click) {
+          setClickDay(timeArrs[i])
           // 选择工
           if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
             time = 1 / workNum * timeArrs[i].num
@@ -2118,6 +2119,7 @@ export default function userForeman() {
       let addTime = 0;
       for (let i = 0; i < addWorkArrs.length; i++) {
         if (addWorkArrs[i].click) {
+          setClickTime(addWorkArrs[i])
           addTime = addWorkArrs[i].num
         }
       }

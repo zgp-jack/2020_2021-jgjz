@@ -291,6 +291,8 @@ export default function Index() {
     }
   }
   useDidShow(() => {
+    setHidden(true)
+    setCloseImage(false)
     getAppShowData();
     const newTime = new Date().getTime() / 1000;
     let creationTime = Taro.getStorageSync(CreationTime);
@@ -416,6 +418,9 @@ export default function Index() {
       setCloseImage(false)
     }
     if (identityType) {
+      if (identityType == '0' ){
+        setCloseImage(true)
+      }
       Taro.setStorageSync(Type, identityType);
     }
     // 没有用户信息就默认设置为工人
