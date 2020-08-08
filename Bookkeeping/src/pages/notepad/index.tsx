@@ -265,10 +265,11 @@ export default function Notepad() {
   }
   // 取消搜索
   const handleOnClear = ()=>{
+    setVal('');
+    if(busy)return;
     // getList();
     // setData([]);
     setIsSheach(true)
-    setVal('');
     // setIds([]);
     // getList(val)
     // setIsSheach(false)

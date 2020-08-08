@@ -929,7 +929,7 @@ export default function AttendanceSheet() {
           >
             <View>{year}年
               <Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' style={{visibility: leftTime?'visible':'hidden'}} />
-            {month}
+            {month}月
               <Image className='righticon' src={`${IMGCDNURL}greyRight.png`} style={{visibility: rightTime?'visible':'hidden'}} />
             </View>
           </Picker>
