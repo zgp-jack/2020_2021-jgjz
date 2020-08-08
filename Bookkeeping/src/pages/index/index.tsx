@@ -267,6 +267,7 @@ export default function Index() {
                 }
               })
             } else if (res.code == 40003) {
+
               let obj: any = {};
               obj.userId = e.referrerInfo.extraData.userId;
               obj.token = e.referrerInfo.extraData.token;
@@ -282,6 +283,8 @@ export default function Index() {
               // loginType = true;
               setDisplay(true)
               setLoginPhone(true)
+              console.log(3123213213)
+              return;
               //console.log(login,'setlogin')
             }
           })
