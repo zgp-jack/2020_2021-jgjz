@@ -20,7 +20,7 @@ import './index.scss'
 
 let loginType = false;
 let isJump = false;
-let authType = false;
+let authType = true;
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -282,10 +282,7 @@ export default function Index() {
               // 设置点击直接跳转到注册手机号页面
               // setLoginStatus(true);
               // loginType = true;
-              authType=true;
-              setTimeout(()=>{
                 setDisplay(true)
-              },0)
               // setLoginPhone(true)
               console.log(3123213213)
               return;
