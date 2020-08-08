@@ -282,8 +282,8 @@ export default function Index() {
               // 设置点击直接跳转到注册手机号页面
               // setLoginStatus(true);
               // loginType = true;
-              setDisplay(true)
               authType=true;
+              setDisplay(true)
               // setLoginPhone(true)
               console.log(3123213213)
               return;
