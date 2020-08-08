@@ -256,6 +256,7 @@ export default function Notepad() {
   }
   // 搜索
   const handleSeach = ()=>{
+    if(busy) return;
     getList(val)
     // 搜索清空，并且全选变false
     setSelectAll(false)
