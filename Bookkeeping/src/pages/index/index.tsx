@@ -20,6 +20,7 @@ import './index.scss'
 
 let loginType = false;
 let isJump = false;
+let authType = false;
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -282,7 +283,8 @@ export default function Index() {
               // setLoginStatus(true);
               // loginType = true;
               setDisplay(true)
-              setLoginPhone(true)
+              authType=true;
+              // setLoginPhone(true)
               console.log(3123213213)
               return;
               //console.log(login,'setlogin')
@@ -294,8 +296,8 @@ export default function Index() {
     }
   }
   useDidShow(() => {
-    setHidden(true)
-    setCloseImage(false)
+    // setHidden(true)
+    // setCloseImage(false)
     getAppShowData();
     const newTime = new Date().getTime() / 1000;
     let creationTime = Taro.getStorageSync(CreationTime);
@@ -1102,7 +1104,7 @@ export default function Index() {
         </View>
       </AtModal>
       {/* 授权 */}
-      <Auth display={display} loginPhone={loginPhone} handleClose={handleClose} callback={handleCallback} />
+      <Auth display={display} loginPhone={authType} handleClose={handleClose} callback={handleCallback} />
       {/* 创建项目 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
       {/* 填写班组 */}
