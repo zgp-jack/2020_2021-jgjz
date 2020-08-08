@@ -1103,7 +1103,7 @@ export default function Index() {
         </View>
       </AtModal>
       {/* 授权 */}
-      <Auth display={display} loginPhone={authType} handleClose={handleClose} callback={handleCallback} />
+      <Auth display={display} handleClose={handleClose} callback={handleCallback} />
       {/* 创建项目 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
       {/* 填写班组 */}
