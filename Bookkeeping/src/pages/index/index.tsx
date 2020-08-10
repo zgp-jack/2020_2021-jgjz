@@ -447,7 +447,8 @@ export default function Index() {
     let midData = Taro.getStorageSync(MidData);
     console.log(midData,'midDatamidDatamidData')
     if(!midData){
-      setleftTime(false)
+      setleftTime(false);
+      setrightTime(false)
     }
     if(midData){
       let type = Taro.getStorageSync(Type);
@@ -513,8 +514,10 @@ export default function Index() {
               Taro.setStorageSync(Earliest_month,res.data.earliest_month);
               if(Number(res.data.this_year_business_month)==montime){
                 setleftTime(false);
+                setrightTime(false);
               }else{
                 setleftTime(true);
+                setrightTime(false);
               }
             }
           } else {
@@ -551,6 +554,7 @@ export default function Index() {
         if(e){
           setBusy(true)
           setleftTime(false);
+          setrightTime(false);
           setNum('')
         }
         console.log(e)
@@ -886,10 +890,10 @@ export default function Index() {
     }
     let month = date.getMonth();
     month = ((month == 0) ? (12) : (month));
-    const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
+    const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1);
     console.log(date.getFullYear() + "-" + addZero(date.getMonth() + 1),'======')
     console.log(befD,'befD')
-    getData(befD,1);
+    getData(befD,type);
     setTime(befD);
     console.log(befD.substring(5,7))
     // 月份

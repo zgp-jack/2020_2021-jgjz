@@ -62,12 +62,15 @@ export default function FlowingWater() {
     setdateEnd(yeartime+'-'+montime);
     if(!earliest_month){
       setleftTime(false);
+      setrightTime(false);
       setDatestart(yeartime+'-'+montime);
     }else{
       setDatestart(earliest_month);
       if(Number(earliest_month.split('-')[0]) == yeartime){
+        setrightTime(false);
         Number(earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
       }else if(Number(earliest_month.split('-')[0]) < yeartime) {
+        setrightTime(false);
         setleftTime(true);
       }
     }
@@ -483,11 +486,11 @@ export default function FlowingWater() {
                 </View>
                 <View className='content-td'>
                   <View className='content-list-right-title'>借支</View>
-                  <View className='content-list-right-money'>¥{v.total_borrow && (parseFloat(v.total_borrow)>9999999.99)?String(v.total_borrow).slice(0,9)+'...':Number(v.total_borrow).toFixed(2)||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_borrow && (parseFloat(v.total_borrow)>9999999.99)?String(v.total_borrow).slice(0,8)+'...':Number(v.total_borrow).toFixed(2)||'0.00'}</View>
                 </View>
                 <View className="content-td">
                   <View className='content-list-right-title'>工钱</View>
-                  <View className='content-list-right-money'>¥{v.total_money && (parseFloat(v.total_money)>9999999.99)?String(v.total_money).slice(0,9)+'...':Number(v.total_money).toFixed(2)||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_money && (parseFloat(v.total_money)>9999999.99)?String(v.total_money).slice(0,8)+'...':Number(v.total_money).toFixed(2)||'0.00'}</View>
                 </View>
               </View>
               {v.click && 
@@ -530,7 +533,7 @@ export default function FlowingWater() {
                           {(val.note || val.view_images.length>0)&&<Text className='icon workericon'>备</Text>}
                         </View>}
                       </View>
-                      <View className={val.business_type == '3'?'content-list-subclass-borrow':'content-list-subclass-money'}>¥{val.money && (parseFloat(val.money)>9999999.99)?String(val.money).slice(0,9)+'...':val.money||'0.00'}<View className="moneyicon">></View></View>
+                      <View className={val.business_type == '3'?'content-list-subclass-borrow':'content-list-subclass-money'}>¥{val.money && (parseFloat(val.money)>9999999.99)?String(val.money).slice(0,8)+'...':val.money||'0.00'}<View className="moneyicon">></View></View>
                     </View>
                     </AtSwipeAction>
                     </View>
