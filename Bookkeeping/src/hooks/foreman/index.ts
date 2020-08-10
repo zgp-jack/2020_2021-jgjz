@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide, useRouter } from '@tarojs/taro'
-import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, bkAddBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction, getWorkerHasBusinessByDateAction,getBookkeepingDataAction } from '../../utils/request/index'
+import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, addNewBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction, getWorkerHasBusinessByDateAction,getBookkeepingDataAction } from '../../utils/request/index'
 import { MidData, Type, Calendar, RecordTime, User, Tomorrow } from '../../config/store'
 import { bkGetProjectTeamData } from '../../utils/request/index.d'
 import { useDispatch, useSelector } from '@tarojs/redux'
@@ -340,7 +340,7 @@ export default function userForeman() {
       identity,
       business_type: paramsId,
     }
-    getMonthDaysCurrent(new Date());
+    // getMonthDaysCurrent(new Date());
     // 首先定义自己
     const objs = JSON.parse(JSON.stringify(obj))
     objs.name = midData.nickname || '未命名';
@@ -349,6 +349,10 @@ export default function userForeman() {
     getBookkeepingDataAction(params).then(res=>{
       // 判断有数据的数据
       if(res.code === 200 ){
+        const today = res.time;
+        console.log(today,'今天')
+        // 日历默认今天
+        getMonthDaysCurrent(new Date());
         //项目内容 latest_group_info
         //项目里的工人 latest_group_workers
         //项目里的设置了工资标准的工人  latest_group_workers_has_wage
@@ -384,7 +388,6 @@ export default function userForeman() {
             }
             // 设置是否记过工
             if (res.data.latest_group_info.constructor === Array){
-              console.log(32132)
               for (let i = 0, len = workArr.length; i < len; i++) {
                 workArr[i].discipline = false;
               }
@@ -406,7 +409,6 @@ export default function userForeman() {
                 }
               }
             }
-            console.log(workArr,'workArr')
             setWorkerItem(workArr);
         }else{
 
@@ -432,6 +434,7 @@ export default function userForeman() {
   }
   // 日历点击
   const handleClickCalendar = (v: any) => {
+    console.log(v,'vvvv')
     const date = v.year + '-' + addZero(v.month) + '-' + addZero(v.date);
     const dates = (new Date(date)).valueOf();
     const newDate = (new Date()).valueOf();
@@ -1993,37 +1996,6 @@ export default function userForeman() {
   const handleWorkOvertimeOk = () => {
     const data: any = timeArr.filter(v => v.click);
     const dataList: any = addWorkArr.filter(v => v.click);
-    // let title;
-    // if (data || dataList) {
-    //   if (data.length > 0) {
-    //     if (data[0].name == '休息') {
-    //       title = data[0].name
-    //     } else {
-    //       title = '上班' + data[0].name
-    //     }
-    //   }
-    //   if (dataList.length > 0) {
-    //     if (dataList[0].name !== '无加班') {
-    //       title = '加班' + dataList[0].name
-    //     } else {
-    //       title = dataList[0].name
-    //     }
-    //   }
-    //   if (data.length > 0 && dataList.length > 0) {
-    //     if (data[0].name == '休息' && dataList[0].name == '无加班') {
-    //       title = data[0].name + dataList[0].name
-    //     } else {
-
-    //       if (data[0].name == '休息') {
-    //         title = '加班' + dataList[0].name
-    //       }
-    //       if (dataList[0].name == '无加班') {
-    //         title = '上班' + data[0].name + dataList[0].name
-    //       }
-    //       title = '上班' + data[0].name + '加班' + dataList[0].name
-    //     }
-    //   }
-    // }
     let title;
     if (data || dataList) {
       if (data.length > 0) {
@@ -2054,20 +2026,19 @@ export default function userForeman() {
         }
       }
     }
-    if (identity === 2) {
-      const data = JSON.parse(JSON.stringify(wageStandard));
+      const dataArrList = JSON.parse(JSON.stringify(wageStandard));
       // 获取上班时长
       const timeArrs = JSON.parse(JSON.stringify(timeArr));
       // 获取加班时长
       const addWorkArrs = JSON.parse(JSON.stringify(addWorkArr));
       //模板金额 
-      const moneyNum = data.money;
+      const moneyNum = dataArrList.money;
       // 模板时间
-      const workNum = data.work;
+      const workNum = dataArrList.work;
       //加班金钱
-      const addWorkNum = data.addWork;
+      const addWorkNum = dataArrList.addWork;
       // 加班时间
-      const dayNum = data.day;
+      const dayNum = dataArrList.day;
       // 上班标准提示
       // if (workNum == 0) {
       //   Msg('上班标准必须必须大于0')
@@ -2095,6 +2066,7 @@ export default function userForeman() {
       let time = 0;
       for (let i = 0; i < timeArrs.length; i++) {
         if (timeArrs[i].click) {
+          console.log(timeArrs[i],'timeArrs[i]')
           setClickDay(timeArrs[i])
           // 选择工
           if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
@@ -2123,8 +2095,9 @@ export default function userForeman() {
           addTime = addWorkArrs[i].num
         }
       }
+    if (identity === 2) {
       let total;
-      if (data.type === 1) {
+      if (dataArrList.type === 1) {
         // 按小时算 加班小时* 模板加班金额
         total = ((moneyNum / workNum) * (time * workNum) + addWorkNum * addTime).toFixed(2);
         // total = (moneyNum / workNum) * time + addWorkNum * addTime;
@@ -2154,10 +2127,12 @@ export default function userForeman() {
       //     Msg(res.msg)
       //   }
       // })
-      setModel({ ...model, workersWages: total, duration: title });
+      let num = isNaN(total) ? 0 : total;
+      setModel({ ...model, workersWages: num, duration: title });
       setWorkOvertimeDisplay(false);
       return;
     }
+    
     setModel({ ...model, duration: title })
     setWorkOvertimeDisplay(false);
   }
@@ -2713,7 +2688,7 @@ export default function userForeman() {
                   const group_leader = item[0].group_leader;
                   params.group_leader = group_leader;
                 }
-                bkAddBusinessAction(params).then(resData => {
+                addNewBusinessAction(params).then(resData => {
                   if (resData.code === 200) {
                     // 再记一笔
                     if (type == 1) {
@@ -2754,7 +2729,7 @@ export default function userForeman() {
           const group_leader = item[0].group_leader;
           params.group_leader = group_leader;
         }
-        bkAddBusinessAction(params).then(resData => {
+        addNewBusinessAction(params).then(resData => {
           if (resData.code === 200) {
             // 再记一笔
             if (type == 1) {
@@ -3072,7 +3047,7 @@ export default function userForeman() {
         group_leader,
       }
       bkSetGroupLeaderAction(paramsData).then(res => {
-        bkAddBusinessAction(params).then(res => {
+        addNewBusinessAction(params).then(res => {
           // 清除reducer
           if (res.code === 200) {
             if (type === 1) {
@@ -3140,7 +3115,7 @@ export default function userForeman() {
         })
       });
     } else {
-      bkAddBusinessAction(params).then(res => {
+      addNewBusinessAction(params).then(res => {
         if (res.code === 200) {
           if (type === 1) {
             Msg('保存成功')

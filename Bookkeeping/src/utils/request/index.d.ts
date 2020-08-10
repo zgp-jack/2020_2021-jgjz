@@ -255,3 +255,9 @@ export interface bkGetCode extends Result {
   errmsg: string,
   refresh: number
 }
+
+// 记工
+export interface getBookkeepingData extends Result{
+  data: any,
+  time:string,
+}

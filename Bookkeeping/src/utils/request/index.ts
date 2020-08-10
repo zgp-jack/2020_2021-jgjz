@@ -945,11 +945,28 @@ export function getWorkerHasBusinessByDateAction(data): Promise<Inter.bkGetWorke
 }
 
 // 初始化记工界面数据 
-export function getBookkeepingDataAction(data): Promise < Inter.bkGetWorker > {
+export function getBookkeepingDataAction(data): Promise<Inter.getBookkeepingData > {
   let userInfo = Taro.getStorageSync(UserInfo);
   return doRequestAction({
     url: api.getBookkeepingDataUrl,
     // method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+    },
+    data: data,
+  })
+}
+
+// 新的记工提交接口 
+export function addNewBusinessAction(data): Promise<Inter.bkGetWorker> {
+  let userInfo = Taro.getStorageSync(UserInfo);
+  return doRequestAction({
+    url: api.addNewBusinessUrl,
+    method: 'POST',
     header: {
       // 'content-type': 'application/json',
       'content-type': 'application/x-www-form-urlencoded',

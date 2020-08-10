@@ -87,3 +87,5 @@ export const jumpBindTelUrl = REQUESTURL + 'bk-member/applet-jump-bind-tel/'
 export const getWorkerHasBusinessByDateUrl = REQUESTURL  +'bk-bookkeeping/get-worker-has-business-by-date/'
 //初始化记工界面数据
 export const getBookkeepingDataUrl = REQUESTURL + '/bk-bookkeeping/get-bookkeeping-data/'
+// 新的记工提交接口
+export const addNewBusinessUrl = REQUESTURL + 'bk-bookkeeping/add-new-business/'

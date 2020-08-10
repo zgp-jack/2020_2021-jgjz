@@ -809,6 +809,7 @@ export default function Index() {
       return;
     }
     let midData = Taro.getStorageSync(MidData);
+    console.log(midData,'midData点击')
     if (!midData) {
       // 游客点中间没反应
       if (state == 2) { return }
