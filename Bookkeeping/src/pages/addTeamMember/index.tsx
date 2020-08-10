@@ -265,7 +265,6 @@ export default function AddTeamMember() {
       }
       console.log(params,'1111');
       console.log(clickArr,'clickArr')
-      return;
       bkAddWorkerInGroupAction(params).then(res=>{
         if(res.code === 200){
           dispatch(setPhoneList(clickArr));

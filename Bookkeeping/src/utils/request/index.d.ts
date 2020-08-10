@@ -153,6 +153,7 @@ export interface bkGetProjectTeamData {
   group_name: string,
   group_id: string,
   click:boolean,
+  group_info:string,
 }
 export interface bkGetProjectTeamDataChild{
   created_by: string
