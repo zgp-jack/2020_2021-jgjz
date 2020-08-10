@@ -48,7 +48,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -77,9 +77,21 @@ export default function Foreman() {
   // },[])
   // 获取项目列表
   const bkGetProjectTeam = ()=>{
+    console.log(projectId,'projectId')
     let params={}
     bkGetProjectTeamAction(params).then(res=>{
       if(res.code === 200){
+        if(res.data.length>0){
+          for(let i =0;i<res.data.length;i++){
+            console.log(res.data[i].group_id + res.data[i].id,'1111');
+            console.log(projectId,'222')
+            if ((res.data[i].group_id +','+ res.data[i].id) == projectId){
+              res.data[i].click = true;
+            }else{
+              res.data[i].click = false;
+            }
+          }
+        }
         setProjectArr(res.data);
       }
     })
@@ -300,6 +312,7 @@ export default function Foreman() {
   const handleTextare = ()=>{
     setAutoFocus(true)
   }
+  console.log(workerItem,'workerItemworkerItemworkerItem')
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -417,7 +430,7 @@ export default function Foreman() {
                         >
                           {/* {v.name.slice(0, 2)} */}
                         {/* {v.name.substring(v.name.length-2)} */}
-                        {v.name.substring(v.name.length - 2)}
+                        {v.name&&v.name.substring(v.name.length - 2)}
                         </View>
                         <View className='workerItem-list-title'>{v.name}</View>
                       </View>

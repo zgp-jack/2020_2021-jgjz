@@ -232,6 +232,9 @@ export default function AddTeamMember() {
         group_leader:e.id
       }
       bkSetGroupLeaderAction(params).then(res => {
+        if(res.code !== 200){
+          Msg(res.msg)
+        }
         console.log(res,'xxx')
       });
       console.log(e,'eeee')
@@ -260,6 +263,9 @@ export default function AddTeamMember() {
         worker_id: ids,
         group_info:groupInfo,
       }
+      console.log(params,'1111');
+      console.log(clickArr,'clickArr')
+      return;
       bkAddWorkerInGroupAction(params).then(res=>{
         if(res.code === 200){
           dispatch(setPhoneList(clickArr));
