@@ -21,6 +21,7 @@ import './index.scss'
 let loginType = false;
 let isJump = false;
 let authType = true;
+let jumType = false;
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -234,6 +235,7 @@ export default function Index() {
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
                 isJump = true;
+                jumType = true
                 getData();
               }
               // 没有鱼泡账号
@@ -421,6 +423,8 @@ export default function Index() {
       setHidden(true)
       setCloseImage(false)
     }
+    console.log(isLoginType,'isLoginTypeisLoginType')
+    console.log(identityType,'identityType')
     if (identityType) {
       if (identityType == '0' ){
         setCloseImage(true)
