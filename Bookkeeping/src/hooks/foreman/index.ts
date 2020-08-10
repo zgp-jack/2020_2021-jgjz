@@ -322,7 +322,6 @@ export default function userForeman() {
     let type = Taro.getStorageSync(Type);
     // 设置身份
     setIdentity(type);
-    console.log(useSelectorItem.workerList,'useSelectorItem.workerList')
     if (useSelectorItem.workerList.length > 0){
       if (identity === 2) {
         setForeman(useSelectorItem.workerList);
@@ -333,7 +332,6 @@ export default function userForeman() {
       }
       let objs = JSON.parse(JSON.stringify(obj));
       const data = JSON.parse(JSON.stringify(moneyList));
-      console.log(moneyList,'moneyListmoneyList')
       const arrList = JSON.parse(JSON.stringify(useSelectorItem.workerList));
       for (let i = 0; i < arrList.length; i++) {
         if (arrList[i].id === objs.id) {
@@ -360,8 +358,6 @@ export default function userForeman() {
         }
       }
       if (cache&& cache.length>0){
-        console.log(arrList,'arrList');
-        console.log(cache,'cache')
         for (let i = 0, len = item.length; i < len; i++) {
           for (let j = 0, setLen = cache.length; j < setLen; j++) {
             if (cache[j] == item[i].id) {
@@ -372,7 +368,6 @@ export default function userForeman() {
       }
       setClickNum(0);
       setAllClick(false)
-      console.log(item,'1111')
       setWorkerItem(item)
     }else{
       getList();
@@ -526,7 +521,6 @@ export default function userForeman() {
                 getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
               }
             }
-            console.log(workArr,'workArrworkArrworkArr')
             dispatch(setPhoneList(workArr));
             setWorkerItem(workArr);
             setMoneyList(res.data.latest_group_workers_has_wage)
@@ -558,7 +552,6 @@ export default function userForeman() {
           }
           return;
         } else {
-          console.log('走到了这里')
           title = '';
           id = '';
           objs.discipline = false;
@@ -589,15 +582,12 @@ export default function userForeman() {
             setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle, time, details: '', workersWages: sum })
           }
         }
-      }else{
-        console.log(321321)
       }
       // 日历默认今天
       // getMonthDaysCurrent(new Date(), [dayObj]);
       // 判断有数据的数据
       // if(res.code === 200 ){
       //   bkGetProjectTeamAction({}).then(resData=>{
-      //     console.log(resData,'resData')
       //     if(resData.code === 200){
       //       if(resData.data.length>0){
       //         for(let i =0;i<resData.data.length;i++){
@@ -636,7 +626,6 @@ export default function userForeman() {
   }
   // 日历点击
   const handleClickCalendar = (v: any) => {
-    console.log(v,'vvvv')
     const date = v.year + '-' + addZero(v.month) + '-' + addZero(v.date);
     const dates = (new Date(date)).valueOf();
     const newDate = (new Date()).valueOf();
@@ -714,7 +703,6 @@ export default function userForeman() {
   }
   // 对应月份日期
   const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[]) => {
-    console.log(cacheDaysArrList, '日历日期')
     // const groupInfos = JSON.parse(JSON.stringify(groupInfo));
     // let id;
     // if (ids) {
@@ -821,7 +809,6 @@ export default function userForeman() {
     }
     // 设置点击
     // 遍历点击
-    console.log(clickDataArr,'clickDataArr')
     if (clickDataArr.length > 0) {
       for (let i = 0, len = clickDataArr.length; i < len; i++) {
         if (clickDataArr[i].click) {
@@ -843,8 +830,6 @@ export default function userForeman() {
     } else {
       List = cacheDaysArr;
     }
-    console.log(List,'List');
-    console.log(calendarDaysArr,'calendarDaysArr')
     if (List.length > 0) {
       List.map(v => {
         calendarDaysArr.map(val => {
@@ -1248,7 +1233,6 @@ export default function userForeman() {
                   setOpenClickTime(toDay)
                   setClickData(toDay)
                   setTimeData(toDay);
-                  console.log(toDay,'toDay')
                   time = toDay[0].year + '-' + toDay[0].month + '-' + toDay[0].date+ `(今天)`;
                 }
                 // 设置加班时长默认值
@@ -1296,14 +1280,12 @@ export default function userForeman() {
               if (resData.data) {
                 let name, id;
                 // 获取项目下的工人
-                console.log(res.data, 'dsadsada')
                 let changeData;
                 for (let i = 0; i < res.data.length; i++) {
                   // 判断遍历出项目
                   // 判断与上一次相同的时候
                   if (res.data[i].group_id + ',' + res.data[i].id === resData.data) {
                     changeData = res.data[i];
-                    // console.log('======')
                     // const data = JSON.parse(JSON.stringify(model));
                     // bkGetWorker(res.data[i].group_id + ',' + res.data[i].id, true);
                     // name = res.data[i].group_name + '-' + res.data[i].name;
@@ -1316,7 +1298,6 @@ export default function userForeman() {
                     // 不相同的时候选择第一个
                   } else {
                     changeData = res.data[0];
-                    // console.log('1======')
                     // const data = JSON.parse(JSON.stringify(model));
                     // // 判断只有一个数据的时候设置第一个项目为true
                     // if (res.data.length === 1) {
@@ -1347,7 +1328,6 @@ export default function userForeman() {
                   //   date:''
                   // }
                   // getWorkerHasBusinessByDateAction(dateParams).then(dateRes=>{
-                  //   console.log(dateRes,'dateRes');
                   // })
                   name = changeData.group_name + '-' + changeData.name;
                   setModel({ ...data, name });
@@ -1426,9 +1406,7 @@ export default function userForeman() {
                 // res.data[0].click = true;
                 // 设置groupInfo
                 // const groupInfos = res.data[0].group_id + ',' + res.data[0].id;
-                // console.log(groupInfos,'groupInfo')
                 // setGroupInfo(res.data[0].group_id + ',' + res.data[0].id)
-                // console.log(res.data[0].group_id + ',' + res.data[0].id,'cccc5')
                 // bkGetWorkerWage(res.data[0].group_id + ',' + res.data[0].id)
                 setProjectArr(res.data);
               }
@@ -1441,7 +1419,6 @@ export default function userForeman() {
   }
   // 已设置工资标准标准
   const bkGetWorkerWage = (id?: string, Item?: any, models?: any) => {
-    console.log(321312, id);
     // 获取类型
     let dataType;
     recorderTypeArr.item.map((v) => {
@@ -1593,8 +1570,6 @@ export default function userForeman() {
   }
   // 工人列表
   const bkGetWorker = (groupInfos?: any, val?: any, dataItem?: any, id?: string, TabberType?: number) => {
-    console.log(groupInfos, 'groupInfosgroupInfos');
-    console.log(TabberType, 'TabberTypeTabberTypeTabberType')
     // 不传group_info获取通讯录里的所有人
     const type = Taro.getStorageSync(Type);
     let params;
@@ -1634,7 +1609,6 @@ export default function userForeman() {
             }
             dispatch(setmailList(res.data))
           } else {
-            console.log(231312321312)
             // const objs = JSON.parse(JSON.stringify(obj));
             let midData = Taro.getStorageSync(MidData)
             let objs: any = {};
@@ -1651,7 +1625,6 @@ export default function userForeman() {
             const userData = Taro.getStorageSync(User);
             // 获取当前点击的项目类型状态
             let dataType;
-            console.log(TabberType, 'TabberType')
             if (TabberType) {
               dataType = TabberType;
             } else if (id) {
@@ -1663,7 +1636,6 @@ export default function userForeman() {
                 }
               })
             }
-            console.log(dataType, 'dataTypedataType')
             let itemType;
             // if (dataType == 2) {
             for (let i = 0; i < contractorArr.item.length; i++) {
@@ -1672,7 +1644,6 @@ export default function userForeman() {
               }
             }
             // }
-            console.log(userData, 'userDatauserData')
             // 设置今天
             const years = new Date().getFullYear();
             const months = new Date().getMonth() + 1;
@@ -1694,7 +1665,6 @@ export default function userForeman() {
                     // 时间
                     if (dateRes.data.days && dateRes.data.days.length > 0) {
                       setcacheDays(dateRes.data.days);
-                      console.log(dateRes.data.days, '工人1111');
                       cacheDaysArr = dateRes.data.days;
                     }
                     // 工人
@@ -1717,14 +1687,11 @@ export default function userForeman() {
                 }
               })
             }
-            console.log(cacheDaysArr, 'cacheDaysArr');
             // return;
             // if (type === 1){
             //   if (userData){
             //       userData.map(v=>{
             //         listArr.map(val=>{
-            //           console.log(v.itemType,'vitemType');
-            //           console.log(itemType,'itemType')
             //           if (val.group_info == v.id && dataType == v.dataType && v.itemType == itemType) {
             //             for(let d=0;d<v.data.length;d++){
             //               if(v.data[d] == val.id){
@@ -1742,8 +1709,6 @@ export default function userForeman() {
             //     }
             // }
             setGroupInfo(groupInfos)
-            console.log(arr, '获取到的数据11')
-            console.log(ArrList, '内容111')
             dispatch(setPhoneList(ArrList));
             dispatch(setWorker(ArrList))
             bkGetWorkerWage(groupInfos, ArrList);
@@ -1755,7 +1720,6 @@ export default function userForeman() {
             }];
             setOpenClickTime(clickDataArr)
             setClickData(clickDataArr);
-            console.log(cacheDaysArr, '日历传送')
             getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr);
             return;
           }
@@ -1820,84 +1784,112 @@ export default function userForeman() {
       }
     })
   }
+  const dealInputVal =(value)=> {
+    value = value.replace(/^0*(0\.|[1-9])/, "$1");
+    value = value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
+    value = value.replace(/^\./g, ""); //验证第一个字符是数字而不是字符
+    value = value.replace(/\.{1,}/g, "."); //只保留第一个.清除多余的
+    value = value
+      .replace(".", "$#$")
+      .replace(/\./g, "")
+      .replace("$#$", ".");
+    value = value.replace(/^(\-)*(\d*)\.(\d\d).*$/, "$1$2.$3"); //只能输入两个小数
+    value =
+      value.indexOf(".") > 0
+        ? value.split(".")[0].substring(0, 7) + "." + value.split(".")[1]
+        : value.substring(0, 7);
+        console.log(value,'value')
+    return value;
+  }
   // 输入框
   const handleInput = (type: string, e) => {
     let data = JSON.parse(JSON.stringify(model));
     if (type === 'details') {
       setNum(e.detail.value.length);
     }
-    if (type == 'wages') {
-      // 整数
-      if ((/(^[1-9]\d*$)/.test(e.detail.value))) {
-        if (e.detail.value.length > 7) {
-          Msg('最多输入七位数');
-          e.detail.value = e.detail.value.slice(0, 7);
-          data[type] = e.detail.value;
-          setModel(data);
-          return;
-        }
-      }
-      // 判断小数为两位
-      if (e.detail.value.toString().split(".").length > 1 && e.detail.value.toString().split(".")[1].length > 2) {
-        Msg('请输入两位小数或整数')
-        let ab_num: string | number = parseInt(e.detail.value.substring(0, e.detail.value.indexOf('.')));
-        const num_data = e.detail.value.replace(/\d+\.(\d*)/, '$1').substring(0, 2);
-        console.log(ab_num.toString().length, 'ab_num.toString().length')
-        if (ab_num.toString().length > 7) {
-          ab_num = (ab_num.toString()).substring(0, 7);
-        }
-        data[type] = parseFloat(ab_num + '.' + num_data);
-        console.log(parseFloat(ab_num + '.' + num_data),'111')
-        setModel(data);
-        return;
-      }
-      // var rePNum = /^\d+(.\d+)?$/;
-      // if (!rePNum.test(e.detail.value)) {
-      //   // alert('不是正数');
-      //   return false;
-      // }
-      // var num = /^([+]?)\d*\.?\d+$/; //验证数字
-      // var re2 = /^\d+(?:\.\d{1,2})?$/ //验证两位小数，小数可有可无，如果有最多两位
-      // if (!re2.test(e.detail.value)){
-      //   Msg('最多输入两位小数');
-      //   const data = e.detail.value.split('.');
-      // }else{
-      //   return;
-      // }
-      // return;
-      // let regex = new RegExp("^([0-9])$|^([1-9]*)$|^(([1-9]+|0)\.([1-9]{1}|[1-9]{1,2}|0{1}[1-9]{1}))$");
-      // regex.test(e.detail.value)
-      // if (!regex.test(e.detail.value)){
-      //   Msg('请输入两位小数或整数')
-      // }
-      // data[type] = e.detail.value;
-    }
-    // 工钱12位保留两个小数
-    if (type == 'amount' || type == 'price' || type == 'borrowing') {
-      if (/^(\d?)+(\.\d{0,2})?$/.test(e.detail.value)) { //正则验证，提现金额小数点后不能大于两位数字
-        let item = e.detail.value;
-        if (e.detail.value.toString().length > 7) {
-          item = (e.detail.value.toString()).substring(0, 7);
-          console.log((e.detail.value.toString()).substring(0, 7), '1111item')
-        }
-        console.log(item, 'item')
-        data[type] = item;
-      } else {
-        Msg('请输入两位小数或整数')
-        let ab_num: string | number = parseInt(e.detail.value.substring(0, e.detail.value.indexOf('.')));
-        const num_data = e.detail.value.replace(/\d+\.(\d*)/, '$1').substring(0, 2);
-        console.log(ab_num.toString().length, 'ab_num.toString().length')
-        if (ab_num.toString().length > 7) {
-          ab_num = (ab_num.toString()).substring(0, 7);
-        }
-        data[type] = parseFloat(ab_num + '.' + num_data);
-      }
-      console.log(data, 'data')
-      setModel(data);
-      return;
-    }
-    data[type] = e.detail.value;
-    setModel(data);
+    console.log(e.detail.value,'e');
+    console.log(type,'11')
+    // if (type == 'wages') {
+    //   data.wages = dealInputVal(e.detail.value);
+    //   console.log(data.wages,'data[type]')
+    //   setModel(data);
+    //   // if ((/^\d{0,7}(\.\d{0,2})?$/g).test(e.detail.value)){
+    //   //   data[type] = e.detail.value;
+    //   // }else{
+    //   //   Msg('最多输入七位数');
+    //   //   return;
+    //   // }
+    //   // 整数
+    //   // if ((/(^[1-9]\d*$)/.test(e.detail.value))) {
+    //   //   if (e.detail.value.length > 7) {
+    //   //     Msg('最多输入七位数');
+    //   //     e.detail.value = e.detail.value.slice(0, 7);
+    //   //     data[type] = e.detail.value;
+    //   //     setModel(data);
+    //   //     return;
+    //   //   }
+    //   // }
+    //   // // 判断小数为两位
+    //   // if (e.detail.value.toString().split(".").length > 1 && e.detail.value.toString().split(".")[1].length > 2) {
+    //   //   Msg('请输入两位小数或整数')
+    //   //   let ab_num: string | number = parseInt(e.detail.value.substring(0, e.detail.value.indexOf('.')));
+    //   //   const num_data = e.detail.value.replace(/\d+\.(\d*)/, '$1').substring(0, 2);
+    //   //   if (ab_num.toString().length > 7) {
+    //   //     ab_num = (ab_num.toString()).substring(0, 7);
+    //   //   }
+    //   //   data[type] = parseFloat(ab_num + '.' + num_data);
+    //   //   setModel(data);
+    //   //   return;
+    //   // }
+    //   // var rePNum = /^\d+(.\d+)?$/;
+    //   // if (!rePNum.test(e.detail.value)) {
+    //   //   // alert('不是正数');
+    //   //   return false;
+    //   // }
+    //   // var num = /^([+]?)\d*\.?\d+$/; //验证数字
+    //   // var re2 = /^\d+(?:\.\d{1,2})?$/ //验证两位小数，小数可有可无，如果有最多两位
+    //   // if (!re2.test(e.detail.value)){
+    //   //   Msg('最多输入两位小数');
+    //   //   const data = e.detail.value.split('.');
+    //   // }else{
+    //   //   return;
+    //   // }
+    //   // return;
+    //   // let regex = new RegExp("^([0-9])$|^([1-9]*)$|^(([1-9]+|0)\.([1-9]{1}|[1-9]{1,2}|0{1}[1-9]{1}))$");
+    //   // regex.test(e.detail.value)
+    //   // if (!regex.test(e.detail.value)){
+    //   //   Msg('请输入两位小数或整数')
+    //   // }
+    //   // data[type] = e.detail.value;
+    // }
+    // // 工钱12位保留两个小数
+    // if (type == 'amount' || type == 'price' || type == 'borrowing') {
+    //   if (/^(\d?)+(\.\d{0,2})?$/.test(e.detail.value)) { //正则验证，提现金额小数点后不能大于两位数字
+    //     let item;
+    //     console.log(e.detail.value.toString().length,'e.detail.value.toString().length')
+    //     if (e.detail.value.toString().length > 7) {
+    //       console.log((e.detail.value.toString()).substring(0, 7),'1111')
+    //       item = (e.detail.value.substring(0, 7));
+    //     }else{
+    //       item = e.detail.value;
+    //     }
+    //     data[type] = item;
+    //   } else {
+    //     Msg('请输入两位小数或整数')
+    //     let ab_num: string | number = parseInt(e.detail.value.substring(0, e.detail.value.indexOf('.')));
+    //     const num_data = e.detail.value.replace(/\d+\.(\d*)/, '$1').substring(0, 2);
+    //     if (ab_num.toString().length > 7) {
+    //       ab_num = (ab_num.toString()).substring(0, 7);
+    //     }
+    //     data[type] = parseFloat(ab_num + '.' + num_data);
+    //   }
+    //   setModel(data);
+    //   return;
+    // }
+    data[type] = dealInputVal(e.detail.value);
+    setTimeout(()=>{
+      setModel({...data});
+    },0)
   }
   // 创建项目
   const handleAddProject = () => {
@@ -2048,7 +2040,6 @@ export default function userForeman() {
   //   }
   // }
   const handleworkOvertime = (type: number, e: any) => {
-    console.log(3213, '1111');
     setTimeType(type)
     if (type === 1) {
       if (e.id === 4) {
@@ -2061,7 +2052,6 @@ export default function userForeman() {
           if (v.id === e.id) {
             v.click = !v.click;
             if (!v.click) {
-              console.log(addWorkArr, 'addWorkArr')
               for (let i = 0; i < addWorkArr.length; i++) {
                 if (addWorkArr[i].click) {
                   if (addWorkArr[i].id !== 1) {
@@ -2104,7 +2094,6 @@ export default function userForeman() {
           duration = '上班' + e.name + addTime;
         }
       }
-      console.log(duration, 'durationduration')
       if (e.id != 4) {
         setModel({ ...model, modalDuration: duration })
       }
@@ -2164,7 +2153,6 @@ export default function userForeman() {
       // } else {
 
       // }
-      console.log(duration, 'duration1')
       if (e.id != 2) {
         setModel({ ...model, modalDuration: duration })
       }
@@ -2305,7 +2293,6 @@ export default function userForeman() {
       let time = 0;
       for (let i = 0; i < timeArrs.length; i++) {
         if (timeArrs[i].click) {
-          console.log(timeArrs[i],'timeArrs[i]')
           setClickDay(timeArrs[i])
           // 选择工
           if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
@@ -2655,10 +2642,8 @@ export default function userForeman() {
     const types = Taro.getStorageSync(Type);
     // 时间
     let times: number = 0, work_time_hour = 0, work_time_type;
-    console.log(timeArr, 'timeArr')
     timeArr.map(v => {
       if (v.click) {
-        console.log(v.num)
         if (v.num || v.num == 0) {
           if (v.id !== 4) {
             times = v.num;
@@ -2706,7 +2691,6 @@ export default function userForeman() {
         tabData = v;
       }
     })
-    console.log(tabData, 'tabDatatabDatatabData')
     // 按量
     let itemType;
     for (let i = 0; i < contractorArr.item.length; i++) {
@@ -2865,7 +2849,6 @@ export default function userForeman() {
         Msg('请设置工资标准');
         return;
       }
-      console.log(projectArr,'projectArrprojectArrprojectArr')
       if (projectArr.length === 0) {
         let items = {
           group_name: '其他项目',
@@ -3514,14 +3497,12 @@ export default function userForeman() {
   }
   // 点击项目
   const handleProject = (v) => {
-    console.log(v,'vvvv')
     let data = JSON.parse(JSON.stringify(model));
     const arr = JSON.parse(JSON.stringify(projectArr))
     data.name = v.group_name + '-' + v.name;
     let groupInfos = v.group_id + ',' + v.id;
     setGroupInfo(groupInfos)
     getMonthDaysCurrent(new Date());
-    console.log(v.group_id + ',' + v.id)
     setProjectId(v.group_id + ',' + v.id)
     //工人
     if (identity === 2) {
@@ -4115,7 +4096,6 @@ export default function userForeman() {
         }
       }
       setAllClick(allClick)
-      console.log(allClick)
       setClickNum(numData.length);
       setWorkerItem(data);
       // return;
@@ -4299,7 +4279,6 @@ export default function userForeman() {
     userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`);
     noData = true;
     // return;
-    console.log(groupInfo, '')
     // return;
     // setRefresh(true)
   }
@@ -4500,6 +4479,7 @@ export default function userForeman() {
       }
     })
   }
+  console.log(model,'sddsadsadasdas')
   return {
     model,
     project,

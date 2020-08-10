@@ -307,12 +307,10 @@ export default function Foreman() {
     setModel({ ...data, groupName: '', teamName: '' })
     setCreateProjectDisplay(true), setShow(false)
   }
-  console.log(foremanTitle,'foremanTitle')
   // 多行文本框层级问题
   const handleTextare = ()=>{
     setAutoFocus(true)
   }
-  console.log(workerItem,'workerItemworkerItemworkerItem')
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -675,7 +673,7 @@ export default function Foreman() {
         <View className='publish-recruit-card'>
           <View className='publish-list-ditals'>
             <View>备注</View>
-            <CoverView onClick={() => handleTextare()} className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView' : ''}>
+              <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}>
             <Textarea
               focus={autoFocus}
               autoFocus={autoFocus}
