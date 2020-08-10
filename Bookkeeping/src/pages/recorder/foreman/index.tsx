@@ -590,7 +590,7 @@ export default function Foreman() {
               <Text className='pulish-list-title'>工钱</Text>
               <Input
                 className='publish-list-input'
-                type='digit'
+                type='text'
                 maxLength={16}
                 onInput={(e) => handleInput('wages', e)}
                 placeholder='工程量和单价未知时，可直接填写'
