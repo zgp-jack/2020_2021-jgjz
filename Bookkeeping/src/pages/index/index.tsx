@@ -297,6 +297,7 @@ export default function Index() {
   useDidShow(() => {
     // setHidden(true)
     // setCloseImage(false)
+    setShow(true);
     getAppShowData();
     const newTime = new Date().getTime() / 1000;
     let creationTime = Taro.getStorageSync(CreationTime);
@@ -375,7 +376,7 @@ export default function Index() {
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     if (Number(this_year_business_month) == montime) {
       setleftTime(false);
-    } else {
+    } else if(Number(this_year_business_month)<montime){
       setleftTime(true);
     }
     // let midParams = {
@@ -507,6 +508,8 @@ export default function Index() {
               }
             }
           } else {
+            setleftTime(false);
+            setrightTime(false);
             setStart(yeartime + '-' + montime)
           }
           // 最晚时间
@@ -605,6 +608,8 @@ export default function Index() {
   const handelChange = (e, type?: boolean) => {
     let midData = Taro.getStorageSync(MidData);
     if (!midData) {
+      setleftTime(false);
+      setrightTime(false);
       setDisplay(true)
       return;
     }
@@ -622,6 +627,7 @@ export default function Index() {
     // }else{
     let msg = e === 2 ? '开始为自己记工吧' : '开始为工人记工吧'
     setType(e);
+    setrightTime(false);
     Taro.setStorageSync(Type, e);
     if (!type) {
       Msg(msg)
@@ -921,7 +927,8 @@ export default function Index() {
                 <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons' />
               </View>}
             </View> :
-            <View className='heard-middle' onClick={() => { handelChange(1) }}>我是工人<Text className='switch'><Text className='test' />切换</Text>
+            <View className='heard-middle' onClick={() => { handelChange(1) }}>
+              <View>我是工人<Text className='switch'><Text className='test' />切换</Text></View>
               {prompt && <View onClick={(e) => { e.stopPropagation(), handlewhiteClose() }} className='tipes'>班组长记工点这里哦
                 <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons' />
               </View>}
