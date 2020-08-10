@@ -821,9 +821,9 @@ export default function EditDetails() {
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
           if (timeArr[i].id == 3) {
-            Time = '休息,'
+            Time = '休息，'
           } else {
-            Time = '上班' + timeArr[i].name+','
+            Time = '上班' + timeArr[i].name+'，'
           }
           break;
         }

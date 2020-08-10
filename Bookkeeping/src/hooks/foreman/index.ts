@@ -1033,7 +1033,7 @@ export default function userForeman() {
           if (res.data.length === 0) {
             // 设置一个工无加班
             // let duration = modalObj.duration;
-            const duration = '一个工,无加班';
+            const duration = '一个工，无加班';
             // 一个工所以为0直接设置
             const data = JSON.parse(JSON.stringify(timeArr));
             data[0].click = true;
@@ -1091,7 +1091,7 @@ export default function userForeman() {
                     setForemanTitle(res.data[i].leader_name || '');
                     // 设置一个工无加班
                     // let duration = modalObj.duration;
-                    const duration = '一个工,无加班';
+                    const duration = '一个工，无加班';
                     // 一个工所以为0直接设置
                     const data = JSON.parse(JSON.stringify(timeArr));
                     data[0].click = true;
@@ -1161,7 +1161,7 @@ export default function userForeman() {
                 setForemanTitle(res.data[0].leader_name || '');
                 // 设置一个工无加班
                 // let duration = modalObj.duration;
-                const duration = '一个工,无加班';
+                const duration = '一个工，无加班';
                 // 一个工所以为0直接设置
                 const data = JSON.parse(JSON.stringify(timeArr));
                 data[0].click = true;
@@ -1364,7 +1364,7 @@ export default function userForeman() {
                 objs.id = midData.worker_id;
                 setWorkerItem([objs])
                 const data = JSON.parse(JSON.stringify(timeArr));
-                const duration = '一个工,无加班'
+                const duration = '一个工，无加班'
                 data[0].click = true;
                 setProjectId(data[0].group_id + ',' + data[0].id)
                 setTimeArr(data);
@@ -1386,7 +1386,7 @@ export default function userForeman() {
                 return;
               } else {
                 const data = JSON.parse(JSON.stringify(timeArr));
-                const duration = '一个工,无加班'
+                const duration = '一个工，无加班'
                 data[0].click = true;
                 setProjectId(data[0].group_id + ',' + data[0].id)
                 setTimeArr(data);
@@ -1847,6 +1847,7 @@ export default function userForeman() {
           ab_num = (ab_num.toString()).substring(0, 7);
         }
         data[type] = parseFloat(ab_num + '.' + num_data);
+        console.log(parseFloat(ab_num + '.' + num_data),'111')
         setModel(data);
         return;
       }
@@ -2147,9 +2148,9 @@ export default function userForeman() {
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
           if (timeArr[i].id == 3) {
-            Time = '休息,'
+            Time = '休息，'
           } else {
-            Time = '上班' + timeArr[i].name + ','
+            Time = '上班' + timeArr[i].name + '，'
           }
           break;
         }
@@ -2187,12 +2188,12 @@ export default function userForeman() {
       for (let i = 0; i < addWorkArr.length; i++) {
         if (addWorkArr[i].click) {
           if (addWorkArr[i].id !== 1) {
-            addTime = ',加班' + addWorkArr[i].name
+            addTime = '，加班' + addWorkArr[i].name
           } else {
-            addTime = ',无加班'
+            addTime = '，无加班'
           }
         } else {
-          addTime = ',无加班'
+          addTime = '，无加班'
         }
       }
       let duration;
