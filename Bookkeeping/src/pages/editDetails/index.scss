@@ -3,6 +3,7 @@
   height: 100%;
   // margin-bottom: 400rpx;
   padding-bottom: 200rpx;
+  background: #FFFFFF;
 }
 .publish-recruit-card {
   position: relative;
@@ -285,7 +286,9 @@
   }
 }
 .textarea{
-  margin-left: 25rpx;
+  padding-left: 25rpx;
+  margin-right: 25rpx;
+  width: auto !important;
   textarea {
     z-index: 1;
   }

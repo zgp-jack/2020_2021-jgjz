@@ -429,8 +429,10 @@ export default function Index() {
     }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
-    if (!midData) {
-      setleftTime(false)
+    console.log(midData,'midDatamidDatamidData')
+    if(!midData){
+      setleftTime(false);
+      setrightTime(false)
     }
     let identity;
     if (type) {
@@ -493,9 +495,17 @@ export default function Index() {
           let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
           let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
           if (res.data.earliest_month) {
-            Taro.setStorageSync(Earliest_month, res.data.earliest_month);
-            setBusiness_month(res.data.this_year_business_month);
-            setStart(yeartime + '-' + res.data.this_year_business_month);
+            setStart(yeartime+'-'+res.data.this_year_business_month);
+            if(!e){
+              Taro.setStorageSync(Earliest_month,res.data.earliest_month);
+              if(Number(res.data.this_year_business_month)==montime){
+                setleftTime(false);
+                setrightTime(false);
+              }else{
+                setleftTime(true);
+                setrightTime(false);
+              }
+            }
           } else {
             setStart(yeartime + '-' + montime)
           }
@@ -526,14 +536,15 @@ export default function Index() {
           Msg(res.msg);
         }
       })
-        .catch((e) => {
-          if (e) {
-            setBusy(true)
-            setleftTime(false);
-            setNum('')
-          }
-          console.log(e)
-        })
+      .catch((e)=>{
+        if(e){
+          setBusy(true)
+          setleftTime(false);
+          setrightTime(false);
+          setNum('')
+        }
+        console.log(e)
+      })
     }
   }
   // 选择时间
@@ -859,8 +870,10 @@ export default function Index() {
     }
     let month = date.getMonth();
     month = ((month == 0) ? (12) : (month));
-    const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
-    getData(befD, 1);
+    const befD = date.getFullYear() + "-" + addZero(date.getMonth() + 1);
+    console.log(date.getFullYear() + "-" + addZero(date.getMonth() + 1),'======')
+    console.log(befD,'befD')
+    getData(befD,type);
     setTime(befD);
     // 月份
     setMonth(befD.substring(5, 7))

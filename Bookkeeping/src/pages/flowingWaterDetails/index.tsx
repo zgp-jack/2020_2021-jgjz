@@ -119,7 +119,7 @@ export default function FlowingWaterDetails() {
               <View className='wages-title'>工 资 标 准：</View>
               <View className='wages-list'>上班： {parseFloat(obj.wage_worktime_define)}小时算1个工<Text className='wages-list-blued'>{obj.wage_money}</Text>元/个工</View>
               <View className='wages-list'>
-                加班： {obj.overtime_type == '1' ? <Text>按小时算 <Text className='wages-list-blued'>{obj.wage_overtime_money}</Text>元/小时</Text> : <Text>按工天算 <Text>{parseFloat(obj.wage_overtime)}</Text>小时算一个工</Text>}
+  加班： {obj.overtime_type == '1' ? <Text>按小时算<Text className='wages-list-blued'>{obj.wage_overtime_money}</Text>元/小时</Text> : <Text>按工天算<Text>{parseFloat(obj.wage_overtime)}</Text>小时算1个工<Text className='wages-list-blued'>{(obj.wage_money/obj.wage_overtime).toFixed(2)}</Text>元/小时</Text>}
               </View>
             </View>
           </View>

@@ -72,12 +72,15 @@ export default function AttendanceSheet() {
     setdateEnd(yeartime+'-'+montime);
     if(!earliest_month){
       setleftTime(false);
+      setrightTime(false);
       setDatestart(yeartime+'-'+montime);
     }else{
       setDatestart(earliest_month);
       if(Number(earliest_month.split('-')[0]) == yeartime){
+        setrightTime(false);
         Number(earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
       }else if(Number(earliest_month.split('-')[0]) < yeartime) {
+        setrightTime(false);
         setleftTime(true);
       }
     }
@@ -151,6 +154,8 @@ export default function AttendanceSheet() {
       }
     })
     .catch((e)=>{
+      setleftTime(false);
+      setrightTime(false);
       setBusy(true)
       setleftTime(false);
       setrightTime(false);
@@ -798,7 +803,7 @@ export default function AttendanceSheet() {
       }
     }
     })
-    .catch((e) => {
+    .catch((e)=>{
       setBusy(true)
       setleftTime(false);
       setrightTime(false);

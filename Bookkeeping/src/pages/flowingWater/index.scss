@@ -7,6 +7,10 @@
   padding-bottom: 200rpx;
 }
 .time{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
   height: 75rpx;
   line-height: 75rpx;
   // padding: 0 30rpsx;
@@ -14,6 +18,10 @@
   background: #fff;
 }
 .time-color{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
   font-size: 26rpx;
   color: rgba(166, 166, 166, 1);
   margin-left: 30rpx;
@@ -21,7 +29,8 @@
 .content{
   margin-top: 20rpx;
   height: 100%;
-  background: #fff
+  background: #fff;
+  margin-top: 95rpx;
 }
 .content-list{
   background: #fff;
@@ -117,14 +126,14 @@
   margin: auto 0;
   color: rgba(254, 99, 43, 1);
   font-size: 24rpx;
-  width: 25%;
+  width: 30%;
   text-align: right;
 }
 .content-list-subclass-borrow{
   margin: auto 0;
   color: #0099FF;
   font-size: 24rpx;
-  width: 39%;
+  width: 30%;
   text-align: right;
 }
 .moneyicon{
@@ -233,17 +242,17 @@
 }
 .leftIcon {
   // margin-right: 15rpx;
-  height: 22rpx;
-  width: 22rpx;
+  height: 20rpx;
+  width: 15rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
   background-size: cover;
 }
 
 .righticon {
-  margin-left: 3rpx;
-  height: 22rpx;
-  width: 22rpx;
-  // display: inline-block;
-  // background: url(../../assets/images/right.png) no-repeat no-repeat;
+  margin-left: 10rpx;
+  height: 20rpx;
+  width: 15rpx;
   background-size: cover;
 }
 .icon{
