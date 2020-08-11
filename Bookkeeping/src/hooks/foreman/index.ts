@@ -601,7 +601,7 @@ export default function userForeman() {
                 }
               }
               // 默认加上自己
-              const workList = [objs, ...arr]
+              const workList = [...arr]
               // 设置工资标准
               if (res.data.default_group_workers_has_wage.length>0){
                 for (let i = 0; i < workList.length; i++) {
