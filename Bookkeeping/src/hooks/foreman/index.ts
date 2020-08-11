@@ -665,6 +665,7 @@ export default function userForeman() {
   const handleClickCalendar = (v: any) => {
     console.log(v,'vvvvv')
     const date = v.year + '-' + addZero(v.month) + '-' + addZero(v.date);
+    console.log(date,'datte')
     const dates = (new Date(date)).valueOf();
     const newDate = (new Date(toDayString)).valueOf();
     console.log(dates,'date')
