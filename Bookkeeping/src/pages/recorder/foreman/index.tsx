@@ -692,9 +692,10 @@ export default function Foreman() {
             <WordsTotal num={num} />
           </View>
         </View>
-        <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} /></View>
+        <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} />
+        <View className='clear'></View>
+        </View>
       </View>
-      <View className='clear'></View>
       <View className='foreman-footer'>
           <View className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</View>
         <View className='footer-right' onClick={()=>handlePreservation(0)}>保存</View>

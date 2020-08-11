@@ -447,13 +447,14 @@ export default function userForeman() {
             // 把自己加进去
             let List: any[] = [];
             if (res.data.latest_group_workers.length > 0) {
-              for (let i = 0; i < res.data.latest_group_workers.length; i++) {
-                if (res.data.latest_group_workers[i].list.length > 0) {
-                  for (let j = 0; j < res.data.latest_group_workers[i].list.length; j++) {
-                    List.push(res.data.latest_group_workers[i].list[j]);
-                  }
-                }
-              }
+              List = res.data.latest_group_workers;
+              // for (let i = 0; i < res.data.latest_group_workers.length; i++) {
+              //   if (res.data.latest_group_workers[i].list.length > 0) {
+              //     for (let j = 0; j < res.data.latest_group_workers[i].list.length; j++) {
+              //       List.push(res.data.latest_group_workers[i].list[j]);
+              //     }
+              //   }
+              // }
             }
             const workArr = [objs, ...List];
             // 设置是够设置工资标准
@@ -2690,10 +2691,10 @@ export default function userForeman() {
     // 记工
     let params: any = {};
     if (tabData.id == 1) {
-      if (!data.work || data.work == 0) {
-        Msg('请设置工资标准');
-        return;
-      }
+      // if (!data.work || data.work == 0) {
+      //   Msg('请设置工资标准');
+      //   return;
+      // }
       params = {
         // 记工类型
         business_type: tabData.id,
@@ -2747,10 +2748,10 @@ export default function userForeman() {
           work_time_type,
         }
       } else {
-        if (!data.work || data.work == 0) {
-          Msg('请设置工资标准');
-          return;
-        }
+        // if (!data.work || data.work == 0) {
+        //   Msg('请设置工资标准');
+        //   return;
+        // }
         // 按天
         params = {
           // 记工类型
