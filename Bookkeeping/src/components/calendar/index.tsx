@@ -54,6 +54,9 @@ export default function CalendarModal({
     { id: 6, name: '五' },
     { id: 7, name: '六' },
   ]
+  const [start,setStart] = useState<number>(0)
+  const [end,setEnd] = useState<number>(0)
+  const [slideFlag, setSlideFlag] = useState<boolean>(false)
   // // 设置点击了的日历
   // const [clickData,setClickData] = useState<any[]>([])
   //农历1949-2100年查询表
@@ -474,6 +477,61 @@ export default function CalendarModal({
   //   setClickData([]);
   // }
   // console.log(calendarDays,'calendarDays')
+  const handleTouch = (e)=>{
+    console.log(e);
+    setStart(e.changedTouches[0].pageX)
+  }
+  const handleEnd = (e)=>{
+    console.log(e);
+    if (!slideFlag){
+      setSlideFlag(true)
+      setEnd(e.changedTouches[0].pageX);
+    }
+    let disX = e.changedTouches[0].pageX - start;
+    if (disX < -60) {
+      // this.setData({
+      //   slideOne: "animated fadeOutLeft",
+      //   slideTwo: "animated fadeInRight"
+      // })
+      setTimeout(() => {
+        tapNext();
+      }, 300);
+      setTimeout(() => {
+        // this.setData({
+        //   slideFlag: false,
+        //   slideOne: "",
+        //   slideTwo: ""
+        // })
+        setSlideFlag(false);
+      }, 800);
+    } else if (disX > 60) {
+      // this.setData({
+      //   slideOne: "animated fadeOutRight",
+      //   slideTwo: "animated fadeInLeft"
+      // })
+      setTimeout(() => {
+        tapPrev();
+      }, 300);
+      setTimeout(() => {
+        // this.setData({
+        //   slideFlag: false,
+        //   slideOne: "",
+        //   slideTwo: ""
+        // })
+        setSlideFlag(false);
+      }, 800);
+    }else{
+      setSlideFlag(false);
+    }
+  }
+  const tapNext = ()=>{
+    console.log(111);
+    onScrollToUpper()
+  }
+  const tapPrev = ()=>{
+    console.log(222);
+    onScrollToLower();
+  }
   return(
     <View>
     {display &&
@@ -492,8 +550,8 @@ export default function CalendarModal({
           </View>
           <View><Text className='content-tips-box'></Text>表示当天已有记工</View>
         </View>
-        <View className='content-times'>
-          <ScrollView
+          <View className='content-times' onTouchStart={(e) => handleTouch(e)} onTouchEnd={(e) => handleEnd(e)} >
+          {/* <ScrollView
             className='scrollView'
             scrollX
             scrollWithAnimation
@@ -501,7 +559,7 @@ export default function CalendarModal({
             lowerThreshold={50}
             onScrollToUpper={onScrollToUpper}
             onScrollToLower={onScrollToLower}
-            >
+            > */}
             <View className='scrollView-content'>
             <View className='content-weekes'>
               {weeks.map((v) => (
@@ -543,7 +601,7 @@ export default function CalendarModal({
             ))}
           </View>
           </View>
-        </ScrollView>
+        {/* </ScrollView> */}
         </View>
       </View>
     </View>

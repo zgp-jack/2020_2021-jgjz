@@ -311,6 +311,10 @@ export default function Foreman() {
   const handleTextare = ()=>{
     setAutoFocus(true)
   }
+  const handleCurrent = ()=>{
+    setCalendarModalDisplay(true);
+    getMonthDaysCurrent(new Date())
+  }
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -650,7 +654,7 @@ export default function Foreman() {
       }
       {/* ===== */}
       <View className='newTime'>
-        <View className='publish-recruit-card' onClick={() => setCalendarModalDisplay(true)}>
+        <View className='publish-recruit-card' onClick={handleCurrent}>
           {/* <Picker
             mode='date'
             onChange={(e) => handleInput('time', e)}
