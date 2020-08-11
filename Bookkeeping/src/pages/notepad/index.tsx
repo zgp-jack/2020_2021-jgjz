@@ -300,14 +300,14 @@ export default function Notepad() {
       </View>
       {/* 内容 */}
       {data.length === 0 && !isSheach && !busy &&
-      <View className='content'>
+      <View className='content1'>
         <View className='noData'>
           <View>您今天还没有填写过记事本哦~</View>
           <View>点击下方<Text className='blued'>【记事】</Text>按钮，添加您的记事信息</View>
         </View>
       </View>}
         {data.length === 0 && isSheach &&
-        <View className='content'>
+        <View className='content1'>
           <View className='noData'>
             <View>暂无数据</View>
           </View>

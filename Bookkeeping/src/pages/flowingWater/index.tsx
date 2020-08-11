@@ -52,6 +52,8 @@ export default function FlowingWater() {
   const [leftTime, setleftTime] = useState<boolean>()
   // 判断右边是否需要icon
   const [rightTime, setrightTime] = useState<boolean>(false)
+  // 判断是否禁用Swipe
+  const [isSwipe,setisSwipe] = useState<boolean>(false)
   // 数据异常
   const [busy, setBusy] = useState<boolean>(false)
   // 获取数据
@@ -74,6 +76,7 @@ export default function FlowingWater() {
         setleftTime(true);
       }
     }
+    setAllcheck(false);
     const date = JSON.stringify(new Date()).slice(1, 11)
     setYear(date.slice(0, 4) + '年');
     setmon(date.slice(5, 7) + '月')
@@ -86,7 +89,6 @@ export default function FlowingWater() {
   const type = Taro.getStorageSync(Type);
   setIdentity(type)
   const getList = (times?:string, lastM?:string)=>{
-    console.log(times, lastM);
     let start_date, end_date;
     if (times && lastM){
       start_date = times;
@@ -128,6 +130,7 @@ export default function FlowingWater() {
           setData({item:res.data.data})
           dispatch(setFlowingWater(res.data))
         }else{
+          setAllcheck(false);
           setIsCheckOut(false)
           setData({ item: [] })
         }
@@ -200,8 +203,10 @@ export default function FlowingWater() {
   const handleCheckboxBtn = (type:number)=>{
     // 0ture 1false
     if(type === 0){
+      setisSwipe(true);
       setIsCheckOut(true)
     }else{
+      setisSwipe(false);
       const arr = JSON.parse(JSON.stringify(data.item));
       const list = arr.map(v => {
         v.arr.map(val => {
@@ -245,9 +250,10 @@ export default function FlowingWater() {
     }
     if(e.text == '删除'){
       Taro.showModal({
-        title:'提示',
         content:'数据一经删除将无法恢复。请谨慎操作哦！',
         showCancel: true,
+        confirmColor:'#0099FF',
+        cancelColor:'#797979',
         success:(res)=>{
           if (res.confirm == true) {
             bkDeleteBusinessAction(params).then(res => {
@@ -373,10 +379,10 @@ export default function FlowingWater() {
     }
     // 总共多少笔
     Taro.showModal({
-      title: "提示",
       content: `本页共${num}笔记工，即将删除选中的${delNum}笔。数据一经删除将无法恢复。请谨慎操作哦！`,
       showCancel: true,
-      confirmText: '确认删除',
+      confirmColor:'#0099FF',
+      cancelColor:'#797979',
       success: (res) => {
         if (res.confirm == true) {
           bkDeleteBusinessAction(params).then(res => {
@@ -500,26 +506,31 @@ export default function FlowingWater() {
                     <View onClick={(e)=>{e.preventDefault(),e.stopPropagation()}}>
                     <AtSwipeAction
                       autoClose={false}
+                      disabled={isSwipe}
                       onOpened={(e) => { e.preventDefault(),e.stopPropagation()}}
                       onClick={(e) => handleSwipeAction(e,val)}
                       options={[
                         { 
                           text: '修改',
                           style: {
-                            backgroundColor: '#C8C7CF'
+                            backgroundColor: '#C8C7CF',
+                            paddingLeft: '46rpx',
+                            paddingRight: '46rpx'
                           },
                         },
                         {
                           text: '删除',
                           style: {
-                            backgroundColor: '#FF4949'
+                            backgroundColor: '#FF4949',
+                            paddingLeft: '46rpx',
+                            paddingRight: '46rpx'
                           }
                         }
                       ]}
                     >
                     <View key={val.id} className='content-list-subclass' onClick={(e)=>handleJump(e,v,val)}>
                       <View className='content-list-subclass-left'>
-                            {isCheckOut && <View><Checkbox checked={val.checkClick} className='checkbox' color='#0099FF' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
+                            {isCheckOut && <View className='checkboxitem'><Checkbox checked={val.checkClick} className='checkbox' color='#0099FF' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
                         {identity == 1?
                         <View className=''>
                           <View>{val.workername || '-'} {(val.note || val.view_images.length>0)&&<Text className='icon'>备</Text>}</View>
@@ -531,10 +542,12 @@ export default function FlowingWater() {
                           <View className='content-list-subclass-left-list'>我在{val.group_info}记了一笔
                           {val.business_type == '1' ? '点工' : (val.business_type == '2' ? '包工' : '借支')}
                           </View>
-                          {(val.note || val.view_images.length>0)&&<Text className='icon workericon'>备</Text>}
+                          <View className='workericon'>
+                            {(val.note || val.view_images.length>0)&&<Text className='icon'>备</Text>}
+                          </View>
                         </View>}
                       </View>
-                      <View className={val.business_type == '3'?'content-list-subclass-borrow':'content-list-subclass-money'}>¥{val.money && (parseFloat(val.money)>9999999.99)?String(val.money).slice(0,8)+'...':val.money||'0.00'}<View className="moneyicon">></View></View>
+                      <View className={val.business_type == '3'?'content-list-subclass-borrow':'content-list-subclass-money'}>¥{val.money && (parseFloat(val.money)>9999999.99)?String(val.money).slice(0,8)+'...':val.money||'0.00'}<View className="moneyicon"></View></View>
                     </View>
                     </AtSwipeAction>
                     </View>

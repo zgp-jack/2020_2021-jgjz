@@ -1,10 +1,11 @@
 .flowingWater{
   // margin-bottom: 200rpx;
-  height: 100vh;
+  height: 100%;
   // margin-bottom: 200rpx;
   width: 100%;
   overflow-y: scroll;
-  padding-bottom: 200rpx;
+  padding-top: 75rpx;
+  // padding-bottom: 200rpx;
 }
 .time{
   position: fixed;
@@ -30,7 +31,6 @@
   margin-top: 20rpx;
   height: 100%;
   background: #fff;
-  margin-top: 95rpx;
 }
 .content-list{
   background: #fff;
@@ -99,47 +99,71 @@
   display: flex;
   justify-content: space-between;
   background: rgba(240, 240, 240, 1);
-  padding: 30rpx 22rpx; 
+  padding: 30rpx;
   border-bottom: 1rpx solid rgba(231, 231, 231, 1);
 }
 .content-list-subclass-left{
   &>.worker{
     display: flex;
   }
+  .checkboxitem{
+    margin-left: -10rpx;
+  }
   display: flex;
+  width: 72%;
   color: rgba(106, 106, 106, 1);
   font-size: 26rpx;
-  margin-left: 20rpx;
 }
 .content-list-subclass-left-title{
   color: rgba(139, 139, 139, 1);
   font-size: 22rpx;
-  // width: 93%;
+  max-height: 60rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: normal !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .content-list-subclass-left-list{
   color: rgba(139, 139, 139, 1);
   font-size: 22rpx;
   margin-top: 20rpx;
-  display: inline-block;
+  max-height: 60rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: normal !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .content-list-subclass-money{
   margin: auto 0;
   color: rgba(254, 99, 43, 1);
   font-size: 24rpx;
-  width: 30%;
+  width: 27%;
   text-align: right;
 }
 .content-list-subclass-borrow{
   margin: auto 0;
   color: #0099FF;
   font-size: 24rpx;
-  width: 30%;
+  width: 27%;
   text-align: right;
 }
 .moneyicon{
   display: inline-block;
   color: #A2A2A2;
-  margin-left: 5rpx;
+  content: " ";
+  height: 15rpx;
+  width: 15rpx;
+  border-width: 2px 2px 0 0;
+  border-color: #A2A2A2;
+  border-style: solid;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 .checkbox{
   z-index: 20;
@@ -193,7 +217,7 @@
   background:rgba(0, 153, 255, 1);
   border-radius:10rpx;
   color: #fff;
-  padding-left: 22rpx;
+  text-align: center;
 }
 .close{
   width:145rpx;
@@ -269,7 +293,7 @@
   color:rgba(255, 255, 255, 1);
 }
 .workericon{
-  margin-top:24rpx;
+  margin-top:18rpx;
 }
 .bulue{
   color: rgba(20, 146, 255, 1);

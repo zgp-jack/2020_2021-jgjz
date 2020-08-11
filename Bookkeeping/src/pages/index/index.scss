@@ -21,8 +21,8 @@
   height: 130rpx;
   line-height: 130rpx;
   display: flex;
-  justify-items: center;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 }
 .heard-left {
   font-size: 32rpx;
@@ -31,12 +31,18 @@
 
 .flex-month{
   display: flex;
+  width: 30%;
+  justify-content: center;
+  text-align: center;
 }
 
 .heard-middle{
   position: relative;
+  width: 45%;
   font-size: 36rpx;
   font-weight: bold;
+  justify-content: center;
+  text-align: center;
 }
 .switch{
   font-size: 22rpx;
@@ -291,7 +297,6 @@
 }
 .leftIcon{
   margin-right: 26rpx;
-  margin-left: 50rpx;
   height: 22rpx;
   width: 22rpx;
   background-size: cover;
@@ -460,8 +465,10 @@
 }
 
 .cloud{
-  width: 100rpx;
+  width: 25%;
   margin-top: 20rpx;
+  justify-content: center;
+  text-align: center;
 }
 .AtBadge{
   .at-badge__num{
@@ -493,7 +500,7 @@
 }
 .tipes{
   position: absolute;
-  left: 0rpx;
+  left: 50rpx;
   bottom: 0rpx;
   height: 35rpx;
   width: 200rpx;
