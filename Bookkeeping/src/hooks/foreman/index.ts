@@ -273,6 +273,8 @@ export default function userForeman() {
   const [clickDay, setClickDay] = useState<any>();
   // 点击加班时长
   const [clickTime, setClickTime] = useState<any>()
+  // 获取后台传的今天的日期
+  const [toDayString, setToDayString] = useState<string>('');
   // const [noData, setNoData] = useState<boolean>(false)
   // 刷新
   //农历1949-2100年查询表
@@ -416,6 +418,7 @@ export default function userForeman() {
       setClickData([dayObj])
       setTimeData([dayObj]);
       setToday([dayObj])
+      setToDayString(today)
       // 设置加班时长默认值
       const timeTitle = '上班一个工，无加班';
       // 一个工
@@ -660,11 +663,14 @@ export default function userForeman() {
   }
   // 日历点击
   const handleClickCalendar = (v: any) => {
+    console.log(v,'vvvvv')
     const date = v.year + '-' + addZero(v.month) + '-' + addZero(v.date);
     const dates = (new Date(date)).valueOf();
-    const newDate = (new Date()).valueOf();
+    const newDate = (new Date(toDayString)).valueOf();
+    console.log(dates,'date')
+    console.log(newDate,'newDate')
     if (newDate < dates) {
-      // Msg('请设置今天之前的日期');
+      Msg('请设置今天之前的日期');
       return;
     }
     const clickDataItem = JSON.parse(JSON.stringify(clickData));
