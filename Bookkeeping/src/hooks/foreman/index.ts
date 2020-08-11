@@ -433,7 +433,7 @@ export default function userForeman() {
       // 日历默认今天
       getMonthDaysCurrent(new Date(), [dayObj]);
       // 把项目设置存起来
-      setProjectArr(res.data.latest_group_info)
+      setProjectArr(res.data.group_info)
       if (res.data.latest_group_info) {
         if (res.data.latest_group_info.id) {
           title = res.data.latest_group_info.name[0] + '-' + res.data.latest_group_info.name[1];
@@ -459,6 +459,7 @@ export default function userForeman() {
             // 设置是够设置工资标准
             let type = Taro.getStorageSync(Type);
             if (res.data.latest_group_workers_has_wage.length > 0) {
+              console.log(1111)
               if(type == 1){
                 for (let i = 0; i < workArr.length; i++) {
                   for (let j = 0; j < res.data.latest_group_workers_has_wage.length; j++) {
@@ -483,6 +484,11 @@ export default function userForeman() {
                 }
                 wageStandardData.type = parseInt(data.overtime_type);
                 sum = data.money;
+                if (data.worker_name){
+                  setForemanTitle(data.worker_name)
+                }else{
+                  setForemanTitle('')
+                }
                 setWageStandard(wageStandardData)
               }
             }
@@ -544,7 +550,14 @@ export default function userForeman() {
               }
               wageStandardData.type = parseInt(data.overtime_type);
               sum = data.money;
+              if (data.worker_name) {
+                setForemanTitle(data.worker_name)
+              } else {
+                setForemanTitle('')
+              }
               setWageStandard(wageStandardData)
+            }else{
+              setForemanTitle('')
             }
             setProjectId(res.data.latest_group_info.id)
             setGroupInfo(res.data.latest_group_info.id)
@@ -560,6 +573,7 @@ export default function userForeman() {
           const workArr = [objs];
           dispatch(setPhoneList(workArr));
           setWorkerItem(workArr);
+          setForemanTitle('')
           let type = Taro.getStorageSync(Type);
           if(type == 1){
             // bkGetProjectTeamAction({}).then(resData => {
@@ -1784,11 +1798,25 @@ export default function userForeman() {
       }
     })
   }
-  const dealInputVal =(value)=> {
+  const dealInputVal =(value,num?:number,type?:string)=> {
     value = value.replace(/^0*(0\.|[1-9])/, "$1");
     value = value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
     value = value.replace(/^\./g, ""); //验证第一个字符是数字而不是字符
     value = value.replace(/\.{1,}/g, "."); //只保留第一个.清除多余的
+    if(num){
+      if (value.split(".")[1] && value.split(".")[1].length>2){
+        Msg('最多输入两位小数')
+      }
+      if(num ===7){
+        if (value.split(".")[0] && value.split(".")[0].length>num){
+          Msg('最多输入七位数')
+        }
+      } else if (num === 14){
+        if (value.split(".")[0] && value.split(".")[0].length > num) {
+          Msg('最多输入十四位数')
+        }
+      }
+    }
     value = value
       .replace(".", "$#$")
       .replace(/\./g, "")
@@ -1796,9 +1824,14 @@ export default function userForeman() {
     value = value.replace(/^(\-)*(\d*)\.(\d\d).*$/, "$1$2.$3"); //只能输入两个小数
     value =
       value.indexOf(".") > 0
-        ? value.split(".")[0].substring(0, 7) + "." + value.split(".")[1]
-        : value.substring(0, 7);
+        ? value.split(".")[0].substring(0, num) + "." + value.split(".")[1]
+        : value.substring(0, num);
         console.log(value,'value')
+    let data = JSON.parse(JSON.stringify(model));
+    if(type){
+      data[type] = value;
+      setModel({ ...data });
+    }
     return value;
   }
   // 输入框
@@ -1807,89 +1840,14 @@ export default function userForeman() {
     if (type === 'details') {
       setNum(e.detail.value.length);
     }
-    console.log(e.detail.value,'e');
-    console.log(type,'11')
-    // if (type == 'wages') {
-    //   data.wages = dealInputVal(e.detail.value);
-    //   console.log(data.wages,'data[type]')
-    //   setModel(data);
-    //   // if ((/^\d{0,7}(\.\d{0,2})?$/g).test(e.detail.value)){
-    //   //   data[type] = e.detail.value;
-    //   // }else{
-    //   //   Msg('最多输入七位数');
-    //   //   return;
-    //   // }
-    //   // 整数
-    //   // if ((/(^[1-9]\d*$)/.test(e.detail.value))) {
-    //   //   if (e.detail.value.length > 7) {
-    //   //     Msg('最多输入七位数');
-    //   //     e.detail.value = e.detail.value.slice(0, 7);
-    //   //     data[type] = e.detail.value;
-    //   //     setModel(data);
-    //   //     return;
-    //   //   }
-    //   // }
-    //   // // 判断小数为两位
-    //   // if (e.detail.value.toString().split(".").length > 1 && e.detail.value.toString().split(".")[1].length > 2) {
-    //   //   Msg('请输入两位小数或整数')
-    //   //   let ab_num: string | number = parseInt(e.detail.value.substring(0, e.detail.value.indexOf('.')));
-    //   //   const num_data = e.detail.value.replace(/\d+\.(\d*)/, '$1').substring(0, 2);
-    //   //   if (ab_num.toString().length > 7) {
-    //   //     ab_num = (ab_num.toString()).substring(0, 7);
-    //   //   }
-    //   //   data[type] = parseFloat(ab_num + '.' + num_data);
-    //   //   setModel(data);
-    //   //   return;
-    //   // }
-    //   // var rePNum = /^\d+(.\d+)?$/;
-    //   // if (!rePNum.test(e.detail.value)) {
-    //   //   // alert('不是正数');
-    //   //   return false;
-    //   // }
-    //   // var num = /^([+]?)\d*\.?\d+$/; //验证数字
-    //   // var re2 = /^\d+(?:\.\d{1,2})?$/ //验证两位小数，小数可有可无，如果有最多两位
-    //   // if (!re2.test(e.detail.value)){
-    //   //   Msg('最多输入两位小数');
-    //   //   const data = e.detail.value.split('.');
-    //   // }else{
-    //   //   return;
-    //   // }
-    //   // return;
-    //   // let regex = new RegExp("^([0-9])$|^([1-9]*)$|^(([1-9]+|0)\.([1-9]{1}|[1-9]{1,2}|0{1}[1-9]{1}))$");
-    //   // regex.test(e.detail.value)
-    //   // if (!regex.test(e.detail.value)){
-    //   //   Msg('请输入两位小数或整数')
-    //   // }
-    //   // data[type] = e.detail.value;
-    // }
-    // // 工钱12位保留两个小数
-    // if (type == 'amount' || type == 'price' || type == 'borrowing') {
-    //   if (/^(\d?)+(\.\d{0,2})?$/.test(e.detail.value)) { //正则验证，提现金额小数点后不能大于两位数字
-    //     let item;
-    //     console.log(e.detail.value.toString().length,'e.detail.value.toString().length')
-    //     if (e.detail.value.toString().length > 7) {
-    //       console.log((e.detail.value.toString()).substring(0, 7),'1111')
-    //       item = (e.detail.value.substring(0, 7));
-    //     }else{
-    //       item = e.detail.value;
-    //     }
-    //     data[type] = item;
-    //   } else {
-    //     Msg('请输入两位小数或整数')
-    //     let ab_num: string | number = parseInt(e.detail.value.substring(0, e.detail.value.indexOf('.')));
-    //     const num_data = e.detail.value.replace(/\d+\.(\d*)/, '$1').substring(0, 2);
-    //     if (ab_num.toString().length > 7) {
-    //       ab_num = (ab_num.toString()).substring(0, 7);
-    //     }
-    //     data[type] = parseFloat(ab_num + '.' + num_data);
-    //   }
-    //   setModel(data);
-    //   return;
-    // }
-    data[type] = dealInputVal(e.detail.value);
-    setTimeout(()=>{
-      setModel({...data});
-    },0)
+    if(type =='amount'|| type =='price'){
+      return dealInputVal(e.detail.value, 7, type);
+    }
+    if(type == 'wages'){
+      return dealInputVal(e.detail.value, 14,type);
+    }
+    data[type] = e.detail.value
+    setModel({...data});
   }
   // 创建项目
   const handleAddProject = () => {
@@ -2698,6 +2656,8 @@ export default function userForeman() {
         itemType = contractorArr.item[i].id;
       }
     }
+    console.log(itemType, 'itemTypeitemType');
+    console.log(tabData.id, 'abData.id')
     if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
       if (data.work == 0) {
         Msg('上班标准必须大于0')
@@ -2730,6 +2690,10 @@ export default function userForeman() {
     // 记工
     let params: any = {};
     if (tabData.id == 1) {
+      if (!data.work || data.work == 0) {
+        Msg('请设置工资标准');
+        return;
+      }
       params = {
         // 记工类型
         business_type: tabData.id,
@@ -2783,6 +2747,10 @@ export default function userForeman() {
           work_time_type,
         }
       } else {
+        if (!data.work || data.work == 0) {
+          Msg('请设置工资标准');
+          return;
+        }
         // 按天
         params = {
           // 记工类型
@@ -2845,10 +2813,6 @@ export default function userForeman() {
     // 记工(包工按量)
     // 工人记工的时候，没有选择项目名称，为他默认一个
     if (identity === 2) {
-      if (!data.work || data.work == 0 ){
-        Msg('请设置工资标准');
-        return;
-      }
       if (projectArr.length === 0) {
         let items = {
           group_name: '其他项目',
