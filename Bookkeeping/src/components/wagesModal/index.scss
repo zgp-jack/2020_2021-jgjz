@@ -258,6 +258,11 @@
   margin-left: 300rpx;
   padding-top: 20rpx;
 }
+.tabList{
+  display: flex;
+  margin-left: 100rpx;
+  padding-top: 20rpx;
+}
 .setWages{
   position: absolute;
   left:-200rpx;
@@ -282,9 +287,9 @@
   padding-left: 20rpx;
 }
 .lookWagesClick{
-  position: absolute;
-  left:-200rpx;
-  top: 0;
+  // position: absolute;
+  // left:-200rpx;
+  // top: 0;
   width:236rpx;
   height:65rpx;
   line-height: 65rpx;
@@ -292,9 +297,13 @@
   border-radius:33rpx;
   color: rgba(152, 150, 150, 1);
   background:rgba(235, 232, 232, 1);
+  padding-right: 20rpx;
 }
 .setWagesClick{
-  position: relative;
+  // position: relative;
+  position: absolute;
+  left: 320rpx;
+  top: 20rpx;
   width:260rpx;
   height:65rpx;
   line-height: 65rpx;
@@ -302,7 +311,6 @@
   color: #fff;
   background:rgba(0, 153, 255, 1);
   border-radius:33rpx;
-  padding-left: 20rpx;
 }
 .wagesModal-standard-box-list-look-title{
   color: rgba(47, 53, 65, 1);
