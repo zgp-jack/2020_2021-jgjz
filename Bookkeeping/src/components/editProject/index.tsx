@@ -25,6 +25,7 @@ export default function EditProject({ display, handleClose, data, handleEditProj
                 className='createProject-complaintModal-content-textarea'
                 placeholder='请输入项目名称'
                 value={data.group_name}
+                maxLength={10}
                 onInput={(e) => handleEditProjectData('group_name', e)}
               />
             </View>
@@ -34,6 +35,7 @@ export default function EditProject({ display, handleClose, data, handleEditProj
                 className='createProject-complaintModal-content-textarea'
                 placeholder='请输入班组名称'
                 value={data.team_name}
+                maxLength={20}
                 onInput={(e) => handleEditProjectData('team_name', e)}
               />
             </View>

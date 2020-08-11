@@ -394,8 +394,12 @@ export default function Foreman() {
                   <View>选择工人</View>
                   {/* <View className='workerBox-list-title-origin'>长按名字可修改/查看工资标准</View> */}
                   <View className='workerBox-list-title-origin-box'>
-                  <View className='workerBox-list-title-origin'>{!noSet ? '长按名字可修改/查看工资标准' :'工资如有变动，请长按头像修改'}</View>
-                    <View className='workerBox-list-title-origin-tips'><Text className='workerBox-list-title-origin-color'></Text>表示当天已记过工</View>
+                  {(recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ?
+                  <View className='workerBox-list-title-origin'>{!noSet ? '长按名字可修改/查看工资标准' :'工资如有变动，请长按头像修改'}</View>:<View></View>
+                  }
+                  <View className='workerBox-list-title-origin-tips' style={{ marginTop: (recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ? '' :'5rpx'}}><Text className='workerBox-list-title-origin-color'></Text>
+                    {recorderType === 3 ? '表示当天已记过借支' :'表示当天已记过工'}
+                    </View>
                   </View>
                 </View>
               <View><View className='whole' onClick={(e) => { e.stopPropagation(), e.preventDefault(), handleAllChange() }}>{!allClick ?'全选':'取消全选'}</View></View>
@@ -593,7 +597,7 @@ export default function Foreman() {
                 type='digit'
                 maxLength={16}
                 onInput={(e) => handleInput('wages', e)}
-                placeholder='工程量和单价未知时，可直接填写'
+                placeholder='工程量和单价未知时，可直接填写工钱'
                 value={model && model.wages}
               />
               <View className='rightIconsBox'>

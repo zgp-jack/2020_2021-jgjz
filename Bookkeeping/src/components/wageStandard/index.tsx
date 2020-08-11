@@ -11,6 +11,10 @@ interface PROPS {
   handleAddWage:()=>void,
   handleWageStandardRadio:(e)=>void,
 }
+const styles =
+{
+  content: { fontSize: '13px' }
+}
 export default function WageStandard({ display, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio }: PROPS) {
   console.log(wageStandard,'wageStandard')
   return(
@@ -29,7 +33,6 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                 <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>上班标准:</Text> {parseFloat(wageStandard.work)}小时算一个工</View>
                 <View className='atInputNumber'>
                   <AtInputNumber
-                    // style='color:red'
                     className='atInputNumberInput'
                     type='digit'
                     min={0}
