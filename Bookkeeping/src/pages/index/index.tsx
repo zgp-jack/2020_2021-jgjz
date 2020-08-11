@@ -611,6 +611,8 @@ export default function Index() {
   // 切换角色
   const handelChange = (e, type?: boolean) => {
     let midData = Taro.getStorageSync(MidData);
+    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
     if (!midData) {
       setleftTime(false);
       setrightTime(false);
@@ -632,6 +634,7 @@ export default function Index() {
     let msg = e === 2 ? '开始为自己记工吧' : '开始为工人记工吧'
     setType(e);
     setrightTime(false);
+    setVal(yeartime+'-'+montime);
     Taro.setStorageSync(Type, e);
     if (!type) {
       Msg(msg)
@@ -888,6 +891,7 @@ export default function Index() {
     setTime(befD);
     // 月份
     setMonth(befD.substring(5, 7))
+    setVal(date.getFullYear() + "-" + addZero(date.getMonth() + 1))
     changeIcon(date.getFullYear() + "-" + addZero(date.getMonth() + 1))
   }
   // 关闭身份显示
@@ -944,7 +948,7 @@ export default function Index() {
             </Image>
           </View>
         </View>
-        <View onClick={() => handleJump('/pages/flowingWater/index', 2)}>
+        <View onClick={() => handleJump(`/pages/flowingWater/index?timeMon=${vals}`, 2)}>
           <View className='moneyList'>
             <View>
               <Image className='moneyIcon' src={`${IMGCDNURL}money.png`} />工钱
@@ -989,7 +993,7 @@ export default function Index() {
         <View className='yun'><Image className='yun-img' src={`${IMGCDNURL}backgroundCloud.png`} /></View>
         <View className='recordBox'>
           <View className='eventList'>
-            <View className='eventList-left' onClick={() => handleJump('/pages/flowingWater/index')}>
+            <View className='eventList-left' onClick={() => handleJump(`/pages/flowingWater/index?timeMon=${vals}`)}>
               <View className='eventList-icon'><Image className='eventList-icon-image' src={`${IMGCDNURL}recorder.png`} /></View>
               <View>记工流水</View>
             </View>
