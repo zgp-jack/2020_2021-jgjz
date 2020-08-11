@@ -306,7 +306,8 @@ export default function Index() {
     // const time = 
     // 七天显示内容
     const state = Taro.getStorageSync(Tips);
-    if (!state) {
+    let midData = Taro.getStorageSync(MidData);
+    if (!state && midData) {
       if (creationTime && (creationTime + 86400 * 7) > newTime) {
         Taro.setStorageSync(Tips, true);
       }
@@ -319,7 +320,6 @@ export default function Index() {
     // const { appHeaderHeight } = UseNavInfo()
     // console.log(appHeadesrHeight,'appHeaderHeight')
     setSlide(false)
-    let midData = Taro.getStorageSync(MidData);
     let neverPromptType = Taro.getStorageSync(NeverPrompt);
     if (neverPromptType) {
       setNeverPrompt(true);

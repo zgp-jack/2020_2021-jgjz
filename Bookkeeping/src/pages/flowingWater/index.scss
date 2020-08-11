@@ -5,7 +5,7 @@
   width: 100%;
   overflow-y: scroll;
   padding-top: 75rpx;
-  // padding-bottom: 200rpx;
+  padding-bottom: 118rpx;
 }
 .time{
   position: fixed;
@@ -240,7 +240,10 @@
   color: rgba(147, 147, 147, 1);
   font-size: 28rpx;
 }
-
+.noData-box{
+  height: 100vh;
+  margin-top: -95rpx;
+}
 .noData{
   text-align: center;
   color: rgba(131, 131, 131, 1);
@@ -292,8 +295,11 @@
   line-height: 26rpx;
   color:rgba(255, 255, 255, 1);
 }
+.leadericon{
+  vertical-align: 5rpx;
+}
 .workericon{
-  margin-top:18rpx;
+  margin-top:15rpx;
 }
 .bulue{
   color: rgba(20, 146, 255, 1);
