@@ -118,12 +118,14 @@
 }
 .content-days{
   display: flex;
-  flex-wrap: wrap;
-  // box-sizing:border-box;
   justify-content: space-around;
+  // display: flex;
+  flex-wrap: wrap;
+  box-sizing:border-box;
+  // justify-content: space-around;
 }
 .content-days-day{
-  width: 90rpx;
+  width: 100rpx;
   font-size: 26rpx;
   text-align: center;
   color: #3C3B3B;
@@ -133,7 +135,7 @@
   border: 1rpx solid transparent;
 }
 .content-days-day-no{
-  width: 90rpx;
+  width: 100rpx;
   font-size: 26rpx;
   text-align: center;
   color: #3C3B3B;
@@ -154,7 +156,7 @@
   display: inline-block;
 }
 .content-days-day-choice {
-  width: 90rpx;
+ width: 100rpx;
   font-size: 26rpx;
   text-align: center;
   color: #3C3B3B;
