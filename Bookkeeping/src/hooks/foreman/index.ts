@@ -1365,7 +1365,13 @@ export default function userForeman() {
                 const data = JSON.parse(JSON.stringify(timeArr));
                 const duration = '一个工，无加班'
                 data[0].click = true;
-                setProjectId(res.data[0].group_id + ',' + res.data[0].id)
+                console.log(res.data[0],'xxxxx')
+                // if(res.data){
+                //   setProjectId(res.data[0].group_id + ',' + res.data[0].id)
+                // }
+                setGroupInfo('');
+                setProjectId('');
+                console.log(data,'data')
                 setTimeArr(data);
                 const years = new Date().getFullYear();
                 const months = new Date().getMonth() + 1;

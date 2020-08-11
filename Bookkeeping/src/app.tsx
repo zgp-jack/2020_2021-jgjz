@@ -1,4 +1,4 @@
-import Taro, { Component, Config,onAppShow,offAppShow } from '@tarojs/taro'
+import Taro, { Component, Config,onAppShow,offAppShow, } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 import Index from './pages/index'
 import { Res } from './config/store';
@@ -15,7 +15,9 @@ import './app.scss'
 
 const store = configStore()
 class App extends Component {
-
+  static options = {
+    addGlobalClass: true
+  }
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -46,7 +48,7 @@ class App extends Component {
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'white',
       // navigationStyle: 'custom',
-    }
+    },
   }
 
   componentDidMount () {}

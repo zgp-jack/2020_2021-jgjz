@@ -10,6 +10,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  .at-input-number__input,
+  .at-input-number input{
+    color: red !important;
+  }
 }
 
 .wageStandard-content {
@@ -102,7 +106,7 @@
 //   color: red !important
 // }
 // .atInputNumber{
-//   color: red !important;
+//   // color: red !important;
 //   .at-input-number{
 //     .at-input-number__input,
 //     .at-input-number{
@@ -111,6 +115,7 @@
 //   }
 // }
 .atInputNumberInput{
+  // background: red !important;
   color: red !important;
   .at-input-number__input{
     color: red !important;
