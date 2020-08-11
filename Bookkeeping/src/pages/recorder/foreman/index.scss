@@ -8,7 +8,7 @@
   display: flex;
   justify-content: space-around;
   background: #ffffff;
-  padding-top: 15rpx;
+  // padding-top: 15rpx;
   padding-bottom: 20rpx;
   color: rgba(47, 53, 65, 1);
   font-size: 28rpx;
@@ -17,6 +17,14 @@
 .tabber-list {
   width: 33%;
   text-align: center;
+  padding-top: 15rpx;
+}
+.tabber-list-click {
+  padding-top: 15rpx;
+  width: 33%;
+  text-align: center;
+  background: rgba(243, 244, 245, 1);
+  border-radius: 3px;
 }
 
 .tabber-list-image-dian {
@@ -187,6 +195,7 @@
   justify-content: space-between;
   padding: 22rpx 26rpx;
   background: #ffffff;
+  margin-top: 42rpx;
 }
 
 .footer-left {
@@ -819,4 +828,5 @@
 
 .image{
   background: #fff;
+  padding-bottom: 10rpx;
 }

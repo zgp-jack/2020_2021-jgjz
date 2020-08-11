@@ -323,7 +323,7 @@ export default function Foreman() {
       <View>
         <View className='tabber'>
           {recorderTypeArr.item.map(v => (
-            <View className='tabber-list' key={v.id} onClick={() => handleClckTabber(v)}>
+            <View className={v.click ? 'tabber-list-click' :'tabber-list'} key={v.id} onClick={() => handleClckTabber(v)}>
               <View className={v.click ? 'tabber-list-box' : ''}>
                 {v.click && 
                 <Image src={`${IMGCDNURL}groupIcon.png`} className='groupIcon' />
@@ -627,9 +627,9 @@ export default function Foreman() {
                 placeholder='请输入本次借支金额'
                 value={model && model.borrowing}
               />
-              <View className='rightIconsBox'>
+              {/* <View className='rightIconsBox'>
                 <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
-              </View>
+              </View> */}
             </View>
           </View>
           <View className='publish-recruit-card'>
@@ -697,12 +697,12 @@ export default function Foreman() {
             />
             </CoverView>
           </View>
-          <View>
+          <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} />
+          <View className='clear'></View>
             <WordsTotal num={num} />
+          <View>
           </View>
         </View>
-        <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} />
-        <View className='clear'></View>
         </View>
       </View>
       <View className='foreman-footer'>

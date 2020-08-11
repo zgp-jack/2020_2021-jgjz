@@ -114,7 +114,7 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                         <View>上班标准：{parseFloat(v.worktime_define)}小时算1个工<Text>{v.money}</Text>元/个工</View>
                         <View>加班标准：{v.overtime_type === '1' ? '按小时算' : '按工天算'} {v.overtime_type == '1' ? `加班${v.overtime_money}元/小时` : `加班 ${v.overtime}小时算1个工` } </View>
                       </View>
-                      <View>
+                      <View className='wagesModal-standard-box-list-look-edit-box'>
                         <View className='wagesModal-standard-box-list-edit' onClick={() => handleEditWages(v,0)}>修改</View>
                       </View>
                     </View>

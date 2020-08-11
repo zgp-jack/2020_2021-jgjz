@@ -80,7 +80,7 @@ export default function EditDetails() {
   ])
   // 上班时长
   const [timeArr, setTimeArr] = useState<DataType[]>([
-    { id: 1, name: '一个工', click: false, num: 1 },
+    { id: 1, name: '1个工', click: false, num: 1 },
     { id: 2, name: '半个工', click: false, num: 0.5 },
     { id: 3, name: '休息', click: false, num: 0 },
     { id: 4, name: '0.0小时', click: false, num: 0 },
@@ -165,7 +165,7 @@ export default function EditDetails() {
           // 判断弹框显示
           let title;
           if (res.data.work_time == '1.00'){
-            title= '一个工'
+            title= '1个工'
           }else if(res.data.work_time =='0.50'){
             title = '半个工'
           }else if(res.data.wage_money == '0.00'){
@@ -210,8 +210,8 @@ export default function EditDetails() {
           data.day = res.data.wage_overtime;
           data.worker_id = res.data.worker_id;
           data.group_info = res.data.group_info;
-          if (parseInt(res.data.money) && parseInt(res.data.overtime)){
-            data.dayAddWork = parseInt(res.data.money) / parseInt(res.data.overtime)||0;
+          if (parseFloat(res.data.wage_money) && parseFloat(res.data.wage_overtime)){
+            data.dayAddWork = moneyfilter((parseFloat(res.data.wage_money) / parseFloat(res.data.wage_overtime)),2)
           }else{
             data.dayAddWork =0
           }
@@ -380,6 +380,16 @@ export default function EditDetails() {
     }
     setBorrowing({item:data});
   }
+  const moneyfilter = (num, decimal) => {
+    num = num.toString()
+    let index = num.indexOf('.')
+    if (index !== -1) {
+      num = num.substring(0, decimal + index + 1)
+    } else {
+      num = num.substring(0)
+    }
+    return parseFloat(num).toFixed(decimal)
+  }
   // 关闭
   const handleClose = ()=>{
     setDisplay(false);
@@ -481,7 +491,7 @@ export default function EditDetails() {
     //按天数 一个工
     if (data.type === 2) {
       if (data.day == 0) {
-        Msg('一个工必须大于0小时')
+        Msg('1个工必须大于0小时')
         return;
       }
     }

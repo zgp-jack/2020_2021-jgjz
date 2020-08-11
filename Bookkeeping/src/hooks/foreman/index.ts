@@ -76,7 +76,7 @@ export default function userForeman() {
   const [identity, setIdentity] = useState<number>(1)
   // 上班时长
   const [timeArr, setTimeArr] = useState<DataType[]>([
-    { id: 1, name: '一个工', click: false, num: 1, whole: true },
+    { id: 1, name: '1个工', click: false, num: 1, whole: true },
     { id: 2, name: '半个工', click: false, num: 0.5, whole: true },
     { id: 3, name: '休息', click: false, num: 0 },
     { id: 4, name: '0.0小时', click: false, num: 0 },
@@ -413,14 +413,14 @@ export default function userForeman() {
         year: today.split('-')[0],
         click: true
       }
-      time = today + `(今天)`;
+      time = today + `（今天）`;
       setOpenClickTime([dayObj])
       setClickData([dayObj])
       setTimeData([dayObj]);
       setToday([dayObj])
       setToDayString(today)
       // 设置加班时长默认值
-      const timeTitle = '上班一个工，无加班';
+      const timeTitle = '上班1个工，无加班';
       // 一个工
       for(let i =0;i<timeArr.length;i++){
         timeArr[i].click = false;
@@ -449,7 +449,7 @@ export default function userForeman() {
       }
       setBorrowing(borrowing);
       // 把项目设置存起来
-      setProjectArr(res.data.group_info)
+      setProjectArr(res.data.group_info);
       if (res.data.latest_group_info) {
         if (res.data.latest_group_info.id) {
           title = res.data.latest_group_info.name[0] + '-' + res.data.latest_group_info.name[1];
@@ -580,6 +580,7 @@ export default function userForeman() {
           objs.set = false;
           objs.click = false;
           const workArr = [objs];
+          console.log(workArr,'workArr')
           dispatch(setPhoneList(workArr));
           setWorkerItem(workArr);
           setForemanTitle('')
@@ -593,8 +594,10 @@ export default function userForeman() {
           if(type == 1){
             if(res.data.group_info && res.data.group_info.length>0){
               title = res.data.group_info[0].group_name + '-' + res.data.group_info[0].name;
-              setProjectId(res.data.group_info[0].group_info)
-              setGroupInfo(res.data.group_info[0].group_info)
+              setProjectId(res.data.group_info[0].group_id +','+ res.data.group_info[0].id)
+              console.log(res.data.group_info[0].group_info,'xx')
+              setGroupInfo(res.data.group_info[0].group_id +','+ res.data.group_info[0].id)
+              console.log(32132131)
               let arr:any[]=[];
               if (res.data.default_group_workers.length>0){
                 for (let i = 0; i < res.data.default_group_workers.length;i++){
@@ -604,7 +607,15 @@ export default function userForeman() {
                 }
               }
               // 默认加上自己
-              const workList = [...arr]
+              let noObjs = false;
+              for(let i = 0;i<arr.length;i++){
+                if (arr[i].worker_id == objs.id){
+                  arr[i] = objs;
+                }else{
+                  noObjs = true;
+                }
+              }
+              const workList = noObjs ? [...arr] : [objs,...arr]
               // 设置工资标准
               if (res.data.default_group_workers_has_wage.length>0){
                 for (let i = 0; i < workList.length; i++) {
@@ -1060,7 +1071,7 @@ export default function userForeman() {
           if (res.data.length === 0) {
             // 设置一个工无加班
             // let duration = modalObj.duration;
-            const duration = '一个工，无加班';
+            const duration = '1个工，无加班';
             // 一个工所以为0直接设置
             const data = JSON.parse(JSON.stringify(timeArr));
             data[0].click = true;
@@ -1121,7 +1132,7 @@ export default function userForeman() {
                     setForemanTitle(res.data[i].leader_name || '');
                     // 设置一个工无加班
                     // let duration = modalObj.duration;
-                    const duration = '一个工，无加班';
+                    const duration = '1个工，无加班';
                     // 一个工所以为0直接设置
                     const data = JSON.parse(JSON.stringify(timeArr));
                     data[0].click = true;
@@ -1165,7 +1176,7 @@ export default function userForeman() {
                     } else {
                       modales = { ...modalObj, name, duration, time, details: '' };
                     }
-                    // 设置班组长
+                    // 设置班组长group_info
                     dispatch(setWorker([res.data[0]]))
                     // 设置工资标准
                     bkGetWorkerWage(res.data[0].group_id + ',' + res.data[0].id, '', modales)
@@ -1191,7 +1202,7 @@ export default function userForeman() {
                 setForemanTitle(res.data[0].leader_name || '');
                 // 设置一个工无加班
                 // let duration = modalObj.duration;
-                const duration = '一个工，无加班';
+                const duration = '1个工，无加班';
                 // 一个工所以为0直接设置
                 const data = JSON.parse(JSON.stringify(timeArr));
                 data[0].click = true;
@@ -1281,7 +1292,7 @@ export default function userForeman() {
                   time = toDay[0].year + '-' + toDay[0].month + '-' + toDay[0].date+ `(今天)`;
                 }
                 // 设置加班时长默认值
-                const timeTitle = '上班一个工，无加班';
+                const timeTitle = '上班1个工，无加班';
                 for(let i =0;i<timeArr.length;i++){
                   timeArr[i].click = false;
                   timeArr[0].click = true;
@@ -1363,7 +1374,7 @@ export default function userForeman() {
                 objs.id = midData.worker_id;
                 setWorkerItem([objs])
                 const data = JSON.parse(JSON.stringify(timeArr));
-                const duration = '一个工，无加班'
+                const duration = '1个工，无加班'
                 data[0].click = true;
                 console.log(res.data[0],'xxxxx')
                 // if(res.data){
@@ -1391,7 +1402,7 @@ export default function userForeman() {
                 return;
               } else {
                 const data = JSON.parse(JSON.stringify(timeArr));
-                const duration = '一个工，无加班'
+                const duration = '1个工，无加班'
                 data[0].click = true;
                 setProjectId(res.data[0].group_id + ',' + res.data[0].id)
                 setTimeArr(data);
@@ -1879,7 +1890,7 @@ export default function userForeman() {
           setTimeData(toDay);
         }
         // 设置加班时长默认值
-        const timeTitle = '上班一个工，无加班';
+        const timeTitle = '上班1个工，无加班';
         // 修改工资标准
         if (type === 2) {
           bkGetWorkerWage(res.data)
@@ -3114,7 +3125,7 @@ export default function userForeman() {
     //按天数 一个工
     if (data.type == 2) {
       if (data.day == 0) {
-        Msg('一个工必须大于0小时')
+        Msg('1个工必须大于0小时')
         return;
       }
     }
@@ -3821,9 +3832,9 @@ export default function userForeman() {
       const months = new Date().getMonth() + 1;
       const dates = new Date().getDate();
       if (data[0].year == years && data[0].month == months && data[0].date == dates) {
-        time = years + '-' + months + '-' + dates
+        time = years + '-' + addZero(months) + '-' + addZero(dates)+'（今天）'
       } else {
-        time = data[0].year + '-' + data[0].month + '-' + data[0].date
+        time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date)
       }
     } else {
       time = '共选择' + data.length + '天';

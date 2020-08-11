@@ -87,7 +87,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
               <View>
                 <View className='workList'>
                   {/* <View className='workList-title'>加班6小时算一个工</View> */}
-                  <View className='workList-title'>加班{parseFloat(wageStandard.day)}小时算一个工</View>
+                  <View className='workList-title'>加班{parseFloat(wageStandard.day)}小时算1个工</View>
                   <View className='workList-add'>
                     <AtInputNumber
                       type='digit'

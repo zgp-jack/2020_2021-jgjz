@@ -226,8 +226,12 @@
   padding: 20rpx 30rpx;
 }
 .wagesModal-standard-box-list-flex-middle{
+  // padding-left: 18rpx;
+  flex: 1;
   border-right: 1rpx solid rgba(229, 226, 226, 1);
-  padding-right: 20rpx;
+  font-size: 26rpx;
+  // border-right: 1rpx solid rgba(229, 226, 226, 1);
+  // padding-right: 20rpx;
 }
 .wagesModal-standard-box-list-flex-left{
   padding-right: 20rpx;
