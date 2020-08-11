@@ -601,8 +601,10 @@ export default function userForeman() {
               let arr:any[]=[];
               if (res.data.default_group_workers.length>0){
                 for (let i = 0; i < res.data.default_group_workers.length;i++){
-                  for (let j = 0; j < res.data.default_group_workers[i].list.length;j++){
-                    arr.push(res.data.default_group_workers[i].list[j]);
+                  if (res.data.default_group_workers[i].list && res.data.default_group_workers[i].list.length>0){
+                    for (let j = 0; j < res.data.default_group_workers[i].list.length;j++){
+                      arr.push(res.data.default_group_workers[i].list[j]);
+                    }
                   }
                 }
               }

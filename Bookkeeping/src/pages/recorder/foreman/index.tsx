@@ -315,7 +315,6 @@ export default function Foreman() {
     setCalendarModalDisplay(true);
     getMonthDaysCurrent(new Date())
   }
-  console.log(workerItem,'workerItemworkerItem')
   return (
     <context.Provider value={value}>
     <View className='foreman'>
