@@ -20,6 +20,8 @@ interface DataType {
 }
 
 export default function FlowingWater() {
+  const router: Taro.RouterInfo = useRouter();
+  const { timeMon } = router.params;
   const dispatch = useDispatch()
   const [data, setData] = useState<DataType>({
     item: []
@@ -44,6 +46,8 @@ export default function FlowingWater() {
     teamName: '',
   })
   const [identity, setIdentity]= useState<number>(1)
+  // Picker 的value
+  const [vals,setVals] = useState<string>('');
   // 日期需要的开始时间
   const [datestart,setDatestart] = useState<string>()
   // 日期需要的结束时间
@@ -78,11 +82,12 @@ export default function FlowingWater() {
     }
     setAllcheck(false);
     const date = JSON.stringify(new Date()).slice(1, 11)
-    setYear(date.slice(0, 4) + '年');
-    setmon(date.slice(5, 7) + '月')
-    const times = date.slice(0, 4) + '-' + date.slice(5, 7);
+    const times = timeMon || date.slice(0, 4) + '-' + date.slice(5, 7);
+    setYear(times.split('-')[0] + '年');
+    setmon(times.split('-')[1] + '月');
     setTime(times);
-    let lastM = JSON.stringify(new Date(new Date().setMonth(new Date().getMonth() + 1))).slice(1, 11)
+    setVals(times);
+    let lastM = times.split('-')[0]+'-'+(Number(times.split('-')[1])+1)
     setLastTime(lastM);
     getList(times, lastM);
   })
@@ -462,7 +467,7 @@ export default function FlowingWater() {
           start={datestart}
           end={dateEnd}
           onChange={(e) =>handelChangeTime(e)}
-          value={''}
+          value={vals}
         // range={timeList}
         // onColumnChange={(e) => handlebindcolumnchange(e)}
         >

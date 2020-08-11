@@ -165,19 +165,19 @@ export default function EditDetails() {
           // 判断弹框显示
           let title;
           if (res.data.work_time == '1.00'){
-            title= '上班一个工'
+            title= '一个工'
           }else if(res.data.work_time =='0.50'){
-            title = '上班半个工'
+            title = '半个工'
           }else if(res.data.wage_money == '0.00'){
-            title = '休息'
+            title = '修改'
           }else{
-            title = '上班'+parseFloat(res.data.work_time_hour) + '小时'
+            title = res.data.work_time_hour + '小时'
           }
           let addTitle;
           if (res.data.overtime == '0.00'){
             addTitle = '，无加班'
           }else{
-            addTitle = '，加班' + parseFloat(res.data.overtime) + '小时'
+            addTitle = '，加班' + res.data.overtime + '小时'
           }
           // 这里是工要获取到多少工资标里的设置的时间再算
           // const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
@@ -210,16 +210,11 @@ export default function EditDetails() {
           data.day = res.data.wage_overtime;
           data.worker_id = res.data.worker_id;
           data.group_info = res.data.group_info;
-          let sum;
-          if (parseFloat(res.data.wage_money) && parseFloat(res.data.wage_overtime)){
-            sum = (parseFloat(res.data.wage_money) / parseFloat(res.data.wage_overtime))
+          if (parseInt(res.data.money) && parseInt(res.data.overtime)){
+            data.dayAddWork = parseInt(res.data.money) / parseInt(res.data.overtime)||0;
           }else{
-            sum =0
+            data.dayAddWork =0
           }
-          data.dayAddWork = (Math.floor(sum * 100) / 100).toFixed(2)
-          console.log(res.data.wage_money,'res.data.wage_money');
-          console.log(res.data.wage_overtime,'res.data.wage_overtime')
-          console.log(data.dayAddWork,'dayAddWorkdayAddWork')
           data.group_info = res.data.group_info;
           data.type = parseInt(res.data.wage_overtime_type);
           for (let i = 0; i < data.data.length;i++){
@@ -239,30 +234,18 @@ export default function EditDetails() {
           setStandard(standardObj);
           // 工钱
           let wages;
-          if (parseInt(res.data.wage_overtime_type) === 1){
+          if (parseInt(res.data.overtime_type) === 1){
             // 每个工多少钱/上班时间*选择的上班时长 + 加班多选小时*加班一小时多少钱
             // 每个工的钱*百分比 + 时间 *加班工钱
-            wages = (+res.data.wage_money / (+res.data.wage_worktime_define)) * (1 / (+res.data.wage_worktime_define) * (+res.data.work_time_hour) * (+res.data.wage_worktime_define)) + (+res.data.wage_overtime_money) * (+res.data.overtime);
-            // wages = (+res.data.worker_money * +res.data.work_time) + (+res.data.overtime) * (+res.data.overtime_money)
+            wages = (+res.data.worker_money * +res.data.work_time) + (+res.data.overtime) * (+res.data.overtime_money)
           }else{
             // 每个工多少钱/上班时间*选择的上班时长 + 每个工多少钱/多少钱算一个工*加班时长
-            wages = parseFloat(res.data.wage_money) / parseFloat(res.data.wage_worktime_define) * (1 / parseFloat(res.data.wage_worktime_define) * parseFloat(res.data.work_time_hour) * parseFloat(res.data.wage_worktime_define)) + (parseFloat(res.data.wage_money) / parseFloat(res.data.wage_overtime) * parseFloat(res.data.overtime))
-            // wages = ((+res.data.worker_money)* (+res.data.work_time)) + (((+res.data.worker_money) / (+res.data.worker_overtime)) * (+res.data.overtime))
+            wages = ((+res.data.worker_money)* (+res.data.work_time)) + (((+res.data.worker_money) / (+res.data.worker_overtime)) * (+res.data.overtime))
           }
-          console.log(parseFloat(res.data.wage_money) / parseFloat(res.data.wage_worktime_define) * (1 / parseFloat(res.data.wage_worktime_define) * parseFloat(res.data.work_time_hour) * parseFloat(res.data.wage_worktime_define)) + (parseFloat(res.data.wage_money) / parseFloat(res.data.wage_overtime) * parseFloat(res.data.overtime)),'111')
-          obj.wages = (Math.floor(wages * 100) / 100).toFixed(2)
+          obj.wages = wages.toFixed(2);
           obj.unitNum = parseInt(res.data.unit_num);
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
-          setUnit(res.data.unit);
-          for (let i = 0; i < company.length;i++){
-            if (company[i].name === res.data.unit){
-              company[i].click = true
-            }else{
-              company[i].click = false
-            }
-          }
-          setCompany(company)
           setVal(obj);
           setWageStandard(data)
           // 设置数据上班时长数据
@@ -283,7 +266,7 @@ export default function EditDetails() {
                 timeArrData[3].click = true;
               }
             }else{
-              const setTime = parseFloat(res.data.work_time_hour)
+              const setTime = (+res.data.work_time_hour).toFixed(2);
               const obj = { id: 4, name: `${setTime}小时`, click: true, num: setTime };
               const index = [timeArrData.length - 1];
               if (i === index[0]) {
@@ -305,7 +288,7 @@ export default function EditDetails() {
             if (res.data.overtime === '0.00'){
               addWorkArrData[0].click = true;
             }else{
-              const obj = { id: 2, name: `${parseFloat(res.data.overtime)}小时`, click: true, num: res.data.overtime };
+              const obj = { id: 2, name: `${res.data.overtime}小时`, click: true, num: res.data.overtime };
               const index = [addWorkArrData.length - 1];
               if (i === index[0]) {
                 addWorkArrData[i] = obj;
@@ -458,14 +441,8 @@ export default function EditDetails() {
     if (type === 'money') {
       const item = JSON.parse(JSON.stringify(wageStandard));
       const dayAddWork = e / item.day;
-      item[type] = e.toFixed(2)||0;
+      item[type] = e;
       item.dayAddWork = dayAddWork.toFixed(2);
-      setWageStandard(item);
-      return;
-    }
-    if (type === 'addWork'){
-      const item = JSON.parse(JSON.stringify(wageStandard));
-      item[type] = e.toFixed(2);
       setWageStandard(item);
       return;
     }
@@ -581,7 +558,7 @@ export default function EditDetails() {
     // const num = total.toFixed(2);
     let num: any = 0;
     // if (num && !Object.is(num, NaN)){
-    num = (Math.floor(sum * 100) / 100).toFixed(2);
+    num = sum.toFixed(2);
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
     let params;
@@ -725,26 +702,22 @@ export default function EditDetails() {
     setTimeType(type)
     if (type === 1) {
       if (e.id === 4) {
+        // const arr = timeArr.map(v => {
+        //   if (v.id === e.id) {
+        //     v.click = !v.click;
+        //   } else {
+        //     v.click = false
+        //   }
+        //   return v;
+        // })
+        // setTimeArr(arr)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
       } else {
-        let titlework='';
         const arr = timeArr.map(v => {
           if (v.id === e.id) {
             v.click = !v.click;
-            if(!v.click){
-              console.log(addWorkArr,'addWorkArr')
-              for (let i = 0; i < addWorkArr.length; i++) {
-                if (addWorkArr[i].click) {
-                  if (addWorkArr[i].id !== 1) {
-                    titlework = '加班' + addWorkArr[i].name
-                  } else {
-                    titlework = '无加班'
-                  }
-                }
-              } 
-            }
           } else {
             if (v.id === 4) {
               v.name = '0.0小时';
@@ -754,12 +727,8 @@ export default function EditDetails() {
           return v;
         })
         setTimeArr(arr);
-        if (titlework){
-          setVal({ ...val, modalDuration: titlework })
-          return;
-        }
       }
-      let addTime='';
+      let addTime;
       for (let i = 0; i < addWorkArr.length; i++) {
         if (addWorkArr[i].click) {
           if (addWorkArr[i].id !== 1) {
@@ -767,15 +736,15 @@ export default function EditDetails() {
           } else {
             addTime = '，无加班'
           }
+        } else {
+          addTime = '，无加班'
         }
       }
       let duration;
-      if(e.click){
-        if (e.id == 3) {
-          duration = e.name +addTime;
-        } else {
-          duration = '上班' + e.name +addTime;
-        }
+      if (e.id == 3) {
+        duration = '上班'+e.name +addTime;
+      } else {
+        duration = '上班' + e.name +addTime;
       }
       console.log(duration,'durationduration')
       if (e.id != 4) {
@@ -783,22 +752,9 @@ export default function EditDetails() {
       }
     } else {
       if (e.id != 2) {
-        let addworkTitle='';
         const arr = addWorkArr.map(v => {
           if (v.id === e.id) {
-            v.click = !v.click;
-            if(!v.click){
-              for (let i = 0; i < timeArr.length; i++) {
-                if (timeArr[i].click) {
-                  if (timeArr[i].id == 3) {
-                    addworkTitle = '休息'
-                  } else {
-                    addworkTitle = '上班' + timeArr[i].name
-                  }
-                  break;
-                }
-              }
-            }
+            v.click = !v.click
           } else {
             if (v.id === 2) {
               v.name = '0.0小时';
@@ -808,35 +764,39 @@ export default function EditDetails() {
           return v;
         })
         setAddWorkArr(arr);
-        if (addworkTitle){
-          setVal({ ...val, modalDuration: addworkTitle })
-          return;
-        }
       } else {
+        // const arr = addWorkArr.map(v => {
+        //   if (v.id === e.id) {
+        //     v.click = !v.click;
+        //   } else {
+        //     v.click = false
+        //   }
+        //   return v;
+        // })
+        // setAddWorkArr(arr)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
       }
-      let Time='';
+      let Time;
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
           if (timeArr[i].id == 3) {
-            Time = '休息，'
+            Time = '上班休息，'
           } else {
-            Time = '上班' + timeArr[i].name+'，'
+            Time = '上班' + timeArr[i].name
           }
           break;
+        } else {
+          Time = '上班休息，'
         }
       }
-      let duration='';
-      if(e.click){
+      let duration;
+      if (e.id == 1) {
+        duration = Time + ',无加班';
+      } else {
         duration = Time + e.name;
       }
-      // if (e.id == 1) {
-      //   duration = Time + '，无加班';
-      // } else {
-      
-      // }
       console.log(duration,'duration1')
       if (e.id != 2) {
         setVal({ ...val, modalDuration:duration })
@@ -853,7 +813,7 @@ export default function EditDetails() {
     if (data || dataList) {
       if (data.length > 0) {
         if (data[0].name == '休息') {
-          title = data[0].name
+          title = '上班'+data[0].name
         } else {
           title = '上班' + data[0].name
         }
@@ -862,7 +822,7 @@ export default function EditDetails() {
         if (dataList[0].name !== '无加班') {
           title = '加班' + dataList[0].name
         } else {
-          title = dataList[0].name
+          title = '加班'+dataList[0].name
         }
       }
       if (data.length > 0 && dataList.length > 0) {
@@ -870,11 +830,11 @@ export default function EditDetails() {
           title = data[0].name +'，'+ dataList[0].name
         } else {
           if (data[0].name == '休息') {
-            title = data[0].name+ '，加班' + dataList[0].name
+            title = '上班' + data[0].name+ '，加班' + dataList[0].name
           }else if (dataList[0].name == '无加班') {
-            title = '上班'+data[0].name +'，'+ dataList[0].name;
+            title = '上班' + data[0].name +'，'+ dataList[0].name;
           }else{
-            title = '上班'+data[0].name + '，加班' + dataList[0].name
+            title = '上班' + data[0].name + '，加班' + dataList[0].name
           }
         }
       }
@@ -941,7 +901,7 @@ export default function EditDetails() {
       wages = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
-    const num = (Math.floor(wages * 100) / 100).toFixed(2)
+    const num = wages.toFixed(2);
     setVal({ ...val, duration: title, wages: num })
     setDisplay(false);
   }
@@ -994,13 +954,13 @@ export default function EditDetails() {
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
           if (timeArr[i].id == 3) {
-            Time = '休息'
+            Time = '上班休息,'
           } else {
             Time = '上班' + timeArr[i].name
           }
           break;
         } else {
-          Time = '休息'
+          Time = '上班休息,'
         }
       }
       let duration;
@@ -1363,20 +1323,17 @@ export default function EditDetails() {
         <View className='publish-list-textTarea-item' >
           <Text className='pulish-list-textTarea-title'>备注</Text>
         </View>
-        <CoverView onClick={() => handleTextare()} className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'coverView':'' }>
         <Textarea
-          focus={autoFocus}
-          autoFocus={autoFocus}
-          auto-focus={autoFocus}
+          focus
+          autoFocus
+          auto-focus
           className='textarea'
           cursor={val.note.length||0}
-          value={val.note}
-          onFocus={() => setAutoFocus(false)}
+          value={val && val.note}
           placeholder='请填写备注...'
           onInput={(e) => handleInput('note', e)}
           maxlength={400}
           />
-          </CoverView>
       <View className='white'>
       <View className='imageBox'>
         <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
