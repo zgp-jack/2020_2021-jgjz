@@ -592,8 +592,16 @@ export default function userForeman() {
               title = res.data.group_info[0].group_name + '-' + res.data.group_info[0].name;
               setProjectId(res.data.group_info[0].group_info)
               setGroupInfo(res.data.group_info[0].group_info)
+              let arr:any[]=[];
+              if (res.data.default_group_workers.length>0){
+                for (let i = 0; i < res.data.default_group_workers.length;i++){
+                  for (let j = 0; j < res.data.default_group_workers[i].list.length;j++){
+                    arr.push(res.data.default_group_workers[i].list[j]);
+                  }
+                }
+              }
               // 默认加上自己
-              const workList = [objs, ...res.data.default_group_workers]
+              const workList = [objs, ...arr]
               // 设置工资标准
               if (res.data.default_group_workers_has_wage.length>0){
                 for (let i = 0; i < workList.length; i++) {

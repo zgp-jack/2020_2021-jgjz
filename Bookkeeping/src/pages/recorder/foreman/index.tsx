@@ -315,6 +315,7 @@ export default function Foreman() {
     setCalendarModalDisplay(true);
     getMonthDaysCurrent(new Date())
   }
+  console.log(workerItem,'workerItemworkerItem')
   return (
     <context.Provider value={value}>
     <View className='foreman'>
@@ -462,7 +463,7 @@ export default function Foreman() {
                           // className={v.click ? 'workerItem-list-click' : 'workerItem-list'}
                           >
                           {/* {v.name} */}
-                        {v.name.substring(v.name.length - 2)}
+                        {v.name}
                         </View>
                         {/* 判断不是按量和借支的时候才能设置工资 */}
                       {(recorderType !== 3 && !(recorderType == 2 && contractor ==1) )&&!v.del && !v.set && <View className='workerItem-list-icon' onClick={(e) => { e.stopPropagation(), handleOpenWagesModal(v) }}><Image className='workerItem-list-icon-img' src={`${IMGCDNURL}mark.png`}/></View>}
