@@ -69,9 +69,11 @@ export default function FlowingWaterDetails() {
       ids: [obj.id]
     }
     Taro.showModal({
-      title: "提示",
       content:'数据一经删除将无法恢复。请谨慎操作哦！',
       showCancel: true,
+      confirmText: '确认删除',
+      confirmColor:'#0099FF',
+      cancelColor:'#797979',
       success: (res) => {
         if(res.confirm == true){
           bkDeleteBusinessAction(params).then(res => {
@@ -109,8 +111,8 @@ export default function FlowingWaterDetails() {
     <View className='flowingWaterDetails'>
       <View className='top'>
         {obj.business_type &&obj.business_type == '1' && <View className='top-name'>点工工钱</View>}
-        {obj.business_type && obj.business_type == '2' && obj.type === '1'&& <View className='top-name'>包工(按天记)工钱</View>}
-        {obj.business_type && obj.business_type == '2' && obj.type === '2' && <View className='top-name'>包工(按量记)工钱</View>}
+        {obj.business_type && obj.business_type == '2' && obj.type === '1'&& <View className='top-name'>包工（按天记）工钱</View>}
+        {obj.business_type && obj.business_type == '2' && obj.type === '2' && <View className='top-name'>包工（按量记）工钱</View>}
         {obj.business_type &&obj.business_type == '3' && <View className='top-name'>本次借支</View>}
         <View className='top-money' style={{fontSize:obj.money>9999999.99?'73rpx':'115rpx'}}>¥{obj.money}</View>
         <View className='top-time'>{time}<Text> {week}</Text></View>

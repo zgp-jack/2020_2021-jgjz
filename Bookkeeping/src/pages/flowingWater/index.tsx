@@ -263,7 +263,7 @@ export default function FlowingWater() {
           if (res.confirm == true) {
             bkDeleteBusinessAction(params).then(res => {
               if (res.code === 200) {
-                Msg('删除成功！')
+                Msg('删除成功')
                 setTimeout(()=>{
                   getList(time, lastTime)
                 },800)
@@ -498,11 +498,11 @@ export default function FlowingWater() {
                 </View>
                 <View className='content-td'>
                   <View className='content-list-right-title'>借支</View>
-                  <View className='content-list-right-money'>¥{v.total_borrow && (parseFloat(v.total_borrow)>9999999.99)?String(v.total_borrow).slice(0,8)+'...':Number(v.total_borrow).toFixed(2)||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_borrow && (parseFloat(v.total_borrow)>9999999.99)?String(v.total_borrow).slice(0,7)+'...':Number(v.total_borrow).toFixed(2)||'0.00'}</View>
                 </View>
                 <View className="content-td">
                   <View className='content-list-right-title'>工钱</View>
-                  <View className='content-list-right-money'>¥{v.total_money && (parseFloat(v.total_money)>9999999.99)?String(v.total_money).slice(0,8)+'...':Number(v.total_money).toFixed(2)||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_money && (parseFloat(v.total_money)>9999999.99)?String(v.total_money).slice(0,7)+'...':Number(v.total_money).toFixed(2)||'0.00'}</View>
                 </View>
               </View>
               {v.click && 
@@ -538,7 +538,7 @@ export default function FlowingWater() {
                             {isCheckOut && <View className='checkboxitem'><Checkbox checked={val.checkClick} className='checkbox' color='#0099FF' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
                         {identity == 1?
                         <View className=''>
-                          <View>{val.workername || '-'} {(val.note || val.view_images.length>0)&&<Text className='icon'>备</Text>}</View>
+                          <View>{val.workername || '-'} {(val.note || val.view_images.length>0)&&<Text className='icon leader-icon'>备</Text>}</View>
                           <View className='content-list-subclass-left-title'>我在{val.group_info}对Ta记了一笔
                           {val.business_type == '1' ? '点工' : (val.business_type == '2'?'包工':'借支') }
                           </View>
@@ -552,7 +552,7 @@ export default function FlowingWater() {
                           </View>
                         </View>}
                       </View>
-                      <View className={val.business_type == '3'?'content-list-subclass-borrow':'content-list-subclass-money'}>¥{val.money && (parseFloat(val.money)>9999999.99)?String(val.money).slice(0,8)+'...':val.money||'0.00'}<View className="moneyicon"></View></View>
+                      <View className={val.business_type == '3'?'content-list-subclass-borrow':'content-list-subclass-money'}>¥{val.money && (parseFloat(val.money)>9999999.99)?String(val.money).slice(0,7)+'...':val.money||'0.00'}<View className="moneyicon"></View></View>
                     </View>
                     </AtSwipeAction>
                     </View>

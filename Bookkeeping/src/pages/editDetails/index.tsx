@@ -38,6 +38,8 @@ export default function EditDetails() {
   })
   // 类型
   const [businessType, setBusinessType] = useState<number>(1);
+  // 禁用textarea
+  const [isdisable,setIsdisable] = useState<boolean>(false)
   // 包工类型名称
   const [typeName,setTypeName] = useState<string>('')
   const [type,setType] = useState<number>(1);
@@ -393,6 +395,7 @@ export default function EditDetails() {
   // 关闭
   const handleClose = ()=>{
     setDisplay(false);
+    setIsdisable(false);
     const data = JSON.parse(JSON.stringify(val));
     const title = data.duration;
     setVal({ ...data, modalDuration: title});
@@ -571,6 +574,7 @@ export default function EditDetails() {
     num = sum.toFixed(2);
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
+    setIsdisable(false);
     let params;
     if (data.type === 1) {
         params = {
@@ -914,6 +918,7 @@ export default function EditDetails() {
     const num = wages.toFixed(2);
     setVal({ ...val, duration: title, wages: num })
     setDisplay(false);
+    setIsdisable(false);
   }
   // 关闭上班时长
   const handleWorkingHoursClose = ()=>{
@@ -1128,6 +1133,7 @@ export default function EditDetails() {
   // 关闭
   const handleWageStandardDisplay = ()=>{
     setWageStandardDisplay(false);
+    setIsdisable(false);
   }
   // 选择单位
   const handleQuantities = (val) => {
@@ -1137,6 +1143,7 @@ export default function EditDetails() {
         if (v.click) {
           setUnit(v.name)
           setQuantitiesDisplay(false)
+          setIsdisable(false);
         }
       } else {
         v.click = false
@@ -1230,7 +1237,7 @@ export default function EditDetails() {
               onInput={(e) => { handleInput('unitNum',e)}}
               value={val.unitNum}
             />
-            <View className='amountType' onClick={()=>setQuantitiesDisplay(true)}>{unit}
+            <View className='amountType' onClick={()=>{setIsdisable(true);setQuantitiesDisplay(true)}}>{unit}
               <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
             </View>
           </View>
@@ -1266,7 +1273,7 @@ export default function EditDetails() {
           <View className='publish-recruit-card'>
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>本次借支</Text>
-              :<Input
+              <Input
               className='publish-list-input-borrowing'
                 type='digit'
                 // disabled
@@ -1292,7 +1299,7 @@ export default function EditDetails() {
       }
       {(businessType === 1 || (businessType === 2 && type === 1)) && 
       <View>
-        <View className='publish-recruit-card' onClick={() => {setDisplay(true)}}>
+        <View className='publish-recruit-card' onClick={() => {setIsdisable(true);setDisplay(true)}}>
           <View className='publish-list-item'>
             <Text className='pulish-list-title'>上班时长</Text>
             <Input
@@ -1307,7 +1314,7 @@ export default function EditDetails() {
             </View>
           </View>
         </View>
-        <View className='publish-recruit-card' onClick={() => { setWageStandardDisplay(true)}}>
+        <View className='publish-recruit-card' onClick={() => {setIsdisable(true);setWageStandardDisplay(true)}}>
           <View className='publish-list-item-money'>
             <View className='pulish-list-title-money'>
               <View>{identity == 1 ? '工人工钱' : '我的工钱'}(点击修改{identity == 1 ? '工人' : '自己'}的工资标准)
@@ -1337,6 +1344,7 @@ export default function EditDetails() {
           focus
           autoFocus
           auto-focus
+          hidden={isdisable}
           className='textarea'
           cursor={val.note.length||0}
           value={val && val.note}
@@ -1356,7 +1364,7 @@ export default function EditDetails() {
       <WorkOvertime display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}
-      <Quantities display={quantitiesDisplay} handleClose={() => { setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />
+      <Quantities display={quantitiesDisplay} handleClose={() => {setIsdisable(false);setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />
     </View>
   )
 }
