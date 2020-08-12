@@ -4101,7 +4101,8 @@ export default function userForeman() {
     const data = recorderTypeArrList.map(val => {
       if (val.id === v.id) {
         val.click = true;
-        setRecorderType(val.id)
+        setRecorderType(val.id);
+        // 清空redux
         getList(val.id);
       }else{
         val.click = false;
