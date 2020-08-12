@@ -529,6 +529,7 @@ export default function userForeman() {
                 //   setForemanTitle('')
                 // }
                 setWageStandard(wageStandardData)
+                setCacheWage(wageStandardData)
               }
             }
             // 设置是否记过工
@@ -602,6 +603,7 @@ export default function userForeman() {
               //   setForemanTitle('')
               // }
               setWageStandard(wageStandardData)
+              setCacheWage(wageStandardData)
             }else{
               setForemanTitle('')
             }
@@ -611,7 +613,6 @@ export default function userForeman() {
           }
           return;
         } else {
-          console.log('在这里')
           title = '';
           id = '';
           objs.discipline = false;
@@ -659,6 +660,55 @@ export default function userForeman() {
                 }
               }
               const workList = !noObjs ? [...arr] : [objs,...arr]
+              // 工人设置工钱
+              const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+              if(type == 2){
+                console.log(res.data.default_group_workers_has_wage,'res.data.default_group_workers_has_wage')
+                if(res.data.default_group_workers_has_wage.length>0){
+                  const data = res.data.default_group_workers_has_wage[0];
+                  wageStandardData.work = data.worktime_define;
+                  wageStandardData.addWork = data.overtime_money;
+                  wageStandardData.money = data.money;
+                  wageStandardData.day = data.overtime;
+                  wageStandardData.worker_id = data.worker_id;
+                  wageStandardData.group_info = data.group_info;
+                  if (parseFloat(data.money) && parseFloat(data.overtime)) {
+                    wageStandardData.dayAddWork = parseFloat(data.money) / parseFloat(data.overtime) || 0;
+                  } else {
+                    wageStandardData.dayAddWork = 0
+                  }
+                  sum = data.money;
+                  wageStandardData.type = parseFloat(data.overtime_type);
+                  setWageStandard(wageStandardData);
+                  setCacheWage(wageStandardData)
+                }else{
+                  const obj = {
+                    data: [
+                      { id: 1, name: '按小时算', click: true },
+                      { id: 2, name: '按天算', click: false },
+                    ],
+                    // 上班模板
+                    work: 0,
+                    // 上班金额
+                    money: 0,
+                    // 加班钱（小时）
+                    addWork: 0,
+                    // 小时/天
+                    type: 1,
+                    // 加班多少小时算一台呢
+                    day: 0,
+                    // 自动换算加班多少每小时多少钱
+                    dayAddWork: 0,
+                    state: '',
+                    group_info: '',
+                    id: '',
+                    worker_id: '',
+                  }
+                  setWageStandard(obj);
+                  setCacheWage(obj)
+                }
+                
+              }
               // 设置工资标准
               if (res.data.default_group_workers_has_wage.length>0){
                 for (let i = 0; i < workList.length; i++) {
@@ -700,12 +750,13 @@ export default function userForeman() {
               }
               dispatch(setPhoneList(workList));
               setWorkerItem(workList);
+              console.log(title,'titletitletitle')
+              console.log(time,'time')
               setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle, time, details: '', workersWages: sum, amount: '', price: '', wages: '', borrowing: '', univalent: '' })
             }
-          // }else{
-
-          //   setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle, time, details: '', workersWages: sum, amount: '', price: '', wages: '', borrowing: '', univalent: '' })
-          // }
+          else{
+            setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle, time, details: '', workersWages: sum, amount: '', price: '', wages: '', borrowing: '', univalent: '' })
+          }
         }
       }
     })
@@ -1150,6 +1201,7 @@ export default function userForeman() {
             wageStandardData.type = 1;
             wageStandardData.dayAddWork = 0;
             setWageStandard(wageStandardData)
+            setCacheWage(wageStandardData)
             //设置工人工资为0
             setModel({ ...modalObj, duration, time, name: '', workersWages: '0', details: '' })
             // setModel({ ...model, workersWages: '0' })
@@ -1226,6 +1278,7 @@ export default function userForeman() {
                   }];
                   setOpenClickTime(clickDataArr)
                   setClickData(clickDataArr);
+                  console.log('删除项目')
                   setModel({ ...modalObj, name, duration, time, details: '', workersWages: '0' })
                   setProjectArr(res.data);
                   // getMonthDaysCurrent(new Date(), clickDataArr)
@@ -1642,6 +1695,7 @@ export default function userForeman() {
             }
             // setModel(obj)
             setWageStandard(wageStandardData)
+            setCacheWage(setWageStandard)
           } else {
             wageStandardData.work = 0;
             wageStandardData.addWork = 0;
@@ -1650,6 +1704,7 @@ export default function userForeman() {
             wageStandardData.type = 1;
             wageStandardData.dayAddWork = 0;
             setWageStandard(wageStandardData)
+            setCacheWage(setWageStandard)
             //设置工人工资为0
             if (models) {
               setModel({ ...models, workersWages: '0' })
@@ -2677,9 +2732,9 @@ export default function userForeman() {
   }
   // 添加工资标准
   const handleWageStandard = (type: string, e: any) => {
+    const cacheItem = JSON.parse(JSON.stringify(cacheWage));
     if (type == 'day') {
       const item = JSON.parse(JSON.stringify(wageStandard));
-      const cacheItem = JSON.parse(JSON.stringify(cacheWage));
       item[type] = e;
       let num: number | string = 0;
       if (item.money > 0 && e > 0) {
@@ -2689,6 +2744,10 @@ export default function userForeman() {
       setWageStandard(item);
       return;
     }
+    // if (type === 'addWork' || type == 'work' || type == 'money' || type == 'day') {
+    //   cacheItem[type] = e;
+    //   setCacheWage(cacheItem);
+    // }
     if (type === 'money') {
       const item = JSON.parse(JSON.stringify(wageStandard));
       // const dayAddWork = e / item.day||0;
@@ -2701,10 +2760,9 @@ export default function userForeman() {
       item[type] = e;
       item.dayAddWork = dayAddWork.toFixed(2) || 0;
       setWageStandard(item);
+      // cacheItem.dayAddWork = dayAddWork.toFixed(2) || 0;
+      // setCacheWage(cacheItem);
       return;
-    }
-    if (type === 'addWork' || type == 'work' || type == 'money' || type == 'day'){
-      
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = e;
@@ -3354,6 +3412,8 @@ export default function userForeman() {
       //     Msg(res.msg)
       //   }
       // })
+      setCacheWage(wageStandard);
+      setWageStandard(wageStandard);
       setModel({ ...model, workersWages: num });
       setWageStandardDisplay(false);
       return;
@@ -4229,5 +4289,8 @@ export default function userForeman() {
     setAddWorkArr,
     projectId, 
     setProjectId,
+    cacheWage, 
+    setCacheWage,
+    setWageStandard,
   }
 }

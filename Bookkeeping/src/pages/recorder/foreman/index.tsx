@@ -48,7 +48,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -222,8 +222,14 @@ export default function Foreman() {
   // 关闭工资标准
   const handleWageStandardClose = ()=>{
     let type = Taro.getStorageSync(Type);
+    const cacheWageItem = JSON.parse(JSON.stringify(cacheWage));
+    const wageStandardItem = JSON.parse(JSON.stringify(wageStandard));
+    console.log(wageStandardItem,'wageStandardItem')
     if(type === 1){
       setWagesModalDisplay(true)
+    }else{
+      setWageStandard(cacheWageItem);
+      setCacheWage(cacheWageItem);
     }
     setWageStandardDisplay(false)
   }
