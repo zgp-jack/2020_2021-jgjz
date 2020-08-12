@@ -1,14 +1,14 @@
-import { GETDATA, SETDATA } from '../constants/flowingWater';
+import { GETDATAWATER, SETDATAWATER } from '../constants/flowingWater';
 
 export function setFlowingWater(data: any) {
   return {
-    type: SETDATA,
+    type: SETDATAWATER,
     data: data
   }
 }
 
 export function getFlowingWater() {
   return {
-    type: GETDATA
+    type: GETDATAWATER
   }
 }

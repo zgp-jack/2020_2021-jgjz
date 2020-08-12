@@ -1,2 +1,2 @@
-export const GETDATA: string = 'getData'
-export const SETDATA: string = 'setData'
+export const GETDATAWATER: string = 'getDataWater'
+export const SETDATAWATER: string = 'setDataWater'

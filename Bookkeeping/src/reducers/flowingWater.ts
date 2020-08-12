@@ -1,4 +1,4 @@
-import { GETDATA, SETDATA } from '../constants/flowingWater'
+import { GETDATAWATER, SETDATAWATER } from '../constants/flowingWater'
 
 const DEFAULT_STATE: any = {
   data: []
@@ -10,10 +10,10 @@ export interface ACTIONTYPE {
 
 export default function flowingWater(state: any = DEFAULT_STATE, action: ACTIONTYPE) {
   switch (action.type) {
-    case GETDATA:
+    case GETDATAWATER:
       return state
-    case SETDATA:
-      return { ...action.data }
+    case SETDATAWATER:
+      return [ ...action.data ]
     default:
       return state
   }

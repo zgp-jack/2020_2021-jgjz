@@ -63,8 +63,6 @@ export default function FlowingWater() {
   const [busy, setBusy] = useState<boolean>(false)
   // 获取数据
   useDidShow(()=>{
-    console.log(useSelectorItem);
-    debugger
     let earliest_month = Taro.getStorageSync(Earliest_month);
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
@@ -97,6 +95,7 @@ export default function FlowingWater() {
   const type = Taro.getStorageSync(Type);
   setIdentity(type)
   const getList = (times?:string, lastM?:string)=>{
+    console.log(useSelectorItem.flowingWater, '111');
     let start_date, end_date;
     if (times && lastM){
       start_date = times;
