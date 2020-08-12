@@ -346,6 +346,7 @@ export default function userForeman() {
     let type = Taro.getStorageSync(Type);
     // 设置身份
     setIdentity(type);
+    console.log(cache,'cache')
     if (useSelectorItem.workerList.length > 0){
       if (identity === 2) {
         setForeman(useSelectorItem.workerList);
@@ -971,6 +972,7 @@ export default function userForeman() {
     // 获取记录过的日历
     // const calendarItem = Taro.getStorageSync(Calendar);
     const cacheDaysArr = JSON.parse(JSON.stringify(cacheDays));
+    console.log(cacheDaysArr,'cacheDaysArr')
     let List;
     if (cacheDaysArrList) {
       List = cacheDaysArrList;
@@ -1844,6 +1846,8 @@ export default function userForeman() {
               }
               getWorkerHasBusinessByDateAction(dateParams).then(dateRes => {
                 if (dateRes.code == 200) {
+                  setCache(dateRes.data.worker||[])
+
                   if (dateRes.data) {
                     // 判断记录过
                     // 时间
@@ -4102,7 +4106,8 @@ export default function userForeman() {
       if (val.id === v.id) {
         val.click = true;
         setRecorderType(val.id);
-        // 清空redux
+        // 清空头像
+        setCache([])
         getList(val.id);
       }else{
         val.click = false;
