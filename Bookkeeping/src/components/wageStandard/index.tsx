@@ -16,7 +16,7 @@ const styles =
   content: { fontSize: '13px' }
 }
 export default function WageStandard({ display, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio }: PROPS) {
-  console.log(wageStandard,'wageStandard')
+  console.log(wageStandard,'wageStandard1111')
   return(
     <View>
       {display && <View className='wageStandard'>
