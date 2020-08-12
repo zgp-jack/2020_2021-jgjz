@@ -1,4 +1,4 @@
-import { GET, SET } from '../constants/notepad'
+import { GETDATA, SETDATA } from '../constants/flowingWater'
 
 const DEFAULT_STATE: any = {
   data: []
@@ -10,10 +10,10 @@ export interface ACTIONTYPE {
 
 export default function flowingWater(state: any = DEFAULT_STATE, action: ACTIONTYPE) {
   switch (action.type) {
-    case GET:
+    case GETDATA:
       return state
-    case SET:
-      return { ...state, ...action.data }
+    case SETDATA:
+      return { ...action.data }
     default:
       return state
   }
