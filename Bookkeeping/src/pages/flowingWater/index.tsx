@@ -3,10 +3,10 @@ import { View, Text, Picker, Checkbox,Image } from '@tarojs/components'
 import { bkBusinessAction, bkDeleteBusinessAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
 import Msg from '../../utils/msg'
 import { AtSwipeAction } from "taro-ui"
-import { useDispatch } from '@tarojs/redux'
+import { useDispatch, useSelector } from '@tarojs/redux'
 import { IMGCDNURL } from '../../config';
 import { Type, Earliest_month } from '../../config/store'
-import { setFlowingWater } from '../../actions/flowingWater';
+import { setFlowingWater, getFlowingWater } from '../../actions/flowingWater';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
 import { bkBusinessTypeDataItem } from '../../utils/request/index.d'
@@ -20,6 +20,7 @@ interface DataType {
 }
 
 export default function FlowingWater() {
+  const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
   const { timeMon } = router.params;
   const dispatch = useDispatch()
@@ -62,6 +63,8 @@ export default function FlowingWater() {
   const [busy, setBusy] = useState<boolean>(false)
   // 获取数据
   useDidShow(()=>{
+    console.log(useSelectorItem);
+    debugger
     let earliest_month = Taro.getStorageSync(Earliest_month);
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
@@ -133,7 +136,6 @@ export default function FlowingWater() {
             }
           }
           setData({item:res.data.data})
-          dispatch(setFlowingWater(res.data))
         }else{
           setAllcheck(false);
           setIsCheckOut(false)
@@ -165,6 +167,8 @@ export default function FlowingWater() {
       }
       return v;
     });
+    console.log(dataClick,'1')
+    dispatch(setFlowingWater(dataClick))
     setData({ item: dataClick})
   }
   // 点击详情

@@ -756,7 +756,7 @@ export default function EditDetails() {
       }
       let duration;
       if (e.id == 3) {
-        duration = '上班'+e.name +addTime;
+        duration = e.name +addTime;
       } else {
         duration = '上班' + e.name +addTime;
       }
@@ -796,13 +796,13 @@ export default function EditDetails() {
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
           if (timeArr[i].id == 3) {
-            Time = '上班休息，'
+            Time = '休息'
           } else {
             Time = '上班' + timeArr[i].name
           }
           break;
         } else {
-          Time = '上班休息，'
+          Time = '休息'
         }
       }
       let duration;
@@ -827,7 +827,7 @@ export default function EditDetails() {
     if (data || dataList) {
       if (data.length > 0) {
         if (data[0].name == '休息') {
-          title = '上班'+data[0].name
+          title = data[0].name
         } else {
           title = '上班' + data[0].name
         }
@@ -835,7 +835,9 @@ export default function EditDetails() {
       if (dataList.length > 0) {
         if (dataList[0].name !== '无加班') {
           title = '加班' + dataList[0].name
-        } else {
+        } else if(data.length==0){
+          title = dataList[0].name
+        }else {
           title = '加班'+dataList[0].name
         }
       }
@@ -844,7 +846,7 @@ export default function EditDetails() {
           title = data[0].name +'，'+ dataList[0].name
         } else {
           if (data[0].name == '休息') {
-            title = '上班' + data[0].name+ '，加班' + dataList[0].name
+            title = data[0].name+ '，加班' + dataList[0].name
           }else if (dataList[0].name == '无加班') {
             title = '上班' + data[0].name +'，'+ dataList[0].name;
           }else{
@@ -969,13 +971,13 @@ export default function EditDetails() {
       for (let i = 0; i < timeArr.length; i++) {
         if (timeArr[i].click) {
           if (timeArr[i].id == 3) {
-            Time = '上班休息,'
+            Time = '休息'
           } else {
             Time = '上班' + timeArr[i].name
           }
           break;
         } else {
-          Time = '上班休息,'
+          Time = '休息'
         }
       }
       let duration;
