@@ -5,8 +5,8 @@ import Msg from '../../utils/msg'
 import { AtSwipeAction } from "taro-ui"
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { IMGCDNURL } from '../../config';
-import { Type, Earliest_month } from '../../config/store'
-import { setFlowingWater, getFlowingWater } from '../../actions/flowingWater';
+import { Type } from '../../config/store'
+import { setFlowingWater } from '../../actions/flowingWater';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
 import { bkBusinessTypeDataItem } from '../../utils/request/index.d'
@@ -63,34 +63,19 @@ export default function FlowingWater() {
   const [busy, setBusy] = useState<boolean>(false)
   // 获取数据
   useDidShow(()=>{
-    let earliest_month = Taro.getStorageSync(Earliest_month);
-    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
-    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    setdateEnd(yeartime+'-'+montime);
-    if(!earliest_month){
-      setleftTime(false);
-      setrightTime(false);
-      setDatestart(yeartime+'-'+montime);
-    }else{
-      setDatestart(earliest_month);
-      if(Number(earliest_month.split('-')[0]) == yeartime){
-        setrightTime(false);
-        Number(earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
-      }else if(Number(earliest_month.split('-')[0]) < yeartime) {
-        setrightTime(false);
-        setleftTime(true);
-      }
-    }
-    setAllcheck(false);
     const date = JSON.stringify(new Date()).slice(1, 11)
     const times = timeMon || date.slice(0, 4) + '-' + date.slice(5, 7);
-    setYear(times.split('-')[0] + '年');
-    setmon(times.split('-')[1] + '月');
     setTime(times);
     setVals(times);
     let lastM = times.split('-')[0]+'-'+(Number(times.split('-')[1])+1)
     setLastTime(lastM);
-    getList(times, lastM);
+    if(useSelectorItem.flowingWater.length>0){
+      setData({item:useSelectorItem.flowingWater});
+    }else {
+      setYear(times.split('-')[0] + '年');
+      setmon(times.split('-')[1] + '月');
+      getList(times, lastM);
+    }
   })
   const type = Taro.getStorageSync(Type);
   setIdentity(type)
@@ -112,7 +97,16 @@ export default function FlowingWater() {
     bkBusinessAction(params).then(res=>{
       if(res.code === 200){
         setBusy(false)
-        console.log(res.data);
+        let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+        let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+        setdateEnd(yeartime+'-'+montime);
+        if(!res.data.first_business_month){
+          setDatestart(yeartime+'-'+montime);
+          changeIcon(times,res.data.first_business_month)
+        }else{
+          setDatestart(res.data.first_business_month);
+          changeIcon(times,res.data.first_business_month)
+        }
         if (res.data.data && res.data.data.length>0){
           for(let i =0 ;i<res.data.data.length;i++){
             const month = res.data.data[i].time.slice(0, 4) + '年' + res.data.data[i].time.slice(5, 7)+'月';
@@ -134,6 +128,7 @@ export default function FlowingWater() {
               res.data.data[0].click = true;
             }
           }
+          dispatch(setFlowingWater(res.data.data))
           setData({item:res.data.data})
         }else{
           setAllcheck(false);
@@ -206,6 +201,7 @@ export default function FlowingWater() {
         }
       }
     }
+    dispatch(setFlowingWater(item))
     setData({item})
   }
   const handleCheckboxBtn = (type:number)=>{
@@ -266,10 +262,26 @@ export default function FlowingWater() {
           if (res.confirm == true) {
             bkDeleteBusinessAction(params).then(res => {
               if (res.code === 200) {
+                if(useSelectorItem.flowingWater.length>0){
+                  useSelectorItem.flowingWater.forEach((element,dex) => {
+                    element.arr.forEach((item,index) => {
+                      if(item.id == v.id){
+                        if(element.arr.length == 1){
+                          useSelectorItem.flowingWater.splice(dex,1)
+                        }else{
+                          if(item.business_type == 3){
+                            element.total_borrow -= item.money;
+                          }else{
+                            element.total_money -= item.money;
+                          }
+                          element.arr.splice(index,1);
+                        }
+                      }
+                    });
+                  });
+                }
+                setData({item:useSelectorItem.flowingWater});
                 Msg('删除成功')
-                setTimeout(()=>{
-                  getList(time, lastTime)
-                },800)
               } else {
                 Msg(res.msg)
               }
@@ -289,11 +301,10 @@ export default function FlowingWater() {
     setLastTime(lastM);
     setYear(e.detail.value.split('-')[0]+'年');
     setmon(e.detail.value.split('-')[1]+'月')
-    changeIcon(e.detail.value)
     getList(e.detail.value, lastM)
   }
-  const changeIcon = (e) => {
-    let earliest_month = Taro.getStorageSync(Earliest_month);
+  const changeIcon = (e,first_business_month) => {
+    let earliest_month = first_business_month;
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     if(!earliest_month){
@@ -344,6 +355,7 @@ export default function FlowingWater() {
         return v; 
       })
       console.log(list,'list')
+      dispatch(setFlowingWater(list))
       setData({ item: list})
       setAllcheck(true);
     }else{
@@ -355,6 +367,7 @@ export default function FlowingWater() {
         })
         return v;
       })
+      dispatch(setFlowingWater(list))
       setData({ item: list })
       setAllcheck(false);
     }
@@ -378,7 +391,7 @@ export default function FlowingWater() {
     let params = {
       ids,
     }
-
+    setisSwipe(false);
     const num = dataItem.length;
     const delNum = ids.length;
     if (!delNum){
@@ -395,10 +408,30 @@ export default function FlowingWater() {
         if (res.confirm == true) {
           bkDeleteBusinessAction(params).then(res => {
             if (res.code === 200) {
+              if(useSelectorItem.flowingWater.length>0){
+                useSelectorItem.flowingWater.forEach((element,dex) => {
+                  element.arr.forEach((item,index) => {
+                    for(let i=0;i<params.ids.length;i++){
+                      if(params.ids[i]==item.id){
+                        if(element.arr.length == 1){
+                          useSelectorItem.flowingWater.splice(dex,1)
+                        }else{
+                          if(item.business_type == 3){
+                            element.total_borrow -= item.money;
+                          }else{
+                            element.total_money -= item.money;
+                          }
+                          element.arr.splice(index,1);
+                        }
+                      }
+                    }
+                  });
+                });
+              }
               Msg('删除成功');
-              setTimeout(()=>{
-                getList(time, lastTime)
-              },800)
+              setData({item:useSelectorItem.flowingWater});
+              setAllcheck(false);
+              setIsCheckOut(false)
             } else {
               Msg(res.msg)
             }
