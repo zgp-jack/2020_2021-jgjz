@@ -85,7 +85,8 @@ export default function AddTeamMember() {
               if (arr.length>0){
                 arr.map(value=>{
                   if(val.id == value.id){
-                    val.click =true
+                    val.click =true,
+                    val.disabled = true
                   }
                   return value;
                 })
@@ -202,7 +203,7 @@ export default function AddTeamMember() {
   // 班组长
   const handleForeman = (name,e)=>{
     if(type !== '2'){
-      if(e.click) return;
+      if (e.click && e.disabled) return;
       const arr = JSON.parse(JSON.stringify(clickData));
       let dataArr = JSON.parse(JSON.stringify(data));
       if (arr.length === 0) {
@@ -292,7 +293,7 @@ export default function AddTeamMember() {
             {val.list.map((v=>(
               <View className='list-flex-test' onClick={() => handleForeman(val.name_py,v)}>
                 {type !== '2' &&
-                  <View><Checkbox checked={v.click} value={v.click} disabled={v.click} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /></View>
+                  <View><Checkbox checked={v.click} value={v.click} disabled={v.click && v.disabled} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /></View>
                 }
                 <View>
                   <View className={classnames({

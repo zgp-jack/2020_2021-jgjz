@@ -352,9 +352,11 @@ export default function Foreman() {
           <View className='contractor'>
             <View>包工类型</View>
             <View className='radioList'>
-              <RadioGroup>
+              <RadioGroup className='radioList-box'>
                 {contractorArr.item.map(v => (
-                  < Radio color='#0099FF' className='borrowing-Radio-list' checked={v.click} key={v.id} onClick={() => handleRadio(v)}>{v.name}</Radio>
+                  <View>
+                  <Radio color='#0099FF' className='borrowing-Radio-list' checked={v.click} key={v.id} onClick={() => handleRadio(v)}>{v.name}</Radio>
+                  </View>
                 ))}
               </RadioGroup>
             </View>
@@ -720,7 +722,7 @@ export default function Foreman() {
         </View>
         </View>
       </View>
-        <View className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay ? '' : 'foreman-footer'}>
+        <View className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay ? '' : 'foreman-footer'}>
         <View className='foreman-footer-btn'>
           <View className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</View>
           <View className='footer-right' onClick={()=>handlePreservation(0)}>保存</View>

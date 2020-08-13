@@ -249,7 +249,7 @@
 .radioList {
   display: flex;
   justify-content: space-between;
-  width: 400rpx;
+  width: 450rpx;
 }
 
 .measure {
@@ -271,6 +271,12 @@
 
 .borrowing-Radio-list{
   transform: scale(0.8, 0.8);
+}
+.radioList-box{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10rpx;
 }
 .borrowing-publish-list-item {
   display: flex;
@@ -400,7 +406,7 @@
   line-height: 60rpx;
   width: 60rpx;
   text-align: center;
-  background: #51CEF7FF;
+  background: rgba(81, 206, 247, 1);
   border-radius: 3px;
   // margin-left: 27rpx;
   font-size: 26rpx;
@@ -414,7 +420,7 @@
   line-height: 60rpx;
   width: 60rpx;
   text-align: center;
-  background: #BF67CFFF;
+  background: rgba(191, 103, 207, 1);
   border-radius: 3px;
   // margin-left: 27rpx;
   font-size: 26rpx;
@@ -428,7 +434,7 @@
   line-height: 60rpx;
   width: 60rpx;
   text-align: center;
-  background: #61DFE2FF;
+  background: rgba(97, 223, 226, 1);
   border-radius: 3px;
   // margin-left: 27rpx;
   font-size: 26rpx;
@@ -442,7 +448,7 @@
   line-height: 60rpx;
   width: 60rpx;
   text-align: center;
-  background: #D466AAFF;
+  background: rgba(212, 102, 170, 1);
   border-radius: 3px;
   // margin-left: 27rpx;
   font-size: 26rpx;
@@ -456,7 +462,7 @@
   line-height: 60rpx;
   width: 60rpx;
   text-align: center;
-  background: #F72D57FF;
+  background: rgba(247, 45, 87, 1);
   border-radius: 3px;
   // margin-left: 27rpx;
   font-size: 26rpx;
@@ -500,8 +506,8 @@
   text-align: center;
   border-radius: 3px;
   font-size: 26rpx;
-  color: #F1F1F1;
-  background: red;
+  color: rgba(241, 241, 241, 1);
+  background: rgba(247, 45, 87, 1);
   background-size: contain;
 }
 .workerItem-ok{
@@ -812,7 +818,7 @@
   background-size: contain;
 }
 .blued{
-  color: #0099FF;
+  color: rgba(0, 153, 255, 1);
 }
 .groupIcon{
   position: absolute;
