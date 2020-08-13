@@ -2,12 +2,14 @@ import Taro, { Config, useEffect, useState, useRouter, useContext } from '@taroj
 import { View, Text, Picker, Checkbox, Image } from '@tarojs/components'
 import { AtList, AtListItem } from "taro-ui"
 import { context } from '../flowingWater';
+import { useSelector } from '@tarojs/redux'
 import { bkDeleteBusinessAction, bkBusinessOneAction } from '../../utils/request/index'
 import Msg from '../../utils/msg';
 import './index.scss'
 
 
 export default function FlowingWaterDetails() {
+  const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
   const { time, id, week } = router.params;
   // 父级的值
@@ -78,10 +80,26 @@ export default function FlowingWaterDetails() {
         if(res.confirm == true){
           bkDeleteBusinessAction(params).then(res => {
             if (res.code === 200) {
+              if(useSelectorItem.flowingWater.length>0){
+                useSelectorItem.flowingWater.forEach((element,dex) => {
+                  element.arr.forEach((item,index) => {
+                    if(item.id == obj.id){
+                      if(element.arr.length == 1){
+                        useSelectorItem.flowingWater.splice(dex,1)
+                      }else{
+                        if(item.business_type == 3){
+                          element.total_borrow -= item.money;
+                        }else{
+                          element.total_money -= item.money;
+                        }
+                        element.arr.splice(index,1);
+                      }
+                    }
+                  });
+                });
+              }
               Msg('删除成功')
-              setTimeout(()=>{
-                Taro.navigateBack();
-              },800)
+              Taro.navigateBack();
             } else {
               Msg(res.msg)
             }

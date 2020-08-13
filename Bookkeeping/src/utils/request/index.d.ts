@@ -88,7 +88,8 @@ export interface bkBusinessType extends Result {
   data: bkBusinessTypeDataItem
 }
 export interface bkBusinessTypeDataItem {
-  data: bkBusinessTypeData[]
+  data: bkBusinessTypeData[],
+  first_business_month: string
 }
 export interface bkBusinessTypeData {
   click:boolean,

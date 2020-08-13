@@ -8,6 +8,7 @@ import ProjectModal from '../../components/projectModal'
 import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Earliest_month, Tips, Res } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
+import { setFlowingWater } from '../../actions/flowingWater';
 import { setWorker } from '../../actions/workerList'
 import { bkIndexTypeData } from '../../utils/request/index.d'
 import Auth from '../../components/auth';
@@ -357,6 +358,7 @@ export default function Index() {
     dispatch(setClickTIme([]))
     //清楚
     dispatch(setWorker([]))
+    dispatch(setFlowingWater([]))
     // 判断有没有用户信息没有就显示
     // 获取缓存信息
     let type = Taro.getStorageSync(Type);

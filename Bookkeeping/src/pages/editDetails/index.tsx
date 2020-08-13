@@ -5,6 +5,7 @@ import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageActio
 import { View, Text, Input, Textarea, RadioGroup, Radio, Image, CoverView } from '@tarojs/components';
 import WageStandard  from '../../components/wageStandard'
 import Quantities from '../../components/quantities';
+import { useSelector } from '@tarojs/redux'
 import Msg from '../../utils/msg'
 import { IMGCDNURL } from '../../config'
 import WorkingHours from '../../components/workingHours';
@@ -28,6 +29,7 @@ interface DataType {
   num?: number
 }
 export default function EditDetails() {
+  const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
   const { id,typeItem } = router.params;
   // 班组长还是工人
@@ -1110,17 +1112,27 @@ export default function EditDetails() {
     // return;
     updateBusinessAction(params).then(res=>{
       if(res.code === 200){
+        if(useSelectorItem.flowingWater.length>0){
+          useSelectorItem.flowingWater.forEach((element) => {
+            element.arr.forEach((item) => {
+              if(item.id == params.id){
+                Object.getOwnPropertyNames(params).forEach((key) =>{
+                  item[key] = params[key]
+                })
+              }
+            });
+          });
+        }
         Msg(res.msg);
-        setTimeout(()=>{
-          if (typeItem){
-            Taro.navigateBack({delta:2});
-          }else{
-            Taro.navigateBack({ delta: 1 });
-          }
-          // Taro.redirectTo({
-          //   url: '/pages/flowingWater/index'
-          // })
-        },1000)
+        Taro.navigateBack();
+        // setTimeout(()=>{
+        //   debugger
+        //   if (typeItem){
+        //     Taro.navigateBack({delta:2});
+        //   }else{
+        //     Taro.navigateBack({ delta: 1 });
+        //   }
+        // },1000)
       }else{
         Msg(res.msg)
       }
@@ -1343,9 +1355,6 @@ export default function EditDetails() {
           <Text className='pulish-list-textTarea-title'>备注</Text>
         </View>
         <Textarea
-          focus
-          autoFocus
-          auto-focus
           hidden={isdisable}
           className='textarea'
           cursor={val.note.length||0}
