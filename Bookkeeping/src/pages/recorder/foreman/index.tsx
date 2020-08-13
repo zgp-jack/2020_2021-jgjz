@@ -604,9 +604,9 @@ export default function Foreman() {
                 onInput={(e) => handleInput('price', e)}
                 value={model && model.price}
               />
-              <View className='rightIconsBox'>
+              {/* <View className='rightIconsBox'>
                 <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
-              </View>
+              </View> */}
             </View>
           </View>
           <View className='publish-recruit-card'>
@@ -620,9 +620,9 @@ export default function Foreman() {
                 placeholder='工程量和单价未知时，可直接填写工钱'
                 value={model && model.wages}
               />
-              <View className='rightIconsBox'>
+              {/* <View className='rightIconsBox'>
                 <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
-              </View>
+              </View> */}
             </View>
           </View>
         </View>
