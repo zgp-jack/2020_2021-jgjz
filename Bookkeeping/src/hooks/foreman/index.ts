@@ -2042,6 +2042,7 @@ export default function userForeman() {
   }
   // 输入框
   const handleInput = (type: string, e) => {
+    if (/^[\u4e00-\u9fa5_a-zA-Z0-9\s\·\~\！\@\#\￥\%\……\&\*\（\）\——\-\+\=\【\】\{\}\、\|\；\‘\’\：\“\”\《\》\？\，\。\、\`\~\!\#\$\%\^\&\*\(\)\_\[\]{\}\\\|\;\'\'\:\"\"\,\.\/\<\>\?]+$/.test(e.detail.value)){
     let data = JSON.parse(JSON.stringify(model));
     if (type === 'details') {
       setNum(e.detail.value.length);
@@ -2054,6 +2055,10 @@ export default function userForeman() {
     }
     data[type] = e.detail.value
     setModel({...data});
+    }else{
+      Msg('请输入正确内容')
+      return
+    }
   }
   // 创建项目
   const handleAddProject = () => {
