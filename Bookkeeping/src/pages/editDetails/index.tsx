@@ -167,19 +167,19 @@ export default function EditDetails() {
           // 判断弹框显示
           let title;
           if (res.data.work_time == '1.00'){
-            title= '1个工'
+            title= '上班1个工'
           }else if(res.data.work_time =='0.50'){
-            title = '半个工'
+            title = '上班半个工'
           }else if(res.data.wage_money == '0.00'){
-            title = '修改'
+            title = '休息'
           }else{
-            title = res.data.work_time_hour + '小时'
+            title = '上班'+parseFloat(res.data.work_time_hour) + '小时'
           }
           let addTitle;
           if (res.data.overtime == '0.00'){
             addTitle = '，无加班'
           }else{
-            addTitle = '，加班' + res.data.overtime + '小时'
+            addTitle = '，加班' + parseFloat(res.data.overtime) + '小时'
           }
           // 这里是工要获取到多少工资标里的设置的时间再算
           // const duration = res.data.work_time + '个工' + res.data.overtime+'小时'
@@ -230,9 +230,9 @@ export default function EditDetails() {
           standardObj.money = res.data.worker_money
           standardObj.overtime_type = res.data.overtime_type
           standardObj.worker_overtime = res.data.worker_overtime
-          standardObj.overtime = res.data.overtime
+          standardObj.overtime = parseFloat(res.data.overtime)
           standardObj.overtime_money = res.data.overtime_money
-          standardObj.work_time = res.data.work_time;
+          standardObj.work_time = parseFloat(res.data.work_time);
           setStandard(standardObj);
           // 工钱
           let wages;
@@ -268,7 +268,7 @@ export default function EditDetails() {
                 timeArrData[3].click = true;
               }
             }else{
-              const setTime = (+res.data.work_time_hour).toFixed(2);
+              const setTime = parseFloat(res.data.work_time_hour)
               const obj = { id: 4, name: `${setTime}小时`, click: true, num: setTime };
               const index = [timeArrData.length - 1];
               if (i === index[0]) {
@@ -290,7 +290,7 @@ export default function EditDetails() {
             if (res.data.overtime === '0.00'){
               addWorkArrData[0].click = true;
             }else{
-              const obj = { id: 2, name: `${res.data.overtime}小时`, click: true, num: res.data.overtime };
+              const obj = { id: 2, name: `${parseFloat(res.data.overtime)}小时`, click: true, num: parseFloat(res.data.overtime) };
               const index = [addWorkArrData.length - 1];
               if (i === index[0]) {
                 addWorkArrData[i] = obj;
@@ -1040,7 +1040,7 @@ export default function EditDetails() {
         }
       }
     })
-    // return;
+    console.log(addWorkArr,'addWorkArr')
     // return;
     //单位
     let unit;
