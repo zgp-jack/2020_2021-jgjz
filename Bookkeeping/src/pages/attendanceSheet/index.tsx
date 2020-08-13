@@ -149,7 +149,28 @@ export default function AttendanceSheet() {
           // 工人
           console.log(leftArr,'leftArr')
           console.log(res.data,'res.data');
-          
+          if(res.data.length>0){
+            let LeftList;
+            for(let i =0;i<res.data.length;i++){
+              let list;
+              let obj:any={};
+              obj.id = res.data[i].id;
+              obj.name = res.data[i].name;
+              //  包工(量)
+              if(res.data[i].amount.length>0){
+
+              }
+              //借支
+              if (res.data[i].borrow.length > 0) {
+
+              }
+              // 包工(天)
+              if (res.data[i].work.length > 0) {
+
+              }
+            };
+          }
+          // 本月统计
           setFixedTab(leftArr);
           setTabArr(rightArr);
           // 设置里面的内容
