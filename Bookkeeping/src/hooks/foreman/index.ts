@@ -396,7 +396,10 @@ export default function userForeman() {
       setClickNum(0);
       setAllClick(false)
       setWorkerItem(item)
+      noData = false;
     }else{
+      console.log(noData,'noData')
+      if(noData) return;
       getList();
     }
   }, [useSelectorItem.workerList])
@@ -418,6 +421,7 @@ export default function userForeman() {
         }
       })
     }
+    console.log(paramsId,'啊啊啊啊啊啊啊啊啊11')
     let params = {
       identity,
       business_type: paramsId,
@@ -573,6 +577,7 @@ export default function userForeman() {
                 getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
               }
             }
+            console.log(workArr,'workArrworkArr')
             dispatch(setPhoneList(workArr));
             setWorkerItem(workArr);
             setMoneyList(res.data.latest_group_workers_has_wage)
@@ -1185,7 +1190,7 @@ export default function userForeman() {
             console.log('无数据')
             // 设置一个工无加班
             // let duration = modalObj.duration;
-            const duration = '1个工，无加班';
+            const duration = '上班1个工，无加班';
             // 一个工所以为0直接设置
             const data = JSON.parse(JSON.stringify(timeArr));
             data[0].click = true;
@@ -2783,7 +2788,7 @@ export default function userForeman() {
   }
   // 添加工资标准
   const handleWageStandard = (type: string, e: any) => {
-    const cacheItem = JSON.parse(JSON.stringify(cacheWage));
+    // const cacheItem = JSON.parse(JSON.stringify(cacheWage));
     if (type == 'day') {
       const item = JSON.parse(JSON.stringify(wageStandard));
       item[type] = e;
@@ -3996,9 +4001,9 @@ export default function userForeman() {
       Msg('请先选择项目')
       return
     }
+    noData = true;
     bkGetWorker();
     userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`);
-    noData = true;
     // return;
     // return;
     // setRefresh(true)

@@ -222,7 +222,34 @@ export default function Foreman() {
   // 关闭工资标准
   const handleWageStandardClose = ()=>{
     let type = Taro.getStorageSync(Type);
-    const cacheWageItem = JSON.parse(JSON.stringify(cacheWage));
+    let data ={
+      data: [
+        { id: 1, name: '按小时算', click: true },
+        { id: 2, name: '按天算', click: false },
+      ],
+      // 上班模板
+      work: 0,
+      // 上班金额
+      money: 0,
+      // 加班钱（小时）
+      addWork: 0,
+      // 小时/天
+      type: 1,
+      // 加班多少小时算一台呢
+      day: 0,
+      // 自动换算加班多少每小时多少钱
+      dayAddWork: 0,
+      state: '',
+      group_info: '',
+      id: '',
+      worker_id: '',
+    }
+    let cacheWageItem;
+    if (cacheWage){
+      cacheWageItem = JSON.parse(JSON.stringify(cacheWage));
+    }else{
+      cacheWageItem = data;
+    }
     const wageStandardItem = JSON.parse(JSON.stringify(wageStandard));
     console.log(wageStandardItem,'wageStandardItem')
     if(type === 1){
