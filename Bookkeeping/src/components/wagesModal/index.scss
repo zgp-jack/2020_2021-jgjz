@@ -196,14 +196,30 @@
   width: 95%;
   margin: 0 auto;
   margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
 }
 .wagesModal-standard-box-list:last-child{
   margin-bottom: 0rpx;
 }
 .wagesModal-standard-box-list-flex{
+  margin-bottom: 20rpx;
+  margin-top: 10rpx;
   display: flex;
   color: rgba(47, 53, 65, 1);
   font-size: 26rpx;
+  justify-content: space-between;
+  width: 100%;
+}
+.wagesModal-standard-box-list-flex-left{
+  flex: 1;
+  border-right: 1rpx solid rgba(229, 226, 226, 1);
+}
+.wagesModal-standard-box-list-border{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  width: 100%;
+  border-right: 1rpx solid rgba(229, 226, 226, 1);
 }
 .checkbox{
   transform: scale(0.6, 0.6);
@@ -218,18 +234,21 @@
   background:rgba(255, 255, 255, 1);
   border:1rpx solid rgba(175, 182, 196, 1);
   border-radius:5rpx;
-  margin-top: 15rpx;
-  margin-left: 25rpx;
+  margin-top: 60%;
+  margin-left: 15%;
+  color: #2F3541;
+  font-size: 26rpx;
 }
 .wagesModal-standard-box-list-title{
   font-size: 29rpx;
   color: rgba(47, 53, 65, 1);
-  padding: 20rpx 18rpx;
+  // padding: 20rpx 18rpx;
+  margin-left: 20rpx;
 }
 .wagesModal-standard-box-list-flex-middle{
   // padding-left: 18rpx;
   flex: 1;
-  border-right: 1rpx solid rgba(229, 226, 226, 1);
+  // border-right: 1rpx solid rgba(229, 226, 226, 1);
   font-size: 26rpx;
   // border-right: 1rpx solid rgba(229, 226, 226, 1);
   // padding-right: 20rpx;
@@ -316,12 +335,13 @@
 .wagesModal-standard-box-list-look-title{
   color: rgba(47, 53, 65, 1);
   font-size: 29rpx;
-  padding: 20rpx 24rpx 10rpx 20rpx;
+  margin-left: 20rpx;
+  // padding: 20rpx 24rpx 10rpx 20rpx;
 }
 .wagesModal-standard-box-list-flex-look-left{
   padding-left: 18rpx;
   flex: 1;
-  border-right: 1rpx solid rgba(229, 226, 226, 1);
+  // border-right: 1rpx solid rgba(229, 226, 226, 1);
   font-size: 29rpx;
 }
 .wagesModal-standard-box-list-look-edit-box{
@@ -393,4 +413,24 @@
   width: 25rpx;
   background-size: contain;
   margin-right: 10rpx;
+}
+.red{
+  color: red;
+}
+.wagesModal-standard-box-list-flex-list{
+  display: flex;
+  justify-content: space-between;
+}
+.wagesModal-standard-box-list-edit-box{
+  width:79rpx;
+  height:33rpx;
+  line-height: 33rpx;
+  text-align: center;
+  background:rgba(255, 255, 255, 1);
+  border:1rpx solid rgba(175, 182, 196, 1);
+  border-radius:5rpx;
+  margin-top: 35%;
+  margin-left: 15%;
+  color: #2F3541;
+  font-size: 26rpx;
 }

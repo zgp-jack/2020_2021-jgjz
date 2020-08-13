@@ -201,8 +201,8 @@ export default function AddTeamMember() {
   }
   // 班组长
   const handleForeman = (name,e)=>{
-    console.log(name,e,'dsadasda')
     if(type !== '2'){
+      if(e.click) return;
       const arr = JSON.parse(JSON.stringify(clickData));
       let dataArr = JSON.parse(JSON.stringify(data));
       if (arr.length === 0) {
@@ -292,7 +292,7 @@ export default function AddTeamMember() {
             {val.list.map((v=>(
               <View className='list-flex-test' onClick={() => handleForeman(val.name_py,v)}>
                 {type !== '2' &&
-                  <View><Checkbox checked={v.click} value={v.click} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /></View>
+                  <View><Checkbox checked={v.click} value={v.click} disabled={v.click} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /></View>
                 }
                 <View>
                   <View className={classnames({

@@ -135,7 +135,7 @@ export default function userForeman() {
   const [wageStandard, setWageStandard] = useState<any>({
     data: [
       { id: 1, name: '按小时算', click: true },
-      { id: 2, name: '按天算', click: false },
+      { id: 2, name: '按工天算', click: false },
     ],
     // 上班模板
     work: 0,
@@ -364,6 +364,8 @@ export default function userForeman() {
           arrList.splice(i, 1)
         }
       }
+      console.log(data,'moneyListmoneyList');
+      console.log(arrList,'arrListarrList')
       const item = [objs, ...arrList];
       if (data.length > 0) {
         for (let j = 0; j < data.length; j++) {
@@ -497,6 +499,9 @@ export default function userForeman() {
                   for (let j = 0; j < res.data.latest_group_workers_has_wage.length; j++) {
                     if (workArr[i].id == res.data.latest_group_workers_has_wage[j].worker_id) {
                       workArr[i].set = true;
+                      setNoset(true)
+                    }else{
+                      setNoset(false) 
                     }
                   }
                 }
@@ -619,6 +624,7 @@ export default function userForeman() {
           objs.discipline = false;
           objs.set = false;
           objs.click = false;
+          setNoset(false)
           const workArr = [objs];
           console.log(workArr,'workArr')
           dispatch(setPhoneList(workArr));
@@ -653,14 +659,21 @@ export default function userForeman() {
               }
               // 默认加上自己
               let noObjs = false;
-              for(let i = 0;i<arr.length;i++){
-                if (arr[i].worker_id == objs.id){
-                  arr[i] = objs;
-                }else{
-                  noObjs = true;
+              if(arr.length>0){
+                for(let i = 0;i<arr.length;i++){
+                  if (arr[i].worker_id == objs.id){
+                    arr[i] = objs;
+                  }else{
+                    noObjs = true;
+                  }
                 }
+              }else{
+                noObjs = true;
               }
-              const workList = !noObjs ? [...arr] : [objs,...arr]
+              console.log(arr,'arr')
+              console.log(noObjs,'noObjs')
+              const workList = !noObjs ? [...arr] : [objs,...arr];
+              console.log(workList,'workList')
               // 工人设置工钱
               const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
               if(type == 2){
@@ -716,6 +729,9 @@ export default function userForeman() {
                   for (let j = 0; j < res.data.default_group_workers_has_wage.length; j++) {
                     if (workList[i].id == res.data.default_group_workers_has_wage[j].worker_id) {
                       workList[i].set = true;
+                      setNoset(true)
+                    }else{
+                      setNoset(false)
                     }
                   }
                 }
@@ -972,9 +988,8 @@ export default function userForeman() {
     // 获取记录过的日历
     // const calendarItem = Taro.getStorageSync(Calendar);
     const cacheDaysArr = JSON.parse(JSON.stringify(cacheDays));
-    console.log(cacheDaysArr,'cacheDaysArr')
     let List;
-    if (cacheDaysArrList) {
+    if (cacheDaysArrList && cacheDaysArrList.length>0 ) {
       List = cacheDaysArrList;
     } else {
       List = cacheDaysArr;
@@ -1154,7 +1169,6 @@ export default function userForeman() {
   }
   // 获取项目名称
   const bkGetProjectTeam = (groupName?: string, isAgain?: boolean,del?:boolean) => {
-    console.log(11)
     bkGetProjectTeamAction({}).then(res => {
       if (res.code === 200) {
         // 如果是工人的话默认选中第一条有数据
@@ -1636,27 +1650,34 @@ export default function userForeman() {
           // }
           //获取工人的时候传过来的工人数据
           if (Item) {
-            for (let i = 0; i < Item.length; i++) {
-              for (let j = 0; j < res.data.length; j++) {
-                if (res.data[j].worker_id == Item[i].id) {
-                  Item[i].set = true;
-                  if (userData && userData.length > 0) {
-                    userData.map(v => {
-                      if (v.id == id && v.dataType == dataType && v.itemType == itemType) {
-                        for (let b = 0; b < v.data.length; b++) {
-                          if (b == v.id) {
-                            v.discipline = true;
+            console.log(32321)
+            console.log(res.data,'res.dartas');
+            console.log(Item,'Item')
+            if(res.data.length>0){
+              for (let i = 0; i < Item.length; i++) {
+                for (let j = 0; j < res.data.length; j++) {
+                  if (res.data[j].worker_id == Item[i].id) {
+                    Item[i].set = true;
+                    if (userData && userData.length > 0) {
+                      userData.map(v => {
+                        if (v.id == id && v.dataType == dataType && v.itemType == itemType) {
+                          for (let b = 0; b < v.data.length; b++) {
+                            if (b == v.id) {
+                              v.discipline = true;
+                            }
                           }
                         }
-                      }
-                    })
+                      })
+                    }
+                    setNoset(true)
                   }
-                  setNoset(true)
-                }
-                else {
-                  setNoset(false)
+                  else {
+                    setNoset(false)
+                  }
                 }
               }
+            }else{
+              setNoset(false)
             }
             setWorkerItem(Item)
             return;
@@ -1837,7 +1858,7 @@ export default function userForeman() {
             const time = years + '-' + months + '-' + dates;
             // 设置蓝色底色
             let ArrList = [objs, ...arr];
-            let cacheDaysArr = [];
+            let cacheDaysArr:any[] = [];
             if (type === 1) {
               let dateParams = {
                 group_info: groupInfos,
@@ -1847,13 +1868,24 @@ export default function userForeman() {
               getWorkerHasBusinessByDateAction(dateParams).then(dateRes => {
                 if (dateRes.code == 200) {
                   setCache(dateRes.data.worker||[])
-
                   if (dateRes.data) {
                     // 判断记录过
                     // 时间
                     if (dateRes.data.days && dateRes.data.days.length > 0) {
-                      setcacheDays(dateRes.data.days);
-                      cacheDaysArr = dateRes.data.days;
+                      let dateItem:any[]=[];
+                      for (let z = 0; z < dateRes.data.days.length; z++) {
+                        let dayObj = {
+                          date: dateRes.data.days[z].split('-')[2],
+                          month: dateRes.data.days[z].split('-')[1],
+                          year: dateRes.data.days[z].split('-')[0],
+                        }
+                        dateItem.push(dayObj);
+                      }
+                      setcacheDays(dateItem);
+                      cacheDaysArr = dateItem;
+                    }else{
+                      setcacheDays([]);
+                      cacheDaysArr = [];
                     }
                     // 工人
                     if (dateRes.data.worker && dateRes.data.worker.length > 0) {
@@ -2613,6 +2645,7 @@ export default function userForeman() {
           bkDeleteRroupWorkerAction(params).then(res => {
             if (res.code === 200) {
               const data = JSON.parse(JSON.stringify(workerItem));
+              const moneyListArr = JSON.parse(JSON.stringify(moneyList));
               // data.splice(data.indexOf(v.id), 1);
               let dataType;
               recorderTypeArr.item.map((v) => {
@@ -2640,6 +2673,15 @@ export default function userForeman() {
                 }
                 return val;
               })
+              console.log(moneyListArr,'moneyListArr');
+              console.log(v,'moneyListArr1')
+              for (let i = 0; i < moneyListArr.length;i++){
+                if (moneyListArr[i].worker_id == v.id){
+                  console.log(i,'111111')
+                  moneyListArr.splice(i,1)
+                }
+              }
+              setMoneyList(moneyListArr)
               setWorkerItem(data);
               dispatch(setPhoneList(data));
               // 获取工人列表
@@ -3595,7 +3637,7 @@ export default function userForeman() {
       content: '删除项目后,所有数据不能找回,确定要删除吗？',
       showCancel: true,
       confirmColor: '#0099FF',
-      cancelColor: '##797979',
+      cancelColor: '#797979',
       success: (res) => {
         if (res.confirm == true) {
           bkDeleteprojectTeamAction(params).then(res => {
@@ -3992,6 +4034,9 @@ export default function userForeman() {
       const years = new Date().getFullYear();
       const months = new Date().getMonth() + 1;
       const dates = new Date().getDate();
+      console.log(years,'years');
+      console.log(years, 'months');
+      console.log(years, 'months');
       if (data[0].year == years && data[0].month == months && data[0].date == dates) {
         time = years + '-' + addZero(months) + '-' + addZero(dates)+'（今天）'
       } else {
@@ -4057,7 +4102,7 @@ export default function userForeman() {
       const months = new Date().getMonth() + 1;
       const dates = new Date().getDate();
       if (data[0].year == years && data[0].month == months && data[0].date == dates) {
-        time = years + '-' + months + '-' + dates
+        time = years + '-' + addZero(months) + '-' + addZero(dates) + '（今天）'
       } else {
         time = data[0].year + '-' + data[0].month + '-' + data[0].date
       }
@@ -4101,6 +4146,11 @@ export default function userForeman() {
   // 切换类型
   const handleClckTabber = (v) => {
     setProjectId('');
+    // 全选
+    setClickNum(0);
+    setAllClick(false)
+    setCheckAll(false);
+    setClickModalNum(0)
     const recorderTypeArrList = JSON.parse(JSON.stringify(recorderTypeArr.item));
     const data = recorderTypeArrList.map(val => {
       if (val.id === v.id) {
@@ -4114,6 +4164,7 @@ export default function userForeman() {
       }
       return val;
     })
+    
     setRecorderTypeArr({ item: data })
   }
   // 获取缓存
@@ -4135,8 +4186,17 @@ export default function userForeman() {
       if (dateRes.code == 200) {
         if (dateRes.data) {
           if (dateRes.data.days && dateRes.data.days.length > 0) {
-            setcacheDays(dateRes.data.days);
-            // cacheDaysArr = dateRes.data.days;
+            let dateItem: any[] = [];
+            for (let z = 0; z < dateRes.data.days.length; z++) {
+              let dayObj = {
+                date: dateRes.data.days[z].split('-')[2],
+                month: dateRes.data.days[z].split('-')[1],
+                year: dateRes.data.days[z].split('-')[0],
+              }
+              dateItem.push(dayObj);
+            }
+            setcacheDays(dateItem);
+            // cacheDaysArr = dateItem;
           }
           if (dateRes.data.worker && dateRes.data.worker.length > 0) {
             setcacheWorker(dateRes.data.worker);

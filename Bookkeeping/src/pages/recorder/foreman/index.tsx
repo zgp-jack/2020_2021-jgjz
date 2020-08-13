@@ -329,7 +329,7 @@ export default function Foreman() {
         <View className='tabber'>
           {recorderTypeArr.item.map(v => (
             <View className={v.click ? 'tabber-list-click' :'tabber-list'} key={v.id} onClick={() => handleClckTabber(v)}>
-              <View className={v.click ? 'tabber-list-box' : ''}>
+              <View className='tabber-list-box'>
                 {v.click && 
                 <Image src={`${IMGCDNURL}groupIcon.png`} className='groupIcon' />
                 }
@@ -405,17 +405,27 @@ export default function Foreman() {
                   {/* <View className='workerBox-list-title-origin'>长按名字可修改/查看工资标准</View> */}
                   <View className='workerBox-list-title-origin-box'>
                   {(recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ?
-                  <View className='workerBox-list-title-origin'>{!noSet ? '长按名字可修改/查看工资标准' :'工资如有变动，请长按头像修改'}</View>:<View></View>
-                  }
-                  <View className='workerBox-list-title-origin-tips' style={{ marginTop: (recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ? '' :'5rpx'}}><Text className='workerBox-list-title-origin-color'></Text>
-                    {recorderType === 3 ? '表示当天已记过借支' :'表示当天已记过工'}
+                    <View className='workerBox-list-title-origin'>{!noSet ? '长按名字可修改/查看工资标准' : '工资如有变动，请长按头像修改'}</View> : <View> 
+                      
+                      {/* <View className='workerBox-list-title-origin-tips-list' style={{ marginTop: (recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ? '' : '6rpx' }}><Text className='workerBox-list-title-origin-color'></Text>
+                      {recorderType === 3 ? '表示当天已记过借支' : '表示当天已记过工'}
+                    </View> */}
                     </View>
+                  }
                   </View>
                 </View>
               <View><View className='whole' onClick={(e) => { e.stopPropagation(), e.preventDefault(), handleAllChange() }}>{!allClick ?'全选':'取消全选'}</View></View>
               </View>
               <View className='workerBox-change'>
-                <View></View>
+                <View>
+                {/* {(recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ? */}
+                  <View className='workerBox-list-title-origin-tips' 
+                  // style={{ marginTop: (recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ? '' : '6rpx' }}
+                  ><Text className='workerBox-list-title-origin-color'></Text>
+                  {recorderType === 3 ? '表示当天已记过借支' : '表示当天已记过工'}
+                </View>
+                {/* :''} */}
+                </View>
                 <View>(已选{clickNum}人)</View>
               </View>
               <View className='workerItem'>
@@ -576,8 +586,8 @@ export default function Foreman() {
                 value={model && model.amount}
               />
             <View className='amountType' onClick={() => setQuantitiesDisplay(true)}>{unit}
-                <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
             </View>
+                <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
               {/* <View className='rightIconsBox'>
                 <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
               </View> */}
@@ -690,8 +700,8 @@ export default function Foreman() {
               <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}>
             <Textarea
               focus={autoFocus}
-              autoFocus={autoFocus}
-              auto-focus={autoFocus}
+              // autoFocus={autoFocus}
+              // auto-focus={autoFocus}
               cursor={model.details.length || 0}
               onFocus={() => setAutoFocus(false)}
               className='textarea'
@@ -710,9 +720,11 @@ export default function Foreman() {
         </View>
         </View>
       </View>
-      <View className='foreman-footer'>
+        <View className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay ? '' : 'foreman-footer'}>
+        <View className='foreman-footer-btn'>
           <View className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</View>
-        <View className='footer-right' onClick={()=>handlePreservation(0)}>保存</View>
+          <View className='footer-right' onClick={()=>handlePreservation(0)}>保存</View>
+        </View>
       </View>
       {/* 填写班组 */}
         <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={handleProjectClose}/>

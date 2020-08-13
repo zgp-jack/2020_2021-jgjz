@@ -1,5 +1,6 @@
 .foreman{
-  height: 100vh;
+  height: 100%;
+  padding-bottom: 200rpx;
   .at-input-number__input, .at-input-number input{
     color: red !important;
   }
@@ -12,15 +13,18 @@
   padding-bottom: 20rpx;
   color: rgba(47, 53, 65, 1);
   font-size: 28rpx;
+  border:1px solid rgba(243, 243, 243, 1);
 }
 
 .tabber-list {
+  height: 144rpx;
   width: 33%;
   text-align: center;
-  padding-top: 15rpx;
+  // padding-top: 15rpx;
 }
 .tabber-list-click {
-  padding-top: 15rpx;
+  height: 144rpx;
+  // padding-top: 15rpx;
   width: 33%;
   text-align: center;
   background: rgba(243, 244, 245, 1);
@@ -65,9 +69,11 @@
 }
 .tabber-list-box {
   margin: 0 auto;
-  height: 99rpx;
+  margin-top: 30rpx;
+  // height: 99rpx;
+  // margin-top: 30rpx;
   width: 76rpx;
-  background: rgba(243, 244, 245, 1);
+  // background: rgba(243, 244, 245, 1);
   border-radius: 3px;
   padding: 5rpx;
   position: relative;
@@ -191,13 +197,21 @@
 }
 
 .foreman-footer {
+  width: 100%;
+  height: 133rpx;
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  // padding: 22rpx 0rpx 22rpx 26rpx;
+  background: #ffffff;
+  z-index: 10;
+  // margin-top: 42rpx;
+}
+.foreman-footer-btn{
   display: flex;
   justify-content: space-between;
-  padding: 22rpx 26rpx;
-  background: #ffffff;
-  margin-top: 42rpx;
+  margin: 21rpx 27rpx;
 }
-
 .footer-left {
   width: 387rpx;
   height: 91rpx;
@@ -317,11 +331,18 @@
   margin-left: 10rpx;
 }
 .workerBox-list-title-origin {
-  color: rgba(249, 158, 53, 1);
+  color: #F99E35;
   font-size: 24rpx;
   margin-left: 9rpx;
+  margin-top: 4rpx;
 }
 .workerBox-list-title-origin-tips {
+  color: rgba(47, 53, 65, 1);
+  font-size: 24rpx;
+  margin-bottom: 15rpx;
+  margin-left: 133rpx;
+}
+.workerBox-list-title-origin-tips-list {
   color: rgba(47, 53, 65, 1);
   font-size: 24rpx;
   margin-bottom: 15rpx;
@@ -633,7 +654,7 @@
 
 .amountType{
   position:  absolute;
-  right: 0rpx;
+  right: 30rpx;
   top: 0rpx;
   color: rgba(47, 53, 65, 1);
   font-size: 29rpx;
@@ -795,7 +816,7 @@
 }
 .groupIcon{
   position: absolute;
-  bottom: -20rpx;
+  bottom: -15rpx;
   left: -5rpx;
   width: 100rpx;
   height: 20rpx;
@@ -821,6 +842,9 @@
   height: 25rpx;
   width: 25rpx;
   background-size: contain;
+  position: absolute;
+  top: 41%;
+  right: 0rpx;
 }
 .coverView{
   display: none;
@@ -828,5 +852,5 @@
 
 .image{
   background: #fff;
-  padding-bottom: 10rpx;
+  padding-bottom: 20rpx;
 }

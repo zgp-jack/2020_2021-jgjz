@@ -115,17 +115,19 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
               <View className='wagesModal-standard-box'>
                 {standard.map((v,i)=>(
                   <View className='wagesModal-standard-box-list'>
+                    <View className='wagesModal-standard-box-list-border'>
                     <View className='wagesModal-standard-box-list-title'>{i == 0 ? '工资标准1' :'工资标准2'}</View>
                     <View className='wagesModal-standard-box-list-flex'>
                       <View><Checkbox className='checkbox' checked={v.click} value={v.click} onClick={()=>handleCheckboxStandard(v)}/></View>
                       <View className='wagesModal-standard-box-list-flex-middle'>
-                        <View>上班标准：{parseFloat(v.worktime_define)}小时算1个工<Text>{v.money}</Text>元/个工</View>
-                        <View>加班标准：{v.overtime_type === '1' ? '按小时算' : '按工天算'} {v.overtime_type == '1' ? `加班${v.overtime_money}元/小时` : `加班 ${v.overtime}小时算1个工` } </View>
-                      </View>
+                        <View>上班标准：{parseFloat(v.worktime_define)}小时算1个工<Text className='red'>{v.money}</Text>元/个工</View>
+                          <View>加班标准：{v.overtime_type === '1' ? '按小时算' : '按工天算'} {v.overtime_type == '1' ? <Text><Text className='red'>{v.overtime_money}</Text>元/小时</Text> : <Text>加班 {parseFloat(v.overtime)}小时算1个工</Text>} </View>
+                        </View>
+                    </View>
+                    </View>
                       <View className='wagesModal-standard-box-list-look-edit-box'>
                         <View className='wagesModal-standard-box-list-edit' onClick={() => handleEditWages(v,0)}>修改</View>
                       </View>
-                    </View>
                   </View>
                 ))}
               </View>
@@ -141,16 +143,21 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                 {moneyList.length === 0 && <View className='noData'><View className='noData-no'>暂未设置工资标准</View></View>}
                 {moneyList.map((v)=>(
                 <View className='wagesModal-standard-box-list' key={v.id}>
-                  <View className='wagesModal-standard-box-list-look-title'>{v.worker_name}</View>
-                  <View className='wagesModal-standard-box-list-flex'>
-                    <View className='wagesModal-standard-box-list-flex-look-left'>
-                        <View className='wagesModal-standard-box-list-flex-look-left-list'>上班 <Text className='wagesModal-standard-box-list-flex-look-left-list-color'>{v.worktime_define}小时算1个工<Text className='red'>{v.money}</Text>元/个工</Text></View>
-                        <View className='wagesModal-standard-box-list-flex-look-left-list'>加班 <Text className='wagesModal-standard-box-list-flex-look-left-list-color'>{v.overtime_type === '1' ? '按小时算' : '按工天算'}  {v.overtime_type == '1' ? `加班${v.overtime_money}/小时` : `加班 ${v.overtime}小时算1个工`} </Text></View>
+                    <View className='wagesModal-standard-box-list-flex'>
+                      <View className='wagesModal-standard-box-list-flex-left'>
+                      <View className='wagesModal-standard-box-list-look-title'>{v.worker_name}</View>
+                        <View className='wagesModal-standard-box-list-flex'>
+                          <View className='wagesModal-standard-box-list-flex-look-left'>
+                            <View className='wagesModal-standard-box-list-flex-look-left-list'>上班 <Text className='wagesModal-standard-box-list-flex-look-left-list-color'>{v.worktime_define}小时算1个工<Text className='red'>{v.money}</Text>元/个工</Text></View>
+                            <View className='wagesModal-standard-box-list-flex-look-left-list'>加班 <Text className='wagesModal-standard-box-list-flex-look-left-list-color'>{v.overtime_type === '1' ? '按小时算' : '按工天算'}  {v.overtime_type == '1' ? <Text><Text className='red'>{v.overtime_money}</Text>元/小时</Text> : <Text>加班{parseFloat(v.overtime)}小时算1个工</Text>} </Text></View>
+                          </View>
+                        </View>
                     </View>
-                    <View className='wagesModal-standard-box-list-look-edit-box'>
-                      <View className='wagesModal-standard-box-list-edit' onClick={()=>handleEditWages(v,1)}>修改</View>
-                    </View>
+                      <View className='wagesModal-standard-box-list-look-edit-box'>
+                        <View className='wagesModal-standard-box-list-edit-box' onClick={() => handleEditWages(v, 1)}>修改</View>
+                      </View>
                   </View>
+                
                 </View>
                 ))}
               </View>

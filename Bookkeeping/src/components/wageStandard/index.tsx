@@ -45,7 +45,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                 </View>
               </View>
               <View className='wageStandard-content-listBox-list'>
-                <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>每个工多少钱:</Text> {wageStandard.money}元/个工</View>
+                <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>每个工多少钱:</Text> <Text>{wageStandard.money}</Text>元/个工</View>
                 <View>
                   <AtInputNumber
                     type='digit'
@@ -70,7 +70,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
             </View>
             {wageStandard.type == 1 &&
               <View className='workList'>
-                <View className='workList-title'>加班{wageStandard.addWork}元/小时</View>
+                <View className='workList-title'>加班<Text>{wageStandard.addWork}</Text>元/小时</View>
                 <View className='workList-add'>
                     <AtInputNumber
                       type='digit'
@@ -100,7 +100,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                   </View>
                 </View>
                 <View className='workList'>
-                <View className='workList-title'>加班{wageStandard.dayAddWork||0}元/小时</View>
+                <View className='workList-title'>加班<Text>{wageStandard.dayAddWork||0}</Text>元/小时</View>
                 </View>
               </View>
             }
