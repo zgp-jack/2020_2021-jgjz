@@ -790,6 +790,10 @@ export default function Index() {
   }
   // 确认弹框
   const handleAddProject = () => {
+    if (!model.teamName){
+      Msg('您还没有填写班组名称');
+      return
+    }
     let params = {
       group_name: model.groupName,
       team_name: model.teamName,
@@ -900,6 +904,15 @@ export default function Index() {
   const handlewhiteClose = () => {
     setPrompt(false);
     Taro.setStorageSync(Tips, true)
+  }
+  // 创建项目
+  const handleOk = ()=>{
+    if (!model.groupName){
+      Msg('您还没有填写项目名称');
+      return;
+    }
+    setCreateProjectDisplay(false);
+    setProject(true)
   }
   return (
     <View className='index-content'>
@@ -1136,7 +1149,7 @@ export default function Index() {
       {/* 授权 */}
       <Auth display={display} handleClose={handleClose} callback={handleCallback} />
       {/* 创建项目 */}
-      <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
+      <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={handleOk} handleInput={handleInput} />
       {/* 填写班组 */}
       <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setProject(false), setModel({ groupName: '', teamName: '' }) }} />
     </View>
