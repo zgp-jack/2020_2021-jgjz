@@ -161,7 +161,9 @@ export default function FlowingWaterDetails() {
             <View className='list-itme'><Text className='list-itme-title'>上班时长</Text>:<Text className='list-itme-content'>{parseFloat(obj.work_time)}个工（{parseFloat(obj.work_time_hour)}小时）</Text></View>
             <View className='list-itme'><Text className='list-itme-title'>加班时长</Text>:<Text className='list-itme-content'>{parseFloat(obj.overtime)}小时</Text></View>
             <View className='wages'>
-              <View className='wages-title'>工资标准</View>:
+              <View className='wages-note'>
+                <View className='wages-title'>工资标准</View>:
+              </View>
               <View className='wages-list'>上班： {parseFloat(obj.wage_worktime_define)}小时算1个工<Text className='wages-list-blued'>{obj.wage_money}</Text>元/个工</View>
               <View className='wages-list'>
                 加班： {obj.wage_overtime_type == '1' ? <Text>按小时算<Text className='wages-list-blued'>{obj.wage_overtime_money}</Text>元/小时</Text> : <Text>按工天算<Text>{parseFloat(obj.wage_overtime)}</Text>小时算1个工<Text className='wages-list-blued'>{moneyfilter(obj.wage_money/obj.wage_overtime,2)}</Text>元/小时</Text>}
@@ -178,7 +180,9 @@ export default function FlowingWaterDetails() {
           }
           {/*  */}
           <View className='remarks'>
-            <View className='remarks-title'>备注</View>:
+            <View className='remarks-note'>
+              <View className='remarks-title'>备注</View>:
+            </View>
             <View className='remarks-details'>{obj.note}</View>
             <View className='list-img-box'>
               {obj.view_images&&obj.view_images.length>0&&obj.view_images.map(v=>(

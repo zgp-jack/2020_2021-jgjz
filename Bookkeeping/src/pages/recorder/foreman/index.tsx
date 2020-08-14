@@ -48,7 +48,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard,isdisable,setIsdisable
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -158,6 +158,7 @@ export default function Foreman() {
   // 关闭选择单位
   const handleClose = ()=>{
     setQuantitiesDisplay(false)
+    setIsdisable(false)
   }
   //关闭加班时长
   const handleWorkOvertimeClose = ()=>{
@@ -165,6 +166,7 @@ export default function Foreman() {
     const title = data.duration;
     setModel({ ...data, modalDuration: title });
     setWorkOvertimeDisplay(false)
+    setIsdisable(false);
     // 上班时长
     const timeArrs = JSON.parse(JSON.stringify(timeArr));
     // 获取加班时长
@@ -206,10 +208,12 @@ export default function Foreman() {
   const handleWorkingHoursClose = ()=>{
     setWorkingHoursDisplay(false);
     setWorkOvertimeDisplay(true)
+    setIsdisable(false)
   }
   // 引导创建项目
   const handleCreateProjectClose = ()=>{
     setCreateProjectDisplay(false)
+    setIsdisable(false)
     const data = JSON.parse(JSON.stringify(model));
     setModel({ ...data, groupName: '', teamName: ''})
   }
@@ -259,6 +263,7 @@ export default function Foreman() {
       setCacheWage(cacheWageItem);
     }
     setWageStandardDisplay(false)
+    setIsdisable(false)
   }
   // 关闭添加成员
   const handleAddMemberClose = ()=>{
@@ -270,6 +275,7 @@ export default function Foreman() {
   // 关闭工资
   const handleWagesModalClose = ()=>{
     setWagesModalDisplay(false);
+    setIsdisable(false)
     //清空选择人数
     setClickModalNum(0)
   }
@@ -285,6 +291,7 @@ export default function Foreman() {
   const handleBack = () => {
     setProject(false)
     setCreateProjectDisplay(true)
+    setIsdisable(true)
   }
    // 跳转
   const userRouteJump = (url: string) => {
@@ -312,6 +319,7 @@ export default function Foreman() {
     console.log(model.groupName,'model.groupName')
     if (model.groupName){
       setCreateProjectDisplay(false), setProject(true) 
+      setIsdisable(true)
     }else{
       Msg('您还没有填写项目名称')
     }
@@ -319,6 +327,7 @@ export default function Foreman() {
   // 填写班组关闭
   const handleProjectClose = ()=>{
     setProject(false)
+    setIsdisable(false)
     const data = JSON.parse(JSON.stringify(model));
     setModel({ ...data, groupName: '', teamName:'' })
   }
@@ -340,11 +349,8 @@ export default function Foreman() {
     setModel({ ...data, groupName: '', teamName: '' })
     setCreateProjectDisplay(true), setShow(false)
   }
-  // 多行文本框层级问题
-  const handleTextare = ()=>{
-    setAutoFocus(true)
-  }
   const handleCurrent = ()=>{
+    setIsdisable(true);
     setCalendarModalDisplay(true);
     getMonthDaysCurrent(new Date())
   }
@@ -392,7 +398,7 @@ export default function Foreman() {
       </View>
       <View className='projectName'>
         <View className='publish-recruit-card'>
-            <View className='publish-list-item' onClick={() => {bkGetProjectTeam(),setShow(true)}}>
+            <View className='publish-list-item' onClick={() => {setIsdisable(true);bkGetProjectTeam(),setShow(true)}}>
             <Text className='pulish-list-title'>项目名称</Text>
             <Input
               className='publish-list-input'
@@ -559,7 +565,7 @@ export default function Foreman() {
       {/* ===== */}
       {(recorderType === 1 || (recorderType === 2 && contractor === 0 ))&&
       <View className='publish-recruit-card'>
-        <View className='publish-list-item' onClick={() => setWorkOvertimeDisplay(true)}>
+        <View className='publish-list-item' onClick={() => {setIsdisable(true);setWorkOvertimeDisplay(true)}}>
           <Text className='pulish-list-title'>上班时长</Text>
           <Input
             className='publish-list-input'
@@ -578,7 +584,7 @@ export default function Foreman() {
       {/* 班组长记工 */}
         {identity === 2 && (recorderType === 1 || (recorderType === 1 || (recorderType === 2 && contractor === 0)) )&&
       <View>
-          <View className='publish-recruit-card-money' onClick={() => { setWageStandardDisplay(true) }}>
+          <View className='publish-recruit-card-money' onClick={() => {setIsdisable(true);setWageStandardDisplay(true) }}>
           <View className='publish-list-item-money'>
             <View className='pulish-list-title-money'>
               <View>我的工钱(点击设置自己的工资标准)
@@ -614,7 +620,7 @@ export default function Foreman() {
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
               />
-            <View className='amountType' onClick={() => setQuantitiesDisplay(true)}>{unit}
+            <View className='amountType' onClick={() => {setIsdisable(true);setQuantitiesDisplay(true)}}>{unit}
             </View>
                 <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
               {/* <View className='rightIconsBox'>
@@ -726,20 +732,21 @@ export default function Foreman() {
         <View className='publish-recruit-card'>
           <View className='publish-list-ditals'>
             <View>备注</View>
-              <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}>
+              {/* <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}> */}
             <Textarea
-              focus={autoFocus}
+              // focus={autoFocus}
               // autoFocus={autoFocus}
               // auto-focus={autoFocus}
+              hidden={isdisable}
               cursor={model.details.length || 0}
-              onFocus={() => setAutoFocus(false)}
+              // onFocus={() => setAutoFocus(false)}
               className='textarea'
               placeholder='请填写备注...'
               value={model && model.details}
               onInput={(e) => handleInput('details',e)}
               maxlength={400}
             />
-            </CoverView>
+            {/* </CoverView> */}
           </View>
           <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} />
           <View className='clear'></View>
@@ -784,7 +791,7 @@ export default function Foreman() {
         right
         mask
         className='atDrawer'
-        onClose={() => { setShow(false), setEdit(false)}}
+        onClose={() => { setIsdisable(false);setShow(false), setEdit(false)}}
         >
         <View className='atDrawer-box'>
           <View className='atDrawer-heard'>

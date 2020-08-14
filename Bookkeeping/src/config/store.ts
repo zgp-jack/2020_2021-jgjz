@@ -21,8 +21,6 @@ export const RecordTime: string ='recordTime';
 export const Tomorrow: string='tomorrow';
 // 登陆成功
 export const IsLoginType:string = 'isLoginType'
-// 第一次记工时间
-export const Earliest_month:string ='earliest_month'
 // 记工切换下面的提示
 export const Tips: string = 'tips'
 // 小程序跳转

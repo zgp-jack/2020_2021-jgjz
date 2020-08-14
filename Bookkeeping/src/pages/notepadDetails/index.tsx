@@ -2,10 +2,12 @@ import Taro, { Config, useContext, useEffect, useState, useRouter } from '@taroj
 import { bkDeleteNotePadAction } from '../../utils/request/index'
 import Msg from '../../utils/msg'
 import { View, Image } from '@tarojs/components'
+import { useSelector } from '@tarojs/redux'
 import { context  } from '../notepad';
 import './index.scss'
 
 export default function NotepadDetails() {
+  const useSelectorItem = useSelector<any, any>(state => state)
   // 路由参数
   const router: Taro.RouterInfo = useRouter()
   let { id } = router.params;
@@ -81,9 +83,20 @@ export default function NotepadDetails() {
           bkDeleteNotePadAction(params).then(res => {
             if (res.code === 200) {
               Msg('删除成功')
-              setTimeout(()=>{
-                Taro.navigateBack();
-              },800)
+              if(useSelectorItem.notepad.data.length>0){
+                useSelectorItem.notepad.data.forEach((element,dex) => {
+                  element.list.forEach((item,index) => {
+                    if(item.id == params.id){
+                      if(element.list.length == 1){
+                        useSelectorItem.notepad.data.splice(dex,1)
+                      }else{
+                        element.list.splice(index,1);
+                      }
+                    }
+                  });
+                });
+              }
+              Taro.navigateBack();
             } else {
               Msg(res.msg)
             }

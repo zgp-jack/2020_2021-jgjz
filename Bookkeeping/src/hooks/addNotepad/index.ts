@@ -1,7 +1,8 @@
 import Taro, { useState, useEffect, useRouter  } from '@tarojs/taro'
 import { bkAddNotepadAction, bkUpdateNotePadAction } from '../../utils/request';
-import { useSelector } from '@tarojs/redux'
+import { useDispatch, useSelector } from '@tarojs/redux'
 import Msg from '../../utils/msg'
+import { setNotepad  } from '../../actions/notepad'
 
 export interface ModalType{
   note:string,
@@ -21,6 +22,7 @@ export interface ImageItem {
 export default function userCode(InitParams) {
   const router: Taro.RouterInfo = useRouter();
   const { id } = router.params;
+  const dispatch = useDispatch()
   // 获取存入的公用内容
   const useSelectorItem = useSelector<any, any>(state => state)
   // 内容
@@ -134,10 +136,18 @@ export default function userCode(InitParams) {
       bkUpdateNotePadAction(params).then(res=>{
         if(res.code === 200){
           Msg('修改成功')
-          // Taro.navigateTo({ url:'/pages/notepad/index'})
-          setTimeout(()=>{
-            Taro.navigateBack({ delta:2});
-          },500)
+          if(useSelectorItem.notepad.data.length>0){
+            useSelectorItem.notepad.data.forEach((element) => {
+              element.list.forEach((item) => {
+                if(item.id == params.id){
+                  Object.getOwnPropertyNames(params).forEach((key) =>{
+                    item[key] = params[key]
+                  })
+                }
+              });
+            });
+          }
+          Taro.navigateBack({delta: 2});
         }else{
           Msg(res.msg);
         }
@@ -147,11 +157,8 @@ export default function userCode(InitParams) {
         if(res.code === 200 ){
           // Msg(res.msg);
           Msg('保存成功')
-          setTimeout(()=>{
-            Taro.navigateBack({
-              delta: 1
-            })
-          },500)
+          dispatch(setNotepad({code:200,data:[],msg:'ok'}))
+          Taro.navigateBack()
         }else{
           Msg(res.msg);
         }

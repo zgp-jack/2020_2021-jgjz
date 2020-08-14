@@ -109,16 +109,24 @@
   font-size: 30rpx;
   color: #333;
   margin-bottom: 20rpx;
+}
+.remarks-title,
+.wages-title{
   width: 150rpx;
   min-width: 150rpx;
   display: inline-block;
+  text-align: justify;
   text-align-last: justify;
 }
-.remarks-title{
-  width: 150rpx;
-  min-width: 150rpx;
+.remarks-note,
+.wages-note{
+  display: flex;
+}
+.remarks-title::after,
+.wages-title::after{
   display: inline-block;
-  text-align-last: justify;
+  content: '';
+  width: 100%;
 }
 .wages-list{
   color: #646464;
