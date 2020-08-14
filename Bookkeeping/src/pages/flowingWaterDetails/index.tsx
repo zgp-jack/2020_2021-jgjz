@@ -1,4 +1,4 @@
-import Taro, { Config, useEffect, useState, useRouter, useContext } from '@tarojs/taro'
+import Taro, { Config, useState, useRouter, useContext, useDidShow } from '@tarojs/taro'
 import { View, Text, Picker, Checkbox, Image } from '@tarojs/components'
 import { AtList, AtListItem } from "taro-ui"
 import { context } from '../flowingWater';
@@ -18,7 +18,7 @@ export default function FlowingWaterDetails() {
     view_images:[]
   })
   // 获取存入的公用内容
-  useEffect(()=>{
+  useDidShow(()=>{
     bkBusinessOneAction({ id }).then(res => {
       if (res.code === 200) {
         const data = res.data;
@@ -63,7 +63,7 @@ export default function FlowingWaterDetails() {
         Msg(res.msg);
       }
     })
-  },[])
+  })
   // 0 点工 1 包工按天 2 包工按量 3借支
   // 删除
   const handleDel = () => {

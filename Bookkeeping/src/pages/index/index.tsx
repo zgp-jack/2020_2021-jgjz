@@ -158,6 +158,8 @@ export default function Index() {
   const [neverPrompt, setNeverPrompt] = useState<boolean>(false)
   // 设置滑动状态
   const [slide, setSlide] = useState<boolean>(false);
+  // 设置滑动值
+  const [isScrollTop,setisScrollTop] = useState<number>(10);
   // 鱼泡网过来然后需要登录手机号
   const [loginPhone, setLoginPhone] = useState<boolean>(false)
   // 判断左边是否需要icon
@@ -321,6 +323,7 @@ export default function Index() {
     // const { appHeaderHeight } = UseNavInfo()
     // console.log(appHeadesrHeight,'appHeaderHeight')
     setSlide(false)
+    setisScrollTop(0);
     let neverPromptType = Taro.getStorageSync(NeverPrompt);
     if (neverPromptType) {
       setNeverPrompt(true);
@@ -653,6 +656,7 @@ export default function Index() {
     // console.log(31231)
     if (!slide) {
       setSlide(true);
+      setisScrollTop(10);
       userRouteJump(`/pages/flowingWater/index`)
     }
   }
@@ -1046,11 +1050,11 @@ export default function Index() {
             <ScrollView
               className='content-list-box'
               scrollY
-              scrollTop={0}
+              scrollTop={isScrollTop}
               // refresherEnabled
               lowerThreshold={200}
-              onScroll={getNextPageData}
-            // onScrollToLower={() => getNextPageData()}
+              // onScroll={getNextPageData}
+              onScrollToLower={() => getNextPageData()}
             >
               {list.map((v, i) => (
                 <View key={i + i} className='content-list' onClick={getNextPageData}>
@@ -1077,8 +1081,9 @@ export default function Index() {
             <ScrollView
               className='content-list-box scrollWorker'
               scrollY
+              scrollTop={isScrollTop}
               lowerThreshold={200}
-              onScroll={getNextPageData}
+              onScrollToLower={getNextPageData}
             >
               {list.map((v, i) => (
                 <View key={i + i} className='content-list-type' onClick={getNextPageData}>
