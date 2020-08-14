@@ -2913,13 +2913,12 @@ export default function userForeman() {
     }
     // 时间
     let times: number = 0, work_time_hour = 0, work_time_type;
-    // if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
-      const data = JSON.parse(JSON.stringify(wageStandard));
-      timeArr.map(v => {
-        if (v.click) {
-          if (v.num || v.num == 0) {
-            if (v.id !== 4) {
-              times = v.num;
+    const data = JSON.parse(JSON.stringify(wageStandard));
+    timeArr.map(v => {
+      if (v.click) {
+        if (v.num || v.num == 0) {
+          if (v.id !== 4) {
+            times = v.num;
               work_time_hour = data.work * v.num;
               work_time_type = 'working_hour';
             } else {
@@ -2930,11 +2929,12 @@ export default function userForeman() {
           }
         }
       })
-      if (data.work == 0) {
-        Msg('上班标准必须大于0')
-        return;
+      if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
+        if (data.work == 0) {
+          Msg('上班标准必须大于0')
+          return;
+        }
       }
-    // }
     // 获取ID
     let workers: number[] = [];
     if (identity === 1) {

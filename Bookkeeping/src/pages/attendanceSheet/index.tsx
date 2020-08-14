@@ -577,16 +577,32 @@ export default function AttendanceSheet() {
               workData.push(res.data[i].work)
             }
             if (res.data[i].borrow && res.data[i].borrow) {
-              amountData.push(res.data[i].borrow)
+              borrowData.push(res.data[i].borrow)
             }
             if (res.data[i].amount && res.data[i].amount) {
-              hourData.push(res.data[i].amount)
+              amountData.push(res.data[i].amount)
             }
           }
-          console.log(sumHour,'sumHour');
-          console.log(sumWork,'sumWork');
-          console.log(sumBorrow,'sumBorrow');
-          console.log(sumAmount,'sumAmount')
+          console.log(hourData,'sumHour');
+          console.log(workData,'sumWork');
+          console.log(amountData,'sumBorrow');
+          console.log(borrowData,'sumAmount');
+          if (hourData && hourData.length>0){
+            hourData.reduce((resp, obj) => {
+              var originObj = resp.find(item => item.date_num === obj.date_num);
+              if (originObj) {
+                console.log(originObj,'originObj')
+                // console.log(obj.total.over_time,'obj.total.over_time');
+                // console.log(originObj.total.over_time,' originObj.total.over_time')
+                // originObj.total.over_time += obj.total.over_time;
+                // originObj.total.over_time += obj.total.over_time;
+              } else {
+                resp.push(obj)
+              }
+              return resp;
+            }, [])
+            console.log(hourData,'r111s')
+          }
           // 本月统计
           // 获取身份
           let type = Taro.getStorageSync(Type);
