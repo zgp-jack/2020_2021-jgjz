@@ -568,22 +568,8 @@ export default function AttendanceSheet() {
             }
           }
           for(let i =0;i<res.data.length;i++){
-            if (res.data[i].hour && res.data[i].hour.length>0){
-              let arr:any[]=[];
-              for(let j =0;j<res.data[i].hour.length;j++){
-                
-                // let obj={
-                //   name: res.data[i].hour
-                // }
-                console.log(res.data[i].hour[j],'1111');
-                const num = res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0);
-                console.log(num,'num')
-              }
-              console.log(res.data[i].hour,'hour')
-            }
+        // 
           }
-          console.log(dayArr,' dayArr')
-          console.log(sumHour, sumWork, sumBorrow, sumAmount)
           // 本月统计
           // 获取身份
           let type = Taro.getStorageSync(Type);

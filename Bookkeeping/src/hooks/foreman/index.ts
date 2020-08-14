@@ -1754,8 +1754,13 @@ export default function userForeman() {
             }
             // setModel(obj)
             setWageStandard(wageStandardData)
-            setCacheWage(setWageStandard)
+            setCacheWage(wageStandardData)
           } else {
+            const dataList= [
+              { id: 1, name: '按小时算', click: true },
+              { id: 2, name: '按工天算', click: false },
+            ];
+            wageStandardData.data =dataList;
             wageStandardData.work = 0;
             wageStandardData.addWork = 0;
             wageStandardData.money = 0;
@@ -1763,7 +1768,7 @@ export default function userForeman() {
             wageStandardData.type = 1;
             wageStandardData.dayAddWork = 0;
             setWageStandard(wageStandardData)
-            setCacheWage(setWageStandard)
+            setCacheWage(wageStandardData)
             //设置工人工资为0
             if (models) {
               setModel({ ...models, workersWages: '0' })
@@ -2716,11 +2721,8 @@ export default function userForeman() {
                 }
                 return val;
               })
-              console.log(moneyListArr,'moneyListArr');
-              console.log(v,'moneyListArr1')
               for (let i = 0; i < moneyListArr.length;i++){
                 if (moneyListArr[i].worker_id == v.id){
-                  console.log(i,'111111')
                   moneyListArr.splice(i,1)
                 }
               }
@@ -2908,8 +2910,6 @@ export default function userForeman() {
     }
     // 时间
     let times: number = 0, work_time_hour = 0, work_time_type;
-    console.log(itemType, 'itemTypeitemType');
-    console.log(tabData.id, 'abData.id')
     if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
       const data = JSON.parse(JSON.stringify(wageStandard));
       timeArr.map(v => {
