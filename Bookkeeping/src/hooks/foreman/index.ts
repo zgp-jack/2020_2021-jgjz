@@ -2643,9 +2643,11 @@ export default function userForeman() {
       return
     }
     Taro.showModal({
-      title: '温馨提示',
+      // title: '温馨提示',
       content: '删除工人后，工人将不在此项目中，但他之前的记工数据不会受影响。确定要删除吗？',
       showCancel: true,
+      confirmColor: '#0099FF',
+      cancelColor: '#797979',
       success: ((res) => {
         if (res.confirm == true) {
           let params = {
@@ -3018,7 +3020,7 @@ export default function userForeman() {
     } else if (tabData.id === 3) {
       // 借支没钱不能保存
       if (!item.borrowing) {
-        Msg('借支必须大于0')
+        Msg('您还没有填写借支')
         return;
       }
       params = {

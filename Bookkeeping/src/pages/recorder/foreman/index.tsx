@@ -520,7 +520,7 @@ export default function Foreman() {
                   </View>
                 ))}
                 {delType && <View>
-                  <View className='discipline' onClick={() => handleDel(1)}>
+                <View className='discipline-del' onClick={() => handleDel(1)}>
                     <View className='workerItem-ok' >
                     <Image src={`${IMGCDNURL}ok.png`} className='workerItem-ok-img'/>
                     </View>
