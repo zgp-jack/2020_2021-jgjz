@@ -89,3 +89,5 @@ export const getWorkerHasBusinessByDateUrl = REQUESTURL  +'bk-bookkeeping/get-wo
 export const getBookkeepingDataUrl = REQUESTURL + '/bk-bookkeeping/get-bookkeeping-data/'
 // 新的记工提交接口
 export const addNewBusinessUrl = REQUESTURL + 'bk-bookkeeping/add-new-business/'
+// 获取分享接口
+export const shareExcelDataUrl = REQUESTURL + 'bk-bookkeeping/get-share-excel-data';

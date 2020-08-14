@@ -977,3 +977,21 @@ export function addNewBusinessAction(data): Promise<Inter.bkGetWorker> {
     data: data,
   })
 }
+
+// 考勤表获取
+// 
+export function shareExcelDataAction(data): Promise<Inter.bkGetWorker> {
+  // let userInfo = Taro.getStorageSync(UserInfo);
+  return doRequestAction({
+    url: api.shareExcelDataUrl,
+    // method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      // mid: userInfo.userId,
+      // token: userInfo.token,
+      // time: userInfo.tokenTime,
+    },
+    data: data,
+  })
+}

@@ -125,8 +125,8 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                         </View>
                     </View>
                     </View>
-                      <View className='wagesModal-standard-box-list-look-edit-box'>
-                        <View className='wagesModal-standard-box-list-edit' onClick={() => handleEditWages(v,0)}>修改</View>
+                    <View className='wagesModal-standard-box-list-look-edit-box' onClick={() => handleEditWages(v, 0)}>
+                        <View className='wagesModal-standard-box-list-edit'>修改</View>
                       </View>
                   </View>
                 ))}

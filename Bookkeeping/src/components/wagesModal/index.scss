@@ -65,7 +65,7 @@
   display: flex;
   flex-wrap: wrap;
   overflow-x:scroll;
-  height: 400rpx;
+  max-height: 400rpx;
 }
 .wagesModal-personnel-box-list {
   width:60rpx;

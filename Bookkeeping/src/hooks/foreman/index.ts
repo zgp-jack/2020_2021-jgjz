@@ -4192,6 +4192,7 @@ export default function userForeman() {
   // 切换类型
   const handleClckTabber = (v) => {
     setProjectId('');
+    setDeldelType(false)
     // 全选
     setClickNum(0);
     setAllClick(false)

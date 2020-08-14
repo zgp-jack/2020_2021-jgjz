@@ -10,28 +10,28 @@ import { Type, Earliest_month } from '../../config/store'
 import './index.scss'
 
 interface DateTyep {
-  id: string | number,
-  name: string | number,
-  type?: {
-    amount?: {
-      num: string | number
+  id:string|number,
+  name:string|number,
+  type?:{
+    amount?:{
+      num:string|number
     },
-    borrow?: {
-      borrow: string | number
+    borrow?:{
+      borrow:string|number
     },
-    hour?: {
+    hour?:{
       work_time: string,
       over_time: string,
     },
-    work?: {
+    work?:{
       work_time: string,
       over_time: string,
     }
   }
-  amount: boolean,
-  borrow: boolean,
-  hour: boolean,
-  work: boolean,
+  amount:boolean,
+  borrow:boolean,
+  hour:boolean,
+  work:boolean,
 }
 export default function AttendanceSheet() {
   // 月份
@@ -144,7 +144,7 @@ export default function AttendanceSheet() {
           }
           // 设置列表左边
           const defaultArr = [
-            { id: 1, name: '工人', },
+            { id: 1, name: '工人',  },
             { id: 2, name: '记工类型' },
             { id: 3, name: '本月统计' },
           ]
@@ -163,7 +163,7 @@ export default function AttendanceSheet() {
           let rightArr: any[] = [];
           let firstArr: any = [];
           const item = JSON.parse(JSON.stringify(dayArr))
-          for (let i = 0; i < item.length; i++) {
+          for(let i =0;i<item.length;i++){
             item[i].default = true;
           }
           firstArr = item;
@@ -171,56 +171,105 @@ export default function AttendanceSheet() {
           rightArr.push(first);
           // 日期
           // 工人
-          let arr: any[] = [];
-          let listArr: any[] = [];
+          let arr:any[]=[];
+          let listArr:any[]=[];
           let numArr: any[] = [];
-          let numDate: any[] = [];
+          let numDate:any[]=[];
           let jigongSum: any = [];
           let daySum: any = [];
           let workSum: any = [];
           let borrowNumSum: any = [];
           let hourNumList: any[] = [];
-          let workNumList: any[] = [];
-          if (res.data.length > 0) {
-            for (let i = 0; i < res.data.length; i++) {
-              let arrObj: any = {};
-              let dayObj: any = {};
-              let list: any[] = [];
-              let dayList: any[] = [];
-              let obj: any = {};
+          let workNumList:any[] = [];
+          if(res.data.length>0){
+            for(let i =0;i<res.data.length;i++){
+              let arrObj:any = {};
+              let dayObj:any = {};
+              let list:any[]=[];
+              let dayList:any[]=[];
+              let obj:any={};
               obj.id = res.data[i].id;
               obj.name = res.data[i].name;
               obj.default = true;
-              let typeObj: any = {};
-              typeObj.type = {};
+              let typeObj:any={};
+              typeObj.type={};
               // 记工,包工(量),借支, 包工(天)
               let hourSumWork, hourSumTime, amountSum, borrowSum, workSumWork, workSumTime;
               // 右边内容
               const dayItem: DateTyep[] = JSON.parse(JSON.stringify(dayArr));
               // 遍历每一天
               // for (let j = 0; j < dayItem.length; j++) {
-              // 记工
-              if (res.data[i].hour.length > 0) {
-                typeObj.type.hour = true;
-                hourSumWork = res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0)
-                hourSumTime = res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0)
-              }
-              //  包工(量)
-              if (res.data[i].amount.length > 0) {
-                typeObj.type.amount = true;
-                amountSum = res.data[i].amount.reduce((accumulator, currentValue) => accumulator + currentValue.list.length, 0);
-              }
-              //借支
-              if (res.data[i].borrow.length > 0) {
-                typeObj.type.borrow = true;
-                borrowSum = (res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0)).toFixed(2)
-              }
-              // 包工(天)
-              if (res.data[i].work.length > 0) {
-                typeObj.type.work = true
-                workSumWork = res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0)
-                workSumTime = res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0)
-              }
+                // 记工
+                if (res.data[i].hour.length > 0) {
+                  typeObj.type.hour = true;
+                  hourSumWork = res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0)
+                  hourSumTime = res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0)
+                  // for (let z = 0; z < res.data[i].hour.length;z++){
+                  //   if (res.data[i].hour[z].date_num == dayItem[j].name){
+                  //     let type:any = {
+                  //       hour:{
+                  //         work_time:'',
+                  //         over_time:'',
+                  //       }
+                  //     };
+                  //     type.hour.work_time = res.data[i].hour[z].total.work_time;
+                  //     type.hour.over_time = res.data[i].hour[z].total.over_time;
+                  //     dayItem[j].type = type;
+                  //   }
+                  // }
+                }
+                //  包工(量)
+                if (res.data[i].amount.length > 0) {
+                  typeObj.type.amount = true;
+                  amountSum = res.data[i].amount.reduce((accumulator, currentValue) => accumulator + currentValue.list.length, 0);
+                  // for (let z = 0; z < res.data[i].amount.length; z++) {
+                  //   if (res.data[i].amount[z].date_num == dayItem[j].name) {
+                  //     let type: any = {
+                  //       amount: {
+                  //         num: '',
+                  //       }
+                  //     };
+                  //     type.amount.num = res.data[i].amount[z].list.length;
+                  //     dayItem[j].type = type;
+                  //   }
+                  // }
+                }
+                //借支
+                if (res.data[i].borrow.length > 0) {
+                  typeObj.type.borrow = true;
+                  borrowSum = (res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0)).toFixed(2)
+                  // for (let z = 0; z < res.data[i].borrow.length; z++) {
+                  //   if (res.data[i].borrow[z].date_num == dayItem[j].name) {
+                  //     let type: any = {
+                  //       borrow: {
+                  //         borrow: '',
+                  //       }
+                  //     };
+                  //     type.borrow.borrow = res.data[i].borrow[z].total.money;
+                  //     dayItem[j].type = type;
+                  //   }
+                  // }
+                }
+                // 包工(天)
+                if (res.data[i].work.length > 0) {
+                  typeObj.type.work = true
+                  workSumWork = res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0)
+                  workSumTime = res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0)
+                  // for (let z = 0; z < res.data[i].work.length; z++) {
+                  //   if (res.data[i].work[z].date_num == dayItem[j].name) {
+                  //     let type: any = {
+                  //       work: {
+                  //         work_time: '',
+                  //         over_time: '',
+                  //       }
+                  //     };
+                  //     type.work.work_time = res.data[i].work[z].total.work_time;
+                  //     type.work.over_time = res.data[i].work[z].total.over_time;
+                  //     dayItem[j].type = type;
+                  //   }
+                  // }
+                }
+              // }
               for (let j = 0; j < dayItem.length; j++) {
                 if (res.data[i].hour.length > 0) {
                   for (let z = 0; z < res.data[i].hour.length; z++) {
@@ -234,6 +283,7 @@ export default function AttendanceSheet() {
                       if (dayItem[j].type) {
                         const data = JSON.parse(JSON.stringify(dayItem[j]));
                         if (data.type) {
+                          // data.type.amount.num = res.data[i].amount[z].list.length;
                           data.type.hour.work_time = parseFloat(res.data[i].hour[z].total.work_time);
                           data.type.hour.over_time = parseFloat(res.data[i].hour[z].total.over_time);
                           dayItem[j] = data;
@@ -243,6 +293,9 @@ export default function AttendanceSheet() {
                         type.hour.over_time = parseFloat(res.data[i].hour[z].total.over_time);
                         dayItem[j].type = type;
                       }
+                      // type.hour.work_time = res.data[i].hour[z].total.work_time;
+                      // type.hour.over_time = res.data[i].hour[z].total.over_time;
+                      // dayItem[j].type = type;
                     }
                   }
                 }
@@ -254,14 +307,14 @@ export default function AttendanceSheet() {
                           num: '',
                         }
                       };
-                      if (dayItem[j].type) {
-                        if (dayItem[j].type) {
+                      if (dayItem[j].type){
+                        if (dayItem[j].type){
                           const data = JSON.parse(JSON.stringify(dayItem[j]))
                           type.amount.num = res.data[i].amount[z].list.length;
                           data.type.amount = type.amount;
                           dayItem[j] = data;
                         }
-                      } else {
+                      }else{
                         type.amount.num = res.data[i].amount[z].list.length;
                         dayItem[j].type = type;
                       }
@@ -318,17 +371,17 @@ export default function AttendanceSheet() {
               }
               const lastDay = JSON.parse(JSON.stringify(dayArr));
               let numHour, numWork, numBorrow, numAmount;
-              for (let b = 0; b < lastDay.length; b++) {
+              for(let b =0;b<lastDay.length;b++){
                 // 记工
-                if (res.data[i].work.length > 0) {
+                if(res.data[i].work.length>0){
                   for (let n = 0; n < res.data[i].work.length; n++) {
                     if (res.data[i].work[n].date_num == lastDay[b].name) {
                       numWork = true
                       if (res.data[i].work[n].list) {
-                        let work: any = {
-                          work_time: '',
-                          over_time: '',
-                        }
+                        let work:any= {
+                            work_time: '',
+                            over_time: '',
+                          }
                         work.work_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0)
                         work.over_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
                         let obj = {
@@ -339,6 +392,8 @@ export default function AttendanceSheet() {
                         workNumList.push(obj)
                         if (lastDay[b].type) {
                           const data = JSON.parse(JSON.stringify(lastDay[b].type));
+                          // data.type.work.work_time = hour;
+                          // data.type.work.over_time = time;
                           data.hour = work;
                           lastDay[b] = data;
                         } else {
@@ -358,31 +413,31 @@ export default function AttendanceSheet() {
                 }
                 // 记天
                 if (res.data[i].hour.length > 0) {
-                  for (let n = 0; n < res.data[i].hour.length; n++) {
-                    if (res.data[i].hour[n].date_num == lastDay[b].name) {
+                  for(let n=0;n<res.data[i].hour.length;n++){
+                    if (res.data[i].hour[n].date_num == lastDay[b].name){
                       numHour = true;
-                      if (res.data[i].hour[n].list) {
+                      if (res.data[i].hour[n].list){
                         let hour: any = {
                           work_time: '',
                           over_time: '',
                         }
-                        for (let j = 0; j < res.data[i].hour.length; j++) {
+                        for(let j=0;j<res.data[i].hour.length;j++){
                         }
                         hour.work_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0)
-                        hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0);
+                        hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time||0), 0);
                         let obj = {
                           name: lastDay[b].name,
                           work_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0),
                           over_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
                         }
                         hourNumList.push(obj)
-                        if (lastDay[b].type) {
+                        if (lastDay[b].type){
                           const data = JSON.parse(JSON.stringify(lastDay[b].type));
                           data.hour = hour;
                           lastDay[b] = data;
-                        } else {
+                        }else{
                           let type = {
-                            hour: {
+                            hour:{
                               work_time: '',
                               over_time: '',
                             }
@@ -396,7 +451,7 @@ export default function AttendanceSheet() {
                   }
                 }
                 // 按量
-                if (res.data[i].amount.length > 0) {
+                if(res.data[i].amount.length>0){
                   for (let n = 0; n < res.data[i].amount.length; n++) {
                     if (res.data[i].amount[n].date_num == lastDay[b].name) {
                       numAmount = true
@@ -409,10 +464,10 @@ export default function AttendanceSheet() {
                           const data = JSON.parse(JSON.stringify(lastDay[b]));
                           data.type.amount = amount;
                           lastDay[b] = data;
-                        } else {
-                          let type: any = {
+                        }else{
+                          let type:any = {
                             amount: {
-                              num: '',
+                              num:'',
                             }
                           }
                           type.amount.num = res.data[i].amount.reduce((accumulator, currentValue) => accumulator + (currentValue.list.length || 0), 0)
@@ -428,7 +483,7 @@ export default function AttendanceSheet() {
                     if (res.data[i].borrow[n].date_num == lastDay[b].name) {
                       numBorrow = true;
                       if (res.data[i].borrow[n].list) {
-                        let borrowList: any = {
+                        let borrowList:any = {
                           borrow: '',
                         }
                         borrowList.borrow = res.data[i].borrow[n].list.reduce((accumulator, currentValue) => accumulator + (currentValue.money || 0), 0)
@@ -451,15 +506,13 @@ export default function AttendanceSheet() {
                 }
               }
               let lastObj = [
-                { id: 1, name: '总计' },
-                {
-                  id: 1, type: {
-                    hour: numHour,
-                    work: numWork,
-                    borrow: numBorrow,
-                    num: numAmount,
-                  }
-                },
+                {id:1,name:'总计'},
+                { id: 1, type:{
+                  hour: numHour,
+                  work: numWork,
+                  borrow: numBorrow,
+                  num: numAmount,
+                } },
                 {
                   hour: {
                     work_time: hourSumWork,
@@ -477,25 +530,25 @@ export default function AttendanceSheet() {
                   }
                 }
               ]
-              let sumObj = {
-                hour: {
+              let sumObj={
+                hour:{
                   work_time: hourSumWork,
                   over_time: hourSumTime,
                 },
-                work: {
+                work:{
                   work_time: workSumWork,
                   over_time: workSumTime,
                 },
-                borrow: {
+                borrow:{
                   borrow: borrowSum
                 },
-                amount: {
+                amount:{
                   num: amountSum
                 }
               }
               list.push(obj, typeObj, sumObj);
               arrObj.list = list;
-              arrObj.type = {
+              arrObj.type ={
                 hour: false,
                 borrow: false,
                 amount: false,
@@ -503,15 +556,15 @@ export default function AttendanceSheet() {
               }
               // dayList.push(dayItem);
               dayObj.list = dayItem;
-              dayObj.type = {
-                hour: false,
-                borrow: false,
-                amount: false,
-                work: false,
+              dayObj.type={
+                hour:false,
+                borrow:false,
+                amount:false,
+                work:false,
               };
-              for (let z = 0; z < dayItem.length; z++) {
-                if (dayItem[z].type) {
-                  if (dayItem[z].type.hour) {
+              for(let z=0;z<dayItem.length;z++){
+                if(dayItem[z].type){
+                  if (dayItem[z].type.hour){
                     dayObj.type.hour = true;
                     arrObj.type.hour = true
                   }
@@ -530,12 +583,12 @@ export default function AttendanceSheet() {
                 }
               }
               // numArr =
-              let numObj = {
+              let numObj={
                 list: lastObj
               }
-              let numDateObj = {
+              let numDateObj={
                 list: lastDay,
-                type: {
+                type:{
                   hour: numHour,
                   work: numWork,
                   borrow: numBorrow,
@@ -548,40 +601,70 @@ export default function AttendanceSheet() {
               listArr.push(dayObj);
             };
           }
-          console.log(arr,'arrr');
-          console.log(listArr,'11111')
-          let sumHour, sumWork, sumBorrow, sumAmount
-          for(let i =0;i<listArr.length;i++){
-            if(listArr[i].type){
-              if (listArr[i].type.amount){
-                sumAmount = true
+          const Item = JSON.parse(JSON.stringify(dayArr));
+          console.log(hourNumList,'hourNumList');
+          console.log(workNumList,'workNumList')
+          for(let i =0;i<Item.length;i++){
+            if (hourNumList.length>0){
+              for (let j = 0; j < hourNumList.length;j++){
+                if(Item[i].name == hourNumList[j].name){
+                  let type = {
+                    hour: {
+                      work_time: '',
+                      over_time: '',
+                    }
+                  }
+                  const work = hourNumList.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0);
+                  const over = hourNumList.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time), 0);
+                  // Item[i].type.work_time = work;
+                  // Item[i].type.over_time = over;
+                  type.hour.work_time = work;
+                  type.hour.over_time = over;
+                  if(Item[i].type){
+                    const data = JSON.parse(JSON.stringify(Item[i].type));
+                    data.hour = type.hour;
+                    console.log(Item[i],'Item[i]Item[i]')
+                    Item[i] = data;
+                  }else{
+                    Item[i].type = type;
+                  }
+                }
               }
-              if (listArr[i].type.hour) {
-                sumHour = true
-              }
-              if (listArr[i].type.work) {
-                sumWork = true
-              }
-              if (listArr[i].type.borrow) {
-                sumBorrow = true
+            }
+            if (workNumList.length > 0) {
+              for (let j = 0; j < workNumList.length; j++) {
+                if (Item[i].name == workNumList[j].name) {
+                  let type = {
+                    work: {
+                      work_time: '',
+                      over_time: '',
+                    }
+                  }
+                  const work = workNumList.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0);
+                  const over = workNumList.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time), 0);
+                  // Item[i].type.work_time = work;
+                  // Item[i].type.over_time = over;
+                  type.work.work_time = work;
+                  type.work.over_time = over;
+                  if (Item[i].type) {
+                    const data = JSON.parse(JSON.stringify(Item[i].type));
+                    data.work = type.work;
+                    Item[i] = data;
+                  } else {
+                    Item[i].type = type;
+                  }
+                }
               }
             }
           }
-          for(let i =0;i<dayArr.length;i++){
-            for (let j = 0; j < listArr.length;j++){
-              if (dayArr[i].name == listArr[j].name){
-                console.log(listArr[j],'1111')
-              }
-            }
-          }
-          console.log(sumHour, sumWork, sumBorrow, sumAmount,'11')
+          console.log(Item,'Item')
           // 本月统计
           // 获取身份
           let type = Taro.getStorageSync(Type);
-          if (type === 1) {
+          if(type === 1){
             setFixedTab([...leftArr, ...arr]);
             setTabArr([...rightArr, ...listArr]);
-          } else {
+          }else{
             setFixedTab([...leftArr, ...arr]);
             setTabArr([...rightArr, ...listArr]);
           }
@@ -655,7 +738,7 @@ export default function AttendanceSheet() {
     })
   }
   useShareAppMessage(() => {
-
+    
     let type = Taro.getStorageSync(Type);
     return {
       // title: '记工记账',
@@ -739,49 +822,49 @@ export default function AttendanceSheet() {
         {!busy &&
           <View className='box'>
             {/* 左边固定 */}
-            <View className='borderBottom'>
-              {fixedTab.map(v => (
-                <View className='box-left'>
-                  {v.list.map(val => (
-                    <View className='middle'>
-                      {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && (!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) ? 'box-none' : 'box-list-default'}>
-                        <View className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount) || (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour)))) ? '' : 'mt20'}>{val.name}</View>
-                        {val.default &&
-                          <View open-type="share">
-                            <Button className='blued' open-type="share">
-                              微信对工
+          <View className='borderBottom'>
+            {fixedTab.map(v => (
+              <View className='box-left'>
+                {v.list.map(val => (
+                  <View className='middle'>
+                    {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && (!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) ? 'box-none' : 'box-list-default'}>
+                      <View className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount)|| (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour))))?'':'mt20'}>{val.name}</View>
+                      {val.default &&
+                        <View open-type="share">
+                          <Button className='blued' open-type="share">
+                            微信对工
                         </Button>
-                          </View>
-                        }
-                      </View>}
-                      {val.type && <View>
-                        <View className='box-list-type'>
-                          {val.type.hour && <View className='box-height'>点工</View>}
-                          {val.type.work && <View className='box-list-bao'>包工<View>（按天记）</View></View>}
-                          {val.type.amount && <View className='box-list-bao'>包工<View>（按量记）</View></View>}
-                          {val.type.borrow && <View className='box-height'>借支</View>}
                         </View>
+                      }
+                    </View>}
+                    {val.type && <View>
+                      <View className='box-list-type'>
+                        {val.type.hour && <View className='box-height'>点工</View>}
+                        {val.type.work && <View className='box-list-bao'>包工<View>（按天记）</View></View>}
+                        {val.type.amount && <View className='box-list-bao'>包工<View>（按量记）</View></View>}
+                        {val.type.borrow && <View className='box-height'>借支</View>}
+                      </View>
+                    </View>}
+                    {!val.type && (val.hour || val.work || val.borrow || val.amount) && <View>
+                      {JSON.stringify(val.hour) !== '{}' && <View className='box-list'>
+                        <View>{val.hour.work_time}{val.hour.work_time||'0'?'个工':''}</View>
+                        <View>{val.hour.over_time}{val.hour.over_time||'0' ? '小时' : ''}</View>
                       </View>}
-                      {!val.type && (val.hour || val.work || val.borrow || val.amount) && <View>
-                        {JSON.stringify(val.hour) !== '{}' && <View className='box-list'>
-                          <View>{val.hour.work_time}{val.hour.work_time || '0' ? '个工' : ''}</View>
-                          <View>{val.hour.over_time}{val.hour.over_time || '0' ? '小时' : ''}</View>
-                        </View>}
-                        {JSON.stringify(val.work) !== '{}' && <View className='box-list-bao'>
-                          <View>{val.work.work_time}{val.work.work_time || '0' ? '个工' : ''}</View>
-                          <View>{val.work.over_time}{val.work.over_time || '0' ? '小时' : ''}</View>
-                        </View>}
-                        {JSON.stringify(val.amount) !== '{}' && <View className='box-height'>
-                          <View>{val.amount.num}{val.amount.num ? '笔' : ''}</View>
-                        </View>}
-                        {JSON.stringify(val.borrow) !== '{}' && <View className='box-height'>
-                          <View>{val.borrow.borrow}</View>
-                        </View>}
+                      {JSON.stringify(val.work) !== '{}' && <View className='box-list-bao'>
+                        <View>{val.work.work_time}{val.work.work_time||'0' ? '个工' : ''}</View>
+                        <View>{val.work.over_time}{val.work.over_time||'0' ? '小时' : ''}</View>
                       </View>}
-                    </View>
-                  ))}
-                </View>
-              ))}
+                      {JSON.stringify(val.amount) !== '{}' && <View className='box-height'>
+                        <View>{val.amount.num}{val.amount.num?'笔':''}</View>
+                      </View>}
+                      {JSON.stringify(val.borrow) !== '{}' && <View className='box-height'>
+                        <View>{val.borrow.borrow}</View>
+                      </View>}
+                    </View> }
+                  </View>
+                ))}
+              </View>
+            ))}
             </View>
             {/* <View>
               {fixedTab.map(v => (
@@ -819,31 +902,31 @@ export default function AttendanceSheet() {
                     <View className='border'>
                       {val.default && <View className='box-list-default'>{val.name}</View>}
                       {/* {!val.default && !val.type && <View className='box-height'></View>} */}
-                      {val.type && <View>
-                        {val.type.hour && v.type.hour ?
+                      {val.type &&<View>
+                        {val.type.hour && v.type.hour?
                           <View className='box-list-bao'>
-                            <View>{val.type.hour.work_time}{val.type.hour.work_time || '0' ? '个工' : ''}</View>
-                            <View>{val.type.hour.over_time}{val.type.hour.over_time || '0' ? '小时' : ''}</View>
-                          </View> :
+                            <View>{val.type.hour.work_time}{val.type.hour.work_time||'0'?'个工':''}</View>
+                            <View>{val.type.hour.over_time}{val.type.hour.over_time||'0' ? '小时' : ''}</View>
+                          </View>:
                           <View>{v.type.hour && <View className='box-list-bao'></View>}</View>
                         }
                         {val.type.work && v.type.work ?
                           <View className='box-list-bao'>
-                            <View>{val.type.work.work_time}{val.type.work.work_time || '0' ? '个工' : ''}</View>
-                            <View>{val.type.work.over_time}{val.type.work.over_time || '0' ? '小时' : ''}</View>
-                          </View> :
+                            <View>{val.type.work.work_time}{val.type.work.work_time||'0' ? '个工' : ''}</View>
+                            <View>{val.type.work.over_time}{val.type.work.over_time||'0' ? '小时' : ''}</View>
+                          </View>:
                           <View>{v.type.work && <View className='box-list-bao'></View>}</View>
                         }
                         {val.type.amount && v.type.amount ?
                           <View className='box-height'>
-                            <View>{val.type.amount.num}{val.type.amount.num ? '笔' : ''}</View>
-                          </View> :
+                          <View>{val.type.amount.num}{val.type.amount.num?'笔':''}</View>
+                          </View>:
                           <View>{v.type.amount && <View className='box-list-bao'></View>}</View>
                         }
                         {val.type.borrow && v.type.borrow ?
                           <View className='box-height'>
                             <View>{val.type.borrow.borrow}</View>
-                          </View> :
+                          </View>:
                           <View>{v.type.borrow && <View className='box-list-bao'></View>}</View>
                         }
                       </View>}
