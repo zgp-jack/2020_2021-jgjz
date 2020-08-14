@@ -408,11 +408,10 @@ export default function FlowingWater() {
         if (res.confirm == true) {
           bkDeleteBusinessAction(params).then(res => {
             if (res.code === 200) {
-              if(useSelectorItem.flowingWater.length>0){
+              params.ids.forEach((id)=>{
                 useSelectorItem.flowingWater.forEach((element,dex) => {
                   element.arr.forEach((item,index) => {
-                    for(let i=0;i<params.ids.length;i++){
-                      if(params.ids[i]==item.id){
+                      if(id==item.id){
                         if(element.arr.length == 1){
                           useSelectorItem.flowingWater.splice(dex,1)
                         }else{
@@ -424,10 +423,9 @@ export default function FlowingWater() {
                           element.arr.splice(index,1);
                         }
                       }
-                    }
                   });
                 });
-              }
+              });
               Msg('删除成功');
               setData({item:useSelectorItem.flowingWater});
               setAllcheck(false);

@@ -1114,25 +1114,30 @@ export default function EditDetails() {
       if(res.code === 200){
         if(useSelectorItem.flowingWater.length>0){
           useSelectorItem.flowingWater.forEach((element) => {
+            element.total_borrow = 0;
+            element.total_money = 0;
             element.arr.forEach((item) => {
               if(item.id == params.id){
                 Object.getOwnPropertyNames(params).forEach((key) =>{
                   item[key] = params[key]
                 })
+                if(item.business_type == 3){
+                  element.total_borrow += Number(item.money);
+                }else{
+                  element.total_money += Number(item.money);
+                }
+              }else{
+                if(item.business_type == 3){
+                  element.total_borrow += Number(item.money);
+                }else{
+                  element.total_money += Number(item.money);
+                }
               }
             });
           });
         }
         Msg(res.msg);
         Taro.navigateBack();
-        // setTimeout(()=>{
-        //   debugger
-        //   if (typeItem){
-        //     Taro.navigateBack({delta:2});
-        //   }else{
-        //     Taro.navigateBack({ delta: 1 });
-        //   }
-        // },1000)
       }else{
         Msg(res.msg)
       }
