@@ -117,8 +117,8 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                   <View className='wagesModal-standard-box-list'>
                     <View className='wagesModal-standard-box-list-border'>
                     <View className='wagesModal-standard-box-list-title'>{i == 0 ? '工资标准1' :'工资标准2'}</View>
-                    <View className='wagesModal-standard-box-list-flex'>
-                      <View><Checkbox className='checkbox' checked={v.click} value={v.click} onClick={()=>handleCheckboxStandard(v)}/></View>
+                      <View className='wagesModal-standard-box-list-flex' onClick={() => handleCheckboxStandard(v)}>
+                      <View><Checkbox className='checkbox' checked={v.click} value={v.click}/></View>
                       <View className='wagesModal-standard-box-list-flex-middle'>
                         <View>上班标准：{parseFloat(v.worktime_define)}小时算1个工<Text className='red'>{v.money}</Text>元/个工</View>
                           <View>加班标准：{v.overtime_type === '1' ? '按小时算' : '按工天算'} {v.overtime_type == '1' ? <Text><Text className='red'>{v.overtime_money}</Text>元/小时</Text> : <Text>加班 {parseFloat(v.overtime)}小时算1个工</Text>} </View>

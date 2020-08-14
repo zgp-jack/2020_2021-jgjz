@@ -64,6 +64,8 @@
 .wagesModal-personnel{
   display: flex;
   flex-wrap: wrap;
+  overflow-x:scroll;
+  height: 400rpx;
 }
 .wagesModal-personnel-box-list {
   width:60rpx;
@@ -146,7 +148,7 @@
 }
 .wagesModal-personnel-box {
   position: relative;
-  margin-bottom: 39rpx;
+  // margin-bottom: 39rpx;
   text-align: center;
   color: rgba(75, 74, 74, 1);
   font-size: 26rpx;

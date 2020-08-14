@@ -647,9 +647,12 @@ export default function userForeman() {
             if(res.data.group_info && res.data.group_info.length>0){
               title = res.data.group_info[0].group_name + '-' + res.data.group_info[0].name;
               console.log(title,'title')
+              setForemanTitle(res.data.group_info[0].leader_name)
               setProjectId(res.data.group_info[0].group_id +','+ res.data.group_info[0].id)
               console.log(res.data.group_info[0].group_info,'xx')
               setGroupInfo(res.data.group_info[0].group_id +','+ res.data.group_info[0].id)
+              res.data.group_info[0].click = true;
+              setProjectArr(res.data.group_info)
               console.log(32132131)
               let arr:any[]=[];
               if (res.data.default_group_workers.length>0){
@@ -723,6 +726,15 @@ export default function userForeman() {
                     id: '',
                     worker_id: '',
                   }
+                  const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+                  wageStandardData.work = 0;
+                  wageStandardData.addWork = 0;
+                  wageStandardData.money = 0;
+                  wageStandardData.day = 0;
+                  wageStandardData.type = 1;
+                  wageStandardData.dayAddWork = 0;
+                  setWageStandard(wageStandardData)
+                  setCacheWage(wageStandardData)
                   setWageStandard(obj);
                   setCacheWage(obj)
                 }
@@ -1404,7 +1416,17 @@ export default function userForeman() {
             // 创建项目的时候
           } else {
             console.log('有数据')
+            console.log(res.data,'1111')
             if (res.data && res.data.length > 0) {
+              const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+              wageStandardData.work = 0;
+              wageStandardData.addWork = 0;
+              wageStandardData.money = 0;
+              wageStandardData.day = 0;
+              wageStandardData.type = 1;
+              wageStandardData.dayAddWork = 0;
+              setWageStandard(wageStandardData)
+              setCacheWage(wageStandardData)
               for (let i = 0; i < res.data.length; i++) {
                 if (groupName == res.data[i].group_name + '-' + res.data[i].name) {
                   res.data[i].click = true;
@@ -1418,6 +1440,15 @@ export default function userForeman() {
                 }
               }
             } else {
+              const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+              wageStandardData.work = 0;
+              wageStandardData.addWork = 0;
+              wageStandardData.money = 0;
+              wageStandardData.day = 0;
+              wageStandardData.type = 1;
+              wageStandardData.dayAddWork = 0;
+              setWageStandard(wageStandardData)
+              setCacheWage(wageStandardData)
               //  清空名字班组长
               setModel({ ...modalObj, name: '', groupName: '', teamName: '', workersWages:'0' })
               getMonthDaysCurrent(new Date());
@@ -2737,6 +2768,7 @@ export default function userForeman() {
   // 打开工资标准
   const handleOpenWagesModal = (v?: any) => {
     if (delType) return;
+
     const item = JSON.parse(JSON.stringify(model));
     if (!item.name) {
       Msg('请先选择项目')
@@ -3656,7 +3688,8 @@ export default function userForeman() {
             if (res.code === 200) {
               Msg('删除成功');
               setTimeout(() => {
-                bkGetProjectTeam('',false,true);
+                // bkGetProjectTeam('',false,true);
+                getList();
                 setForemanTitle('');
                 setModel({ ...model, name: '',groupName:'' });
               }, 800)
@@ -3783,6 +3816,7 @@ export default function userForeman() {
   }
   // 选模板
   const handleCheckboxStandard = (v) => {
+    console.log(v,'vvvvv')
     const data = JSON.parse(JSON.stringify(standard));
     for (let i = 0; i < data.length; i++) {
       if (v.id === data[i].id) {
@@ -4370,5 +4404,6 @@ export default function userForeman() {
     cacheWage, 
     setCacheWage,
     setWageStandard,
+    setTab,
   }
 }
