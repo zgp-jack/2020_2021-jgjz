@@ -573,16 +573,20 @@ export default function AttendanceSheet() {
             if(res.data[i].hour&&res.data[i].hour){
               hourData.push(res.data[i].hour)
             }
-            if (res.data[i].hour && res.data[i].hour) {
-              hourData.push(res.data[i].hour)
+            if (res.data[i].work && res.data[i].work) {
+              workData.push(res.data[i].work)
             }
-            if (res.data[i].hour && res.data[i].hour) {
-              hourData.push(res.data[i].hour)
+            if (res.data[i].borrow && res.data[i].borrow) {
+              amountData.push(res.data[i].borrow)
             }
-            if (res.data[i].hour && res.data[i].hour) {
-              hourData.push(res.data[i].hour)
+            if (res.data[i].amount && res.data[i].amount) {
+              hourData.push(res.data[i].amount)
             }
           }
+          console.log(sumHour,'sumHour');
+          console.log(sumWork,'sumWork');
+          console.log(sumBorrow,'sumBorrow');
+          console.log(sumAmount,'sumAmount')
           // 本月统计
           // 获取身份
           let type = Taro.getStorageSync(Type);
