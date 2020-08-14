@@ -2861,27 +2861,10 @@ export default function userForeman() {
   // 保存
   const handlePreservation = (type: number) => {
     // 获取工资标准
-    const data = JSON.parse(JSON.stringify(wageStandard));
     const item = JSON.parse(JSON.stringify(model));
     const workerItemArr = JSON.parse(JSON.stringify(workerItem));
     const types = Taro.getStorageSync(Type);
-    // 时间
-    let times: number = 0, work_time_hour = 0, work_time_type;
-    timeArr.map(v => {
-      if (v.click) {
-        if (v.num || v.num == 0) {
-          if (v.id !== 4) {
-            times = v.num;
-            work_time_hour = data.work * v.num;
-            work_time_type = 'working_hour';
-          } else {
-            work_time_hour = 1 / data.work * v.num;
-            times = v.num;
-            work_time_type = 'hour'
-          }
-        }
-      }
-    })
+    
     // return;
     // const times = 1/data.work * work_time;
     // 加班时间
@@ -2923,9 +2906,27 @@ export default function userForeman() {
         itemType = contractorArr.item[i].id;
       }
     }
+    // 时间
+    let times: number = 0, work_time_hour = 0, work_time_type;
     console.log(itemType, 'itemTypeitemType');
     console.log(tabData.id, 'abData.id')
     if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
+      const data = JSON.parse(JSON.stringify(wageStandard));
+      timeArr.map(v => {
+        if (v.click) {
+          if (v.num || v.num == 0) {
+            if (v.id !== 4) {
+              times = v.num;
+              work_time_hour = data.work * v.num;
+              work_time_type = 'working_hour';
+            } else {
+              work_time_hour = 1 / data.work * v.num;
+              times = v.num;
+              work_time_type = 'hour'
+            }
+          }
+        }
+      })
       if (data.work == 0) {
         Msg('上班标准必须大于0')
         return;
@@ -2946,6 +2947,7 @@ export default function userForeman() {
         }
       }
     }
+    
     // 工人ID传自己
     if (identity === 2) {
       // workers = 
@@ -2958,6 +2960,7 @@ export default function userForeman() {
     let params: any = {};
     if (tabData.id == 1) {
       if (identity == 2) {
+        const data = JSON.parse(JSON.stringify(wageStandard));
         if (!data.work || data.work == 0) {
           Msg('请设置工资标准');
           return;
@@ -3017,6 +3020,7 @@ export default function userForeman() {
         }
       } else {
         if (identity == 2){
+          const data = JSON.parse(JSON.stringify(wageStandard));
           if (!data.work || data.work == 0) {
             Msg('请设置工资标准');
             return;
@@ -3092,6 +3096,7 @@ export default function userForeman() {
         bkAddProjectTeamAction(items).then(res => {
           // 给自己设置工资标准
           if (res.code === 200) {
+            const data = JSON.parse(JSON.stringify(wageStandard));
             let paramsData;
             //   identity: identity,
             //   worktime_define: data.work,
