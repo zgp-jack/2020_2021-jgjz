@@ -567,8 +567,21 @@ export default function AttendanceSheet() {
               }
             }
           }
+          console.log(sumHour, sumWork, sumBorrow, sumAmount)
+          let hourData: any[] = [], workData: any[] = [], amountData: any[] = [], borrowData:any[]=[];
           for(let i =0;i<res.data.length;i++){
-        // 
+            if(res.data[i].hour&&res.data[i].hour){
+              hourData.push(res.data[i].hour)
+            }
+            if (res.data[i].hour && res.data[i].hour) {
+              hourData.push(res.data[i].hour)
+            }
+            if (res.data[i].hour && res.data[i].hour) {
+              hourData.push(res.data[i].hour)
+            }
+            if (res.data[i].hour && res.data[i].hour) {
+              hourData.push(res.data[i].hour)
+            }
           }
           // 本月统计
           // 获取身份

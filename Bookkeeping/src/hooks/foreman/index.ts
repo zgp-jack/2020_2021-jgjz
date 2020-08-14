@@ -1730,6 +1730,7 @@ export default function userForeman() {
           // 工人的时候
           const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
           if (res.data.length > 0) {
+            console.log(1111,'有')
             const data = res.data[0];
             wageStandardData.work = data.worktime_define;
             wageStandardData.addWork = data.overtime_money;
@@ -1756,6 +1757,7 @@ export default function userForeman() {
             setWageStandard(wageStandardData)
             setCacheWage(wageStandardData)
           } else {
+            console.log(1111, '没有有')
             const dataList= [
               { id: 1, name: '按小时算', click: true },
               { id: 2, name: '按工天算', click: false },
@@ -1767,6 +1769,7 @@ export default function userForeman() {
             wageStandardData.day = 0;
             wageStandardData.type = 1;
             wageStandardData.dayAddWork = 0;
+            console.log(setWageStandard,'setWageStandard')
             setWageStandard(wageStandardData)
             setCacheWage(wageStandardData)
             //设置工人工资为0
@@ -2910,7 +2913,7 @@ export default function userForeman() {
     }
     // 时间
     let times: number = 0, work_time_hour = 0, work_time_type;
-    if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
+    // if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
       const data = JSON.parse(JSON.stringify(wageStandard));
       timeArr.map(v => {
         if (v.click) {
@@ -2931,7 +2934,7 @@ export default function userForeman() {
         Msg('上班标准必须大于0')
         return;
       }
-    }
+    // }
     // 获取ID
     let workers: number[] = [];
     if (identity === 1) {
