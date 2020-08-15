@@ -916,6 +916,7 @@ export default function AttendanceSheet() {
       month: vals,
       identity:type,
     }
+    console.log(vals,'val')
     return {
       // title: '记工记账',
       title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
