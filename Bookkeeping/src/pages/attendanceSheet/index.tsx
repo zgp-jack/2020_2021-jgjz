@@ -121,9 +121,10 @@ export default function AttendanceSheet() {
         // 设置内容
         if (res.data.length > 0) {
           console.log(newTime,'newTime')
-          const time = (newTime).replace('-', '/');
-          console.log(time,'111')
-          const curDate = new Date(newTime.replace(/-/g, "/"));
+          // const time = (newTime).replace('-', '/');
+          // console.log(time,'111')
+          let newDate = (newTime).replace(/-/g, '/');
+          const curDate = new Date(newDate);
           console.log(curDate,'curDate')
           /* 获取当前月份 */
           const curMonth = curDate.getMonth();
