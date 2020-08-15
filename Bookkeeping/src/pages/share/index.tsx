@@ -1,7 +1,7 @@
 import Taro, { Config, useEffect, useState, useRouter } from '@tarojs/taro'
 import { View, Text, Picker } from '@tarojs/components'
 import CalendarModal from '../../components/attendanceModal';
-import { bkgetExcelDataAction, shareExcelDataAction } from '../../utils/request/index';
+import { bkGetShareExcelDataAction, shareExcelDataAction } from '../../utils/request/index';
 import Msg from '../../utils/msg';
 import './index.scss'
 
@@ -9,7 +9,7 @@ import './index.scss'
 
 export default function Share() {
   const router: Taro.RouterInfo = useRouter();
-  const { time, identity } = router.params;
+  const { time, identity, session } = router.params;
   // 月份
   const [date, setDate] = useState('');
   // 年
@@ -35,21 +35,22 @@ export default function Share() {
     return num;
   }
   useEffect(() => {
-    // 进来获取本月数据
-    const time = new Date();
-    const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
-    const years = time.getFullYear();
-    const months = addZero(time.getMonth() + 1);
-    setYear(years)
-    setMonth(months)
-    setDate(newTime);
-    getList(newTime);
+    // // 进来获取本月数据
+    // const time = new Date();
+    // const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
+    // const years = time.getFullYear();
+    // const months = addZero(time.getMonth() + 1);
+    // setYear(years)
+    // setMonth(months)
+    // setDate(newTime);
+    getList(time);
   }, [])
   // 获取数据
   const getList = (newTime: string) => {
     let params = {
-      date: time,
+      date: newTime,
       identity,
+      session
     };
     // 获取本月天数
     // const time = newTime.setDate(0);
@@ -90,7 +91,8 @@ export default function Share() {
       list: defaultArr
     }
     fixedTabList.push(fixedTabObj);
-    shareExcelDataAction(params).then(res => {
+    bkGetShareExcelDataAction(params).then(res => {
+      console.log(res.data,'res.data')
       const data = res.data;
       let leftData: any = [];
       let rightData: any = [];

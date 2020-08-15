@@ -764,13 +764,13 @@ export function bkAddWorkerInGroupAction(data): Promise<Inter.bkBusinessType> {
 
 
 // 分享获取考勤表
-export function bkGetShareExcelDataAction(data): Promise<Inter.bkBusinessType> {
+export function bkGetShareExcelDataAction(data): Promise<Inter.bkWageStandGetWage> {
   let type = Taro.getStorageSync(Type)
   let midData = Taro.getStorageSync(MidData);
   data.identity = type
-  const { id } = data;
+  const { session } = data;
   return doRequestAction({
-    url: api.bkGetShareExcelDataUrl+'/id='+id,
+    url: api.bkGetShareExcelDataUrl + '?session=' + session,
     header: {
       'content-type': 'application/x-www-form-urlencoded',
       mid: midData.yupao_id,
