@@ -11,6 +11,9 @@ import './index.scss'
 export default function Share() {
   const router: Taro.RouterInfo = useRouter();
   const { time, identity, session } = router.params;
+  console.log(time,'time');
+  console.log(identity, 'identity');
+  console.log(session, 'session');
   // 月份
   const [date, setDate] = useState('');
   // 年
