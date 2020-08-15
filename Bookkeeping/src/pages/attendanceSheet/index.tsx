@@ -805,6 +805,10 @@ export default function AttendanceSheet() {
               work: sumWork,
             },
           }
+          console.log(obj,'obj');
+          console.log(sum,'sum')
+          console.log([...leftArr, ...arr, obj],'111111');
+          console.log([[...rightArr, ...listArr, sum]],'[...rightArr, ...listArr, sum]')
           // 本月统计
           // 获取身份
           let type = Taro.getStorageSync(Type);
