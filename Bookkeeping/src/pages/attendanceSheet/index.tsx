@@ -864,6 +864,7 @@ export default function AttendanceSheet() {
     setTabArr([]);
     setYear(e.detail.value.slice(0, 4));
     setMonth(e.detail.value.slice(5, 8));
+    setVals(time)
     getDateList(time);
   }
   const changeIcon = (e,first_business_month) => {
