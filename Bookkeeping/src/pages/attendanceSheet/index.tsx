@@ -547,23 +547,6 @@ export default function AttendanceSheet() {
           console.log(arr,'arrr');
           console.log(listArr,'11111')
           let sumHour, sumWork, sumBorrow, sumAmount;
-          // for(let i =0;i<listArr.length;i++){
-          //   if(listArr[i].type){
-          //     if (listArr[i].type.amount){
-          //       sumAmount = true
-          //     }
-          //     if (listArr[i].type.hour) {
-          //       sumHour = true
-          //     }
-          //     if (listArr[i].type.work) {
-          //       sumWork = true
-          //     }
-          //     if (listArr[i].type.borrow) {
-          //       sumBorrow = true
-          //     }
-          //   }
-          // }
-          console.log(sumHour, sumWork, sumBorrow, sumAmount)
           let hourData: any[] = [], workData: any[] = [], amountData: any[] = [], borrowData:any[]=[];
           for(let i =0;i<res.data.length;i++){
             if(res.data[i].hour&&res.data[i].hour){
@@ -632,7 +615,7 @@ export default function AttendanceSheet() {
           }
           console.log(hourDataSum, amountDataSum, borrowDataSum, workDataSum,'123123');
           for(let i =0;i<dayArr.length;i++){
-            if (hourDataSum.length>0){
+            if (hourDataSum&&hourDataSum.length>0){
               sumHour = true;
               for (let j = 0; j < hourDataSum.length;j++){
                 if (hourDataSum[j].date_num == dayArr[i].name){
@@ -653,7 +636,7 @@ export default function AttendanceSheet() {
                 }
               }
             }
-            if (workDataSum.length > 0) {
+            if (workDataSum&&workDataSum.length > 0) {
               sumWork = true;
               for (let j = 0; j < workDataSum.length; j++) {
                 if (workDataSum[j].date_num == dayArr[i].name) {
@@ -674,7 +657,7 @@ export default function AttendanceSheet() {
                 }
               }
             }
-            if (amountDataSum.length > 0) {
+            if (amountDataSum&&amountDataSum.length > 0) {
               sumAmount = true
               for (let j = 0; j < amountDataSum.length; j++) {
                 if (amountDataSum[j].date_num == dayArr[i].name) {
@@ -694,7 +677,7 @@ export default function AttendanceSheet() {
                 }
               }
             }
-            if (borrowDataSum.length > 0) {
+            if (borrowDataSum&&borrowDataSum.length > 0) {
               sumBorrow = true;
               for (let j = 0; j < borrowDataSum.length; j++) {
                 if (borrowDataSum[j].date_num == dayArr[i].name) {
@@ -764,8 +747,37 @@ export default function AttendanceSheet() {
             }
           }
           console.log(hourWorkNum, hourOverNum,'1111')
+          // 等于0就相当于没有记
+          let amount;
+          if (amountDataSumNum == 0 ){
+            amount ={}
+          }else{
+            amount = {
+              num: amountDataSumNum,
+            }
+          }
+          let borrow;
+          if (borrowNum == 0) {
+            borrow = {}
+          } else {
+            borrow = {
+              borrow: borrowNum,
+            }
+          }
+          let hour;
+          if (hourWorkNum == 0 && hourOverNum ==0 ){
+            hour = {}
+          }else{
+            hour= { work_time: hourWorkNum, over_time: hourOverNum }
+          }
+          let work;
+          if (workWorkNum == 0 && workOverNum == 0 ){
+            work = {}
+          }else{
+            work = { work_time: workWorkNum, over_time: workOverNum }
+          }
           let sumLeft = [
-            { id: 1, name: '总计' },
+            { id: 1, name: '本月总计' },
             {
               id: 2, type: {
                 hour: sumHour,
@@ -775,12 +787,14 @@ export default function AttendanceSheet() {
               }
             },
             {
-              amount: { num: amountDataSumNum },
-              borrow: { borrow: borrowNum },
-              hour: { work_time: hourWorkNum, over_time: hourOverNum },
-              work: { work_time: workWorkNum, over_time: workOverNum },
+              amount,
+              borrow,
+              hour,
+              work,
             }
           ]
+          console.log(sumLeft,'sumLeft1')
+          console.log(sumHour, sumWork, sumBorrow, sumAmount)
           console.log(sum,'sumLeft')
           let obj = {
             list: sumLeft,
@@ -987,7 +1001,7 @@ export default function AttendanceSheet() {
                           <View>{val.work.work_time}{val.work.work_time || '0' ? '个工' : ''}</View>
                           <View>{val.work.over_time}{val.work.over_time || '0' ? '小时' : ''}</View>
                         </View>}
-                        {JSON.stringify(val.amount) !== '{}' && <View className='box-height'>
+                        {JSON.stringify(val.amount) !== '{}'&& <View className='box-height'>
                           <View>{val.amount.num}{val.amount.num ? '笔' : ''}</View>
                         </View>}
                         {JSON.stringify(val.borrow) !== '{}' && <View className='box-height'>
