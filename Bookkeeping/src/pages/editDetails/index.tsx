@@ -1375,7 +1375,7 @@ export default function EditDetails() {
       </View>
       </View>
       </View>
-      <View className='footer'><View className='footerBtn' onClick={handlesub}>保存</View></View>
+      {!isdisable && <CoverView className='footer'><CoverView className='footerBtn' onClick={handlesub}>保存</CoverView></CoverView>}
       <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio}/>
       <WorkOvertime display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>

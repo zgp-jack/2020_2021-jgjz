@@ -136,18 +136,8 @@ export default function userCode(InitParams) {
       bkUpdateNotePadAction(params).then(res=>{
         if(res.code === 200){
           Msg('修改成功')
-          if(useSelectorItem.notepad.data.length>0){
-            useSelectorItem.notepad.data.forEach((element) => {
-              element.list.forEach((item) => {
-                if(item.id == params.id){
-                  Object.getOwnPropertyNames(params).forEach((key) =>{
-                    item[key] = params[key]
-                  })
-                }
-              });
-            });
-          }
-          Taro.navigateBack({delta: 2});
+          dispatch(setNotepad({code:200,data:[],msg:'ok'}))
+          Taro.navigateBack({delta: 2})
         }else{
           Msg(res.msg);
         }
