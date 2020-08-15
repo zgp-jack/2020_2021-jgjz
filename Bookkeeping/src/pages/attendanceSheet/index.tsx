@@ -120,7 +120,9 @@ export default function AttendanceSheet() {
         }
         // 设置内容
         if (res.data.length > 0) {
+          console.log(newTime,'newTime')
           const curDate = new Date(newTime);
+          console.log(curDate,'curDate')
           /* 获取当前月份 */
           const curMonth = curDate.getMonth();
           /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
