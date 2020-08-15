@@ -132,26 +132,37 @@ export default function AttendanceSheet() {
         }
         // 设置内容
         if (res.data.length > 0) {
+          console.log(newTime,'1');
+          const date: any = newTime.split("-");
+          console.log(date[0],date[1],'111')
+          let month;
+          if (parseInt(date[1])<10){
+            month = date[1].slice(1,2);
+          }else{
+            month = parseInt(date[1])
+          }
+          const timeDate = new Date(parseInt(date[0]), month, 0);
+          const day = timeDate.getDate();
           // const num = getCurrentMonthDayNum(newTime);
           // console.log(num,'num')
           // console.log(newTime,'newTime')
           // // const time = (newTime).replace('-', '/');
           // // console.log(time,'111')
-          let newDate = (newTime).replace(/-/g, '/')+'';
-          console.log(newDate, 'neeData', typeof newDate)
-          const curDate = new Date(newDate);
-          // const date:any = newTime.split("-");
-          // console.log(date,'11111')
-          // console.log(new Date(date[0],data[1],0),'111')
-          // console.log(curDate,'curDate')
-          /* 获取当前月份 */
-          const curMonth = curDate.getMonth();
-          /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
-          curDate.setMonth(curMonth + 1);
-          /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
-          curDate.setDate(0);
-          const day = curDate.getDate();
-          console.log(day,'day');
+          // let newDate = (newTime).replace(/-/g, '/')+'';
+          // console.log(newDate, 'neeData', typeof newDate)
+          // const curDate = new Date(newDate);
+          // // const date:any = newTime.split("-");
+          // // console.log(date,'11111')
+          // // console.log(new Date(date[0],data[1],0),'111')
+          // // console.log(curDate,'curDate')
+          // /* 获取当前月份 */
+          // const curMonth = curDate.getMonth();
+          // /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
+          // curDate.setMonth(curMonth + 1);
+          // /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
+          // curDate.setDate(0);
+          // const day = curDate.getDate();
+          // console.log(day,'day');
           //  设置第一列
           const dayArr: DateTyep[] = [];
           for (var k = 1; k <= day; k++) {
