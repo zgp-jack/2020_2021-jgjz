@@ -90,4 +90,4 @@ export const getBookkeepingDataUrl = REQUESTURL + '/bk-bookkeeping/get-bookkeepi
 // 新的记工提交接口
 export const addNewBusinessUrl = REQUESTURL + 'bk-bookkeeping/add-new-business/'
 // 获取分享接口
-export const shareExcelDataUrl = REQUESTURL + 'bk-bookkeeping/get-share-excel-data';
+export const shareExcelDataUrl = REQUESTURL + 'bk-bookkeeping/get-share-excel-url/';

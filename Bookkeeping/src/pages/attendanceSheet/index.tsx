@@ -1,7 +1,7 @@
 import Taro, { Config, useEffect, useState, useRouter, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Picker, Button, Image } from '@tarojs/components'
 import CalendarModal from '../../components/attendanceModal';
-import { bkgetExcelDataAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
+import { bkgetExcelDataAction, bkGetProjectTeamAction, bkAddProjectTeamAction, shareExcelDataAction } from '../../utils/request/index';
 import Msg from '../../utils/msg';
 import { IMGCDNURL } from '../../config';
 import CreateProject from '../../components/createProject';
@@ -52,7 +52,7 @@ export default function AttendanceSheet() {
   // 项目班组
   const [project, setProject] = useState<boolean>(false)
    // Picker 的value
-   const [vals,setVals] = useState<string>('');
+  const [vals,setVals] = useState<string>('');
   // 日期需要的开始时间
   const [datestart, setDatestart] = useState<string>()
   // 日期需要的结束时间
@@ -100,6 +100,18 @@ export default function AttendanceSheet() {
     // getList(newTime)
     getDateList(times);
   }, [])
+  // 获取月份
+  const getCurrentMonthDayNum =(time:any)=>{
+    let today = new Date(time);
+    let dayAllThisMonth = 31;
+    if (today.getMonth() + 1 != 12) {
+      let currentMonthStartDate:any = new Date(today.getFullYear() + "/" + (today.getMonth() + 1) + "/01"); // 本月1号的日期
+      let nextMonthStartDate:any = new Date(today.getFullYear() + "/" + (today.getMonth() + 2) + "/01"); // 下个月1号的日期
+      dayAllThisMonth = (nextMonthStartDate - currentMonthStartDate) / (24 * 3600 * 1000);
+    }
+
+    return dayAllThisMonth;
+  }
   // 获取数据
   const getDateList = (newTime: string) => {
     let params = {
@@ -120,23 +132,29 @@ export default function AttendanceSheet() {
         }
         // 设置内容
         if (res.data.length > 0) {
-          console.log(newTime,'newTime')
-          // const time = (newTime).replace('-', '/');
-          // console.log(time,'111')
-          let newDate = (newTime).replace(/-/g, '/');
-          const curDate = new Date(newDate);
-          console.log(curDate,'curDate')
-          /* 获取当前月份 */
-          const curMonth = curDate.getMonth();
-          /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
-          curDate.setMonth(curMonth + 1);
-          /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
-          curDate.setDate(0);
-          const day = curDate.getDate();
-          console.log(day,'day');
+          const num = getCurrentMonthDayNum(newTime);
+          console.log(num,'num')
+          // console.log(newTime,'newTime')
+          // // const time = (newTime).replace('-', '/');
+          // // console.log(time,'111')
+          // let newDate = (newTime).replace(/-/g, '/');
+          // console.log(newDate,'neeData')
+          // const curDate = new Date(newDate);
+          // const date:any = newTime.split("-");
+          // console.log(date,'11111')
+          // console.log(new Date(date[0],data[1],0),'111')
+          // console.log(curDate,'curDate')
+          // /* 获取当前月份 */
+          // const curMonth = curDate.getMonth();
+          // /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
+          // curDate.setMonth(curMonth + 1);
+          // /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
+          // curDate.setDate(0);
+          // const day = curDate.getDate();
+          // console.log(day,'day');
           //  设置第一列
           const dayArr: DateTyep[] = [];
-          for (var k = 1; k <= day; k++) {
+          for (var k = 1; k <= num; k++) {
             let obj: any = {
               id: k,
               name: k,
@@ -877,11 +895,22 @@ export default function AttendanceSheet() {
   }
   useShareAppMessage(() => {
     let type = Taro.getStorageSync(Type);
-    return {
-      // title: '记工记账',
-      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
-      path: `/pages/share/index?time=${month}&identity=${type}`
+    let params = {
+      month: vals,
+      identity:type,
     }
+    shareExcelDataAction(params).then(res=>{
+      console.log(res,'111')
+      if(res.code === 200){
+        return {
+          // title: '记工记账',
+          title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+          path: `/pages/share/index?time=${month}&identity=${type}&session=${res.data}`
+        }
+      }else{
+        Msg(res.msg);
+      }
+    })
   })
   // 跳转
   const handleJump = () => {

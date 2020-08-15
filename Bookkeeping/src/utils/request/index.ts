@@ -979,7 +979,6 @@ export function addNewBusinessAction(data): Promise<Inter.bkGetWorker> {
 }
 
 // 考勤表获取
-// 
 export function shareExcelDataAction(data): Promise<Inter.bkGetWorker> {
   let userInfo = Taro.getStorageSync(UserInfo);
   return doRequestAction({
