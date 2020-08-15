@@ -84,8 +84,6 @@ export function doRequestAction(reqData: Request): Promise<any> {
   // 获取用户信息
   let userInfo: User = Taro.getStorageSync(UserInfo);
   let IsShareInfo = Taro.getStorageSync(IsShare);
-  console.log(userInfo,'userInfo')
-  console.log(IsShareInfo,'IsShareInfo')
   // 获取存入的公用内容
   let type: User = Taro.getStorageSync(Type)
   // const useSelectorItem = useSelector<any, any>(state => state)
@@ -111,7 +109,6 @@ export function doRequestAction(reqData: Request): Promise<any> {
       header: req.header,
       data: data,
       success: (res) => {
-        //console.log(res)
         if (res.statusCode === 200) {
           resolve(res.data)
         } else {
@@ -790,7 +787,6 @@ export function bkGetShareExcelDataAction(data): Promise<Inter.bkWageStandGetWag
 // 验证码
 export function bkGetCodeAction(data): Promise<Inter.bkGetCode> {
   let midData = Taro.getStorageSync(MidData);
-  console.log(midData,'midDatamidData')
   return doRequestAction({
     url: api.bkGetCodeUrl,
     method: 'POST',
@@ -915,7 +911,6 @@ export function appletJumpAction(data): Promise<Inter.bkGetWorker> {
 // jumpBindTelUrl 小程序跳转后 添加绑定手机号
 export function jumpBindTelAction(data): Promise<Inter.bkGetWorker> {
   let userInfo = Taro.getStorageSync(UserInfo);
-  console.log(userInfo,'21321321')
   return doRequestAction({
     url: api.jumpBindTelUrl,
     method: 'POST',

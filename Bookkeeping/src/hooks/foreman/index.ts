@@ -400,7 +400,6 @@ export default function userForeman() {
       setWorkerItem(item)
       noData = false;
     }else{
-      console.log(noData,'noData')
       if(noData) return;
       getList();
     }
@@ -423,7 +422,6 @@ export default function userForeman() {
         }
       })
     }
-    console.log(paramsId,'啊啊啊啊啊啊啊啊啊11')
     let params = {
       identity,
       business_type: paramsId,
@@ -514,9 +512,16 @@ export default function userForeman() {
               }else{
                 const data = res.data.latest_group_workers_has_wage[0];
                 const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+                for(let i =0;i<wageStandardData.data.length;i++){
+                  if (wageStandardData.data[i].id == data.overtime_type){
+                    wageStandardData.data[i].click = true
+                  }else{
+                    wageStandardData.data[i].click = false
+                  }
+                }
                 wageStandardData.work = data.worktime_define;
-                wageStandardData.addWork = data.overtime_money;
                 wageStandardData.money = data.money;
+                wageStandardData.addWork = data.overtime_money;
                 wageStandardData.day = data.overtime;
                 wageStandardData.worker_id = data.worker_id;
                 wageStandardData.group_info = data.group_info;
@@ -525,6 +530,13 @@ export default function userForeman() {
                   wageStandardData.dayAddWork = parseFloat(data.money) / parseFloat(data.overtime) || 0;
                 } else {
                   wageStandardData.dayAddWork = 0
+                }
+                if(parseFloat(data.overtime_type) == 2){
+                  wageStandardData.addWork = data.overtime;
+                  wageStandardData.day = data.overtime_money;
+                }else{
+                  wageStandardData.addWork = data.overtime_money;
+                  wageStandardData.day = data.overtime;
                 }
                 wageStandardData.type = parseFloat(data.overtime_type);
                 for (let i = 0; i < wageStandardData.data.length;i++){
@@ -579,7 +591,6 @@ export default function userForeman() {
                 getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
               }
             }
-            console.log(workArr,'workArrworkArr')
             dispatch(setPhoneList(workArr));
             setWorkerItem(workArr);
             setMoneyList(res.data.latest_group_workers_has_wage)
@@ -590,12 +601,26 @@ export default function userForeman() {
             if (res.data.latest_group_workers_has_wage.length > 0) {
               const data = res.data.latest_group_workers_has_wage[0];
               const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+              for (let i = 0; i < wageStandardData.data.length; i++) {
+                if (wageStandardData.data[i].id == data.overtime_type) {
+                  wageStandardData.data[i].click = true
+                } else {
+                  wageStandardData.data[i].click = false
+                }
+              }
               wageStandardData.work = data.worktime_define;
-              wageStandardData.addWork = data.overtime_money;
               wageStandardData.money = data.money;
-              wageStandardData.day = data.overtime;
+              // wageStandardData.addWork = data.overtime_money;
+              // wageStandardData.day = data.overtime;
               wageStandardData.worker_id = data.worker_id;
               wageStandardData.group_info = data.group_info;
+              if (parseFloat(data.overtime_type) == 2) {
+                wageStandardData.addWork = data.overtime;
+                wageStandardData.day = data.overtime_money;
+              } else {
+                wageStandardData.addWork = data.overtime_money;
+                wageStandardData.day = data.overtime;
+              }
               if (parseFloat(data.money) && parseFloat(data.overtime)) {
                 wageStandardData.dayAddWork = parseFloat(data.money) / parseFloat(data.overtime) || 0;
               } else {
@@ -646,6 +671,7 @@ export default function userForeman() {
           // default_group_worker_has_business  默认班组中     有记工的人和日期
           console.log(type,'type')
           // if(type == 1){
+          console.log(res.data.group_info,'res.data.group_infores.data.group_info')
             if(res.data.group_info && res.data.group_info.length>0){
               title = res.data.group_info[0].group_name + '-' + res.data.group_info[0].name;
               console.log(title,'title')
@@ -689,13 +715,28 @@ export default function userForeman() {
               if(type == 2){
                 console.log(res.data.default_group_workers_has_wage,'res.data.default_group_workers_has_wage')
                 if(res.data.default_group_workers_has_wage.length>0){
+                  
                   const data = res.data.default_group_workers_has_wage[0];
                   wageStandardData.work = data.worktime_define;
-                  wageStandardData.addWork = data.overtime_money;
                   wageStandardData.money = data.money;
-                  wageStandardData.day = data.overtime;
+                  // wageStandardData.addWork = data.overtime_money;
+                  // wageStandardData.day = data.overtime;
                   wageStandardData.worker_id = data.worker_id;
                   wageStandardData.group_info = data.group_info;
+                  if (parseFloat(data.overtime_type) == 2) {
+                    wageStandardData.addWork = data.overtime;
+                    wageStandardData.day = data.overtime_money;
+                  } else {
+                    wageStandardData.addWork = data.overtime_money;
+                    wageStandardData.day = data.overtime;
+                  }
+                  for (let i = 0; i < wageStandardData.data.length; i++) {
+                    if (wageStandardData.data[i].id == data.overtime_type) {
+                      wageStandardData.data[i].click = true
+                    } else {
+                      wageStandardData.data[i].click = false
+                    }
+                  }
                   if (parseFloat(data.money) && parseFloat(data.overtime)) {
                     wageStandardData.dayAddWork = parseFloat(data.money) / parseFloat(data.overtime) || 0;
                   } else {
@@ -735,6 +776,10 @@ export default function userForeman() {
                   wageStandardData.day = 0;
                   wageStandardData.type = 1;
                   wageStandardData.dayAddWork = 0;
+                  wageStandardData.data=[
+                    { id: 1, name: '按小时算', click: true },
+                    { id: 2, name: '按工天算', click: false },
+                  ],
                   setWageStandard(wageStandardData)
                   setCacheWage(wageStandardData)
                   setWageStandard(obj);
@@ -789,8 +834,21 @@ export default function userForeman() {
               console.log(title,'titletitletitle')
               console.log(time,'time')
               setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle, time, details: '', workersWages: sum, amount: '', price: '', wages: '', borrowing: '', univalent: '' })
-            }
-          else{
+            }else{
+              console.log('删空后')
+              const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+              wageStandardData.data = [
+                { id: 1, name: '按小时算', click: true },
+                { id: 2, name: '按工天算', click: false },
+              ];
+              wageStandardData.work = 0;
+              wageStandardData.addWork = 0;
+              wageStandardData.money = 0;
+              wageStandardData.day = 0;
+              wageStandardData.type = 1;
+              wageStandardData.dayAddWork = 0;
+              setWageStandard(wageStandardData)
+              setCacheWage(wageStandardData)
             setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle, time, details: '', workersWages: sum, amount: '', price: '', wages: '', borrowing: '', univalent: '' })
           }
         }
@@ -1235,6 +1293,10 @@ export default function userForeman() {
             wageStandardData.day = 0;
             wageStandardData.type = 1;
             wageStandardData.dayAddWork = 0;
+            wageStandardData.data = [
+              { id: 1, name: '按小时算', click: true },
+              { id: 2, name: '按工天算', click: false },
+            ];
             setWageStandard(wageStandardData)
             setCacheWage(wageStandardData)
             //设置工人工资为0
@@ -1427,6 +1489,10 @@ export default function userForeman() {
               wageStandardData.day = 0;
               wageStandardData.type = 1;
               wageStandardData.dayAddWork = 0;
+              wageStandardData.data = [
+                { id: 1, name: '按小时算', click: true },
+                { id: 2, name: '按工天算', click: false },
+              ];
               setWageStandard(wageStandardData)
               setCacheWage(wageStandardData)
               for (let i = 0; i < res.data.length; i++) {
@@ -1449,6 +1515,10 @@ export default function userForeman() {
               wageStandardData.day = 0;
               wageStandardData.type = 1;
               wageStandardData.dayAddWork = 0;
+              wageStandardData.data = [
+                { id: 1, name: '按小时算', click: true },
+                { id: 2, name: '按工天算', click: false },
+              ];
               setWageStandard(wageStandardData)
               setCacheWage(wageStandardData)
               //  清空名字班组长
@@ -1732,7 +1802,6 @@ export default function userForeman() {
           // 工人的时候
           const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
           if (res.data.length > 0) {
-            console.log(1111,'有')
             const data = res.data[0];
             wageStandardData.work = data.worktime_define;
             wageStandardData.addWork = data.overtime_money;
@@ -1740,6 +1809,13 @@ export default function userForeman() {
             wageStandardData.day = data.overtime;
             wageStandardData.worker_id = data.worker_id;
             wageStandardData.group_info = data.group_info;
+            for (let i = 0; i < wageStandardData.data.length; i++) {
+              if (wageStandardData.data[i].id == data.overtime_type) {
+                wageStandardData.data[i].click = true
+              } else {
+                wageStandardData.data[i].click = false
+              }
+            }
             if (parseFloat(data.money) && parseFloat(data.overtime)) {
               wageStandardData.dayAddWork = parseFloat(data.money) / parseFloat(data.overtime) || 0;
             } else {
@@ -3478,9 +3554,9 @@ export default function userForeman() {
           identity: identity,
           worktime_define: data.work,
           overtime_type: data.type,
-          overtime_money: data.dayAddWork,
+          overtime_money: data.day,
           money: data.money,
-          overtime: data.day,
+          overtime: data.addWork,
           group_info: groupInfos,
           business_type: tabData.id,
         }
@@ -4292,7 +4368,6 @@ export default function userForeman() {
       }
     })
   }
-  console.log(wageStandard,'wageStandardData')
   return {
     model,
     project,

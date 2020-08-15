@@ -71,16 +71,12 @@ export default function Share() {
       identity,
       session
     };
-    console.log(params,'请求值')
     bkGetShareExcelDataAction(params).then(res => {
-      console.log(res,'分享返回')
       if(res.code === 200 ){
         setBusy(false)
         if(res.data.length>0){
           if (res.data.length > 0) {
-            console.log(newTime, '1');
             const date: any = newTime.split("-");
-            console.log(date[0], date[1], '111')
             let month;
             if (parseInt(date[1]) < 10) {
               month = date[1].slice(1, 2);
@@ -98,7 +94,6 @@ export default function Share() {
               }
               dayArr.push(obj);
             }
-            console.log(dayArr, 'dayArrdayArrdayArr')
             // 设置列表左边
             const defaultArr = [
               { id: 1, name: '工人', },

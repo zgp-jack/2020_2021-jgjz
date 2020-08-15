@@ -138,9 +138,7 @@ export default function AttendanceSheet() {
         }
         // 设置内容
         if (res.data.length > 0) {
-          console.log(newTime,'1');
           const date: any = newTime.split("-");
-          console.log(date[0],date[1],'111')
           let month;
           if (parseInt(date[1])<10){
             month = date[1].slice(1,2);
@@ -158,7 +156,6 @@ export default function AttendanceSheet() {
             }
             dayArr.push(obj);
           }
-          console.log(dayArr,'dayArrdayArrdayArr')
           // 设置列表左边
           const defaultArr = [
             { id: 1, name: '工人', },
@@ -892,23 +889,10 @@ export default function AttendanceSheet() {
   }
   useShareAppMessage(() => {
     let type = Taro.getStorageSync(Type);
-    let params = {
-      month: vals,
-      identity:type,
-    }
-    console.log(vals,'val')
     return {
-      // title: '记工记账',
       title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
       path: `/pages/share/index?time=${vals}&identity=${type}&session=${session}`
     }
-    // shareExcelDataAction(params).then(res=>{
-    //   console.log(res,'111')
-    //   if(res.code === 200){
-    //   }else{
-    //     Msg(res.msg);
-    //   }
-    // })
   })
   // 跳转
   const handleJump = () => {
