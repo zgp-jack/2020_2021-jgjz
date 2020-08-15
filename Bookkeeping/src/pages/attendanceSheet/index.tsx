@@ -128,6 +128,7 @@ export default function AttendanceSheet() {
           /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
           curDate.setDate(0);
           const day = curDate.getDate();
+          console.log(day,'day');
           //  设置第一列
           const dayArr: DateTyep[] = [];
           for (var k = 1; k <= day; k++) {
