@@ -149,27 +149,6 @@ export default function AttendanceSheet() {
           }
           const timeDate = new Date(parseInt(date[0]), month, 0);
           const day = timeDate.getDate();
-          // const num = getCurrentMonthDayNum(newTime);
-          // console.log(num,'num')
-          // console.log(newTime,'newTime')
-          // // const time = (newTime).replace('-', '/');
-          // // console.log(time,'111')
-          // let newDate = (newTime).replace(/-/g, '/')+'';
-          // console.log(newDate, 'neeData', typeof newDate)
-          // const curDate = new Date(newDate);
-          // // const date:any = newTime.split("-");
-          // // console.log(date,'11111')
-          // // console.log(new Date(date[0],data[1],0),'111')
-          // // console.log(curDate,'curDate')
-          // /* 获取当前月份 */
-          // const curMonth = curDate.getMonth();
-          // /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
-          // curDate.setMonth(curMonth + 1);
-          // /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
-          // curDate.setDate(0);
-          // const day = curDate.getDate();
-          // console.log(day,'day');
-          //  设置第一列
           const dayArr: DateTyep[] = [];
           for (var k = 1; k <= day; k++) {
             let obj: any = {
@@ -1053,34 +1032,6 @@ export default function AttendanceSheet() {
                 </View>
               ))}
             </View>
-            {/* <View>
-              {fixedTab.map(v => (
-                <View className='box-left'>
-                  {v.list.map(val => (
-                    <View className='box-border'>
-                      {!val.type && <View className={val.default ? 'box-list-default' : 'box-list'}>
-                        <View className='name'>{val.name}</View>
-                        {!val.default &&
-                          <View open-type="share">
-                            <Button className='blued' open-type="share">
-                              微信对工
-                        </Button>
-                          </View>
-                        }
-                      </View>}
-                      {val.type &&
-                        <View className='box-list-type'>
-                          {val.type.hour && <View className='box-list'>点工</View>}
-                          {val.type.work && <View className='box-list-bao'>包工<View>（按天记）</View></View>}
-                          {val.type.amount && <View className='box-list-bao'>包工<View>（按量记）</View></View>}
-                          {val.type.borrow && <View className='box-list'>借支</View>}
-                        </View>
-                      }
-                    </View>
-                  ))}
-                </View>
-              ))}
-            </View> */}
             {/* 右边 */}
             <View className='box-scroll'>
               {tebArr.map(v => (
