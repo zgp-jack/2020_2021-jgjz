@@ -2101,10 +2101,11 @@ export default function userForeman() {
     }
     data[type] = e.detail.value
     setModel({...data});
-    }else{
-      Msg('请输入正确内容')
-      return
     }
+    // else{
+    //   Msg('请输入正确内容')
+    //   return
+    // }
   }
   // 创建项目
   const handleAddProject = () => {

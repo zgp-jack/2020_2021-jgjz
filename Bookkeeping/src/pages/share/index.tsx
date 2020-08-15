@@ -9,7 +9,7 @@ import './index.scss'
 
 export default function Share() {
   const router: Taro.RouterInfo = useRouter();
-  const { time, identity, session } = router.params;
+  const { time = '2020-8', identity = '1', session ='011ab8PlsM7WTzXPYnncigTwqbH0JWM951krTpMkN9jjxHVxtqM4LrbUcLP0Id1cV2B1aqY' } = router.params;
   // 月份
   const [date, setDate] = useState('');
   // 年
