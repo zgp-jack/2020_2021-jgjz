@@ -2259,7 +2259,7 @@ export default function userForeman() {
     setTimeType(type)
     if (type === 1) {
       if (e.id === 4) {
-        setIsdisable(false)
+        setIsdisable(true)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
@@ -2346,7 +2346,7 @@ export default function userForeman() {
           return;
         }
       } else {
-        setIsdisable(false)
+        setIsdisable(true)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
@@ -2880,7 +2880,6 @@ export default function userForeman() {
     const item = JSON.parse(JSON.stringify(model));
     const workerItemArr = JSON.parse(JSON.stringify(workerItem));
     const types = Taro.getStorageSync(Type);
-    
     // return;
     // const times = 1/data.work * work_time;
     // 加班时间
@@ -3183,6 +3182,7 @@ export default function userForeman() {
                     } else {
                       dispatch(setWorker([]))
                       // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+                      setIsdisable(true);
                       setDisplay(true)
                     }
                   } else {
@@ -3234,6 +3234,7 @@ export default function userForeman() {
             } else {
               dispatch(setWorker([]))
               // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+              setIsdisable(true);
               setDisplay(true)
             }
           } else {
@@ -3262,6 +3263,7 @@ export default function userForeman() {
               getList()
             }, 800)
           } else {
+            setIsdisable(true);
             setDisplay(true)
           }
         } else {

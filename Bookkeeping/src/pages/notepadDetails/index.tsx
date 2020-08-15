@@ -1,9 +1,10 @@
-import Taro, { Config, useContext, useEffect, useState, useRouter } from '@tarojs/taro'
-import { bkDeleteNotePadAction } from '../../utils/request/index'
+import Taro, { Config, useContext, useDidShow, useState, useRouter } from '@tarojs/taro'
+import { bkGetNotePadAction, bkDeleteNotePadAction } from '../../utils/request/index';
 import Msg from '../../utils/msg'
 import { View, Image } from '@tarojs/components'
 import { useSelector } from '@tarojs/redux'
 import { context  } from '../notepad';
+import { UserInfo } from '../../config/store';
 import './index.scss'
 
 export default function NotepadDetails() {
@@ -13,11 +14,37 @@ export default function NotepadDetails() {
   let { id } = router.params;
   // 父级的值
   const { dataArr } = useContext(context);
+  // 系统繁忙
+  const [busy, setBusy] =useState<boolean>(false)
   // 内容
   const [data, setData] = useState<any>({
     view_images:[]
   })
-  useEffect(()=>{
+  useDidShow(()=>{
+    getnoteData(id);
+  })
+  const getnoteData = (id) => {
+    let userInfo = Taro.getStorageSync(UserInfo);
+    // const params = {
+    //   mid: userInfo.userId,
+    //   token: userInfo.token,
+    //   time: userInfo.tokenTime,
+    //   uuid: userInfo.uuid,
+    //   id
+    // }
+    bkGetNotePadAction({id}).then(res => {
+      if (res.code === 200) {
+        setBusy(false)
+        if(res.data.length>0){
+          datachange(res.data)
+        }
+      }
+    })
+    .catch((e)=>{
+      setBusy(true)
+    })
+  }
+  const datachange = (dataArr) => {
     if(dataArr){
       console.log(dataArr)
       for(let i =0;i<dataArr.length;i++){
@@ -36,24 +63,10 @@ export default function NotepadDetails() {
             }
           }
         }
-        // if(dataArr[i].id === id){
-        //   setData(dataArr[i])
-        //   console.log(dataArr,'xx')
-        //   console.log(dataArr[i].created_time,'xxxx')
-        //   const date = new Date(dataArr[i].created_time*1000).getDay();
-        //   // const time = new Date(dataArr[i].created_time);
-        //   // const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1) + '-' + addZero(time.getDate()) + '    ' + addZero(time.getHours()) + ':' + addZero(time.getMinutes());
-        //   const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
-        //   const week = weeks[date];
-        //   console.log(date,'datedatedate')
-        //   console.log(week,'xxx')
-        //   Taro.setNavigationBarTitle({
-        //     title: dataArr[i].created_time_string + '   ' + week,
-        //   })
-        // }
+        
       }
     }
-  })
+  }
   const addZero = (num) => {
     if (parseInt(num) < 10) {
       num = '0' + num;
@@ -112,24 +125,30 @@ export default function NotepadDetails() {
     })
   }
   return (
-    <View className='notepadDetails'>
-      <View className='time'>{data.newTime}</View>
-      <View className='content'>
-        {data.note}
-      </View>
-      <View className='imageList'>
-        {data.view_images && data.view_images.length>0&&data.view_images.map(v=>(
-          <View className='image'>
-            <Image className='image-image' src={v.httpurl} onClick={()=>{handleImage(v)}}/>
-          </View>
-        ))}
-      </View>
-      <View className='footer'>
-        <View className='footer-box'>
-        <View className='footer-del' onClick={handleDel}>删除</View>
-          <View className='footer-btn' onClick={() => userRouteJump(`/pages/addNotepad/index?id=${data.id}`)}>修改</View>
+    <View>
+      {busy && <View className='busyBox'>
+        <View>系统繁忙，刷新试试</View>
+        <View className='refresh' onClick={()=>getnoteData(id)}>刷新</View>
+        </View>}
+      {!busy && <View className='notepadDetails'>
+        <View className='time'>{data.newTime}</View>
+        <View className='content'>
+          {data.note}
         </View>
-      </View>
+        <View className='imageList'>
+          {data.view_images && data.view_images.length>0&&data.view_images.map(v=>(
+            <View className='image'>
+              <Image className='image-image' src={v.httpurl} onClick={()=>{handleImage(v)}}/>
+            </View>
+          ))}
+        </View>
+        <View className='footer'>
+          <View className='footer-box'>
+          <View className='footer-del' onClick={handleDel}>删除</View>
+            <View className='footer-btn' onClick={() => userRouteJump(`/pages/addNotepad/index?id=${data.id}`)}>修改</View>
+          </View>
+        </View>
+      </View>}
     </View>
   )
 }

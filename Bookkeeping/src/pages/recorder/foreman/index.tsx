@@ -153,6 +153,7 @@ export default function Foreman() {
         url: '/pages/flowingWater/index'
       })
     }
+    setIsdisable(false);
     setDisplay(false)
   }
   // 关闭选择单位
@@ -348,7 +349,10 @@ export default function Foreman() {
     }
     const data = JSON.parse(JSON.stringify(model));
     setModel({ ...data, groupName: '', teamName: '' })
-    setCreateProjectDisplay(true), setShow(false)
+    setCreateProjectDisplay(true), setShow(false);
+    setTimeout(() => {
+      setIsdisable(true);
+    },500);
   }
   const handleCurrent = ()=>{
     setIsdisable(true);
@@ -734,6 +738,7 @@ export default function Foreman() {
           <View className='publish-list-ditals'>
             <View>备注</View>
               {/* <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}> */}
+            {isdisable && <View className='textarea'>{model && model.details}</View>}
             <Textarea
               // focus={autoFocus}
               // autoFocus={autoFocus}
@@ -757,12 +762,12 @@ export default function Foreman() {
         </View>
         </View>
       </View>
-        <View className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay ? '' : 'foreman-footer'}>
-        <View className='foreman-footer-btn'>
-          <View className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</View>
-          <View className='footer-right' onClick={()=>handlePreservation(0)}>保存</View>
-        </View>
-      </View>
+      {!isdisable && <CoverView className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay ? '' : 'foreman-footer'}>
+        <CoverView className='foreman-footer-btn'>
+          <CoverView className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</CoverView>
+          <CoverView className='footer-right' onClick={()=>handlePreservation(0)}>保存</CoverView>
+        </CoverView>
+      </CoverView>}
       {/* 填写班组 */}
         <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={handleProjectClose}/>
       {/* 成功弹窗 */}
