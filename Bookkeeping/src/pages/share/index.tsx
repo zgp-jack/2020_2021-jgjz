@@ -62,14 +62,6 @@ export default function Share() {
   }
   useEffect(() => {
     Taro.setStorageSync(IsShare,true);
-    // // 进来获取本月数据
-    // const time = new Date();
-    // const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
-    // const years = time.getFullYear();
-    // const months = addZero(time.getMonth() + 1);
-    // setYear(years)
-    // setMonth(months)
-    // setDate(newTime);
     getList(time);
   }, [])
   // 获取数据
@@ -79,8 +71,9 @@ export default function Share() {
       identity,
       session
     };
-    
+    console.log(params,'请求值')
     bkGetShareExcelDataAction(params).then(res => {
+      console.log(res,'分享返回')
       if(res.code === 200 ){
         setBusy(false)
         if(res.data.length>0){
