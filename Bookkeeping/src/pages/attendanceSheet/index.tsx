@@ -551,64 +551,256 @@ export default function AttendanceSheet() {
           console.log(arr,'arrr');
           console.log(listArr,'11111')
           let sumHour, sumWork, sumBorrow, sumAmount;
-          for(let i =0;i<listArr.length;i++){
-            if(listArr[i].type){
-              if (listArr[i].type.amount){
-                sumAmount = true
-              }
-              if (listArr[i].type.hour) {
-                sumHour = true
-              }
-              if (listArr[i].type.work) {
-                sumWork = true
-              }
-              if (listArr[i].type.borrow) {
-                sumBorrow = true
-              }
-            }
-          }
+          // for(let i =0;i<listArr.length;i++){
+          //   if(listArr[i].type){
+          //     if (listArr[i].type.amount){
+          //       sumAmount = true
+          //     }
+          //     if (listArr[i].type.hour) {
+          //       sumHour = true
+          //     }
+          //     if (listArr[i].type.work) {
+          //       sumWork = true
+          //     }
+          //     if (listArr[i].type.borrow) {
+          //       sumBorrow = true
+          //     }
+          //   }
+          // }
           console.log(sumHour, sumWork, sumBorrow, sumAmount)
           let hourData: any[] = [], workData: any[] = [], amountData: any[] = [], borrowData:any[]=[];
           for(let i =0;i<res.data.length;i++){
             if(res.data[i].hour&&res.data[i].hour){
-              hourData.push(res.data[i].hour)
+              hourData.push(...res.data[i].hour)
             }
             if (res.data[i].work && res.data[i].work) {
-              workData.push(res.data[i].work)
+              workData.push(...res.data[i].work)
             }
             if (res.data[i].borrow && res.data[i].borrow) {
-              borrowData.push(res.data[i].borrow)
+              borrowData.push(...res.data[i].borrow)
             }
             if (res.data[i].amount && res.data[i].amount) {
-              amountData.push(res.data[i].amount)
+              amountData.push(...res.data[i].amount)
             }
           }
-          console.log(hourData,'sumHour');
-          console.log(workData,'sumWork');
-          console.log(amountData,'sumBorrow');
-          console.log(borrowData,'sumAmount');
+          let hourDataSum, amountDataSum, borrowDataSum, workDataSum;
           if (hourData && hourData.length>0){
-            hourData.reduce((resp, obj) => {
-              var originObj = resp.find(item => item.date_num === obj.date_num);
-              if (originObj) {
-                console.log(originObj,'originObj')
-                // console.log(obj.total.over_time,'obj.total.over_time');
-                // console.log(originObj.total.over_time,' originObj.total.over_time')
-                // originObj.total.over_time += obj.total.over_time;
-                // originObj.total.over_time += obj.total.over_time;
-              } else {
-                resp.push(obj)
+            let newArr:any[] = []
+            hourData.forEach((el:any) => {
+              const result = newArr.findIndex((ol:any) => { return el.date_num === ol.date_num })
+            if (result !== -1) {
+              newArr[result].total.over_time = parseFloat(newArr[result].total.over_time) + parseFloat(el.total.over_time)
+              newArr[result].total.work_time = parseFloat(newArr[result].total.work_time) + parseFloat(el.total.work_time)
+            } else {
+              newArr.push(el)
               }
-              return resp;
-            }, [])
-            console.log(hourData,'r111s')
+            })
+            hourDataSum = newArr;
+          }
+          if (amountData && amountData.length > 0) {
+            let newArr: any[] = []
+            amountData.forEach((el: any) => {
+              const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
+              if (result !== -1) {
+                newArr[result].list = [...newArr[result].list, ...el.list];
+              } else {
+                newArr.push(el)
+              }
+            })
+            amountDataSum = newArr;
+          }
+          if (borrowData && borrowData.length > 0) {
+            let newArr: any[] = []
+            borrowData.forEach((el: any) => {
+              const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
+              if (result !== -1) {
+                newArr[result].total.money = parseFloat(newArr[result].total.money) + parseFloat(el.total.money)
+              } else {
+                newArr.push(el)
+              }
+            })
+            borrowDataSum = newArr;
+          }
+          if (workData && workData.length > 0) {
+            let newArr: any[] = []
+            workData.forEach((el: any) => {
+              const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
+              if (result !== -1) {
+                newArr[result].total.over_time = parseFloat(newArr[result].total.over_time) + parseFloat(el.total.over_time)
+                newArr[result].total.work_time = parseFloat(newArr[result].total.work_time) + parseFloat(el.total.work_time)
+              } else {
+                newArr.push(el)
+              }
+            })
+            workDataSum = newArr;
+          }
+          console.log(hourDataSum, amountDataSum, borrowDataSum, workDataSum,'123123');
+          for(let i =0;i<dayArr.length;i++){
+            if (hourDataSum.length>0){
+              sumHour = true;
+              for (let j = 0; j < hourDataSum.length;j++){
+                if (hourDataSum[j].date_num == dayArr[i].name){
+                  console.log(hourDataSum[j],'hourDataSum[j]')
+                  let type = {
+                    hour: {
+                      work_time: hourDataSum[j].total.work_time,
+                      over_time: hourDataSum[j].total.over_time
+                    }
+                  }
+                  if (dayArr[i].type){
+                    const data = JSON.parse(JSON.stringify(dayArr[i]));
+                    data.type.hour = type.hour;
+                    dayArr[i] = data;
+                  }else{
+                    dayArr[i].type = type;
+                  }
+                }
+              }
+            }
+            if (workDataSum.length > 0) {
+              sumWork = true;
+              for (let j = 0; j < workDataSum.length; j++) {
+                if (workDataSum[j].date_num == dayArr[i].name) {
+                  console.log(workDataSum[j], 'workDataSum[j]')
+                  let type = {
+                    work: {
+                      work_time: workDataSum[j].total.work_time,
+                      over_time: workDataSum[j].total.over_time
+                    }
+                  }
+                  if (dayArr[i].type) {
+                    const data = JSON.parse(JSON.stringify(dayArr[i]));
+                    data.type.work = type.work;
+                    dayArr[i] = data;
+                  } else {
+                    dayArr[i].type = type;
+                  }
+                }
+              }
+            }
+            if (amountDataSum.length > 0) {
+              sumAmount = true
+              for (let j = 0; j < amountDataSum.length; j++) {
+                if (amountDataSum[j].date_num == dayArr[i].name) {
+                  console.log(amountDataSum[j], 'workDataSum[j]')
+                  let type = {
+                    amount: {
+                      num: amountDataSum[j].list.length,
+                    }
+                  }
+                  if (dayArr[i].type) {
+                    const data = JSON.parse(JSON.stringify(dayArr[i]));
+                    data.type.amount = type.amount;
+                    dayArr[i] = data;
+                  } else {
+                    dayArr[i].type = type;
+                  }
+                }
+              }
+            }
+            if (borrowDataSum.length > 0) {
+              sumBorrow = true;
+              for (let j = 0; j < borrowDataSum.length; j++) {
+                if (borrowDataSum[j].date_num == dayArr[i].name) {
+                  console.log(borrowDataSum[j].total.money, 'workDataSum[j]1111')
+                  let type = {
+                    borrow: {
+                      borrow: borrowDataSum[j].total.money
+                    }
+                  }
+                  if (dayArr[i].type) {
+                    const data = JSON.parse(JSON.stringify(dayArr[i]));
+                    data.type.borrow = type.borrow;
+                    console.log(type.borrow,'borrowborrow')
+                    dayArr[i] = data;
+                  } else {
+                    console.log(type,'dnakjdbk')
+                    dayArr[i].type = type;
+                  }
+                }
+              }
+            }
+          }
+          let sum ={
+            list: dayArr,
+            type:{
+              hour: sumHour,
+              borrow: sumBorrow,
+              amount: sumAmount,
+              work: sumWork,
+            }
+          }
+          let amountDataSumNum;
+          let lengthArr:any[]=[];
+          // 按量
+          if (amountDataSum&&amountDataSum.length>0){
+            for (let o = 0; o < amountDataSum.length;o++){
+              for (let b = 0; b < amountDataSum[o].list.length;b++){
+                lengthArr.push(amountDataSum[o].list[b])
+              }
+            }
+          }
+          amountDataSumNum = lengthArr.length;
+          // 按天
+          let hourWorkNum=0, hourOverNum=0;
+          if (hourDataSum && hourDataSum.length > 0) {
+            console.log(hourDataSum, 'hourDataSum1')
+            for (let o = 0; o < hourDataSum.length; o++) {
+              hourWorkNum += parseFloat(hourDataSum[o].total.work_time);
+              hourOverNum += parseFloat(hourDataSum[o].total.over_time);
+            }
+          }
+          // 记工
+          let workWorkNum = 0, workOverNum = 0;
+          if (workDataSum && workDataSum.length > 0) {
+            console.log(workDataSum, 'workDataSum1')
+            for (let o = 0; o < workDataSum.length; o++) {
+              workWorkNum += parseFloat(workDataSum[o].total.work_time);
+              workOverNum += parseFloat(workDataSum[o].total.over_time);
+            }
+          }
+          // 借支
+          let borrowNum = 0;
+          if (borrowDataSum && borrowDataSum.length > 0) {
+            console.log(borrowDataSum, 'borrowDataSum1')
+            for (let o = 0; o < borrowDataSum.length; o++) {
+              borrowNum += parseFloat(borrowDataSum[o].total.money);
+            }
+          }
+          console.log(hourWorkNum, hourOverNum,'1111')
+          let sumLeft = [
+            { id: 1, name: '总计' },
+            {
+              id: 2, type: {
+                hour: sumHour,
+                borrow: sumBorrow,
+                amount: sumAmount,
+                work: sumWork,
+              }
+            },
+            {
+              amount: { num: amountDataSumNum },
+              borrow: { borrow: borrowNum },
+              hour: { work_time: hourWorkNum, over_time: hourOverNum },
+              work: { work_time: workWorkNum, over_time: workOverNum },
+            }
+          ]
+          console.log(sum,'sumLeft')
+          let obj = {
+            list: sumLeft,
+            type: {
+              hour: sumHour,
+              borrow: sumBorrow,
+              amount: sumAmount,
+              work: sumWork,
+            },
           }
           // 本月统计
           // 获取身份
           let type = Taro.getStorageSync(Type);
           if (type === 1) {
-            setFixedTab([...leftArr, ...arr]);
-            setTabArr([...rightArr, ...listArr]);
+            setFixedTab([...leftArr, ...arr, obj]);
+            setTabArr([...rightArr, ...listArr, sum]);
           } else {
             setFixedTab([...leftArr, ...arr]);
             setTabArr([...rightArr, ...listArr]);
