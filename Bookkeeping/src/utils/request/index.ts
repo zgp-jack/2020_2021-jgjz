@@ -82,7 +82,8 @@ export function doRequestAction(reqData: Request): Promise<any> {
   }
   let data = { ...req.data, wechat_token: 'jigong' }
   // 获取用户信息
-  let userInfo: User = Taro.getStorageSync(UserInfo)
+  let userInfo: User = Taro.getStorageSync(UserInfo);
+  console.log(userInfo,'userInfouserInfo')
   // 获取存入的公用内容
   let type: User = Taro.getStorageSync(Type)
   // const useSelectorItem = useSelector<any, any>(state => state)
