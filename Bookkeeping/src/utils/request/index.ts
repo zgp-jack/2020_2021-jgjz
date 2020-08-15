@@ -85,6 +85,7 @@ export function doRequestAction(reqData: Request): Promise<any> {
   let userInfo: User = Taro.getStorageSync(UserInfo);
   let IsShareInfo = Taro.getStorageSync(IsShare);
   console.log(userInfo,'userInfo')
+  console.log(IsShareInfo,'IsShareInfo')
   // 获取存入的公用内容
   let type: User = Taro.getStorageSync(Type)
   // const useSelectorItem = useSelector<any, any>(state => state)

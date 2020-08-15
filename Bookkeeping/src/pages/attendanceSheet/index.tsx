@@ -63,6 +63,8 @@ export default function AttendanceSheet() {
   const [rightTime, setrightTime] = useState<boolean>(false)
   //判断是否追加
   const [additional, setAdditional] = useState<number>(0)
+  // 分享session 
+  const [session, setSession] = useState<string>('')
   // 弹框内容
   const [model, setModel] = useState<any>({
     groupName: '',
@@ -100,20 +102,24 @@ export default function AttendanceSheet() {
     // getList(newTime)
     getDateList(times);
   }, [])
-  // 获取月份
-  // const getCurrentMonthDayNum =(time:any)=>{
-  //   let today = new Date(time);
-  //   let dayAllThisMonth = 31;
-  //   if (today.getMonth() + 1 != 12) {
-  //     let currentMonthStartDate:any = new Date(today.getFullYear() + "/" + (today.getMonth() + 1) + "/01"); // 本月1号的日期
-  //     let nextMonthStartDate:any = new Date(today.getFullYear() + "/" + (today.getMonth() + 2) + "/01"); // 下个月1号的日期
-  //     dayAllThisMonth = (nextMonthStartDate - currentMonthStartDate) / (24 * 3600 * 1000);
-  //   }
-
-  //   return dayAllThisMonth;
-  // }
+  // 获取分享考勤表url
   // 获取数据
+  const getUrl = (newTime)=>{
+    let type = Taro.getStorageSync(Type);
+    let params = {
+      month: newTime,
+      identity: type,
+    }
+    shareExcelDataAction(params).then(res=>{
+      if(res.code === 200){
+        setSession(res.data);
+      }else{
+        Msg(res.msg);
+      }
+    })
+  }
   const getDateList = (newTime: string) => {
+    getUrl(newTime);
     let params = {
       date: newTime
     };
@@ -910,18 +916,18 @@ export default function AttendanceSheet() {
       month: vals,
       identity:type,
     }
-    shareExcelDataAction(params).then(res=>{
-      console.log(res,'111')
-      if(res.code === 200){
-        return {
-          // title: '记工记账',
-          title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
-          path: `/pages/share/index?time=${month}&identity=${type}&session=${res.data}`
-        }
-      }else{
-        Msg(res.msg);
-      }
-    })
+    return {
+      // title: '记工记账',
+      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      path: `/pages/share/index?time=${month}&identity=${type}&session=${session}`
+    }
+    // shareExcelDataAction(params).then(res=>{
+    //   console.log(res,'111')
+    //   if(res.code === 200){
+    //   }else{
+    //     Msg(res.msg);
+    //   }
+    // })
   })
   // 跳转
   const handleJump = () => {
