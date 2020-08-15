@@ -66,7 +66,7 @@ export const updateBusinessUrl = REQUESTURL + '/bk-bookkeeping/update-business/'
 // 给组里天加工人
 export const bkAddWorkerInGroupUrl = REQUESTURL + '/bk-worker/add-worker-in-group/'
 // 分享获取考勤表
-export const bkGetShareExcelDataUrl = REQUESTURL + '/bk-bookkeeping/get-share-excel-data';
+export const bkGetShareExcelDataUrl = REQUESTURL + '/bk-bookkeeping/get-share-excel-data/';
 // 验证码
 export const bkGetCodeUrl = REQUESTURL + 'bk-index/get-code/'
 // 设置班组长
