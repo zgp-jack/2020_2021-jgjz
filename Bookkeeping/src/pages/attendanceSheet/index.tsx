@@ -138,6 +138,7 @@ export default function AttendanceSheet() {
             }
             dayArr.push(obj);
           }
+          console.log(dayArr,'dayArrdayArrdayArr')
           // 设置列表左边
           const defaultArr = [
             { id: 1, name: '工人', },
@@ -544,8 +545,6 @@ export default function AttendanceSheet() {
               listArr.push(dayObj);
             };
           }
-          console.log(arr,'arrr');
-          console.log(listArr,'11111')
           let sumHour, sumWork, sumBorrow, sumAmount;
           let hourData: any[] = [], workData: any[] = [], amountData: any[] = [], borrowData:any[]=[];
           for(let i =0;i<res.data.length;i++){
@@ -613,25 +612,24 @@ export default function AttendanceSheet() {
             })
             workDataSum = newArr;
           }
-          console.log(hourDataSum, amountDataSum, borrowDataSum, workDataSum,'123123');
-          for(let i =0;i<dayArr.length;i++){
+          const dayArrList = JSON.parse(JSON.stringify(dayArr));
+          for(let i =0;i<dayArrList.length;i++){
             if (hourDataSum&&hourDataSum.length>0){
               sumHour = true;
               for (let j = 0; j < hourDataSum.length;j++){
-                if (hourDataSum[j].date_num == dayArr[i].name){
-                  console.log(hourDataSum[j],'hourDataSum[j]')
+                if (hourDataSum[j].date_num == dayArrList[i].name){
                   let type = {
                     hour: {
                       work_time: hourDataSum[j].total.work_time,
                       over_time: hourDataSum[j].total.over_time
                     }
                   }
-                  if (dayArr[i].type){
-                    const data = JSON.parse(JSON.stringify(dayArr[i]));
+                  if (dayArrList[i].type){
+                    const data = JSON.parse(JSON.stringify(dayArrList[i]));
                     data.type.hour = type.hour;
-                    dayArr[i] = data;
+                    dayArrList[i] = data;
                   }else{
-                    dayArr[i].type = type;
+                    dayArrList[i].type = type;
                   }
                 }
               }
@@ -639,20 +637,19 @@ export default function AttendanceSheet() {
             if (workDataSum&&workDataSum.length > 0) {
               sumWork = true;
               for (let j = 0; j < workDataSum.length; j++) {
-                if (workDataSum[j].date_num == dayArr[i].name) {
-                  console.log(workDataSum[j], 'workDataSum[j]')
+                if (workDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
                     work: {
                       work_time: workDataSum[j].total.work_time,
                       over_time: workDataSum[j].total.over_time
                     }
                   }
-                  if (dayArr[i].type) {
-                    const data = JSON.parse(JSON.stringify(dayArr[i]));
+                  if (dayArrList[i].type) {
+                    const data = JSON.parse(JSON.stringify(dayArrList[i]));
                     data.type.work = type.work;
-                    dayArr[i] = data;
+                    dayArrList[i] = data;
                   } else {
-                    dayArr[i].type = type;
+                    dayArrList[i].type = type;
                   }
                 }
               }
@@ -660,19 +657,18 @@ export default function AttendanceSheet() {
             if (amountDataSum&&amountDataSum.length > 0) {
               sumAmount = true
               for (let j = 0; j < amountDataSum.length; j++) {
-                if (amountDataSum[j].date_num == dayArr[i].name) {
-                  console.log(amountDataSum[j], 'workDataSum[j]')
+                if (amountDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
                     amount: {
                       num: amountDataSum[j].list.length,
                     }
                   }
-                  if (dayArr[i].type) {
-                    const data = JSON.parse(JSON.stringify(dayArr[i]));
+                  if (dayArrList[i].type) {
+                    const data = JSON.parse(JSON.stringify(dayArrList[i]));
                     data.type.amount = type.amount;
-                    dayArr[i] = data;
+                    dayArrList[i] = data;
                   } else {
-                    dayArr[i].type = type;
+                    dayArrList[i].type = type;
                   }
                 }
               }
@@ -680,28 +676,25 @@ export default function AttendanceSheet() {
             if (borrowDataSum&&borrowDataSum.length > 0) {
               sumBorrow = true;
               for (let j = 0; j < borrowDataSum.length; j++) {
-                if (borrowDataSum[j].date_num == dayArr[i].name) {
-                  console.log(borrowDataSum[j].total.money, 'workDataSum[j]1111')
+                if (borrowDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
                     borrow: {
                       borrow: borrowDataSum[j].total.money
                     }
                   }
-                  if (dayArr[i].type) {
-                    const data = JSON.parse(JSON.stringify(dayArr[i]));
+                  if (dayArrList[i].type) {
+                    const data = JSON.parse(JSON.stringify(dayArrList[i]));
                     data.type.borrow = type.borrow;
-                    console.log(type.borrow,'borrowborrow')
-                    dayArr[i] = data;
+                    dayArrList[i] = data;
                   } else {
-                    console.log(type,'dnakjdbk')
-                    dayArr[i].type = type;
+                    dayArrList[i].type = type;
                   }
                 }
               }
             }
           }
           let sum ={
-            list: dayArr,
+            list: dayArrList,
             type:{
               hour: sumHour,
               borrow: sumBorrow,
@@ -723,7 +716,6 @@ export default function AttendanceSheet() {
           // 按天
           let hourWorkNum=0, hourOverNum=0;
           if (hourDataSum && hourDataSum.length > 0) {
-            console.log(hourDataSum, 'hourDataSum1')
             for (let o = 0; o < hourDataSum.length; o++) {
               hourWorkNum += parseFloat(hourDataSum[o].total.work_time);
               hourOverNum += parseFloat(hourDataSum[o].total.over_time);
@@ -732,7 +724,6 @@ export default function AttendanceSheet() {
           // 记工
           let workWorkNum = 0, workOverNum = 0;
           if (workDataSum && workDataSum.length > 0) {
-            console.log(workDataSum, 'workDataSum1')
             for (let o = 0; o < workDataSum.length; o++) {
               workWorkNum += parseFloat(workDataSum[o].total.work_time);
               workOverNum += parseFloat(workDataSum[o].total.over_time);
@@ -741,12 +732,10 @@ export default function AttendanceSheet() {
           // 借支
           let borrowNum = 0;
           if (borrowDataSum && borrowDataSum.length > 0) {
-            console.log(borrowDataSum, 'borrowDataSum1')
             for (let o = 0; o < borrowDataSum.length; o++) {
               borrowNum += parseFloat(borrowDataSum[o].total.money);
             }
           }
-          console.log(hourWorkNum, hourOverNum,'1111')
           // 等于0就相当于没有记
           let amount;
           if (amountDataSumNum == 0 ){
@@ -793,9 +782,6 @@ export default function AttendanceSheet() {
               work,
             }
           ]
-          console.log(sumLeft,'sumLeft1')
-          console.log(sumHour, sumWork, sumBorrow, sumAmount)
-          console.log(sum,'sumLeft')
           let obj = {
             list: sumLeft,
             type: {
@@ -805,10 +791,6 @@ export default function AttendanceSheet() {
               work: sumWork,
             },
           }
-          console.log(obj,'obj');
-          console.log(sum,'sum')
-          console.log([...leftArr, ...arr, obj],'111111');
-          console.log([[...rightArr, ...listArr, sum]],'[...rightArr, ...listArr, sum]')
           // 本月统计
           // 获取身份
           let type = Taro.getStorageSync(Type);
