@@ -101,17 +101,17 @@ export default function AttendanceSheet() {
     getDateList(times);
   }, [])
   // 获取月份
-  const getCurrentMonthDayNum =(time:any)=>{
-    let today = new Date(time);
-    let dayAllThisMonth = 31;
-    if (today.getMonth() + 1 != 12) {
-      let currentMonthStartDate:any = new Date(today.getFullYear() + "/" + (today.getMonth() + 1) + "/01"); // 本月1号的日期
-      let nextMonthStartDate:any = new Date(today.getFullYear() + "/" + (today.getMonth() + 2) + "/01"); // 下个月1号的日期
-      dayAllThisMonth = (nextMonthStartDate - currentMonthStartDate) / (24 * 3600 * 1000);
-    }
+  // const getCurrentMonthDayNum =(time:any)=>{
+  //   let today = new Date(time);
+  //   let dayAllThisMonth = 31;
+  //   if (today.getMonth() + 1 != 12) {
+  //     let currentMonthStartDate:any = new Date(today.getFullYear() + "/" + (today.getMonth() + 1) + "/01"); // 本月1号的日期
+  //     let nextMonthStartDate:any = new Date(today.getFullYear() + "/" + (today.getMonth() + 2) + "/01"); // 下个月1号的日期
+  //     dayAllThisMonth = (nextMonthStartDate - currentMonthStartDate) / (24 * 3600 * 1000);
+  //   }
 
-    return dayAllThisMonth;
-  }
+  //   return dayAllThisMonth;
+  // }
   // 获取数据
   const getDateList = (newTime: string) => {
     let params = {
@@ -132,29 +132,29 @@ export default function AttendanceSheet() {
         }
         // 设置内容
         if (res.data.length > 0) {
-          const num = getCurrentMonthDayNum(newTime);
-          console.log(num,'num')
+          // const num = getCurrentMonthDayNum(newTime);
+          // console.log(num,'num')
           // console.log(newTime,'newTime')
           // // const time = (newTime).replace('-', '/');
           // // console.log(time,'111')
-          // let newDate = (newTime).replace(/-/g, '/');
-          // console.log(newDate,'neeData')
-          // const curDate = new Date(newDate);
-          // const date:any = newTime.split("-");
-          // console.log(date,'11111')
-          // console.log(new Date(date[0],data[1],0),'111')
-          // console.log(curDate,'curDate')
-          // /* 获取当前月份 */
-          // const curMonth = curDate.getMonth();
-          // /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
-          // curDate.setMonth(curMonth + 1);
-          // /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
-          // curDate.setDate(0);
-          // const day = curDate.getDate();
-          // console.log(day,'day');
+          let newDate = (newTime).replace(/-/g, '/')+'';
+          console.log(newDate, 'neeData', typeof newDate)
+          const curDate = new Date(newDate);
+          const date:any = newTime.split("-");
+          console.log(date,'11111')
+          console.log(new Date(date[0],data[1],0),'111')
+          console.log(curDate,'curDate')
+          /* 获取当前月份 */
+          const curMonth = curDate.getMonth();
+          /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
+          curDate.setMonth(curMonth + 1);
+          /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
+          curDate.setDate(0);
+          const day = curDate.getDate();
+          console.log(day,'day');
           //  设置第一列
           const dayArr: DateTyep[] = [];
-          for (var k = 1; k <= num; k++) {
+          for (var k = 1; k <= day; k++) {
             let obj: any = {
               id: k,
               name: k,
