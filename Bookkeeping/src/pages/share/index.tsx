@@ -1,6 +1,7 @@
 import Taro, { Config, useEffect, useState, useRouter } from '@tarojs/taro'
 import { View, Text, Picker } from '@tarojs/components'
 import CalendarModal from '../../components/attendanceModal';
+import { IsShare  } from '../../config/store';
 import { bkGetShareExcelDataAction, shareExcelDataAction } from '../../utils/request/index';
 import Msg from '../../utils/msg';
 import './index.scss'
@@ -9,7 +10,7 @@ import './index.scss'
 
 export default function Share() {
   const router: Taro.RouterInfo = useRouter();
-  const { time = '2020-8', identity = '1', session ='011ab8PlsM7WTzXPYnncigTwqbH0JWM951krTpMkN9jjxHVxtqM4LrbUcLP0Id1cV2B1aqY' } = router.params;
+  const { time, identity, session } = router.params;
   // 月份
   const [date, setDate] = useState('');
   // 年
@@ -35,6 +36,7 @@ export default function Share() {
     return num;
   }
   useEffect(() => {
+    Taro.setStorageSync(IsShare,true);
     // // 进来获取本月数据
     // const time = new Date();
     // const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);

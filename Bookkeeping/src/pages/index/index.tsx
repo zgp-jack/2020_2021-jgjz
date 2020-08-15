@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res,IsShare } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
@@ -301,6 +301,7 @@ export default function Index() {
     }
   }
   useDidShow(() => {
+    Taro.setStorageSync(IsShare,false)
     // setHidden(true)
     // setCloseImage(false)
     setShow(true);

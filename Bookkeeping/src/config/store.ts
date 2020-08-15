@@ -25,3 +25,5 @@ export const IsLoginType:string = 'isLoginType'
 export const Tips: string = 'tips'
 // 小程序跳转
 export const Res:string = 'res';
+// 进入分享考勤表
+export const IsShare:string = 'IsShare';

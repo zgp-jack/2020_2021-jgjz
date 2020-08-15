@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import Msg from '../msg'
-import { UserInfo, Type, MidData } from '../../config/store'
+import { UserInfo, Type, MidData, IsShare} from '../../config/store'
 import { User } from '../../reducers/user'
 import * as api from '../api'
 import * as Inter from './index.d'
@@ -83,7 +83,8 @@ export function doRequestAction(reqData: Request): Promise<any> {
   let data = { ...req.data, wechat_token: 'jigong' }
   // 获取用户信息
   let userInfo: User = Taro.getStorageSync(UserInfo);
-  console.log(userInfo,'userInfouserInfo')
+  let IsShareInfo = Taro.getStorageSync(IsShare);
+  console.log(userInfo,'userInfo')
   // 获取存入的公用内容
   let type: User = Taro.getStorageSync(Type)
   // const useSelectorItem = useSelector<any, any>(state => state)
@@ -94,11 +95,13 @@ export function doRequestAction(reqData: Request): Promise<any> {
     data.tokenTime = userInfo.tokenTime
     data.identity = type
   }else{
-    data.userId = userInfo.userId
-    data.token = userInfo.token
-    data.tokenTime = userInfo.tokenTime
-    data.identity = type
-  }
+    if (!IsShareInfo){
+      data.userId = userInfo.userId
+      data.token = userInfo.token
+      data.tokenTime = userInfo.tokenTime
+      data.identity = type
+      }
+    }
   }
   return new Promise((resolve, reject) => {
     Taro.request({
