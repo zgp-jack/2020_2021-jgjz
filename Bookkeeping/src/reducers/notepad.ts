@@ -14,7 +14,7 @@ export default function msg(state:any = DEFAULT_STATE, action: ACTIONTYPE) {
     case GET:
       return state
     case SET:
-      return { ...state, ...action.data }
+      return { ...action.data }
     default:
       return state
   }

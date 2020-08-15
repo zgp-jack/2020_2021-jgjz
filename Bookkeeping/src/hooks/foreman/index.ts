@@ -297,6 +297,8 @@ export default function userForeman() {
   const [clickTime, setClickTime] = useState<any>()
   // 获取后台传的今天的日期
   const [toDayString, setToDayString] = useState<string>('');
+  // 备注是否disable
+  const [isdisable,setIsdisable] = useState<boolean>(false)
   // const [noData, setNoData] = useState<boolean>(false)
   // 刷新
   //农历1949-2100年查询表
@@ -2137,6 +2139,7 @@ export default function userForeman() {
         Msg(res.msg);
         return;
       }
+      setIsdisable(false);
       setProject(false);
       // let data = JSON.parse(JSON.stringify(model));
       // data.name = model.groupName;
@@ -2256,6 +2259,7 @@ export default function userForeman() {
     setTimeType(type)
     if (type === 1) {
       if (e.id === 4) {
+        setIsdisable(false)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
@@ -2342,6 +2346,7 @@ export default function userForeman() {
           return;
         }
       } else {
+        setIsdisable(false)
         setWorkOvertimeDisplay(false)
         setWorkingHoursDisplay(true);
         return;
@@ -2431,6 +2436,7 @@ export default function userForeman() {
     }
     setWorkingHoursDisplay(false);
     setWorkOvertimeDisplay(true);
+    setIsdisable(true)
   }
   // 确认时间选择
   const handleWorkOvertimeOk = () => {
@@ -2569,11 +2575,13 @@ export default function userForeman() {
       let num = isNaN(total) ? 0 : total;
       setModel({ ...model, workersWages: num, duration: title });
       setWorkOvertimeDisplay(false);
+      setIsdisable(false)
       return;
     }
     
     setModel({ ...model, duration: title })
     setWorkOvertimeDisplay(false);
+    setIsdisable(false)
   }
   // 选择单位
   const handleQuantities = (val) => {
@@ -2583,6 +2591,7 @@ export default function userForeman() {
         if (v.click) {
           setUnit(v.name)
           setQuantitiesDisplay(false)
+          setIsdisable(false)
         }
       } else {
         v.click = false
@@ -2769,6 +2778,7 @@ export default function userForeman() {
     setAddStandard(1);
     setWagesModalDisplay(false);
     setWageStandardDisplay(true);
+    setIsdisable(true)
   }
   // 打开工资标准
   const handleOpenWagesModal = (v?: any) => {
@@ -2799,6 +2809,7 @@ export default function userForeman() {
     if (recorderType === 3 || (recorderType == 2 && contractor == 1)) {
       return;
     }
+    setIsdisable(true);
     setWagesModalDisplay(true);
     //把工资标准的内容设置为新的s
     const data = JSON.parse(JSON.stringify(workerItem));
@@ -3514,6 +3525,7 @@ export default function userForeman() {
       setWageStandard(wageStandard);
       setModel({ ...model, workersWages: num });
       setWageStandardDisplay(false);
+      setIsdisable(false)
       return;
     }
     if (addStandard === 1) {
@@ -3560,6 +3572,7 @@ export default function userForeman() {
           bkGetWorkerWage();
           setWagesModalDisplay(true);
           setWageStandardDisplay(false);
+          setIsdisable(false)
         } else {
           Msg(res.msg);
         }
@@ -3597,6 +3610,7 @@ export default function userForeman() {
         }
         setWagesModalDisplay(true);
         setWageStandardDisplay(false);
+        setIsdisable(false)
       })
     }
   }
@@ -3622,6 +3636,7 @@ export default function userForeman() {
     //判断不是新增
     setAddStandard(0)
     setWageStandardDisplay(true);
+    setIsdisable(true);
     setWagesModalDisplay(false);
     const data = JSON.parse(JSON.stringify(wageStandard));
     data.work = v.worktime_define;
@@ -3663,6 +3678,7 @@ export default function userForeman() {
         bkGetWorkerWage();
         setWagesModalDisplay(true);
         setWageStandardDisplay(false);
+        setIsdisable(false)
       } else {
         Msg(res.msg);
       }
@@ -3788,6 +3804,7 @@ export default function userForeman() {
             }
           }
         }
+        setIsdisable(false)
         setWorkerItem(data)
         bkGetWorkerWage();
         setWagesModalDisplay(false);
@@ -3978,6 +3995,7 @@ export default function userForeman() {
   // 长按
   const handleLongClick = () => {
     setWageStandardDisplay(true)
+    setIsdisable(true)
   }
   // 全选
   const handleAllClick = () => {
@@ -4124,6 +4142,7 @@ export default function userForeman() {
     // setCalendarDays(calendar);
     // setClickData([]);
     setCalendarModalDisplay(false);
+    setIsdisable(false)
   }
   // 日历切换时间
   const handleChangeTime = (type: number) => {
@@ -4171,6 +4190,7 @@ export default function userForeman() {
     setTimeData(data);
     // 关闭
     setCalendarModalDisplay(false);
+    setIsdisable(false)
     // }
   }
   // 左
@@ -4196,6 +4216,7 @@ export default function userForeman() {
   // 工人长按
   const onLongPress = () => {
     setWageStandardDisplay(true)
+    setIsdisable(true)
   }
   // 切换类型
   const handleClckTabber = (v) => {
@@ -4414,5 +4435,7 @@ export default function userForeman() {
     setCacheWage,
     setWageStandard,
     setTab,
+    isdisable,
+    setIsdisable
   }
 }

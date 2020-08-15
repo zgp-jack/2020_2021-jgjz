@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Earliest_month, Tips, Res } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
+import { setNotepad  } from '../../actions/notepad'
 import { setWorker } from '../../actions/workerList'
 import { bkIndexTypeData } from '../../utils/request/index.d'
 import Auth from '../../components/auth';
@@ -360,6 +361,7 @@ export default function Index() {
     // 清楚日历缓存
     dispatch(setClickTIme([]))
     //清楚
+    dispatch(setNotepad({code:200,data:[],msg:'ok'}))
     dispatch(setWorker([]))
     dispatch(setFlowingWater([]))
     // 判断有没有用户信息没有就显示
@@ -509,7 +511,6 @@ export default function Index() {
           if (res.data.earliest_month) {
             setStart(yeartime+'-'+res.data.this_year_business_month);
             if(!e){
-              Taro.setStorageSync(Earliest_month,res.data.earliest_month);
               if(Number(res.data.this_year_business_month)==montime){
                 setleftTime(false);
                 setrightTime(false);
@@ -1018,7 +1019,7 @@ export default function Index() {
               <View className='eventList-icon'><Image className='eventList-icon-image' src={`${IMGCDNURL}recorder.png`} /></View>
               <View>记工流水</View>
             </View>
-            <View className='' onClick={() => handleJump('/pages/attendanceSheet/index')}>
+            <View className='' onClick={() => handleJump(`/pages/attendanceSheet/index?timeMon=${vals}`)}>
               <View className='eventList-icon-attendance'><Image className='eventList-icon-attendance-image' src={`${IMGCDNURL}attendance.png`} /></View>
               <View className='' >考勤表</View>
             </View>

@@ -235,7 +235,8 @@ export interface bkGetWorker extends Result{
 
 // 考勤表
 export interface bkgetExcelData extends Result{
-  data: bkgetExcelDataList[]
+  data: bkgetExcelDataList[],
+  month: string
 }
 interface bkgetExcelDataList {
   amount: bkgetExcelDataListArr[],

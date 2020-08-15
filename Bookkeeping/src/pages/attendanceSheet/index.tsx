@@ -6,7 +6,7 @@ import Msg from '../../utils/msg';
 import { IMGCDNURL } from '../../config';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { Type, Earliest_month } from '../../config/store'
+import { Type } from '../../config/store'
 import './index.scss'
 
 interface DateTyep {
@@ -34,6 +34,8 @@ interface DateTyep {
   work: boolean,
 }
 export default function AttendanceSheet() {
+  const router: Taro.RouterInfo = useRouter();
+  const { timeMon } = router.params;
   // 月份
   const [date, setDate] = useState('');
   // 年
@@ -49,6 +51,8 @@ export default function AttendanceSheet() {
   const [createProjectDisplay, setCreateProjectDisplay] = useState<boolean>(false)
   // 项目班组
   const [project, setProject] = useState<boolean>(false)
+   // Picker 的value
+   const [vals,setVals] = useState<string>('');
   // 日期需要的开始时间
   const [datestart, setDatestart] = useState<string>()
   // 日期需要的结束时间
@@ -88,31 +92,13 @@ export default function AttendanceSheet() {
     // 进来获取本月数据
     const time = new Date();
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
-    const years = time.getFullYear();
-    const months = addZero(time.getMonth() + 1);
-    let earliest_month = Taro.getStorageSync(Earliest_month);
-    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
-    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    setdateEnd(yeartime + '-' + montime);
-    if (!earliest_month) {
-      setleftTime(false);
-      setrightTime(false);
-      setDatestart(yeartime + '-' + montime);
-    } else {
-      setDatestart(earliest_month);
-      if (Number(earliest_month.split('-')[0]) == yeartime) {
-        setrightTime(false);
-        Number(earliest_month.split('-')[1]) < montime ? setleftTime(true) : setleftTime(false);
-      } else if (Number(earliest_month.split('-')[0]) < yeartime) {
-        setrightTime(false);
-        setleftTime(true);
-      }
-    }
-    setYear(years)
-    setMonth(months)
+    const times = timeMon || newTime;
+    setVals(times);
+    setYear(times.split('-')[0]);
+    setMonth(times.split('-')[1]);
     // setDate(newTime);
     // getList(newTime)
-    getDateList(newTime);
+    getDateList(times);
   }, [])
   // 获取数据
   const getDateList = (newTime: string) => {
@@ -122,6 +108,16 @@ export default function AttendanceSheet() {
     bkgetExcelDataAction(params).then(res => {
       if (res.code === 200) {
         setBusy(false)
+        let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+        let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+        setdateEnd(yeartime+'-'+montime);
+        if(!res.month){
+          setDatestart(yeartime+'-'+montime);
+          changeIcon(newTime,res.month)
+        }else{
+          setDatestart(res.month);
+          changeIcon(newTime,res.month)
+        }
         // 设置内容
         if (res.data.length > 0) {
           const curDate = new Date(newTime);
@@ -827,11 +823,10 @@ export default function AttendanceSheet() {
     setTabArr([]);
     setYear(e.detail.value.slice(0, 4));
     setMonth(e.detail.value.slice(5, 8));
-    changeIcon(e.detail.value);
     getDateList(time);
   }
-  const changeIcon = (e) => {
-    let earliest_month = Taro.getStorageSync(Earliest_month);
+  const changeIcon = (e,first_business_month) => {
+    let earliest_month = first_business_month;
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     if (!earliest_month) {
@@ -935,8 +930,10 @@ export default function AttendanceSheet() {
           <Picker
             mode='date'
             fields='month'
+            start={datestart}
+            end={dateEnd}
             onChange={(e) => handleTime(e)}
-            value={''}
+            value={vals}
           >
             <View>{year}年
               <Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' style={{ visibility: leftTime ? 'visible' : 'hidden' }} />

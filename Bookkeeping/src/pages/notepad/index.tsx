@@ -5,7 +5,7 @@ import { UserInfo } from '../../config/store';
 import { bkGetNotePadAction, bkDeleteNotePadAction } from '../../utils/request/index';
 import Msg, { getdate, timestampToTime } from '../../utils/msg'
 import { bkGetNotePadTypeData } from '../../utils/request/index.d'
-import { useDispatch } from '@tarojs/redux'
+import { useDispatch, useSelector } from '@tarojs/redux'
 import { IMGCDNURL  } from '../../config';
 import { setNotepad  } from '../../actions/notepad'
 import './index.scss'
@@ -14,6 +14,7 @@ export interface Injected {
 }
 export const context = createContext<Injected>({} as Injected)
 export default function Notepad() {
+  const useSelectorItem = useSelector<any, any>(state => state)
   const dispatch = useDispatch()
   // 输入框
   const [val,setVal]= useState<string>('');
@@ -31,9 +32,13 @@ export default function Notepad() {
   const [ids, setIds] = useState<string[]>([]);
   // 获取数据
   useDidShow(() => {
-    setIds([])
-    setSelectAll(false)
-    getList(val);
+    // setIds([])
+    // setSelectAll(false)
+    if(useSelectorItem.notepad.data.length){
+      setData(JSON.parse(JSON.stringify(useSelectorItem.notepad.data)))
+    }else {
+      getList(val);
+    }
   })
   // 点击全选
   const handleDel = ()=>{
@@ -51,6 +56,7 @@ export default function Notepad() {
       }
       return v;
     });
+    dispatch(setNotepad({code:200,data:arr,msg:'ok'}))
     setDel(false)
     setIds([])
     setSelectAll(false)
@@ -182,6 +188,7 @@ export default function Notepad() {
       })
       return v;
     })
+    dispatch(setNotepad({code:200,data:dataItem,msg:'ok'}))
     setData(dataItem)
     console.log(item,'item')
     setIds(item);
@@ -211,9 +218,21 @@ export default function Notepad() {
             if(res.code === 200 ){
               Msg('删除成功')
               setIds([]);
-              setTimeout(()=>{
-                getList(val);
-              },500)
+              setSelectAll(false);
+              setDel(false);
+              params.id.forEach((id)=>{
+                useSelectorItem.notepad.data.forEach((element,dex) => {
+                  element.list.forEach((item,index) => {
+                      if(id==item.id){
+                        if(element.list.length == 1){
+                          useSelectorItem.notepad.data.splice(dex,1)
+                        }else{
+                          element.list.splice(index,1);
+                        }
+                      }
+                  });
+                });
+              });
             }else{
               Msg(res.msg);
             }
@@ -251,6 +270,7 @@ export default function Notepad() {
       });
       setSelectAll(false)
     }
+    dispatch(setNotepad({code:200,data:arr,msg:'ok'}))
     setIds(clickId)
     setData(arr)
   }
