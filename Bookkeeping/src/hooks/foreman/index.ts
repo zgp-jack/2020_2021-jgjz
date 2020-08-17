@@ -649,9 +649,6 @@ export default function userForeman() {
               // }
               setWageStandard(wageStandardData)
               setCacheWage(wageStandardData)
-            }else{
-              console.log('1111','res.data.latest_group_workers_has_wage.length')
-              setForemanTitle('')
             }
             setProjectId(res.data.latest_group_info.id)
             setGroupInfo(res.data.latest_group_info.id)
