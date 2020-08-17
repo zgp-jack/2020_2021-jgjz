@@ -165,6 +165,7 @@
 }
 .btn-title{
   font-size: 24rpx;
+  margin-left: 10rpx;
 }
 .notepad{
   height:88rpx;
@@ -349,6 +350,7 @@
   // margin-left: 10rpx;
   // margin-right: 10rpx;
   width: 414rpx;
+  font-weight: 500;
   margin: 0 auto;
   margin-bottom: 41rpx;
 }
@@ -544,4 +546,8 @@
   background-size: contain;
   background: rgba(0, 0, 0, 0.6);
   z-index: 999;
+}
+
+.fontSize{
+  font-size: 36rpx;
 }

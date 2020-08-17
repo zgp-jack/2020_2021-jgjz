@@ -485,43 +485,26 @@ export default function Foreman() {
                     {v.id === 1 &&
                       <View >
                         <View 
-                        // className={classnames({
-                        //   'workerItem-list-first-click': v.click,
-                        //   'workerItem-list-first': v.id ==1,
-                        //   'workerItem-list-first-red':v.id>1&&v.id<20,
-                        // })}
                         className={v.click ? 'workerItem-list-first-click' : 'workerItem-list-first'} 
                         >
-                          {/* {v.name.slice(0, 2)} */}
-                        {/* {v.name.substring(v.name.length-2)} */}
-                        {v.name && v.name.substring(v.name.length - 2)}
+                        {v.name && v.name.toString().substring(v.name.length - 2)}
                         </View>
                         <View className='workerItem-list-title'>{v.name}</View>
                       </View>
                     }
-                    {v.id !== 1 &&
-                      <View>
+                    {/* {v.id !== 1 && */}
+                      <View className='userClick-box'>
                         <View 
                         className={classnames({
-                          'workerItem-list-click': v.click,
-                          'workerItem-list': !v.click && v.id % 2 == 1 && v.id>100,
-                          'workerItem-list-red': !v.click && v.id % 2 == 0 && v.id>100,
-                          'workerItem-list-origion': !v.click && v.id % 2 == 1 && v.id < 100,
-                          'workerItem-list-violet': !v.click && v.id % 2 == 0 && v.id < 100,
-                          // 'workerItem-list-pink': !v.click && v.id % 2 == 0 && v.id < 50,
-                          // 'workerItem-list': !v.click && v.id>=100,
-                          // 'workerItem-list-red': !v.click && v.id < 100 && v.id % 2 == 1,
-                          // 'workerItem-list-bulued': !v.click && v.id < 100 && v.id % 2 == 0,
-                          // 'workerItem-list-origion': !v.click && v.id >= 100 && v.id<200 && v.id % 2 !== 0,
-                          // 'workerItem-list-': !v.click && v.id >= 100,
-                          // 'workerItem-list-violet': !v.click && v.id >200,
-                          // 'workerItem-list-pink': !v.click && v.id > 200 && v.id % 2 == 0,
-                        })}
-                          // className={v.click ? 'workerItem-list-click' : 'workerItem-list'}
-                          >
-                          {/* {v.name} */}
-                        {v.name}
+                          // 'workerItem-list-click': v.click,
+                          'workerItem-list': v.id % 2 == 1 && v.id>100,
+                          'workerItem-list-red': v.id % 2 == 0 && v.id>100,
+                          'workerItem-list-origion': v.id % 2 == 1 && v.id < 100,
+                          'workerItem-list-violet':  v.id % 2 == 0 && v.id < 100,
+                        })}>
+                        {v.name && v.name.toString().substring(v.name.length - 2)}
                         </View>
+                        <View className={v.click?'userClick':''}></View>
                         {/* 判断不是按量和借支的时候才能设置工资 */}
                       {(recorderType !== 3 && !(recorderType == 2 && contractor ==1) )&&!v.del && !v.set && <View className='workerItem-list-icon' onClick={(e) => { e.stopPropagation(), handleOpenWagesModal(v) }}><Image className='workerItem-list-icon-img' src={`${IMGCDNURL}mark.png`}/></View>}
                         {v.del && <View className='workerItem-list-icon-del' onClick={(e) => { e.stopPropagation(), handleDelList(v) }}>
@@ -529,7 +512,7 @@ export default function Foreman() {
                         </View>}
                         <View className='workerItem-list-title'>{v.name}</View>
                       </View>
-                    }
+                    {/* // } */}
                   </View>
                 ))}
                 {delType && <View>

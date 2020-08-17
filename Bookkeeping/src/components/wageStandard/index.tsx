@@ -16,7 +16,25 @@ const styles =
   content: { fontSize: '13px' }
 }
 export default function WageStandard({ display, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio }: PROPS) {
-  console.log(wageStandard,'wageStandard1111')
+  console.log(wageStandard,'wageStandard')
+  const toFixedFn = (num: any) => {
+    let f = parseFloat(num);
+    if (isNaN(f)) {
+      return false;
+    }
+    f = Math.round(num * 100) / 100;
+    let s = f.toString();
+    let rs = s.indexOf('.');
+    if (rs < 0) {
+      rs = s.length;
+      s += '.';
+    }
+    while (s.length <= rs + 2) {
+      s += '0';
+    }
+    console.log(s, 'xxxx')
+    return Number(s);
+  }
   return(
     <View>
       {display && <View className='wageStandard'>
@@ -37,7 +55,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                     className='atInputNumberInput'
                     type='digit'
                     min={0}
-                    max={10000}
+                    max={24}
                     step={0.5}
                     value={wageStandard.work}
                     onChange={(e) => { handleWageStandard('work',e)}}
@@ -50,7 +68,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                   <AtInputNumber
                     type='digit'
                     min={0}
-                    max={10000}
+                    max={9999.99}
                     step={1}
                     value={wageStandard.money}
                     onChange={(e) => { handleWageStandard('money', e) }}
@@ -70,12 +88,12 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
             </View>
             {wageStandard.type == 1 &&
               <View className='workList'>
-                <View className='workList-title'>加班<Text>{wageStandard.addWork}</Text>元/小时</View>
+              <View className='workList-title'>加班<Text>{wageStandard.addWork}</Text>元/小时</View>
                 <View className='workList-add'>
                     <AtInputNumber
                       type='digit'
                       min={0}
-                      max={100000}
+                      max={9999.99}
                       step={1}
                       value={wageStandard.addWork}
                       onChange={(e) => { handleWageStandard('addWork', e) }}
@@ -92,7 +110,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                     <AtInputNumber
                       type='digit'
                       min={0}
-                      max={100000}
+                      max={24}
                       step={0.5}
                       value={wageStandard.day}
                       onChange={(e) => { handleWageStandard('day', e) }}
@@ -100,7 +118,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                   </View>
                 </View>
                 <View className='workList'>
-                <View className='workList-title'>加班<Text>{wageStandard.dayAddWork||0}</Text>元/小时</View>
+                <View className='workList-title'>加班<Text>{wageStandard.dayAddWork}</Text>元/小时</View>
                 </View>
               </View>
             }

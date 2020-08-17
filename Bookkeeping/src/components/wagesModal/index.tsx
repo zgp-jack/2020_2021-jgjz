@@ -76,18 +76,21 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                     {data.map((v)=>(
                       <View className='wagesModal-personnel-box' key={v.id} onClick={()=>handleWagesList(v)}>
                         <View className='background'>
+                        <View className='userClick-box'>
                         <View className={classnames({
-                          'wagesModal-personnel-box-list': !v.click && v.id % 2 == 1 && v.id > 100,
-                          'wagesModal-personnel-box-list-red': !v.click && v.id % 2 == 0 && v.id > 100,
-                          'wagesModal-personnel-box-list-origion': !v.click && v.id % 2 == 1 && v.id < 100,
-                          'wagesModal-personnel-box-list-violet': !v.click && v.id % 2 == 0 && v.id < 100,
-                          'wagesModal-personnel-box-list-click': v.click,
+                          'wagesModal-personnel-box-list':  v.id % 2 == 1 && v.id > 100,
+                          'wagesModal-personnel-box-list-red':  v.id % 2 == 0 && v.id > 100,
+                          'wagesModal-personnel-box-list-origion':  v.id % 2 == 1 && v.id < 100,
+                          'wagesModal-personnel-box-list-violet':  v.id % 2 == 0 && v.id < 100,
+                          // 'wagesModal-personnel-box-list-click': v.click,
                           // 'wagesModal-personnel-box-list-set':v.set
                         })}>{v.name.substring(v.name.length - 2)}</View>
                         <View className='names'>{v.name}</View>
                         </View>
                         <View className={v.set?'':'list-icon'}></View>
                       </View>
+                        <View className={v.click?'userClick':''}></View>
+                    </View>
                     ))}
                   </View>
                 }

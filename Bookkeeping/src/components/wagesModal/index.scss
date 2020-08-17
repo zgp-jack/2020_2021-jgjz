@@ -125,7 +125,7 @@
   line-height: 60rpx;
   text-align: center;
   // background: red;
-  background: url(../../assets/images/click.png) no-repeat no-repeat;
+  background: url(../../assets/images/userClick.png) no-repeat no-repeat;
   background-size: contain;
   // border: 1rpx solid rgba(253, 69, 33, 1);
   border-radius: 3rpx;
@@ -435,4 +435,19 @@
   margin-left: 15%;
   color: #2F3541;
   font-size: 26rpx;
+}
+.userClick-box {
+  position: relative;
+}
+
+.userClick {
+  position: absolute;
+  left: 42rpx;
+  top: 10rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  width: 60rpx;
+  z-index: 1;
+  background: url(../../assets/images/userClick.png) no-repeat no-repeat;
+  background-size: contain;
 }

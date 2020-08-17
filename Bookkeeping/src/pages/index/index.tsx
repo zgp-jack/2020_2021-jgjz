@@ -1036,7 +1036,7 @@ export default function Index() {
           </View>
           <View className='btnBox'>
             <View className='btn' onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`, true)}>
-              {!item || (item && item.business_list.data.length === 0) ? <Text> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text > 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
+              {!item || (item && item.business_list.data.length === 0) ? <Text className='fontSize'> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text  className='fontSize'> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
               <View className='notepad-Icon'><Image className='notepad-Icon-iamge' src={`${IMGCDNURL}notepad.png`} /></View>
@@ -1138,8 +1138,8 @@ export default function Index() {
         <View className='AtModal'>
           <View className='AtModal-top'>当前是<Text className='atModal-name'>【{type == 1 ? '班组长' : '工人'}】</Text>身份</View>
           <View className='mtList'>与上一次记工身份不一致，是否<Text className='atModal-change'>切换?</Text></View>
-          <View className='atModal-list' onClick={() => handleType(0)}>不切换</View>
           <View className='atModal-list' onClick={() => handleType(1)}>切换成【{type == 1 ? '工人' : '班组长'}】</View>
+          <View className='atModal-list' onClick={() => handleType(0)}>不切换</View>
           <View className='atModal-list' onClick={() => handleType(2)}><Text className='blued'>不再提醒</Text></View>
         </View>
       </AtModal>

@@ -1,4 +1,4 @@
-import Taro, { useEffect, useState,useDidShow } from '@tarojs/taro'
+import Taro, { useEffect, useState, useDidShow } from '@tarojs/taro'
 import { View, Image, Text, Input } from '@tarojs/components'
 import { IMGCDNURL } from '../../config'
 import './index.scss'
@@ -7,14 +7,14 @@ import './index.scss'
 interface PROPS {
   display: boolean //是否跳转到页面授权
   handleWorkingHoursClose: (boolean) => void;
-  type:number //类型区分
-  handleWorkingHours:(type:number,v:any)=>void;
+  type: number //类型区分
+  handleWorkingHours: (type: number, v: any) => void;
   // textarea:string,
   // handleTextarea:(e:any)=>void,
   // setComplaintModal:(e:boolean)=>void,
 }
-export default function WorkingHours({ display, handleWorkingHoursClose, handleWorkingHours, type}: PROPS) {
-  const [data,setData]= useState<any>([
+export default function WorkingHours({ display, handleWorkingHoursClose, handleWorkingHours, type }: PROPS) {
+  const [data, setData] = useState<any>([
     { id: 1, name: '0.5小时', click: false, num: 0.5 },
     { id: 2, name: '1小时', click: false, num: 1 },
     { id: 3, name: '1.5小时', click: false, num: 1.5 },
@@ -68,18 +68,18 @@ export default function WorkingHours({ display, handleWorkingHoursClose, handleW
     <View>
       {display &&
         <View className='workingHours-complaintModal'>
-        <View className='workingHours-complaintModal-content'>
-          <View className='workingHours-complaintModal-content-title'>选择上班时间<View onClick={handleWorkingHoursClose} className='workingHours-complaintModal-content-close'>
-            <Image src={`${IMGCDNURL}closeIcons.png`} className='closeIcons' />
-          </View></View>
-          <View className='workingHours-complaintModal-content-timeBox'>
-            <View className='workingHours-complaintModal-content-box'>
+          <View className='workingHours-complaintModal-content'>
+            <View className='workingHours-complaintModal-content-title'>选择上班时间<View onClick={handleWorkingHoursClose} className='workingHours-complaintModal-content-close'>
+              <Image src={`${IMGCDNURL}closeIcons.png`} className='closeIcons' />
+            </View></View>
+            <View className='workingHours-complaintModal-content-timeBox'>
+              <View className='workingHours-complaintModal-content-box'>
                 {data.map(v => (
-                  <View 
-                    className={v.click ? 'workingHours-complaintModal-content-box-list-click' : 'workingHours-complaintModal-content-box-list'} 
+                  <View
+                    className={v.click ? 'workingHours-complaintModal-content-box-list-click' : 'workingHours-complaintModal-content-box-list'}
                     key={v.id}
-                    onClick={()=>handleWorkingHours(type,v)}
-                    >{v.name}</View>
+                    onClick={() => handleWorkingHours(type, v)}
+                  >{v.name}</View>
                 ))}
               </View>
             </View>
