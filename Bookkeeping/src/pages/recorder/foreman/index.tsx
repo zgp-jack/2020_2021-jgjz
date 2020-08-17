@@ -264,7 +264,9 @@ export default function Foreman() {
       setCacheWage(cacheWageItem);
     }
     setWageStandardDisplay(false)
-    setIsdisable(false)
+    if(identity == 2){
+      setIsdisable(false)
+    }
   }
   // 关闭添加成员
   const handleAddMemberClose = ()=>{

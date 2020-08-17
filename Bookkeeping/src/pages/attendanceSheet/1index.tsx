@@ -6,7 +6,7 @@ import Msg from '../../utils/msg';
 import { IMGCDNURL } from '../../config';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import {Type,Earliest_month} from '../../config/store'
+import {Type} from '../../config/store'
 import './index.scss'
 
 export default function AttendanceSheet() {
@@ -66,24 +66,6 @@ export default function AttendanceSheet() {
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
     const years = time.getFullYear();
     const months = addZero(time.getMonth() + 1);
-    let earliest_month = Taro.getStorageSync(Earliest_month);
-    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
-    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    setdateEnd(yeartime+'-'+montime);
-    if(!earliest_month){
-      setleftTime(false);
-      setrightTime(false);
-      setDatestart(yeartime+'-'+montime);
-    }else{
-      setDatestart(earliest_month);
-      if(Number(earliest_month.split('-')[0]) == yeartime){
-        setrightTime(false);
-        Number(earliest_month.split('-')[1])<montime?setleftTime(true):setleftTime(false);
-      }else if(Number(earliest_month.split('-')[0]) < yeartime) {
-        setrightTime(false);
-        setleftTime(true);
-      }
-    }
     setYear(years)
     setMonth(months)
     // setDate(newTime);
@@ -99,6 +81,16 @@ export default function AttendanceSheet() {
     bkgetExcelDataAction(params).then(res => {
       if(res.code === 200){
         setBusy(false)
+        let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+        let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+        setdateEnd(yeartime+'-'+montime);
+        if(!res.month){
+          setDatestart(yeartime+'-'+montime);
+          changeIcon(newTime,res.month)
+        }else{
+          setDatestart(res.month);
+          changeIcon(newTime,res.month)
+        }
       // 设置内容
       if (res.data.length > 0) {
       const curDate = new Date(newTime);
@@ -160,6 +152,13 @@ export default function AttendanceSheet() {
       setleftTime(false);
       setrightTime(false);
     })
+  }
+  const toFixedFn = (num:any)=>{
+    let nums = num + '';
+    if(nums.indexOf('.')+1>0){
+      nums = nums.substring(0,nums.indexOf(".")+3);
+    }
+    return  Number(nums);
   }
   // 获取数据
   const getList = (newTime: string) => {
@@ -632,8 +631,8 @@ export default function AttendanceSheet() {
           borrow: {
             money: borrowSum
           },
-          hour: { work_time: hourWorkTimeSum.toFixed(2), over_time: hourOverTimeSum.toFixed(2) },
-          work: { work_time: workWorkTimeSum.toFixed(2), over_time: workOverTimeSum.toFixed(2) }
+          hour: { work_time: toFixedFn(hourWorkTimeSum), over_time: toFixedFn(hourOverTimeSum) },
+          work: { work_time: toFixedFn(workWorkTimeSum), over_time: toFixedFn(workOverTimeSum) }
         }
       }
       if (identity === 1){
@@ -752,16 +751,16 @@ export default function AttendanceSheet() {
             // }
             // dayArrItme[i] = jigongSums[j];
             // dayArrItme[i].type.hour.over_time = jigongSums[j].total.over_time
-            obj.type.hour.over_time = (parseInt(jigongSums[j].total.over_time)).toFixed(2);
-            obj.type.hour.work_time = (parseInt(jigongSums[j].total.work_time)).toFixed(2);
+            obj.type.hour.over_time = toFixedFn(parseInt(jigongSums[j].total.over_time));
+            obj.type.hour.work_time = toFixedFn(parseInt(jigongSums[j].total.work_time));
             // dayArrItme[i] = obj;
           }
         }
         // 按天
         for (let j = 0; j < workSums.length; j++) {
           if (dayArrItme[i].name === workSums[j].date_num) {
-            obj.type.work.over_time = (parseInt(workSums[j].total.over_time)).toFixed(2);
-            obj.type.work.work_time = (parseInt(workSums[j].total.work_time)).toFixed(2);
+            obj.type.work.over_time = toFixedFn(parseInt(workSums[j].total.over_time));
+            obj.type.work.work_time = toFixedFn(parseInt(workSums[j].total.work_time));
           }
         }
         // 借支
@@ -817,12 +816,9 @@ export default function AttendanceSheet() {
     setTabArr([]);
     setYear(e.detail.value.slice(0, 4));
     setMonth(e.detail.value.slice(5, 8));
-    changeIcon(e.detail.value);
     getDateList(time);
   }
-  const changeIcon = (e) => {
-    console.log("zgsdfasdfasdf",e);
-    let earliest_month = Taro.getStorageSync(Earliest_month);
+  const changeIcon = (e,earliest_month) => {
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     if(!earliest_month){

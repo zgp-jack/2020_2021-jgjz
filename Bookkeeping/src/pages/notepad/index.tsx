@@ -233,6 +233,7 @@ export default function Notepad() {
                   });
                 });
               });
+              setData(JSON.parse(JSON.stringify(useSelectorItem.notepad.data)))
             }else{
               Msg(res.msg);
             }

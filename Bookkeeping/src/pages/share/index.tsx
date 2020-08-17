@@ -164,7 +164,7 @@ export default function Share() {
               //借支
               if (res.data[i].borrow.length > 0) {
                 typeObj.type.borrow = true;
-                borrowSum = (res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0)).toFixed(2)
+                borrowSum = toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0))
               }
               // 包工(天)
               if (res.data[i].work.length > 0) {
@@ -230,12 +230,12 @@ export default function Share() {
                       if (dayItem[j].type) {
                         if (dayItem[j].type) {
                           const data = JSON.parse(JSON.stringify(dayItem[j]))
-                          type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money)).toFixed(2);
+                          type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money));
                           data.type.borrow = type.borrow;
                           dayItem[j] = data;
                         }
                       } else {
-                        type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money)).toFixed(2);
+                        type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money));
                         dayItem[j].type = type;
                       }
                     }
@@ -633,7 +633,7 @@ export default function Share() {
                 if (borrowDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
                     borrow: {
-                      borrow: toFixedFn(borrowDataSum[j].total.money).toFixed(2)
+                      borrow: toFixedFn(borrowDataSum[j].total.money)
                     }
                   }
                   if (dayArrList[i].type) {
@@ -704,7 +704,7 @@ export default function Share() {
             borrow = {}
           } else {
             borrow = {
-              borrow: toFixedFn(borrowNum).toFixed(2),
+              borrow: toFixedFn(borrowNum),
             }
           }
           let hour;
@@ -765,9 +765,12 @@ export default function Share() {
       setBusy(true)
     })
   }
-  const toFixedFn = (num: any) => {
-    const data = Math.floor(num * 100) / 100
-    return data;
+  const toFixedFn = (num:any)=>{
+    let nums = num + '';
+    if(nums.indexOf('.')+1>0){
+      nums = nums.substring(0,nums.indexOf(".")+3);
+    }
+    return  Number(nums);
   }
   // 设置时间
   const handleTime = (e) => {
