@@ -187,7 +187,7 @@ export default function EditDetails() {
             title= '上班1个工'
           }else if(res.data.work_time =='0.50'){
             title = '上班半个工'
-          }else if(res.data.wage_money == '0.00'){
+          } else if (res.data.work_time == '0.00'){
             title = '休息'
           }else{
             title = '上班'+parseFloat(res.data.work_time_hour) + '小时'
@@ -266,6 +266,15 @@ export default function EditDetails() {
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
           setVal(obj);
+          const List = JSON.parse(JSON.stringify(company))
+          for(let i =0;i<List.length;i++){
+            if(List[i].name == res.data.unit){
+              List[i].click = true;
+            }else{
+              List[i].click = false
+            }
+          }
+          setCompany(List)
           setUnit(res.data.unit)
           setWageStandard(data)
           // 设置数据上班时长数据
@@ -276,14 +285,15 @@ export default function EditDetails() {
             //   timeArrData[i].click = true
             // }else{
               // 返回的是工为单位的 小时为单位的数据
+              console.log(res.data.work_time,'res.data.work_time')
             // const setTime = ((+res.data.worktime_define) / (1 / (+res.data.work_time))).toFixed(1);
-            if (res.data.work_time == '1.00' || res.data.work_time == '0.50' || res.data.wage_money == '0.00'){
+            if (res.data.work_time == '1.00' || res.data.work_time == '0.50' || res.data.work_time == '0.00'){
               if (res.data.work_time == '1.00'){
                 timeArrData[0].click = true;
               } else if (res.data.work_time == '0.50'){
                 timeArrData[1].click = true;
               } else if (res.data.work_time == '0.00'){
-                timeArrData[3].click = true;
+                timeArrData[2].click = true;
               }
             }else{
               const setTime = parseFloat(res.data.work_time_hour)
@@ -1073,31 +1083,22 @@ export default function EditDetails() {
     }else{
       typeState = businessTypes;
     }
+    console.log(timeArr,'timeArr')
     // 时间
     let times: number = 0, work_time_hour = 0, work_time_type;
     timeArr.map(v => {
       if (v.click) {
-        if (v.num) {
+        if (v.num || v.num == 0) {
           if (v.id !== 4) {
-            // times = v.num;
-            // work_time_hour = items.work * v.num;
-            // times = items.work * v.num;
-            // work_time_hour = items.work * v.num;
             times = v.num;
             work_time_type = 'working_hour'
           } else {
-            // times = 1 / items.work * v.num;
-            // work_time_hour = v.num;
-            // work_time_hour = 1 / items.work * v.num;
             times = v.num;
             work_time_type = 'hour'
           }
         }
       }
     })
-    console.log(times,'e2')
-    console.log(work_time_type,'work_time_type')
-    console.log(timeArr,'timeArr')
     // 加班时间
     let overtime: number = 0;
     addWorkArr.map(v => {
@@ -1210,26 +1211,53 @@ export default function EditDetails() {
     })
   }
   // 输入框
-  // const handleInput = (type,e)=>{
-  //   let data = JSON.parse(JSON.stringify(val));
-  //   data[type] = e.detail.value;
-  //   setVal(data);
-  // }
-  const handleInput = (type: string, e) => {
-    if (/^[\u4e00-\u9fa5_a-zA-Z0-9\s\·\~\！\@\#\￥\%\……\&\*\（\）\——\-\+\=\【\】\{\}\、\|\；\‘\’\：\“\”\《\》\？\，\。\、\`\~\!\#\$\%\^\&\*\(\)\_\[\]{\}\\\|\;\'\'\:\"\"\,\.\/\<\>\?]+$/.test(e.detail.value)){
-      let data = JSON.parse(JSON.stringify(val));
-      if (type === 'note') {
-        setVal(e.detail.value.length);
-      }
-      if(type === 'unitNum' || type ==='unitPrice'){
-        return dealInputVal(e.detail.value, 7, type);
-      }
-      if (type === 'money'){
-        return dealInputVal(e.detail.value, 14,type);
-      }
-      data[type] = e.detail.value
-      setVal(data);
+  const handleInput = (type,e)=>{
+    let data = JSON.parse(JSON.stringify(val));
+    if (type == 'unitNum' || type == 'price' || type =='unitPrice') {
+      return dealInputVal(e.detail.value, 7, type);
     }
+    if (type == 'wages' || type == 'borrowing' || type =='money') {
+      return dealInputVal(e.detail.value, 14, type);
+    }
+    data[type] = e.detail.value;
+    setVal({...data});
+  }
+  // 输入框验证
+  const dealInputVal = (value, num?: number, type?: string) => {
+    value = value.replace(/^0*(0\.|[1-9])/, "$1");
+    value = value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
+    value = value.replace(/^\./g, ""); //验证第一个字符是数字而不是字符
+    value = value.replace(/\.{1,}/g, "."); //只保留第一个.清除多余的
+    if (num) {
+      if (value.split(".")[1] && value.split(".")[1].length > 2) {
+        Msg('超出最大输入范围')
+      }
+      if (num === 7) {
+        if (value.split(".")[0] && value.split(".")[0].length > num) {
+          Msg('超出最大输入范围')
+        }
+      } else if (num === 14) {
+        if (value.split(".")[0] && value.split(".")[0].length > num) {
+          Msg('超出最大输入范围')
+        }
+      }
+    }
+    value = value
+      .replace(".", "$#$")
+      .replace(/\./g, "")
+      .replace("$#$", ".");
+    value = value.replace(/^(\-)*(\d*)\.(\d\d).*$/, "$1$2.$3"); //只能输入两个小数
+    value =
+      value.indexOf(".") > 0
+        ? value.split(".")[0].substring(0, num) + "." + value.split(".")[1]
+        : value.substring(0, num);
+    let data = JSON.parse(JSON.stringify(val));
+    if (type) {
+      data[type] = value;
+      setVal({ ...data });
+    }
+    console.log(value,'1111')
+    return value;
   }
   // 关闭
   const handleWageStandardDisplay = ()=>{

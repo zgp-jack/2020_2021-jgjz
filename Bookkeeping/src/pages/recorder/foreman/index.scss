@@ -10,7 +10,7 @@
   justify-content: space-around;
   background: #ffffff;
   // padding-top: 15rpx;
-  padding-bottom: 20rpx;
+  padding-bottom: 13rpx;
   color: rgba(47, 53, 65, 1);
   font-size: 28rpx;
   border:1px solid rgba(243, 243, 243, 1);
@@ -100,7 +100,7 @@
   height: 125rpx;
   line-height: 125rpx;
   margin-left: 30rpx;
-  border-bottom: 1rpx solid #F1F1F1;
+  // border-bottom: 1rpx solid #F1F1F1;
 }
 
 .pulish-list-title {
@@ -365,6 +365,7 @@
 .whole {
   min-width: 96rpx;
   height: 42rpx;
+  line-height: 42rpx;
   background: rgba(0, 153, 255, 0);
   border: 1rpx solid #0099FF;
   border-radius: 3rpx;
@@ -601,6 +602,7 @@
   font-size: 26rpx;
   text-align: center;
   margin: auto 0 ;
+  border-radius:5rpx;
 }
 .atDrawer-list{
   position: relative;

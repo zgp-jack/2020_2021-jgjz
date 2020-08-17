@@ -7,6 +7,7 @@ import { IMGCDNURL } from '../../config';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
 import { Type } from '../../config/store'
+import classnames from 'classnames'
 import './index.scss'
 
 interface DateTyep {
@@ -160,7 +161,7 @@ export default function AttendanceSheet() {
           const defaultArr = [
             { id: 1, name: '工人', },
             { id: 2, name: '记工类型' },
-            { id: 3, name: '本月统计' },
+            { id: 3, name: '本月总计' },
           ]
           let arrObj = {
             list: dayArr,
@@ -216,24 +217,24 @@ export default function AttendanceSheet() {
               // 记工
               if (res.data[i].hour.length > 0) {
                 typeObj.type.hour = true;
-                hourSumWork = res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0)
-                hourSumTime = res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0)
+                hourSumWork = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0))
+                hourSumTime = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0))
               }
               //  包工(量)
               if (res.data[i].amount.length > 0) {
                 typeObj.type.amount = true;
-                amountSum = res.data[i].amount.reduce((accumulator, currentValue) => accumulator + currentValue.list.length, 0);
+                amountSum = toFixedFn(res.data[i].amount.reduce((accumulator, currentValue) => accumulator + currentValue.list.length, 0));
               }
               //借支
               if (res.data[i].borrow.length > 0) {
                 typeObj.type.borrow = true;
-                borrowSum = toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0))
+                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0))).toFixed(2)
               }
               // 包工(天)
               if (res.data[i].work.length > 0) {
                 typeObj.type.work = true
-                workSumWork = res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0)
-                workSumTime = res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0)
+                workSumWork = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0))
+                workSumTime = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0))
               }
               for (let j = 0; j < dayItem.length; j++) {
                 if (res.data[i].hour.length > 0) {
@@ -635,6 +636,7 @@ export default function AttendanceSheet() {
               sumHour = true;
               for (let j = 0; j < hourDataSum.length;j++){
                 if (hourDataSum[j].date_num == dayArrList[i].name){
+                  console.log(toFixedFn(hourDataSum[j].total.work_time),'hourDataSum[j].total.work_time')
                   let type = {
                     hour: {
                       work_time: toFixedFn(hourDataSum[j].total.work_time),
@@ -783,7 +785,7 @@ export default function AttendanceSheet() {
             work = { work_time: toFixedFn(workWorkNum), over_time: toFixedFn(workOverNum) }
           }
           let sumLeft = [
-            { id: 1, name: '本月总计' },
+            { id: 1, name: '总计' },
             {
               id: 2, type: {
                 hour: sumHour,
@@ -833,11 +835,11 @@ export default function AttendanceSheet() {
       })
   }
   const toFixedFn = (num:any)=>{
-    let nums = num + '';
+    let nums = num + "";
     if(nums.indexOf('.')+1>0){
-      nums = nums.substring(0,nums.indexOf(".")+3);
+      nums = nums.substring(0, nums.indexOf(".") + 3);
     }
-    return  Number(nums);
+    return  Number(nums) ;
   }
   // 设置时间
   const handleTime = (e) => {
@@ -985,7 +987,14 @@ export default function AttendanceSheet() {
                   {v.list.map(val => (
                     <View className='middle'>
                       {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && (!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) ? 'box-none' : 'box-list-default'}>
-                        <View className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount) || (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour)))) ? '' : 'mt20'}>{val.name}</View>
+                        <View 
+                        className={classnames({
+                          // 'mt20': v.type.hour,
+                          // '': v.type.work,
+                        }
+                        )}
+                        // className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount) || (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour)))) ? 'hidden' : 'mt20'}
+                        >{val.name}</View>
                         {val.default &&
                           <View open-type="share">
                             <Button className='blued' open-type="share">
@@ -1081,7 +1090,11 @@ export default function AttendanceSheet() {
             //  onClick={handleShare}
             >
               {/* <View>分享给微信好友</View> */}
-              <Button open-type="share" className='shareBtn'>分享给微信好友</Button>
+              <Button open-type="share" className='shareBtn'>
+                {/* 分享给微信好友 */}
+                <View className='btn-top'>一键对工</View>
+                <View className='btn-bootom'>发送到工人微信群快速对工</View>
+                </Button>
               {/* <View className='footer-btn-box-left-title'>发送到工人微信群快速对工</View> */}
             </View>
             <View className='footer-btn-box-right' onClick={handleJump}>

@@ -1,5 +1,6 @@
 import Taro, { useEffect, useState,useDidShow } from '@tarojs/taro'
 import { View, Image, Text, Input } from '@tarojs/components'
+import { IMGCDNURL } from '../../config'
 import './index.scss'
 
 
@@ -68,7 +69,9 @@ export default function WorkingHours({ display, handleWorkingHoursClose, handleW
       {display &&
         <View className='workingHours-complaintModal'>
         <View className='workingHours-complaintModal-content'>
-          <View className='workingHours-complaintModal-content-title'>选择上班时间<Text onClick={handleWorkingHoursClose} className='workingHours-complaintModal-content-close'>x</Text></View>
+          <View className='workingHours-complaintModal-content-title'>选择上班时间<View onClick={handleWorkingHoursClose} className='workingHours-complaintModal-content-close'>
+            <Image src={`${IMGCDNURL}closeIcons.png`} className='closeIcons' />
+          </View></View>
           <View className='workingHours-complaintModal-content-timeBox'>
             <View className='workingHours-complaintModal-content-box'>
                 {data.map(v => (
