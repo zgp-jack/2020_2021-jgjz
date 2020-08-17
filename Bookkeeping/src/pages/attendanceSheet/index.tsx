@@ -161,7 +161,7 @@ export default function AttendanceSheet() {
           const defaultArr = [
             { id: 1, name: '工人', },
             { id: 2, name: '记工类型' },
-            { id: 3, name: '本月统计' },
+            { id: 3, name: '本月总计' },
           ]
           let arrObj = {
             list: dayArr,
@@ -636,6 +636,7 @@ export default function AttendanceSheet() {
               sumHour = true;
               for (let j = 0; j < hourDataSum.length;j++){
                 if (hourDataSum[j].date_num == dayArrList[i].name){
+                  console.log(toFixedFn(hourDataSum[j].total.work_time),'hourDataSum[j].total.work_time')
                   let type = {
                     hour: {
                       work_time: toFixedFn(hourDataSum[j].total.work_time),
@@ -784,7 +785,7 @@ export default function AttendanceSheet() {
             work = { work_time: toFixedFn(workWorkNum), over_time: toFixedFn(workOverNum) }
           }
           let sumLeft = [
-            { id: 1, name: '本月总计' },
+            { id: 1, name: '总计' },
             {
               id: 2, type: {
                 hour: sumHour,
@@ -834,7 +835,8 @@ export default function AttendanceSheet() {
       })
   }
   const toFixedFn = (num:any)=>{
-    const data = Math.floor(num * 100) / 100
+    console.log(num,'num')
+    const data = Math.floor(num * 100) / 100;
     return  data;
   }
   // 设置时间
@@ -984,13 +986,12 @@ export default function AttendanceSheet() {
                     <View className='middle'>
                       {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && (!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) ? 'box-none' : 'box-list-default'}>
                         <View 
-                          // className={
-                          //   classnames({
-                          //     'mt20': (v.type.hour && !v.type.work && !v.type.borrow && !v.type.amount) || (!v.type.hour && v.type.work && !v.type.borrow && !v.type.amount) || (!v.type.hour && !v.type.work && v.type.borrow && !v.type.amount) || (!v.type.hour && !v.type.work && !v.type.borrow && v.type.amount)
-
-                          //   })
-                          // }
-                        className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount) || (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour)))) ? 'hidden' : 'mt20'}
+                        className={classnames({
+                          // 'mt20': v.type.hour,
+                          // '': v.type.work,
+                        }
+                        )}
+                        // className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount) || (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour)))) ? 'hidden' : 'mt20'}
                         >{val.name}</View>
                         {val.default &&
                           <View open-type="share">
@@ -1087,7 +1088,11 @@ export default function AttendanceSheet() {
             //  onClick={handleShare}
             >
               {/* <View>分享给微信好友</View> */}
-              <Button open-type="share" className='shareBtn'>分享给微信好友</Button>
+              <Button open-type="share" className='shareBtn'>
+                {/* 分享给微信好友 */}
+                <View className='btn-top'>一键对工</View>
+                <View className='btn-bootom'>发送到工人微信群快速对工</View>
+                </Button>
               {/* <View className='footer-btn-box-left-title'>发送到工人微信群快速对工</View> */}
             </View>
             <View className='footer-btn-box-right' onClick={handleJump}>

@@ -494,7 +494,7 @@ export default function Foreman() {
                         >
                           {/* {v.name.slice(0, 2)} */}
                         {/* {v.name.substring(v.name.length-2)} */}
-                        {v.name&&v.name.substring(v.name.length - 2)}
+                        {v.name && v.name.substring(v.name.length - 2)}
                         </View>
                         <View className='workerItem-list-title'>{v.name}</View>
                       </View>
@@ -803,7 +803,7 @@ export default function Foreman() {
         >
         <View className='atDrawer-box'>
           <View className='atDrawer-heard'>
-          <View onClick={() => { setShow(false)}}>
+          <View style={{ marginTop: '3rpx' }} onClick={() => { setShow(false)}}>
           <Image src={`${IMGCDNURL}leftIcons.png`} className='addIcon'/>
           </View>
             <View>项目列表</View>

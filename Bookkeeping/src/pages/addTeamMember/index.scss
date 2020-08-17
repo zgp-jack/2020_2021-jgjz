@@ -71,7 +71,6 @@
   display: flex;
   background: #fff;
   padding: 20rpx 28rpx;
-  border-bottom: 1rpx solid #ccc;
   margin-top: 20rpx;
 }
 .list-flex{
@@ -85,7 +84,8 @@
 }
 .list-title{
   height: 27rpx;
-  font-size: 20rpx;
+  line-height: 27rpx;
+  font-size: 24rpx;
   padding: 10rpx;
   padding-left: 28rpx;
 }
@@ -143,4 +143,7 @@
 .Checkbox{
   transform: scale(0.6, 0.6);
   margin-top: 10rpx;
+}
+.at-search-bar::after{
+  border-bottom-width:0PX;
 }

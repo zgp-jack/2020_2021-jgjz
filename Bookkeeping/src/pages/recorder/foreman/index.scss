@@ -100,7 +100,7 @@
   height: 125rpx;
   line-height: 125rpx;
   margin-left: 30rpx;
-  border-bottom: 1rpx solid #F1F1F1;
+  // border-bottom: 1rpx solid #F1F1F1;
 }
 
 .pulish-list-title {
@@ -365,6 +365,7 @@
 .whole {
   min-width: 96rpx;
   height: 42rpx;
+  line-height: 42rpx;
   background: rgba(0, 153, 255, 0);
   border: 1rpx solid #0099FF;
   border-radius: 3rpx;
