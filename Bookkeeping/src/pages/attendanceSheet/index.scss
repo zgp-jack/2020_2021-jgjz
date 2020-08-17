@@ -377,7 +377,20 @@
 // }
 .mt20{
   margin-top: 20%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hidden{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .buled{
   color: rgba(0, 153, 255, 1);
+  // word-wrap: break-word;
+  overflow-x: scroll;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // white-space: nowrap;
 }

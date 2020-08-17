@@ -982,7 +982,7 @@ export default function AttendanceSheet() {
                   {v.list.map(val => (
                     <View className='middle'>
                       {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && (!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) ? 'box-none' : 'box-list-default'}>
-                        <View className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount) || (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour)))) ? '' : 'mt20'}>{val.name}</View>
+                        <View className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount) || (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour)))) ? 'hidden' : 'mt20'}>{val.name}</View>
                         {val.default &&
                           <View open-type="share">
                             <Button className='blued' open-type="share">

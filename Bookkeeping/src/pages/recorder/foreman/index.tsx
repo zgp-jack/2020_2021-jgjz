@@ -174,6 +174,7 @@ export default function Foreman() {
     const addWorkArrs = JSON.parse(JSON.stringify(addWorkArr));
     const clickDayItem = JSON.parse(JSON.stringify(clickDay));
     const clickTimeItem = JSON.parse(JSON.stringify(clickTime));
+    console.log(clickDayItem,'clickDayItemclickDayItem')
     // 上班时长
     if (clickDayItem){
       for (let i = 0; i < timeArrs.length; i++) {
@@ -182,7 +183,7 @@ export default function Foreman() {
           if (clickDayItem.id !==4 ){
             timeArrs[i].click = true
           }else{
-            timeArrs[i] = { id: 4, name: clickDayItem.name, click: true, num: clickDayItem };
+            timeArrs[i] = { id: 4, name: clickDayItem.name, click: true, num: clickDayItem.num };
           }
         }
       }
@@ -196,11 +197,12 @@ export default function Foreman() {
           if (clickTimeItem.id !== 2) {
             addWorkArrs[i].click = true
           } else {
-            addWorkArrs[i] = { id: 2, name: clickTimeItem.name, click: true, num: clickTimeItem };
+            addWorkArrs[i] = { id: 2, name: clickTimeItem.name, click: true, num: clickTimeItem.num };
           }
         }
       }
     }
+    console.log(timeArrs,'timeArrs')
     console.log(addWorkArrs,'addWorkArrs')
     setTimeArr(timeArrs);
     setAddWorkArr(addWorkArrs)
