@@ -251,6 +251,7 @@ export default function EditDetails() {
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
           setVal(obj);
+          setUnit(res.data.unit)
           setWageStandard(data)
           // 设置数据上班时长数据
           const timeArrData = JSON.parse(JSON.stringify(timeArr));

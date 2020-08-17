@@ -531,13 +531,13 @@ export default function userForeman() {
                 } else {
                   wageStandardData.dayAddWork = 0
                 }
-                if(parseFloat(data.overtime_type) == 2){
-                  wageStandardData.addWork = data.overtime;
-                  wageStandardData.day = data.overtime_money;
-                }else{
+                // if(parseFloat(data.overtime_type) == 2){
+                //   wageStandardData.addWork = data.overtime;
+                //   wageStandardData.day = data.overtime_money;
+                // }else{
                   wageStandardData.addWork = data.overtime_money;
                   wageStandardData.day = data.overtime;
-                }
+                // }
                 wageStandardData.type = parseFloat(data.overtime_type);
                 for (let i = 0; i < wageStandardData.data.length;i++){
                   if (parseFloat(data.overtime_type) == wageStandardData.data[i].id){
@@ -614,13 +614,13 @@ export default function userForeman() {
               // wageStandardData.day = data.overtime;
               wageStandardData.worker_id = data.worker_id;
               wageStandardData.group_info = data.group_info;
-              if (parseFloat(data.overtime_type) == 2) {
-                wageStandardData.addWork = data.overtime;
-                wageStandardData.day = data.overtime_money;
-              } else {
+              // if (parseFloat(data.overtime_type) == 2) {
+              //   wageStandardData.addWork = data.overtime;
+              //   wageStandardData.day = data.overtime_money;
+              // } else {
                 wageStandardData.addWork = data.overtime_money;
                 wageStandardData.day = data.overtime;
-              }
+              // }
               if (parseFloat(data.money) && parseFloat(data.overtime)) {
                 wageStandardData.dayAddWork = parseFloat(data.money) / parseFloat(data.overtime) || 0;
               } else {
@@ -723,13 +723,13 @@ export default function userForeman() {
                   // wageStandardData.day = data.overtime;
                   wageStandardData.worker_id = data.worker_id;
                   wageStandardData.group_info = data.group_info;
-                  if (parseFloat(data.overtime_type) == 2) {
-                    wageStandardData.addWork = data.overtime;
-                    wageStandardData.day = data.overtime_money;
-                  } else {
+                  // if (parseFloat(data.overtime_type) == 2) {
+                  //   wageStandardData.addWork = data.overtime;
+                  //   wageStandardData.day = data.overtime_money;
+                  // } else {
                     wageStandardData.addWork = data.overtime_money;
                     wageStandardData.day = data.overtime;
-                  }
+                  // }
                   for (let i = 0; i < wageStandardData.data.length; i++) {
                     if (wageStandardData.data[i].id == data.overtime_type) {
                       wageStandardData.data[i].click = true
@@ -2133,15 +2133,15 @@ export default function userForeman() {
     value = value.replace(/\.{1,}/g, "."); //只保留第一个.清除多余的
     if(num){
       if (value.split(".")[1] && value.split(".")[1].length>2){
-        Msg('最多输入两位小数')
+        Msg('超出最大输入范围')
       }
       if(num ===7){
         if (value.split(".")[0] && value.split(".")[0].length>num){
-          Msg('最多输入七位数')
+          Msg('超出最大输入范围')
         }
       } else if (num === 14){
         if (value.split(".")[0] && value.split(".")[0].length > num) {
-          Msg('最多输入十四位数')
+          Msg('超出最大输入范围')
         }
       }
     }
@@ -2172,7 +2172,7 @@ export default function userForeman() {
     if(type =='amount'|| type =='price'){
       return dealInputVal(e.detail.value, 7, type);
     }
-    if(type == 'wages'){
+    if (type == 'wages' || type == 'borrowing'){
       return dealInputVal(e.detail.value, 14,type);
     }
     data[type] = e.detail.value
@@ -3102,9 +3102,9 @@ export default function userForeman() {
           workers,
           type: 2,
           unit,
-          unit_num: item.amount,
-          unit_price: item.price,
-          money: item.wages,
+          unit_num: parseFloat(item.amount),
+          unit_price: parseFloat(item.price),
+          money: parseFloat(item.wages),
           work_time_hour,
           work_time_type,
         }
@@ -3556,9 +3556,9 @@ export default function userForeman() {
           identity: identity,
           worktime_define: data.work,
           overtime_type: data.type,
-          overtime_money: data.day,
+          overtime_money: data.addWork,
           money: data.money,
-          overtime: data.addWork,
+          overtime: data.day,
           group_info: groupInfos,
           business_type: tabData.id,
         }

@@ -620,7 +620,7 @@ export default function Foreman() {
               <Input
                 className='publish-list-input-amount'
                 type='digit'
-                maxLength={9}
+                maxLength={10}
                 placeholder='请填写工程量'
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
@@ -639,7 +639,7 @@ export default function Foreman() {
               <Input
                 className='publish-list-input'
                 type='digit'
-                maxLength={9}
+                maxLength={10}
                 placeholder='请填写单价'
                 onInput={(e) => handleInput('price', e)}
                 value={model && model.price}
@@ -677,7 +677,7 @@ export default function Foreman() {
                 className='publish-list-input'
                 type='digit'
                 // disabled
-                maxLength={16}
+                maxLength={17}
                 onInput={(e) => handleInput('borrowing', e)}
                 placeholder='请输入本次借支金额'
                 value={model && model.borrowing}

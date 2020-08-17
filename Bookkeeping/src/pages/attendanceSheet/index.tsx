@@ -248,13 +248,13 @@ export default function AttendanceSheet() {
                       if (dayItem[j].type) {
                         const data = JSON.parse(JSON.stringify(dayItem[j]));
                         if (data.type) {
-                          data.type.hour.work_time = parseFloat(res.data[i].hour[z].total.work_time);
-                          data.type.hour.over_time = parseFloat(res.data[i].hour[z].total.over_time);
+                          data.type.hour.work_time = toFixedFn((parseFloat(res.data[i].hour[z].total.work_time)));
+                          data.type.hour.over_time = toFixedFn(parseFloat(res.data[i].hour[z].total.over_time));
                           dayItem[j] = data;
                         }
                       } else {
-                        type.hour.work_time = parseFloat(res.data[i].hour[z].total.work_time);
-                        type.hour.over_time = parseFloat(res.data[i].hour[z].total.over_time);
+                        type.hour.work_time = toFixedFn(parseFloat(res.data[i].hour[z].total.work_time));
+                        type.hour.over_time = toFixedFn(parseFloat(res.data[i].hour[z].total.over_time));
                         dayItem[j].type = type;
                       }
                     }
@@ -293,12 +293,12 @@ export default function AttendanceSheet() {
                       if (dayItem[j].type) {
                         if (dayItem[j].type) {
                           const data = JSON.parse(JSON.stringify(dayItem[j]))
-                          type.borrow.borrow = parseFloat(res.data[i].borrow[z].total.money).toFixed(2);
+                          type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money)).toFixed(2);
                           data.type.borrow = type.borrow;
                           dayItem[j] = data;
                         }
                       } else {
-                        type.borrow.borrow = parseFloat(res.data[i].borrow[z].total.money).toFixed(2);
+                        type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money)).toFixed(2);
                         dayItem[j].type = type;
                       }
                     }
@@ -316,14 +316,14 @@ export default function AttendanceSheet() {
                       if (dayItem[j].type) {
                         if (dayItem[j].type) {
                           const data = JSON.parse(JSON.stringify(dayItem[j]))
-                          type.work.work_time = parseFloat(res.data[i].work[z].total.work_time);
-                          type.work.over_time = parseFloat(res.data[i].work[z].total.over_time);
+                          type.work.work_time = toFixedFn(parseFloat(res.data[i].work[z].total.work_time));
+                          type.work.over_time = toFixedFn(parseFloat(res.data[i].work[z].total.over_time));
                           data.type.work = type.work;
                           dayItem[j] = data;
                         }
                       } else {
-                        type.work.work_time = parseFloat(res.data[i].work[z].total.work_time);
-                        type.work.over_time = parseFloat(res.data[i].work[z].total.over_time);
+                        type.work.work_time = toFixedFn(parseFloat(res.data[i].work[z].total.work_time));
+                        type.work.over_time = toFixedFn(parseFloat(res.data[i].work[z].total.over_time));
                         dayItem[j].type = type;
                       }
                     }
@@ -637,8 +637,8 @@ export default function AttendanceSheet() {
                 if (hourDataSum[j].date_num == dayArrList[i].name){
                   let type = {
                     hour: {
-                      work_time: hourDataSum[j].total.work_time,
-                      over_time: hourDataSum[j].total.over_time
+                      work_time: toFixedFn(hourDataSum[j].total.work_time),
+                      over_time: toFixedFn(hourDataSum[j].total.over_time)
                     }
                   }
                   if (dayArrList[i].type){
@@ -657,8 +657,8 @@ export default function AttendanceSheet() {
                 if (workDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
                     work: {
-                      work_time: workDataSum[j].total.work_time,
-                      over_time: workDataSum[j].total.over_time
+                      work_time: toFixedFn(workDataSum[j].total.work_time),
+                      over_time: toFixedFn(workDataSum[j].total.over_time)
                     }
                   }
                   if (dayArrList[i].type) {
@@ -696,7 +696,7 @@ export default function AttendanceSheet() {
                 if (borrowDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
                     borrow: {
-                      borrow: borrowDataSum[j].total.money
+                      borrow: toFixedFn(borrowDataSum[j].total.money).toFixed(2)
                     }
                   }
                   if (dayArrList[i].type) {
@@ -767,20 +767,20 @@ export default function AttendanceSheet() {
             borrow = {}
           } else {
             borrow = {
-              borrow: borrowNum,
+              borrow: toFixedFn(borrowNum).toFixed(2),
             }
           }
           let hour;
           if (hourWorkNum == 0 && hourOverNum ==0 ){
             hour = {}
           }else{
-            hour= { work_time: hourWorkNum, over_time: hourOverNum }
+            hour = { work_time: toFixedFn(hourWorkNum), over_time: toFixedFn(hourOverNum) }
           }
           let work;
           if (workWorkNum == 0 && workOverNum == 0 ){
             work = {}
           }else{
-            work = { work_time: workWorkNum, over_time: workOverNum }
+            work = { work_time: toFixedFn(workWorkNum), over_time: toFixedFn(workOverNum) }
           }
           let sumLeft = [
             { id: 1, name: '本月总计' },
@@ -831,6 +831,10 @@ export default function AttendanceSheet() {
         setleftTime(false);
         setrightTime(false);
       })
+  }
+  const toFixedFn = (num:any)=>{
+    const data = Math.floor(num * 100) / 100
+    return  data;
   }
   // 设置时间
   const handleTime = (e) => {
@@ -982,7 +986,7 @@ export default function AttendanceSheet() {
                         {val.default &&
                           <View open-type="share">
                             <Button className='blued' open-type="share">
-                              微信对工
+                              微信对工>
                         </Button>
                           </View>
                         }
@@ -1008,7 +1012,7 @@ export default function AttendanceSheet() {
                           <View>{val.amount.num}{val.amount.num ? '笔' : ''}</View>
                         </View>}
                         {JSON.stringify(val.borrow) !== '{}' && <View className='box-height'>
-                          <View>{val.borrow.borrow}</View>
+                          <View className='buled'>{val.borrow.borrow}</View>
                         </View>}
                       </View>}
                     </View>
@@ -1047,7 +1051,7 @@ export default function AttendanceSheet() {
                         }
                         {val.type.borrow && v.type.borrow ?
                           <View className='box-height'>
-                            <View>{val.type.borrow.borrow}</View>
+                            <View className='buled'>{val.type.borrow.borrow}</View>
                           </View> :
                           <View>{v.type.borrow && <View className='box-list-bao'></View>}</View>
                         }
