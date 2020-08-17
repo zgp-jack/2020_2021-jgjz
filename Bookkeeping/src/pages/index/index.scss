@@ -537,3 +537,11 @@
   width: 10rpx;
   background-size: contain;
 }
+.noImgBox{
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  background-size: contain;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}

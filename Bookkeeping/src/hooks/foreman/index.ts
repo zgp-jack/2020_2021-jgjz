@@ -952,8 +952,11 @@ export default function userForeman() {
     }
   }
   const toFixedFn = (num: any) => {
-    const data = Math.floor(num * 100) / 100
-    return data;
+    let nums = num + "";
+    if (nums.indexOf('.') + 1 > 0) {
+      nums = nums.substring(0, nums.indexOf(".") + 3);
+    }
+    return Number(nums);
   }
   // 对应月份日期
   const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[]) => {

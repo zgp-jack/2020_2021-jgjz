@@ -766,8 +766,11 @@ export default function Share() {
     })
   }
   const toFixedFn = (num: any) => {
-    const data = Math.floor(num * 100) / 100
-    return data;
+    let nums = num + "";
+    if (nums.indexOf('.') + 1 > 0) {
+      nums = nums.substring(0, nums.indexOf(".") + 3);
+    }
+    return Number(nums);
   }
   // 设置时间
   const handleTime = (e) => {

@@ -66,6 +66,10 @@ const Images = [
   {
     url: `${IMGCDNURL}noviceGuidance5.png`,
     id: 5
+  },
+  {
+    url: `${IMGCDNURL}noviceGuidance6.png`,
+    id: 6
   }
 ]
 // export interface Item {
@@ -927,7 +931,12 @@ export default function Index() {
       {/* <UseNavInfo/> */}
       {/* <AtNavBar/> */}
       {<View style={{ visibility: hidden ? 'visible' : 'hidden' }} >
-        <Image src={image} className={closeImage ? 'noImages' : 'images'} onClick={() => { hanleImage(image) }} />
+        {Images.map((v) => (
+          <Image src={v.url} key={v.id} className='noImages' />
+        ))}
+        <View className='noImgBox'>
+          <Image src={image} className={closeImage ? 'noImages' : 'images'} onClick={() => { hanleImage(image) }} />
+        </View>
       </View>
       }
       {/* 头部 */}
