@@ -7,6 +7,7 @@ import { IMGCDNURL } from '../../config';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
 import { Type } from '../../config/store'
+import classnames from 'classnames'
 import './index.scss'
 
 interface DateTyep {
@@ -216,24 +217,24 @@ export default function AttendanceSheet() {
               // 记工
               if (res.data[i].hour.length > 0) {
                 typeObj.type.hour = true;
-                hourSumWork = res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0)
-                hourSumTime = res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0)
+                hourSumWork = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0))
+                hourSumTime = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0))
               }
               //  包工(量)
               if (res.data[i].amount.length > 0) {
                 typeObj.type.amount = true;
-                amountSum = res.data[i].amount.reduce((accumulator, currentValue) => accumulator + currentValue.list.length, 0);
+                amountSum = toFixedFn(res.data[i].amount.reduce((accumulator, currentValue) => accumulator + currentValue.list.length, 0));
               }
               //借支
               if (res.data[i].borrow.length > 0) {
                 typeObj.type.borrow = true;
-                borrowSum = (res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0)).toFixed(2)
+                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0))).toFixed(2)
               }
               // 包工(天)
               if (res.data[i].work.length > 0) {
                 typeObj.type.work = true
-                workSumWork = res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0)
-                workSumTime = res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0)
+                workSumWork = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0))
+                workSumTime = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0))
               }
               for (let j = 0; j < dayItem.length; j++) {
                 if (res.data[i].hour.length > 0) {
@@ -982,7 +983,15 @@ export default function AttendanceSheet() {
                   {v.list.map(val => (
                     <View className='middle'>
                       {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && (!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) ? 'box-none' : 'box-list-default'}>
-                        <View className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount) || (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour)))) ? 'hidden' : 'mt20'}>{val.name}</View>
+                        <View 
+                          // className={
+                          //   classnames({
+                          //     'mt20': (v.type.hour && !v.type.work && !v.type.borrow && !v.type.amount) || (!v.type.hour && v.type.work && !v.type.borrow && !v.type.amount) || (!v.type.hour && !v.type.work && v.type.borrow && !v.type.amount) || (!v.type.hour && !v.type.work && !v.type.borrow && v.type.amount)
+
+                          //   })
+                          // }
+                        className={(((v.type.hour && (!v.type.work) && (!v.type.borrow) && (!v.type.amount) || (!v.type.amount)))) || ((v.type.work && (!v.type.hour) && (!v.type.borrow) || (!v.type.amount)) || ((v.type.borrow && (!v.type.work) && (!v.type.hour) || (!v.type.amount))) || ((v.type.amount && (!v.type.work) && (!v.type.borrow) || (!v.type.hour)))) ? 'hidden' : 'mt20'}
+                        >{val.name}</View>
                         {val.default &&
                           <View open-type="share">
                             <Button className='blued' open-type="share">
