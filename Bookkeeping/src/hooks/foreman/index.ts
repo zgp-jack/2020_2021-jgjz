@@ -488,6 +488,8 @@ export default function userForeman() {
           setLeader_id(res.data.latest_group_info.leader_id)
           title = res.data.latest_group_info.name[0] + '-' + res.data.latest_group_info.name[1];
           id = res.data.latest_group_info.id;
+          console.log('走这里','leader_name');
+          console.log(res.data.latest_group_info.leader_name)
           setForemanTitle(res.data.latest_group_info.leader_name||'')
           // 区分是工人还是班组长
           if (identity == 1) {
@@ -648,6 +650,7 @@ export default function userForeman() {
               setWageStandard(wageStandardData)
               setCacheWage(wageStandardData)
             }else{
+              console.log('1111','res.data.latest_group_workers_has_wage.length')
               setForemanTitle('')
             }
             setProjectId(res.data.latest_group_info.id)
@@ -667,6 +670,7 @@ export default function userForeman() {
           dispatch(setPhoneList(workArr));
           setWorkerItem(workArr);
           setForemanTitle('')
+          setLeader_id('')
           let type = Taro.getStorageSync(Type);
           // latest_group_workers  上次记工班组中的工人
           // latest_group_workers_has_wage  上次记工班组  中有工资的工人
@@ -681,6 +685,7 @@ export default function userForeman() {
               title = res.data.group_info[0].group_name + '-' + res.data.group_info[0].name;
               console.log(title,'title')
               setForemanTitle(res.data.group_info[0].leader_name)
+
               setProjectId(res.data.group_info[0].group_id +','+ res.data.group_info[0].id)
               console.log(res.data.group_info[0].group_info,'xx')
               setGroupInfo(res.data.group_info[0].group_id +','+ res.data.group_info[0].id)
