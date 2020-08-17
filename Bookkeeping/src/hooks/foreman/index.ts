@@ -2550,13 +2550,6 @@ export default function userForeman() {
     setWorkOvertimeDisplay(true);
     setIsdisable(true)
   }
-  const toFixedFn = (num:any)=>{
-    let nums = num + '';
-    if(nums.indexOf('.')+1>0){
-      nums = nums.substring(0,nums.indexOf(".")+3);
-    }
-    return  Number(nums);
-  }
   // 确认时间选择
   const handleWorkOvertimeOk = () => {
     const data: any = timeArr.filter(v => v.click);
@@ -4348,6 +4341,7 @@ export default function userForeman() {
     setDeldelType(false)
     // 全选
     setClickNum(0);
+    setNum(0);
     setAllClick(false)
     setCheckAll(false);
     setClickModalNum(0)
@@ -4364,7 +4358,6 @@ export default function userForeman() {
       }
       return val;
     })
-    
     setRecorderTypeArr({ item: data })
   }
   // 获取缓存

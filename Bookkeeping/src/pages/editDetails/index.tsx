@@ -1027,43 +1027,6 @@ export default function EditDetails() {
     setWorkingHoursDisplay(false);
     setWorkOvertimeDisplay(true);
   }
-  // 工程量 单价 工钱的输入正则
-  const dealInputVal =(value,num?:number,type?:string)=> {
-    value = value.replace(/^0*(0\.|[1-9])/, "$1");
-    value = value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
-    value = value.replace(/^\./g, ""); //验证第一个字符是数字而不是字符
-    value = value.replace(/\.{1,}/g, "."); //只保留第一个.清除多余的
-    if(num){
-      if (value.split(".")[1] && value.split(".")[1].length>2){
-        Msg('超出最大输入范围')
-      }
-      if(num ===7){
-        if (value.split(".")[0] && value.split(".")[0].length>num){
-          Msg('超出最大输入范围')
-        }
-      } else if (num === 14){
-        if (value.split(".")[0] && value.split(".")[0].length > num) {
-          Msg('超出最大输入范围')
-        }
-      }
-    }
-    value = value
-      .replace(".", "$#$")
-      .replace(/\./g, "")
-      .replace("$#$", ".");
-    value = value.replace(/^(\-)*(\d*)\.(\d\d).*$/, "$1$2.$3"); //只能输入两个小数
-    value =
-      value.indexOf(".") > 0
-        ? value.split(".")[0].substring(0, num) + "." + value.split(".")[1]
-        : value.substring(0, num);
-        console.log(value,'value')
-    let data = JSON.parse(JSON.stringify(val));
-    if(type){
-      data[type] = value;
-      setVal(data);
-    }
-    return value;
-  }
   // 保存
   const handlesub = ()=>{
     const data = JSON.parse(JSON.stringify(val));
