@@ -780,7 +780,7 @@ export default function Share() {
     if (isNaN(f)) {
       return false;
     }
-    f = Math.round(num * 100) / 100;
+    f = Math.round(num * 1000) / 1000;
     let s = f.toString();
     let rs = s.indexOf('.');
     if (rs < 0) {
@@ -790,7 +790,7 @@ export default function Share() {
     while (s.length <= rs + 2) {
       s += '0';
     }
-    console.log(s, 'xxxx')
+    s = s.substring(0, s.indexOf(".") + 3);
     return Number(s);
   }
   // 设置时间

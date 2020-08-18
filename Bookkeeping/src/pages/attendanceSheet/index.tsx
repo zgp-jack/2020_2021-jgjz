@@ -847,7 +847,7 @@ export default function AttendanceSheet() {
     if (isNaN(f)) {
       return false;
     }
-     f = Math.round(num * 100) / 100;
+     f = Math.round(num * 1000) / 1000;
     let s = f.toString();
     let rs = s.indexOf('.');
     if (rs < 0) {
@@ -857,6 +857,7 @@ export default function AttendanceSheet() {
     while (s.length <= rs + 2) {
       s += '0';
     }
+    s = s.substring(0, s.indexOf(".") + 3);
     console.log(s,'xxxx')
     return Number(s);
   }
