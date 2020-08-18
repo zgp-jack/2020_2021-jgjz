@@ -758,7 +758,7 @@ export default function Share() {
           // 获取身份
           console.log(obj, 'obj')
           // let type = Taro.getStorageSync(Type);
-          if (identity === 1) {
+          if (identity === '1') {
             setFixedTab([...leftArr, ...arr, obj]);
             setTabArr([...rightArr, ...listArr, sum]);
           } else {
