@@ -791,7 +791,7 @@ export default function AttendanceSheet() {
             work = { work_time: toFixedFn(workWorkNum), over_time: toFixedFn(workOverNum) }
           }
           let sumLeft = [
-            { id: 1, name: '总计', default:true },
+            { id: 1, name: '总计', default:true, isSum:true },
             {
               id: 2, type: {
                 hour: sumHour,
@@ -1018,7 +1018,7 @@ export default function AttendanceSheet() {
                       }
                       )}
                         >{val.name}</View>
-                        {val.default &&
+                        {val.default && !val.isSum &&
                           <View open-type="share">
                             <Button className='blued' open-type="share">
                               微信对工>

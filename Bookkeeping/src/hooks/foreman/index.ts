@@ -350,7 +350,6 @@ export default function userForeman() {
     let type = Taro.getStorageSync(Type);
     // 设置身份
     setIdentity(type);
-    console.log(cache,'cache')
     if (useSelectorItem.workerList.length > 0){
       if (identity === 2) {
         setForeman(useSelectorItem.workerList);
@@ -368,8 +367,6 @@ export default function userForeman() {
           arrList.splice(i, 1)
         }
       }
-      console.log(data,'moneyListmoneyList');
-      console.log(arrList,'arrListarrList')
       const item = [objs, ...arrList];
       if (data.length > 0) {
         for (let j = 0; j < data.length; j++) {
@@ -3381,8 +3378,8 @@ export default function userForeman() {
               setProjectId('');
               setGroupInfo('');
               // 清空通讯录的reducer
-              dispatch(setPhoneList([]));
-              dispatch(setWorker([]));
+              // dispatch(setPhoneList([]));
+              // dispatch(setWorker([]));
               // 全选为0
               setClickNum(0);
               setAllClick(false)
