@@ -689,7 +689,6 @@ export default function Index() {
         setTips(false)
         setType(dignity);
         Taro.setStorageSync(Type, dignity);
-        Msg('开始为工人记工吧')
         setTimeout(() => {
           bkGetProjectTeam(1, 1)
         }, 1000)
@@ -1036,7 +1035,7 @@ export default function Index() {
           </View>
           <View className='btnBox'>
             <View className='btn' onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`, true)}>
-              {!item || (item && item.business_list.data.length === 0) ? <Text className='fontSize'> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text  className='fontSize'> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
+              {!item || (item && item.business_list.data.length === 0) ? <Text className='fontSize'> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text  className='fontSize'> 再记一笔<Text className='btn-title'>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
               <View className='notepad-Icon'><Image className='notepad-Icon-iamge' src={`${IMGCDNURL}notepad.png`} /></View>
