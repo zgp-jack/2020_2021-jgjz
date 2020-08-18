@@ -123,7 +123,7 @@ export default function FlowingWaterDetails() {
     })
   }
   const moneyfilter = (num,overnum,decimal)=>{
-    if(Number(overnum)==0){
+    if(Number(overnum)==0 || Number(num)==0){
       return 0;
     }else{
       num = num/overnum

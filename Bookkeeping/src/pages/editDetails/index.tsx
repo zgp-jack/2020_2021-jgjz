@@ -5,7 +5,8 @@ import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageActio
 import { View, Text, Input, Textarea, RadioGroup, Radio, Image, CoverView } from '@tarojs/components';
 import WageStandard  from '../../components/wageStandard'
 import Quantities from '../../components/quantities';
-import { useSelector } from '@tarojs/redux'
+import { useDispatch, useSelector } from '@tarojs/redux'
+import { setFlowingWater } from '../../actions/flowingWater';
 import Msg from '../../utils/msg'
 import { IMGCDNURL } from '../../config'
 import WorkingHours from '../../components/workingHours';
@@ -26,7 +27,7 @@ interface ValType{
   unitNum:string,
   unit:string,
   unitPrice:string,
-  money:string,
+  money:any,
 }
 interface ImageDataType {
   item: ImageItem[],
@@ -45,6 +46,7 @@ interface DataType {
   num?: number
 }
 export default function EditDetails() {
+  const dispatch = useDispatch()
   const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
   const { id,typeItem } = router.params;
@@ -118,7 +120,7 @@ export default function EditDetails() {
   const [wageStandard, setWageStandard] =useState<any>({
     data: [
       { id: 1, name: '按小时算', click: false },
-      { id: 2, name: '按天算', click: false },
+      { id: 2, name: '按工天算', click: false },
     ],
     work: 0,
     money: 0,
@@ -263,7 +265,7 @@ export default function EditDetails() {
             wages = ((+res.data.worker_money)* (+res.data.work_time)) + (((+res.data.worker_money) / (+res.data.worker_overtime)) * (+res.data.overtime))
           }
           obj.wages = toFixedFn(wages);
-          obj.unitNum = parseInt(res.data.unit_num);
+          obj.unitNum = toFixedFn(parseFloat(res.data.unit_num));
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
           setVal(obj);
@@ -419,7 +421,7 @@ export default function EditDetails() {
     setBorrowing({item:data});
   }
   const moneyfilter = (num, overnum, decimal) => {
-    if(Number(overnum)==0){
+    if(Number(overnum)==0 || Number(num)==0){
       return 0;
     }else{
       num = num/overnum
@@ -494,7 +496,10 @@ export default function EditDetails() {
     }
     if (type === 'money') {
       const item = JSON.parse(JSON.stringify(wageStandard));
-      const dayAddWork = e / item.day;
+      let dayAddWork = 0;
+      if(item.day!==0){
+        dayAddWork = e / item.day;
+      }
       item[type] = e;
       item.dayAddWork = toFixedFn(dayAddWork);
       setWageStandard(item);
@@ -613,7 +618,7 @@ export default function EditDetails() {
     let num: any = 0;
     // if (num && !Object.is(num, NaN)){
     num = toFixedFn(sum);
-    setVal({ ...valData, wages:num})
+    setVal({ ...valData, money:num})
     setWageStandardDisplay(false);
     setIsdisable(false);
     let params;
@@ -959,7 +964,7 @@ export default function EditDetails() {
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
     const num = toFixedFn(wages);
-    setVal({ ...val, duration: title, wages: num })
+    setVal({ ...val, duration: title, money: num })
     setDisplay(false);
     setIsdisable(false);
   }
@@ -1161,11 +1166,14 @@ export default function EditDetails() {
                   item[key] = params[key]
                 })
                 if(item.business_type == 3){
-                  element.total_borrow += Number(item.money);
+                  // element.total_borrow -= Number(item.money);
+                  element.total_borrow += Number(params.money);
                 }else{
-                  element.total_money += Number(item.money);
+                  // element.total_money -= Number(item.money);
+                  element.total_money += Number(params.money);
                 }
-              }else{
+              }
+              else{
                 if(item.business_type == 3){
                   element.total_borrow += Number(item.money);
                 }else{
@@ -1175,6 +1183,7 @@ export default function EditDetails() {
             });
           });
         }
+        // dispatch(setFlowingWater([]))
         Msg(res.msg);
         Taro.navigateBack();
       }else{
@@ -1430,7 +1439,7 @@ export default function EditDetails() {
               type='text'
               disabled
               placeholder='请选择工钱'
-              value={val.wages}
+              value={val.money}
               // value={'11111111111111'}
             />
             <View className='rightIconsBox'>
