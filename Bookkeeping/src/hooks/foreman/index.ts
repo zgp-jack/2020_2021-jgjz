@@ -525,7 +525,7 @@ export default function userForeman() {
                     wageStandardData.data[i].click = false
                   }
                 }
-                wageStandardData.work = data.worktime_define;
+                wageStandardData.work = parseInt(data.worktime_define);
                 wageStandardData.money = data.money;
                 wageStandardData.addWork = data.overtime_money;
                 wageStandardData.day = data.overtime;
@@ -614,7 +614,7 @@ export default function userForeman() {
                   wageStandardData.data[i].click = false
                 }
               }
-              wageStandardData.work = data.worktime_define;
+              wageStandardData.work = parseInt(data.worktime_define);
               wageStandardData.money = data.money;
               // wageStandardData.addWork = data.overtime_money;
               // wageStandardData.day = data.overtime;
@@ -738,7 +738,7 @@ export default function userForeman() {
                 if(res.data.default_group_workers_has_wage.length>0){
                   
                   const data = res.data.default_group_workers_has_wage[0];
-                  wageStandardData.work = data.worktime_define;
+                  wageStandardData.work = parseInt(data.worktime_define);
                   wageStandardData.money = data.money;
                   // wageStandardData.addWork = data.overtime_money;
                   // wageStandardData.day = data.overtime;
@@ -2203,6 +2203,10 @@ export default function userForeman() {
         if (value.split(".")[0] && value.split(".")[0].length > num) {
           Msg('超出最大输入范围')
         }
+      }else if(num === 4){
+        if (value.split(".")[0] && value.split(".")[0].length > num) {
+          Msg('超出最大输入范围')
+        }
       }
     }
     value = value
@@ -2216,8 +2220,34 @@ export default function userForeman() {
         : value.substring(0, num);
     let data = JSON.parse(JSON.stringify(model));
     if(type){
-      data[type] = value;
-      setModel({ ...data });
+      if(type === 'day' || type === 'work'){
+        if(parseFloat(value)>24){
+          const data = 24;
+          const item = JSON.parse(JSON.stringify(wageStandard));
+          item[type] = 24;
+          let num: number | string = 0.00;
+          if (item.money > 0 && data > 0) {
+            num = item.money / data
+          }
+          console.log(num,'num')
+          item.dayAddWork = (toFixedFn(num));
+          setWageStandard(item);
+          console.log(data,'data')
+          return data 
+        }
+        const item = JSON.parse(JSON.stringify(wageStandard));
+        item[type] = parseInt(value);
+        let num: number | string = 0.00;
+        if (item.money > 0 && value > 0) {
+          num = item.money / value
+        }
+        item.dayAddWork = toFixedFn(num);
+        setWageStandard(item);
+        return value
+      }else{
+        data[type] = value;
+        setModel({ ...data });
+      }
     }
     return value;
   }
@@ -2999,6 +3029,7 @@ export default function userForeman() {
   const handleWageStandard = (type: string, e: any) => {
     // const cacheItem = JSON.parse(JSON.stringify(cacheWage));
     if (type == 'day') {
+      return dealInputVal(e.detail.value,4,type)
       const item = JSON.parse(JSON.stringify(wageStandard));
       item[type] = e;
       if(e == 24){
@@ -3046,10 +3077,7 @@ export default function userForeman() {
       return;
     }
     if(type === 'work'){
-      console.log(e);
-      if(e == 24){
-        Msg('超出了最大输入范围')
-      }
+      return dealInputVal(e.toString(), 4, type)
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = e;

@@ -130,3 +130,16 @@
 .red{
   color: red;
 }
+
+.atInputNumber{
+  display: flex;
+}
+.inputBox{
+  height: 32rpx;
+  width: 64rpx;
+  border: 1rpx solid #ccc;
+  margin-right: 18rpx;
+  margin-left: 18rpx;
+  color: red;
+  text-align: center;
+}
