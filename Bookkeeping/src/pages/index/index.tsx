@@ -1138,8 +1138,8 @@ export default function Index() {
         <View className='AtModal'>
           <View className='AtModal-top'>当前是<Text className='atModal-name'>【{type == 1 ? '班组长' : '工人'}】</Text>身份</View>
           <View className='mtList'>与上一次记工身份不一致，是否<Text className='atModal-change'>切换?</Text></View>
-          <View className='atModal-list' onClick={() => handleType(1)}>切换成【{type == 1 ? '工人' : '班组长'}】</View>
           <View className='atModal-list' onClick={() => handleType(0)}>不切换</View>
+          <View className='atModal-list' onClick={() => handleType(1)}>切换成【{type == 1 ? '工人' : '班组长'}】</View>
           <View className='atModal-list' onClick={() => handleType(2)}><Text className='blued'>不再提醒</Text></View>
         </View>
       </AtModal>

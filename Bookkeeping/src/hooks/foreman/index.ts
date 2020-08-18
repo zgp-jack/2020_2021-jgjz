@@ -299,6 +299,8 @@ export default function userForeman() {
   const [toDayString, setToDayString] = useState<string>('');
   // 备注是否disable
   const [isdisable,setIsdisable] = useState<boolean>(false)
+  // 跳转考勤表
+  const [jumpMonth, setJumpMonth] = useState<string>('')
   // const [noData, setNoData] = useState<boolean>(false)
   // 刷新
   //农历1949-2100年查询表
@@ -350,7 +352,6 @@ export default function userForeman() {
     let type = Taro.getStorageSync(Type);
     // 设置身份
     setIdentity(type);
-    console.log(cache,'cache')
     if (useSelectorItem.workerList.length > 0){
       if (identity === 2) {
         setForeman(useSelectorItem.workerList);
@@ -368,8 +369,6 @@ export default function userForeman() {
           arrList.splice(i, 1)
         }
       }
-      console.log(data,'moneyListmoneyList');
-      console.log(arrList,'arrListarrList')
       const item = [objs, ...arrList];
       if (data.length > 0) {
         for (let j = 0; j < data.length; j++) {
@@ -647,6 +646,20 @@ export default function userForeman() {
               // } else {
               //   setForemanTitle('')
               // }
+              setWageStandard(wageStandardData)
+              setCacheWage(wageStandardData)
+            }else{
+              const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+              wageStandardData.work = 0;
+              wageStandardData.addWork = 0.00;
+              wageStandardData.money = 0.00;
+              wageStandardData.day = 0;
+              wageStandardData.type = 1;
+              wageStandardData.dayAddWork = 0.00;
+              wageStandardData.data = [
+                { id: 1, name: '按小时算', click: true },
+                { id: 2, name: '按工天算', click: false },
+              ],
               setWageStandard(wageStandardData)
               setCacheWage(wageStandardData)
             }
@@ -2891,6 +2904,29 @@ export default function userForeman() {
   //添加标准
   const handleAddStandard = () => {
     setAddStandard(1);
+    const obj ={
+      data: [
+        { id: 1, name: '按小时算', click: true },
+        { id: 2, name: '按工天算', click: false },
+      ],
+      // 上班模板
+      work: 0,
+      // 上班金额
+      money: 0.00,
+      // 加班钱（小时）
+      addWork: 0.00,
+      // 小时/天
+      type: 1,
+      // 加班多少小时算一台呢
+      day: 0,
+      // 自动换算加班多少每小时多少钱
+      dayAddWork: 0.00,
+      state: '',
+      group_info: '',
+      id: '',
+      worker_id: '',
+    }
+    setWageStandard(obj)
     setWagesModalDisplay(false);
     setWageStandardDisplay(true);
   }
@@ -2956,6 +2992,9 @@ export default function userForeman() {
     if (type == 'day') {
       const item = JSON.parse(JSON.stringify(wageStandard));
       item[type] = e;
+      if(e == 24){
+        Msg('超出了最大输入范围')
+      }
       let num: number | string = 0.00;
       if (item.money > 0 && e > 0) {
         num = toFixedFn(item.money / e).toFixed(2)
@@ -2977,7 +3016,9 @@ export default function userForeman() {
       } else {
         dayAddWork = e / item.day || 0.00;
       }
-      
+      if(e == 9999.99){
+        Msg('超出了最大输入范围')
+      }
       item[type] = e.toFixed(2);
       item.dayAddWork = toFixedFn(dayAddWork).toFixed(2) || 0.00;
       setWageStandard(item);
@@ -2989,8 +3030,17 @@ export default function userForeman() {
       const data = JSON.parse(JSON.stringify(wageStandard));
       data[type] = e.toFixed(2);
       setWageStandard(data);
+      if(e == 9999.99){
+        Msg('超出了最大输入范围')
+      }
       console.log(data,'data')
       return;
+    }
+    if(type === 'work'){
+      console.log(e);
+      if(e == 24){
+        Msg('超出了最大输入范围')
+      }
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = e;
@@ -3302,6 +3352,7 @@ export default function userForeman() {
                       // bkGetProjectTeam();
                       //直接保存
                     } else {
+                      JumpFn(timeItem);
                       dispatch(setWorker([]))
                       // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
                       setIsdisable(true);
@@ -3359,6 +3410,7 @@ export default function userForeman() {
               }, 800)
               //直接保存
             } else {
+              JumpFn(timeItem);
               dispatch(setWorker([]))
               // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
               setIsdisable(true);
@@ -3381,8 +3433,8 @@ export default function userForeman() {
               setProjectId('');
               setGroupInfo('');
               // 清空通讯录的reducer
-              dispatch(setPhoneList([]));
-              dispatch(setWorker([]));
+              // dispatch(setPhoneList([]));
+              // dispatch(setWorker([]));
               // 全选为0
               setClickNum(0);
               setAllClick(false)
@@ -3390,6 +3442,7 @@ export default function userForeman() {
               getList()
             }, 800)
           } else {
+            JumpFn(timeItem);
             setIsdisable(true);
             setDisplay(true)
           }
@@ -3398,6 +3451,35 @@ export default function userForeman() {
         }
       })
     }
+  }
+  const JumpFn = (timeItem)=>{
+    const month = toDayString.split('-')[1];
+    const year = toDayString.split('-')[0];
+    // 获取到日期
+    let arr: any = [];
+    timeItem.forEach((el: any) => {
+      const result = arr.findIndex((ol: any) => {
+        return el.month == ol.month && el.year == ol.year
+      })
+      if (result !== -1) {
+        console.log(result, 'result')
+        arr = [...arr, ...el]
+      } else {
+        arr.push(el)
+      }
+    })
+    const time = limit(arr, month);
+    setJumpMonth(time.year + '-' + time.month);
+  }
+  const limit = (arr, num)=> {
+    var newArr:any[] = [];
+    arr.map((x)=>{
+      // 对数组各个数值求差值
+      newArr.push(Math.abs(x.month - num));
+    });
+    // 求最小值的索引
+    var index = newArr.indexOf(Math.min.apply(null, newArr));
+    return arr[index];
   }
   const handleCalendar = (v) => {
   }
@@ -3659,13 +3741,26 @@ export default function userForeman() {
       return;
     }
     if (addStandard === 1) {
-      let params = {
-        name: '',
-        worktime_define: data.work,
-        overtime_type: data.type,
-        overtime_money: data.dayAddWork,
-        money: data.money,
-        overtime: data.day,
+      let params;
+      if(data.type == 1){
+        params = {
+          name: '',
+          worktime_define: data.work,
+          overtime_type: data.type,
+          overtime_money: data.addWork,
+          money: data.money,
+          overtime: data.day,
+        }
+      }else{
+        params = {
+          name: '',
+          worktime_define: data.work,
+          overtime_type: data.type,
+          overtime_money: data.addWork,
+          money: data.money,
+          overtime: data.day,
+          id: data.id
+        }
       }
       bkAddWageAction(params).then(res => {
         if (res.code === 200) {
@@ -3935,6 +4030,7 @@ export default function userForeman() {
         setIsdisable(false)
         setWorkerItem(data)
         bkGetWorkerWage();
+        setWageStandardDisplay(false)
         setWagesModalDisplay(false);
       } else {
         Msg(res.msg);
@@ -4563,6 +4659,7 @@ export default function userForeman() {
     setWageStandard,
     setTab,
     isdisable,
-    setIsdisable
+    setIsdisable,
+    jumpMonth
   }
 }
