@@ -55,6 +55,7 @@
 }
 
 .content-tips-time{
+  display: flex;
   font-weight: bold;
 }
 
@@ -209,4 +210,7 @@
   background-size: contain;
   height: 44rpx;
   width: 120rpx;
+}
+.month{
+  margin-left: 20rpx;
 }
