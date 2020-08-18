@@ -646,6 +646,20 @@ export default function userForeman() {
               // }
               setWageStandard(wageStandardData)
               setCacheWage(wageStandardData)
+            }else{
+              const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+              wageStandardData.work = 0;
+              wageStandardData.addWork = 0.00;
+              wageStandardData.money = 0.00;
+              wageStandardData.day = 0;
+              wageStandardData.type = 1;
+              wageStandardData.dayAddWork = 0.00;
+              wageStandardData.data = [
+                { id: 1, name: '按小时算', click: true },
+                { id: 2, name: '按工天算', click: false },
+              ],
+              setWageStandard(wageStandardData)
+              setCacheWage(wageStandardData)
             }
             setProjectId(res.data.latest_group_info.id)
             setGroupInfo(res.data.latest_group_info.id)

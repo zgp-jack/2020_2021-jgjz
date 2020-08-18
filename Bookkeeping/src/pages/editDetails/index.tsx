@@ -261,6 +261,7 @@ export default function EditDetails() {
             // 每个工多少钱/上班时间*选择的上班时长 + 每个工多少钱/多少钱算一个工*加班时长
             wages = ((+res.data.worker_money)* (+res.data.work_time)) + (((+res.data.worker_money) / (+res.data.worker_overtime)) * (+res.data.overtime))
           }
+          console.log(toFixedFn(wages),'toFixedFn(wages)')
           obj.wages = toFixedFn(wages);
           obj.unitNum = parseInt(res.data.unit_num);
           obj.unitPrice = res.data.unit_price;
@@ -362,12 +363,25 @@ export default function EditDetails() {
       })
     }
   },[])
-  const toFixedFn = (num:any)=>{
-    let nums = num + '';
-    if(nums.indexOf('.')+1>0){
-      nums = nums.substring(0,nums.indexOf(".")+3);
+  const toFixedFn = (num: any) => {
+    let f = parseFloat(num);
+    if (isNaN(f)) {
+      return false;
     }
-    return  Number(nums);
+    f = Math.round(num * 1000) / 1000;
+    let s = f.toString();
+    let rs = s.indexOf('.');
+    if (rs < 0) {
+      rs = s.length;
+      s += '.';
+    }
+    while (s.length <= rs + 2) {
+      s += '0';
+    }
+    // console.log(f,'ffff')
+    s = s.substring(0, s.indexOf(".") + 3);
+    console.log(s, 'xxxx')
+    return Number(s);
   }
   const addZero = (num) => {
     if (parseInt(num) < 10) {
