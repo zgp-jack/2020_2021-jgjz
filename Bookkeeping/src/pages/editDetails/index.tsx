@@ -393,7 +393,7 @@ export default function EditDetails() {
     // console.log(f,'ffff')
     s = s.substring(0, s.indexOf(".") + 3);
     console.log(s, 'xxxx')
-    return Number(s);
+    return s;
   }
   const addZero = (num) => {
     if (parseInt(num) < 10) {

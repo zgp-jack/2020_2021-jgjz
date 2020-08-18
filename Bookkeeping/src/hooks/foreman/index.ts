@@ -533,7 +533,7 @@ export default function userForeman() {
                 wageStandardData.group_info = data.group_info;
                 // wageStandardData.type = data.overtime_type;
                 if (parseFloat(data.money) && parseFloat(data.overtime)) {
-                  wageStandardData.dayAddWork = toFixedFn((parseFloat(data.money) / parseFloat(data.overtime) || 0)).toFixed(2);
+                  wageStandardData.dayAddWork = toFixedFn((parseFloat(data.money) / parseFloat(data.overtime) || 0));
                 } else {
                   wageStandardData.dayAddWork = 0.00
                 }
@@ -628,7 +628,7 @@ export default function userForeman() {
                 wageStandardData.day = data.overtime;
               // }
               if (parseFloat(data.money) && parseFloat(data.overtime)) {
-                wageStandardData.dayAddWork = toFixedFn(parseFloat(data.money) / parseFloat(data.overtime) || 0).toFixed(2);
+                wageStandardData.dayAddWork = toFixedFn(parseFloat(data.money) / parseFloat(data.overtime) || 0);
               } else {
                 wageStandardData.dayAddWork = 0.00
               }
@@ -759,7 +759,7 @@ export default function userForeman() {
                     }
                   }
                   if (parseFloat(data.money) && parseFloat(data.overtime)) {
-                    wageStandardData.dayAddWork = toFixedFn(parseFloat(data.money) / parseFloat(data.overtime) || 0).toFixed(2);
+                    wageStandardData.dayAddWork = toFixedFn(parseFloat(data.money) / parseFloat(data.overtime) || 0);
                   } else {
                     wageStandardData.dayAddWork = 0.00
                   }
@@ -965,14 +965,23 @@ export default function userForeman() {
     }
   }
   const toFixedFn = (num: any) => {
-    let nums = num + "";
-    if (nums.indexOf('.') + 1 > 0) {
-      nums = nums.substring(0, nums.indexOf(".") + 3);
-    }else{
-      nums = nums + '.00'
+    let f = parseFloat(num);
+    if (isNaN(f)) {
+      return false;
     }
-    console.log(nums,'111')
-    return Number(nums);
+    f = Math.round(num * 1000) / 1000;
+    let s = f.toString();
+    let rs = s.indexOf('.');
+    if (rs < 0) {
+      rs = s.length;
+      s += '.';
+    }
+    while (s.length <= rs + 2) {
+      s += '0';
+    }
+    s = s.substring(0, s.indexOf(".") + 3);
+    console.log(s, 'xxxx')
+    return s;
   }
   // 对应月份日期
   const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[]) => {
@@ -1868,7 +1877,7 @@ export default function userForeman() {
               }
             }
             if (parseFloat(data.money) && parseFloat(data.overtime)) {
-              wageStandardData.dayAddWork = toFixedFn(parseFloat(data.money) / parseFloat(data.overtime) || 0).toFixed(2);
+              wageStandardData.dayAddWork = toFixedFn(parseFloat(data.money) / parseFloat(data.overtime) || 0);
             } else {
               wageStandardData.dayAddWork = 0.00
             }
@@ -1879,7 +1888,7 @@ export default function userForeman() {
             const obj = JSON.parse(JSON.stringify(model));
             // model.workersWages = sum;
             if (models) {
-              models.workersWages = sum;
+              models.workersWages = toFixedFn(sum);
               setModel(models)
             }
             // setModel(obj)
@@ -2700,7 +2709,7 @@ export default function userForeman() {
       //     Msg(res.msg)
       //   }
       // })
-      let num = isNaN(total) ? 0 : total;
+      let num = isNaN(total) ? 0.00 : total;
       setModel({ ...model, workersWages: num, duration: title });
       setWorkOvertimeDisplay(false);
       setIsdisable(false)
@@ -2997,9 +3006,9 @@ export default function userForeman() {
       }
       let num: number | string = 0.00;
       if (item.money > 0 && e > 0) {
-        num = toFixedFn(item.money / e).toFixed(2)
+        num = item.money / e
       }
-      item.dayAddWork = num;
+      item.dayAddWork = toFixedFn(num);
       setWageStandard(item);
       return;
     }
@@ -3020,7 +3029,7 @@ export default function userForeman() {
         Msg('超出了最大输入范围')
       }
       item[type] = e.toFixed(2);
-      item.dayAddWork = toFixedFn(dayAddWork).toFixed(2) || 0.00;
+      item.dayAddWork = toFixedFn(dayAddWork) || 0.00;
       setWageStandard(item);
       // cacheItem.dayAddWork = dayAddWork.toFixed(2) || 0;
       // setCacheWage(cacheItem);
@@ -3468,17 +3477,22 @@ export default function userForeman() {
         arr.push(el)
       }
     })
-    const time = limit(arr, month);
+    const time = limit(arr, month, year);
     setJumpMonth(time.year + '-' + time.month);
   }
-  const limit = (arr, num)=> {
+  const limit = (arr, num, year)=> {
     var newArr:any[] = [];
     arr.map((x)=>{
       // 对数组各个数值求差值
-      newArr.push(Math.abs(x.month - num));
+      if (year == x.year){
+        newArr.push(Math.abs((+x.month) - (+num)));
+      }else{
+          const month =(+x.year)-(+year)*12
+          newArr.push(Math.abs((month+x.month) - (+num)));
+      }
     });
     // 求最小值的索引
-    var index = newArr.indexOf(Math.min.apply(null, newArr));
+    let index = newArr.indexOf(Math.min.apply(null, newArr));
     return arr[index];
   }
   const handleCalendar = (v) => {
@@ -3647,7 +3661,7 @@ export default function userForeman() {
     let groupInfoId = groupInfos;
     if (identity == 2) {
       //工资标准 每个工多少钱/上班标准 * 上班时长  判断加班是按小时算还是i按天算
-      let total = 0;
+      let total = 0.00;
       if (data.type === 1) {
         // 按小时算 加班小时* 模板加班金额
         total = (moneyNum / workNum) * (time * workNum) + addWorkNum * addTime;
@@ -3658,7 +3672,7 @@ export default function userForeman() {
         total = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);
       }
       // const num = total.toFixed(2);
-      let num: any = 0;
+      let num: any = 0.00;
       // if (num && !Object.is(num, NaN)){
       num = toFixedFn(total);
       // }
@@ -3879,7 +3893,7 @@ export default function userForeman() {
       }
     }
     if (v.overtime_type == 2) {
-      data.dayAddWork = toFixedFn((parseFloat(v.money) / parseFloat(v.overtime))).toFixed(2);
+      data.dayAddWork = toFixedFn((parseFloat(v.money) / parseFloat(v.overtime)));
     }
     setWageStandard(data)
   }
