@@ -801,7 +801,7 @@ export default function Share() {
     getList(time);
   }
   return (
-    <View className='content'>
+    <View className='AttendanceSheetContent'>
       <View>
         {busy &&
           <View className='busyBox'>
