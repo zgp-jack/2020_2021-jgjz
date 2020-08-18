@@ -11,6 +11,7 @@ import { IMGCDNURL } from '../../config'
 import WorkingHours from '../../components/workingHours';
 import WorkOvertime from '../../components/workOvertime';
 import './index.scss'
+import msg from 'src/reducers/notepad';
 interface ValType{
   note:string,
   name:string,
@@ -1036,6 +1037,7 @@ export default function EditDetails() {
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
     let typeState=0;
+
     if (businessTypes == 3){
       for (let i = 0; i < borrowingArr.length;i++){
         console.log(borrowingArr[i],'111')
@@ -1089,9 +1091,16 @@ export default function EditDetails() {
     }
     // 判断按量记录
     let params;
-    console.log(businessType,'businessType');
-    console.log(type,'213123')
     let types= JSON.parse(JSON.stringify(type));
+    if(businessType==3){
+      if(!Number(money)){
+        Msg('请输入本次借支金额')
+        return
+      }
+    }else if(!Number(money)&&!Number(data.unitNum)&&!Number(data.unitPrice)){
+      Msg('请填写工程量、单价或工钱');
+      return;
+    }
     if (businessType == 2 && types == 2){
       // unit
       params = {
@@ -1219,7 +1228,6 @@ export default function EditDetails() {
       data[type] = value;
       setVal({ ...data });
     }
-    console.log(value,'1111')
     return value;
   }
   // 关闭
@@ -1327,7 +1335,7 @@ export default function EditDetails() {
               type='digit'
               placeholder='请填写工程量'
               maxLength={10}
-              onInput={(e) => {handleInput('unitNum',e)}}
+              onInput={(e) => handleInput('unitNum',e)}
               value={val && val.unitNum}
             />
             <View className='amountType' onClick={()=>{setIsdisable(true);setQuantitiesDisplay(true)}}>{unit}
@@ -1343,7 +1351,7 @@ export default function EditDetails() {
               type='digit'
               placeholder='请填写单价'
               maxLength={10}
-              onInput={(e) => { handleInput('unitPrice', e) }}
+              onInput={(e) => handleInput('unitPrice', e)}
               value={val && val.unitPrice}
             />
           </View>
@@ -1355,7 +1363,7 @@ export default function EditDetails() {
               className='publish-list-input-color'
               type='digit'
               maxLength={16}
-              onInput={(e) => { handleInput('money', e) }}
+              onInput={(e) => handleInput('money', e)}
               placeholder='工程量和单价未知时，可直接填写'
               value={val && val.money}
             />
@@ -1373,7 +1381,7 @@ export default function EditDetails() {
                 type='digit'
                 // disabled
                 maxLength={17}
-                onInput={(e) => { handleInput('money', e) }}
+                onInput={(e) => handleInput('money', e)}
                 placeholder='请输入本次借支金额'
                 value={val && val.money}
               />
