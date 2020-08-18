@@ -130,6 +130,23 @@ export default function EditDetails() {
     id: '',
     worker_id:'',
   })
+  //关闭内容
+  const [closeWageStandard, setCloseWageStandard] = useState<any>({
+    data: [
+      { id: 1, name: '按小时算', click: false },
+      { id: 2, name: '按天算', click: false },
+    ],
+    work: 0,
+    money: 0,
+    addWork: 0,
+    type: 1,
+    day: 0,
+    dayAddWork: 0,
+    state: '',
+    group_info: '',
+    id: '',
+    worker_id: '',
+  })
   const [val,setVal] = useState<ValType>({
     note:'',
     name:'',
@@ -257,6 +274,7 @@ export default function EditDetails() {
             // 每个工多少钱/上班时间*选择的上班时长 + 加班多选小时*加班一小时多少钱
             // 每个工的钱*百分比 + 时间 *加班工钱
             wages = (+res.data.worker_money * +res.data.work_time) + (+res.data.overtime) * (+res.data.overtime_money)
+            // wages = 
           }else{
             // 每个工多少钱/上班时间*选择的上班时长 + 每个工多少钱/多少钱算一个工*加班时长
             wages = ((+res.data.worker_money)* (+res.data.work_time)) + (((+res.data.worker_money) / (+res.data.worker_overtime)) * (+res.data.overtime))
@@ -277,6 +295,7 @@ export default function EditDetails() {
           }
           setCompany(List)
           setUnit(res.data.unit)
+          setCloseWageStandard(data)
           setWageStandard(data)
           // 设置数据上班时长数据
           const timeArrData = JSON.parse(JSON.stringify(timeArr));
@@ -448,11 +467,11 @@ export default function EditDetails() {
   }
   // 关闭
   const handleClose = ()=>{
-    setDisplay(false);
-    setIsdisable(false);
     const data = JSON.parse(JSON.stringify(val));
     const title = data.duration;
     setVal({ ...data, modalDuration: title});
+    setDisplay(false);
+    setIsdisable(false);
     const clickDayItem = JSON.parse(JSON.stringify(clickDay));
     const clickTimeItem = JSON.parse(JSON.stringify(clickTime));
     console.log(clickDayItem,'clickDayItem');
@@ -469,7 +488,7 @@ export default function EditDetails() {
           if (clickDayItem.id !==4 ){
             timeArrs[i].click = true
           }else{
-            timeArrs[i] = { id: 4, name: clickDayItem.name, click: true, num: clickDayItem };
+            timeArrs[i] = { id: 4, name: clickDayItem.name, click: true, num: clickDayItem.num };
           }
         }
       }
@@ -483,7 +502,7 @@ export default function EditDetails() {
           if (clickTimeItem.id !== 2) {
             addWorkArrs[i].click = true
           } else {
-            addWorkArrs[i] = { id: 2, name: clickTimeItem.name, click: true, num: clickTimeItem };
+            addWorkArrs[i] = { id: 2, name: clickTimeItem.name, click: true, num: clickTimeItem.num };
           }
         }
       }
@@ -677,6 +696,9 @@ export default function EditDetails() {
         type: 'wage'
       }
     }
+    console.log(data,'data2312313');
+    setWageStandard(data);
+    setCloseWageStandard(data);
     // return;
     // let paramsData = {
     //   id: data.worker_id,
@@ -1238,6 +1260,9 @@ export default function EditDetails() {
   }
   // 关闭
   const handleWageStandardDisplay = ()=>{
+    const data = JSON.parse(JSON.stringify(closeWageStandard));
+    console.log(data,'xxxx');
+    setWageStandard(data);
     setWageStandardDisplay(false);
     setIsdisable(false);
   }
