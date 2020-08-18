@@ -5,12 +5,14 @@ import { bkBusinessOneAction, updateBusinessAction, bkSetWorkerIdentityWageActio
 import { View, Text, Input, Textarea, RadioGroup, Radio, Image, CoverView } from '@tarojs/components';
 import WageStandard  from '../../components/wageStandard'
 import Quantities from '../../components/quantities';
-import { useSelector } from '@tarojs/redux'
+import { useDispatch, useSelector } from '@tarojs/redux'
+import { setFlowingWater } from '../../actions/flowingWater';
 import Msg from '../../utils/msg'
 import { IMGCDNURL } from '../../config'
 import WorkingHours from '../../components/workingHours';
 import WorkOvertime from '../../components/workOvertime';
 import './index.scss'
+import msg from 'src/reducers/notepad';
 interface ValType{
   note:string,
   name:string,
@@ -25,7 +27,7 @@ interface ValType{
   unitNum:string,
   unit:string,
   unitPrice:string,
-  money:string,
+  money:any,
 }
 interface ImageDataType {
   item: ImageItem[],
@@ -44,6 +46,7 @@ interface DataType {
   num?: number
 }
 export default function EditDetails() {
+  const dispatch = useDispatch()
   const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
   const { id,typeItem } = router.params;
@@ -117,7 +120,7 @@ export default function EditDetails() {
   const [wageStandard, setWageStandard] =useState<any>({
     data: [
       { id: 1, name: '按小时算', click: false },
-      { id: 2, name: '按天算', click: false },
+      { id: 2, name: '按工天算', click: false },
     ],
     work: 0,
     money: 0,
@@ -271,7 +274,7 @@ export default function EditDetails() {
           // 工钱
           let wages;
           obj.wages = toFixedFn(res.data.money);
-          obj.unitNum = parseInt(res.data.unit_num);
+          obj.unitNum = toFixedFn(parseFloat(res.data.unit_num));
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
           setVal(obj);
@@ -441,7 +444,7 @@ export default function EditDetails() {
     setBorrowing({item:data});
   }
   const moneyfilter = (num, overnum, decimal) => {
-    if(Number(overnum)==0){
+    if(Number(overnum)==0 || Number(num)==0){
       return 0;
     }else{
       num = num/overnum
@@ -516,7 +519,10 @@ export default function EditDetails() {
     }
     if (type === 'money') {
       const item = JSON.parse(JSON.stringify(wageStandard));
-      const dayAddWork = e / item.day;
+      let dayAddWork = 0;
+      if(item.day!==0){
+        dayAddWork = e / item.day;
+      }
       item[type] = e;
       item.dayAddWork = toFixedFn(dayAddWork);
       setWageStandard(item);
@@ -635,7 +641,7 @@ export default function EditDetails() {
     let num: any = 0;
     // if (num && !Object.is(num, NaN)){
     num = toFixedFn(sum);
-    setVal({ ...valData, wages:num})
+    setVal({ ...valData, money:num})
     setWageStandardDisplay(false);
     setIsdisable(false);
     let params;
@@ -984,7 +990,7 @@ export default function EditDetails() {
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
     const num = toFixedFn(wages);
-    setVal({ ...val, duration: title, wages: num })
+    setVal({ ...val, duration: title, money: num })
     setDisplay(false);
     setIsdisable(false);
   }
@@ -1062,6 +1068,7 @@ export default function EditDetails() {
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
     let typeState=0;
+
     if (businessTypes == 3){
       for (let i = 0; i < borrowingArr.length;i++){
         console.log(borrowingArr[i],'111')
@@ -1115,9 +1122,16 @@ export default function EditDetails() {
     }
     // 判断按量记录
     let params;
-    console.log(businessType,'businessType');
-    console.log(type,'213123')
     let types= JSON.parse(JSON.stringify(type));
+    if(businessType==3){
+      if(!Number(money)){
+        Msg('请输入本次借支金额')
+        return
+      }
+    }else if(!Number(money)&&!Number(data.unitNum)&&!Number(data.unitPrice)){
+      Msg('请填写工程量、单价或工钱');
+      return;
+    }
     if (businessType == 2 && types == 2){
       // unit
       params = {
@@ -1178,11 +1192,14 @@ export default function EditDetails() {
                   item[key] = params[key]
                 })
                 if(item.business_type == 3){
-                  element.total_borrow += Number(item.money);
+                  // element.total_borrow -= Number(item.money);
+                  element.total_borrow += Number(params.money);
                 }else{
-                  element.total_money += Number(item.money);
+                  // element.total_money -= Number(item.money);
+                  element.total_money += Number(params.money);
                 }
-              }else{
+              }
+              else{
                 if(item.business_type == 3){
                   element.total_borrow += Number(item.money);
                 }else{
@@ -1192,6 +1209,7 @@ export default function EditDetails() {
             });
           });
         }
+        // dispatch(setFlowingWater([]))
         Msg(res.msg);
         Taro.navigateBack();
       }else{
@@ -1245,7 +1263,6 @@ export default function EditDetails() {
       data[type] = value;
       setVal({ ...data });
     }
-    console.log(value,'1111')
     return value;
   }
   // 关闭
@@ -1356,7 +1373,7 @@ export default function EditDetails() {
               type='digit'
               placeholder='请填写工程量'
               maxLength={10}
-              onInput={(e) => {handleInput('unitNum',e)}}
+              onInput={(e) => handleInput('unitNum',e)}
               value={val && val.unitNum}
             />
             <View className='amountType' onClick={()=>{setIsdisable(true);setQuantitiesDisplay(true)}}>{unit}
@@ -1372,7 +1389,7 @@ export default function EditDetails() {
               type='digit'
               placeholder='请填写单价'
               maxLength={10}
-              onInput={(e) => { handleInput('unitPrice', e) }}
+              onInput={(e) => handleInput('unitPrice', e)}
               value={val && val.unitPrice}
             />
           </View>
@@ -1384,7 +1401,7 @@ export default function EditDetails() {
               className='publish-list-input-color'
               type='digit'
               maxLength={16}
-              onInput={(e) => { handleInput('money', e) }}
+              onInput={(e) => handleInput('money', e)}
               placeholder='工程量和单价未知时，可直接填写'
               value={val && val.money}
             />
@@ -1402,7 +1419,7 @@ export default function EditDetails() {
                 type='digit'
                 // disabled
                 maxLength={17}
-                onInput={(e) => { handleInput('money', e) }}
+                onInput={(e) => handleInput('money', e)}
                 placeholder='请输入本次借支金额'
                 value={val && val.money}
               />
@@ -1451,7 +1468,7 @@ export default function EditDetails() {
               type='text'
               disabled
               placeholder='请选择工钱'
-              value={val.wages}
+              value={val.money}
               // value={'11111111111111'}
             />
             <View className='rightIconsBox'>

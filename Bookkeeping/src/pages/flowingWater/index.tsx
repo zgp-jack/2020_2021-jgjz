@@ -49,6 +49,8 @@ export default function FlowingWater() {
   const [identity, setIdentity]= useState<number>(1)
   // Picker 的value
   const [vals,setVals] = useState<string>('');
+  // 判断Picker是否禁用
+  const [isPicker,setisPicker] = useState<boolean>(false);
   // 日期需要的开始时间
   const [datestart,setDatestart] = useState<string>()
   // 日期需要的结束时间
@@ -209,8 +211,10 @@ export default function FlowingWater() {
     if(type === 0){
       setisSwipe(true);
       setIsCheckOut(true)
+      setisPicker(true);
     }else{
       setisSwipe(false);
+      setisPicker(false);
       const arr = JSON.parse(JSON.stringify(data.item));
       const list = arr.map(v => {
         v.arr.map(val => {
@@ -503,6 +507,7 @@ export default function FlowingWater() {
     <View className='flowingWater'>
       <View className='time'>
         <Picker
+          disabled={isPicker}
           mode='date'
           fields='month'
           start={datestart}
