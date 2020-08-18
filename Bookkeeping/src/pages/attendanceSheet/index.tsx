@@ -96,6 +96,7 @@ export default function AttendanceSheet() {
     const time = new Date();
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
     const times = timeMon || newTime;
+    console.log(times,'啊啊点拿觉得你是看见你的空间啊失败的恐惧啊')
     setVals(times);
     setYear(times.split('-')[0]);
     setMonth(times.split('-')[1]);

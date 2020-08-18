@@ -270,17 +270,7 @@ export default function EditDetails() {
           setStandard(standardObj);
           // 工钱
           let wages;
-          if (parseInt(res.data.overtime_type) === 1){
-            // 每个工多少钱/上班时间*选择的上班时长 + 加班多选小时*加班一小时多少钱
-            // 每个工的钱*百分比 + 时间 *加班工钱
-            wages = (+res.data.worker_money * +res.data.work_time) + (+res.data.overtime) * (+res.data.overtime_money)
-            // wages = 
-          }else{
-            // 每个工多少钱/上班时间*选择的上班时长 + 每个工多少钱/多少钱算一个工*加班时长
-            wages = ((+res.data.worker_money)* (+res.data.work_time)) + (((+res.data.worker_money) / (+res.data.worker_overtime)) * (+res.data.overtime))
-          }
-          console.log(toFixedFn(wages),'toFixedFn(wages)')
-          obj.wages = toFixedFn(wages);
+          obj.wages = toFixedFn(res.data.money);
           obj.unitNum = parseInt(res.data.unit_num);
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
