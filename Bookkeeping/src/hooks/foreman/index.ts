@@ -2659,12 +2659,12 @@ export default function userForeman() {
       let total;
       if (dataArrList.type === 1) {
         // 按小时算 加班小时* 模板加班金额
-        total = ((moneyNum / workNum) * (time * workNum) + addWorkNum * addTime).toFixed(2);
+        total = toFixedFn((moneyNum / workNum) * (time * workNum) + addWorkNum * addTime);
         // total = (moneyNum / workNum) * time + addWorkNum * addTime;
       } else {
         // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
         // total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);
-        total = (moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime)).toFixed(2);
+        total = toFixedFn(moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime));
       }
       // const num = total.toFixed(2);
       // let num: any = 0;
@@ -2893,7 +2893,6 @@ export default function userForeman() {
     setAddStandard(1);
     setWagesModalDisplay(false);
     setWageStandardDisplay(true);
-    setIsdisable(true)
   }
   // 打开工资标准
   const handleOpenWagesModal = (v?: any) => {
@@ -3506,6 +3505,7 @@ export default function userForeman() {
     const addWorkNum = data.addWork;
     // 加班时间
     const dayNum = data.day;
+    setIsdisable(true)
     // 上班标准提示
     if (workNum == 0) {
       Msg('上班标准必须大于0')
@@ -3578,7 +3578,7 @@ export default function userForeman() {
       // const num = total.toFixed(2);
       let num: any = 0;
       // if (num && !Object.is(num, NaN)){
-      num = total.toFixed(2);
+      num = toFixedFn(total);
       // }
       // 给工人自己设置工资标准
       // 传0会报错所以判断是按天还是按小时
@@ -3702,7 +3702,6 @@ export default function userForeman() {
           bkGetWorkerWage();
           setWagesModalDisplay(true);
           setWageStandardDisplay(false);
-          setIsdisable(false)
         } else {
           Msg(res.msg);
         }
@@ -3740,7 +3739,6 @@ export default function userForeman() {
         }
         setWagesModalDisplay(true);
         setWageStandardDisplay(false);
-        setIsdisable(false)
       })
     }
   }
@@ -4354,6 +4352,7 @@ export default function userForeman() {
     setDeldelType(false)
     // 全选
     setClickNum(0);
+    setNum(0);
     setAllClick(false)
     setCheckAll(false);
     setClickModalNum(0)
@@ -4370,7 +4369,6 @@ export default function userForeman() {
       }
       return val;
     })
-    
     setRecorderTypeArr({ item: data })
   }
   // 获取缓存

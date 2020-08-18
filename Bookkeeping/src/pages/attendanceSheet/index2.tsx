@@ -6,7 +6,7 @@ import Msg from '../../utils/msg';
 import { IMGCDNURL } from '../../config';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { Type, Earliest_month } from '../../config/store'
+import { Type } from '../../config/store'
 import './index.scss'
 
 interface DateTyep {
@@ -90,30 +90,19 @@ export default function AttendanceSheet() {
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
     const years = time.getFullYear();
     const months = addZero(time.getMonth() + 1);
-    let earliest_month = Taro.getStorageSync(Earliest_month);
-    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
-    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    setdateEnd(yeartime + '-' + montime);
-    if (!earliest_month) {
-      setleftTime(false);
-      setrightTime(false);
-      setDatestart(yeartime + '-' + montime);
-    } else {
-      setDatestart(earliest_month);
-      if (Number(earliest_month.split('-')[0]) == yeartime) {
-        setrightTime(false);
-        Number(earliest_month.split('-')[1]) < montime ? setleftTime(true) : setleftTime(false);
-      } else if (Number(earliest_month.split('-')[0]) < yeartime) {
-        setrightTime(false);
-        setleftTime(true);
-      }
-    }
     setYear(years)
     setMonth(months)
     // setDate(newTime);
     // getList(newTime)
     getDateList(newTime);
   }, [])
+  const toFixedFn = (num:any)=>{
+    let nums = num + '';
+    if(nums.indexOf('.')+1>0){
+      nums = nums.substring(0,nums.indexOf(".")+3);
+    }
+    return  Number(nums);
+  }
   // 获取数据
   const getDateList = (newTime: string) => {
     let params = {
@@ -122,6 +111,16 @@ export default function AttendanceSheet() {
     bkgetExcelDataAction(params).then(res => {
       if (res.code === 200) {
         setBusy(false)
+        let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0,4));
+        let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+        setdateEnd(yeartime+'-'+montime);
+        if(!res.month){
+          setDatestart(yeartime+'-'+montime);
+          changeIcon(newTime,res.month)
+        }else{
+          setDatestart(res.month);
+          changeIcon(newTime,res.month)
+        }
         // 设置内容
         if (res.data.length > 0) {
           const curDate = new Date(newTime);
@@ -237,7 +236,7 @@ export default function AttendanceSheet() {
                 //借支
                 if (res.data[i].borrow.length > 0) {
                   typeObj.type.borrow = true;
-                  borrowSum = (res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0)).toFixed(2)
+                  borrowSum = toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0))
                   // for (let z = 0; z < res.data[i].borrow.length; z++) {
                   //   if (res.data[i].borrow[z].date_num == dayItem[j].name) {
                   //     let type: any = {
@@ -332,12 +331,12 @@ export default function AttendanceSheet() {
                       if (dayItem[j].type) {
                         if (dayItem[j].type) {
                           const data = JSON.parse(JSON.stringify(dayItem[j]))
-                          type.borrow.borrow = parseFloat(res.data[i].borrow[z].total.money).toFixed(2);
+                          type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money));
                           data.type.borrow = type.borrow;
                           dayItem[j] = data;
                         }
                       } else {
-                        type.borrow.borrow = parseFloat(res.data[i].borrow[z].total.money).toFixed(2);
+                        type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money));
                         dayItem[j].type = type;
                       }
                     }
@@ -690,11 +689,9 @@ export default function AttendanceSheet() {
     setTabArr([]);
     setYear(e.detail.value.slice(0, 4));
     setMonth(e.detail.value.slice(5, 8));
-    changeIcon(e.detail.value);
     getDateList(time);
   }
-  const changeIcon = (e) => {
-    let earliest_month = Taro.getStorageSync(Earliest_month);
+  const changeIcon = (e,earliest_month) => {
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     if (!earliest_month) {

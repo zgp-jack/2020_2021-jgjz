@@ -57,13 +57,20 @@ export default function FlowingWaterDetails() {
             addTime = (parseInt(data.overtime) / parseInt(data.worker_overtime))
           }
         }
-        data.addTime = addTime.toFixed(2);
+        data.addTime = toFixedFn(addTime);
         setObj(data)
       }else{
         Msg(res.msg);
       }
     })
   })
+  const toFixedFn = (num:any)=>{
+    let nums = num + '';
+    if(nums.indexOf('.')+1>0){
+      nums = nums.substring(0,nums.indexOf(".")+3);
+    }
+    return  Number(nums);
+  }
   // 0 点工 1 包工按天 2 包工按量 3借支
   // 删除
   const handleDel = () => {
@@ -115,15 +122,20 @@ export default function FlowingWaterDetails() {
       urls: [e.httpurl]
     })
   }
-  const moneyfilter = (num,decimal)=>{
-    num = num.toString()
-    let index = num.indexOf('.')
-    if (index !== -1) {
-        num = num.substring(0, decimal + index + 1)
-    } else {
-        num = num.substring(0)
+  const moneyfilter = (num,overnum,decimal)=>{
+    if(Number(overnum)==0){
+      return 0;
+    }else{
+      num = num/overnum
+      num = num.toString()
+      let index = num.indexOf('.')
+      if (index !== -1) {
+          num = num.substring(0, decimal + index + 1)
+      } else {
+          num = num.substring(0)
+      }
+      return parseFloat(num).toFixed(decimal)
     }
-    return parseFloat(num).toFixed(decimal)
   }
   return(
     <View className='flowingWaterDetails'>
@@ -166,7 +178,7 @@ export default function FlowingWaterDetails() {
               </View>
               <View className='wages-list'>上班： {parseFloat(obj.wage_worktime_define)}小时算1个工<Text className='wages-list-blued'>{obj.wage_money}</Text>元/个工</View>
               <View className='wages-list'>
-                加班： {obj.wage_overtime_type == '1' ? <Text>按小时算<Text className='wages-list-blued'>{obj.wage_overtime_money}</Text>元/小时</Text> : <Text>按工天算<Text>{parseFloat(obj.wage_overtime)}</Text>小时算1个工<Text className='wages-list-blued'>{moneyfilter(obj.wage_money/obj.wage_overtime,2)}</Text>元/小时</Text>}
+                加班： {obj.wage_overtime_type == '1' ? <Text>按小时算<Text className='wages-list-blued'>{obj.wage_overtime_money}</Text>元/小时</Text> : <Text>按工天算<Text>{parseFloat(obj.wage_overtime)}</Text>小时算1个工<Text className='wages-list-blued'>{moneyfilter(obj.wage_money,obj.wage_overtime,2)}</Text>元/小时</Text>}
               </View>
             </View>
           </View>

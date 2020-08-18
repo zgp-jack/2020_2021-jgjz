@@ -491,6 +491,13 @@ export default function FlowingWater() {
     setProject(false)
     setCreateProjectDisplay(true)
   }
+  const toFixedFn = (num:any)=>{
+    let nums = num + '';
+    if(nums.indexOf('.')+1>0){
+      nums = nums.substring(0,nums.indexOf(".")+3);
+    }
+    return  Number(nums);
+  }
   return(
     <context.Provider value={value}>
     <View className='flowingWater'>
@@ -532,11 +539,11 @@ export default function FlowingWater() {
                 </View>
                 <View className='content-td'>
                   <View className='content-list-right-title'>借支</View>
-                  <View className='content-list-right-money'>¥{v.total_borrow && (parseFloat(v.total_borrow)>9999999.99)?String(v.total_borrow).slice(0,7)+'...':Number(v.total_borrow).toFixed(2)||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_borrow && (parseFloat(v.total_borrow)>9999999.99)?String(v.total_borrow).slice(0,7)+'...':toFixedFn(Number(v.total_borrow))||'0.00'}</View>
                 </View>
                 <View className="content-td">
                   <View className='content-list-right-title'>工钱</View>
-                  <View className='content-list-right-money'>¥{v.total_money && (parseFloat(v.total_money)>9999999.99)?String(v.total_money).slice(0,7)+'...':Number(v.total_money).toFixed(2)||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_money && (parseFloat(v.total_money)>9999999.99)?String(v.total_money).slice(0,7)+'...':toFixedFn(Number(v.total_money))||'0.00'}</View>
                 </View>
               </View>
               {v.click && 

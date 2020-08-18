@@ -11,7 +11,22 @@ import { IMGCDNURL } from '../../config'
 import WorkingHours from '../../components/workingHours';
 import WorkOvertime from '../../components/workOvertime';
 import './index.scss'
-
+interface ValType{
+  note:string,
+  name:string,
+  workername:string,
+  leaderName:string,
+  time:string,
+  workingHours:string,
+  working:string,
+  duration:string,
+  modalDuration:string,
+  wages:any,
+  unitNum:string,
+  unit:string,
+  unitPrice:string,
+  money:string,
+}
 interface ImageDataType {
   item: ImageItem[],
 }
@@ -115,7 +130,7 @@ export default function EditDetails() {
     id: '',
     worker_id:'',
   })
-  const [val,setVal] = useState({
+  const [val,setVal] = useState<ValType>({
     note:'',
     name:'',
     workername:'',
@@ -215,7 +230,7 @@ export default function EditDetails() {
           data.worker_id = res.data.worker_id;
           data.group_info = res.data.group_info;
           if (parseFloat(res.data.wage_money) && parseFloat(res.data.wage_overtime)){
-            data.dayAddWork = moneyfilter((parseFloat(res.data.wage_money) / parseFloat(res.data.wage_overtime)),2)
+            data.dayAddWork = moneyfilter(parseFloat(res.data.wage_money),parseFloat(res.data.wage_overtime),2)
           }else{
             data.dayAddWork =0
           }
@@ -246,7 +261,7 @@ export default function EditDetails() {
             // 每个工多少钱/上班时间*选择的上班时长 + 每个工多少钱/多少钱算一个工*加班时长
             wages = ((+res.data.worker_money)* (+res.data.work_time)) + (((+res.data.worker_money) / (+res.data.worker_overtime)) * (+res.data.overtime))
           }
-          obj.wages = wages.toFixed(2);
+          obj.wages = toFixedFn(wages);
           obj.unitNum = parseInt(res.data.unit_num);
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
@@ -347,6 +362,13 @@ export default function EditDetails() {
       })
     }
   },[])
+  const toFixedFn = (num:any)=>{
+    let nums = num + '';
+    if(nums.indexOf('.')+1>0){
+      nums = nums.substring(0,nums.indexOf(".")+3);
+    }
+    return  Number(nums);
+  }
   const addZero = (num) => {
     if (parseInt(num) < 10) {
       num = '0' + num;
@@ -395,15 +417,20 @@ export default function EditDetails() {
     }
     setBorrowing({item:data});
   }
-  const moneyfilter = (num, decimal) => {
-    num = num.toString()
-    let index = num.indexOf('.')
-    if (index !== -1) {
-      num = num.substring(0, decimal + index + 1)
-    } else {
-      num = num.substring(0)
+  const moneyfilter = (num, overnum, decimal) => {
+    if(Number(overnum)==0){
+      return 0;
+    }else{
+      num = num/overnum
+      num = num.toString()
+      let index = num.indexOf('.')
+      if (index !== -1) {
+          num = num.substring(0, decimal + index + 1)
+      } else {
+          num = num.substring(0)
+      }
+      return parseFloat(num).toFixed(decimal)
     }
-    return parseFloat(num).toFixed(decimal)
   }
   // 关闭
   const handleClose = ()=>{
@@ -460,7 +487,7 @@ export default function EditDetails() {
         dayAddWork = item.money / e;
       }
       item[type] = e||0;
-      item.dayAddWork = dayAddWork.toFixed(2)||0;
+      item.dayAddWork = toFixedFn(dayAddWork)||0;
       setWageStandard(item);
       return;
     }
@@ -468,7 +495,7 @@ export default function EditDetails() {
       const item = JSON.parse(JSON.stringify(wageStandard));
       const dayAddWork = e / item.day;
       item[type] = e;
-      item.dayAddWork = dayAddWork.toFixed(2);
+      item.dayAddWork = toFixedFn(dayAddWork);
       setWageStandard(item);
       return;
     }
@@ -584,7 +611,7 @@ export default function EditDetails() {
     // const num = total.toFixed(2);
     let num: any = 0;
     // if (num && !Object.is(num, NaN)){
-    num = sum.toFixed(2);
+    num = toFixedFn(sum);
     setVal({ ...valData, wages:num})
     setWageStandardDisplay(false);
     setIsdisable(false);
@@ -930,7 +957,7 @@ export default function EditDetails() {
       wages = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
-    const num = wages.toFixed(2);
+    const num = toFixedFn(wages);
     setVal({ ...val, duration: title, wages: num })
     setDisplay(false);
     setIsdisable(false);
@@ -1114,6 +1141,7 @@ export default function EditDetails() {
     // return;
     updateBusinessAction(params).then(res=>{
       if(res.code === 200){
+        delete params['group_info'];
         if(useSelectorItem.flowingWater.length>0){
           useSelectorItem.flowingWater.forEach((element) => {
             element.total_borrow = 0;
@@ -1298,8 +1326,9 @@ export default function EditDetails() {
               className='publish-list-input-amount'
               type='digit'
               placeholder='请填写工程量'
-              onInput={(e) => { handleInput('unitNum',e)}}
-              value={val.unitNum}
+              maxLength={10}
+              onInput={(e) => {handleInput('unitNum',e)}}
+              value={val && val.unitNum}
             />
             <View className='amountType' onClick={()=>{setIsdisable(true);setQuantitiesDisplay(true)}}>{unit}
               <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
@@ -1313,8 +1342,9 @@ export default function EditDetails() {
               className='publish-list-input-color'
               type='digit'
               placeholder='请填写单价'
+              maxLength={10}
               onInput={(e) => { handleInput('unitPrice', e) }}
-              value={val.unitPrice}
+              value={val && val.unitPrice}
             />
           </View>
         </View>
@@ -1324,9 +1354,10 @@ export default function EditDetails() {
             :<Input
               className='publish-list-input-color'
               type='digit'
+              maxLength={16}
               onInput={(e) => { handleInput('money', e) }}
               placeholder='工程量和单价未知时，可直接填写'
-              value={val.money}
+              value={val && val.money}
             />
           </View>
         </View>
@@ -1341,9 +1372,10 @@ export default function EditDetails() {
               className='publish-list-input-borrowing'
                 type='digit'
                 // disabled
+                maxLength={17}
                 onInput={(e) => { handleInput('money', e) }}
                 placeholder='请输入本次借支金额'
-                value={val.money}
+                value={val && val.money}
               />
             </View>
           </View>
