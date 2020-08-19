@@ -1115,10 +1115,20 @@ export default function EditDetails() {
     })
     // 图片
     let money;
-    if (businessType == 3 || (businessType == 2 && type == 2) ){
+    if (businessType == 3){
       money = val.money
+    }else if((businessType == 2 && type == 2)){
+      if(Number(val.money)){
+        money = val.money
+      }else{
+        if(Number(val.unitNum)&&Number(val.unitPrice)){
+          money = toFixedFn(Number(val.unitNum)*Number(val.unitPrice))
+        }else{
+          money = 0;
+        }
+      }
     }else{
-      money =val.wages
+      money =val.money
     }
     // 判断按量记录
     let params;
