@@ -63,10 +63,10 @@
 
 .content-tips-box {
   background: #FDEBC0;
-  height: 26rpx;
-  width: 26rpx;
-  display: inline-block;
+  height: 28.5rpx;
+  width: 28.5rpx;
   margin-right: 13rpx;
+  margin-top: 6rpx;
 }
 
 .leftIcon {
@@ -215,4 +215,8 @@
 }
 .month{
   margin-left: 20rpx;
+}
+.title{
+  font-size: 30rpx;
+  display: flex;
 }

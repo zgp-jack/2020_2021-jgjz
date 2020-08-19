@@ -883,8 +883,9 @@ export default function userForeman() {
   }
   const addZero = (num) => {
     if (parseFloat(num) < 10) {
-      num = '0' + num;
+      num = '0' + parseFloat(num);
     }
+    console.log(num,'num')
     return num;
   }
   // 日历点击
@@ -893,7 +894,7 @@ export default function userForeman() {
     const dates = (new Date(date)).valueOf();
     const newDate = (new Date(toDayString)).valueOf();
     if (newDate < dates) {
-      Msg('请设置今天之前的日期');
+      // Msg('请设置今天之前的日期');
       return;
     }
     const clickDataItem = JSON.parse(JSON.stringify(clickData));
@@ -948,20 +949,21 @@ export default function userForeman() {
         return;
         // }
         //就刷新更改
-      } else {
-        // 判断向上还是向下
-        // 向上
-        if (v.up) {
-          let date = new Date(calendarDaysArr[i].year, calendarDaysArr[i].month - 1, calendarDaysArr[i].date);
-          getMonthDaysCurrent(date);
-          return;
-          // 向下
-        } else if (v.next) {
-          let date = new Date(calendarDaysArr[i].year, calendarDaysArr[i].month + 1, calendarDaysArr[i].date)
-          getMonthDaysCurrent(date);
-          return;
-        }
       }
+      //  else {
+      //   // 判断向上还是向下
+      //   // 向上
+      //   if (v.up) {
+      //     let date = new Date(calendarDaysArr[i].year, calendarDaysArr[i].month - 1, calendarDaysArr[i].date);
+      //     getMonthDaysCurrent(date);
+      //     return;
+      //     // 向下
+      //   } else if (v.next) {
+      //     let date = new Date(calendarDaysArr[i].year, calendarDaysArr[i].month + 1, calendarDaysArr[i].date)
+      //     getMonthDaysCurrent(date);
+      //     return;
+      //   }
+      // }
     }
   }
   const toFixedFn = (num: any) => {
@@ -980,7 +982,7 @@ export default function userForeman() {
       s += '0';
     }
     s = s.substring(0, s.indexOf(".") + 3);
-    return s;
+    return s.toString();
   }
   // 对应月份日期
   const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[]) => {
@@ -2697,29 +2699,6 @@ export default function userForeman() {
       const addWorkNum = dataArrList.addWork;
       // 加班时间
       const dayNum = dataArrList.day;
-      // 上班标准提示
-      // if (workNum == 0) {
-      //   Msg('上班标准必须必须大于0')
-      //   return;
-      // }
-      // // 每个工多少钱提示
-      // if (moneyNum == 0) {
-      //   Msg('每个工工钱必须大于0')
-      //   return;
-      // }
-      // //按天数 一个工
-      // if (data.type == 2) {
-      //   if (data.day == 0) {
-      //     Msg('一个工必须大于0小时')
-      //     return;
-      //   }
-      // }
-      // if (data.type == 1) {
-      //   if (data.addWork == 0) {
-      //     Msg('每小时加班金额必须大于0')
-      //     return;
-      //   }
-      // }
       // 上班时间
       let time = 0;
       for (let i = 0; i < timeArrs.length; i++) {
@@ -2753,15 +2732,19 @@ export default function userForeman() {
         }
       }
     if (identity === 2) {
-      let total;
+      let total:any='0.00';
       if (dataArrList.type === 1) {
         // 按小时算 加班小时* 模板加班金额
-        total = toFixedFn((moneyNum / workNum) * (time * workNum) + addWorkNum * addTime);
+        if (moneyNum){
+          total = toFixedFn((moneyNum / workNum) * (time * workNum) + addWorkNum * addTime);
+        }
         // total = (moneyNum / workNum) * time + addWorkNum * addTime;
       } else {
         // 按天算 每个工多少钱/模板定义的多少小时算一个工 * 加班时长
         // total = moneyNum / workNum * time + (moneyNum / dayNum * addTime);
-        total = toFixedFn(moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime));
+        if (moneyNum){
+          total = toFixedFn(moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime));
+        }
       }
       // const num = total.toFixed(2);
       // let num: any = 0;
@@ -2784,7 +2767,7 @@ export default function userForeman() {
       //     Msg(res.msg)
       //   }
       // })
-      let num = isNaN(total) ? 0.00 : total;
+      let num = isNaN(total) ? '0.00' : total.toString();
       setModel({ ...model, workersWages: num, duration: title });
       setWorkOvertimeDisplay(false);
       setIsdisable(false)
@@ -4427,6 +4410,7 @@ export default function userForeman() {
     } else {
       time = '共选择' + data.length + '天';
     }
+    console.log(time,'timetimetime')
     setModel({ ...model, time: time });
     // clickDataItem.map((v,i)=>{
     //   if (data.length==0){
@@ -4487,7 +4471,7 @@ export default function userForeman() {
       if (data[0].year == years && data[0].month == months && data[0].date == dates) {
         time = years + '-' + addZero(months) + '-' + addZero(dates) + '（今天）'
       } else {
-        time = data[0].year + '-' + data[0].month + '-' + data[0].date
+        time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date)
       }
     } else {
       time = '共选择' + data.length + '天';
