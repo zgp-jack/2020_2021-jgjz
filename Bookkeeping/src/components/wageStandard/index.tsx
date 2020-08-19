@@ -51,10 +51,18 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
               <View className='wageStandard-content-listBox-list'>
                 <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>上班标准:</Text> {parseFloat(wageStandard.work)}小时算一个工</View>
                 <View className='atInputNumber'>
+                  {/* <View>-</View><View>
+                    <Input 
+                      type='digit'
+                      className='inputBox' 
+                      // maxLength={7}
+                      value={wageStandard.work} 
+                      onInput={(e) => { handleWageStandard('work', e) }}/>
+                    </View><View>+</View> */}
                   <AtInputNumber
                     style='color:red'
                     className='atInputNumberInput'
-                    type='digit'
+                    type='number'
                     min={0}
                     max={24}
                     step={0.5}
