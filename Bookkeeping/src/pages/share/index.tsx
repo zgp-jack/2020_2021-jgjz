@@ -62,6 +62,9 @@ export default function Share() {
     return num;
   }
   useEffect(() => {
+    Taro.setNavigationBarTitle({
+      title: `${time}月份清单`
+    })
     Taro.setStorageSync(IsShare,true);
     getList(time);
   }, [])

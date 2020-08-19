@@ -71,7 +71,8 @@ export default function userForeman() {
   // 获取存入的公用内容
   const useSelectorItem = useSelector<any, any>(state => state)
   const dispatch = useDispatch()
-
+  // 测试
+  const [test,setText] = useState<string>('')
   // 是工人还是班组
   const [identity, setIdentity] = useState<number>(1)
   // 上班时长
@@ -2276,32 +2277,28 @@ export default function userForeman() {
         ? value.split(".")[0].substring(0, num) + "." + value.split(".")[1]
         : value.substring(0, num);
     let data = JSON.parse(JSON.stringify(model));
+    let item = JSON.parse(JSON.stringify(wageStandard));
     if(type){
-      if(type === 'day' || type === 'work'){
-        if(parseFloat(value)>24){
-          const data = 24;
-          const item = JSON.parse(JSON.stringify(wageStandard));
-          item[type] = 24;
+      if (!value) {
+        value = 0;
+      }
+      if (type === 'day' || type === 'work' ){
+        if(value>24){
+          Msg('超出最大输入范围');
+          value = 24;
+        }
+        if(type == 'day'){
           let num: number | string = 0.00;
-          if (item.money > 0 && data > 0) {
-            num = item.money / data
+          if (item.money > 0 && value > 0) {
+            num = item.money / value
           }
           item.dayAddWork = (toFixedFn(num));
-          setWageStandard(item);
-          return data 
         }
-        const item = JSON.parse(JSON.stringify(wageStandard));
-        item[type] = parseInt(value);
-        let num: number | string = 0.00;
-        if (item.money > 0 && value > 0) {
-          num = item.money / value
-        }
-        item.dayAddWork = toFixedFn(num);
+        item[type] = value;
         setWageStandard(item);
-        return value
       }else{
         data[type] = value;
-        setModel({ ...data });
+        setWageStandard(data);
       }
     }
     return value;
@@ -3065,19 +3062,20 @@ export default function userForeman() {
   const handleWageStandard = (type: string, e: any) => {
     // const cacheItem = JSON.parse(JSON.stringify(cacheWage));
     if (type == 'day') {
+      return dealInputVal(e.detail.value, 2, type);
       // return dealInputVal(e.detail.value,4,type)
-      const item = JSON.parse(JSON.stringify(wageStandard));
-      item[type] = e;
-      if(e == 24){
-        Msg('超出了最大输入范围')
-      }
-      let num: number | string = 0.00;
-      if (item.money > 0 && e > 0) {
-        num = item.money / e
-      }
-      item.dayAddWork = toFixedFn(num);
-      setWageStandard(item);
-      return;
+      // const item = JSON.parse(JSON.stringify(wageStandard));
+      // item[type] = e;
+      // if(e == 24){
+      //   Msg('超出了最大输入范围')
+      // }
+      // let num: number | string = 0.00;
+      // if (item.money > 0 && e > 0) {
+      //   num = item.money / e
+      // }
+      // item.dayAddWork = toFixedFn(num);
+      // setWageStandard(item);
+      // return;
     }
     // if (type === 'addWork' || type == 'work' || type == 'money' || type == 'day') {
     //   cacheItem[type] = e;
@@ -3112,11 +3110,7 @@ export default function userForeman() {
       return;
     }
     if(type === 'work'){
-      const data = JSON.parse(JSON.stringify(wageStandard));
-      data[type] = e;
-      setWageStandard(data);
-      // dealInputVal(e.detail.value, 2, type)
-      // return '11'
+      return dealInputVal(e.detail.value, 2, type);
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = e;
@@ -4594,6 +4588,51 @@ export default function userForeman() {
       }
     })
   }
+  // 加
+  const handleInputAdd = (type:string,e:string)=>{
+    const data = JSON.parse(JSON.stringify(wageStandard));
+    if(type === 'work' || type === 'day'){
+      if (data[type]<24){
+        let num = Number(data[type]) + 0.5;
+        if(num>24){
+          num = 24;
+          Msg('超出最大输入范围')
+        }
+        if (type === 'day') {
+          let num: number | string = 0.00;
+          if (data.money > 0 && Number(data.day) > 0) {
+            num = data.money / Number(data.day)
+          }
+          data.dayAddWork = (toFixedFn(num));
+        }
+        data[type] = num;
+        setWageStandard(data);
+      }
+    }
+  }
+  // 减少
+  const handleDelInput = (type: string, e: string)=>{
+    const data = JSON.parse(JSON.stringify(wageStandard));
+    if (type === 'work'|| type === 'day') {
+      if (Number(data[type])>0) {
+        let num = Number(data[type]) - 0.5;
+        if (num == 0) {
+          num = 0;
+        }
+        if(type === 'day'){
+          let num: number | string = 0.00;
+          if (data.money > 0 && Number(data.day) > 0) {
+            num = data.money / Number(data.day)
+          }
+          data.dayAddWork = toFixedFn(num);
+        }
+        data[type] = num;
+        setWageStandard(data);
+      }
+    }else if(type === 'day'){
+
+    }
+  }
   return {
     model,
     project,
@@ -4739,6 +4778,8 @@ export default function userForeman() {
     setTab,
     isdisable,
     setIsdisable,
-    jumpMonth
+    jumpMonth,
+    handleInputAdd,
+    handleDelInput,
   }
 }

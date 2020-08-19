@@ -10,12 +10,14 @@ interface PROPS {
   handleWageStandard:(type:string,val:any)=>void,
   handleAddWage:()=>void,
   handleWageStandardRadio:(e)=>void,
+  handleAdd:(e:string,val:string)=>void,
+  handleDel: (e: string, val: string) => void,
 }
 const styles =
 {
   content: { fontSize: '13px' }
 }
-export default function WageStandard({ display, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio }: PROPS) {
+export default function WageStandard({ display, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel }: PROPS) {
   console.log(wageStandard,'wageStandard')
   const toFixedFn = (num: any) => {
     let f = parseFloat(num);
@@ -49,27 +51,17 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
           <View className='wageStandard-box'>
             <View className='wageStandard-content-listBox'> 
               <View className='wageStandard-content-listBox-list'>
-                <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>上班标准:</Text> {parseFloat(wageStandard.work)}小时算一个工</View>
+                <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>上班标准:</Text> {wageStandard.work}小时算一个工</View>
                 <View className='atInputNumber'>
-                  {/* <View>-</View><View>
+                  <View onClick={() => handleDel('work', wageStandard.work)}>-</View><View>
                     <Input 
                       type='digit'
                       className='inputBox' 
                       // maxLength={7}
                       value={wageStandard.work} 
-                      onInput={(e) => { handleWageStandard('work', e) }}/>
-                    </View><View>+</View> */}
-                  <AtInputNumber
-                    style='color:red'
-                    className='atInputNumberInput'
-                    type='number'
-                    min={0}
-                    max={24}
-                    step={0.5}
-                    value={wageStandard.work}
-                    onChange={(e) => { handleWageStandard('work',e)}}
-                    />
-                </View>
+                      onInput={(e) =>handleWageStandard('work', e)}/>
+                  </View><View onClick={() => handleAdd('work', wageStandard.work)}>+</View>
+                </View> 
               </View>
               <View className='wageStandard-content-listBox-list'>
                 <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>每个工多少钱:</Text> <Text>{wageStandard.money}</Text>元/个工</View>
@@ -115,16 +107,18 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                 <View className='workList'>
                   {/* <View className='workList-title'>加班6小时算一个工</View> */}
                   <View className='workList-title'>加班{parseFloat(wageStandard.day)}小时算1个工</View>
-                  <View className='workList-add'>
-                    <AtInputNumber
-                      type='digit'
-                      min={0}
-                      max={24}
-                      step={0.5}
-                      value={wageStandard.day}
-                      onChange={(e) => { handleWageStandard('day', e) }}
-                    />
-                  </View>
+                  {/* <View className='workList-add'> */}
+                  <View className='atInputNumber'>
+                    <View onClick={() => handleDel('day', wageStandard.day)}>-</View><View>
+                      <Input
+                        type='digit'
+                        className='inputBox-day'
+                        // maxLength={7}
+                        value={wageStandard.day}
+                        onInput={(e) => handleWageStandard('day', e)} />
+                    </View><View onClick={() => handleAdd('day', wageStandard.day)}>+</View>
+                  </View> 
+                  {/* </View> */}
                 </View>
                 <View className='workList'>
                 <View className='workList-title'>加班<Text>{wageStandard.dayAddWork}</Text>元/小时</View>
