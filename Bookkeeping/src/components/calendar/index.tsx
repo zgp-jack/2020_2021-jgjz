@@ -128,11 +128,15 @@ export default function CalendarModal({
           <View className='content-tips-time'> 
               {time.year}年 
               <View className='month'>
-              <Image src={`${IMGCDNURL}timeLefts.png`} className='leftIcon' onClick={() => handleChangeTime(0)} />
+              <View className='iconLeft' onClick={() => handleChangeTime(0)} >
+              <Image src={`${IMGCDNURL}timeLefts.png`} className='leftIcon'/>
+              </View>
               {/* <View className='leftIcon' onClick={() => handleChangeTime(0)} /> */}
               {time.monent}月
               {/* <View className='righticon' onClick={() => handleChangeTime(1)}/> */}
-              <Image src={`${IMGCDNURL}timeRights.png`} className='righticon' onClick={() => handleChangeTime(1)} />
+              <View className='iconRight' onClick={() => handleChangeTime(1)} >
+                <Image src={`${IMGCDNURL}timeRights.png`} className='righticon'/>
+              </View>
               </View>
           </View>
           <View className='title'><View className='content-tips-box'></View><View>表示当天已有记工</View></View>
