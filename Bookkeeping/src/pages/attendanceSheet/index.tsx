@@ -96,7 +96,6 @@ export default function AttendanceSheet() {
     const time = new Date();
     const newTime = time.getFullYear() + '-' + addZero(time.getMonth() + 1);
     const times = timeMon || newTime;
-    console.log(times,'啊啊点拿觉得你是看见你的空间啊失败的恐惧啊')
     setVals(times);
     setYear(times.split('-')[0]);
     setMonth(times.split('-')[1]);
@@ -230,7 +229,6 @@ export default function AttendanceSheet() {
               if (res.data[i].borrow.length > 0) {
                 typeObj.type.borrow = true;
                 borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.total.money)), 0)))
-                console.log(borrowSum,'borrowSum')
               }
               // 包工(天)
               if (res.data[i].work.length > 0) {
@@ -467,7 +465,6 @@ export default function AttendanceSheet() {
                   }
                 }
               }
-              console.log(borrowSum,'hourSumWorkhourSumWork')
               let lastObj = [
                 { id: 1, name: '总计', default:true},
                 {
@@ -527,10 +524,8 @@ export default function AttendanceSheet() {
                 amount: false,
                 work: false,
               };
-              console.log(dayItem,'dayItem')
               for (let z = 0; z < dayItem.length; z++) {
                 if (dayItem[z].type) {
-                  console.log(dayItem[z],'')
                   if (dayItem[z].type.hour) {
                     arrObj.type.hour = true;
                     dayObj.type.hour = true;
@@ -553,7 +548,6 @@ export default function AttendanceSheet() {
               let numObj = {
                 list: lastObj
               }
-              console.log(numHour,'xxxxx')
               let numDateObj = {
                 list: lastDay,
                 type: {
@@ -565,7 +559,6 @@ export default function AttendanceSheet() {
               }
               numDate = [numDateObj]
               numArr = [numObj];
-              console.log(numObj,'arrObj')
               arr.push(arrObj);
               listArr.push(dayObj);
             };
@@ -643,7 +636,6 @@ export default function AttendanceSheet() {
               sumHour = true;
               for (let j = 0; j < hourDataSum.length;j++){
                 if (hourDataSum[j].date_num == dayArrList[i].name){
-                  console.log(toFixedFnNum(hourDataSum[j].total.work_time),'hourDataSum[j].total.work_time')
                   let type = {
                     hour: {
                       work_time: toFixedFnNum(hourDataSum[j].total.work_time),
@@ -808,7 +800,6 @@ export default function AttendanceSheet() {
               work,
             }
           ]
-          console.log(sumHour, sumBorrow, sumAmount, sumWork,'313123231')
           let obj = {
             list: sumLeft,
             type: {
@@ -820,7 +811,6 @@ export default function AttendanceSheet() {
           }
           // 本月统计
           // 获取身份
-          console.log(obj,'obj')
           let type = Taro.getStorageSync(Type);
           if (type === 1) {
             setFixedTab([...leftArr, ...arr, obj]);
@@ -858,15 +848,12 @@ export default function AttendanceSheet() {
     while (s.length <= rs + 2) {
       s += '0';
     }
-    // console.log(num,'numm')
     s = s.substring(0, s.indexOf(".") + 3);
-    console.log(s,'ssssss');
     return s;
   }
   const toFixedFnNum = (num: any)=>{
     let s = num + '';
     s = s.substring(0, s.indexOf(".") + 3);
-    console.log(s, 'ssssss');
     return Number(s);
   }
   // 设置时间
@@ -928,6 +915,7 @@ export default function AttendanceSheet() {
     let type = Taro.getStorageSync(Type);
     return {
       title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      imageUrl: `${IMGCDNURL}shareIconImg.png`,
       path: `/pages/share/index?time=${vals}&identity=${type}&session=${session}`
     }
   })
@@ -976,7 +964,6 @@ export default function AttendanceSheet() {
     setProject(false)
     setCreateProjectDisplay(true)
   }
-  console.log(fixedTab,'fixedTab')
   // 分享
   return (
     <View className='AttendanceSheetContent'>

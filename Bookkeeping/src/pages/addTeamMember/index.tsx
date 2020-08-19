@@ -35,10 +35,8 @@ export default function AddTeamMember() {
     setModel({...itme, phone: '', userName:''})
   }
   // const handleCheckbox = (e)=>{
-  //   console.log('checkout')
   //   const arr = JSON.parse(JSON.stringify(clickData));
   //   let dataArr = JSON.parse(JSON.stringify(data));
-  //   console.log(e);
   //   // let arr = JSON.parse(JSON.stringify(storagelist));
   //   // let dataArr = JSON.parse(JSON.stringify(workerList));
   //   if (arr.length === 0 ){
@@ -71,12 +69,9 @@ export default function AddTeamMember() {
     Taro.setNavigationBarTitle({
       title: titel,
     })
-    console.log(useSelectorItem,'useSelectorItem.mailList')
     if (useSelectorItem.mailList && useSelectorItem.phoneList) {
       const item = JSON.parse(JSON.stringify(useSelectorItem.mailList))
       const arr = JSON.parse(JSON.stringify(useSelectorItem.phoneList))
-      console.log(item,'itemsdadsdsadsadas')
-      console.log(arr,'arrrrrrrr')
       let itemData;
       if (item.length>0){
         itemData = item.map(v=>{
@@ -97,7 +92,6 @@ export default function AddTeamMember() {
           }
         })
       }
-      console.log(itemData,'timesdd sakd kasbdjkasb')
       // return;
       setDefaultData(item);
       setData(item)
@@ -139,7 +133,6 @@ export default function AddTeamMember() {
   }
   const onActionClick =()=>{
     const value = JSON.parse(JSON.stringify(valData));
-    console.log(value);
     const dataArr = JSON.parse(JSON.stringify(data));
     const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
     let arr:any[] = [
@@ -155,7 +148,6 @@ export default function AddTeamMember() {
             let list:any =[];
             // 首先要判断ID和姓名，然后判断在哪个字母表，然后再追加到数组
             if (dataArr[i].list[j].name.indexOf(value) !== -1 || (dataArr[i].list[j].tel&&dataArr[i].list[j].tel.indexOf(value) !== -1)){
-              console.log(dataArr[i].list[j],'231231')
               // for(let z =0;z<arr.length;z++){
               //   for(let b=0;b<arr[z].list;b++){
               //     if (dataArr[i].name === !arr[z].list.name ){
@@ -165,29 +157,23 @@ export default function AddTeamMember() {
               // }
               list.push(dataArr[i].list[j])
             }
-            console.log(list,'xxx')
             arr[0].list.push(...list)
           }
         }
       }
     }
-    console.log(arr,'arrrr');
     setData(arr);
   }
   const handleChange = ()=>{
 
   }
   const handleLetter = (v)=>{
-    console.log(v,'v')
-    console.log(`#${v.name}`);
     const query = Taro.createSelectorQuery()                // 创建节点查询器 query
     query.select(`#${v.name}`).boundingClientRect()    // 这段代码的意思是选择Id=productServe的节点，获取节点位置信息的查询请求
     query.selectViewport().scrollOffset()                 // 这段代码的意思是获取页面滑动位置的查询请求
     query.exec((res) => {
       var winWidth = Taro.getSystemInfoSync().windowWidth;
       const data =  750 / winWidth;
-      console.log(data,'ata')
-      console.log(res,'res111')
       Taro.pageScrollTo({
         scrollTop: (res[0].top) * data,
         duration: 300
@@ -236,9 +222,7 @@ export default function AddTeamMember() {
         if(res.code !== 200){
           Msg(res.msg)
         }
-        console.log(res,'xxx')
       });
-      console.log(e,'eeee')
       e.group_leader = e.id;
       e.leader_name= e.name;
       dispatch(setWorker([e]))
