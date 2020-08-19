@@ -46,14 +46,12 @@ export function getdate(time) {
 export function getTime(time) {
   const now = new Date(time);
   var times = now.getFullYear() + (now.getMonth() + 1) + now.getDate();
-  console.log(times,'11111')
   return times;
 }
 
 // 
 export function timestampToTime(timestamp) {
   var date = new Date(parseInt(timestamp));//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-  console.log(date,'31312321')
   var Y = date.getFullYear() + '-';
   var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
   var D = date.getDate() + ' ';

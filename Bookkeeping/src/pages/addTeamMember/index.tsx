@@ -264,8 +264,6 @@ export default function AddTeamMember() {
         worker_id: ids,
         group_info:groupInfo,
       }
-      console.log(params,'1111');
-      console.log(clickArr,'clickArr')
       bkAddWorkerInGroupAction(params).then(res=>{
         if(res.code === 200){
           dispatch(setPhoneList(clickArr));
@@ -274,7 +272,6 @@ export default function AddTeamMember() {
         }
       })
   }
-  console.log(data,'data')
   return(
     <View className='content'>
       <View>

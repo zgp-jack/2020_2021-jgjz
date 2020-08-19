@@ -389,7 +389,9 @@ export default function Index() {
     getData();
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
     let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
-    setVal(yeartime+'-'+montime);
+    console.log(montime,'montimemontimemontime')
+    const mon = addZero(montime);
+    setVal(yeartime + '-' + mon);
     if (Number(this_year_business_month) == montime) {
       setleftTime(false);
     } else if(Number(this_year_business_month)<montime){

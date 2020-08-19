@@ -445,9 +445,7 @@ export default function Share() {
                   num: amountSum
                 }
               }
-              console.log(lastObj, '1111')
               list.push(obj, typeObj, sumObj);
-              console.log(list, 'lsit')
               arrObj.list = list;
               arrObj.type = {
                 hour: false,

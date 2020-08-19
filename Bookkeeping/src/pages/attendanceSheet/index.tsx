@@ -509,9 +509,7 @@ export default function AttendanceSheet() {
                   num: amountSum
                 }
               }
-              console.log(lastObj,'1111')
               list.push(obj, typeObj, sumObj);
-              console.log(list,'lsit')
               arrObj.list = list;
               arrObj.type = {
                 hour: false,
@@ -1008,17 +1006,19 @@ export default function AttendanceSheet() {
                 <View className='box-left' key={'v'+o}>
                   {v.list.map((val,c) => (
                     <View className='middle' key={'c'+c}>
-                      {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && ((!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (v.type.hour || v.type.work || v.type.borrow || v.type.amount)) ? 'box-none' : 'box-list-default'}>
+                      {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && 
+                      <View className={val.default && ((!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (v.type.hour || v.type.work || v.type.borrow || v.type.amount)) ? 'box-none' : 'box-list-default'}>
                         <View 
                         className={classnames({
                           // 'mt100': val.type,
                           'mt100': v.type &&v.type.hour && v.type.work && v.type.borrow && v.type.amount ,
                           'mt50': v.type && ((v.type.hour && v.type.work && v.type.borrow) || (v.type.hour && v.type.borrow && v.type.amount) || (v.type.hour && v.type.amount && v.type.work) || (v.type.work && v.type.borrow && v.type.amount )),
                           'mt20': v.type&& ((v.type.hour && v.type.work) || (v.type.hour && v.type.borrow) || (v.type.hour && v.type.amount) || (v.type.work && v.type.borrow) || (v.type.work && v.type.amount) || (v.type.borrow && v.type.amount)),
-                          '': v.type &&  ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount) )
+                          'mt0': v.type &&  ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount) )
                       }
                       )}
-                        >{val.name}</View>
+                        >
+                        {val.name}</View>
                         {val.default && !val.isSum &&
                           <View open-type="share">
                             <Button className='blued' open-type="share">
