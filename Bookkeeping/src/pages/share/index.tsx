@@ -154,8 +154,8 @@ export default function Share() {
               // 记工
               if (res.data[i].hour.length > 0) {
                 typeObj.type.hour = true;
-                hourSumWork = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0))
-                hourSumTime = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0))
+                hourSumWork = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.total.work_time)), 0))
+                hourSumTime = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.total.over_time)), 0))
               }
               //  包工(量)
               if (res.data[i].amount.length > 0) {
@@ -165,13 +165,14 @@ export default function Share() {
               //借支
               if (res.data[i].borrow.length > 0) {
                 typeObj.type.borrow = true;
-                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0)))
+                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.total.money)), 0)))
+                console.log(borrowSum, 'borrowSum')
               }
               // 包工(天)
               if (res.data[i].work.length > 0) {
                 typeObj.type.work = true
-                workSumWork = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0))
-                workSumTime = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0))
+                workSumWork = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.total.work_time)), 0))
+                workSumTime = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.total.over_time)), 0))
               }
               for (let j = 0; j < dayItem.length; j++) {
                 if (res.data[i].hour.length > 0) {
@@ -186,13 +187,13 @@ export default function Share() {
                       if (dayItem[j].type) {
                         const data = JSON.parse(JSON.stringify(dayItem[j]));
                         if (data.type) {
-                          data.type.hour.work_time = toFixedFn((parseFloat(res.data[i].hour[z].total.work_time)));
-                          data.type.hour.over_time = toFixedFn(parseFloat(res.data[i].hour[z].total.over_time));
+                          data.type.hour.work_time = toFixedFn(((res.data[i].hour[z].total.work_time)));
+                          data.type.hour.over_time = toFixedFn((res.data[i].hour[z].total.over_time));
                           dayItem[j] = data;
                         }
                       } else {
-                        type.hour.work_time = toFixedFn(parseFloat(res.data[i].hour[z].total.work_time));
-                        type.hour.over_time = toFixedFn(parseFloat(res.data[i].hour[z].total.over_time));
+                        type.hour.work_time = toFixedFn((res.data[i].hour[z].total.work_time));
+                        type.hour.over_time = toFixedFn((res.data[i].hour[z].total.over_time));
                         dayItem[j].type = type;
                       }
                     }
@@ -231,12 +232,12 @@ export default function Share() {
                       if (dayItem[j].type) {
                         if (dayItem[j].type) {
                           const data = JSON.parse(JSON.stringify(dayItem[j]))
-                          type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money));
+                          type.borrow.borrow = toFixedFn((res.data[i].borrow[z].total.money));
                           data.type.borrow = type.borrow;
                           dayItem[j] = data;
                         }
                       } else {
-                        type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money));
+                        type.borrow.borrow = toFixedFn((res.data[i].borrow[z].total.money));
                         dayItem[j].type = type;
                       }
                     }
@@ -254,14 +255,14 @@ export default function Share() {
                       if (dayItem[j].type) {
                         if (dayItem[j].type) {
                           const data = JSON.parse(JSON.stringify(dayItem[j]))
-                          type.work.work_time = toFixedFn(parseFloat(res.data[i].work[z].total.work_time));
-                          type.work.over_time = toFixedFn(parseFloat(res.data[i].work[z].total.over_time));
+                          type.work.work_time = toFixedFn((res.data[i].work[z].total.work_time));
+                          type.work.over_time = toFixedFn((res.data[i].work[z].total.over_time));
                           data.type.work = type.work;
                           dayItem[j] = data;
                         }
                       } else {
-                        type.work.work_time = toFixedFn(parseFloat(res.data[i].work[z].total.work_time));
-                        type.work.over_time = toFixedFn(parseFloat(res.data[i].work[z].total.over_time));
+                        type.work.work_time = toFixedFn((res.data[i].work[z].total.work_time));
+                        type.work.over_time = toFixedFn((res.data[i].work[z].total.over_time));
                         dayItem[j].type = type;
                       }
                     }
@@ -281,12 +282,12 @@ export default function Share() {
                           work_time: '',
                           over_time: '',
                         }
-                        work.work_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0)
-                        work.over_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                        work.work_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.work_time)), 0)
+                        work.over_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.over_time || 0)), 0)
                         let obj = {
                           name: lastDay[b].name,
-                          work_time: res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0),
-                          over_time: res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                          work_time: res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.work_time)), 0),
+                          over_time: res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.over_time || 0)), 0)
                         }
                         workNumList.push(obj)
                         if (lastDay[b].type) {
@@ -300,8 +301,8 @@ export default function Share() {
                               over_time: '',
                             }
                           }
-                          type.work.work_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time || 0), 0);
-                          type.work.over_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                          type.work.work_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.work_time || 0)), 0);
+                          type.work.over_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.over_time || 0)), 0)
                           lastDay[b].type = type;
                         }
                       }
@@ -320,12 +321,12 @@ export default function Share() {
                         }
                         for (let j = 0; j < res.data[i].hour.length; j++) {
                         }
-                        hour.work_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0)
-                        hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0);
+                        hour.work_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + (toFixedFn(currentValue.work_time)), 0)
+                        hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + (toFixedFn(currentValue.over_time || 0)), 0);
                         let obj = {
                           name: lastDay[b].name,
-                          work_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0),
-                          over_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                          work_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + (toFixedFn(currentValue.work_time), 0)),
+                          over_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + (toFixedFn(currentValue.over_time || 0)), 0)
                         }
                         hourNumList.push(obj)
                         if (lastDay[b].type) {
@@ -339,8 +340,8 @@ export default function Share() {
                               over_time: '',
                             }
                           }
-                          type.hour.work_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time || 0), 0);
-                          type.hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                          type.hour.work_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.work_time || 0)), 0);
+                          type.hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.over_time || 0)), 0)
                           lastDay[b].type = type;
                         }
                       }
@@ -402,6 +403,7 @@ export default function Share() {
                   }
                 }
               }
+              console.log(borrowSum, 'hourSumWorkhourSumWork')
               let lastObj = [
                 { id: 1, name: '总计', default: true },
                 {
@@ -526,8 +528,8 @@ export default function Share() {
             hourData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.over_time = parseFloat(newArr[result].total.over_time) + parseFloat(el.total.over_time)
-                newArr[result].total.work_time = parseFloat(newArr[result].total.work_time) + parseFloat(el.total.work_time)
+                newArr[result].total.over_time = Number(toFixedFn(newArr[result].total.over_time)) + Number(toFixedFn(el.total.over_time))
+                newArr[result].total.work_time = Number(toFixedFn(newArr[result].total.work_time)) + Number(toFixedFn(el.total.work_time))
               } else {
                 newArr.push(el)
               }
@@ -551,7 +553,7 @@ export default function Share() {
             borrowData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.money = parseFloat(newArr[result].total.money) + parseFloat(el.total.money)
+                newArr[result].total.money = Number(toFixedFn(newArr[result].total.money)) + Number(toFixedFn(el.total.money))
               } else {
                 newArr.push(el)
               }
@@ -563,8 +565,8 @@ export default function Share() {
             workData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.over_time = parseFloat(newArr[result].total.over_time) + parseFloat(el.total.over_time)
-                newArr[result].total.work_time = parseFloat(newArr[result].total.work_time) + parseFloat(el.total.work_time)
+                newArr[result].total.over_time = Number(toFixedFn(newArr[result].total.over_time)) + Number(toFixedFn(el.total.over_time))
+                newArr[result].total.work_time = Number(toFixedFn(newArr[result].total.work_time)) + Number(toFixedFn(el.total.work_time))
               } else {
                 newArr.push(el)
               }
@@ -677,23 +679,23 @@ export default function Share() {
           let hourWorkNum = 0, hourOverNum = 0;
           if (hourDataSum && hourDataSum.length > 0) {
             for (let o = 0; o < hourDataSum.length; o++) {
-              hourWorkNum += parseFloat(hourDataSum[o].total.work_time);
-              hourOverNum += parseFloat(hourDataSum[o].total.over_time);
+              hourWorkNum += Number(toFixedFn(hourDataSum[o].total.work_time));
+              hourOverNum += Number(toFixedFn(hourDataSum[o].total.over_time));
             }
           }
           // 记工
           let workWorkNum = 0, workOverNum = 0;
           if (workDataSum && workDataSum.length > 0) {
             for (let o = 0; o < workDataSum.length; o++) {
-              workWorkNum += parseFloat(workDataSum[o].total.work_time);
-              workOverNum += parseFloat(workDataSum[o].total.over_time);
+              workWorkNum += Number(toFixedFn(workDataSum[o].total.work_time));
+              workOverNum += Number(toFixedFn(workDataSum[o].total.over_time));
             }
           }
           // 借支
           let borrowNum = 0;
           if (borrowDataSum && borrowDataSum.length > 0) {
             for (let o = 0; o < borrowDataSum.length; o++) {
-              borrowNum += parseFloat(borrowDataSum[o].total.money);
+              borrowNum += Number(toFixedFn(borrowDataSum[o].total.money));
             }
           }
           // 等于0就相当于没有记
@@ -726,7 +728,7 @@ export default function Share() {
             work = { work_time: toFixedFn(workWorkNum), over_time: toFixedFn(workOverNum) }
           }
           let sumLeft = [
-            { id: 1, name: '总计', default: true },
+            { id: 1, name: '总计', default: true, isSum: true },
             {
               id: 2, type: {
                 hour: sumHour,
@@ -755,8 +757,7 @@ export default function Share() {
           // 本月统计
           // 获取身份
           console.log(obj, 'obj')
-          // let type = Taro.getStorageSync(Type);
-          if (identity === '1') {
+          if (identity == '1') {
             setFixedTab([...leftArr, ...arr, obj]);
             setTabArr([...rightArr, ...listArr, sum]);
           } else {
@@ -774,12 +775,12 @@ export default function Share() {
     })
   }
   const toFixedFn = (num: any) => {
-    let f = parseFloat(num);
-    if (isNaN(f)) {
-      return false;
-    }
-    f = Math.round(num * 1000) / 1000;
-    let s = f.toString();
+    // let f = parseFloat(num);
+    // if (isNaN(f)) {
+    //   return false;
+    // }
+    //  f = Math.round(num * 1000) / 1000
+    let s = num + '';
     let rs = s.indexOf('.');
     if (rs < 0) {
       rs = s.length;
@@ -788,8 +789,10 @@ export default function Share() {
     while (s.length <= rs + 2) {
       s += '0';
     }
+    // console.log(num,'numm')
     s = s.substring(0, s.indexOf(".") + 3);
-    return Number(s);
+    console.log(s, 'ssssss');
+    return s;
   }
   // 设置时间
   const handleTime = (e) => {

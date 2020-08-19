@@ -504,13 +504,13 @@ export default function userForeman() {
             let type = Taro.getStorageSync(Type);
             if (res.data.latest_group_workers_has_wage.length > 0) {
               if(type == 1){
+                setNoset(false)
                 for (let i = 0; i < workArr.length; i++) {
                   for (let j = 0; j < res.data.latest_group_workers_has_wage.length; j++) {
                     if (workArr[i].id == res.data.latest_group_workers_has_wage[j].worker_id) {
                       workArr[i].set = true;
-                      setNoset(true)
                     }else{
-                      setNoset(false) 
+                      setNoset(true) 
                     }
                   }
                 }
@@ -560,6 +560,13 @@ export default function userForeman() {
                 setWageStandard(wageStandardData)
                 setCacheWage(wageStandardData)
               }
+            }else{
+              console.log(workArr,'List')
+              for (let i = 0; i < workArr.length; i++) {
+                workArr[i].set = false;
+              }
+              setNoset(true)
+              console.log(32131232131)
             }
             // 设置是否记过工
             if (res.data.latest_group_info.constructor === Array) {
@@ -2326,6 +2333,7 @@ export default function userForeman() {
       Msg('您还没有填写班组名称');
       return;
     }
+    setDeldelType(false)
     let type = Taro.getStorageSync(Type);
     let params = {
       group_name: model.groupName,
@@ -3215,7 +3223,7 @@ export default function userForeman() {
       if (identity == 2) {
         const data = JSON.parse(JSON.stringify(wageStandard));
         if (!data.work || data.work == 0) {
-          Msg('请设置工资标准');
+          Msg('您还没有设置工资标准');
           return;
         }
       }
@@ -3275,7 +3283,7 @@ export default function userForeman() {
         if (identity == 2){
           const data = JSON.parse(JSON.stringify(wageStandard));
           if (!data.work || data.work == 0) {
-            Msg('请设置工资标准');
+            Msg('您还没有设置工资标准');
             return;
           }
         }
@@ -3584,6 +3592,7 @@ export default function userForeman() {
     setProjectArr(arr)
     setShow(false)
     setModel(data)
+    setDeldelType(false)
     // 设置GroupInfo;
     setGroupInfo(v.group_id + ',' + v.id)
     // 工人的话
