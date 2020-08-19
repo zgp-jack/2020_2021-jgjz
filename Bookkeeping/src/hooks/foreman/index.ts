@@ -2203,7 +2203,7 @@ export default function userForeman() {
         if (value.split(".")[0] && value.split(".")[0].length > num) {
           Msg('超出最大输入范围')
         }
-      }else if(num === 4){
+      }else if(num === 2){
         if (value.split(".")[0] && value.split(".")[0].length > num) {
           Msg('超出最大输入范围')
         }
@@ -2218,6 +2218,7 @@ export default function userForeman() {
       value.indexOf(".") > 0
         ? value.split(".")[0].substring(0, num) + "." + value.split(".")[1]
         : value.substring(0, num);
+    console.log(value,'valewe');
     let data = JSON.parse(JSON.stringify(model));
     if(type){
       if(type === 'day' || type === 'work'){
@@ -2235,13 +2236,17 @@ export default function userForeman() {
           console.log(data,'data')
           return data 
         }
+        console.log(value,'value')
         const item = JSON.parse(JSON.stringify(wageStandard));
         item[type] = parseInt(value);
         let num: number | string = 0.00;
         if (item.money > 0 && value > 0) {
           num = item.money / value
         }
+        console.log(parseInt(value),'valeue')
+        console.log(type,'type')
         item.dayAddWork = toFixedFn(num);
+        console.log(item,'Itme')
         setWageStandard(item);
         return value
       }else{
@@ -3029,7 +3034,7 @@ export default function userForeman() {
   const handleWageStandard = (type: string, e: any) => {
     // const cacheItem = JSON.parse(JSON.stringify(cacheWage));
     if (type == 'day') {
-      return dealInputVal(e.detail.value,4,type)
+      // return dealInputVal(e.detail.value,4,type)
       const item = JSON.parse(JSON.stringify(wageStandard));
       item[type] = e;
       if(e == 24){
@@ -3077,7 +3082,12 @@ export default function userForeman() {
       return;
     }
     if(type === 'work'){
-      return dealInputVal(e.toString(), 4, type)
+      const data = JSON.parse(JSON.stringify(wageStandard));
+      data[type] = e;
+      setWageStandard(data);
+      // console.log(e,'eee')
+      // dealInputVal(e.detail.value, 2, type)
+      // return '11'
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = e;

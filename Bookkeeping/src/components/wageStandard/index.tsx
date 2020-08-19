@@ -62,9 +62,9 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                   <AtInputNumber
                     style='color:red'
                     className='atInputNumberInput'
-                    type='digit'
+                    type='number'
                     min={0}
-                    // max={24}
+                    max={24}
                     step={0.5}
                     value={wageStandard.work}
                     onChange={(e) => { handleWageStandard('work',e)}}
@@ -77,7 +77,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                   <AtInputNumber
                     type='digit'
                     min={0}
-                    // max={9999.99}
+                    max={9999.99}
                     step={1}
                     value={wageStandard.money}
                     onChange={(e) => { handleWageStandard('money', e) }}
@@ -102,7 +102,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                     <AtInputNumber
                       type='digit'
                       min={0}
-                      // max={9999.99}
+                      max={9999.99}
                       step={1}
                       value={wageStandard.addWork}
                       onChange={(e) => { handleWageStandard('addWork', e) }}
@@ -119,7 +119,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                     <AtInputNumber
                       type='digit'
                       min={0}
-                      // max={24}
+                      max={24}
                       step={0.5}
                       value={wageStandard.day}
                       onChange={(e) => { handleWageStandard('day', e) }}
