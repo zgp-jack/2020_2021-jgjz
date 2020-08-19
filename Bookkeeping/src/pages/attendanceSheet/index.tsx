@@ -218,24 +218,25 @@ export default function AttendanceSheet() {
               // 记工
               if (res.data[i].hour.length > 0) {
                 typeObj.type.hour = true;
-                hourSumWork = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0))
-                hourSumTime = toFixedFn(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0))
+                hourSumWork = toFixedFnNum(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.total.work_time)), 0))
+                hourSumTime = toFixedFnNum(res.data[i].hour.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.total.over_time)), 0))
               }
               //  包工(量)
               if (res.data[i].amount.length > 0) {
                 typeObj.type.amount = true;
-                amountSum = toFixedFn(res.data[i].amount.reduce((accumulator, currentValue) => accumulator + currentValue.list.length, 0));
+                amountSum = (res.data[i].amount.reduce((accumulator, currentValue) => accumulator + currentValue.list.length, 0));
               }
               //借支
               if (res.data[i].borrow.length > 0) {
                 typeObj.type.borrow = true;
-                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.money), 0)))
+                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.total.money)), 0)))
+                console.log(borrowSum,'borrowSum')
               }
               // 包工(天)
               if (res.data[i].work.length > 0) {
                 typeObj.type.work = true
-                workSumWork = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.work_time), 0))
-                workSumTime = toFixedFn(res.data[i].work.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.total.over_time), 0))
+                workSumWork = toFixedFnNum(res.data[i].work.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.total.work_time)), 0))
+                workSumTime = toFixedFnNum(res.data[i].work.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.total.over_time)), 0))
               }
               for (let j = 0; j < dayItem.length; j++) {
                 if (res.data[i].hour.length > 0) {
@@ -250,13 +251,13 @@ export default function AttendanceSheet() {
                       if (dayItem[j].type) {
                         const data = JSON.parse(JSON.stringify(dayItem[j]));
                         if (data.type) {
-                          data.type.hour.work_time = toFixedFn((parseFloat(res.data[i].hour[z].total.work_time)));
-                          data.type.hour.over_time = toFixedFn(parseFloat(res.data[i].hour[z].total.over_time));
+                          data.type.hour.work_time = toFixedFnNum(((res.data[i].hour[z].total.work_time)));
+                          data.type.hour.over_time = toFixedFnNum((res.data[i].hour[z].total.over_time));
                           dayItem[j] = data;
                         }
                       } else {
-                        type.hour.work_time = toFixedFn(parseFloat(res.data[i].hour[z].total.work_time));
-                        type.hour.over_time = toFixedFn(parseFloat(res.data[i].hour[z].total.over_time));
+                        type.hour.work_time = toFixedFnNum((res.data[i].hour[z].total.work_time));
+                        type.hour.over_time = toFixedFnNum((res.data[i].hour[z].total.over_time));
                         dayItem[j].type = type;
                       }
                     }
@@ -295,12 +296,12 @@ export default function AttendanceSheet() {
                       if (dayItem[j].type) {
                         if (dayItem[j].type) {
                           const data = JSON.parse(JSON.stringify(dayItem[j]))
-                          type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money));
+                          type.borrow.borrow = toFixedFn((res.data[i].borrow[z].total.money));
                           data.type.borrow = type.borrow;
                           dayItem[j] = data;
                         }
                       } else {
-                        type.borrow.borrow = toFixedFn(parseFloat(res.data[i].borrow[z].total.money));
+                        type.borrow.borrow = toFixedFn((res.data[i].borrow[z].total.money));
                         dayItem[j].type = type;
                       }
                     }
@@ -318,14 +319,14 @@ export default function AttendanceSheet() {
                       if (dayItem[j].type) {
                         if (dayItem[j].type) {
                           const data = JSON.parse(JSON.stringify(dayItem[j]))
-                          type.work.work_time = toFixedFn(parseFloat(res.data[i].work[z].total.work_time));
-                          type.work.over_time = toFixedFn(parseFloat(res.data[i].work[z].total.over_time));
+                          type.work.work_time = toFixedFnNum((res.data[i].work[z].total.work_time));
+                          type.work.over_time = toFixedFnNum((res.data[i].work[z].total.over_time));
                           data.type.work = type.work;
                           dayItem[j] = data;
                         }
                       } else {
-                        type.work.work_time = toFixedFn(parseFloat(res.data[i].work[z].total.work_time));
-                        type.work.over_time = toFixedFn(parseFloat(res.data[i].work[z].total.over_time));
+                        type.work.work_time = toFixedFnNum((res.data[i].work[z].total.work_time));
+                        type.work.over_time = toFixedFnNum((res.data[i].work[z].total.over_time));
                         dayItem[j].type = type;
                       }
                     }
@@ -345,12 +346,12 @@ export default function AttendanceSheet() {
                           work_time: '',
                           over_time: '',
                         }
-                        work.work_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0)
-                        work.over_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                        work.work_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.work_time)), 0)
+                        work.over_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.over_time || 0)), 0)
                         let obj = {
                           name: lastDay[b].name,
-                          work_time: res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0),
-                          over_time: res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                          work_time: res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.work_time)), 0),
+                          over_time: res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.over_time || 0)), 0)
                         }
                         workNumList.push(obj)
                         if (lastDay[b].type) {
@@ -364,8 +365,8 @@ export default function AttendanceSheet() {
                               over_time: '',
                             }
                           }
-                          type.work.work_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time || 0), 0);
-                          type.work.over_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                          type.work.work_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.work_time || 0)), 0);
+                          type.work.over_time = res.data[i].work[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.over_time || 0)), 0)
                           lastDay[b].type = type;
                         }
                       }
@@ -384,12 +385,12 @@ export default function AttendanceSheet() {
                         }
                         for (let j = 0; j < res.data[i].hour.length; j++) {
                         }
-                        hour.work_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0)
-                        hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0);
+                        hour.work_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + (toFixedFnNum(currentValue.work_time)), 0)
+                        hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + (toFixedFnNum(currentValue.over_time || 0)), 0);
                         let obj = {
                           name: lastDay[b].name,
-                          work_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time), 0),
-                          over_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                          work_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + (toFixedFnNum(currentValue.work_time), 0)),
+                          over_time: res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + (toFixedFnNum(currentValue.over_time || 0)), 0)
                         }
                         hourNumList.push(obj)
                         if (lastDay[b].type) {
@@ -403,8 +404,8 @@ export default function AttendanceSheet() {
                               over_time: '',
                             }
                           }
-                          type.hour.work_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.work_time || 0), 0);
-                          type.hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.over_time || 0), 0)
+                          type.hour.work_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.work_time || 0)), 0);
+                          type.hour.over_time = res.data[i].hour[n].list.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.over_time || 0)), 0)
                           lastDay[b].type = type;
                         }
                       }
@@ -466,6 +467,7 @@ export default function AttendanceSheet() {
                   }
                 }
               }
+              console.log(borrowSum,'hourSumWorkhourSumWork')
               let lastObj = [
                 { id: 1, name: '总计', default:true},
                 {
@@ -509,9 +511,7 @@ export default function AttendanceSheet() {
                   num: amountSum
                 }
               }
-              console.log(lastObj,'1111')
               list.push(obj, typeObj, sumObj);
-              console.log(list,'lsit')
               arrObj.list = list;
               arrObj.type = {
                 hour: false,
@@ -592,8 +592,8 @@ export default function AttendanceSheet() {
             hourData.forEach((el:any) => {
               const result = newArr.findIndex((ol:any) => { return el.date_num === ol.date_num })
             if (result !== -1) {
-              newArr[result].total.over_time = parseFloat(newArr[result].total.over_time) + parseFloat(el.total.over_time)
-              newArr[result].total.work_time = parseFloat(newArr[result].total.work_time) + parseFloat(el.total.work_time)
+              newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
+              newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
             } else {
               newArr.push(el)
               }
@@ -617,7 +617,7 @@ export default function AttendanceSheet() {
             borrowData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.money = parseFloat(newArr[result].total.money) + parseFloat(el.total.money)
+                newArr[result].total.money = Number(toFixedFn(newArr[result].total.money)) + Number(toFixedFn(el.total.money))
               } else {
                 newArr.push(el)
               }
@@ -629,8 +629,8 @@ export default function AttendanceSheet() {
             workData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.over_time = parseFloat(newArr[result].total.over_time) + parseFloat(el.total.over_time)
-                newArr[result].total.work_time = parseFloat(newArr[result].total.work_time) + parseFloat(el.total.work_time)
+                newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
+                newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
               } else {
                 newArr.push(el)
               }
@@ -643,11 +643,11 @@ export default function AttendanceSheet() {
               sumHour = true;
               for (let j = 0; j < hourDataSum.length;j++){
                 if (hourDataSum[j].date_num == dayArrList[i].name){
-                  console.log(toFixedFn(hourDataSum[j].total.work_time),'hourDataSum[j].total.work_time')
+                  console.log(toFixedFnNum(hourDataSum[j].total.work_time),'hourDataSum[j].total.work_time')
                   let type = {
                     hour: {
-                      work_time: toFixedFn(hourDataSum[j].total.work_time),
-                      over_time: toFixedFn(hourDataSum[j].total.over_time)
+                      work_time: toFixedFnNum(hourDataSum[j].total.work_time),
+                      over_time: toFixedFnNum(hourDataSum[j].total.over_time)
                     }
                   }
                   if (dayArrList[i].type){
@@ -666,8 +666,8 @@ export default function AttendanceSheet() {
                 if (workDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
                     work: {
-                      work_time: toFixedFn(workDataSum[j].total.work_time),
-                      over_time: toFixedFn(workDataSum[j].total.over_time)
+                      work_time: toFixedFnNum(workDataSum[j].total.work_time),
+                      over_time: toFixedFnNum(workDataSum[j].total.over_time)
                     }
                   }
                   if (dayArrList[i].type) {
@@ -743,23 +743,23 @@ export default function AttendanceSheet() {
           let hourWorkNum=0, hourOverNum=0;
           if (hourDataSum && hourDataSum.length > 0) {
             for (let o = 0; o < hourDataSum.length; o++) {
-              hourWorkNum += parseFloat(hourDataSum[o].total.work_time);
-              hourOverNum += parseFloat(hourDataSum[o].total.over_time);
+              hourWorkNum += Number(toFixedFnNum(hourDataSum[o].total.work_time));
+              hourOverNum += Number(toFixedFnNum(hourDataSum[o].total.over_time));
             }
           }
           // 记工
           let workWorkNum = 0, workOverNum = 0;
           if (workDataSum && workDataSum.length > 0) {
             for (let o = 0; o < workDataSum.length; o++) {
-              workWorkNum += parseFloat(workDataSum[o].total.work_time);
-              workOverNum += parseFloat(workDataSum[o].total.over_time);
+              workWorkNum += Number(toFixedFnNum(workDataSum[o].total.work_time));
+              workOverNum += Number(toFixedFnNum(workDataSum[o].total.over_time));
             }
           }
           // 借支
           let borrowNum = 0;
           if (borrowDataSum && borrowDataSum.length > 0) {
             for (let o = 0; o < borrowDataSum.length; o++) {
-              borrowNum += parseFloat(borrowDataSum[o].total.money);
+              borrowNum += Number(toFixedFn(borrowDataSum[o].total.money));
             }
           }
           // 等于0就相当于没有记
@@ -783,13 +783,13 @@ export default function AttendanceSheet() {
           if (hourWorkNum == 0 && hourOverNum ==0 ){
             hour = {}
           }else{
-            hour = { work_time: toFixedFn(hourWorkNum), over_time: toFixedFn(hourOverNum) }
+            hour = { work_time: toFixedFnNum(hourWorkNum), over_time: toFixedFnNum(hourOverNum) }
           }
           let work;
           if (workWorkNum == 0 && workOverNum == 0 ){
             work = {}
           }else{
-            work = { work_time: toFixedFn(workWorkNum), over_time: toFixedFn(workOverNum) }
+            work = { work_time: toFixedFnNum(workWorkNum), over_time: toFixedFnNum(workOverNum) }
           }
           let sumLeft = [
             { id: 1, name: '总计', default:true, isSum:true },
@@ -844,12 +844,12 @@ export default function AttendanceSheet() {
       })
   }
   const toFixedFn = (num:any)=>{
-    let f = parseFloat(num);
-    if (isNaN(f)) {
-      return false;
-    }
-     f = Math.round(num * 1000) / 1000;
-    let s = f.toString();
+    // let f = parseFloat(num);
+    // if (isNaN(f)) {
+    //   return false;
+    // }
+    //  f = Math.round(num * 1000) / 1000
+    let s = num+'';
     let rs = s.indexOf('.');
     if (rs < 0) {
       rs = s.length;
@@ -858,8 +858,15 @@ export default function AttendanceSheet() {
     while (s.length <= rs + 2) {
       s += '0';
     }
+    // console.log(num,'numm')
     s = s.substring(0, s.indexOf(".") + 3);
-    console.log(s,'xxxx')
+    console.log(s,'ssssss');
+    return s;
+  }
+  const toFixedFnNum = (num: any)=>{
+    let s = num + '';
+    s = s.substring(0, s.indexOf(".") + 3);
+    console.log(s, 'ssssss');
     return Number(s);
   }
   // 设置时间
@@ -1008,17 +1015,19 @@ export default function AttendanceSheet() {
                 <View className='box-left' key={'v'+o}>
                   {v.list.map((val,c) => (
                     <View className='middle' key={'c'+c}>
-                      {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && ((!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (v.type.hour || v.type.work || v.type.borrow || v.type.amount)) ? 'box-none' : 'box-list-default'}>
+                      {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && 
+                      <View className={val.default && ((!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (v.type.hour || v.type.work || v.type.borrow || v.type.amount)) ? 'box-none' : 'box-list-default'}>
                         <View 
                         className={classnames({
                           // 'mt100': val.type,
                           'mt100': v.type &&v.type.hour && v.type.work && v.type.borrow && v.type.amount ,
                           'mt50': v.type && ((v.type.hour && v.type.work && v.type.borrow) || (v.type.hour && v.type.borrow && v.type.amount) || (v.type.hour && v.type.amount && v.type.work) || (v.type.work && v.type.borrow && v.type.amount )),
                           'mt20': v.type&& ((v.type.hour && v.type.work) || (v.type.hour && v.type.borrow) || (v.type.hour && v.type.amount) || (v.type.work && v.type.borrow) || (v.type.work && v.type.amount) || (v.type.borrow && v.type.amount)),
-                          '': v.type &&  ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount) )
+                          'mt0': v.type &&  ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount) )
                       }
                       )}
-                        >{val.name}</View>
+                        >
+                        {val.name}</View>
                         {val.default && !val.isSum &&
                           <View open-type="share">
                             <Button className='blued' open-type="share">

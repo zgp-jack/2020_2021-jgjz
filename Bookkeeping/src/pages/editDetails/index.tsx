@@ -523,9 +523,17 @@ export default function EditDetails() {
       if(item.day!==0){
         dayAddWork = e / item.day;
       }
-      item[type] = e;
+      item[type] = toFixedFn(e);
       item.dayAddWork = toFixedFn(dayAddWork);
       setWageStandard(item);
+      return;
+    }
+    if (type === 'addWork'){
+      const data = JSON.parse(JSON.stringify(wageStandard));
+      console.log(e,'xxxx');
+      console.log(toFixedFn(e),'toFixedFn(e)')
+      data[type] = toFixedFn(e);
+      setWageStandard(data);
       return;
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
@@ -667,7 +675,6 @@ export default function EditDetails() {
         group_info: data.group_info,
       }
     }
-    console.log(data,'1111');
     let paramsData:any = {};
     if (data.type === 1){
       paramsData = {
@@ -692,7 +699,6 @@ export default function EditDetails() {
         type: 'wage'
       }
     }
-    console.log(data,'data2312313');
     setWageStandard(data);
     setCloseWageStandard(data);
     // return;
@@ -783,8 +789,6 @@ export default function EditDetails() {
   }
   // 选择加班时长
   const handleworkOvertime = (type: number, e: any) => {
-    console.log(3213,'1111');
-    console.log(val,'xxx')
     setTimeType(type)
     if (type === 1) {
       if (e.id === 4) {

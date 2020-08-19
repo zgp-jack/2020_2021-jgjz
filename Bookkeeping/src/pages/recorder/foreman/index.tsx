@@ -77,14 +77,11 @@ export default function Foreman() {
   // },[])
   // 获取项目列表
   const bkGetProjectTeam = ()=>{
-    console.log(projectId,'projectId')
     let params={}
     bkGetProjectTeamAction(params).then(res=>{
       if(res.code === 200){
         if(res.data.length>0){
           for(let i =0;i<res.data.length;i++){
-            console.log(res.data[i].group_id + res.data[i].id,'1111');
-            console.log(projectId,'222')
             if ((res.data[i].group_id +','+ res.data[i].id) == projectId){
               res.data[i].click = true;
             }else{

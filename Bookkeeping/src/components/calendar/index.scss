@@ -18,6 +18,7 @@
   box-shadow: #e7e6e4 0 0 10rpx;
   box-sizing:border-box;
   height: 1000rpx;
+  border-radius:22rpx 22rpx 0rpx 0rpx;
 }
 
 
@@ -27,6 +28,7 @@
   height: 95rpx;
   line-height: 95rpx;
   background: #F5FAFE;
+  border-radius:22px 22px 0px 0px;
 }
 
 .content-top-close{
@@ -61,14 +63,14 @@
 
 .content-tips-box {
   background: #FDEBC0;
-  height: 26rpx;
-  width: 26rpx;
-  display: inline-block;
+  height: 28.5rpx;
+  width: 28.5rpx;
   margin-right: 13rpx;
+  margin-top: 6rpx;
 }
 
 .leftIcon {
-  margin-right: 10rpx;
+  // margin-right: 10rpx;
   height: 22rpx;
   width: 22rpx;
   // display: inline-block;
@@ -212,5 +214,18 @@
   width: 120rpx;
 }
 .month{
-  margin-left: 20rpx;
+  display: flex;
+  // margin-left: 20rpx;
+}
+.title{
+  font-size: 30rpx;
+  display: flex;
+}
+.iconLeft{
+  padding-left: 20rpx;
+  padding-right: 10rpx;
+}
+.iconRight{
+  padding-left: 10rpx;
+  padding-right: 10rpx;
 }
