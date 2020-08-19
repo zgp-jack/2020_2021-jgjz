@@ -388,8 +388,8 @@ export default function Index() {
     // getData();
     getData();
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
-    setVal(yeartime+'-'+montime);
+    const date = new Date();
+    setVal(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
     if (Number(this_year_business_month) == montime) {
       setleftTime(false);
     } else if(Number(this_year_business_month)<montime){
@@ -624,8 +624,6 @@ export default function Index() {
   // 切换角色
   const handelChange = (e, type?: boolean) => {
     let midData = Taro.getStorageSync(MidData);
-    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
     if (!midData) {
       setleftTime(false);
       setrightTime(false);
@@ -647,7 +645,8 @@ export default function Index() {
     let msg = e === 2 ? '开始为自己记工吧' : '开始为工人记工吧'
     setType(e);
     setrightTime(false);
-    setVal(yeartime+'-'+montime);
+    const date = new Date();
+    setVal(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
     Taro.setStorageSync(Type, e);
     if (!type) {
       Msg(msg)
@@ -832,6 +831,18 @@ export default function Index() {
   const nextStep = () => {
     let midData = Taro.getStorageSync(MidData);
     if (!midData) return;
+  }
+  // 防抖跳流水
+  const deboucehandleJump = (url) => {
+    let timeout:any = null;
+    return function() {
+      if(timeout !== null){
+        clearTimeout(timeout);
+      }     
+      timeout = setTimeout(()=>{
+        handleJump(url,true);
+      }, 350);  
+    }
   }
   // 跳流水
   const handleJump = (url: string, state?: boolean | number) => {
@@ -1035,8 +1046,8 @@ export default function Index() {
             </View>
           </View>
           <View className='btnBox'>
-            <View className='btn' onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`, true)}>
-              {!item || (item && item.business_list.data.length === 0) ? <Text className='fontSize'> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text  className='fontSize'> 再记一笔<Text className='btn-title'>(点工 包工 借支)</Text></Text>}
+            <View className='btn' onClick={deboucehandleJump(`/pages/recorder/index?type=${type}&stateType=1`)}>
+              {!item || (item && item.business_list.data.length === 0) ? <Text className='fontSize'> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text  className='fontSize'> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
               <View className='notepad-Icon'><Image className='notepad-Icon-iamge' src={`${IMGCDNURL}notepad.png`} /></View>

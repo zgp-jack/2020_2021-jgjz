@@ -26,7 +26,7 @@
 }
 .list-content{
   background: white;
-  padding-bottom: 80rpx;
+  padding-bottom: 100rpx;
 }
 .list{
   padding-top: 15rpx;
@@ -61,8 +61,10 @@
   display: flex;
   justify-content: space-around;
   position: fixed;
-  bottom: 20rpx;
+  bottom: 0rpx;
+  padding-bottom: 20rpx;
   width: 100%;
+  background-color: #fff;
   z-index: 2;
 }
 

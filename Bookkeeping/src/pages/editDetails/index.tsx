@@ -274,7 +274,7 @@ export default function EditDetails() {
           // 工钱
           let wages;
           obj.wages = toFixedFn(res.data.money);
-          obj.unitNum = toFixedFn(parseFloat(res.data.unit_num));
+          obj.unitNum = (parseFloat(res.data.unit_num));
           obj.unitPrice = res.data.unit_price;
           obj.unit = res.data.unit;
           setVal(obj);
@@ -1138,9 +1138,12 @@ export default function EditDetails() {
         Msg('请输入本次借支金额')
         return
       }
-    }else if(!Number(money)&&!Number(data.unitNum)&&!Number(data.unitPrice)){
+    }else if((businessType == 2 && type == 2)&&!Number(money)&&!Number(data.unitNum)&&!Number(data.unitPrice)){
       Msg('请填写工程量、单价或工钱');
       return;
+    }else if(!Number(money)){
+      Msg('您还没有选择上班或加班时长');
+      return
     }
     if (businessType == 2 && types == 2){
       // unit
@@ -1194,28 +1197,28 @@ export default function EditDetails() {
         delete params['group_info'];
         if(useSelectorItem.flowingWater.length>0){
           useSelectorItem.flowingWater.forEach((element) => {
-            element.total_borrow = 0;
-            element.total_money = 0;
+            // element.total_borrow = 0;
+            // element.total_money = 0;
             element.arr.forEach((item) => {
               if(item.id == params.id){
+                if(item.business_type == 3){
+                  element.total_borrow -= Number(item.money);
+                  element.total_borrow += Number(params.money);
+                }else{
+                  element.total_money -= Number(item.money);
+                  element.total_money += Number(params.money);
+                }
                 Object.getOwnPropertyNames(params).forEach((key) =>{
                   item[key] = params[key]
                 })
-                if(item.business_type == 3){
-                  // element.total_borrow -= Number(item.money);
-                  element.total_borrow += Number(params.money);
-                }else{
-                  // element.total_money -= Number(item.money);
-                  element.total_money += Number(params.money);
-                }
               }
-              else{
-                if(item.business_type == 3){
-                  element.total_borrow += Number(item.money);
-                }else{
-                  element.total_money += Number(item.money);
-                }
-              }
+              // else{
+              //   if(item.business_type == 3){
+              //     element.total_borrow += Number(item.money);
+              //   }else{
+              //     element.total_money += Number(item.money);
+              //   }
+              // }
             });
           });
         }

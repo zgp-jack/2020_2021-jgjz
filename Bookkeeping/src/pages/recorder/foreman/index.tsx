@@ -212,7 +212,7 @@ export default function Foreman() {
   const handleWorkingHoursClose = ()=>{
     setWorkingHoursDisplay(false);
     setWorkOvertimeDisplay(true)
-    setIsdisable(false)
+    // setIsdisable(false)
   }
   // 引导创建项目
   const handleCreateProjectClose = ()=>{
@@ -356,7 +356,7 @@ export default function Foreman() {
     setModel({ ...data, groupName: '', teamName: '' })
     setCreateProjectDisplay(true), setShow(false);
     setTimeout(() => {
-      setIsdisable(true);
+    setIsdisable(true);
     },500);
   }
   const handleCurrent = ()=>{
@@ -643,7 +643,7 @@ export default function Foreman() {
               <Input
                 className='publish-list-input'
                 type='digit'
-                maxLength={16}
+                maxLength={17}
                 onInput={(e) => handleInput('wages', e)}
                 placeholder='工程量和单价未知时，可直接填写工钱'
                 value={model && model.wages}
@@ -726,7 +726,7 @@ export default function Foreman() {
           <View className='publish-list-ditals'>
             <View>备注</View>
               {/* <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}> */}
-            {isdisable && <View className='textarea'>{model && model.details}</View>}
+            {/* {isdisable && <View className='textarea'>{model && model.details}</View>} */}
             <Textarea
               // focus={autoFocus}
               // autoFocus={autoFocus}

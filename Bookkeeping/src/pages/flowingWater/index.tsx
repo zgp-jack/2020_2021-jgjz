@@ -495,12 +495,24 @@ export default function FlowingWater() {
     setProject(false)
     setCreateProjectDisplay(true)
   }
-  const toFixedFn = (num:any)=>{
-    let nums = num + '';
-    if(nums.indexOf('.')+1>0){
-      nums = nums.substring(0,nums.indexOf(".")+3);
+  const toFixedFn = (num: any) => {
+    let f = parseFloat(num);
+    if (isNaN(f)) {
+      return false;
     }
-    return  Number(nums);
+    f = Math.round(num * 1000) / 1000;
+    let s = f.toString();
+    let rs = s.indexOf('.');
+    if (rs < 0) {
+      rs = s.length;
+      s += '.';
+    }
+    while (s.length <= rs + 2) {
+      s += '0';
+    }
+    // console.log(f,'ffff')
+    s = s.substring(0, s.indexOf(".") + 3);
+    return s;
   }
   return(
     <context.Provider value={value}>
@@ -544,11 +556,11 @@ export default function FlowingWater() {
                 </View>
                 <View className='content-td'>
                   <View className='content-list-right-title'>借支</View>
-                  <View className='content-list-right-money'>¥{v.total_borrow && (parseFloat(v.total_borrow)>9999999.99)?String(v.total_borrow).slice(0,7)+'...':toFixedFn(Number(v.total_borrow))||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_borrow && (parseFloat(v.total_borrow)>9999999.99)?String(v.total_borrow).slice(0,7)+'...':toFixedFn(v.total_borrow)||'0.00'}</View>
                 </View>
                 <View className="content-td">
                   <View className='content-list-right-title'>工钱</View>
-                  <View className='content-list-right-money'>¥{v.total_money && (parseFloat(v.total_money)>9999999.99)?String(v.total_money).slice(0,7)+'...':toFixedFn(Number(v.total_money))||'0.00'}</View>
+                  <View className='content-list-right-money'>¥{v.total_money && (parseFloat(v.total_money)>9999999.99)?String(v.total_money).slice(0,7)+'...':toFixedFn(v.total_money)||'0.00'}</View>
                 </View>
               </View>
               {v.click && 
