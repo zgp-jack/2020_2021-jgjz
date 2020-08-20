@@ -349,7 +349,7 @@
 .btnBox {
   position: fixed;
   left: 0;
-  bottom: 20rpx;
+  bottom: 10rpx;
   width: 100%;
 }
 
@@ -457,28 +457,35 @@
 }
 
 .mt20 {
-  margin-top: 20%;
+  margin-top: 35% !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .mt50 {
-  margin-top: 50%;
+  margin-top: 70% !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .mt100 {
-  margin-top: 75%;
+  margin-top: 95% !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.mtall {
-  margin-top: 95%;
+
+.mt0 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.mt10 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 18%;
 }
