@@ -1109,7 +1109,7 @@ export default function Index() {
                   <View>
                     <View className='content-list-flex'>
                       <View>{v.workername}{(v.note || v.view_images.length>0)&& <Text className='icon leader-icon'>备</Text>}</View>
-                      <View className='orgion'>¥{v.money}</View>
+                      <View className='orgion'><Text className='orgion-type-chars'>¥</Text>{v.money}</View>
                     </View>
                     <View className='details'>我在{v.group_info}项目组对{v.workername}记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
                   </View>
@@ -1137,7 +1137,7 @@ export default function Index() {
                   <View className='content-list-flex'>
                     <View className='details'>我在{v.group_info}项目组对Ta记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
                     {/* <View></View> */}
-                    <View className='orgion-type'>¥{v.money}</View>
+                    <View className='orgion-type'><Text className='orgion-type-chars'>¥</Text>{v.money}</View>
                   </View>
                 </View>
               ))}
