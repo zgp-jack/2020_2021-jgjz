@@ -953,86 +953,110 @@ export default function Index() {
       {/* 头部 */}
       <View className='top'>
         <Image src={`${IMGCDNURL}background.png`} className='top_img' />
-        <View className='heard'>
-          <View className='flex-month'>
-            <Image onClick={() => handleLeft(0)} src={`${IMGCDNURL}left.png`} className='leftIcon' style={{ visibility: leftTime ? 'visible' : 'hidden' }} />
-            {/* <View className='heard-left' style={newMonth > start ? '' : { marginLeft: '50rpx' }}> */}
-            <Picker
-              start={start}
-              end={end}
-              mode='date'
-              fields='month'
-              onChange={(e) => handleChangeTime(e)}
-              value={vals}
-            // range={timeList}
-            // onColumnChange={(e) => handlebindcolumnchange(e)}
-            >
-              {month}月
-            </Picker>
-            {/* </View> */}
-            <Image onClick={() => handleLeft(1)} className='righticon' src={`${IMGCDNURL}right.png`} style={{ visibility: rightTime ? 'visible' : 'hidden' }} />
+
+        <View className='inner'>
+
+          <View className='heard'>
+            <View className='flex-month'>
+              {
+                leftTime && <Image onClick={() => handleLeft(0)} src={`${IMGCDNURL}left.png`} className='leftIcon' style={{ visibility: leftTime ? 'visible' : 'hidden' }} />
+              }
+              
+              {/* <View className='heard-left' style={newMonth > start ? '' : { marginLeft: '50rpx' }}> */}
+              <Picker
+                start={start}
+                end={end}
+                mode='date'
+                fields='month'
+                onChange={(e) => handleChangeTime(e)}
+                value={vals}
+              // range={timeList}
+              // onColumnChange={(e) => handlebindcolumnchange(e)}
+              >
+                {month}月
+              </Picker>
+              {/* </View> */}
+              {
+                rightTime && <Image onClick={() => handleLeft(1)} className='righticon' src={`${IMGCDNURL}right.png`} style={{ visibility: rightTime ? 'visible' : 'hidden' }} />
+              }
+            </View>
+            {/* <Image src={`${IMGCDNURL}user.png`}/> */}
+            {type === 1 ?
+              <View className='heard-middle' onClick={() => { handelChange(2) }}>我是班组长<Text className='switch'><Text className='test' />切换 </Text>
+                {prompt && <View className='tipes' onClick={(e) => { e.stopPropagation(), handlewhiteClose() }}>工人记工点这里哦
+                  <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons' />
+                </View>}
+              </View> :
+              <View className='heard-middle' onClick={() => { handelChange(1) }}>
+                <View>我是工人<Text className='switch'><Text className='test' />切换</Text></View>
+                {prompt && <View onClick={(e) => { e.stopPropagation(), handlewhiteClose() }} className='tipes'>班组长记工点这里哦
+                  <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons' />
+                </View>}
+              </View>}
+            <View onClick={handelTps} className='cloud'>
+              {item && !show && <AtBadge value={num} maxValue={99} className='AtBadge' />}
+              <Image src={`${IMGCDNURL}cloud.png`} className='heard-right'>
+              </Image>
+            </View>
           </View>
-          {/* <Image src={`${IMGCDNURL}user.png`}/> */}
-          {type === 1 ?
-            <View className='heard-middle' onClick={() => { handelChange(2) }}>我是班组长<Text className='switch'><Text className='test' />切换 </Text>
-              {prompt && <View className='tipes' onClick={(e) => { e.stopPropagation(), handlewhiteClose() }}>工人记工点这里哦
-                <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons' />
-              </View>}
-            </View> :
-            <View className='heard-middle' onClick={() => { handelChange(1) }}>
-              <View>我是工人<Text className='switch'><Text className='test' />切换</Text></View>
-              {prompt && <View onClick={(e) => { e.stopPropagation(), handlewhiteClose() }} className='tipes'>班组长记工点这里哦
-                <Image src={`${IMGCDNURL}whiteClose.png`} className='closeIcons' />
-              </View>}
-            </View>}
-          <View onClick={handelTps} className='cloud'>
-            {item && !show && <AtBadge value={num} maxValue={99} className='AtBadge' />}
-            <Image src={`${IMGCDNURL}cloud.png`} className='heard-right'>
-            </Image>
+          <View onClick={() => handleJump(`/pages/flowingWater/index?timeMon=${vals}`, 2)}>
+            <View className='moneyList'>
+              <View>
+                <Image className='moneyIcon' src={`${IMGCDNURL}money.png`} />工钱
+                <View className='money'>
+                    {/* {item.money} -- { item.overtime } -- {item.borrow} */}
+                    {busy ? '-' : (item && (parseFloat(item.money) > 9999999.99 ? '1千万+' : item.money) || '0.00')}
+                </View>
+              </View>
+
+              <View>
+                <Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`} />借支
+                <View className='money'>
+                  {busy ? '-' : (item && (parseFloat(item.borrow) > 9999999.99 ? '1千万+' : item.borrow) || '0.00')}
+                </View>
+              </View>
+
+            </View>
+            <View className='typeList'>
+              <View className='textCenter clearfix'>
+                <View className='fl'>
+                  <Text>上班</Text>
+                  <View className='num'>
+                      {busy ? '-' : ((item && item.work_time > 998.99 ? '999+' : item && item.work_time) || 0)}
+                      {/* {(item && item.work_time > 998.99 ? '999+' : item.work_time)||0} */}
+                      个工
+                  </View>
+                </View>
+              </View>
+              <View className='textCenter'>
+                {/* <View> */}
+                <View>
+                  加班
+                  <View className='num'>
+                    {/* {item && item.overtime || 0}小时 */}
+                    {busy ? '-' : ((item && item.overtime > 998.99 ? '999+' : item && item.overtime) || 0)}
+                    {/* {(item && item.overtime > 998.99 ? '999+' : item.overtime) || 0} */}
+                    小时
+                  </View>
+                </View>
+              </View>
+              <View className='textCenter clearfix'>
+                <View className='fr'>
+                  <View>按量记
+                    <View>
+                      {busy && <View className='num'>-平方米</View>}
+                      {!busy && !item && <View className='num'>0平方米</View>}
+                      {!busy && item && item.amount.type === 0 && <View className='num'>0平方米</View>}
+                      {!busy && item && item.amount.type === 1 && <View className='num'>{parseFloat(item.amount.unit_num) > 999999.99 ? '1百万+' : parseFloat(item.amount.unit_num)}{item.amount.unit}</View>}
+                      {!busy && item &&item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>}
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
-        <View onClick={() => handleJump(`/pages/flowingWater/index?timeMon=${vals}`, 2)}>
-          <View className='moneyList'>
-            <View>
-              <Image className='moneyIcon' src={`${IMGCDNURL}money.png`} />工钱
-            <View className='money'>
-                {/* {item.money} -- { item.overtime } -- {item.borrow} */}
-                {busy ? '-' : (item && (parseFloat(item.money) > 9999999.99 ? '1千万+' : item.money) || '0.00')}
-              </View>
-            </View>
-            <View>
-              <Image className='moneyIconPay' src={`${IMGCDNURL}money1.png`} />借支
-            <View className='money'>
-                {busy ? '-' : (item && (parseFloat(item.borrow) > 9999999.99 ? '1千万+' : item.borrow) || '0.00')}
-              </View>
-            </View>
-          </View>
-          <View className='typeList'>
-            <View className='textCenter'>上班
-            <View className='num'>
-                {busy ? '-' : ((item && item.work_time > 998.99 ? '999+' : item && item.work_time) || 0)}
-                {/* {(item && item.work_time > 998.99 ? '999+' : item.work_time)||0} */}
-                个工
-            </View>
-            </View>
-            <View className='textCenter'>加班<View className='num'>
-              {/* {item && item.overtime || 0}小时 */}
-              {busy ? '-' : ((item && item.overtime > 998.99 ? '999+' : item && item.overtime) || 0)}
-              {/* {(item && item.overtime > 998.99 ? '999+' : item.overtime) || 0} */}
-              小时
-            </View></View>
-            <View className='textCenter'><View>按量记
-            <View>
-                {busy && <View className='num'>-平方米</View>}
-                {!busy && !item && <View className='num'>0平方米</View>}
-                {!busy && item && item.amount.type === 0 && <View className='num'>0平方米</View>}
-                {!busy && item && item.amount.type === 1 && <View className='num'>{parseFloat(item.amount.unit_num) > 999999.99 ? '1百万+' : parseFloat(item.amount.unit_num)}{item.amount.unit}</View>}
-                {!busy && item &&item.amount.type === 2 && <View className='num'>{item.amount.count > 999999.99 ? '1百万+' : item.amount.count}笔</View>}
-              </View>
-            </View>
-            </View>
-          </View>
-        </View>
+
         <View className='yun'><Image className='yun-img' src={`${IMGCDNURL}backgroundCloud.png`} /></View>
         <View className='recordBox'>
           <View className='eventList'>
@@ -1055,6 +1079,7 @@ export default function Index() {
             </View>
           </View>
         </View>
+        
         {/* <View className='backgroundCloud'></View> */}
       </View>
       <View className='content'>

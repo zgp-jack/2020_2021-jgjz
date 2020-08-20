@@ -8,6 +8,9 @@
   // background: url('../../assets/images/background.png') no-repeat center center;
   background-size: cover;
 }
+.inner{
+  padding: 0 60rpx;
+}
 .top_img {
   position: absolute;
   height: 520rpx;
@@ -32,8 +35,8 @@
 .flex-month{
   display: flex;
   width: 30%;
-  justify-content: center;
-  text-align: center;
+  // justify-content: center;
+  text-align: left;
 }
 
 .heard-middle{
@@ -73,7 +76,7 @@
 .moneyList{
   &>view{
     text-align: center;
-    width: 42%
+    width: 50%
   }
   display: flex;
   justify-content: center;
@@ -222,7 +225,7 @@
 }
 .content-noList{
   margin-top: 10%;
-  font-size:24rpx;
+  font-size:26rpx;
   font-weight:400;
   color:rgba(175, 175, 175, 1);
 }
@@ -469,8 +472,8 @@
 .cloud{
   width: 25%;
   margin-top: 20rpx;
-  justify-content: center;
-  text-align: center;
+  // justify-content: center;
+  text-align: right;
 }
 .AtBadge{
   .at-badge__num{
@@ -525,6 +528,9 @@
   width: 33%;
   text-align: center;
   font-size: 30rpx;
+}
+.textCenter>view{
+  text-align: center;
 }
 .downIcon-Icon-iamge {
   height: 32rpx;
