@@ -2224,7 +2224,9 @@ export default function userForeman() {
             setClickData(clickDataArr);
             console.log(change,'change1111')
             console.log(cacheDaysArr,'cacheDaysArrcacheDaysArrcacheDaysArr')
-            getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr, change);
+            setTimeout(()=>{
+              getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr, change);
+            },0)
             return;
           }
         }
