@@ -461,7 +461,8 @@ export default function FlowingWater() {
         setCreateProjectDisplay(true)
       } else {
         let type = Taro.getStorageSync(Type);
-        userRouteJump(`/pages/recorder/index?type=${type}`)
+        Taro.redirectTo({url:`/pages/recorder/index?type=${type}`});
+        // userRouteJump(`/pages/recorder/index?type=${type}`)
       }
     })
   }
