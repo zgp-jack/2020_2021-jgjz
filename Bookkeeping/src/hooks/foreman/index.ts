@@ -3013,7 +3013,7 @@ export default function userForeman() {
   // 打开工资标准
   const handleOpenWagesModal = (v?: any) => {
     if (delType) return;
-
+    if(recorderType == 3){return}
     const item = JSON.parse(JSON.stringify(model));
     if (!item.name) {
       Msg('请先选择项目')
