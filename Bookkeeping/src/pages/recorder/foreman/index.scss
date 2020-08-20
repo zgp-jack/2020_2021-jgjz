@@ -689,7 +689,7 @@
 }
 .publish-list-input-amount{
   position: relative;
-  width: 100%;
+  width: 86%;
   margin-right: 125rpx;
   height: 125px;
   line-height: 125px;
@@ -796,6 +796,9 @@
     }
   }
 }
+.new-input{
+  width: 106%;
+}
 .publish-list-input-money {
   position: relative;
   width: 100%;
@@ -849,7 +852,7 @@
 }
 .groupIcon{
   position: absolute;
-  bottom: -15rpx;
+  bottom: -21rpx;
   left: -5rpx;
   width: 100rpx;
   height: 20rpx;
