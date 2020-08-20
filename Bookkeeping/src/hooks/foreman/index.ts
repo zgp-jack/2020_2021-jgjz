@@ -354,7 +354,7 @@ export default function userForeman() {
     // 设置身份
     setIdentity(type);
     if (useSelectorItem.workerList.length > 0){
-      if (identity === 2) {
+      if (type === 2) {
         setForeman(useSelectorItem.workerList);
         if (useSelectorItem.workerList[0].leader_name) {
           setForemanTitle(useSelectorItem.workerList[0].leader_name);
@@ -372,14 +372,15 @@ export default function userForeman() {
       }
       const item = [objs, ...arrList];
       if (data.length > 0) {
+        setNoset(false)
         for (let j = 0; j < data.length; j++) {
           for (let i = 0; i < item.length; i++) {
             item[i].click = false;
             if (data[j].worker_id === item[i].id) {
               item[i].set = true
-              setNoset(true)
             } else {
-              setNoset(false)
+              setNoset(true)
+              // setNoset(false)
             }
           }
         }
@@ -893,7 +894,6 @@ export default function userForeman() {
     if (parseFloat(num) < 10) {
       num = '0' + parseFloat(num);
     }
-    console.log(num,'num')
     return num;
   }
   // 日历点击
@@ -4385,7 +4385,6 @@ export default function userForeman() {
     } else {
       time = '共选择' + data.length + '天';
     }
-    console.log(time,'timetimetime')
     setModel({ ...model, time: time });
     // clickDataItem.map((v,i)=>{
     //   if (data.length==0){
