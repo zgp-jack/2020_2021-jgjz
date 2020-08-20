@@ -1489,7 +1489,7 @@ export default function EditDetails() {
       <View>
         <View className='publish-recruit-card'>
           <View className='publish-list-item'>
-            <Text className='pulish-list-title'>工程量</Text>
+            <Text className='pulish-list-title justify-quantities'>工程量</Text>
             :<Input
               className='publish-list-input-amount'
               type='digit'
