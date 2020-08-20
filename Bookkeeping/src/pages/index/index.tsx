@@ -177,6 +177,8 @@ export default function Index() {
   const [hidden, setHidden] = useState<boolean>(false)
   // 不请求
   const [noRequest, setNoRequest] = useState<boolean>(false)
+  // 防止记工button多次点击
+  const [ishandleJump,setishandleJump] = useState<boolean>(true)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = () => {
@@ -427,6 +429,7 @@ export default function Index() {
         if (state) {
           Msg('开始为工人记工吧')
         }
+        setishandleJump(true)
         userRouteJump(`/pages/recorder/index?type=${dignity}`)
       }
     })
@@ -790,6 +793,7 @@ export default function Index() {
   }
   // 关闭创建项目
   const handleCreateProjectClose = () => {
+    setishandleJump(true)
     setCreateProjectDisplay(false)
     setModel({ groupName: '', teamName: '' })
   }
@@ -812,6 +816,7 @@ export default function Index() {
     bkAddProjectTeamAction(params).then(res => {
       if (res.code === 200) {
         setProject(false);
+        setishandleJump(true);
         setModel({ groupName: '', teamName: '' })
         // 班组长是1
         userRouteJump(`/pages/recorder/index?type=${1}`)
@@ -831,18 +836,6 @@ export default function Index() {
   const nextStep = () => {
     let midData = Taro.getStorageSync(MidData);
     if (!midData) return;
-  }
-  // 防抖跳流水
-  const deboucehandleJump = (url) => {
-    let timeout:any = null;
-    return function() {
-      if(timeout !== null){
-        clearTimeout(timeout);
-      }     
-      timeout = setTimeout(()=>{
-        handleJump(url,true);
-      }, 350);  
-    }
   }
   // 跳流水
   const handleJump = (url: string, state?: boolean | number) => {
@@ -871,7 +864,10 @@ export default function Index() {
         return;
       } else {
         if (type === 1) {
-          bkGetProjectTeam(2)
+          if(ishandleJump){
+            setishandleJump(false)
+            bkGetProjectTeam(2)
+          }
           return;
         } else {
           handelChange(type, true)
@@ -1046,7 +1042,7 @@ export default function Index() {
             </View>
           </View>
           <View className='btnBox'>
-            <View className='btn' onClick={deboucehandleJump(`/pages/recorder/index?type=${type}&stateType=1`)}>
+            <View className='btn' onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`,true)}>
               {!item || (item && item.business_list.data.length === 0) ? <Text className='fontSize'> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text  className='fontSize'> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
@@ -1180,7 +1176,7 @@ export default function Index() {
       {/* 创建项目 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={handleOk} handleInput={handleInput} />
       {/* 填写班组 */}
-      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setProject(false), setModel({ groupName: '', teamName: '' }) }} />
+      <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setishandleJump(true);setProject(false), setModel({ groupName: '', teamName: '' }) }} />
     </View>
   )
 }
