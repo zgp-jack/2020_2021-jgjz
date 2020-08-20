@@ -59,6 +59,8 @@ export default function Foreman() {
   const [edit,setEdit] = useState<boolean>(false)
   // 项目名称
   const [projectList, setProjectList]= useState<any>([{},{}])
+  // 创建项目弹窗与备注显示
+  const [iscreatproject, setIscreatproject] = useState<boolean>(false)
   // useDidShow(()=>{
   //   if (useSelectorItem.workerList.length>0){
   //     setWorkerItem(useSelectorItem.workerList)
@@ -215,6 +217,7 @@ export default function Foreman() {
   const handleCreateProjectClose = ()=>{
     setCreateProjectDisplay(false)
     setIsdisable(false)
+    setIscreatproject(false);
     const data = JSON.parse(JSON.stringify(model));
     setModel({ ...data, groupName: '', teamName: ''})
   }
@@ -324,6 +327,7 @@ export default function Foreman() {
     if (model.groupName){
       setCreateProjectDisplay(false), setProject(true) 
       setIsdisable(true)
+      setIscreatproject(false);
     }else{
       Msg('您还没有填写项目名称')
     }
@@ -352,9 +356,7 @@ export default function Foreman() {
     const data = JSON.parse(JSON.stringify(model));
     setModel({ ...data, groupName: '', teamName: '' })
     setCreateProjectDisplay(true), setShow(false);
-    setTimeout(() => {
-    setIsdisable(true);
-    },500);
+    setIscreatproject(true);
   }
   const handleCurrent = ()=>{
     setIsdisable(true);
@@ -728,7 +730,7 @@ export default function Foreman() {
               // focus={autoFocus}
               // autoFocus={autoFocus}
               // auto-focus={autoFocus}
-              hidden={isdisable}
+              hidden={isdisable || iscreatproject}
               cursor={model.details.length || 0}
               // onFocus={() => setAutoFocus(false)}
               className='textarea'
@@ -747,7 +749,7 @@ export default function Foreman() {
         </View>
         </View>
       </View>
-      {!isdisable && <CoverView className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay ? '' : 'foreman-footer'}>
+      {!isdisable && !iscreatproject && <CoverView className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay ? '' : 'foreman-footer'}>
         <CoverView className='foreman-footer-btn'>
           <CoverView className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</CoverView>
           <CoverView className='footer-right' onClick={()=>handlePreservation(0)}>保存</CoverView>
