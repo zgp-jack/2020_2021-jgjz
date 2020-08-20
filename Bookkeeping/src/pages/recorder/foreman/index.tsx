@@ -139,7 +139,9 @@ export default function Foreman() {
   }
   // 点击保存成功弹窗
   const handleRecorderPopup = (type:number)=>{
-    const time = JSON.parse(JSON.stringify(jumpMonth));
+    const foldTime = JSON.parse(JSON.stringify(jumpMonth));
+    const foldMon = foldTime.year + '-' + foldTime.month + '-' + foldTime.date;
+    const time = foldTime.year + '-' + foldTime.month;
     // 跳转
     if(type === 1){
       Taro.redirectTo({
@@ -150,7 +152,7 @@ export default function Foreman() {
       //   delta: 1
       // })
       Taro.redirectTo({
-        url: '/pages/flowingWater/index'
+        url: `/pages/flowingWater/index?timeMon=${time}&foldMon=${foldMon}`
       })
     }
     setTimeout(() => {

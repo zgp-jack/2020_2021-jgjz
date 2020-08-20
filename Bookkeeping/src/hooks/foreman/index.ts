@@ -3545,7 +3545,7 @@ export default function userForeman() {
       }
     })
     const time = limit(arr, month, year);
-    setJumpMonth(time.year + '-' + time.month);
+    setJumpMonth(time);
   }
   const limit = (arr, num, year)=> {
     var newArr:any[] = [];
