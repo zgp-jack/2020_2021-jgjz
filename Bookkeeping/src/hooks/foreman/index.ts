@@ -2183,10 +2183,11 @@ export default function userForeman() {
                       setcacheDays(dateItem);
                       cacheDaysArr = dateItem;
                     }else{
-                      console.log(321312)
+                      console.log('没有数据啊啊啊啊 ')
                       setcacheDays([]);
                       cacheDaysArr = [];
                       change = true;
+                      console.log(change,'changechangechange')
                       console.log(cacheDaysArr,'cacheDaysArrcacheDaysArr')
                     }
                     // 工人
