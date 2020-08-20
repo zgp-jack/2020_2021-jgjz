@@ -64,6 +64,8 @@ export default function AttendanceSheet() {
   const [rightTime, setrightTime] = useState<boolean>(false)
   //判断是否追加
   const [additional, setAdditional] = useState<number>(0)
+  // 防止记工button多次点击
+  const [ishandleJump,setishandleJump] = useState<boolean>(true)
   // 分享session 
   const [session, setSession] = useState<string>('')
   // 弹框内容
@@ -943,14 +945,19 @@ export default function AttendanceSheet() {
   })
   // 跳转
   const handleJump = () => {
-    bkGetProjectTeamAction({}).then(res => {
-      if (res.data.length === 0) {
-        setCreateProjectDisplay(true)
-      } else {
-        let type = Taro.getStorageSync(Type);
-        Taro.redirectTo({url:`/pages/recorder/index?type=${type}`})
-      }
-    })
+    if(ishandleJump){
+      setishandleJump(false)
+      bkGetProjectTeamAction({}).then(res => {
+        if (res.data.length === 0) {
+          setishandleJump(true)
+          setCreateProjectDisplay(true)
+        } else {
+          setishandleJump(true)
+          let type = Taro.getStorageSync(Type);
+          Taro.redirectTo({url:`/pages/recorder/index?type=${type}`})
+        }
+      })
+    }
   }
   // 关闭创建项目
   const handleCreateProjectClose = () => {

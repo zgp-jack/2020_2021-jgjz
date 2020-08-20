@@ -63,6 +63,8 @@ export default function FlowingWater() {
   const [isSwipe,setisSwipe] = useState<boolean>(false)
   // 判断折叠情况
   const [foldTime,setfoldTime] = useState<string>(foldMon);
+  // 防止记工button多次点击
+  const [ishandleJump,setishandleJump] = useState<boolean>(true)
   // 数据异常
   const [busy, setBusy] = useState<boolean>(false)
   // 获取数据
@@ -456,15 +458,20 @@ export default function FlowingWater() {
   console.log(data,'data')
   // 记工
   const handleAddJump = ()=>{
-    bkGetProjectTeamAction({}).then(res => {
-      if (res.data.length === 0) {
-        setCreateProjectDisplay(true)
-      } else {
-        let type = Taro.getStorageSync(Type);
-        Taro.redirectTo({url:`/pages/recorder/index?type=${type}`});
-        // userRouteJump(`/pages/recorder/index?type=${type}`)
-      }
-    })
+    if(ishandleJump){
+      setishandleJump(false);
+      bkGetProjectTeamAction({}).then(res => {
+        if (res.data.length === 0) {
+          setishandleJump(true)
+          setCreateProjectDisplay(true)
+        } else {
+          setishandleJump(true)
+          let type = Taro.getStorageSync(Type);
+          Taro.redirectTo({url:`/pages/recorder/index?type=${type}`});
+          // userRouteJump(`/pages/recorder/index?type=${type}`)
+        }
+      })
+    }
   }
   // 关闭创建项目
   const handleCreateProjectClose = () => {
