@@ -512,6 +512,7 @@ export default function userForeman() {
                     if (workArr[i].id == res.data.latest_group_workers_has_wage[j].worker_id) {
                       workArr[i].set = true;
                     }else{
+                      workArr[i].set = false;
                       setNoset(true) 
                     }
                   }

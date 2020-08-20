@@ -361,7 +361,7 @@ export default function Foreman() {
   const handleCurrent = ()=>{
     setIsdisable(true);
     setCalendarModalDisplay(true);
-    getMonthDaysCurrent(new Date())
+    // getMonthDaysCurrent(new Date())
   }
   return (
     <context.Provider value={value}>
