@@ -134,22 +134,38 @@
 .atInputNumber{
   display: flex;
 }
+.atInputNumber-mr {
+  display: flex;
+  margin-right: 10rpx;
+}
 .inputBox{
   height: 32rpx;
   width: 64rpx;
-  border: 1rpx solid #ccc;
   margin-right: 18rpx;
   margin-left: 18rpx;
   color: red;
   text-align: center;
+  // background:rgba(36, 40, 42, 0);
+  border:1px solid rgba(118, 119, 119, 0.5);
+  border-radius:2px;
+  font-size: 26rpx;
+  margin-top: 6rpx;
 }
 .inputBox-day{
   height: 32rpx;
   width: 64rpx;
-  border: 1rpx solid #ccc;
   margin-right: 18rpx;
   margin-left: 18rpx;
   color: red;
   text-align: center;
-  margin-top: 30rpx;
+  // background:rgba(36, 40, 42, 0);
+  border:1px solid rgba(118, 119, 119, 0.5);
+  border-radius:2px;
+  font-size: 26rpx;
+  margin-top: 28rpx;
+}
+.icon{
+  color: rgba(36, 40, 42, 1);
+  font-size: 36rpx;
+  font-weight: bold;
 }

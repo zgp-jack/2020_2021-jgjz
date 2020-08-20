@@ -506,35 +506,17 @@ export default function EditDetails() {
   }
   // 输入框
   const handleWageStandard = (type,e)=>{
-    if (type == 'day') {
-      const item = JSON.parse(JSON.stringify(wageStandard));
-      let dayAddWork = 0;
-      if(e !== 0){
-        dayAddWork = item.money / e;
+    if (type == 'day' || type === 'work') {
+      if (e.detail.value > 24) {
+        Msg('超出最大输入范围')
       }
-      item[type] = e||0;
-      item.dayAddWork = toFixedFn(dayAddWork)||0;
-      setWageStandard(item);
-      return;
+      return dealInputVal(e.detail.value, 2, type);
     }
-    if (type === 'money') {
-      const item = JSON.parse(JSON.stringify(wageStandard));
-      let dayAddWork = 0;
-      if(item.day!==0){
-        dayAddWork = e / item.day;
+    if (type === 'money' || type === 'addWork') {
+      if (e.detail.value > 9999.99) {
+        Msg('超出最大输入范围')
       }
-      item[type] = toFixedFn(e);
-      item.dayAddWork = toFixedFn(dayAddWork);
-      setWageStandard(item);
-      return;
-    }
-    if (type === 'addWork'){
-      const data = JSON.parse(JSON.stringify(wageStandard));
-      console.log(e,'xxxx');
-      console.log(toFixedFn(e),'toFixedFn(e)')
-      data[type] = toFixedFn(e);
-      setWageStandard(data);
-      return;
+      return dealInputVal(e.detail.value, 4, type);
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = e;
@@ -1276,9 +1258,45 @@ export default function EditDetails() {
         ? value.split(".")[0].substring(0, num) + "." + value.split(".")[1]
         : value.substring(0, num);
     let data = JSON.parse(JSON.stringify(val));
+    let item = JSON.parse(JSON.stringify(wageStandard));
     if (type) {
-      data[type] = value;
-      setVal({ ...data });
+      if (type === 'day' || type === 'work' || type === 'money' || type === 'addWork') {
+        if (!value) {
+          value = 0;
+        }
+        if (type === 'money' || type === 'addWork') {
+          if (value > 9999.99) {
+            Msg('超出最大输入范围');
+            value = 9999.99;
+          }
+          if (type === 'money') {
+            let dayAddWork;
+            if (item.day == 0) {
+              dayAddWork = 0.00
+            } else {
+              dayAddWork = value / item.day || 0.00;
+            }
+            item.dayAddWork = toFixedFn(dayAddWork);
+          }
+        } else {
+          if (value > 24) {
+            Msg('超出最大输入范围');
+            value = 24;
+          }
+          if (type == 'day') {
+            let num: number | string = 0.00;
+            if (item.money > 0 && value > 0) {
+              num = item.money / value
+            }
+            item.dayAddWork = (toFixedFn(num));
+          }
+        }
+        item[type] = value;
+        setWageStandard(item);
+      } else {
+        data[type] = value;
+        setVal({ ...data });
+      }
     }
     return value;
   }
@@ -1311,6 +1329,95 @@ export default function EditDetails() {
   // 点击多行
   const handleTextare = () => {
     setAutoFocus(true)
+  }
+  // 减少
+  const handleDelInput = (type: string, e: string) => {
+    const data = JSON.parse(JSON.stringify(wageStandard));
+    if (type === 'work' || type === 'day') {
+      if (Number(data[type]) > 0) {
+        let num = Number(data[type]) - 0.5;
+        if (num == 0) {
+          num = 0;
+        }
+        if (type === 'day') {
+          let price: number | string = 0.00;
+          if (data.money > 0 && Number(num) > 0) {
+            price = data.money / Number(num);
+            console.log(price,'price')
+          }
+          data.dayAddWork = toFixedFn(price);
+        }
+        data[type] = num;
+        setWageStandard(data);
+      }
+    } else if (type === 'money' || type === 'addWork') {
+      if (data[type] > 0) {
+        let num = Number(data[type]) - 1;
+        if (num == 0) {
+          num = 0;
+        }
+        console.log(data.money, data.day,'1111')
+        if (type === 'money') {
+          let dayAddWork;
+          if (data.day == 0) {
+            dayAddWork = 0.00
+          } else {
+            dayAddWork = Number(num) / data.day || 0.00;
+          }
+          data.dayAddWork = toFixedFn(dayAddWork);
+        }
+        data[type] = toFixedFn(num);
+        setWageStandard(data);
+      }
+    }
+  }
+  // 加
+  const handleInputAdd = (type: string, e: string) => {
+    console.log(e, 'eeee');
+    const data = JSON.parse(JSON.stringify(wageStandard));
+    if (type === 'work' || type === 'day') {
+      if (Number(e) == 24) {
+        Msg('超出最大输入范围')
+      }
+      if (data[type] < 24) {
+        let num = Number(data[type]) + 0.5;
+        if (num > 24) {
+          num = 24;
+          Msg('超出最大输入范围')
+        }
+        if (type === 'day') {
+          let price: number | string = 0.00;
+          if (data.money > 0 && Number(num) > 0) {
+            price = data.money / Number(num)
+          }
+          data.dayAddWork = (toFixedFn(price));
+        }
+        data[type] = num;
+        setWageStandard(data);
+      }
+    } else if (type === 'money' || type === 'addWork') {
+      if (Number(e) == 9999.99) {
+        Msg('超出最大输入范围')
+      }
+      if (data[type] < 9999.99) {
+        let num = Number(data[type]) + 1;
+        if (num > 9999.99) {
+          num = 9999.99;
+          Msg('超出最大输入范围')
+        }
+        if (type === 'money') {
+          let dayAddWork;
+          if (data.day == 0) {
+            dayAddWork = 0.00
+          } else {
+            dayAddWork = Number(num) / data.day || 0.00;
+          }
+          data.dayAddWork = toFixedFn(dayAddWork);
+        }
+        data[type] = toFixedFn(num);
+        setWageStandard(data);
+      }
+    }
   }
   return (
     <View className='content'>
@@ -1516,7 +1623,7 @@ export default function EditDetails() {
       </View>
       </View>
       {!isdisable && <CoverView className='footer'><CoverView className='footerBtn' onClick={handlesub}>保存</CoverView></CoverView>}
-      <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio}/>
+      <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput}/>
       <WorkOvertime display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}
