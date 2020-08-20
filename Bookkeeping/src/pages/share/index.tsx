@@ -67,7 +67,7 @@ export default function Share() {
         month: time.split('-')[1],
         year: time.split('-')[0],
       }
-      const title = date.year + '年' + date.month +'月份清单';
+      const title = date.year + '年' + date.month +'月对工清单';
       console.log(data,'data');
       Taro.setNavigationBarTitle({
         title,
