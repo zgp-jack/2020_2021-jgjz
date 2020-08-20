@@ -24,3 +24,18 @@ page {
 	display:block;/*转块*/
 	clear:both;/*清浮动*/
 }
+
+/* 右尖角 */
+.towardsTheRight{
+  display: inline-block;
+  margin-left: 5rpx;
+  color: #A2A2A2;
+  content: " ";
+  height: 18rpx;
+  width: 18rpx;
+  border-width: 2px 2px 0 0;
+  border-color: #A2A2A2;
+  border-style: solid;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
