@@ -64,6 +64,7 @@ interface TimeType {
   year: string,
   monent: string,
 }
+let changeId = 1;
 export default function userForeman() {
   let noData = false;
   // const router: Taro.RouterInfo = useRouter();
@@ -302,6 +303,8 @@ export default function userForeman() {
   const [isdisable,setIsdisable] = useState<boolean>(false)
   // 跳转考勤表
   const [jumpMonth, setJumpMonth] = useState<string>('')
+  //切换的类型
+  // const [changeId,setChangeID] = useState<number>(1)
   // const [noData, setNoData] = useState<boolean>(false)
   // 刷新
   //农历1949-2100年查询表
@@ -486,13 +489,16 @@ export default function userForeman() {
       // 把项目设置存起来
       setProjectArr(res.data.group_info);
       if (res.data.latest_group_info) {
+        console.log(111123131232)
         if (res.data.latest_group_info.id) {
           setLeader_id(res.data.latest_group_info.leader_id)
           title = res.data.latest_group_info.name[0] + '-' + res.data.latest_group_info.name[1];
           id = res.data.latest_group_info.id;
           setForemanTitle(res.data.latest_group_info.leader_name||'')
           // 区分是工人还是班组长
+          console.log(identity,'identity')
           if (identity == 1) {
+            console.log('班组长')
             // 班组长的时候需要做处理，数据里没有自己
             // 工人 
             // 判断有工人有工资标准
@@ -578,6 +584,7 @@ export default function userForeman() {
               }
             } else {
               if (res.data.latest_group_worker_has_business) {
+                console.log(1111)
                 // 工人
                 if (res.data.latest_group_worker_has_business.worker.length > 0) {
                   // 设置缓存
@@ -602,8 +609,12 @@ export default function userForeman() {
                     dateItem.push(dayObj);
                   }
                 }
+                console.log(dateItem,'dateItem11111')
                 setcacheDays(dateItem);
                 getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+              }else{
+                setcacheDays([]);
+                getMonthDaysCurrent(new Date(), [dayObj], '', '', []);
               }
             }
             dispatch(setPhoneList(workArr));
@@ -696,6 +707,7 @@ export default function userForeman() {
           }
           return;
         } else {
+          console.log(111111)
           title = '';
           id = '';
           objs.discipline = false;
@@ -707,6 +719,8 @@ export default function userForeman() {
           setWorkerItem(workArr);
           setForemanTitle('')
           setLeader_id('')
+          setcacheDays([]);
+          getMonthDaysCurrent(new Date(),'','','',[],true);
           let type = Taro.getStorageSync(Type);
           // latest_group_workers  上次记工班组中的工人
           // latest_group_workers_has_wage  上次记工班组  中有工资的工人
@@ -864,9 +878,12 @@ export default function userForeman() {
                     dateItem.push(dayObj);
                   }
                 }
+                console.log('这么')
+                console.log(dateItem,'dateItemdateItem')
                 setcacheDays(dateItem);
-                getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+                getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem,true);
               }
+              console.log('啊啊啊啊啊')
               dispatch(setPhoneList(workList));
               setWorkerItem(workList);
               setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle, time, details: '', workersWages: sum, amount: '', price: '', wages: '', borrowing: '', univalent: '' })
@@ -999,7 +1016,7 @@ export default function userForeman() {
     return s+'';
   }
   // 对应月份日期
-  const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[]) => {
+  const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[],change?:boolean) => {
     // const groupInfos = JSON.parse(JSON.stringify(groupInfo));
     // let id;
     // if (ids) {
@@ -1121,12 +1138,24 @@ export default function userForeman() {
     // 获取记录过的日历
     // const calendarItem = Taro.getStorageSync(Calendar);
     const cacheDaysArr = JSON.parse(JSON.stringify(cacheDays));
-    let List;
-    if (cacheDaysArrList && cacheDaysArrList.length>0 ) {
-      List = cacheDaysArrList;
-    } else {
-      List = cacheDaysArr;
+    let List:any[]= [];
+    if (changeId != 3){
+      if(change){
+        List =[];
+      }else{
+        if (cacheDaysArrList) {
+          if (cacheDaysArrList.length>0){
+            List = cacheDaysArrList;
+          }else{
+            // List = [];
+            List = cacheDaysArr;
+          }
+        } else {
+          List = cacheDaysArr;
+        }
+      }
     }
+    console.log(List,'lsit');
     if (List.length > 0) {
       List.map(v => {
         calendarDaysArr.map(val => {
@@ -2126,6 +2155,7 @@ export default function userForeman() {
             // 设置蓝色底色
             let ArrList = [objs, ...arr];
             let cacheDaysArr:any[] = [];
+            let change = false;
             if (type === 1) {
               let dateParams = {
                 group_info: groupInfos,
@@ -2138,7 +2168,9 @@ export default function userForeman() {
                   if (dateRes.data) {
                     // 判断记录过
                     // 时间
+                    console.log(dateRes.data,'dataaaa');
                     if (dateRes.data.days && dateRes.data.days.length > 0) {
+                      console.log(3213123123213)
                       let dateItem:any[]=[];
                       for (let z = 0; z < dateRes.data.days.length; z++) {
                         let dayObj = {
@@ -2151,8 +2183,11 @@ export default function userForeman() {
                       setcacheDays(dateItem);
                       cacheDaysArr = dateItem;
                     }else{
+                      console.log(321312)
                       setcacheDays([]);
                       cacheDaysArr = [];
+                      change = true;
+                      console.log(cacheDaysArr,'cacheDaysArrcacheDaysArr')
                     }
                     // 工人
                     if (dateRes.data.worker && dateRes.data.worker.length > 0) {
@@ -2186,7 +2221,9 @@ export default function userForeman() {
             }];
             setOpenClickTime(clickDataArr)
             setClickData(clickDataArr);
-            getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr);
+            console.log(change,'change1111')
+            console.log(cacheDaysArr,'cacheDaysArrcacheDaysArrcacheDaysArr')
+            getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr, change);
             return;
           }
         }
@@ -4506,6 +4543,9 @@ export default function userForeman() {
         // 清空头像
         setCache([])
         getList(val.id);
+        console.log(val.id,'idddd')
+        // setChangeID(val.id)
+        changeId = val.id;
       }else{
         val.click = false;
       }
