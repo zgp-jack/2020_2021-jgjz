@@ -2298,7 +2298,7 @@ export default function userForeman() {
         setWageStandard(item);
       }else{
         data[type] = value;
-        setWageStandard(data);
+        setModel(data);
       }
     }
     return value;

@@ -34,7 +34,7 @@ interface DateTyep {
 
 export default function Share() {
   const router: Taro.RouterInfo = useRouter();
-  const { time, identity, session } = router.params;
+  const { time='2020-08', identity, session } = router.params;
   // 月份
   const [date, setDate] = useState('');
   // 年
@@ -67,7 +67,8 @@ export default function Share() {
         month: time.split('-')[1],
         year: time.split('-')[0],
       }
-      const title = date.year + '年' + date.month +'月对工清单';
+      const month = parseInt(date.month);
+      const title = date.year + '年' + month +'月对工清单';
       console.log(data,'data');
       Taro.setNavigationBarTitle({
         title,
