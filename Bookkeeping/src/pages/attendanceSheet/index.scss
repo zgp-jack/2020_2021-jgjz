@@ -171,11 +171,9 @@
 .box-left{
   height:  auto;
   display: flex;
-  border-bottom: 1rpx solid #ccc;
 }
 .box-right{
   display: flex;
-  border-bottom: 1rpx solid #ccc;
   // font-size: 0
 }
 .box-scroll{
@@ -416,19 +414,19 @@
   // white-space: nowrap;
 }
 .mt20{
-  margin-top: 35%;
+  margin-top: 35% !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .mt50 {
-  margin-top: 70%;
+  margin-top: 70% !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .mt100 {
-  margin-top: 95%;
+  margin-top: 95% !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -437,4 +435,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.mt10{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 18%;
 }

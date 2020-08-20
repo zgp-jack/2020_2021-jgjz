@@ -117,8 +117,8 @@ export default function CalendarModal({
     {display &&
     <View className='calendarModal-complaintModal'>
       <View className='calendarModal-complaintModal-content'>
-          <View className='icon-left'><Image src={`${IMGCDNURL}rili.png`} className='icon-left-image'/></View>
-          <View className='icon-right'><Image src={`${IMGCDNURL}rili.png`} className='icon-right-image'/></View>
+          {/* <View className='icon-left'><Image src={`${IMGCDNURL}rili.png`} className='icon-left-image'/></View>
+          <View className='icon-right'><Image src={`${IMGCDNURL}rili.png`} className='icon-right-image'/></View> */}
         <View className='calendarModal-complaintModal-content-top'>
             <View className='content-top-close' onClick={handleCalendarClose}>取消</View>
             <View className='content-top-title'>选择日期(可选多天)</View>
