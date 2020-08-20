@@ -62,9 +62,17 @@ export default function Share() {
     return num;
   }
   useEffect(() => {
-    Taro.setNavigationBarTitle({
-      title: `${time}月份清单`
-    })
+    if (time){
+      let date = {
+        month: time.split('-')[1],
+        year: time.split('-')[0],
+      }
+      const title = date.year + '年' + date.month +'月份清单';
+      console.log(data,'data');
+      Taro.setNavigationBarTitle({
+        title,
+      })
+    }
     Taro.setStorageSync(IsShare,true);
     getList(time);
   }, [])
