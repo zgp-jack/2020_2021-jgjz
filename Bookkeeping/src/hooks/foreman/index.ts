@@ -2358,7 +2358,9 @@ export default function userForeman() {
         Msg(res.msg);
         return;
       }
-      setIsdisable(false);
+      setTimeout(() => {
+        setIsdisable(false)
+      });
       setProject(false);
       // let data = JSON.parse(JSON.stringify(model));
       // data.name = model.groupName;
@@ -2775,13 +2777,17 @@ export default function userForeman() {
       let num = isNaN(total) ? '0.00' : total.toString();
       setModel({ ...model, workersWages: num, duration: title });
       setWorkOvertimeDisplay(false);
-      setIsdisable(false)
+      setTimeout(() => {
+        setIsdisable(false)
+      });
       return;
     }
     
     setModel({ ...model, duration: title })
     setWorkOvertimeDisplay(false);
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
   }
   // 选择单位
   const handleQuantities = (val) => {
@@ -2791,7 +2797,9 @@ export default function userForeman() {
         if (v.click) {
           setUnit(v.name)
           setQuantitiesDisplay(false)
-          setIsdisable(false)
+          setTimeout(() => {
+            setIsdisable(false)
+          });
         }
       } else {
         v.click = false
@@ -3813,7 +3821,9 @@ export default function userForeman() {
       setWageStandard(wageStandard);
       setModel({ ...model, workersWages: num });
       setWageStandardDisplay(false);
-      setIsdisable(false)
+      setTimeout(() => {
+        setIsdisable(false)
+      });
       return;
     }
     if (addStandard === 1) {
@@ -3977,7 +3987,9 @@ export default function userForeman() {
         bkGetWorkerWage();
         setWagesModalDisplay(true);
         setWageStandardDisplay(false);
-        setIsdisable(false)
+        setTimeout(() => {
+          setIsdisable(false)
+        });
       } else {
         Msg(res.msg);
       }
@@ -4103,7 +4115,9 @@ export default function userForeman() {
             }
           }
         }
-        setIsdisable(false)
+        setTimeout(() => {
+          setIsdisable(false)
+        });
         setWorkerItem(data)
         bkGetWorkerWage();
         setWageStandardDisplay(false)
@@ -4439,7 +4453,9 @@ export default function userForeman() {
     // setCalendarDays(calendar);
     // setClickData([]);
     setCalendarModalDisplay(false);
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
   }
   // 日历切换时间
   const handleChangeTime = (type: number) => {
@@ -4487,7 +4503,9 @@ export default function userForeman() {
     setTimeData(data);
     // 关闭
     setCalendarModalDisplay(false);
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
     // }
   }
   // 左

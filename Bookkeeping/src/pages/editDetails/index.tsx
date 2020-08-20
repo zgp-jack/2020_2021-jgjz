@@ -464,7 +464,9 @@ export default function EditDetails() {
     const title = data.duration;
     setVal({ ...data, modalDuration: title});
     setDisplay(false);
-    setIsdisable(false);
+    setTimeout(() => {
+      setIsdisable(false)
+    });
     const clickDayItem = JSON.parse(JSON.stringify(clickDay));
     const clickTimeItem = JSON.parse(JSON.stringify(clickTime));
     console.log(clickDayItem,'clickDayItem');
@@ -651,7 +653,9 @@ export default function EditDetails() {
     num = toFixedFn(sum);
     setVal({ ...valData, money:num})
     setWageStandardDisplay(false);
-    setIsdisable(false);
+    setTimeout(() => {
+      setIsdisable(false)
+    });
     let params;
     if (data.type === 1) {
         params = {
@@ -996,7 +1000,9 @@ export default function EditDetails() {
     const num = toFixedFn(wages);
     setVal({ ...val, duration: title, money: num })
     setDisplay(false);
-    setIsdisable(false);
+    setTimeout(() => {
+      setIsdisable(false)
+    });
   }
   // 关闭上班时长
   const handleWorkingHoursClose = ()=>{
@@ -1137,18 +1143,6 @@ export default function EditDetails() {
     // 判断按量记录
     let params;
     let types= JSON.parse(JSON.stringify(type));
-    if(businessType==3){
-      if(!Number(money)){
-        Msg('请输入本次借支金额')
-        return
-      }
-    }else if((businessType == 2 && type == 2)&&!Number(money)&&!Number(data.unitNum)&&!Number(data.unitPrice)){
-      Msg('请填写工程量、单价或工钱');
-      return;
-    }else if(!Number(money)){
-      Msg('您还没有选择上班或加班时长');
-      return
-    }
     if (businessType == 2 && types == 2){
       // unit
       params = {
@@ -1288,7 +1282,9 @@ export default function EditDetails() {
     console.log(data,'xxxx');
     setWageStandard(data);
     setWageStandardDisplay(false);
-    setIsdisable(false);
+    setTimeout(() => {
+      setIsdisable(false)
+    });
   }
   // 选择单位
   const handleQuantities = (val) => {
@@ -1298,7 +1294,9 @@ export default function EditDetails() {
         if (v.click) {
           setUnit(v.name)
           setQuantitiesDisplay(false)
-          setIsdisable(false);
+          setTimeout(() => {
+            setIsdisable(false)
+          });
         }
       } else {
         v.click = false
@@ -1520,7 +1518,7 @@ export default function EditDetails() {
       <WorkOvertime display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}
-      <Quantities display={quantitiesDisplay} handleClose={() => {setIsdisable(false);setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />
+      <Quantities display={quantitiesDisplay} handleClose={() => {setTimeout(() => {setIsdisable(false)});setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />
     </View>
   )
 }

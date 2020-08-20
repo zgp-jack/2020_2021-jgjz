@@ -153,13 +153,17 @@ export default function Foreman() {
         url: '/pages/flowingWater/index'
       })
     }
-    setIsdisable(false);
+    setTimeout(() => {
+      setIsdisable(false)
+    });
     setDisplay(false)
   }
   // 关闭选择单位
   const handleClose = ()=>{
     setQuantitiesDisplay(false)
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
   }
   //关闭加班时长
   const handleWorkOvertimeClose = ()=>{
@@ -167,7 +171,9 @@ export default function Foreman() {
     const title = data.duration;
     setModel({ ...data, modalDuration: title });
     setWorkOvertimeDisplay(false)
-    setIsdisable(false);
+    setTimeout(() => {
+      setIsdisable(false)
+    });
     // 上班时长
     const timeArrs = JSON.parse(JSON.stringify(timeArr));
     // 获取加班时长
@@ -216,7 +222,9 @@ export default function Foreman() {
   // 引导创建项目
   const handleCreateProjectClose = ()=>{
     setCreateProjectDisplay(false)
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
     setIscreatproject(false);
     const data = JSON.parse(JSON.stringify(model));
     setModel({ ...data, groupName: '', teamName: ''})
@@ -268,7 +276,9 @@ export default function Foreman() {
     }
     setWageStandardDisplay(false)
     if(identity == 2){
-      setIsdisable(false)
+      setTimeout(() => {
+        setIsdisable(false)
+      });
     }
   }
   // 关闭添加成员
@@ -282,7 +292,9 @@ export default function Foreman() {
   const handleWagesModalClose = ()=>{
     setWagesModalDisplay(false);
     setTab(0)
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
     //清空选择人数
     setClickModalNum(0)
   }
@@ -335,7 +347,9 @@ export default function Foreman() {
   // 填写班组关闭
   const handleProjectClose = ()=>{
     setProject(false)
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
     const data = JSON.parse(JSON.stringify(model));
     setModel({ ...data, groupName: '', teamName:'' })
   }
@@ -784,7 +798,7 @@ export default function Foreman() {
         right
         mask
         className='atDrawer'
-        onClose={() => { setIsdisable(false);setShow(false), setEdit(false)}}
+        onClose={() => { setTimeout(() => {setIsdisable(false)});setShow(false), setEdit(false)}}
         >
         <View className='atDrawer-box'>
           <View className='atDrawer-heard'>
