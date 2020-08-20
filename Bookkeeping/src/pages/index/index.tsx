@@ -999,7 +999,7 @@ export default function Index() {
               </Image>
             </View>
           </View>
-          <View onClick={() => handleJump(`/pages/flowingWater/index?timeMon=${vals}`, 2)}>
+          <View className='money_box' onClick={() => handleJump(`/pages/flowingWater/index?timeMon=${vals}`, 2)}>
             <View className='moneyList'>
               <View>
                 <Image className='moneyIcon' src={`${IMGCDNURL}money.png`} />工钱

@@ -87,6 +87,10 @@
   color: white;
   vertical-align: middle;
 }
+
+.money_box{
+  margin-top: 20rpx;
+}
   
 .moneyList{
   &>view{
@@ -105,12 +109,12 @@
   text-align: center;
 }
 .typeList{
-  margin-top: 50rpx;
+  margin-top: 45rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 34rpx;
-  margin-bottom: 55rpx;
+  margin-bottom: 50rpx;
 }
 .num{
   // margin-left: 15rpx;
@@ -302,6 +306,7 @@
   margin-top: 10rpx;
 }
 .details{
+  width: 75%;
   color:rgba(139, 139, 139, 1);
   font-size: 28rpx;
   text-align: left;
@@ -337,6 +342,7 @@
   display: inline-block;
   background-size: cover;
   margin-right: 14rpx;
+  vertical-align: -10%;
 }
 .moneyIconPay{
   width: 30rpx;
@@ -344,6 +350,7 @@
   display: inline-block;
   background-size: cover;
   margin-right: 14rpx;
+  vertical-align: -10%;
 }
 .ptBox{
   padding-top: 10rpx;
