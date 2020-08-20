@@ -4311,6 +4311,7 @@ export default function userForeman() {
   }
   // 切换包工类型
   const handleRadio = (v) => {
+    setDeldelType(false)
     const data = JSON.parse(JSON.stringify(contractorArr.item));
     for (let i = 0; i < data.length; i++) {
       if (data[i].id === v.id) {
