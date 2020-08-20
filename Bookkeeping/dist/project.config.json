@@ -1,153 +1,166 @@
 {
-  "miniprogramRoot": "./",
-  "projectname": "Bookkeeping",
-  "description": "",
-  "appid": "wx3abff5d74de220d2",
-  "setting": {
-    "urlCheck": false,
-    "es6": false,
-    "enhance": false,
-    "postcss": false,
-    "preloadBackgroundData": false,
-    "minified": false,
-    "newFeature": true,
-    "coverView": true,
-    "nodeModules": true,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "useIsolateContext": true,
-    "useCompilerModule": false,
-    "userConfirmedUseCompilerModuleSwitch": false
-  },
-  "compileType": "miniprogram",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "plugin": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": -1,
-      "list": [
-        {
-          "id": -1,
-          "name": "意见反馈",
-          "pathName": "pages/feedback/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "记工",
-          "pathName": "pages/recorder/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "记事本",
-          "pathName": "pages/notepad/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "新增记事本",
-          "pathName": "pages/addNotepad/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "记事本详情",
-          "pathName": "pages/notepadDetails/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "考勤表",
-          "pathName": "pages/attendanceSheet/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "下载",
-          "pathName": "pages/download/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "技工流水",
-          "pathName": "pages/flowingWater/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "流水详情",
-          "pathName": "pages/flowingWaterDetails/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "添加班组成员",
-          "pathName": "pages/addTeamMember/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "修改",
-          "pathName": "pages/editDetails/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "登陆",
-          "pathName": "pages/login/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "分享考勤表",
-          "pathName": "pages/share/index",
-          "query": "",
-          "scene": null
-        }
-      ]
-    }
-  }
+	"projectname": "Bookkeeping",
+	"description": "",
+	"appid": "wx3abff5d74de220d2",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"enhance": false,
+		"postcss": false,
+		"preloadBackgroundData": false,
+		"minified": false,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useIsolateContext": true,
+		"useCompilerModule": false,
+		"userConfirmedUseCompilerModuleSwitch": false
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "意见反馈",
+					"pathName": "pages/feedback/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "记工",
+					"pathName": "pages/recorder/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "记事本",
+					"pathName": "pages/notepad/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "新增记事本",
+					"pathName": "pages/addNotepad/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "记事本详情",
+					"pathName": "pages/notepadDetails/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "考勤表",
+					"pathName": "pages/attendanceSheet/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "下载",
+					"pathName": "pages/download/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "技工流水",
+					"pathName": "pages/flowingWater/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "流水详情",
+					"pathName": "pages/flowingWaterDetails/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "添加班组成员",
+					"pathName": "pages/addTeamMember/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "修改",
+					"pathName": "pages/editDetails/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登陆",
+					"pathName": "pages/login/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "分享考勤表",
+					"pathName": "pages/share/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/flowingWaterDetails/index",
+					"pathName": "pages/flowingWaterDetails/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/flowingWaterDetails/index",
+					"pathName": "pages/flowingWaterDetails/index",
+					"query": "time=2020-08-20&id=8440&week=%E5%91%A8%E5%9B%9B&__key_=15979208833082",
+					"scene": null
+				}
+			]
+		}
+	}
 }
