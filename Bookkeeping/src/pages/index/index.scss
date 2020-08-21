@@ -53,6 +53,7 @@ page{
 .switch{
   margin-left: 12rpx;
   font-size: 22rpx;
+  vertical-align: -2.8%;
 }
 
 .switch-icon{
@@ -244,8 +245,12 @@ scroll-view{
   height:280rpx;
 }
 .content-list{
+  display: flex;
   height: 104rpx;
   border-bottom: 1rpx solid rgba(238, 238, 238, 1);
+}
+.content-list>View{
+  width: 70%;
 }
 .content-list-type{
   border-bottom: 1rpx solid rgba(238, 238, 238, 1);
@@ -305,6 +310,7 @@ scroll-view{
   color:rgba(106, 106, 106, 1);
 }
 .orgion {
+  margin:auto 0;
   color: rgba(254, 99, 43, 1);
   font-size: 28rpx;
 }
@@ -317,7 +323,6 @@ scroll-view{
   font-size: 20rpx;
 }
 .details{
-  width: 70%;
   color:rgba(139, 139, 139, 1);
   font-size: 28rpx;
   text-align: left;
@@ -327,6 +332,11 @@ scroll-view{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.content-list-flex>.details{
+  width: 70%;
+}
+
 .content-list-flex-title{
   color:rgba(139, 139, 139, 1);
   font-size: 24rpx;
