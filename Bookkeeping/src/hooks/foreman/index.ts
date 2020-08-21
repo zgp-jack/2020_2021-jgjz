@@ -609,6 +609,8 @@ export default function userForeman() {
                     for (let j = 0, setLen = res.data.latest_group_worker_has_business.worker.length; j < setLen; j++) {
                       if (res.data.latest_group_worker_has_business.worker[j] == workArr[i].id) {
                         workArr[i].discipline = true;
+                      }else{
+                        workArr[i].discipline = false;
                       }
                     }
                   }
@@ -4440,12 +4442,16 @@ export default function userForeman() {
     const data = JSON.parse(JSON.stringify(contractorArr.item));
     for (let i = 0; i < data.length; i++) {
       if (data[i].id === v.id) {
-        data[i].click = true
+        data[i].click = true;
         setContractor(v.id)
       } else {
         data[i].click = false;
       }
     }
+    for (let i = 0; i < workerItem.length;i++){
+      workerItem[i].del = false;
+    }
+    setWorkerItem(workerItem)
     setContractorArr({ item: data });
   }
   // 跳转
