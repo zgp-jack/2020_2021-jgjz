@@ -232,7 +232,11 @@ page{
   font-weight: 400;
   color:rgba(128, 128, 128, 1)
 }
+scroll-view{
+  width: calc(100% - 120rpx);
+}
 .content-list-box{
+  padding: 0 60rpx;
   height:310rpx;
   overflow-y: auto;
 }
@@ -241,13 +245,9 @@ page{
 }
 .content-list{
   height: 104rpx;
-  padding-left: 60rpx;
-  padding-right: 60rpx;
   border-bottom: 1rpx solid rgba(238, 238, 238, 1);
 }
 .content-list-type{
-  padding-left: 60rpx;
-  padding-right: 60rpx;
   border-bottom: 1rpx solid rgba(238, 238, 238, 1);
 }
 .content-noList{

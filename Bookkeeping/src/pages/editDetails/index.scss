@@ -3,7 +3,7 @@
   height: 100%;
   // margin-bottom: 400rpx;
   padding-bottom: 200rpx;
-  background: #FFFFFF;
+  // background: #FFFFFF;
 }
 .publish-recruit-card {
   position: relative;
@@ -18,7 +18,7 @@
   height: 125rpx;
   line-height: 125rpx;
   margin-left: 30rpx;
-  border-bottom: 1rpx solid #F1F1F1;
+  // border-bottom: 1rpx solid #F1F1F1;
 }
 .pulish-list-textTarea-title{
   height: 125rpx;
@@ -147,7 +147,7 @@
   width: 100%;
   z-index: 2;
   width: 100%;
-  background: #FFFFFF;
+  // background: #FFFFFF;
   padding: 20rpx 0;
   bottom: 0rpx;
 
@@ -290,11 +290,11 @@
   }
 }
 .textarea{
-  padding-left: 25rpx;
-  margin-right: 25rpx;
+  padding:0 30rpx;
   width: auto !important;
   word-break:break-all;
   word-wrap: break-word;
+  max-height: 150rpx;
 }
 .rightIcons {
   height: 25rpx;
