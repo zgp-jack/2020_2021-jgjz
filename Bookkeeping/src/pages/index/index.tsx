@@ -246,8 +246,8 @@ export default function Index() {
                 identityType = res.data.lasted_business_identity;
                 isJump = true;
                 jumType = true;
-                setIdentity(false)
-                setCloseImage(true)
+                // setIdentity(false)
+                // setCloseImage(true)
                 getData();
               }
               // 没有鱼泡账号
@@ -279,8 +279,8 @@ export default function Index() {
                   midData.yupao_id = res.data.yupao_id;
                   Taro.setStorageSync(MidData, midData);
                   console.log('44444444万')
-                  setIdentity(false)
-                  setCloseImage(true)
+                  // setIdentity(false)
+                  // setCloseImage(true)
                   getData();
                 }
               })
