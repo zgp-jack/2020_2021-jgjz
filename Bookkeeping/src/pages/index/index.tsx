@@ -438,12 +438,13 @@ export default function Index() {
   // 获取首页数据
   const getData = (e?: string, type?: number) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
+    // 判断如果有工人身份就隐藏新手指引
+    console.log(isLoginType,'isLoginTypeisLoginType')
+    console.log(identityType,'identityType')
     if (isLoginType == 1) {
       setHidden(true)
       setCloseImage(false)
     }
-    console.log(isLoginType,'isLoginTypeisLoginType')
-    console.log(identityType,'identityType')
     if (identityType) {
       if (identityType == '0' ){
         setCloseImage(true)
