@@ -591,7 +591,7 @@ export default function userForeman() {
               for (let i = 0; i < workArr.length; i++) {
                 workArr[i].set = false;
               }
-              setNoset(true)
+              setNoset(false)
             }
             // 设置是否记过工
             if (res.data.latest_group_info.constructor === Array) {
@@ -4449,7 +4449,11 @@ export default function userForeman() {
       }
     }
     for (let i = 0; i < workerItem.length;i++){
+      setNoset(true)
       workerItem[i].del = false;
+      if (!workerItem[i].set){
+        setNoset(false)
+      }
     }
     setWorkerItem(workerItem)
     setContractorArr({ item: data });
