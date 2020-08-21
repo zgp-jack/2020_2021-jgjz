@@ -276,6 +276,7 @@ export default function Index() {
                   midData.worker_id = res.data.worker_id;
                   midData.yupao_id = res.data.yupao_id;
                   Taro.setStorageSync(MidData, midData);
+                  setCloseImage(true)
                   getData();
                 }
               })
