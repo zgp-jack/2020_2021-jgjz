@@ -245,9 +245,7 @@ export default function Index() {
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
                 isJump = true;
-                jumType = true;
-                // setIdentity(false)
-                // setCloseImage(true)
+                jumType = true
                 getData();
               }
               // 没有鱼泡账号
@@ -278,9 +276,6 @@ export default function Index() {
                   midData.worker_id = res.data.worker_id;
                   midData.yupao_id = res.data.yupao_id;
                   Taro.setStorageSync(MidData, midData);
-                  console.log('44444444万')
-                  // setIdentity(false)
-                  // setCloseImage(true)
                   getData();
                 }
               })
@@ -454,8 +449,6 @@ export default function Index() {
         setCloseImage(true)
       }
       Taro.setStorageSync(Type, identityType);
-    }else{
-      setCloseImage(true)
     }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
@@ -472,9 +465,8 @@ export default function Index() {
     }
     if (midData) {
       let type = Taro.getStorageSync(Type);
-      if (!type || type == 0) {
-        // setIdentity(true)
-        setCloseImage(true)
+      if (!type || type === 0) {
+        setIdentity(true)
         return
       } else {
         setType(type);
@@ -1113,7 +1105,7 @@ export default function Index() {
                   {/* {v.arr.map(val=>( */}
                   <View>
                     <View className='content-list-flex'>
-                      <View>{v.workername}{(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}</View>
+                      <View>{v.workername}{(v.note || v.view_images.length>0)&& <Text className='icon leader-icon'>备</Text>}</View>
                       <View className='orgion'><Text className='orgion-type-chars'>¥</Text>{v.money}</View>
                     </View>
                     <View className='details'>我在{v.group_info}项目组对{v.workername}记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
@@ -1142,7 +1134,6 @@ export default function Index() {
                   <View className='content-list-flex'>
                     <View className='details'>我在{v.group_info}项目组对Ta记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
                     {/* <View></View> */}
-                    {(v.note || v.view_images.length>0)&& <Text className='icon leader-icon'>备</Text>}
                     <View className='orgion-type'><Text className='orgion-type-chars'>¥</Text>{v.money}</View>
                   </View>
                 </View>
