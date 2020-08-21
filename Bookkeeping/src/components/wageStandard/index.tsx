@@ -57,7 +57,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                         type='digit'
                         className='inputBox'
                         // maxLength={7}
-                        value={toFixedFnNum(wageStandard.money).toString()}
+                        value={wageStandard.money}
                         onInput={(e) => handleWageStandard('money', e)} />
                     </View><View className='icon' onClick={() => handleAdd('money', wageStandard.money)}>+</View>
                   </View> 
@@ -93,7 +93,7 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                       type='digit'
                       className='inputBox-day'
                       // maxLength={7}
-                      value={toFixedFnNum(wageStandard.addWork).toString()}
+                      value={wageStandard.addWork}
                       onInput={(e) => handleWageStandard('addWork', e)} />
                   </View><View className='icon' onClick={() => handleAdd('addWork', wageStandard.addWork)}>+</View>
                 </View> 

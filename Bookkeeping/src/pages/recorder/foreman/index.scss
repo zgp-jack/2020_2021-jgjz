@@ -701,7 +701,7 @@
 }
 .publish-list-input-amount{
   position: relative;
-  width: 100%;
+  width: 86%;
   margin-right: 125rpx;
   height: 125px;
   line-height: 125px;
@@ -808,6 +808,9 @@
     }
   }
 }
+.new-input{
+  width: 106%;
+}
 .publish-list-input-money {
   position: relative;
   width: 100%;
@@ -817,7 +820,7 @@
   font-size: 30px;
   // margin-left: 30px;
   text-align: right;
-  margin-top: 20rpx;
+  margin-top: 15rpx;
   color: red;
   width: 200rpx;
   .publish-input-list {
@@ -861,7 +864,7 @@
 }
 .groupIcon{
   position: absolute;
-  bottom: -15rpx;
+  bottom: -21rpx;
   left: -5rpx;
   width: 100rpx;
   height: 20rpx;
@@ -881,7 +884,7 @@
   line-height: 125rpx;
   height: 125rpx;
   margin-left: 10rpx;
-  margin-top: 18rpx;
+  margin-top: 15rpx;
 }
 .downIcons{
   height: 25rpx;

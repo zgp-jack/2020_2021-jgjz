@@ -1574,7 +1574,8 @@ export default function EditDetails() {
               value={val.duration}
             />
             <View className='rightIconsBox'>
-              <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+              {/* <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' /> */}
+              <Text className='towardsTheRight' />
             </View>
           </View>
         </View>
@@ -1594,7 +1595,8 @@ export default function EditDetails() {
               // value={'11111111111111'}
             />
             <View className='rightIconsBox'>
-              <Image src={`${IMGCDNURL}iconsRIght.png`} className='money-rightIcons' />
+              {/* <Image src={`${IMGCDNURL}iconsRIght.png`} className='money-rightIcons' /> */}
+              <Text className='towardsTheRight' />
             </View>
           </View>
         </View>
@@ -1613,6 +1615,7 @@ export default function EditDetails() {
           placeholder='请填写备注...'
           onInput={(e) => handleInput('note', e)}
           maxlength={400}
+          auto-height={true}
           />
         </View>
       <View className='white'>
