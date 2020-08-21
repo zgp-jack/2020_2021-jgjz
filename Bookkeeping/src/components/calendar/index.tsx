@@ -29,6 +29,7 @@ interface PROPS {
   handleCalendarSub:()=>void,
   onScrollToUpper: () => void,
   onScrollToLower: () => void,
+  noCalendarDay:boolean,
 }
 // interface TimeType{
 //   year:string,
@@ -37,7 +38,7 @@ interface PROPS {
 
 export default function CalendarModal({ 
   // setRecorderType, calendarDays, setCalendarDays, clickData, setClickData,
-  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper,onScrollToLower}: PROPS) {
+  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay}: PROPS) {
   // 储存点击天数
   // 获取存入的公用内容
   const useSelectorItem = useSelector<any, any>(state => state)
@@ -186,7 +187,10 @@ export default function CalendarModal({
                 } */}
                 {/* {recorderType !== 3 &&  */}
                 <View>
-                  {!v.next && !v.up && !v.stop  && <View><Checkbox className={classnames({
+                  {!v.next && !v.up && !v.stop && !v.click  ? <View className='checkBox'></View> :'' }
+                  {!v.next && !v.up && !v.stop && v.click ? <View className='clickCheckBox'></View> : ''}
+                  {/* <View className='clickCheckBox'></View> */}
+                  {/* {!v.next && !v.up && !v.stop  && <View><Checkbox className={classnames({
                     'checkbox': !v.click,
                     'checkbox-click': v.click,
                   })} 
@@ -195,7 +199,7 @@ export default function CalendarModal({
                     value={v.value}
                     color='rgba(253, 120, 13, 1)'
                   /></View>
-                  }
+                  } */}
                 </View>
                 {/* } */}
               </View>
