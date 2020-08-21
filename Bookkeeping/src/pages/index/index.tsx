@@ -226,6 +226,7 @@ export default function Index() {
             console.log(res,'跳转获取的值')
             // 直接返回记工记账用户信息
             if (res.code == 200) {
+              isJump = true;
               if (res.data) {
                 let obj: any = {
                   sign: {},
@@ -244,7 +245,6 @@ export default function Index() {
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
-                isJump = true;
                 jumType = true
                 getData();
               }
@@ -440,18 +440,21 @@ export default function Index() {
   // 获取首页数据
   const getData = (e?: string, type?: number) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
-    // 判断如果有工人身份就隐藏新手指引
     console.log(isLoginType,'isLoginTypeisLoginType')
     console.log(identityType,'identityType')
+    // 判断如果有工人身份就隐藏新手指引
     if (isLoginType == 1) {
       setHidden(true)
       setCloseImage(false)
     }
-    if (identityType) {
-      if (identityType == '0' ){
-        setCloseImage(true)
+    // 鱼泡网跳转过来的
+    if (jumType){
+      if (identityType) {
+        if (identityType == '0' ){
+          setCloseImage(true)
+        }
+        Taro.setStorageSync(Type, identityType);
       }
-      Taro.setStorageSync(Type, identityType);
     }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
