@@ -4,6 +4,9 @@
   .at-input-number__input, .at-input-number input{
     color: red !important;
   }
+  .textarea{
+    height: 220rpx !important;
+  }
 }
 .tabber {
   display: flex;
@@ -686,6 +689,11 @@
   top: 0rpx;
   color: rgba(47, 53, 65, 1);
   font-size: 29rpx;
+  width: 100rpx;
+  text-align: right;
+}
+.justify-quantities {
+  min-width: 130rpx;
 }
 .publish-list-input-amount{
   position: relative;
@@ -808,7 +816,7 @@
   font-size: 30px;
   // margin-left: 30px;
   text-align: right;
-  margin-top: 20rpx;
+  margin-top: 15rpx;
   color: red;
   width: 200rpx;
   .publish-input-list {
@@ -872,7 +880,7 @@
   line-height: 125rpx;
   height: 125rpx;
   margin-left: 10rpx;
-  margin-top: 18rpx;
+  margin-top: 15rpx;
 }
 .downIcons{
   height: 25rpx;

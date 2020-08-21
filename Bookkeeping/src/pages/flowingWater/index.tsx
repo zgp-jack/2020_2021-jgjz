@@ -22,7 +22,7 @@ interface DataType {
 export default function FlowingWater() {
   const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
-  const { timeMon } = router.params;
+  const { timeMon,foldMon } = router.params;
   const dispatch = useDispatch()
   const [data, setData] = useState<DataType>({
     item: []
@@ -61,6 +61,10 @@ export default function FlowingWater() {
   const [rightTime, setrightTime] = useState<boolean>(false)
   // 判断是否禁用Swipe
   const [isSwipe,setisSwipe] = useState<boolean>(false)
+  // 判断折叠情况
+  const [foldTime,setfoldTime] = useState<string>(foldMon);
+  // 防止记工button多次点击
+  const [ishandleJump,setishandleJump] = useState<boolean>(true)
   // 数据异常
   const [busy, setBusy] = useState<boolean>(false)
   // 获取数据
@@ -120,15 +124,17 @@ export default function FlowingWater() {
             res.data.data[i].month = month;
             res.data.data[i].day = day;
           }
-          // 设置今天的自动打开
-          const newData = new Date();
-          const newTime = newData.getFullYear() + '-' + addZero(newData.getMonth() + 1) + '-' + addZero(newData.getDate());
-          for (let i = 0; i < res.data.data.length;i++){
-            if (res.data.data[i].time == newTime){
-              res.data.data[i].click = true;
-            }else{
-              res.data.data[0].click = true;
+          // 设置折叠
+          if(foldTime){
+            for (let i = 0; i < res.data.data.length;i++){
+              if ((Number(res.data.data[i].time.split('-')[0]) == Number(foldTime.split('-')[0]))&&(Number(res.data.data[i].time.split('-')[1]) == Number(foldTime.split('-')[1])) && (Number(res.data.data[i].time.split('-')[2]) == Number(foldTime.split('-')[2]))){
+                res.data.data[i].click = true;
+                setfoldTime('');
+                break
+              }
             }
+          }else{
+            res.data.data[0].click = true;
           }
           dispatch(setFlowingWater(res.data.data))
           setData({item:res.data.data})
@@ -452,14 +458,20 @@ export default function FlowingWater() {
   console.log(data,'data')
   // 记工
   const handleAddJump = ()=>{
-    bkGetProjectTeamAction({}).then(res => {
-      if (res.data.length === 0) {
-        setCreateProjectDisplay(true)
-      } else {
-        let type = Taro.getStorageSync(Type);
-        userRouteJump(`/pages/recorder/index?type=${type}`)
-      }
-    })
+    if(ishandleJump){
+      setishandleJump(false);
+      bkGetProjectTeamAction({}).then(res => {
+        if (res.data.length === 0) {
+          setishandleJump(true)
+          setCreateProjectDisplay(true)
+        } else {
+          setishandleJump(true)
+          let type = Taro.getStorageSync(Type);
+          Taro.redirectTo({url:`/pages/recorder/index?type=${type}`});
+          // userRouteJump(`/pages/recorder/index?type=${type}`)
+        }
+      })
+    }
   }
   // 关闭创建项目
   const handleCreateProjectClose = () => {

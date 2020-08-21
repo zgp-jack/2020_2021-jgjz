@@ -60,3 +60,35 @@ export function timestampToTime(timestamp) {
   var s = (date.getSeconds() >= 10 ? date.getSeconds() : '0' + date.getSeconds());
   return Y + M + D + h + m + s;
 }
+
+/**
+ * 根据时间搓和格式类型返回格式化好的字符串
+ * @param {number} timestamp 时间搓
+ * @param {string} format 格式化类型, 默认yyyy-MM-dd
+ * @return {string} 格式好的字符串
+ */
+export function formatDate(timestamp, format = 'yyyy-MM-dd') {
+  if (!timestamp) {
+      return;
+  }
+  var date = new Date(timestamp);
+  var o = {
+      'M+': date.getMonth() + 1, // 月份 
+      'd+': date.getDate(), // 日 
+      'h+': date.getHours(), // 小时 
+      'm+': date.getMinutes(), // 分 
+      's+': date.getSeconds(), // 秒 
+      'q+': Math.floor((date.getMonth() + 3) / 3), // 季度 
+      'S': date.getMilliseconds() // 毫秒 
+  };
+
+  if (/(y+)/.test(format)) {
+      format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+  }
+  for (var k in o) {
+      if (new RegExp('(' + k + ')').test(format)) {
+          format = format.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+      }
+  }
+  return format;
+}

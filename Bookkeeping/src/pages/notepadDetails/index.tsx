@@ -1,6 +1,6 @@
 import Taro, { Config, useContext, useDidShow, useState, useRouter } from '@tarojs/taro'
 import { bkGetNotePadAction, bkDeleteNotePadAction } from '../../utils/request/index';
-import Msg from '../../utils/msg'
+import Msg,{formatDate} from '../../utils/msg'
 import { View, Image } from '@tarojs/components'
 import { useSelector } from '@tarojs/redux'
 import { context  } from '../notepad';
@@ -131,7 +131,7 @@ export default function NotepadDetails() {
         <View className='refresh' onClick={()=>getnoteData(id)}>刷新</View>
         </View>}
       {!busy && <View className='notepadDetails'>
-        <View className='time'>{data.newTime}</View>
+        <View className='time'>{data.created_time && formatDate(Number(data.created_time*1000),'yyyy/MM/dd hh:mm')}</View>
         <View className='content'>
           {data.note}
         </View>
