@@ -55,8 +55,11 @@ export default function NotepadDetails() {
               const date = new Date(dataArr[i].list[j].created_time * 1000).getDay();
               const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
               const week = weeks[date];
+              const timeItem = new Date(dataArr[i].list[j].created_time*1000);
+              const newTime = timeItem.getFullYear() + '/' + addZero(timeItem.getMonth() + 1) + '/' + addZero(timeItem.getDate()) + ' ' + addZero(timeItem.getHours()) + ':'+addZero(timeItem.getMinutes());
               dataArr[i].list[j].created_time_string = dataArr[i].list[j].created_time_string.replace('-', '/')
               const time = dataArr[i].list[j].created_time_string.substring(0, 4) + '年'+ dataArr[i].list[j].created_time_string.substring(5, 7) + '月' + dataArr[i].list[j].created_time_string.substring(8, 11) + '日';
+              dataArr[i].list[j].newTime = newTime;
               Taro.setNavigationBarTitle({
                 title: time + '   ' + week,
               })
