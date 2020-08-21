@@ -470,7 +470,7 @@ export default function Index() {
     }
     if (midData) {
       let type = Taro.getStorageSync(Type);
-      if (!type || type === 0) {
+      if (!type || type == 0) {
         // setIdentity(true)
         setCloseImage(true)
         return
