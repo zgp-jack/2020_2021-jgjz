@@ -478,6 +478,9 @@ export default function Index() {
         setType(type);
       }
     }
+    if (!isLoginType && !identityType){
+      setCloseImage(true)
+    }
     // 判断选没有选择时间
     let changeTime;
     if (!e) {
