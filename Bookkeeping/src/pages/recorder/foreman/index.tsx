@@ -140,8 +140,7 @@ export default function Foreman() {
   // 点击保存成功弹窗
   const handleRecorderPopup = (type:number)=>{
     const foldTime = JSON.parse(JSON.stringify(jumpMonth));
-    const foldMon = foldTime.year + '-' + foldTime.month + '-' + foldTime.date;
-    const time = foldTime.year + '-' + foldTime.month;
+    const time = foldTime.split('-')[0] + '-' + foldTime.split('-')[1];
     // 跳转
     if(type === 1){
       Taro.redirectTo({
@@ -152,7 +151,7 @@ export default function Foreman() {
       //   delta: 1
       // })
       Taro.redirectTo({
-        url: `/pages/flowingWater/index?timeMon=${time}&foldMon=${foldMon}`
+        url: `/pages/flowingWater/index?timeMon=${time}&foldMon=${foldTime}`
       })
     }
     setTimeout(() => {
@@ -739,9 +738,10 @@ export default function Foreman() {
       <View className='textareaList'>
         <View className='publish-recruit-card'>
           <View className='publish-list-ditals'>
-            <View>备注</View>
+            <View className='textareanote'>备注</View>
               {/* <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}> */}
-            {/* {isdisable && <View className='textarea'>{model && model.details}</View>} */}
+            {/* {isdisable && !iscreatproject && <View className='textarea'>{model && model.details}</View>} */}
+            <View className='istextarea'>
             <Textarea
               // focus={autoFocus}
               // autoFocus={autoFocus}
@@ -755,6 +755,7 @@ export default function Foreman() {
               onInput={(e) => handleInput('details',e)}
               maxlength={400}
             />
+            </View>
             {/* </CoverView> */}
           </View>
           <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} />

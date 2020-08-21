@@ -947,16 +947,21 @@ export default function AttendanceSheet() {
   const handleJump = () => {
     if(ishandleJump){
       setishandleJump(false)
-      bkGetProjectTeamAction({}).then(res => {
-        if (res.data.length === 0) {
-          setishandleJump(true)
-          setCreateProjectDisplay(true)
-        } else {
-          setishandleJump(true)
-          let type = Taro.getStorageSync(Type);
-          Taro.redirectTo({url:`/pages/recorder/index?type=${type}`})
-        }
-      })
+      let type = Taro.getStorageSync(Type);
+      if(identity==1){
+        bkGetProjectTeamAction({}).then(res => {
+          if (res.data.length === 0) {
+            setishandleJump(true)
+            setCreateProjectDisplay(true)
+          } else {
+            setishandleJump(true)
+            Taro.redirectTo({url:`/pages/recorder/index?type=${type}`})
+          }
+        })
+      }else{
+        setishandleJump(true)
+        Taro.redirectTo({url:`/pages/recorder/index?type=${type}`});
+      }
     }
   }
   // 关闭创建项目

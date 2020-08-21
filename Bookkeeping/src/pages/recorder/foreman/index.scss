@@ -185,13 +185,16 @@
 }
 
 .publish-list-ditals {
-  &>view{
+  &>.textareanote{
     margin-bottom: 20rpx;
   }
   padding: 30rpx;
   font-size: 30rpx;
 }
-
+.istextarea {
+  height: 210rpx !important;
+  width: 100%;
+}
 .textarea {
   height: 210rpx !important;
   width: 100%;

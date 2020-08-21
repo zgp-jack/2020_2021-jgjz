@@ -1604,6 +1604,7 @@ export default function EditDetails() {
         <View className='publish-list-textTarea-item' >
           <Text className='pulish-list-textTarea-title'>备注</Text>
         </View>
+        <View className='istextarea'>
         <Textarea
           hidden={isdisable}
           className='textarea'
@@ -1613,6 +1614,7 @@ export default function EditDetails() {
           onInput={(e) => handleInput('note', e)}
           maxlength={400}
           />
+        </View>
       <View className='white'>
       <View className='imageBox'>
         <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>

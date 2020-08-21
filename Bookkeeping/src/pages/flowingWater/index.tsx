@@ -71,9 +71,14 @@ export default function FlowingWater() {
   useDidShow(()=>{
     const date = JSON.stringify(new Date()).slice(1, 11)
     const times = timeMon || date.slice(0, 4) + '-' + date.slice(5, 7);
+    let lastM:string;
     setTime(times);
     setVals(times);
-    let lastM = times.split('-')[0]+'-'+(Number(times.split('-')[1])+1)
+    if(Number(times.split('-')[1])==12){
+      lastM = (Number(times.split('-')[0])+1) + '-' + '01';
+    }else{
+      lastM = times.split('-')[0]+'-'+(Number(times.split('-')[1])+1)
+    }
     setLastTime(lastM);
     if(useSelectorItem.flowingWater.length>0){
       setData({item:useSelectorItem.flowingWater});
@@ -401,7 +406,6 @@ export default function FlowingWater() {
     let params = {
       ids,
     }
-    setisSwipe(false);
     const num = dataItem.length;
     const delNum = ids.length;
     if (!delNum){
@@ -440,6 +444,8 @@ export default function FlowingWater() {
               setData({item:useSelectorItem.flowingWater});
               setAllcheck(false);
               setIsCheckOut(false)
+              setisPicker(false)
+              setisSwipe(false);
             } else {
               Msg(res.msg)
             }
@@ -460,17 +466,24 @@ export default function FlowingWater() {
   const handleAddJump = ()=>{
     if(ishandleJump){
       setishandleJump(false);
-      bkGetProjectTeamAction({}).then(res => {
-        if (res.data.length === 0) {
-          setishandleJump(true)
-          setCreateProjectDisplay(true)
-        } else {
-          setishandleJump(true)
-          let type = Taro.getStorageSync(Type);
-          Taro.redirectTo({url:`/pages/recorder/index?type=${type}`});
-          // userRouteJump(`/pages/recorder/index?type=${type}`)
-        }
-      })
+      let type = Taro.getStorageSync(Type);
+      if(identity==1){
+        bkGetProjectTeamAction({}).then(res => {
+          if (res.data.length === 0) {
+            setishandleJump(true)
+            setCreateProjectDisplay(true)
+          } else {
+            setishandleJump(true)
+            dispatch(setFlowingWater([]))
+            Taro.redirectTo({url:`/pages/recorder/index?type=${type}`});
+            // userRouteJump(`/pages/recorder/index?type=${type}`)
+          }
+        })
+      }else{
+        setishandleJump(true)
+        dispatch(setFlowingWater([]))
+        Taro.redirectTo({url:`/pages/recorder/index?type=${type}`});
+      }
     }
   }
   // 关闭创建项目
@@ -495,6 +508,7 @@ export default function FlowingWater() {
         setProject(false);
         setModel({ groupName: '', teamName: '' })
         let type = Taro.getStorageSync(Type);
+        dispatch(setFlowingWater([]))
         userRouteJump(`/pages/recorder/index?type=${type}`)
       } else {
         Msg(res.msg);
