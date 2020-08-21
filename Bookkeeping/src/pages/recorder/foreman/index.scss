@@ -4,9 +4,6 @@
   .at-input-number__input, .at-input-number input{
     color: red !important;
   }
-  .textarea{
-    height: 220rpx !important;
-  }
 }
 .tabber {
   display: flex;
@@ -188,15 +185,19 @@
 }
 
 .publish-list-ditals {
+  &>view{
+    margin-bottom: 20rpx;
+  }
   padding: 30rpx;
   font-size: 30rpx;
 }
 
 .textarea {
-  padding-top: 20rpx;
-  height: 100rpx !important;
+  height: 210rpx !important;
   width: 100%;
-  overflow-y: scroll;
+  font-size: 30rpx !important;
+  line-height: 30rpx !important;
+  // overflow-y: scroll;
 }
 
 .foreman-footer {
