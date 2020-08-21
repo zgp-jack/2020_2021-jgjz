@@ -1214,16 +1214,16 @@ export default function EditDetails() {
   const handleInput = (type,e)=>{
     let data = JSON.parse(JSON.stringify(val));
     if (type == 'unitNum' || type == 'price' || type =='unitPrice') {
-      return dealInputVal(e.detail.value, 7, type);
+      return dealInputVal(e.detail.value, 7, type,true);
     }
     if (type == 'wages' || type == 'borrowing' || type =='money') {
-      return dealInputVal(e.detail.value, 14, type);
+      return dealInputVal(e.detail.value, 14, type,true);
     }
     data[type] = e.detail.value;
     setVal({...data});
   }
   // 输入框验证
-  const dealInputVal = (value, num?: number, type?: string) => {
+  const dealInputVal = (value, num?: number, type?: string,isMday?:boolean) => {
     value = value.replace(/^0*(0\.|[1-9])/, "$1");
     value = value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
     value = value.replace(/^\./g, ""); //验证第一个字符是数字而不是字符
@@ -1255,38 +1255,40 @@ export default function EditDetails() {
     let item = JSON.parse(JSON.stringify(wageStandard));
     if (type) {
       if (type === 'day' || type === 'work' || type === 'money' || type === 'addWork') {
-        if (!value) {
-          value = 0;
-        }
-        if (type === 'money' || type === 'addWork') {
-          if (value > 9999.99) {
-            Msg('超出最大输入范围');
-            value = 9999.99;
+        if (isMday) {
+          if (!value) {
+            value = 0;
           }
-          if (type === 'money') {
-            let dayAddWork;
-            if (item.day == 0) {
-              dayAddWork = 0.00
-            } else {
-              dayAddWork = value / item.day || 0.00;
+          if (type === 'money' || type === 'addWork') {
+            if (value > 9999.99) {
+              Msg('超出最大输入范围');
+              value = 9999.99;
             }
-            item.dayAddWork = toFixedFn(dayAddWork);
-          }
-        } else {
-          if (value > 24) {
-            Msg('超出最大输入范围');
-            value = 24;
-          }
-          if (type == 'day') {
-            let num: number | string = 0.00;
-            if (item.money > 0 && value > 0) {
-              num = item.money / value
+            if (type === 'money') {
+              let dayAddWork;
+              if (item.day == 0) {
+                dayAddWork = 0.00
+              } else {
+                dayAddWork = value / item.day || 0.00;
+              }
+              item.dayAddWork = toFixedFn(dayAddWork);
             }
-            item.dayAddWork = (toFixedFn(num));
+          } else {
+            if (value > 24) {
+              Msg('超出最大输入范围');
+              value = 24;
+            }
+            if (type == 'day') {
+              let num: number | string = 0.00;
+              if (item.money > 0 && value > 0) {
+                num = item.money / value
+              }
+              item.dayAddWork = (toFixedFn(num));
+            }
           }
+          item[type] = value;
+          setWageStandard(item);
         }
-        item[type] = value;
-        setWageStandard(item);
       } else {
         data[type] = value;
         setVal({ ...data });
