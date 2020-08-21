@@ -3626,37 +3626,16 @@ export default function userForeman() {
     }
   }
   const JumpFn = (timeItem)=>{
-    const month = toDayString.split('-')[1];
-    const year = toDayString.split('-')[0];
-    // 获取到日期
-    let arr: any = [];
-    timeItem.forEach((el: any) => {
-      const result = arr.findIndex((ol: any) => {
-        return el.month == ol.month && el.year == ol.year
-      })
-      if (result !== -1) {
-        arr = [...arr, ...el]
-      } else {
-        arr.push(el)
-      }
-    })
-    const time = limit(arr, month, year);
-    setJumpMonth(time);
-  }
-  const limit = (arr, num, year)=> {
-    var newArr:any[] = [];
-    arr.map((x)=>{
-      // 对数组各个数值求差值
-      if (year == x.year){
-        newArr.push(Math.abs((+x.month) - (+num)));
-      }else{
-          const month =(+x.year)-(+year)*12
-          newArr.push(Math.abs((month+x.month) - (+num)));
-      }
+    let timedata = new Date(toDayString).getTime();
+    timeItem.forEach((el,index) => {
+      let eltime = el.year+'-'+el.month+'-'+el.date;
+      let eldate = new Date(Date.parse(eltime.replace(/-/g,  "/")))
+      let elstamp = new Date(eldate).getTime()
+      arr[index] = timedata - elstamp;
     });
-    // 求最小值的索引
-    let index = newArr.indexOf(Math.min.apply(null, newArr));
-    return arr[index];
+    let min = Math.min.apply(null,arr); 
+    const time = new Date(timedata-min).getFullYear()+'-'+(new Date(timedata-min).getMonth()+1)+'-'+new Date(timedata-min).getDate();
+    setJumpMonth(time);
   }
   const handleCalendar = (v) => {
   }

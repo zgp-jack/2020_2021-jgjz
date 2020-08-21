@@ -389,14 +389,16 @@ export default function Index() {
     dispatch(setTypes(type))
     // getData();
     getData();
-    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    const date = new Date();
-    setVal(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
-    if (Number(this_year_business_month) == montime) {
-      setleftTime(false);
-    } else if(Number(this_year_business_month)<montime){
-      setleftTime(true);
-    }
+    // let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    // const date = new Date();
+    // setVal(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
+    // console.log(vals);
+    // debugger
+    // if (Number(this_year_business_month) == montime) {
+    //   setleftTime(false);
+    // } else if(Number(this_year_business_month)<montime){
+    //   setleftTime(true);
+    // }
     // let midParams = {
     //   mid: userInfo.userId,
     // }
@@ -591,6 +593,13 @@ export default function Index() {
   const changeIcon = (e) => {
     let startmon = parseInt(start.split('-')[1]);
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    if(Number(e.split('-')[1]) == 1){
+      setleftTime(false);
+      if(Number(montime) != 1){
+        setrightTime(true);
+      }
+      return
+    }
     if (startmon == montime) {
       setleftTime(false);
       setrightTime(false);
