@@ -640,7 +640,7 @@ export default function Foreman() {
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>单价</Text>
               <Input
-                className='publish-list-input'
+                className='publish-list-input new-input'
                 type='digit'
                 maxLength={10}
                 placeholder='请填写单价'
@@ -656,7 +656,7 @@ export default function Foreman() {
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>工钱</Text>
               <Input
-                className='publish-list-input'
+                className='publish-list-input new-input'
                 type='digit'
                 maxLength={17}
                 onInput={(e) => handleInput('wages', e)}
@@ -677,7 +677,7 @@ export default function Foreman() {
             <View className='publish-list-item'>
               <Text className='pulish-list-title'>本次借支</Text>
               <Input
-                className='publish-list-input'
+                className='publish-list-input new-input'
                 type='digit'
                 // disabled
                 maxLength={17}

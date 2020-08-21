@@ -35,8 +35,10 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
               <View>
                   {tab=== 0 && 
                 <View className='tab'>
-                  <View className='lookWages' onClick={()=>{handleAtSwitch(0)}}>查看工资标准
-                      <View className='setWages' onClick={(e) => { e.stopPropagation(); handleAtSwitch(1)}}>设置工资标准
+                  <View className='Wages_box_right'>
+                    <View className='lookWages' onClick={()=>{handleAtSwitch(0)}}>查看工资标准
+                        <View className='setWages' onClick={(e) => { e.stopPropagation(); handleAtSwitch(1)}}>设置工资标准
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -47,11 +49,13 @@ export default function WagesModal({ display, handleClose, data, handleAddStanda
                   <View className='lookWagesClick' onClick={() => { handleAtSwitch(0) }}>设置工资标准
                     </View>
                   </View> */}
-                <View className='lookWagesClick' onClick={(e) => { e.stopPropagation(); handleAtSwitch(1) }}> 设置工资标准
-                    <View className='setWagesClick' onClick={() => { handleAtSwitch(0) }}>查看工资标准
+                <View className='Wages_box_left'>
+                  <View className='lookWagesClick' onClick={(e) => { e.stopPropagation(); handleAtSwitch(1) }}> 设置工资标准
+                      <View className='setWagesClick' onClick={() => { handleAtSwitch(0) }}>查看工资标准
                       </View>
+                    </View>
                   </View>
-                  </View>
+                </View>
                   // setWagesClick lookWagesClick
                   }
                 {/* </View> */}

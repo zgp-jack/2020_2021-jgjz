@@ -543,8 +543,8 @@ export default function FlowingWater() {
         >
             {/* <Text className='time-color'>{year}<View><Image className='leftIcon' src={`${IMGCDNURL}left.png`} /></View>{mon}<View><Image className='rightIcon' src={`${IMGCDNURL}right.png`}/></View></Text> */}
         <View className='time-color'>
-          {year}<Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' style={{visibility: leftTime?'visible':'hidden'}} />
-          {mon}<Image className='righticon' src={`${IMGCDNURL}greyRight.png`} style={{visibility: rightTime?'visible':'hidden'}} />
+          <Text className='title_year'>{year}</Text>{leftTime && <Image src={`${IMGCDNURL}greyLeft.png`} className='leftIcon' style={{visibility: leftTime?'visible':'hidden'}} />}
+          {mon}{rightTime && <Image className='righticon' src={`${IMGCDNURL}greyRight.png`} style={{visibility: rightTime?'visible':'hidden'}} />}
         </View>
         </Picker>
       </View>
@@ -556,7 +556,7 @@ export default function FlowingWater() {
               <View className='refresh' onClick={() =>getList()}>刷新</View>
           </View>}
             {!busy && data.item && data.item.length>0 && data.item.map((v,i)=>(
-            <View key={i+i} onClick={()=>handleClick(v)}>
+            <View key={i+i} onClick={()=>handleClick(v)} className='list_item'>
               <View className='content-list'>
                 <View className='content-list-left content-td'>
                   {v.click && <View className='content-list-icon-lowerIcon'><Image className='content-list-icon-lowerIcon-image' src={`${IMGCDNURL}lowerIcon.png`}/></View>}
@@ -578,7 +578,7 @@ export default function FlowingWater() {
               {v.click && 
                 <View>
                   {v.arr.map((val=>(
-                    <View onClick={(e)=>{e.preventDefault(),e.stopPropagation()}}>
+                    <View onClick={(e)=>{e.preventDefault(),e.stopPropagation()}} className='list_item_item'>
                     <AtSwipeAction
                       autoClose={false}
                       disabled={isSwipe}
