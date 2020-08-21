@@ -378,16 +378,24 @@ export default function userForeman() {
       }
       const item = [objs, ...arrList];
       if (data.length > 0) {
-        setNoset(false)
+        // setNoset(false)
         for (let j = 0; j < data.length; j++) {
           for (let i = 0; i < item.length; i++) {
             item[i].click = false;
+            // setNoset(false)
             if (data[j].worker_id === item[i].id) {
               item[i].set = true
-            } else {
-              setNoset(true)
-              // setNoset(false)
+              // setNoset(true)
             }
+            //  else {
+            // }
+          }
+        }
+        for (let j = 0; j < item.length;j++){
+          if(!item[j].set){
+            setNoset(false)
+          }else{
+            setNoset(true)
           }
         }
       } else {
@@ -511,19 +519,24 @@ export default function userForeman() {
               List = res.data.latest_group_workers;
             }
             const workArr = [objs, ...List];
+            console.log(workArr,'workArr');
+            console.log(res.data.latest_group_workers_has_wage,'res.data.latest_group_workers_has_wage')
             // 设置是够设置工资标准
             let type = Taro.getStorageSync(Type);
             if (res.data.latest_group_workers_has_wage.length > 0) {
               if(type == 1){
-                setNoset(false)
                 for (let i = 0; i < workArr.length; i++) {
+                  workArr[i].set = false;
                   for (let j = 0; j < res.data.latest_group_workers_has_wage.length; j++) {
                     if (workArr[i].id == res.data.latest_group_workers_has_wage[j].worker_id) {
                       workArr[i].set = true;
-                    }else{
-                      workArr[i].set = false;
-                      setNoset(true) 
                     }
+                  }
+                }
+                for (let i = 0; i < workArr.length;i++){
+                  setNoset(true) 
+                  if(!workArr[i].set){
+                    setNoset(false) 
                   }
                 }
               }else{
@@ -573,12 +586,10 @@ export default function userForeman() {
                 setCacheWage(wageStandardData)
               }
             }else{
-              console.log(workArr,'List')
               for (let i = 0; i < workArr.length; i++) {
                 workArr[i].set = false;
               }
               setNoset(true)
-              console.log(32131232131)
             }
             // 设置是否记过工
             if (res.data.latest_group_info.constructor === Array) {
@@ -612,7 +623,6 @@ export default function userForeman() {
                     dateItem.push(dayObj);
                   }
                 }
-                console.log(dateItem,'dateItem11111')
                 setcacheDays(dateItem);
                 getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
               }else{
@@ -620,6 +630,7 @@ export default function userForeman() {
                 getMonthDaysCurrent(new Date(), [dayObj], '', '', []);
               }
             }
+            console.log(workArr,'workArrworkArr')
             dispatch(setPhoneList(workArr));
             setWorkerItem(workArr);
             setMoneyList(res.data.latest_group_workers_has_wage)
@@ -1850,6 +1861,7 @@ export default function userForeman() {
           //获取工人的时候传过来的工人数据
           if (Item) {
             if(res.data.length>0){
+              setNoset(false)
               for (let i = 0; i < Item.length; i++) {
                 for (let j = 0; j < res.data.length; j++) {
                   if (res.data[j].worker_id == Item[i].id) {
@@ -1865,10 +1877,9 @@ export default function userForeman() {
                         }
                       })
                     }
+                    // setNoset(false)
+                  }else {
                     setNoset(true)
-                  }
-                  else {
-                    setNoset(false)
                   }
                 }
               }
@@ -4497,7 +4508,6 @@ export default function userForeman() {
     if (type === 0) {
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
       getMonthDaysCurrent(date);
-      return;
     } else {
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
       getMonthDaysCurrent(date);

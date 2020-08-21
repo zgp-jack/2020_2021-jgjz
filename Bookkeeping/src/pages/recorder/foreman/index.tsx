@@ -375,6 +375,12 @@ export default function Foreman() {
     setIscreatproject(true);
   }
   const handleCurrent = ()=>{
+    // 打开日历如果上次点击默认打开最后一个日期的那个月份
+    const data = JSON.parse(JSON.stringify(timeData));
+    console.log(data,'data');
+    if(data){
+      const end = data.pop();
+    }
     setIsdisable(true);
     setCalendarModalDisplay(true);
     // getMonthDaysCurrent(new Date())
