@@ -1214,7 +1214,7 @@ export default function EditDetails() {
   const handleInput = (type,e)=>{
     let data = JSON.parse(JSON.stringify(val));
     if (type == 'unitNum' || type == 'price' || type =='unitPrice') {
-      return dealInputVal(e.detail.value, 7, type,true);
+      return dealInputVal(e.detail.value, 7, type);
     }
     if (type == 'wages' || type == 'borrowing' || type =='money') {
       return dealInputVal(e.detail.value, 14, type,true);
@@ -1253,9 +1253,12 @@ export default function EditDetails() {
         : value.substring(0, num);
     let data = JSON.parse(JSON.stringify(val));
     let item = JSON.parse(JSON.stringify(wageStandard));
-    if (type) {
-      if (type === 'day' || type === 'work' || type === 'money' || type === 'addWork') {
-        if (isMday) {
+    if (isMday && type){
+      data[type] = value;
+      setVal({ ...data });
+    }else{
+      if (type) {
+        if (type === 'day' || type === 'work' || type === 'money' || type === 'addWork') {
           if (!value) {
             value = 0;
           }
@@ -1288,10 +1291,10 @@ export default function EditDetails() {
           }
           item[type] = value;
           setWageStandard(item);
+        } else {
+          data[type] = value;
+          setVal({ ...data });
         }
-      } else {
-        data[type] = value;
-        setVal({ ...data });
       }
     }
     return value;

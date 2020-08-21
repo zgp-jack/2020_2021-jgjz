@@ -607,10 +607,10 @@ export default function userForeman() {
                   setCache(res.data.latest_group_worker_has_business.worker)
                   for (let i = 0, len = workArr.length; i < len; i++) {
                     for (let j = 0, setLen = res.data.latest_group_worker_has_business.worker.length; j < setLen; j++) {
+                      // workArr[i].discipline = true;
                       if (res.data.latest_group_worker_has_business.worker[j] == workArr[i].id) {
+                        console.log(res.data.latest_group_worker_has_business.worker[j],'res.data.latest_group_worker_has_business.worker[j]')
                         workArr[i].discipline = true;
-                      }else{
-                        workArr[i].discipline = false;
                       }
                     }
                   }
