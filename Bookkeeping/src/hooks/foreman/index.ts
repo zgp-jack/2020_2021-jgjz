@@ -4451,6 +4451,7 @@ export default function userForeman() {
     for (let i = 0; i < workerItem.length;i++){
       setNoset(true)
       workerItem[i].del = false;
+      workerItem[i].click = false;
       if (!workerItem[i].set){
         setNoset(false)
       }
