@@ -1105,7 +1105,7 @@ export default function Index() {
                   {/* {v.arr.map(val=>( */}
                   <View>
                     <View className='content-list-flex'>
-                      <View>{v.workername}{(v.note || v.view_images.length>0)&& <Text className='icon leader-icon'>备</Text>}</View>
+                      <View>{v.workername}{(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}</View>
                       <View className='orgion'><Text className='orgion-type-chars'>¥</Text>{v.money}</View>
                     </View>
                     <View className='details'>我在{v.group_info}项目组对{v.workername}记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
@@ -1134,6 +1134,7 @@ export default function Index() {
                   <View className='content-list-flex'>
                     <View className='details'>我在{v.group_info}项目组对Ta记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
                     {/* <View></View> */}
+                    {(v.note || v.view_images.length>0)&& <Text className='icon leader-icon'>备</Text>}
                     <View className='orgion-type'><Text className='orgion-type-chars'>¥</Text>{v.money}</View>
                   </View>
                 </View>

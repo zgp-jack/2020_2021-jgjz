@@ -630,7 +630,7 @@ export default function Foreman() {
               />
             <View className='amountType' onClick={() => {setIsdisable(true);setQuantitiesDisplay(true)}}>{unit}
             </View>
-                <Image src={`${IMGCDNURL}downIcons.png`} className='downIcons' />
+                <Image src={`${IMGCDNURL}downIcons-new.png`} className='downIcons' />
               {/* <View className='rightIconsBox'>
                 <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
               </View> */}
