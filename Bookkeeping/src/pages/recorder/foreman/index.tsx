@@ -377,7 +377,7 @@ export default function Foreman() {
     // 打开日历如果上次点击默认打开最后一个日期的那个月份
     const data = JSON.parse(JSON.stringify(timeData));
     console.log(data,'data');
-    if(data){
+    if(data&&data.length>0){
       const end = data.pop();
       console.log(end,'end')
       const time = end.year + '-' + end.month + '-' + end.date;
