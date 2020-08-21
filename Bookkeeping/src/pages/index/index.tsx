@@ -226,7 +226,6 @@ export default function Index() {
             console.log(res,'跳转获取的值')
             // 直接返回记工记账用户信息
             if (res.code == 200) {
-              isJump = true;
               if (res.data) {
                 let obj: any = {
                   sign: {},
@@ -245,6 +244,7 @@ export default function Index() {
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
+                isJump = true;
                 jumType = true
                 getData();
               }
@@ -389,16 +389,14 @@ export default function Index() {
     dispatch(setTypes(type))
     // getData();
     getData();
-    // let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    // const date = new Date();
-    // setVal(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
-    // console.log(vals);
-    // debugger
-    // if (Number(this_year_business_month) == montime) {
-    //   setleftTime(false);
-    // } else if(Number(this_year_business_month)<montime){
-    //   setleftTime(true);
-    // }
+    let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
+    const date = new Date();
+    setVal(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
+    if (Number(this_year_business_month) == montime) {
+      setleftTime(false);
+    } else if(Number(this_year_business_month)<montime){
+      setleftTime(true);
+    }
     // let midParams = {
     //   mid: userInfo.userId,
     // }
@@ -440,21 +438,17 @@ export default function Index() {
   // 获取首页数据
   const getData = (e?: string, type?: number) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
-    console.log(isLoginType,'isLoginTypeisLoginType')
-    console.log(identityType,'identityType')
-    // 判断如果有工人身份就隐藏新手指引
     if (isLoginType == 1) {
       setHidden(true)
       setCloseImage(false)
     }
-    // 鱼泡网跳转过来的
-    if (jumType){
-      if (identityType) {
-        if (identityType == '0' ){
-          setCloseImage(true)
-        }
-        Taro.setStorageSync(Type, identityType);
+    console.log(isLoginType,'isLoginTypeisLoginType')
+    console.log(identityType,'identityType')
+    if (identityType) {
+      if (identityType == '0' ){
+        setCloseImage(true)
       }
+      Taro.setStorageSync(Type, identityType);
     }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
@@ -472,17 +466,12 @@ export default function Index() {
     if (midData) {
       let type = Taro.getStorageSync(Type);
       if (!type || type === 0) {
-        // setIdentity(true)
+        setIdentity(true)
         return
       } else {
         setType(type);
       }
     }
-    if (!isLoginType && (!identityType || identityType == '0')){
-      console.log('==========aaaa')
-      setCloseImage(true)
-    }
-    console.log('走这了')
     // 判断选没有选择时间
     let changeTime;
     if (!e) {
@@ -601,13 +590,6 @@ export default function Index() {
   const changeIcon = (e) => {
     let startmon = parseInt(start.split('-')[1]);
     let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
-    if(Number(e.split('-')[1]) == 1){
-      setleftTime(false);
-      if(Number(montime) != 1){
-        setrightTime(true);
-      }
-      return
-    }
     if (startmon == montime) {
       setleftTime(false);
       setrightTime(false);

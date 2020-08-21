@@ -2397,6 +2397,11 @@ export default function userForeman() {
             item.dayAddWork = (toFixedFn(num));
           }
         }
+        // if (type == 'money' || type == 'addWork'){
+        //   // item[type] = toFixedFn(value);
+        //   setWageStandard(item);
+        //   return;
+        // }
         item[type] = value;
         setWageStandard(item);
       }else{
@@ -3185,7 +3190,7 @@ export default function userForeman() {
       return dealInputVal(e.detail.value, 4, type);
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
-    data[type] = e;
+    data[type] = toFixedFn(e);
     setWageStandard(data);
   }
   // 保存
