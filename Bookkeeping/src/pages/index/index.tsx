@@ -472,13 +472,13 @@ export default function Index() {
     if (midData) {
       let type = Taro.getStorageSync(Type);
       if (!type || type === 0) {
-        setIdentity(true)
+        // setIdentity(true)
         return
       } else {
         setType(type);
       }
     }
-    if (!isLoginType && !identityType){
+    if (!isLoginType && !identityType && identityType == '0'){
       setCloseImage(true)
     }
     // 判断选没有选择时间
