@@ -228,7 +228,24 @@ export default function AttendanceSheet() {
               //借支
               if (res.data[i].borrow.length > 0) {
                 typeObj.type.borrow = true;
-                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.total.money)), 0)))
+                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => {
+                  // let a = new Number(toFixedFn(currentValue.total.money));
+                  // let b = parseFloat(toFixedFn(currentValue.total.money));
+                  // console.log(a,'aaaa')
+                  // console.log(b,'bbbbbb')
+                  // const num: any = (toFixedFn(currentValue.total.money)).split('.');
+                  // const left = num[0]*100;
+                  // const right = num[1];
+                  // console.log(left,'left');
+                  // console.log(right,'right')
+                  // const sum = (left + right) /100;
+                  // console.log(sum,'numda dbskb ak')
+                  const a:any = parseFloat(toFixedFn(currentValue.total.money)*100/100);
+                  console.log(a,'asdsadsadas');
+                  const sums = accumulator + a;
+                  return sums
+              }, 0)));
+                console.log(borrowSum,'borrowSum')
               }
               // 包工(天)
               if (res.data[i].work.length > 0) {
@@ -300,6 +317,7 @@ export default function AttendanceSheet() {
                         }
                       } else {
                         type.borrow.borrow = toFixedFn((res.data[i].borrow[z].total.money));
+                        console.log(type.borrow.borrow,'type.borrow.borrow')
                         dayItem[j].type = type;
                       }
                     }
@@ -508,6 +526,7 @@ export default function AttendanceSheet() {
                   num: amountSum
                 }
               }
+              console.log(obj, typeObj, sumObj,'obj, typeObj, sumObj')
               list.push(obj, typeObj, sumObj);
               arrObj.list = list;
               arrObj.type = {
@@ -812,6 +831,7 @@ export default function AttendanceSheet() {
           // 本月统计
           // 获取身份
           let type = Taro.getStorageSync(Type);
+          console.log(arr,'listArr')
           if (type === 1) {
             setFixedTab([...leftArr, ...arr, obj]);
             setTabArr([...rightArr, ...listArr, sum]);
@@ -849,11 +869,13 @@ export default function AttendanceSheet() {
       s += '0';
     }
     s = s.substring(0, s.indexOf(".") + 3);
+    console.log(s,'sssssss')
     return s;
   }
   const toFixedFnNum = (num: any)=>{
     let s = num + '';
     s = s.substring(0, s.indexOf(".") + 3);
+    console.log(s,' Number(s)')
     return Number(s);
   }
   // 设置时间
@@ -926,7 +948,7 @@ export default function AttendanceSheet() {
         setCreateProjectDisplay(true)
       } else {
         let type = Taro.getStorageSync(Type);
-        userRouteJump(`/pages/recorder/index?type=${type}`)
+        Taro.redirectTo({url:`/pages/recorder/index?type=${type}`})
       }
     })
   }
@@ -952,7 +974,8 @@ export default function AttendanceSheet() {
         setProject(false);
         setModel({ groupName: '', teamName: '' })
         let type = Taro.getStorageSync(Type);
-        userRouteJump(`/pages/recorder/index?type=${type}`)
+        Taro.redirectTo({ url: `/pages/recorder/index?type=${type}` })
+        // userRouteJump(`/pages/recorder/index?type=${type}`)
       } else {
         Msg(res.msg);
         return;
@@ -1007,6 +1030,7 @@ export default function AttendanceSheet() {
                         <View 
                         className={classnames({
                           // 'mt100': val.type,
+                          'mt10': (v.type && val.isSum && ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount))),
                           'mt100': v.type &&v.type.hour && v.type.work && v.type.borrow && v.type.amount ,
                           'mt50': v.type && ((v.type.hour && v.type.work && v.type.borrow) || (v.type.hour && v.type.borrow && v.type.amount) || (v.type.hour && v.type.amount && v.type.work) || (v.type.work && v.type.borrow && v.type.amount )),
                           'mt20': v.type&& ((v.type.hour && v.type.work) || (v.type.hour && v.type.borrow) || (v.type.hour && v.type.amount) || (v.type.work && v.type.borrow) || (v.type.work && v.type.amount) || (v.type.borrow && v.type.amount)),

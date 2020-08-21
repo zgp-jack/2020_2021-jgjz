@@ -112,13 +112,19 @@ export default function CalendarModal({
   //   console.log(222);
   //   onScrollToLower();
   // }
+  const addZero = (num) => {
+    if (parseFloat(num) < 10) {
+      num = '0' + parseFloat(num);
+    }
+    return num;
+  }
   return(
     <View>
     {display &&
     <View className='calendarModal-complaintModal'>
       <View className='calendarModal-complaintModal-content'>
-          <View className='icon-left'><Image src={`${IMGCDNURL}rili.png`} className='icon-left-image'/></View>
-          <View className='icon-right'><Image src={`${IMGCDNURL}rili.png`} className='icon-right-image'/></View>
+          {/* <View className='icon-left'><Image src={`${IMGCDNURL}rili.png`} className='icon-left-image'/></View>
+          <View className='icon-right'><Image src={`${IMGCDNURL}rili.png`} className='icon-right-image'/></View> */}
         <View className='calendarModal-complaintModal-content-top'>
             <View className='content-top-close' onClick={handleCalendarClose}>取消</View>
             <View className='content-top-title'>选择日期(可选多天)</View>
@@ -132,7 +138,7 @@ export default function CalendarModal({
               <Image src={`${IMGCDNURL}timeLefts.png`} className='leftIcon'/>
               </View>
               {/* <View className='leftIcon' onClick={() => handleChangeTime(0)} /> */}
-              {time.monent}月
+                {addZero(time.monent)}月
               {/* <View className='righticon' onClick={() => handleChangeTime(1)}/> */}
               <View className='iconRight' onClick={() => handleChangeTime(1)} >
                 <Image src={`${IMGCDNURL}timeRights.png`} className='righticon'/>
@@ -171,15 +177,16 @@ export default function CalendarModal({
                   'content-days-day-no': !v.current,
                   'content-days-day-choice': v.choice,
                   'content-days-day-click': v.click && !v.up && !v.next,
+                  'content-days-day-click-all': v.click && !v.up && !v.next && v.choice,
                 })}
                 >
-                <View style={v.record ? { color: '#3C3B3B' } : ''}>{v.date}</View>
-                <View className='lunarCalendarItem' style={v.record ? { color: '#BABABAFF' } : ''}>{v.lunarCalendarItem}</View>
+                <View style={v.record ? (v.click ? { color:'rgba(253, 120, 13, 1)'} : { color: '#3C3B3B' }) : ''}>{v.date}</View>
+                <View className='lunarCalendarItem' style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#BABABAFF' }) : ''}>{v.lunarCalendarItem}</View>
                 {/* {recorderType === 3 && <View className='noCheckbox'></View>
                 } */}
                 {/* {recorderType !== 3 &&  */}
                 <View>
-                  {!v.next && !v.up && <View><Checkbox className={classnames({
+                  {!v.next && !v.up && !v.stop  && <View><Checkbox className={classnames({
                     'checkbox': !v.click,
                     'checkbox-click': v.click,
                   })} 

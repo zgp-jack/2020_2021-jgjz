@@ -34,7 +34,7 @@ interface DateTyep {
 
 export default function Share() {
   const router: Taro.RouterInfo = useRouter();
-  const { time, identity, session } = router.params;
+  const { time='2020-08', identity, session } = router.params;
   // 月份
   const [date, setDate] = useState('');
   // 年
@@ -62,9 +62,18 @@ export default function Share() {
     return num;
   }
   useEffect(() => {
-    Taro.setNavigationBarTitle({
-      title: `${time}月份清单`
-    })
+    if (time){
+      let date = {
+        month: time.split('-')[1],
+        year: time.split('-')[0],
+      }
+      const month = parseInt(date.month);
+      const title = date.year + '年' + month +'月对工清单';
+      console.log(data,'data');
+      Taro.setNavigationBarTitle({
+        title,
+      })
+    }
     Taro.setStorageSync(IsShare,true);
     getList(time);
   }, [])
@@ -818,11 +827,11 @@ export default function Share() {
                     {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && ((!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (v.type.hour || v.type.work || v.type.borrow || v.type.amount)) ? 'box-none' : 'box-list-default'}>
                       <View
                         className={classnames({
-                          // 'mt100': val.type,
-                          'mtall': v.type && v.type.hour && v.type.work && v.type.borrow && v.type.amount,
-                          'mt100': v.type && ((v.type.hour && v.type.work && v.type.borrow) || (v.type.hour && v.type.borrow && v.type.amount) || (v.type.hour && v.type.amount && v.type.work) || (v.type.work && v.type.borrow && v.type.amount)),
-                          'mt50': v.type && ((v.type.hour && v.type.work) || (v.type.hour && v.type.borrow) || (v.type.hour && v.type.amount) || (v.type.work && v.type.borrow) || (v.type.work && v.type.amount) || (v.type.borrow && v.type.amount)),
-                          'mt20': v.type && ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount))
+                          'mt10': (v.type && val.isSum && ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount))),
+                          'mt100': v.type && v.type.hour && v.type.work && v.type.borrow && v.type.amount,
+                          'mt50': v.type && ((v.type.hour && v.type.work && v.type.borrow) || (v.type.hour && v.type.borrow && v.type.amount) || (v.type.hour && v.type.amount && v.type.work) || (v.type.work && v.type.borrow && v.type.amount)),
+                          'mt20': v.type && ((v.type.hour && v.type.work) || (v.type.hour && v.type.borrow) || (v.type.hour && v.type.amount) || (v.type.work && v.type.borrow) || (v.type.work && v.type.amount) || (v.type.borrow && v.type.amount)),
+                          'mt0': v.type && ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount))
                         }
                         )}
                       >{val.name}</View>

@@ -64,6 +64,7 @@ interface TimeType {
   year: string,
   monent: string,
 }
+let changeId = 1;
 export default function userForeman() {
   let noData = false;
   // const router: Taro.RouterInfo = useRouter();
@@ -302,6 +303,8 @@ export default function userForeman() {
   const [isdisable,setIsdisable] = useState<boolean>(false)
   // 跳转考勤表
   const [jumpMonth, setJumpMonth] = useState<string>('')
+  //切换的类型
+  // const [changeId,setChangeID] = useState<number>(1)
   // const [noData, setNoData] = useState<boolean>(false)
   // 刷新
   //农历1949-2100年查询表
@@ -354,7 +357,7 @@ export default function userForeman() {
     // 设置身份
     setIdentity(type);
     if (useSelectorItem.workerList.length > 0){
-      if (identity === 2) {
+      if (type === 2) {
         setForeman(useSelectorItem.workerList);
         if (useSelectorItem.workerList[0].leader_name) {
           setForemanTitle(useSelectorItem.workerList[0].leader_name);
@@ -372,14 +375,15 @@ export default function userForeman() {
       }
       const item = [objs, ...arrList];
       if (data.length > 0) {
+        setNoset(false)
         for (let j = 0; j < data.length; j++) {
           for (let i = 0; i < item.length; i++) {
             item[i].click = false;
             if (data[j].worker_id === item[i].id) {
               item[i].set = true
-              setNoset(true)
             } else {
-              setNoset(false)
+              setNoset(true)
+              // setNoset(false)
             }
           }
         }
@@ -485,13 +489,16 @@ export default function userForeman() {
       // 把项目设置存起来
       setProjectArr(res.data.group_info);
       if (res.data.latest_group_info) {
+        console.log(111123131232)
         if (res.data.latest_group_info.id) {
           setLeader_id(res.data.latest_group_info.leader_id)
           title = res.data.latest_group_info.name[0] + '-' + res.data.latest_group_info.name[1];
           id = res.data.latest_group_info.id;
           setForemanTitle(res.data.latest_group_info.leader_name||'')
           // 区分是工人还是班组长
+          console.log(identity,'identity')
           if (identity == 1) {
+            console.log('班组长')
             // 班组长的时候需要做处理，数据里没有自己
             // 工人 
             // 判断有工人有工资标准
@@ -511,6 +518,7 @@ export default function userForeman() {
                     if (workArr[i].id == res.data.latest_group_workers_has_wage[j].worker_id) {
                       workArr[i].set = true;
                     }else{
+                      workArr[i].set = false;
                       setNoset(true) 
                     }
                   }
@@ -576,6 +584,7 @@ export default function userForeman() {
               }
             } else {
               if (res.data.latest_group_worker_has_business) {
+                console.log(1111)
                 // 工人
                 if (res.data.latest_group_worker_has_business.worker.length > 0) {
                   // 设置缓存
@@ -600,8 +609,12 @@ export default function userForeman() {
                     dateItem.push(dayObj);
                   }
                 }
+                console.log(dateItem,'dateItem11111')
                 setcacheDays(dateItem);
                 getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+              }else{
+                setcacheDays([]);
+                getMonthDaysCurrent(new Date(), [dayObj], '', '', []);
               }
             }
             dispatch(setPhoneList(workArr));
@@ -694,6 +707,7 @@ export default function userForeman() {
           }
           return;
         } else {
+          console.log(111111)
           title = '';
           id = '';
           objs.discipline = false;
@@ -705,6 +719,8 @@ export default function userForeman() {
           setWorkerItem(workArr);
           setForemanTitle('')
           setLeader_id('')
+          setcacheDays([]);
+          getMonthDaysCurrent(new Date(),'','','',[],true);
           let type = Taro.getStorageSync(Type);
           // latest_group_workers  上次记工班组中的工人
           // latest_group_workers_has_wage  上次记工班组  中有工资的工人
@@ -862,9 +878,12 @@ export default function userForeman() {
                     dateItem.push(dayObj);
                   }
                 }
+                console.log('这么')
+                console.log(dateItem,'dateItemdateItem')
                 setcacheDays(dateItem);
-                getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+                getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem,true);
               }
+              console.log('啊啊啊啊啊')
               dispatch(setPhoneList(workList));
               setWorkerItem(workList);
               setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle, time, details: '', workersWages: sum, amount: '', price: '', wages: '', borrowing: '', univalent: '' })
@@ -893,7 +912,6 @@ export default function userForeman() {
     if (parseFloat(num) < 10) {
       num = '0' + parseFloat(num);
     }
-    console.log(num,'num')
     return num;
   }
   // 日历点击
@@ -992,8 +1010,13 @@ export default function userForeman() {
     s = s.substring(0, s.indexOf(".") + 3);
     return s.toString();
   }
+  const toFixedFnNum = (num: any) => {
+    let s = num + '';
+    s = s.substring(0, s.indexOf(".") + 3);
+    return s+'';
+  }
   // 对应月份日期
-  const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[]) => {
+  const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[],change?:boolean) => {
     // const groupInfos = JSON.parse(JSON.stringify(groupInfo));
     // let id;
     // if (ids) {
@@ -1115,12 +1138,24 @@ export default function userForeman() {
     // 获取记录过的日历
     // const calendarItem = Taro.getStorageSync(Calendar);
     const cacheDaysArr = JSON.parse(JSON.stringify(cacheDays));
-    let List;
-    if (cacheDaysArrList && cacheDaysArrList.length>0 ) {
-      List = cacheDaysArrList;
-    } else {
-      List = cacheDaysArr;
+    let List:any[]= [];
+    if (changeId != 3){
+      if(change){
+        List =[];
+      }else{
+        if (cacheDaysArrList) {
+          if (cacheDaysArrList.length>0){
+            List = cacheDaysArrList;
+          }else{
+            // List = [];
+            List = cacheDaysArr;
+          }
+        } else {
+          List = cacheDaysArr;
+        }
+      }
     }
+    console.log(List,'lsit');
     if (List.length > 0) {
       List.map(v => {
         calendarDaysArr.map(val => {
@@ -2120,6 +2155,7 @@ export default function userForeman() {
             // 设置蓝色底色
             let ArrList = [objs, ...arr];
             let cacheDaysArr:any[] = [];
+            let change = false;
             if (type === 1) {
               let dateParams = {
                 group_info: groupInfos,
@@ -2132,7 +2168,9 @@ export default function userForeman() {
                   if (dateRes.data) {
                     // 判断记录过
                     // 时间
+                    console.log(dateRes.data,'dataaaa');
                     if (dateRes.data.days && dateRes.data.days.length > 0) {
+                      console.log(3213123123213)
                       let dateItem:any[]=[];
                       for (let z = 0; z < dateRes.data.days.length; z++) {
                         let dayObj = {
@@ -2145,8 +2183,12 @@ export default function userForeman() {
                       setcacheDays(dateItem);
                       cacheDaysArr = dateItem;
                     }else{
+                      console.log('没有数据啊啊啊啊 ')
                       setcacheDays([]);
                       cacheDaysArr = [];
+                      change = true;
+                      console.log(change,'changechangechange')
+                      console.log(cacheDaysArr,'cacheDaysArrcacheDaysArr')
                     }
                     // 工人
                     if (dateRes.data.worker && dateRes.data.worker.length > 0) {
@@ -2180,7 +2222,9 @@ export default function userForeman() {
             }];
             setOpenClickTime(clickDataArr)
             setClickData(clickDataArr);
-            getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr);
+            console.log(change,'change1111')
+            console.log(cacheDaysArr,'cacheDaysArrcacheDaysArrcacheDaysArr')
+            getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr, change);
             return;
           }
         }
@@ -2253,18 +2297,8 @@ export default function userForeman() {
       if (value.split(".")[1] && value.split(".")[1].length>2){
         Msg('超出最大输入范围')
       }
-      if(num ===7){
-        if (value.split(".")[0] && value.split(".")[0].length>num){
-          Msg('超出最大输入范围')
-        }
-      } else if (num === 14){
-        if (value.split(".")[0] && value.split(".")[0].length > num) {
-          Msg('超出最大输入范围')
-        }
-      }else if(num === 2){
-        if (value.split(".")[0] && value.split(".")[0].length > num) {
-          Msg('超出最大输入范围')
-        }
+      if (value.split(".")[0] && value.split(".")[0].length>num){
+        Msg('超出最大输入范围')
       }
     }
     value = value
@@ -2279,26 +2313,42 @@ export default function userForeman() {
     let data = JSON.parse(JSON.stringify(model));
     let item = JSON.parse(JSON.stringify(wageStandard));
     if(type){
-      if (!value) {
-        value = 0;
-      }
-      if (type === 'day' || type === 'work' ){
-        if(value>24){
-          Msg('超出最大输入范围');
-          value = 24;
+      if (type === 'day' || type === 'work' || type === 'money' || type === 'addWork' ){
+        if (!value) {
+          value = 0;
         }
-        if(type == 'day'){
-          let num: number | string = 0.00;
-          if (item.money > 0 && value > 0) {
-            num = item.money / value
+        if (type === 'money' || type ==='addWork'){
+          if (value > 9999.99) {
+            Msg('超出最大输入范围');
+            value = 9999.99;
           }
-          item.dayAddWork = (toFixedFn(num));
+          if (type === 'money'){
+            let dayAddWork;
+            if (item.day == 0) {
+              dayAddWork = 0.00
+            }else{
+              dayAddWork = value / item.day || 0.00;
+            }
+            item.dayAddWork = toFixedFn(dayAddWork);
+          }
+        }else{
+          if(value>24){
+            Msg('超出最大输入范围');
+            value = 24;
+          }
+          if(type == 'day'){
+            let num: number | string = 0.00;
+            if (item.money > 0 && value > 0) {
+              num = item.money / value
+            }
+            item.dayAddWork = (toFixedFn(num));
+          }
         }
         item[type] = value;
         setWageStandard(item);
       }else{
         data[type] = value;
-        setWageStandard(data);
+        setModel(data);
       }
     }
     return value;
@@ -2358,7 +2408,9 @@ export default function userForeman() {
         Msg(res.msg);
         return;
       }
-      setIsdisable(false);
+      setTimeout(() => {
+        setIsdisable(false)
+      });
       setProject(false);
       // let data = JSON.parse(JSON.stringify(model));
       // data.name = model.groupName;
@@ -2775,13 +2827,17 @@ export default function userForeman() {
       let num = isNaN(total) ? '0.00' : total.toString();
       setModel({ ...model, workersWages: num, duration: title });
       setWorkOvertimeDisplay(false);
-      setIsdisable(false)
+      setTimeout(() => {
+        setIsdisable(false)
+      });
       return;
     }
     
     setModel({ ...model, duration: title })
     setWorkOvertimeDisplay(false);
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
   }
   // 选择单位
   const handleQuantities = (val) => {
@@ -2791,7 +2847,9 @@ export default function userForeman() {
         if (v.click) {
           setUnit(v.name)
           setQuantitiesDisplay(false)
-          setIsdisable(false)
+          setTimeout(() => {
+            setIsdisable(false)
+          });
         }
       } else {
         v.click = false
@@ -3005,7 +3063,7 @@ export default function userForeman() {
   // 打开工资标准
   const handleOpenWagesModal = (v?: any) => {
     if (delType) return;
-
+    if(recorderType == 3){return}
     const item = JSON.parse(JSON.stringify(model));
     if (!item.name) {
       Msg('请先选择项目')
@@ -3061,56 +3119,17 @@ export default function userForeman() {
   // 添加工资标准
   const handleWageStandard = (type: string, e: any) => {
     // const cacheItem = JSON.parse(JSON.stringify(cacheWage));
-    if (type == 'day') {
+    if (type == 'day' || type === 'work') {
+      if (e.detail.value>24){
+        Msg('超出最大输入范围')
+      }
       return dealInputVal(e.detail.value, 2, type);
-      // return dealInputVal(e.detail.value,4,type)
-      // const item = JSON.parse(JSON.stringify(wageStandard));
-      // item[type] = e;
-      // if(e == 24){
-      //   Msg('超出了最大输入范围')
-      // }
-      // let num: number | string = 0.00;
-      // if (item.money > 0 && e > 0) {
-      //   num = item.money / e
-      // }
-      // item.dayAddWork = toFixedFn(num);
-      // setWageStandard(item);
-      // return;
     }
-    // if (type === 'addWork' || type == 'work' || type == 'money' || type == 'day') {
-    //   cacheItem[type] = e;
-    //   setCacheWage(cacheItem);
-    // }
-    if (type === 'money') {
-      const item = JSON.parse(JSON.stringify(wageStandard));
-      // const dayAddWork = e / item.day||0;
-      let dayAddWork;
-      if (item.day == 0) {
-        dayAddWork = 0.00
-      } else {
-        dayAddWork = e / item.day || 0.00;
+    if (type === 'money' || type === 'addWork') {
+      if (e.detail.value > 9999.99){
+        Msg('超出最大输入范围')
       }
-      if(e == 9999.99){
-        Msg('超出了最大输入范围')
-      }
-      item[type] = e.toFixed(2);
-      item.dayAddWork = toFixedFn(dayAddWork) || 0.00;
-      setWageStandard(item);
-      // cacheItem.dayAddWork = dayAddWork.toFixed(2) || 0;
-      // setCacheWage(cacheItem);
-      return;
-    }
-    if(type === 'addWork'){
-      const data = JSON.parse(JSON.stringify(wageStandard));
-      data[type] = e.toFixed(2);
-      setWageStandard(data);
-      if(e == 9999.99){
-        Msg('超出了最大输入范围')
-      }
-      return;
-    }
-    if(type === 'work'){
-      return dealInputVal(e.detail.value, 2, type);
+      return dealInputVal(e.detail.value, 4, type);
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = e;
@@ -3537,7 +3556,7 @@ export default function userForeman() {
       }
     })
     const time = limit(arr, month, year);
-    setJumpMonth(time.year + '-' + time.month);
+    setJumpMonth(time);
   }
   const limit = (arr, num, year)=> {
     var newArr:any[] = [];
@@ -3813,7 +3832,9 @@ export default function userForeman() {
       setWageStandard(wageStandard);
       setModel({ ...model, workersWages: num });
       setWageStandardDisplay(false);
-      setIsdisable(false)
+      setTimeout(() => {
+        setIsdisable(false)
+      });
       return;
     }
     if (addStandard === 1) {
@@ -3977,7 +3998,9 @@ export default function userForeman() {
         bkGetWorkerWage();
         setWagesModalDisplay(true);
         setWageStandardDisplay(false);
-        setIsdisable(false)
+        setTimeout(() => {
+          setIsdisable(false)
+        });
       } else {
         Msg(res.msg);
       }
@@ -4103,7 +4126,9 @@ export default function userForeman() {
             }
           }
         }
-        setIsdisable(false)
+        setTimeout(() => {
+          setIsdisable(false)
+        });
         setWorkerItem(data)
         bkGetWorkerWage();
         setWageStandardDisplay(false)
@@ -4339,6 +4364,7 @@ export default function userForeman() {
   }
   // 切换包工类型
   const handleRadio = (v) => {
+    setDeldelType(false)
     const data = JSON.parse(JSON.stringify(contractorArr.item));
     for (let i = 0; i < data.length; i++) {
       if (data[i].id === v.id) {
@@ -4413,7 +4439,6 @@ export default function userForeman() {
     } else {
       time = '共选择' + data.length + '天';
     }
-    console.log(time,'timetimetime')
     setModel({ ...model, time: time });
     // clickDataItem.map((v,i)=>{
     //   if (data.length==0){
@@ -4439,7 +4464,9 @@ export default function userForeman() {
     // setCalendarDays(calendar);
     // setClickData([]);
     setCalendarModalDisplay(false);
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
   }
   // 日历切换时间
   const handleChangeTime = (type: number) => {
@@ -4487,7 +4514,9 @@ export default function userForeman() {
     setTimeData(data);
     // 关闭
     setCalendarModalDisplay(false);
-    setIsdisable(false)
+    setTimeout(() => {
+      setIsdisable(false)
+    });
     // }
   }
   // 左
@@ -4533,6 +4562,9 @@ export default function userForeman() {
         // 清空头像
         setCache([])
         getList(val.id);
+        console.log(val.id,'idddd')
+        // setChangeID(val.id)
+        changeId = val.id;
       }else{
         val.click = false;
       }
@@ -4589,48 +4621,89 @@ export default function userForeman() {
     })
   }
   // 加
-  const handleInputAdd = (type:string,e:string)=>{
+  const handleInputAdd = (type: string, e: string) => {
     const data = JSON.parse(JSON.stringify(wageStandard));
-    if(type === 'work' || type === 'day'){
-      if (data[type]<24){
+    if (type === 'work' || type === 'day') {
+      if (Number(e) == 24) {
+        Msg('超出最大输入范围')
+      }
+      if (data[type] < 24) {
         let num = Number(data[type]) + 0.5;
-        if(num>24){
+        if (num > 24) {
           num = 24;
           Msg('超出最大输入范围')
         }
         if (type === 'day') {
-          let num: number | string = 0.00;
-          if (data.money > 0 && Number(data.day) > 0) {
-            num = data.money / Number(data.day)
+          let price: number | string = 0.00;
+          if (data.money > 0 && Number(num) > 0) {
+            price = data.money / Number(num)
           }
-          data.dayAddWork = (toFixedFn(num));
+          data.dayAddWork = (toFixedFn(price));
         }
         data[type] = num;
+        setWageStandard(data);
+      }
+    } else if (type === 'money' || type === 'addWork') {
+      if (Number(e) == 9999.99) {
+        Msg('超出最大输入范围')
+      }
+      if (data[type] < 9999.99) {
+        let num = Number(data[type]) + 1;
+        if (num > 9999.99) {
+          num = 9999.99;
+          Msg('超出最大输入范围')
+        }
+        if (type === 'money') {
+          let dayAddWork;
+          if (data.day == 0) {
+            dayAddWork = 0.00
+          } else {
+            dayAddWork = Number(num) / data.day || 0.00;
+          }
+          data.dayAddWork = toFixedFn(dayAddWork);
+        }
+        data[type] = toFixedFn(num);
         setWageStandard(data);
       }
     }
   }
   // 减少
-  const handleDelInput = (type: string, e: string)=>{
+  const handleDelInput = (type: string, e: string) => {
     const data = JSON.parse(JSON.stringify(wageStandard));
-    if (type === 'work'|| type === 'day') {
-      if (Number(data[type])>0) {
+    if (type === 'work' || type === 'day') {
+      if (Number(data[type]) > 0) {
         let num = Number(data[type]) - 0.5;
         if (num == 0) {
           num = 0;
         }
-        if(type === 'day'){
-          let num: number | string = 0.00;
-          if (data.money > 0 && Number(data.day) > 0) {
-            num = data.money / Number(data.day)
+        if (type === 'day') {
+          let price: number | string = 0.00;
+          if (data.money > 0 && Number(num) > 0) {
+            price = data.money / Number(num);
           }
-          data.dayAddWork = toFixedFn(num);
+          data.dayAddWork = toFixedFn(price);
         }
         data[type] = num;
         setWageStandard(data);
       }
-    }else if(type === 'day'){
-
+    } else if (type === 'money' || type === 'addWork') {
+      if (data[type] > 0) {
+        let num = Number(data[type]) - 1;
+        if (num == 0) {
+          num = 0;
+        }
+        if (type === 'money') {
+          let dayAddWork;
+          if (data.day == 0) {
+            dayAddWork = 0.00
+          } else {
+            dayAddWork = Number(num) / data.day || 0.00;
+          }
+          data.dayAddWork = toFixedFn(dayAddWork);
+        }
+        data[type] = toFixedFn(num);
+        setWageStandard(data);
+      }
     }
   }
   return {

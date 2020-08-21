@@ -4,6 +4,9 @@
   .at-input-number__input, .at-input-number input{
     color: red !important;
   }
+  .textarea{
+    height: 220rpx !important;
+  }
 }
 .tabber {
   display: flex;
@@ -686,6 +689,11 @@
   top: 0rpx;
   color: rgba(47, 53, 65, 1);
   font-size: 29rpx;
+  width: 84rpx;
+  text-align: right;
+}
+.justify-quantities {
+  min-width: 130rpx;
 }
 .publish-list-input-amount{
   position: relative;
