@@ -478,9 +478,11 @@ export default function Index() {
         setType(type);
       }
     }
-    if (!isLoginType && !identityType && identityType == '0'){
+    if (!isLoginType && (!identityType || identityType == '0')){
+      console.log('==========aaaa')
       setCloseImage(true)
     }
+    console.log('走这了')
     // 判断选没有选择时间
     let changeTime;
     if (!e) {
