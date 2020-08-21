@@ -246,6 +246,7 @@ export default function Index() {
                 identityType = res.data.lasted_business_identity;
                 isJump = true;
                 jumType = true;
+                setIdentity(false)
                 setCloseImage(true)
                 getData();
               }
