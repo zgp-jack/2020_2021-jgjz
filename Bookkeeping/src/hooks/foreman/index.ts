@@ -261,6 +261,8 @@ export default function userForeman() {
   const [clickNum, setClickNum] = useState<number>(0);
   // 保存今天
   const [toDay,setToday] = useState<any>();
+  // 日历是否选择31天
+  const [noCalendarDay, setnoCalendarDay] = useState<boolean>(false)
   // 修改项目组数据
   const [editProjectData, setEditProjectData] = useState<any>({
     group_info: '',
@@ -933,18 +935,54 @@ export default function userForeman() {
     const date = v.year + '-' + v.month + '-' + v.date;
     const dates = (new Date(date)).valueOf();
     const newDate = (new Date(toDayString)).valueOf();
+    let isChange = false;
     if (newDate < dates) {
       // Msg('请设置今天之前的日期');
+      // setnoCalendarDay(false)
+      // isChange = true;
       return;
     }
+    // setnoCalendarDay(true)
     const clickDataItem = JSON.parse(JSON.stringify(clickData));
     const calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
     // 遍历本月的值
     for (let i = 0; i < calendarDaysArr.length; i++) {
       // 判断是同一天就设置点击
       if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year && !v.up && !v.next) {
-        if (clickDataItem.length > 30) {
-          if (calendarDaysArr[i].click) {
+        // if (isChange){
+        //   console.log(111)
+        //   calendarDaysArr[i].click = false;
+        //   console.log(clickDataItem,'clickDataItem')
+        //   setClickData(clickDataItem);
+        // }else{
+          if (clickDataItem.length > 30) {
+            if (calendarDaysArr[i].click) {
+              calendarDaysArr[i].click = !calendarDaysArr[i].click;
+              // 点击的时候用的
+              let data: any[] = [];
+              // 判断是true时候删除
+              if (calendarDaysArr[i].click) {
+                data = [...clickDataItem, calendarDaysArr[i]];
+                // 增加
+              } else {
+                // calendarDaysArr.sp
+                for (let j = 0; j < clickDataItem.length; j++) {
+                  if (clickDataItem[j].date == calendarDaysArr[i].date && clickDataItem[j].month == calendarDaysArr[i].month && clickDataItem[j].year == calendarDaysArr[i].year) {
+                    clickDataItem.splice(j, 1)
+                  }
+                }
+                data = [...clickDataItem];
+              }
+              setClickData(data)
+            } else {
+              Msg('最多选择31天')
+              calendarDaysArr[i].click = false;
+              console.log(calendarDaysArr,'calendarDaysArr')
+              setCalendarDays(calendarDaysArr);
+              setClickData(clickDataItem)
+              return;
+            }
+          } else {
             calendarDaysArr[i].click = !calendarDaysArr[i].click;
             // 点击的时候用的
             let data: any[] = [];
@@ -962,28 +1000,7 @@ export default function userForeman() {
               data = [...clickDataItem];
             }
             setClickData(data)
-          } else {
-            Msg('最多选择31天')
-            return;
-          }
-        } else {
-          calendarDaysArr[i].click = !calendarDaysArr[i].click;
-          // 点击的时候用的
-          let data: any[] = [];
-          // 判断是true时候删除
-          if (calendarDaysArr[i].click) {
-            data = [...clickDataItem, calendarDaysArr[i]];
-            // 增加
-          } else {
-            // calendarDaysArr.sp
-            for (let j = 0; j < clickDataItem.length; j++) {
-              if (clickDataItem[j].date == calendarDaysArr[i].date && clickDataItem[j].month == calendarDaysArr[i].month && clickDataItem[j].year == calendarDaysArr[i].year) {
-                clickDataItem.splice(j, 1)
-              }
-            }
-            data = [...clickDataItem];
-          }
-          setClickData(data)
+          // }
         }
         setCalendarDays(calendarDaysArr);
         return;
@@ -4888,5 +4905,6 @@ export default function userForeman() {
     jumpMonth,
     handleInputAdd,
     handleDelInput,
+    noCalendarDay,
   }
 }

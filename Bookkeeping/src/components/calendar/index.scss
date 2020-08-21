@@ -249,3 +249,18 @@
 .CheckboxBox{
   height: 24rpx;
 }
+.checkBox{
+  height: 21rpx;
+  width: 21rpx;
+  border: 1rpx solid #ccc;
+  margin:  0 auto;
+  margin-top: 10rpx;
+}
+.clickCheckBox {
+  height: 24rpx;
+  width: 24rpx;
+  margin: 0 auto;
+  background: url(../../assets/images/checkBox.png) no-repeat no-repeat;
+  background-size: contain;
+  margin-top: 10rpx;
+}
