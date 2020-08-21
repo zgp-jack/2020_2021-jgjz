@@ -64,7 +64,10 @@ interface TimeType {
   year: string,
   monent: string,
 }
+// 切换类型
 let changeId = 1;
+// 日历
+let isChange = false;
 export default function userForeman() {
   let noData = false;
   // const router: Taro.RouterInfo = useRouter();
@@ -1024,6 +1027,7 @@ export default function userForeman() {
     // } else {
     //   id = groupInfos;
     // }
+    console.log(change,'啊日期难道就看手机看到你撒健康的白金卡')
     let dataType;
     if (typeId) {
       dataType = typeId;
@@ -1186,7 +1190,8 @@ export default function userForeman() {
     //     }
     //   }
     // }
-    setCalendarDays(calendarDaysArr)
+    setCalendarDays(calendarDaysArr);
+    isChange = false;
   }
   // 公历转农历函数
   const sloarToLunar = (sy, sm, sd) => {
@@ -2112,6 +2117,7 @@ export default function userForeman() {
             }
             dispatch(setmailList(res.data))
           } else {
+            console.log('气死了')
             // const objs = JSON.parse(JSON.stringify(obj));
             let midData = Taro.getStorageSync(MidData)
             let objs: any = {};
@@ -2155,7 +2161,7 @@ export default function userForeman() {
             // 设置蓝色底色
             let ArrList = [objs, ...arr];
             let cacheDaysArr:any[] = [];
-            let change = false;
+            // let change = false;
             if (type === 1) {
               let dateParams = {
                 group_info: groupInfos,
@@ -2182,13 +2188,31 @@ export default function userForeman() {
                       }
                       setcacheDays(dateItem);
                       cacheDaysArr = dateItem;
+                      const clickDataArr = [{
+                        year: years,
+                        month: months,
+                        date: dates,
+                        click: true
+                      }];
+                      setOpenClickTime(clickDataArr)
+                      setClickData(clickDataArr);
+                      getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr );
                     }else{
-                      console.log('没有数据啊啊啊啊 ')
+                      // console.log('没有数据啊啊啊啊 ')
                       setcacheDays([]);
-                      cacheDaysArr = [];
-                      change = true;
-                      console.log(change,'changechangechange')
-                      console.log(cacheDaysArr,'cacheDaysArrcacheDaysArr')
+                      // cacheDaysArr = [];
+                      // isChange = true;
+                      // console.log(isChange,'changechangechange')
+                      // console.log(cacheDaysArr,'cacheDaysArrcacheDaysArr')
+                      const clickDataArr = [{
+                        year: years,
+                        month: months,
+                        date: dates,
+                        click: true
+                      }];
+                      setOpenClickTime(clickDataArr)
+                      setClickData(clickDataArr);
+                      getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, [], true);
                     }
                     // 工人
                     if (dateRes.data.worker && dateRes.data.worker.length > 0) {
@@ -2214,17 +2238,16 @@ export default function userForeman() {
             dispatch(setPhoneList(ArrList));
             dispatch(setWorker(ArrList))
             bkGetWorkerWage(groupInfos, ArrList);
-            const clickDataArr = [{
-              year: years,
-              month: months,
-              date: dates,
-              click: true
-            }];
-            setOpenClickTime(clickDataArr)
-            setClickData(clickDataArr);
-            console.log(change,'change1111')
-            console.log(cacheDaysArr,'cacheDaysArrcacheDaysArrcacheDaysArr')
-            getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr, change);
+            // const clickDataArr = [{
+            //   year: years,
+            //   month: months,
+            //   date: dates,
+            //   click: true
+            // }];
+            // setOpenClickTime(clickDataArr)
+            // setClickData(clickDataArr);
+            // console.log(isChange,'change')
+            // getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr, isChange);
             return;
           }
         }
@@ -3583,7 +3606,6 @@ export default function userForeman() {
     const name = v.group_name + '-' + v.name;
     let groupInfos = v.group_id + ',' + v.id;
     setGroupInfo(groupInfos)
-    getMonthDaysCurrent(new Date());
     setProjectId(v.group_id + ',' + v.id)
     //工人
     if (identity === 2) {
@@ -3611,12 +3633,14 @@ export default function userForeman() {
     // 工人的话
     const type = Taro.getStorageSync(Type);
     if (type == 2) {
+      getMonthDaysCurrent(new Date());
       // 把数据存到reducer
       dispatch(setWorker([v]));
       // 修改工资标准
       bkGetWorkerWage(v.group_id + ',' + v.id, '', data, name);
       // getList();
       return;
+    }else{
     }
     setAllClick(false);
     setClickNum(0);

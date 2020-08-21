@@ -424,6 +424,7 @@ export default function Index() {
     bkGetProjectTeamAction({}).then(res => {
       // 判断为0就出现新增弹框
       if (res.data.length === 0) {
+        setishandleJump(true)
         setCreateProjectDisplay(true)
       } else {
         if (state) {
