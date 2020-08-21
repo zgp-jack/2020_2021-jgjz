@@ -6,7 +6,7 @@ page{
 }
 .top{
   position: relative;
-  height:517rpx;
+  // height:517rpx;
   color: #fff;
   // background: url('../../assets/images/background.png') no-repeat center center;
   background-size: cover;
@@ -51,6 +51,7 @@ page{
   text-align: center;
 }
 .switch{
+  margin-left: 12rpx;
   font-size: 22rpx;
 }
 
@@ -88,9 +89,13 @@ page{
   text-align: center;
   line-height: 30rpx;
   color: white;
-  vertical-align: middle;
+  vertical-align: 9%;
 }
-
+.leader-icon{
+  margin-top: 15rpx;
+  margin-left: 0;
+  margin-right: 45rpx;
+}
 .money_box{
   margin-top: 20rpx;
 }
@@ -107,7 +112,7 @@ page{
   text-align: center;
 }
 .money{
-  margin-top: 30rpx;
+  margin-top: 20rpx;
   font-size:48rpx;
   text-align: center;
 }
@@ -228,7 +233,7 @@ page{
   color:rgba(128, 128, 128, 1)
 }
 .content-list-box{
-  height:300rpx;
+  height:310rpx;
   overflow-y: auto;
 }
 .scrollWorker{
@@ -312,7 +317,7 @@ page{
   font-size: 20rpx;
 }
 .details{
-  width: 75%;
+  width: 70%;
   color:rgba(139, 139, 139, 1);
   font-size: 28rpx;
   text-align: left;
