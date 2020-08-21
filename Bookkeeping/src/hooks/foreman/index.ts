@@ -3287,8 +3287,8 @@ export default function userForeman() {
       if (identity == 2) {
         const data = JSON.parse(JSON.stringify(wageStandard));
         if (!data.work || data.work == 0) {
-          Msg('您还没有设置工资标准');
-          return;
+          // Msg('您还没有设置工资标准');
+          // return;
         }
       }
       params = {
@@ -3353,8 +3353,8 @@ export default function userForeman() {
         if (identity == 2){
           const data = JSON.parse(JSON.stringify(wageStandard));
           if (!data.work || data.work == 0) {
-            Msg('您还没有设置工资标准');
-            return;
+            // Msg('您还没有设置工资标准');
+            // return;
           }
         }
         // 按天
@@ -3421,130 +3421,130 @@ export default function userForeman() {
     // 记工(包工按量)
     // 工人记工的时候，没有选择项目名称，为他默认一个
     if (identity === 2) {
-      if (projectArr.length === 0) {
-        let items = {
-          group_name: '其他项目',
-          team_name: '其他班组'
-        }
-        bkAddProjectTeamAction(items).then(res => {
-          // 给自己设置工资标准
-          if (res.code === 200) {
-            const data = JSON.parse(JSON.stringify(wageStandard));
-            let paramsData;
-            //   identity: identity,
-            //   worktime_define: data.work,
-            //   overtime_type: data.type,
-            //   overtime_money: data.dayAddWork,
-            //   money: data.money,
-            //   overtime: data.day,
-            //   group_info: res.data,
-            // }
-            // 按小时
-            if( tabData.id == 3){
-              paramsData = {
-                // 记工类型
-                business_type: tabData.id,
-                // 班组信息
-                group_info: res.data,
-                // 工时
-                work_time: times,
-                // 身份
-                identity,
-                // 图片
-                img_url,
-                // 备注
-                note: item.details,
-                // note: item.note,
-                // 记录日期
-                time,
-                // 工人id
-                workers,
-                type: radioType,
-                money: item.borrowing,
-                work_time_hour,
-                work_time_type,
-              }
-            }else{
-              if (data.type === 1) {
-                paramsData = {
-                  identity: identity,
-                  worktime_define: data.work,
-                  overtime_type: data.type,
-                  overtime_money: data.addWork,
-                  money: data.money,
-                  overtime: data.day,
-                  group_info: res.data,
-                  business_type: tabData.id,
-                }
-                // 按天
-              } else {
-                paramsData = {
-                  identity: identity,
-                  worktime_define: data.work,
-                  overtime_type: data.type,
-                  overtime_money: data.dayAddWork,
-                  money: data.money,
-                  overtime: data.day,
-                  group_info: res.data,
-                  business_type: tabData.id,
-                }
-              }
-            }
-            bkSetWorkerIdentityWageAction(paramsData).then(resItem => {
-              if (resItem.code === 200) {
-                params.group_info = res.data;
-                // 班组长id
-                const item = useSelectorItem.workerList;
-                // 判断选择班组长有数据给后台传班组长
-                if (item.length > 0) {
-                  const group_leader = item[0].group_leader;
-                  params.group_leader = group_leader;
-                }
-                addNewBusinessAction(params).then(resData => {
-                  if (resData.code === 200) {
-                    // 再记一笔
-                    if (type == 1) {
-                      // 再记录一笔的话需要清除内容
-                      // 清空备注和图片
-                      Msg('保存成功')
-                      setTimeout(() => {
-                        setImage({ item: [] });
-                        // bkGetProjectTeam('', true);
-                        setProjectId('');
-                        setGroupInfo('');
-                        // 清空通讯录的reducer
-                        dispatch(setPhoneList([]));
-                        dispatch(setWorker([]));
-                        // 全选为0
-                        setClickNum(0);
-                        setAllClick(false)
-                        // 重新请求
-                        getList()
-                        // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
-                      }, 800)
-                      // 首选获取项目名称
-                      // bkGetProjectTeam();
-                      //直接保存
-                    } else {
-                      JumpFn(timeItem);
-                      dispatch(setWorker([]))
-                      // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
-                      setIsdisable(true);
-                      setDisplay(true)
-                    }
-                  } else {
-                    Msg(res.msg);
-                  }
-                })
-              } else {
-                Msg(resItem.msg)
-              }
-            })
-          } else {
-            Msg(res.msg)
-          }
-        })
-      } else {
+      // if (projectArr.length === 0) {
+      //   let items = {
+      //     group_name: '其他项目',
+      //     team_name: '其他班组'
+      //   }
+      //   bkAddProjectTeamAction(items).then(res => {
+      //     // 给自己设置工资标准
+      //     if (res.code === 200) {
+      //       const data = JSON.parse(JSON.stringify(wageStandard));
+      //       let paramsData;
+      //       //   identity: identity,
+      //       //   worktime_define: data.work,
+      //       //   overtime_type: data.type,
+      //       //   overtime_money: data.dayAddWork,
+      //       //   money: data.money,
+      //       //   overtime: data.day,
+      //       //   group_info: res.data,
+      //       // }
+      //       // 按小时
+      //       if( tabData.id == 3){
+      //         paramsData = {
+      //           // 记工类型
+      //           business_type: tabData.id,
+      //           // 班组信息
+      //           group_info: res.data,
+      //           // 工时
+      //           work_time: times,
+      //           // 身份
+      //           identity,
+      //           // 图片
+      //           img_url,
+      //           // 备注
+      //           note: item.details,
+      //           // note: item.note,
+      //           // 记录日期
+      //           time,
+      //           // 工人id
+      //           workers,
+      //           type: radioType,
+      //           money: item.borrowing,
+      //           work_time_hour,
+      //           work_time_type,
+      //         }
+      //       }else{
+      //         if (data.type === 1) {
+      //           paramsData = {
+      //             identity: identity,
+      //             worktime_define: data.work,
+      //             overtime_type: data.type,
+      //             overtime_money: data.addWork,
+      //             money: data.money,
+      //             overtime: data.day,
+      //             group_info: res.data,
+      //             business_type: tabData.id,
+      //           }
+      //           // 按天
+      //         } else {
+      //           paramsData = {
+      //             identity: identity,
+      //             worktime_define: data.work,
+      //             overtime_type: data.type,
+      //             overtime_money: data.dayAddWork,
+      //             money: data.money,
+      //             overtime: data.day,
+      //             group_info: res.data,
+      //             business_type: tabData.id,
+      //           }
+      //         }
+      //       }
+      //       // bkSetWorkerIdentityWageAction(paramsData).then(resItem => {
+      //       //   if (resItem.code === 200) {
+      //       //     params.group_info = res.data;
+      //       //     // 班组长id
+      //       //     const item = useSelectorItem.workerList;
+      //       //     // 判断选择班组长有数据给后台传班组长
+      //       //     if (item.length > 0) {
+      //       //       const group_leader = item[0].group_leader;
+      //       //       params.group_leader = group_leader;
+      //       //     }
+      //           addNewBusinessAction(params).then(resData => {
+      //             if (resData.code === 200) {
+      //               // 再记一笔
+      //               if (type == 1) {
+      //                 // 再记录一笔的话需要清除内容
+      //                 // 清空备注和图片
+      //                 Msg('保存成功')
+      //                 setTimeout(() => {
+      //                   setImage({ item: [] });
+      //                   // bkGetProjectTeam('', true);
+      //                   setProjectId('');
+      //                   setGroupInfo('');
+      //                   // 清空通讯录的reducer
+      //                   dispatch(setPhoneList([]));
+      //                   dispatch(setWorker([]));
+      //                   // 全选为0
+      //                   setClickNum(0);
+      //                   setAllClick(false)
+      //                   // 重新请求
+      //                   getList()
+      //                   // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+      //                 }, 800)
+      //                 // 首选获取项目名称
+      //                 // bkGetProjectTeam();
+      //                 //直接保存
+      //               } else {
+      //                 JumpFn(timeItem);
+      //                 dispatch(setWorker([]))
+      //                 // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
+      //                 setIsdisable(true);
+      //                 setDisplay(true)
+      //               }
+      //             } else {
+      //               Msg(res.msg);
+      //             }
+      //           })
+      //         // } else {
+      //         //   Msg(resItem.msg)
+      //         // }
+      //       // })
+      //     } else {
+      //       Msg(res.msg)
+      //     }
+      //   })
+      // } else {
         // 班组长id
         const item = useSelectorItem.workerList;
         // 判断选择班组长有数据给后台传班组长
@@ -3593,7 +3593,7 @@ export default function userForeman() {
             Msg(resData.msg)
           }
         })
-      }
+      // }
       return
     } else {
       addNewBusinessAction(params).then(res => {
