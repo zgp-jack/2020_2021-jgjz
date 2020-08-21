@@ -454,6 +454,8 @@ export default function Index() {
         setCloseImage(true)
       }
       Taro.setStorageSync(Type, identityType);
+    }else{
+      setCloseImage(true)
     }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
