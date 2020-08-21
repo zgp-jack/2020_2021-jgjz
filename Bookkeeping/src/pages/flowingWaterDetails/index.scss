@@ -115,6 +115,27 @@
   color: #333;
   margin-bottom: 20rpx;
 }
+.remarks-title,
+.wages-title{
+  width: 150rpx;
+  // min-width: 150rpx;
+  font-weight: bold;
+  display: inline-block;
+  text-align: justify;
+  text-align-last: justify;
+}
+.remarks-note,
+.wages-note{
+  display: flex;
+  padding-bottom: 20rpx;
+}
+.remarks-title::after,
+.wages-title::after{
+  display: inline-block;
+  content: '';
+  width: 100%;
+}
+
 .wages-list{
   color: #646464;
   font-size: 26rpx;
@@ -125,8 +146,8 @@
 }
 .list-itme{
   margin: 0 30rpx;
-  height: 75rpx;
-  line-height: 75rpx;
+  // height: 75rpx;
+  // line-height: 75rpx;
   font-size: 30rpx;
   display: flex;
   border-bottom: 1rpx solid #f4f4f4;
@@ -134,7 +155,7 @@
 }
 .list-itme-title{
   width: 150rpx;
-  min-width: 150rpx;
+  // min-width: 150rpx;
   display: inline-block;
   text-align: justify;
   color: rgba(51, 51, 51, 1);

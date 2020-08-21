@@ -1490,7 +1490,7 @@ export default function EditDetails() {
         <View className='publish-recruit-card'>
           <View className='publish-list-item'>
             <Text className='pulish-list-title justify-quantities'>工程量</Text>
-            :<Input
+            <Input
               className='publish-list-input-amount'
               type='digit'
               placeholder='请填写工程量'
@@ -1506,7 +1506,7 @@ export default function EditDetails() {
         <View className='publish-recruit-card'>
           <View className='publish-list-item'>
             <Text className='pulish-list-title'>单价</Text>
-            :<Input
+            <Input
               className='publish-list-input-color'
               type='digit'
               placeholder='请填写单价'
@@ -1519,7 +1519,7 @@ export default function EditDetails() {
         <View className='publish-recruit-card'>
           <View className='publish-list-item'>
             <Text className='pulish-list-title'>工钱</Text>
-            :<Input
+            <Input
               className='publish-list-input-color'
               type='digit'
               maxLength={16}
@@ -1574,8 +1574,8 @@ export default function EditDetails() {
               value={val.duration}
             />
             <View className='rightIconsBox'>
-              {/* <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' /> */}
-              <Text className='towardsTheRight' />
+              <Image src={`${IMGCDNURL}iconsRIght.png`} className='rightIcons' />
+              {/* <Text className='towardsTheRight' /> */}
             </View>
           </View>
         </View>
@@ -1595,8 +1595,8 @@ export default function EditDetails() {
               // value={'11111111111111'}
             />
             <View className='rightIconsBox'>
-              {/* <Image src={`${IMGCDNURL}iconsRIght.png`} className='money-rightIcons' /> */}
-              <Text className='towardsTheRight' />
+              <Image src={`${IMGCDNURL}iconsRIght.png`} className='money-rightIcons' />
+              {/* <Text className='towardsTheRight' /> */}
             </View>
           </View>
         </View>

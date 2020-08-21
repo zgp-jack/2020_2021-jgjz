@@ -33,7 +33,7 @@
 .content{
   margin-top: 60rpx;
   height: 100%;
-  background: #fff;
+  // background: #fff;
 }
 
 .list_item_item:not(:last-child),.list_item:not(:last-child){
@@ -106,7 +106,7 @@
 .content-list-subclass{
   display: flex;
   justify-content: space-between;
-  background-color: #fafafa;
+  background-color: #efefef;
   padding: 30rpx;
 }
 .content-list-subclass:not(:last-child){

@@ -151,27 +151,27 @@ export default function FlowingWaterDetails() {
         <AtList className='list'>
           {obj.identity == 1 ?
           <View>
-            <View className='list-itme'>
+            <View className='list-itme public-list'>
               <Text className='list-itme-title'>工人</Text>:<Text className='list-itme-content'>{obj.workername||''}</Text>
             </View>
-            <View className='list-itme'>
+            <View className='list-itme public-list'>
               <Text className='list-itme-title'>项目名称</Text>:<Text className='list-itme-content'>{obj.group_info_name ? obj.group_info_name.replace(',','-'):'-'}</Text>
             </View>
           </View>
           :<view>
-            <View className='list-itme'>
+            <View className='list-itme public-list'>
               <Text className='list-itme-title'>项目名称</Text>:<Text className='list-itme-content'>{obj.group_info_name ? obj.group_info_name.replace(',','-'):'-'}</Text>
             </View>
-            <View className='list-itme'>
+            <View className='list-itme public-list'>
               <Text className='list-itme-title'>班组长</Text>:<Text className='list-itme-content'>{obj.leader_name||''}</Text>
             </View>
           </view>}
-          {obj.business_type === '3' && <View className='list-itme'><Text className='list-itme-title'>借支属于</Text>:<Text className='list-itme-content'>{obj.typeDes}</Text></View>}
+          {obj.business_type === '3' && <View className='list-itme public-list'><Text className='list-itme-title'>借支属于</Text>:<Text className='list-itme-content'>{obj.typeDes}</Text></View>}
           {/* 按天\点工 */}
           {((obj.business_type == '2' && obj.type ==='1') || obj.business_type == '1') && 
           <View>
-            <View className='list-itme'><Text className='list-itme-title'>上班时长</Text>:<Text className='list-itme-content'>{parseFloat(obj.work_time)}个工（{parseFloat(obj.work_time_hour)}小时）</Text></View>
-            <View className='list-itme'><Text className='list-itme-title'>加班时长</Text>:<Text className='list-itme-content'>{parseFloat(obj.overtime)}小时</Text></View>
+            <View className='list-itme public-list'><Text className='list-itme-title'>上班时长</Text>:<Text className='list-itme-content'>{parseFloat(obj.work_time)}个工（{parseFloat(obj.work_time_hour)}小时）</Text></View>
+            <View className='list-itme public-list'><Text className='list-itme-title'>加班时长</Text>:<Text className='list-itme-content'>{parseFloat(obj.overtime)}小时</Text></View>
             <View className='wages'>
               <View className='list-itme wages-note'>
                 <View className='wages-title list-itme-title'>工资标准</View>:
@@ -187,8 +187,8 @@ export default function FlowingWaterDetails() {
           {/* 按量 */}
           {obj.business_type === '2' && obj.type === '2'  && 
           <View>
-            <View className='list-itme'><Text className='list-itme-title'>工程量</Text>:<Text className='list-itme-content'>{parseFloat(obj.unit_num)}{obj.unit}</Text></View>
-            <View className='list-itme'><Text className='list-itme-title'>单价</Text>:<Text className='list-itme-content'>{obj.unit_price}</Text></View>
+            <View className='list-itme public-list'><Text className='list-itme-title'>工程量</Text>:<Text className='list-itme-content'>{parseFloat(obj.unit_num)}{obj.unit}</Text></View>
+            <View className='list-itme public-list'><Text className='list-itme-title'>单价</Text>:<Text className='list-itme-content'>{obj.unit_price}</Text></View>
           </View>
           }
           {/*  */}
