@@ -3253,7 +3253,7 @@ export default function userForeman() {
       })
       if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
         if (data.work == 0) {
-          Msg('上班标准必须大于0')
+          Msg('您还没有设置工资标准')
           return;
         }
       }
@@ -3317,6 +3317,12 @@ export default function userForeman() {
     } else if (tabData.id == 2) {
       // 按量
       if (itemType === 1) {
+        console.log(item,'1111');
+        console.log(item.wages,item.unit_price,item.amount,'aaaaaa')
+        // if (!item.wages || !item.price || !item.amount){
+        //   Msg('您还没有填写工程量、单价或工钱');
+        //   return;
+        // }
         params = {
           // 记工类型
           business_type: tabData.id,
@@ -3337,9 +3343,9 @@ export default function userForeman() {
           workers,
           type: 2,
           unit,
-          unit_num: parseFloat(item.amount),
-          unit_price: parseFloat(item.price),
-          money: parseFloat(item.wages),
+          unit_num: item.amount,
+          unit_price: item.price,
+          money: item.wages,
           work_time_hour,
           work_time_type,
         }
@@ -3384,6 +3390,7 @@ export default function userForeman() {
         Msg('您还没有填写借支')
         return;
       }
+      console.log(item.borrowing,'item.borrowingitem.borrowing')
       params = {
         // 记工类型
         business_type: tabData.id,
@@ -3408,6 +3415,7 @@ export default function userForeman() {
         work_time_type,
       }
     }
+    console.log(params,'params')
     // 工人的时候要先设置工资标准
     const foremanTitles = JSON.parse(JSON.stringify(foremanTitle))
     // 记工(包工按量)
@@ -3432,28 +3440,54 @@ export default function userForeman() {
             //   group_info: res.data,
             // }
             // 按小时
-            if (data.type === 1) {
+            if( tabData.id == 3){
               paramsData = {
-                identity: identity,
-                worktime_define: data.work,
-                overtime_type: data.type,
-                overtime_money: data.addWork,
-                money: data.money,
-                overtime: data.day,
-                group_info: res.data,
+                // 记工类型
                 business_type: tabData.id,
+                // 班组信息
+                group_info: res.data,
+                // 工时
+                work_time: times,
+                // 身份
+                identity,
+                // 图片
+                img_url,
+                // 备注
+                note: item.details,
+                // note: item.note,
+                // 记录日期
+                time,
+                // 工人id
+                workers,
+                type: radioType,
+                money: item.borrowing,
+                work_time_hour,
+                work_time_type,
               }
-              // 按天
-            } else {
-              paramsData = {
-                identity: identity,
-                worktime_define: data.work,
-                overtime_type: data.type,
-                overtime_money: data.dayAddWork,
-                money: data.money,
-                overtime: data.day,
-                group_info: res.data,
-                business_type: tabData.id,
+            }else{
+              if (data.type === 1) {
+                paramsData = {
+                  identity: identity,
+                  worktime_define: data.work,
+                  overtime_type: data.type,
+                  overtime_money: data.addWork,
+                  money: data.money,
+                  overtime: data.day,
+                  group_info: res.data,
+                  business_type: tabData.id,
+                }
+                // 按天
+              } else {
+                paramsData = {
+                  identity: identity,
+                  worktime_define: data.work,
+                  overtime_type: data.type,
+                  overtime_money: data.dayAddWork,
+                  money: data.money,
+                  overtime: data.day,
+                  group_info: res.data,
+                  business_type: tabData.id,
+                }
               }
             }
             bkSetWorkerIdentityWageAction(paramsData).then(resItem => {
