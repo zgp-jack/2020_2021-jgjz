@@ -144,7 +144,7 @@ export default function FlowingWaterDetails() {
         {obj.business_type && obj.business_type == '2' && obj.type === '1'&& <View className='top-name'>包工（按天记）工钱</View>}
         {obj.business_type && obj.business_type == '2' && obj.type === '2' && <View className='top-name'>包工（按量记）工钱</View>}
         {obj.business_type &&obj.business_type == '3' && <View className='top-name'>本次借支</View>}
-        <View className='top-money' style={{fontSize:obj.money>9999999.99?'73rpx':'115rpx'}}><Text className='top-money-symbol'>¥</Text>{obj.money}</View>
+        <View className='top-money' style={{fontSize:obj.money>9999999.99?'60rpx':'115rpx'}}><Text className='top-money-symbol'>¥</Text>{obj.money}</View>
         <View className='top-time'>{time}<Text> {week}</Text></View>
       </View>
       <View className='list-content'>
