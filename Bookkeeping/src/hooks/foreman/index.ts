@@ -1055,6 +1055,7 @@ export default function userForeman() {
     // } else {
     //   id = groupInfos;
     // }
+    console.log(e,'eeeee')
     console.log(change,'啊日期难道就看手机看到你撒健康的白金卡')
     let dataType;
     if (typeId) {
@@ -1993,6 +1994,7 @@ export default function userForeman() {
               }
             }
           })
+          console.log(1111)
           getMonthDaysCurrent(new Date(), clickDataArr, groupInfo, id, cacheDaysArr);
           const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
           if (res.data.length > 0) {

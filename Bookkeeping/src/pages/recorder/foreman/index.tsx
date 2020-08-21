@@ -377,15 +377,22 @@ export default function Foreman() {
     // 打开日历如果上次点击默认打开最后一个日期的那个月份
     const data = JSON.parse(JSON.stringify(timeData));
     console.log(data,'data');
+    setIsdisable(true);
+    setCalendarModalDisplay(true);
+    console.log(data,'datataa')
     if(data&&data.length>0){
       const end = data.pop();
       console.log(end,'end')
-      const time = end.year + '-' + end.month + '-' + end.date;
+      let time;
+      if (end.constructor === Array){
+        time = end[0].year + '-' + end[0].month + '-' + end[0].date;
+      }else{
+        time = end.year + '-' + end.month + '-' + end.date;
+      }
       getMonthDaysCurrent(new Date(time))
+    }else{
+      getMonthDaysCurrent(new Date())
     }
-    setIsdisable(true);
-    setCalendarModalDisplay(true);
-    // getMonthDaysCurrent(new Date())
   }
   return (
     <context.Provider value={value}>
