@@ -438,7 +438,7 @@ export default function Foreman() {
       </View>
       <View className='projectName'>
         <View className='publish-recruit-card'>
-            <View className='publish-list-item' onClick={() => {setIsdisable(true);bkGetProjectTeam(),setShow(true)}}>
+            <View className='publish-list-item border-item' onClick={() => {setIsdisable(true);bkGetProjectTeam(),setShow(true)}}>
             <Text className='pulish-list-title'>项目名称</Text>
             <Input
               className='publish-list-input'
@@ -633,7 +633,7 @@ export default function Foreman() {
       {recorderType === 2 && contractor === 1 && 
         <View className='measure'>
           <View className='publish-recruit-card'>
-            <View className='publish-list-item'>
+            <View className='publish-list-item border-item'>
               <Text className='pulish-list-title justify-quantities'>工程量</Text>
               <Input
                 className='publish-list-input-amount'
@@ -652,7 +652,7 @@ export default function Foreman() {
             </View>
           </View>
           <View className='publish-recruit-card'>
-            <View className='publish-list-item'>
+            <View className='publish-list-item border-item'>
               <Text className='pulish-list-title'>单价</Text>
               <Input
                 className='publish-list-input new-input'
@@ -689,7 +689,7 @@ export default function Foreman() {
       {recorderType === 3 &&
         <View className='borrowing'>
           <View className='publish-recruit-card'>
-            <View className='publish-list-item'>
+            <View className='publish-list-item border-item'>
               <Text className='pulish-list-title'>本次借支</Text>
               <Input
                 className='publish-list-input new-input'
