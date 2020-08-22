@@ -325,7 +325,7 @@ export default function Index() {
       }
       setPrompt(true)
     }
-    let data = Taro.getStorageSync(IsLoginType);
+    // let data = Taro.getStorageSync(IsLoginType);
     // return
     // setCloseImage(false);
     getDates();
@@ -440,18 +440,26 @@ export default function Index() {
   const getData = (e?: string, type?: number) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
+    if(jump){
+      if (identityType && identityType == '0'){
+        setCloseImage(true)
+      }
+      Taro.setStorageSync(Type, identityType);
+    }
+    console.log(jump,'====jump=====');
+    // 登陆过来的
     if (isLoginType == 1) {
       setHidden(true)
       setCloseImage(false)
     }
     console.log(isLoginType,'isLoginTypeisLoginType')
     console.log(identityType,'identityType')
-    if (identityType) {
-      if (identityType == '0' ){
-        setCloseImage(true)
-      }
-      Taro.setStorageSync(Type, identityType);
-    }
+    // if (identityType) {
+    //   if (identityType == '0' ){
+    //     setCloseImage(true)
+    //   }
+    //   Taro.setStorageSync(Type, identityType);
+    // }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
     console.log(midData,'midDatamidDatamidData')
