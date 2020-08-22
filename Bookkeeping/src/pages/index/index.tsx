@@ -179,6 +179,8 @@ export default function Index() {
   const [noRequest, setNoRequest] = useState<boolean>(false)
   // 防止记工button多次点击
   const [ishandleJump,setishandleJump] = useState<boolean>(true)
+  // 图片关闭
+  const [ImgClose, setImgClose] = useState<Boolean>(false)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = () => {
@@ -778,6 +780,7 @@ export default function Index() {
       setHidden(false)
       setCloseImage(false);
       setIdentity(true)
+      setImgClose(true)
       // setHidden(false)
       // 并开启选择身份
       getData();
@@ -792,7 +795,7 @@ export default function Index() {
     // userRouteJump(`/pages/login/index`)
     // return;
     // 打开新手指引
-    setHidden(false)
+    setHidden(true)
     setCloseImage(false);
     setDisplay(false)
   }
@@ -953,7 +956,7 @@ export default function Index() {
         {Images.map((v) => (
           <Image src={v.url} key={v.id} className='noImages' />
         ))}
-        <View className={closeImage ? '' :'noImgBox'}>
+        <View className={ImgClose ?'noImages':''}>
           <Image src={image} className={closeImage ? 'noImages' : 'images'} onClick={() => { hanleImage(image) }} />
         </View>
       </View>
