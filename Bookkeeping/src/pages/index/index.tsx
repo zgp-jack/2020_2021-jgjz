@@ -181,6 +181,8 @@ export default function Index() {
   const [ishandleJump,setishandleJump] = useState<boolean>(true)
   // 图片关闭
   const [ImgClose, setImgClose] = useState<Boolean>(false)
+  // 新手指引
+  const [isModal,setIsModal] = useState<Boolean>(false)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = () => {
@@ -280,6 +282,8 @@ export default function Index() {
                   midData.yupao_id = res.data.yupao_id;
                   Taro.setStorageSync(MidData, midData);
                   getData();
+                  setIsModal(true);
+                  // setCloseImage(true);
                 }
               })
             } else if (res.code == 40003) {
@@ -443,6 +447,7 @@ export default function Index() {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
     if(jump){
+      console.log('走跳转过来的情况')
       if (identityType){
         if (identityType == '0'){
           setHidden(true)
@@ -482,6 +487,7 @@ export default function Index() {
     // 判断是点开小程序的时候,没有身份让他选择身份
     if (!jump){
       if (midData) {
+        console.log('走小程序自己的时候')
         let type = Taro.getStorageSync(Type);
         if (!type || type === 0) {
           setIdentity(true)
@@ -511,6 +517,11 @@ export default function Index() {
       time: changeTime,
       identity,
     }
+    if (isModal){
+      setHidden(true)
+      setCloseImage(true)
+    }
+    // 判断没有type 就要出现身份选择弹框
     if (!identity) return;
     console.log(midData,'内容midData')
     if (midData) {
