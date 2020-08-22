@@ -449,6 +449,7 @@ export default function Index() {
     console.log(jump,'======')
     console.log(isLoginType, '======222')
     console.log(Taro.getStorageSync(Type), '1111======')
+    console.log(isModal,'isModalisModalisModalisModal')
     if(jump){
       console.log('走跳转过来的情况')
       if(isModal){
