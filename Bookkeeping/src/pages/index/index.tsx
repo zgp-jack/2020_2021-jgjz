@@ -1132,7 +1132,7 @@ export default function Index() {
               {list.map((v, i) => (
                 <View key={i + i} className='content-list-type' onClick={getNextPageData}>
                   <View className='content-list-flex'>
-                    <View>
+                    <View className='no-title'>
                       <Text className='details'>我在{v.group_info}项目组对Ta记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</Text>
                       {(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}
                     </View>

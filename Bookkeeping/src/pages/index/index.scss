@@ -333,7 +333,7 @@ scroll-view{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.content-list-flex>View{
+.content-list-flex>.no-title{
   display: inline-block;
   text-align: left;
 }
@@ -341,7 +341,7 @@ scroll-view{
   display: inline-block;
   max-width: 54vw;
 }
-.content-list-flex .icon{
+.no-title .icon{
   vertical-align: 92%;
   margin:0;
 }
