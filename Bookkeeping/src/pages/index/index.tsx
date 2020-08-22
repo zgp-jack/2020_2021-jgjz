@@ -451,6 +451,11 @@ export default function Index() {
     console.log(Taro.getStorageSync(Type), '1111======')
     if(jump){
       console.log('走跳转过来的情况')
+      if(isModal){
+        setHidden(true)
+        setCloseImage(true)
+        return;
+      }
       if (identityType){
         if (identityType == '0'){
           setHidden(true)
@@ -463,6 +468,7 @@ export default function Index() {
         setCloseImage(true)
         return;
       }
+      
     }
     console.log(jump,'====jump=====');
     // 登陆过来的
