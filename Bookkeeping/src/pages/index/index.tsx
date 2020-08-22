@@ -446,6 +446,9 @@ export default function Index() {
   const getData = (e?: string, type?: number) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
+    console.log(jump,'======')
+    console.log(isLoginType, '======222')
+    console.log(Taro.getStorageSync(Type), '1111======')
     if(jump){
       console.log('走跳转过来的情况')
       if (identityType){
@@ -794,7 +797,7 @@ export default function Index() {
         }
       }
     } else {
-      Taro.setStorageSync(IsLoginType, 2);
+      // Taro.setStorageSync(IsLoginType, 2);
       // 关闭
       setHidden(false)
       setCloseImage(false);
@@ -823,6 +826,7 @@ export default function Index() {
     setType(e);
     setIdentity(false)
     Taro.setStorageSync(Type, e);
+    Taro.setStorageSync(IsLoginType, e)
     getData();
   }
   // 关闭创建项目
