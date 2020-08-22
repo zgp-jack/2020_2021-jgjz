@@ -455,6 +455,10 @@ export default function Index() {
           return;
         }
         Taro.setStorageSync(Type, identityType);
+      }else{
+        setHidden(true)
+        setCloseImage(true)
+        return;
       }
     }
     console.log(jump,'====jump=====');
@@ -517,10 +521,10 @@ export default function Index() {
       time: changeTime,
       identity,
     }
-    if (isModal){
-      setHidden(true)
-      setCloseImage(true)
-    }
+    // if (isModal){
+    //   setHidden(true)
+    //   setCloseImage(true)
+    // }
     // 判断没有type 就要出现身份选择弹框
     if (!identity) return;
     console.log(midData,'内容midData')
