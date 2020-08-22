@@ -949,11 +949,11 @@ export default function Index() {
     <View className='index-content'>
       {/* <UseNavInfo/> */}
       {/* <AtNavBar/> */}
-      {<View style={{ visibility: hidden ? 'visible' : 'hidden' }} >
+      {<View>
         {Images.map((v) => (
           <Image src={v.url} key={v.id} className='noImages' />
         ))}
-        <View className='noImgBox'>
+        <View className={closeImage ? 'noImgBox':''}>
           <Image src={image} className={closeImage ? 'noImages' : 'images'} onClick={() => { hanleImage(image) }} />
         </View>
       </View>
