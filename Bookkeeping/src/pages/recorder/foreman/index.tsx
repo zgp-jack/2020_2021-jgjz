@@ -373,6 +373,12 @@ export default function Foreman() {
     setCreateProjectDisplay(true), setShow(false);
     setIscreatproject(true);
   }
+  const addZero = (num) => {
+    if (parseFloat(num) < 10) {
+      num = '0' + parseFloat(num);
+    }
+    return num;
+  }
   const handleCurrent = ()=>{
     // 打开日历如果上次点击默认打开最后一个日期的那个月份
     const data = JSON.parse(JSON.stringify(timeData));
@@ -385,9 +391,9 @@ export default function Foreman() {
       console.log(end,'end')
       let time;
       if (end.constructor === Array){
-        time = end[0].year + '-' + end[0].month + '-' + end[0].date;
+        time = end[0].year + '-' + addZero(end[0].month) + '-' + addZero(end[0].date);
       }else{
-        time = end.year + '-' + end.month + '-' + end.date;
+        time = end.year + '-' + addZero(end.month) + '-' + addZero(end.date);
       }
       getMonthDaysCurrent(new Date(time))
     }else{
