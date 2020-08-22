@@ -475,12 +475,14 @@ export default function userForeman() {
         timeArr[i].click = false;
         timeArr[0].click = true;
         timeArr[3] = { id: 4, name: '0.0小时', click: false, num: 0 };
+        setClickDay(timeArr[0])
       }
       // 无加班
       for (let i = 0; i < addWorkArr.length;i++){
         addWorkArr[i].click = false;
         addWorkArr[0].click = true;
         addWorkArr[1] = { id: 2, name: '0.0小时', click: false, num: 0 };
+        setClickTime(addWorkArr[0])
       }
       setTimeArr(timeArr);
       setAddWorkArr(addWorkArr)
@@ -3452,6 +3454,7 @@ export default function userForeman() {
           params.wage_overtime = wageStandardData.day;
           params.overtime_money = wageStandardData.addWork;
           params.wage_money = wageStandardData.money;
+          params.group_info = '';
         }
         // 班组长id
         const item = useSelectorItem.workerList;

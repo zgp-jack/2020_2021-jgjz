@@ -181,6 +181,9 @@ export default function Foreman() {
     const addWorkArrs = JSON.parse(JSON.stringify(addWorkArr));
     const clickDayItem = JSON.parse(JSON.stringify(clickDay));
     const clickTimeItem = JSON.parse(JSON.stringify(clickTime));
+    console.log(addWorkArrs,'addWorkArrs');
+    console.log(clickTimeItem,'clickTimeItem');
+    console.log(timeArrs,'timeArrs')
     console.log(clickDayItem,'clickDayItemclickDayItem')
     // 上班时长
     if (clickDayItem){
