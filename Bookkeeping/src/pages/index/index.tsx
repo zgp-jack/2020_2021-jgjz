@@ -506,7 +506,7 @@ export default function Index() {
     }
     let params = {
       time: changeTime,
-      identity
+      identity:type,
     }
     console.log(midData,'内容midData')
     if (midData) {
