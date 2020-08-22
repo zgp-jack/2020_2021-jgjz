@@ -39,43 +39,43 @@ export default function userCode(InitParams) {
   })
   useEffect(() => {
     if (InitParams.id){
-      console.log(useSelectorItem,'useSelectorItem')
-      if (useSelectorItem.notepad.data){
-        let obj;
-        useSelectorItem.notepad.data.map(v => {
-          console.log(v)
-          if(v.list.length>0 && v.list){
-            v.list.map(val=>{
-              console.log(val,'val')
-              if (val.id === InitParams.id){
-                obj = val;
-              }
-            })
-          }
-          // if (v.id === InitParams.id){
-          //   obj = v;
-          // }
-        });
-        console.log(obj,'obj')
-        const time = obj.created_time_string.substring(0, 4) + '年' + obj.created_time_string.substring(5, 7) + '月' + obj.created_time_string.substring(8, 11) + '日';
-        const date = new Date(obj.created_time * 1000).getDay();
-        const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
-        const week = weeks[date];
-        const timeItem = new Date(obj.created_time * 1000);
-        const newTime = timeItem.getFullYear() + '/' + addZero(timeItem.getMonth() + 1) + '/' + addZero(timeItem.getDate()) + '    ' + addZero(timeItem.getHours()) + ':' + addZero(timeItem.getMinutes());
-        console.log(timeItem,'timeItem')
-        setImage({item:obj.view_images})
-        let params = {
-          note: obj.note,
-          time: newTime,
-          image: obj.view_images,
-          id: InitParams.id
-        }
-        setModel(params);
-        Taro.setNavigationBarTitle({
-          title: time + ' ' + week
-        })
-      }
+      // console.log(useSelectorItem,'useSelectorItem')
+      // if (useSelectorItem.notepad.data){
+      //   let obj;
+      //   useSelectorItem.notepad.data.map(v => {
+      //     console.log(v)
+      //     if(v.list.length>0 && v.list){
+      //       v.list.map(val=>{
+      //         console.log(val,'val')
+      //         if (val.id === InitParams.id){
+      //           obj = val;
+      //         }
+      //       })
+      //     }
+      //     // if (v.id === InitParams.id){
+      //     //   obj = v;
+      //     // }
+      //   });
+      //   console.log(obj,'obj')
+      //   const time = obj.created_time_string.substring(0, 4) + '年' + obj.created_time_string.substring(5, 7) + '月' + obj.created_time_string.substring(8, 11) + '日';
+      //   const date = new Date(obj.created_time * 1000).getDay();
+      //   const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+      //   const week = weeks[date];
+      //   const timeItem = new Date(obj.created_time * 1000);
+      //   const newTime = timeItem.getFullYear() + '/' + addZero(timeItem.getMonth() + 1) + '/' + addZero(timeItem.getDate()) + '    ' + addZero(timeItem.getHours()) + ':' + addZero(timeItem.getMinutes());
+      //   console.log(timeItem,'timeItem')
+      //   setImage({item:obj.view_images})
+      //   let params = {
+      //     note: obj.note,
+      //     time: newTime,
+      //     image: obj.view_images,
+      //     id: InitParams.id
+      //   }
+      //   setModel(params);
+      //   Taro.setNavigationBarTitle({
+      //     title: time + ' ' + week
+      //   })
+      // }
     }else{
       // 获取当前时间
       // let lastM = JSON.stringify(new Date(new Date().setMonth(new Date().getMonth() + 1))).slice(1, 11)
