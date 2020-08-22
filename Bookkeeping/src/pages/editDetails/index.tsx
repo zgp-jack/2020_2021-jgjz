@@ -1527,7 +1527,7 @@ export default function EditDetails() {
             <Input
               className='publish-list-input-color'
               type='digit'
-              maxLength={16}
+              maxLength={17}
               onInput={(e) => handleInput('money', e)}
               placeholder='工程量和单价未知时，可直接填写'
               value={val && val.money}
