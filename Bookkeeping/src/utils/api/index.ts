@@ -23,6 +23,10 @@ export const bkGetNotePadUrl: string = REQUESTURL + 'bk-notepad/get-note-pad/'
 export const bkDeleteNotePadUrl: string = REQUESTURL + 'bk-notepad/delete-note-pad/'
 // 修改
 export const bkUpdateNotePadUrl: string = REQUESTURL + '/bk-notepad/update-note-pad/'
+
+// 记事本修改页面展示的数据
+export const bkGetNewNotePadUrl: string = REQUESTURL + '/bk-notepad/get-note-pad-one/'
+
 // 流水
 export const bkBusinessUrl: string = REQUESTURL + '/bk-bookkeeping/get-bk-business/'
 // 项目列表

@@ -1620,7 +1620,6 @@ export default function EditDetails() {
           placeholder='请填写备注...'
           onInput={(e) => handleInput('note', e)}
           maxlength={400}
-          auto-height={true}
           />
         </View>
       <View className='white'>

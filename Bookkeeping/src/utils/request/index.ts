@@ -271,6 +271,32 @@ export function bkGetNotePadAction(data): Promise<Inter.bkGetWorker> {
   })
 }
 
+
+// 记事本修改页面展示的数据
+export function bkNewNotePadAction(data): Promise<Inter.bkGetNotePadType> {
+  let type = Taro.getStorageSync(Type)
+  let midData = Taro.getStorageSync(MidData);
+  data.identity = type
+  return doRequestAction({
+    url: api.bkGetNewNotePadUrl,
+    // header:{
+    //   mid: midData.yupao_id,
+    //   token: midData.sign.token,
+    //   time: midData.sign.time,
+    //   uuid: midData.uuid,
+    // },
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: midData.yupao_id,
+      token: midData.sign.token,
+      time: midData.sign.time,
+      uuid: midData.uuid
+    },
+    data: data
+  })
+}
+
 // 删除记事本
 export function bkDeleteNotePadAction(data): Promise<Inter.bkGetNotePadType> {
   const { id } = data;
