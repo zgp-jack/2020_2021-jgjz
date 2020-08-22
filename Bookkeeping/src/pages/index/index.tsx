@@ -443,11 +443,13 @@ export default function Index() {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
     if(jump){
-      if (identityType && identityType == '0'){
-        setHidden(true)
-        setCloseImage(true)
+      if (identityType){
+        if (identityType == '0'){
+          setHidden(true)
+          setCloseImage(true)
+        }
+        Taro.setStorageSync(Type, identityType);
       }
-      Taro.setStorageSync(Type, identityType);
     }
     console.log(jump,'====jump=====');
     // 登陆过来的
@@ -506,7 +508,7 @@ export default function Index() {
     }
     let params = {
       time: changeTime,
-      identity:type,
+      identity,
     }
     console.log(midData,'内容midData')
     if (midData) {
