@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res,IsShare } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
@@ -21,7 +21,7 @@ import { setClickTIme } from '../../actions/clickTIme'
 import './index.scss'
 
 let loginType = false;
-let isJump = false;
+// let isJump = false;
 let authType = true;
 let jumType = false;
 let ContentItem: bkIndexTypeData = {
@@ -211,9 +211,9 @@ export default function Index() {
   const getAppShowData = ()=>{
     const data = Taro.getStorageSync(Res);
     if (data) {
-      if (isJump)return;
+      const jump = Taro.getStorageSync(IsJump);
+      if (jump)return;
       const e = data;
-      console.log(e,'传过来的值')
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
           // 验证有没有手机号
@@ -224,6 +224,7 @@ export default function Index() {
           }
           appletJumpAction(params).then(res => {
             console.log(res,'跳转获取的值')
+            Taro.setStorageSync(IsJump, true);
             // 直接返回记工记账用户信息
             if (res.code == 200) {
               if (res.data) {
@@ -244,13 +245,13 @@ export default function Index() {
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
-                isJump = true;
+                // isJump = true;
                 jumType = true
                 getData();
               }
               // 没有鱼泡账号
             } else if (res.code == 40001) {
-              //  有鱼泡账号
+              //  有鱼泡账号1
             } else if (res.code == 40000) {
               let obj: any = {
                 sign: {}
@@ -438,6 +439,7 @@ export default function Index() {
   // 获取首页数据
   const getData = (e?: string, type?: number) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
+    const jump = Taro.getStorageSync(IsJump);
     if (isLoginType == 1) {
       setHidden(true)
       setCloseImage(false)
@@ -463,13 +465,16 @@ export default function Index() {
     } else {
       identity = Taro.getStorageSync(Type);
     }
-    if (midData) {
-      let type = Taro.getStorageSync(Type);
-      if (!type || type === 0) {
-        setIdentity(true)
-        return
-      } else {
-        setType(type);
+    // 判断是点开小程序的时候,没有身份让他选择身份
+    if (!jump){
+      if (midData) {
+        let type = Taro.getStorageSync(Type);
+        if (!type || type === 0) {
+          setIdentity(true)
+          return
+        } else {
+          setType(type);
+        }
       }
     }
     // 判断选没有选择时间
@@ -499,11 +504,6 @@ export default function Index() {
         if (res.code === 200) {
           setNoRequest(true)
           setBusy(false)
-          // if (isJump){
-          //   dispatch(setContent(res.data))
-          // }
-          // ContentItem = res.data;
-          console.log(res.data, 'res.datata')
           setItem(res.data);
           setNum(res.data.count_is_new);
           if (parseInt(res.data.count_is_new) == 0) {
