@@ -250,7 +250,7 @@ scroll-view{
   border-bottom: 1rpx solid rgba(238, 238, 238, 1);
 }
 .content-list>View{
-  width: 75%;
+  width: 73%;
 }
 .content-list-type{
   border-bottom: 1rpx solid rgba(238, 238, 238, 1);
@@ -333,9 +333,17 @@ scroll-view{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.content-list-flex>.details{
-  width: 70%;
+.content-list-flex>View{
+  display: inline-block;
+  text-align: left;
+}
+.content-list-flex .details{
+  display: inline-block;
+  max-width: 54vw;
+}
+.content-list-flex .icon{
+  vertical-align: 92%;
+  margin:0;
 }
 
 .content-list-flex-title{
