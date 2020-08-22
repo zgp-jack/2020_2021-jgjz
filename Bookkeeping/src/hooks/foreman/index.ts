@@ -263,6 +263,10 @@ export default function userForeman() {
   const [toDay,setToday] = useState<any>();
   // 日历是否选择31天
   const [noCalendarDay, setnoCalendarDay] = useState<boolean>(false)
+  // 判断日历左边是否需要icon
+  const [leftTime, setleftTime] = useState<boolean>(true)
+  // 判断日历右边是否需要icon
+  const [rightTime, setrightTime] = useState<boolean>(false)
   // 修改项目组数据
   const [editProjectData, setEditProjectData] = useState<any>({
     group_info: '',
@@ -3546,7 +3550,7 @@ export default function userForeman() {
       arr[index] = timedata - elstamp;
     });
     let min = Math.min.apply(null,arr); 
-    const time = new Date(timedata-min).getFullYear()+'-'+(new Date(timedata-min).getMonth()+1)+'-'+new Date(timedata-min).getDate();
+    const time = addZero(new Date(timedata-min).getFullYear())+'-'+addZero(new Date(timedata-min).getMonth()+1)+'-'+addZero(new Date(timedata-min).getDate());
     setJumpMonth(time);
   }
   const handleCalendar = (v) => {
@@ -4450,16 +4454,34 @@ export default function userForeman() {
     // setCalendarDays(calendar);
     // setClickData([]);
     setCalendarModalDisplay(false);
+    setleftTime(true)
+    setrightTime(false)
     setTimeout(() => {
       setIsdisable(false)
     });
   }
   // 日历切换时间
   const handleChangeTime = (type: number) => {
+    const nowYear = Number(toDayString.split('-')[0]);
+    const nowMon = Number(toDayString.split('-')[1])
     if (type === 0) {
+      if(Number(time.year)==(nowYear-1)&&Number(time.monent)==2){
+        setleftTime(false);
+      }
+      setrightTime(true);
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
       getMonthDaysCurrent(date);
     } else {
+      if(nowMon == 1){
+        if((Number(time.year)+1)==nowYear&&Number(time.monent)==12){
+          setrightTime(false);
+        }
+      }else{
+        if(Number(time.year)==nowYear&&(Number(time.monent)+1)==nowMon){
+          setrightTime(false);
+        }
+      }
+      setleftTime(true)
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
       getMonthDaysCurrent(date);
       return;
@@ -4499,6 +4521,8 @@ export default function userForeman() {
     setTimeData(data);
     // 关闭
     setCalendarModalDisplay(false);
+    setleftTime(true)
+    setrightTime(false)
     setTimeout(() => {
       setIsdisable(false)
     });
@@ -4840,5 +4864,7 @@ export default function userForeman() {
     handleInputAdd,
     handleDelInput,
     noCalendarDay,
+    leftTime,
+    rightTime
   }
 }

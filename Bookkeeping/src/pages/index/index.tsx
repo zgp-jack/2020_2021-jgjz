@@ -1150,6 +1150,7 @@ export default function Index() {
               scrollTop={isScrollTop}
               // refresherEnabled
               lowerThreshold={200}
+              scrollWithAnimation={true}
               // onScroll={getNextPageData}
               onScrollToLower={() => getNextPageData()}
             >
@@ -1180,6 +1181,7 @@ export default function Index() {
               scrollY
               scrollTop={isScrollTop}
               lowerThreshold={200}
+              scrollWithAnimation={true}
               onScrollToLower={getNextPageData}
             >
               {list.map((v, i) => (
