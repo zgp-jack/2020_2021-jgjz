@@ -174,7 +174,7 @@ export default function Index() {
   const [this_year_business_month, setBusiness_month] = useState<string>()
   // 今天
   const [toDay, setToDay] = useState<string>('')
-  const [hidden, setHidden] = useState<boolean>(false)
+  // const [hidden, setHidden] = useState<boolean>(false)
   // 不请求
   const [noRequest, setNoRequest] = useState<boolean>(false)
   // 防止记工button多次点击
@@ -449,7 +449,6 @@ export default function Index() {
     console.log(jump,'====jump=====');
     // 登陆过来的
     if (isLoginType == 1) {
-      setHidden(true)
       setCloseImage(false)
     }
     console.log(isLoginType,'isLoginTypeisLoginType')
@@ -775,7 +774,8 @@ export default function Index() {
       Taro.setStorageSync(IsLoginType, 2);
       // 关闭
       setCloseImage(true);
-      setHidden(false)
+      setIdentity(true);
+      // setHidden(false)
       // 并开启选择身份
       getData();
     }
@@ -789,7 +789,7 @@ export default function Index() {
     // userRouteJump(`/pages/login/index`)
     // return;
     // 打开新手指引
-    setHidden(true)
+    // setHidden(true)
     setCloseImage(false);
     setDisplay(false)
   }
@@ -946,7 +946,7 @@ export default function Index() {
     <View className='index-content'>
       {/* <UseNavInfo/> */}
       {/* <AtNavBar/> */}
-      {<View style={{ visibility: hidden ? 'visible' : 'hidden' }} >
+      {<View>
         {Images.map((v) => (
           <Image src={v.url} key={v.id} className='noImages' />
         ))}
