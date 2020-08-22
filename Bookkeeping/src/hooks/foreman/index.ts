@@ -781,6 +781,7 @@ export default function userForeman() {
                 noObjs = true;
               }
               const workList = !noObjs ? [...arr] : [objs,...arr];
+              console.log(workList,'workListworkList')
               // 工人设置工钱
               const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
               if(type == 2){
@@ -1880,8 +1881,9 @@ export default function userForeman() {
           // }
           //获取工人的时候传过来的工人数据
           if (Item) {
+            console.log(111111)
             if(res.data.length>0){
-              setNoset(false)
+              // setNoset(false)
               for (let i = 0; i < Item.length; i++) {
                 for (let j = 0; j < res.data.length; j++) {
                   if (res.data[j].worker_id == Item[i].id) {
@@ -1899,8 +1901,15 @@ export default function userForeman() {
                     }
                     // setNoset(false)
                   }else {
-                    setNoset(true)
+                    // setNoset(true)
                   }
+                }
+              }
+              for(let i =0;i<Item.length;i++){
+                if (!Item[i].set) {
+                  setNoset(false)
+                } else {
+                  setNoset(true)
                 }
               }
             }else{
