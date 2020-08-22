@@ -515,6 +515,9 @@ export default function Index() {
         } else {
           setType(type);
         }
+      }else{
+        setHidden(false)
+        setCloseImage(false)
       }
     }
     // 判断选没有选择时间
@@ -831,7 +834,7 @@ export default function Index() {
     // return;
     // 打开新手指引
     setHidden(true)
-    setCloseImage(false);
+    setCloseImage(true);
     setDisplay(false)
   }
   //身份
