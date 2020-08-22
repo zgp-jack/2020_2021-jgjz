@@ -281,8 +281,8 @@ export default function Index() {
                   midData.worker_id = res.data.worker_id;
                   midData.yupao_id = res.data.yupao_id;
                   Taro.setStorageSync(MidData, midData);
-                  setIsModal(true);
-                  getData();
+                  // setIsModal(true);
+                  getData('','',true);
                   // setCloseImage(true);
                 }
               })
@@ -442,7 +442,7 @@ export default function Index() {
     })
   }
   // 获取首页数据
-  const getData = (e?: string, type?: number) => {
+  const getData = (e?: string, type?: number|string,isModal?:boolean) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
     console.log(jump,'======')
