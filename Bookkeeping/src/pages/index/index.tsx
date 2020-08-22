@@ -511,6 +511,7 @@ export default function Index() {
       time: changeTime,
       identity,
     }
+    if (!identity) return;
     console.log(midData,'内容midData')
     if (midData) {
       bkIndexAction(params).then(res => {
