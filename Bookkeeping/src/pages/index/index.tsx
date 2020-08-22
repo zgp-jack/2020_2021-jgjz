@@ -783,7 +783,7 @@ export default function Index() {
       setImgClose(true)
       // setHidden(false)
       // 并开启选择身份
-      getData();
+      // getData();
     }
     setImage(url)
   }
