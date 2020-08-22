@@ -457,6 +457,7 @@ export default function Index() {
       console.log('走跳转过来的情况')
       // 40000
       if(isModal){
+        setImgClose(false)
         setHidden(true)
         setCloseImage(true)
         return;
@@ -992,7 +993,7 @@ export default function Index() {
           <Image src={v.url} key={v.id} className='noImages' />
         ))}
         <View className={ImgClose ?'noImages':''}>
-          <Image src={image} className={closeImage ? 'noImages' : 'images'} onClick={() => { hanleImage(image) }} />
+          <Image src={image} className={closeImage ? 'images' : 'noImages'} onClick={() => { hanleImage(image) }} />
         </View>
       </View>
       }
