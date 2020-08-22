@@ -281,13 +281,12 @@ export default function Index() {
                   midData.worker_id = res.data.worker_id;
                   midData.yupao_id = res.data.yupao_id;
                   Taro.setStorageSync(MidData, midData);
-                  getData();
                   setIsModal(true);
+                  getData();
                   // setCloseImage(true);
                 }
               })
             } else if (res.code == 40003) {
-
               let obj: any = {};
               obj.userId = e.referrerInfo.extraData.userId;
               obj.token = e.referrerInfo.extraData.token;
@@ -450,13 +449,19 @@ export default function Index() {
     console.log(isLoginType, '======222')
     console.log(Taro.getStorageSync(Type), '1111======')
     console.log(isModal,'isModalisModalisModalisModal')
+    //  isLoginType 手机号注册过来
+    // jump 其他小程序过来
+    // isModal 4000
+    // identityType  小程序过来200返回以前是否有过选择身份
     if(jump){
       console.log('走跳转过来的情况')
+      // 40000
       if(isModal){
         setHidden(true)
         setCloseImage(true)
         return;
       }
+      // 2000 但是没有选择身份
       if (identityType){
         if (identityType == '0'){
           setHidden(true)
