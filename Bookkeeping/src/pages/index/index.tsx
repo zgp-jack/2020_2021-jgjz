@@ -247,15 +247,28 @@ export default function Index() {
                   token: e.referrerInfo.extraData.token,
                   time: e.referrerInfo.extraData.tokenTime
                 }
-                Taro.setStorageSync(MidData, obj);
+                // Taro.setStorageSync(MidData, obj);
                 Taro.setStorageSync(UserInfo, obj);
-                console.log(MidData,'设置MidData')
+                // console.log(MidData,'设置MidData')
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
                 // isJump = true;
-                jumType = true
-                getData();
+                // getData();
+                bkMemberAuthAction(params).then(res => {
+                  if (res.code !== 200) {
+                    Msg(res.msg);
+                  } else {
+                    let midData = Taro.getStorageSync(UserInfo);
+                    midData.worker_id = res.data.worker_id;
+                    midData.yupao_id = res.data.yupao_id;
+                    Taro.setStorageSync(MidData, midData);
+                    // setIsModal(true);
+                    jumType = true
+                    getData();
+                    // setCloseImage(true);
+                  }
+                })
               }
               // 没有鱼泡账号
             } else if (res.code == 40001) {

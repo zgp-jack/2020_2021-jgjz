@@ -219,9 +219,9 @@ export default function AddTeamMember() {
         group_leader: e.id
       }
       bkSetGroupLeaderAction(params).then(res => {
-        if (res.code !== 200) {
-          Msg(res.msg)
-        }
+        // if (res.code !== 200) {
+        //   Msg(res.msg)
+        // }
       });
       e.group_leader = e.id;
       e.leader_name = e.name;
