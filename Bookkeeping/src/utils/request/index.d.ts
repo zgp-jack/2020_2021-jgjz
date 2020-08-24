@@ -29,6 +29,7 @@ export interface InitUserInfoData {
   sign: InitUserInfoSign
   yupao_id?:any
   worker_id?:any
+  worker_name?:any
 }
 
 interface InitUserInfoSign {

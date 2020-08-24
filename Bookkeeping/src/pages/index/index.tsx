@@ -262,6 +262,7 @@ export default function Index() {
                     let midData = Taro.getStorageSync(UserInfo);
                     midData.worker_id = res.data.worker_id;
                     midData.yupao_id = res.data.yupao_id;
+                    midData.worker_name = res.data.worker_name;
                     Taro.setStorageSync(MidData, midData);
                     // setIsModal(true);
                     jumType = true
@@ -298,6 +299,7 @@ export default function Index() {
                   let midData = Taro.getStorageSync(UserInfo);
                   midData.worker_id = res.data.worker_id;
                   midData.yupao_id = res.data.yupao_id;
+                  midData.worker_name = res.data.worker_name;
                   Taro.setStorageSync(MidData, midData);
                   // setIsModal(true);
                   getData('','',true);

@@ -137,12 +137,12 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
                   content: resItem.msg||''
                 })
               }else{
-
                 console.log(res.data.worker_id,'dsadsadasd')
                 // worker_id = resItem.data.worker_id;
                 // res.data.worker_id = resItem.data.worker_id;
                 let midData = Taro.getStorageSync(MidData);
                 midData.worker_id = resItem.data.worker_id;
+                midData.worker_name = resItem.data.worker_name;
                 Taro.setStorageSync(MidData, midData)
                 // Taro.setStorageSync(MidData, res.data)
                 Taro.setStorageSync(CreationTime, resItem.data.created_time)
@@ -246,6 +246,7 @@ export default function Auth({ display, handleClose, callback}: PROPS) {
             } else {
               // worker_id = resItem.data.worker_id;
               res.data.worker_id = resItem.data.worker_id;
+              res.data.worker_name = resItem.data.worker_name;
               Taro.setStorageSync(MidData, res.data)
               Taro.setStorageSync(CreationTime, resItem.data.created_time)
             }
