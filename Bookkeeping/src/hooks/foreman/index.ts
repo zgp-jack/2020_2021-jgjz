@@ -464,6 +464,7 @@ export default function userForeman() {
     setObj(objs);
     let title:string='',id, time,sum:string='0';
     getBookkeepingDataAction(params).then(res=>{
+      console.log(res,'ressssssssss')
       console.log(res.time,'res.time');
       let today;
       if(res.time){
