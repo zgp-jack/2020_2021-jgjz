@@ -933,7 +933,7 @@ export default function Index() {
     let midData = Taro.getStorageSync(MidData);
     console.log(midData,'midData点击')
     // 判断没有type 
-    // let type = Taro.getStorageSync(Type);
+    let type = Taro.getStorageSync(Type);
     // if (!type && midData ){
     //   setIdentity(true)
     //   return;
@@ -944,18 +944,22 @@ export default function Index() {
       setDisplay(true)
       return;
     }
+    if(midData && (!type || type == 0)){
+      setIdentity(true);
+      return;
+    }
     // 点击记工
     if (state && state != 2) {
       if (busy) {
         Msg('网络错误，请求失败')
         return;
       }
-      console.log(type,'tyep')
-      if(!type || type == 0){
-        console.log(312321312);
-        setIdentity(true);
-        // return;
-      }
+      // console.log(type,'tyep')
+      // if(!type || type == 0){
+      //   console.log(312321312);
+      //   setIdentity(true);
+      //   // return;
+      // }
       // 判断不是0 然后与当前身份不同就是提示
       // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
