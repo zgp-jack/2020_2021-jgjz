@@ -565,6 +565,7 @@ export default function Index() {
       time: changeTime,
       identity,
     }
+    Taro.setStorageSync(Type, identity);
     // if (isModal){
     //   setHidden(true)
     //   setCloseImage(true)
