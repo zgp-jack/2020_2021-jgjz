@@ -493,7 +493,7 @@ export default function Index() {
     }
     // 判断是点开小程序的时候,没有身份让他选择身份
     if (!jump){
-      setDisplay(false);
+      // setDisplay(false);
       if (midData) {
         console.log('走小程序自己的时候')
         let type = Taro.getStorageSync(Type);
@@ -672,6 +672,7 @@ export default function Index() {
     console.log(e,'eeeee');
     console.log(type,'1111');
     let midData = Taro.getStorageSync(MidData);
+    console.log(midData,'miDaadasda')
     if (!midData) {
       setleftTime(false);
       setrightTime(false);
