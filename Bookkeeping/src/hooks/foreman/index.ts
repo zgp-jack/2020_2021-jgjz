@@ -647,11 +647,7 @@ export default function userForeman() {
                   // })
                   workArr.forEach((v,i)=>{
                     res.data.latest_group_worker_has_business.worker.forEach((val,index)=>{
-                      console.log(v,'vq')
-                      console.log(v.id,'vvvv');
-                      console.log(val,'index1')
                       if(val == v.id){
-                        console.log(val[index],'index')
                         v.discipline = true;
                       }
                     })
@@ -4618,6 +4614,9 @@ export default function userForeman() {
     setAllClick(false)
     setCheckAll(false);
     setClickModalNum(0)
+    workerItem.forEach((item) => {
+      delete item.discipline
+    })
     const recorderTypeArrList = JSON.parse(JSON.stringify(recorderTypeArr.item));
     const data = recorderTypeArrList.map(val => {
       if (val.id === v.id) {

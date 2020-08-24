@@ -577,6 +577,7 @@ export default function Index() {
           let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
           let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
           if (res.data.earliest_month) {
+            if(Number(res.data.this_year_business_month)==0) res.data.this_year_business_month = '01';
             setStart(yeartime+'-'+res.data.this_year_business_month);
             if(!e){
               if(Number(res.data.this_year_business_month)==montime){
