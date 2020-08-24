@@ -528,6 +528,7 @@ export default function Index() {
         let type = Taro.getStorageSync(Type);
         console.log(type,'type')
         if (!type || type === 0) {
+          setDisplay(false);
           setIdentity(true)
           return
         } else {
