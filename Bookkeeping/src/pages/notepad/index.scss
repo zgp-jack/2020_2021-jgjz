@@ -44,9 +44,11 @@
 }
 .footer{
   position: fixed;
-  bottom: 50rpx;
+  bottom: 0rpx;
   left: 0rpx;
   width: 100%;
+  padding-bottom: 20rpx;
+  background-color: #fff;
 }
 .footer-btn{
   width:690rpx;

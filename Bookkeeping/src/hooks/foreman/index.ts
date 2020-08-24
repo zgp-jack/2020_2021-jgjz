@@ -363,6 +363,9 @@ export default function userForeman() {
   // 设置年月日小于0前面加0
   useEffect(()=>{
     let type = Taro.getStorageSync(Type);
+    let mid = Taro.getStorageSync(MidData);
+    console.log(mid,'MidDataMidDataMidData');
+    console.log(type ,'tyndsandjasndlk')
     // 设置身份
     setIdentity(type);
     if (useSelectorItem.workerList.length > 0){
@@ -423,12 +426,14 @@ export default function userForeman() {
       setWorkerItem(item)
       noData = false;
     }else{
+      console.log(231321321312);
       if(noData) return;
       getList();
     }
   }, [useSelectorItem.workerList])
   // 设置默认数据
   const getList = (businessType?:number)=>{
+    console.log('默认请求')
     // 缓存数据
     let midData = Taro.getStorageSync(MidData)
     // 获取通讯里信息
@@ -450,15 +455,24 @@ export default function userForeman() {
       identity,
       business_type: paramsId,
     }
+    console.log(params,'params')
+    console.log(midData,'midDatamidDatamidData')
     // getMonthDaysCurrent(new Date());
     // 首先定义自己
     const objs = JSON.parse(JSON.stringify(obj))
-    objs.name = midData.nickname || '未命名';
+    objs.name = midData.worker_name || '未命名';
     objs.id = midData.worker_id;
     setObj(objs);
     let title:string='',id, time,sum:string='0';
     getBookkeepingDataAction(params).then(res=>{
-      const today = res.time;
+      console.log(res,'ressssssssss')
+      console.log(res.time,'res.time');
+      let today;
+      if(res.time){
+        today = res.time;
+      }else{
+        today = new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDay();
+      }
       // 设置日历
       let dayObj = {
         date: today.split('-')[2],
@@ -594,6 +608,7 @@ export default function userForeman() {
                 setCacheWage(wageStandardData)
               }
             }else{
+              console.log(11111)
               for (let i = 0; i < workArr.length; i++) {
                 workArr[i].set = false;
               }
@@ -611,15 +626,35 @@ export default function userForeman() {
                 if (res.data.latest_group_worker_has_business.worker.length > 0) {
                   // 设置缓存
                   setCache(res.data.latest_group_worker_has_business.worker)
-                  for (let i = 0, len = workArr.length; i < len; i++) {
-                    for (let j = 0, setLen = res.data.latest_group_worker_has_business.worker.length; j < setLen; j++) {
-                      // workArr[i].discipline = true;
-                      if (res.data.latest_group_worker_has_business.worker[j] == workArr[i].id) {
-                        console.log(res.data.latest_group_worker_has_business.worker[j],'res.data.latest_group_worker_has_business.worker[j]')
-                        workArr[i].discipline = true;
+                  // for (let i = 0, len = workArr.length; i < len; i++) {
+                  //   for (let j = 0, setLen = res.data.latest_group_worker_has_business.worker.length; j < setLen; j++) {
+                  //         workArr[i].discipline = false;
+                  //     if (res.data.latest_group_worker_has_business.worker[j] == workArr[i].id) {
+                  //       console.log(res.data.latest_group_worker_has_business.worker[j],'res.data.latest_group_worker_has_business.worker[j]')
+                  //       workArr[i].discipline = true;
+                  //     }
+                  //   }
+                  // }
+                  // const arr = workArr.map(v=>{
+                  //   res.data.latest_group_worker_has_business.worker.map(val=>{
+                  //     if(v.id == val ){
+                  //       v.discipline = true;
+                  //     }else{
+                  //       v.discipline = false; 
+                  //     }
+                  //     return val;
+                  //   })
+                  //   return v;
+                  // })
+                  workArr.forEach((v,i)=>{
+                    res.data.latest_group_worker_has_business.worker.forEach((val,index)=>{
+                      if(val == v.id){
+                        v.discipline = true;
                       }
-                    }
-                  }
+                    })
+                  })
+                  console.log(arr,'arr')
+                  console.log(workArr,'workArr')
                 }
                 // 日历
                 let dateItem:any[] =[];
@@ -1758,7 +1793,7 @@ export default function userForeman() {
                 // bkGetWorker('',true)
                 let midData = Taro.getStorageSync(MidData)
                 const objs = JSON.parse(JSON.stringify(obj))
-                objs.name = midData.nickname || '未命名';
+                objs.name = midData.worker_name || '未命名';
                 objs.id = midData.worker_id;
                 setWorkerItem([objs])
                 const data = JSON.parse(JSON.stringify(timeArr));
@@ -1814,7 +1849,7 @@ export default function userForeman() {
                 // 删除项目后设置工人
                 let midData = Taro.getStorageSync(MidData)
                 const objs = JSON.parse(JSON.stringify(obj))
-                objs.name = midData.nickname || '未命名';
+                objs.name = midData.worker_name || '未命名';
                 objs.id = midData.worker_id;
                 setWorkerItem([objs])
                 setGroupInfo('')
@@ -1888,6 +1923,8 @@ export default function userForeman() {
           //获取工人的时候传过来的工人数据
           if (Item) {
             console.log(111111)
+            console.log(Item,'itme');
+            console.log(res.data,'res.data');
             if(res.data.length>0){
               // setNoset(false)
               for (let i = 0; i < Item.length; i++) {
@@ -1911,13 +1948,17 @@ export default function userForeman() {
                   }
                 }
               }
+              console.log(Item,'ITEM')
+              let noSet:boolean= true;
               for(let i =0;i<Item.length;i++){
                 if (!Item[i].set) {
-                  setNoset(false)
-                } else {
-                  setNoset(true)
-                }
+                  noSet = false
+                } 
+                // else {
+                //   setNoset(true)
+                // }
               }
+              setNoset(noSet);
             }else{
               setNoset(false)
             }
@@ -2168,7 +2209,7 @@ export default function userForeman() {
             // const objs = JSON.parse(JSON.stringify(obj));
             let midData = Taro.getStorageSync(MidData)
             let objs: any = {};
-            objs.name = midData.nickname || '未命名';
+            objs.name = midData.worker_name || '未命名';
             objs.id = midData.worker_id;
             setObj(objs);
             // 选择另一个项目的情况
@@ -3283,7 +3324,7 @@ export default function userForeman() {
       }
     // 获取ID
     let workers: number[] = [];
-    if (identity === 1) {
+    if (identity == 1) {
       for (let i = 0; i < workerItem.length; i++) {
         if (workerItem[i].click) {
           workers.push(workerItem[i].id)
@@ -3298,7 +3339,7 @@ export default function userForeman() {
     }
     
     // 工人ID传自己
-    if (identity === 2) {
+    if (identity == 2) {
       // workers = 
       const midData = Taro.getStorageSync(MidData);
       workers = midData.worker_id;
@@ -3410,10 +3451,10 @@ export default function userForeman() {
       }
     } else if (tabData.id === 3) {
       // 借支没钱不能保存
-      if (!item.borrowing) {
-        Msg('您还没有填写借支')
-        return;
-      }
+      // if (!item.borrowing) {
+      //   Msg('您还没有填写借支')
+      //   return;
+      // }
       console.log(item.borrowing,'item.borrowingitem.borrowing')
       params = {
         // 记工类型
@@ -3444,7 +3485,10 @@ export default function userForeman() {
     const foremanTitles = JSON.parse(JSON.stringify(foremanTitle))
     // 记工(包工按量)
     // 工人记工的时候，没有选择项目名称，为他默认一个
-    if (identity === 2) {
+    if (projectArr.length === 0){
+      params.group_info = '';
+    }
+    if (identity == 2) {
         // 没有项目&&记工和包工点工的时候需要传
       console.log(projectArr.length,'projectArr.length');
       console.log(tabData.id,'tabData.id')
@@ -3562,10 +3606,11 @@ export default function userForeman() {
     data.name = v.group_name + '-' + v.name;
     const name = v.group_name + '-' + v.name;
     let groupInfos = v.group_id + ',' + v.id;
+    setLeader_id('');
     setGroupInfo(groupInfos)
     setProjectId(v.group_id + ',' + v.id)
     //工人
-    if (identity === 2) {
+    if (identity == 2) {
       if (v.leader_name) {
         setForemanTitle(v.leader_name)
       } else {
@@ -4101,12 +4146,24 @@ export default function userForeman() {
             if (data[i].id == worker_ids[j]) {
               data[i].set = true;
               data[i].del = false;
-              setNoset(true)
+              // setNoset(true)
             } else {
-              setNoset(false)
+              // setNoset(false)
             }
           }
         }
+        console.log(data,'dataaaa')
+        let noset:boolean = true;
+        for (let j = 0; j < data.length; j++) {
+          if (!data[j].set) {
+            // setNoset(false)
+            noset = false
+          }
+          //  else {
+          //   setNoset(true)
+          // }
+        }
+        setNoset(noset)
         setTimeout(() => {
           setIsdisable(false)
         });
@@ -4559,6 +4616,9 @@ export default function userForeman() {
     setAllClick(false)
     setCheckAll(false);
     setClickModalNum(0)
+    workerItem.forEach((item) => {
+      delete item.discipline
+    })
     const recorderTypeArrList = JSON.parse(JSON.stringify(recorderTypeArr.item));
     const data = recorderTypeArrList.map(val => {
       if (val.id === v.id) {

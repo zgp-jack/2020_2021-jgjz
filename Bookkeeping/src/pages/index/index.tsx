@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump,First } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
@@ -24,6 +24,8 @@ let loginType = false;
 // let isJump = false;
 let authType = true;
 let jumType = false;
+// 跳转type
+let jumpType:string|number = 0;
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -215,8 +217,9 @@ export default function Index() {
   const getAppShowData = ()=>{
     const data = Taro.getStorageSync(Res);
     if (data) {
-      const jump = Taro.getStorageSync(IsJump);
-      if (jump)return;
+      const first = Taro.getStorageSync(First);
+      console.log(first,'firsttttttt')
+      if (first)return;
       const e = data;
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
@@ -228,7 +231,9 @@ export default function Index() {
           }
           appletJumpAction(params).then(res => {
             console.log(res,'跳转获取的值')
+            console.log(e.referrerInfo.extraData,'e.referrerInfo.extraData.userId ')
             Taro.setStorageSync(IsJump, true);
+            Taro.setStorageSync(First,true)
             // 直接返回记工记账用户信息
             if (res.code == 200) {
               if (res.data) {
@@ -244,14 +249,29 @@ export default function Index() {
                   token: e.referrerInfo.extraData.token,
                   time: e.referrerInfo.extraData.tokenTime
                 }
-                Taro.setStorageSync(MidData, obj);
-                console.log(MidData,'设置MidData')
+                // Taro.setStorageSync(MidData, obj);
+                Taro.setStorageSync(UserInfo, obj);
+                // console.log(MidData,'设置MidData')
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
                 // isJump = true;
-                jumType = true
-                getData();
+                // getData();
+                bkMemberAuthAction(params).then(resItem => {
+                  if (resItem.code !== 200) {
+                    Msg(resItem.msg);
+                  } else {
+                    let midData = Taro.getStorageSync(UserInfo);
+                    midData.worker_id = resItem.data.worker_id;
+                    midData.yupao_id = resItem.data.yupao_id;
+                    midData.worker_name = resItem.data.worker_name;
+                    Taro.setStorageSync(MidData, midData);
+                    // setIsModal(true);
+                    jumType = true
+                    getData();
+                    // setCloseImage(true);
+                  }
+                })
               }
               // 没有鱼泡账号
             } else if (res.code == 40001) {
@@ -270,16 +290,18 @@ export default function Index() {
               }
               // 要存UserInfo
               Taro.setStorageSync(UserInfo, obj);
+              Taro.setStorageSync(MidData, obj);
               let params = {
                 mid: e.referrerInfo.extraData.userId,
               }
-              bkMemberAuthAction(params).then(res => {
-                if (res.code !== 200) {
-                  Msg(res.msg);
+              bkMemberAuthAction(params).then(resItem => {
+                if (resItem.code !== 200) {
+                  Msg(resItem.msg);
                 } else {
                   let midData = Taro.getStorageSync(UserInfo);
-                  midData.worker_id = res.data.worker_id;
-                  midData.yupao_id = res.data.yupao_id;
+                  midData.worker_id = resItem.data.worker_id;
+                  midData.yupao_id = resItem.data.yupao_id;
+                  midData.worker_name = resItem.data.worker_name;
                   Taro.setStorageSync(MidData, midData);
                   // setIsModal(true);
                   getData('','',true);
@@ -297,6 +319,7 @@ export default function Index() {
               }
               obj.tokenTime = e.referrerInfo.extraData.tokenTime;
               Taro.setStorageSync(UserInfo, obj);
+              Taro.setStorageSync(MidData, obj);
               // 设置点击直接跳转到注册手机号页面
               // setLoginStatus(true);
               // loginType = true;
@@ -313,6 +336,10 @@ export default function Index() {
     }
   }
   useDidShow(() => {
+    console.log('aaaaaaaaaaaaa');
+    // setIdentity(false);
+    setImgClose(false);
+    setCloseImage(false);
     Taro.setStorageSync(IsShare,false)
     // setHidden(true)
     // setCloseImage(false)
@@ -445,12 +472,13 @@ export default function Index() {
   const getData = (e?: string, type?: number|string,isModal?:boolean) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
+    console.log(jump,'IsJumpIsJumpIsJump')
     //  isLoginType 手机号注册过来
     // jump 其他小程序过来
     // isModal 4000
     // identityType  小程序过来200返回以前是否有过选择身份
     if(jump){
-      console.log('走跳转过来的情况')
+      Taro.setStorageSync(IsJump, false);
       // 40000
       if(isModal){
         setImgClose(false)
@@ -465,6 +493,8 @@ export default function Index() {
           setCloseImage(true)
           return;
         }
+        setType(Number(identityType));
+        Taro.setStorageSync(IsJump, false);
         Taro.setStorageSync(Type, identityType);
       }else{
         setHidden(true)
@@ -497,14 +527,17 @@ export default function Index() {
     let identity;
     if (type) {
       identity = type;
+      jumpType = type;
     } else {
       identity = Taro.getStorageSync(Type);
+      jumpType = identity;
     }
     // 判断是点开小程序的时候,没有身份让他选择身份
     if (!jump){
       if (midData) {
         console.log('走小程序自己的时候')
         let type = Taro.getStorageSync(Type);
+        console.log(type,'type')
         if (!type || type === 0) {
           setIdentity(true)
           return
@@ -536,6 +569,7 @@ export default function Index() {
       time: changeTime,
       identity,
     }
+    // Taro.setStorageSync(Type, identity);
     // if (isModal){
     //   setHidden(true)
     //   setCloseImage(true)
@@ -544,9 +578,11 @@ export default function Index() {
     if (!identity) return;
     console.log(midData,'内容midData')
     if (midData) {
+      console.log(params,'请求')
       bkIndexAction(params).then(res => {
         console.log('请求')
         if (res.code === 200) {
+          Taro.setStorageSync(IsJump, false);
           setNoRequest(true)
           setBusy(false)
           setItem(res.data);
@@ -563,6 +599,7 @@ export default function Index() {
           let montime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(5, 7));
           let yeartime = parseInt(JSON.stringify(new Date()).slice(1, 11).slice(0, 4));
           if (res.data.earliest_month) {
+            if(Number(res.data.this_year_business_month)==0) res.data.this_year_business_month = '01';
             setStart(yeartime+'-'+res.data.this_year_business_month);
             if(!e){
               if(Number(res.data.this_year_business_month)==montime){
@@ -672,6 +709,8 @@ export default function Index() {
   }
   // 切换角色
   const handelChange = (e, type?: boolean) => {
+    console.log(e,'eeeee');
+    console.log(type,'1111');
     let midData = Taro.getStorageSync(MidData);
     if (!midData) {
       setleftTime(false);
@@ -840,6 +879,7 @@ export default function Index() {
     setIdentity(false)
     Taro.setStorageSync(Type, e);
     Taro.setStorageSync(IsLoginType, e)
+    Taro.setStorageSync(IsJump, false);
     getData();
   }
   // 关闭创建项目
@@ -896,24 +936,64 @@ export default function Index() {
     }
     let midData = Taro.getStorageSync(MidData);
     console.log(midData,'midData点击')
+    // 判断没有type 
+    let type = Taro.getStorageSync(Type);
+    console.log(type,'tyep')
+    // if (!type && midData ){
+    //   setIdentity(true)
+    //   return;
+    // }
     if (!midData) {
       // 游客点中间没反应
       if (state == 2) { return }
       setDisplay(true)
       return;
     }
+    // if(midData && (type ==0 || !type)){
+    //   console.log('aaa')
+    //   console.log(identity,'状态');
+    //   setIdentity(true);
+    //   console.log('走这了嗷嗷')
+    //   // return;
+    // }
     // 点击记工
     if (state && state != 2) {
       if (busy) {
         Msg('网络错误，请求失败')
         return;
       }
+      // console.log(type,'tyep')
+      // if(!type || type == 0){
+      //   console.log(312321312);
+      //   setIdentity(true);
+      //   // return;
+      // }
       // 判断不是0 然后与当前身份不同就是提示
       // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
+      console.log(lasted_business_identity,'lasted_business_identity');
+      console.log(type,'type');
+      console.log(neverPrompt,'neverPrompt')
+      console.log(parseInt(lasted_business_identity),'lasted_business_identity12231');
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
-        setTips(true)
+        // if(type && type != 0){
+        // console.log(lasted_business_identity, 'lasted_business_identity1');
+        // console.log(type, 'type1');
+        // console.log(neverPrompt, 'neverPrompt1')
+        //   console.log('来了');
+        //   setIdentity(true)
+        // if()
+          // setIdentity(true);
+        if (isNaN(type) || type == 0 ){
+          setIdentity(true)
+        }else{
+          setTips(true)
+        }
+        // }
         return;
       } else {
+        console.log(lasted_business_identity, 'lasted_business_identity2');
+        console.log(type, 'type2');
+        console.log(neverPrompt, 'neverPrompt2')
         if (type === 1) {
           if(ishandleJump){
             setishandleJump(false)
@@ -921,6 +1001,9 @@ export default function Index() {
           }
           return;
         } else {
+          console.log(lasted_business_identity, 'lasted_business_identity3');
+          console.log(type, 'type3');
+          console.log(neverPrompt, 'neverPrompt3')
           handelChange(type, true)
         }
       }
@@ -999,7 +1082,9 @@ export default function Index() {
           <Image src={v.url} key={v.id} className='noImages' />
         ))}
         <View className={ImgClose ?'noImages':''}>
+          <View className={closeImage ?'ImgBox':''}>
           <Image src={image} className={closeImage ? 'images' : 'noImages'} onClick={() => { hanleImage(image) }} />
+          </View>
         </View>
       </View>
       }
@@ -1123,7 +1208,7 @@ export default function Index() {
             </View>
           </View>
           <View className='btnBox'>
-            <View className='btn' onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`,true)}>
+            <View className='btn' onClick={() => handleJump(`/pages/recorder/index?type=${jumpType}&stateType=1`,true)}>
               {!item || (item && item.business_list.data.length === 0) ? <Text className='fontSize'> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text  className='fontSize'> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
@@ -1252,7 +1337,8 @@ export default function Index() {
         </View>
       </AtModal>
       {/* 选择身份弹窗 */}
-      <AtModal isOpened={identity} closeOnClickOverlay={false} >
+      <View className={identity ? '' :'noImages'}>
+      <AtModal isOpened={true} closeOnClickOverlay={false} >
         <View className='useAtModal'>
           <View className='useAtModal-title'>请根据需要选择您的身份</View>
           <View className='useAtModal-tips'>温馨提示：选对身份，才能使用想要的功能哦</View>
@@ -1272,6 +1358,7 @@ export default function Index() {
           </View>
         </View>
       </AtModal>
+      </View>
       {/* 授权 */}
       <Auth display={display} handleClose={handleClose} callback={handleCallback} />
       {/* 创建项目 */}

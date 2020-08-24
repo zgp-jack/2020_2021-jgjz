@@ -12,11 +12,12 @@ export default function Recorder() {
   useEffect(()=>{
     // let userInfo = Taro.getStorageSync(UserInfo)
     const type = Taro.getStorageSync(Type)
+    console.log(type,'typeeeeeeee')
     // console.log(userInfo,'userInfouserInfo')
     // console.log(typeof userInfo.type,'xxxx')
     
     // 有type就是班长 1 
-    if (type === 1){
+    if (type == 1){
       Taro.setNavigationBarTitle({
         title: '我是班组长，开始记工'
       })
