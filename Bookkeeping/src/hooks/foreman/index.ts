@@ -464,6 +464,7 @@ export default function userForeman() {
     const objs = JSON.parse(JSON.stringify(obj))
     objs.name = midData.worker_name || '未命名';
     objs.id = midData.worker_id;
+    
     setObj(objs);
     let title:string='',id, time,sum:string='0';
     getBookkeepingDataAction(params).then(res=>{
