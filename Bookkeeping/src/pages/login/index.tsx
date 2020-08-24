@@ -199,7 +199,7 @@ export default function Login() {
               Taro.redirectTo({ url: `/pages/index/index` });
               Taro.setStorageSync(Sign, true);
               Taro.setStorageSync(IsLogion, false);
-              Taro.setStorageSync(IsLogion, false);
+              // Taro.setStorageSync(IsLogion, false);
             }
           })
         }else{
