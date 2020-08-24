@@ -637,7 +637,7 @@ export default function FlowingWater() {
                         </View>}
                       </View>
                       <View className={val.business_type == '3'?'content-list-subclass-borrow':'content-list-subclass-money'}>
-                        <Text>¥{val.money && (parseFloat(val.money) > 9999999.99) ? String(val.money).slice(0, 7) + '...' : val.money || '0.00'}</Text>
+                        <Text>¥{val.money && (parseFloat(val.money) > 9999999.99) ? String(val.money).slice(0, 7) + '...' : toFixedFn(val.money) || '0.00'}</Text>
                         <View className="moneyicon"></View>
                       </View>
                     </View>
