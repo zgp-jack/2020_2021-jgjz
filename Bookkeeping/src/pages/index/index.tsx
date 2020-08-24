@@ -974,8 +974,12 @@ export default function Index() {
       console.log(neverPrompt,'neverPrompt')
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
         // if(type && type != 0){
+        console.log(lasted_business_identity, 'lasted_business_identity1');
+        console.log(type, 'type1');
+        console.log(neverPrompt, 'neverPrompt1')
           console.log('来了');
-          setTips(true)
+          setIdentity(true)
+          setTips(false)
         // }
         return;
       } else {
