@@ -4154,13 +4154,18 @@ export default function userForeman() {
             }
           }
         }
+        console.log(data,'dataaaa')
+        let noset:boolean = true;
         for (let j = 0; j < data.length; j++) {
           if (!data[j].set) {
-            setNoset(false)
-          } else {
-            setNoset(true)
+            // setNoset(false)
+            noset = false
           }
+          //  else {
+          //   setNoset(true)
+          // }
         }
+        setNoset(noset)
         setTimeout(() => {
           setIsdisable(false)
         });
