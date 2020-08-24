@@ -192,6 +192,7 @@ export default function Login() {
             } else {
               let midData = Taro.getStorageSync(MidData);
               midData.worker_id = res.data.worker_id;
+              midData.worker_id = res.data.worker_name;
               Taro.setStorageSync(MidData, midData)
               Taro.setStorageSync(IsLoginType, 1);
               Taro.navigateBack();
