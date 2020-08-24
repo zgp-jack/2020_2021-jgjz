@@ -224,6 +224,7 @@ export default function Index() {
       console.log(first,'firsttttttt');
       console.log(data,'啊啊啊啊啊试试');
       if (first)return;
+
       const e = data;
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
@@ -233,6 +234,7 @@ export default function Index() {
             token: e.referrerInfo.extraData.token,
             tokenTime: e.referrerInfo.extraData.tokenTime
           }
+          console.log('走这里')
           appletJumpAction(params).then(res => {
             console.log(res,'跳转获取的值')
             console.log(e.referrerInfo.extraData,'e.referrerInfo.extraData.userId ')
