@@ -345,12 +345,10 @@ export default function Index() {
   useDidShow(() => {
     const sign = Taro.getStorageSync(Sign);
     if (sign) {
-      console.log(11111);
       setHidden(true)
       setCloseImage(true)
       return;
     }
-    console.log('aaaaaaaaaaaaa');
     // setIdentity(false);
     setImgClose(false);
     setCloseImage(false);
@@ -412,27 +410,6 @@ export default function Index() {
     } else if(Number(this_year_business_month)<montime){
       setleftTime(true);
     }
-    // let midParams = {
-    //   mid: userInfo.userId,
-    // }
-    // 登陆了就获取信息
-    // let midData = Taro.getStorageSync(MidData);
-    // if (midData) {
-    //   bkMemberAuthAction(midParams).then(res => {
-    //     if (res.code !== 200) {
-    //       Msg(res.msg)
-    //     } else {
-    //       console.log(res, 'ressssssssssss')
-    //       let userInfo = Taro.getStorageSync(UserInfo)
-    //       res.data.sign = {}
-    //       res.data.sign.token = userInfo.token;
-    //       res.data.sign.time = res.data.created_time;
-    //       res.data.uuid = userInfo.uuid;
-    //       // res.data.worker_id = res.data.worker_id;
-    //       Taro.setStorageSync(MidData, res.data)
-    //     }
-    //   })
-    // }
   })
   // 获取项目名称
   const bkGetProjectTeam = (dignity, state?: number) => {
@@ -489,23 +466,16 @@ export default function Index() {
         setCloseImage(true)
         return;
       }
-      
     }
     console.log(jump,'====jump=====');
     // 登陆过来的
-    if (isLoginType == 1) {
-      setHidden(false)
-      setCloseImage(false);
-      return;
-    }
-    console.log(isLoginType,'isLoginTypeisLoginType')
-    console.log(identityType,'identityType')
-    // if (identityType) {
-    //   if (identityType == '0' ){
-    //     setCloseImage(true)
-    //   }
-    //   Taro.setStorageSync(Type, identityType);
+    // if (isLoginType == 1) {
+    //   setHidden(false)
+    //   setCloseImage(false);
+    //   return;
     // }
+    // console.log(isLoginType,'isLoginTypeisLoginType')
+    // console.log(identityType,'identityType')
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
     console.log(midData,'midDatamidDatamidData')
