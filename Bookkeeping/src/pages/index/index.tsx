@@ -934,10 +934,10 @@ export default function Index() {
     console.log(midData,'midData点击')
     // 判断没有type 
     let type = Taro.getStorageSync(Type);
-    if (!type && midData ){
-      setIdentity(true)
-      return;
-    }
+    // if (!type && midData ){
+    //   setIdentity(true)
+    //   return;
+    // }
     if (!midData) {
       // 游客点中间没反应
       if (state == 2) { return }
