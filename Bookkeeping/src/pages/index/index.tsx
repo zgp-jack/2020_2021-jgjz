@@ -717,6 +717,7 @@ export default function Index() {
   }
   // 跳转
   const userRouteJump = (url: string) => {
+    noLogion=false;
     Taro.navigateTo({
       url: url
     })
