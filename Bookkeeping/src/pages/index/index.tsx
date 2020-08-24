@@ -230,6 +230,7 @@ export default function Index() {
           }
           appletJumpAction(params).then(res => {
             console.log(res,'跳转获取的值')
+            console.log(e.referrerInfo.extraData,'e.referrerInfo.extraData.userId ')
             Taro.setStorageSync(IsJump, true);
             // 直接返回记工记账用户信息
             if (res.code == 200) {
