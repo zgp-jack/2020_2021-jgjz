@@ -17,7 +17,7 @@ export default function Recorder() {
     // console.log(typeof userInfo.type,'xxxx')
     
     // 有type就是班长 1 
-    if (type === 1){
+    if (type == 1){
       Taro.setNavigationBarTitle({
         title: '我是班组长，开始记工'
       })
