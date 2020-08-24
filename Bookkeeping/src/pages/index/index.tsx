@@ -218,7 +218,7 @@ export default function Index() {
     const data = Taro.getStorageSync(Res);
     if (data) {
       const first = Taro.getStorageSync(First);
-      if (First)return;
+      if (first)return;
       const e = data;
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
@@ -536,6 +536,7 @@ export default function Index() {
       if (midData) {
         console.log('走小程序自己的时候')
         let type = Taro.getStorageSync(Type);
+        console.log(type,'type')
         if (!type || type === 0) {
           setIdentity(true)
           return

@@ -3609,6 +3609,7 @@ export default function userForeman() {
     data.name = v.group_name + '-' + v.name;
     const name = v.group_name + '-' + v.name;
     let groupInfos = v.group_id + ',' + v.id;
+    setLeader_id('');
     setGroupInfo(groupInfos)
     setProjectId(v.group_id + ',' + v.id)
     //工人
