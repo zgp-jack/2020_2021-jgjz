@@ -980,7 +980,10 @@ export default function Index() {
         // console.log(neverPrompt, 'neverPrompt1')
         //   console.log('来了');
         //   setIdentity(true)
-          setTips(true)
+        // if()
+          setIdentity(true);
+          // setTips(true)
+
         // }
         return;
       } else {
