@@ -456,6 +456,7 @@ export default function userForeman() {
       business_type: paramsId,
     }
     console.log(params,'params')
+    console.log(midData,'midDatamidDatamidData')
     // getMonthDaysCurrent(new Date());
     // 首先定义自己
     const objs = JSON.parse(JSON.stringify(obj))
