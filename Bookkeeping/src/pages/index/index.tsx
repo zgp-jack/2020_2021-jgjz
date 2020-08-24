@@ -959,7 +959,9 @@ export default function Index() {
       // 判断不是0 然后与当前身份不同就是提示
       // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
-        setTips(true)
+        if(type && type !== 0 ){
+          setTips(true)
+        }
         return;
       } else {
         if (type === 1) {
