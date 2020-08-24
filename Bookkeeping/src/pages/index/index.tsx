@@ -949,7 +949,7 @@ export default function Index() {
       console.log('aaa')
       setIdentity(true);
       console.log('走这了嗷嗷')
-      // return;
+      return;
     }
     // 点击记工
     if (state && state != 2) {
