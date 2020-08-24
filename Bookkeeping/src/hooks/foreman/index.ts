@@ -4454,8 +4454,6 @@ export default function userForeman() {
     // setCalendarDays(calendar);
     // setClickData([]);
     setCalendarModalDisplay(false);
-    setleftTime(true)
-    setrightTime(false)
     setTimeout(() => {
       setIsdisable(false)
     });
@@ -4521,8 +4519,6 @@ export default function userForeman() {
     setTimeData(data);
     // 关闭
     setCalendarModalDisplay(false);
-    setleftTime(true)
-    setrightTime(false)
     setTimeout(() => {
       setIsdisable(false)
     });
@@ -4865,6 +4861,9 @@ export default function userForeman() {
     handleDelInput,
     noCalendarDay,
     leftTime,
-    rightTime
+    setleftTime,
+    rightTime,
+    setrightTime,
+    toDayString
   }
 }
