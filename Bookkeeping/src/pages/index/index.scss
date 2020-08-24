@@ -6,7 +6,7 @@ page{
 }
 .top{
   position: relative;
-  // height:517rpx;
+  height:526rpx;
   color: #fff;
   // background: url('../../assets/images/background.png') no-repeat center center;
   background-size: cover;
@@ -237,15 +237,27 @@ scroll-view{
 .content-list-box{
   padding: 0 60rpx;
   height:310rpx;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
-.scrollViewBox ::-webkit-scrollbar{
+.scrollViewBox ::-webkit-scrollbar,.content-list-box::-webkit-scrollbar{
   width: 0;
   height: 0;
   color: transparent;
 }
+
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+//保证出现滚动条,ios没有滚动条拉动全局
+.isscroll{
+  padding-bottom:30rpx; 
+}
 .scrollWorker{
-  height:315rpx;
+  // height:325rpx;
 }
 .content-list{
   display: flex;
@@ -264,12 +276,27 @@ scroll-view{
   font-weight:400;
   color:rgba(175, 175, 175, 1);
 }
-.jumpBox{
+.movable_top{
+  bottom: calc(120rpx + 42rpx + 82rpx + 66rpx);
+}
+.movable_b{
+  bottom: calc(120rpx + 42rpx - 82rpx);
+}
+.jumpBox-movable{
   position: fixed;
-  bottom: 96rpx;
+  height:140rpx;
+  width: 82rpx;
   right: 30rpx;
+  // background: red;
+}
+.jumpBox{
+  // position: fixed;
+  // bottom: 96rpx;
+  // right: 30rpx;
+  width: 82rpx;
   font-size: 18rpx;
 }
+
 .jumpItem {
   box-shadow:0rpx 10rpx 15rpx 0rpx rgba(1, 116, 192, 0.45);
   border-radius:50%;
@@ -278,7 +305,7 @@ scroll-view{
   color: #fff;
   text-align: center;
   background: rgba(0, 153, 255, 1);
-  margin-bottom: 26rpx;
+  // margin-bottom: 26rpx;
 }
 .jumpItem-icon {
   height: 32rpx;
@@ -345,11 +372,12 @@ scroll-view{
 }
 .content-list-flex .details{
   display: inline-block;
-  max-width: 54vw;
+  max-width: 58vw;
 }
 .no-title .icon{
-  vertical-align: 92%;
-  margin:0;
+  margin-top: 16rpx;
+  margin-bottom: 21rpx;
+  vertical-align: top;
 }
 
 .content-list-flex-title{
@@ -617,4 +645,7 @@ scroll-view{
 }
 .fontSize{
   font-size: 36rpx;
+}
+.borrow-blue{
+  color: #0099FF;
 }

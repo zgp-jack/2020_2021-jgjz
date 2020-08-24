@@ -1,5 +1,5 @@
 import Taro, { useEffect, useState, useDidShow, onAppShow } from '@tarojs/taro'
-import { View, Text, Picker, ScrollView, Image } from '@tarojs/components'
+import { View, Text, Picker, ScrollView, Image , MovableArea , MovableView } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction, appletJumpAction } from '../../utils/request/index';
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
@@ -1067,6 +1067,12 @@ export default function Index() {
     setCreateProjectDisplay(false);
     setProject(true)
   }
+
+
+  //图标拖拽效果
+  const dragging = (e:any) =>{
+    debugger
+  }
   return (
     <View className='index-content'>
       {/* <UseNavInfo/> */}
@@ -1236,19 +1242,21 @@ export default function Index() {
               // onScroll={getNextPageData}
               onScrollToLower={() => getNextPageData()}
             >
-              {list.map((v, i) => (
-                <View key={i + i} className='content-list' onClick={getNextPageData}>
-                  {/* {v.arr.map(val=>( */}
-                  <View>
-                    <View className='content-list-flex'>
-                      <View>{v.workername}{(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}</View>
+              <View className='isscroll'>
+                {list.map((v, i) => (
+                  <View key={i + i} className='content-list' onClick={getNextPageData}>
+                    {/* {v.arr.map(val=>( */}
+                    <View>
+                      <View className='content-list-flex'>
+                        <View>{v.workername}{(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}</View>
+                      </View>
+                      <View className='details'>我在{v.group_info}对{v.workername}记了一笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
                     </View>
-                    <View className='details'>我在{v.group_info}项目组对{v.workername}记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
+                    <View className={v.business_type==3?'orgion borrow-blue':'orgion'}><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
+                    {/* // ))} */}
                   </View>
-                  <View className={v.business_type==3?'orgion borrow-blue':'orgion'}><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
-                  {/* // ))} */}
-                </View>
-              ))}
+                ))}
+              </View>
             </ScrollView>
             {list.length >= 3 && <View onClick={getNextPageData} className='last'>
               <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}downIcon.png`} />
@@ -1266,22 +1274,24 @@ export default function Index() {
               // scrollWithAnimation={true}
               onScrollToLower={getNextPageData}
             >
+            <View className='isscroll'>
               {list.map((v, i) => (
                 <View key={i + i} className='content-list-type' onClick={getNextPageData}>
                   <View className='content-list-flex'>
                     <View className='no-title'>
-                      <Text className='details'>我在{v.group_info}项目组对Ta记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</Text>
+                      <Text className='details'>我在{v.group_info}记了一笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</Text>
                       {(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}
                     </View>
                     <View className={v.business_type==3?'orgion-type borrow-blue':'orgion-type'}><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
                   </View>
                 </View>
               ))}
-            </ScrollView>
+            </View>
+          </ScrollView>
             {list.length >= 4 && <View onClick={getNextPageData} className='last'>
               <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}downIcon.png`} />
             </View>}
-          </View>
+        </View>
         }
         {((item && list.length === 0) || !item) && !busy &&
           <View className='content-noList'>
@@ -1290,21 +1300,32 @@ export default function Index() {
           </View>
         }
       </View>
-      <View className='jumpBox'>
-        <View className='jumpItem' onClick={() => userRouteJump('/pages/feedback/index')}>
-          {/* <View className='jumpItem' onClick={() => userRouteJump('/pages/login/index')}> */}
-          <View className='ptBox'>
-            <View className='jumpItem-icon'><Image className='jumpItem-icon-image' src={`${IMGCDNURL}work.png`} /></View>
-            <View className='jumpItem-title'>意见</View>
+      
+      <MovableArea className='jumpBox-movable movable_b'>
+        <MovableView direction="vertical">
+          <View className='jumpBox'>
+            <View className='jumpItem'>
+              <View className='ptBox'>
+                <View className='jumpItem-icon-goback'><Image className='jumpItem-icon-goback-image' src={`${IMGCDNURL}goBack.png`} /></View>
+                <View className='jumpItem-title' onClick={handleGoback}>鱼泡网</View>
+              </View>
+            </View>
           </View>
-        </View>
-        <View className='jumpItem'>
-          <View className='ptBox'>
-            <View className='jumpItem-icon-goback'><Image className='jumpItem-icon-goback-image' src={`${IMGCDNURL}goBack.png`} /></View>
-            <View className='jumpItem-title' onClick={handleGoback}>鱼泡网</View>
+        </MovableView>
+      </MovableArea>
+
+      <MovableArea className='jumpBox-movable movable_top'>
+        <MovableView direction="vertical" y="1000">
+          <View className='jumpBox'>
+            <View className='jumpItem' onClick={() => userRouteJump('/pages/feedback/index')}>
+              <View className='ptBox'>
+                <View className='jumpItem-icon'><Image className='jumpItem-icon-image' src={`${IMGCDNURL}work.png`} /></View>
+                <View className='jumpItem-title'>意见</View>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
+        </MovableView>
+      </MovableArea>
       {/* 弹框 */}
       <AtModal isOpened={tips} closeOnClickOverlay={false}>
         <View className='AtModal'>
