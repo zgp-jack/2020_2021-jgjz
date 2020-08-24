@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump,First } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump, First, IsLogion } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
@@ -186,6 +186,8 @@ export default function Index() {
   const [ImgClose, setImgClose] = useState<Boolean>(false)
   // 新手指引
   const [isModal,setIsModal] = useState<Boolean>(false)
+  //是否登陆
+  const [isLogionType, setIsLogionType] = useState<Boolean>(false);
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = () => {
@@ -479,6 +481,12 @@ export default function Index() {
     // jump 其他小程序过来
     // isModal 4000
     // identityType  小程序过来200返回以前是否有过选择身份
+    const isLogion = Taro.getStorageSync(IsLogion);
+    if (isLogion){
+      setIsLogionType(true);
+      setDisplay(true);
+      return;
+    }
     if(jump){
       Taro.setStorageSync(IsJump, false);
       // 40000
@@ -990,6 +998,7 @@ export default function Index() {
           // handelChange(type, true);
           // noLogion = false;
           console.log(111112132123);
+          Taro.setStorageSync(IsLogion, true);
           setDisplay(true);
           return;
         }
@@ -1349,7 +1358,7 @@ export default function Index() {
       </AtModal>
       </View>
       {/* 授权 */}
-      <Auth display={display} handleClose={handleClose} callback={handleCallback} />
+      <Auth display={display} handleClose={handleClose} callback={handleCallback} isLogionType={isLogionType}/>
       {/* 创建项目 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={handleOk} handleInput={handleInput} />
       {/* 填写班组 */}

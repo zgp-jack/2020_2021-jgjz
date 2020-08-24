@@ -3,7 +3,7 @@ import { View, Text, Checkbox, Image, Input } from '@tarojs/components'
 import { AtInput } from 'taro-ui'
 import { bkGetCodeAction, GetUserInfoAction, bkMemberAuthAction, jumpBindTelAction } from '../../utils/request/index';
 import { isPhone } from '../../utils/v'
-import { UserInfo, MidData, IsLoginType } from '../../config/store';
+import { UserInfo, MidData, IsLoginType, IsLogion } from '../../config/store';
 import Msg from '../../utils/msg';
 import './index.scss'
 
@@ -128,9 +128,11 @@ export default function Login() {
               if (midData){
                 midData.worker_id = resData.data.worker_id;
                 midData.yupao_id = resData.data.yupao_id;
+                midData.worker_name = resData.data.worker_name;
                 Taro.setStorageSync(MidData, midData);
                 Taro.setStorageSync(IsLoginType,1);
                 Taro.navigateBack({delta:1});
+                Taro.setStorageSync(IsLogion,false);
               }
             }else{
               Taro.showModal({
@@ -191,6 +193,7 @@ export default function Login() {
               Taro.setStorageSync(MidData, midData)
               Taro.setStorageSync(IsLoginType, 1);
               Taro.navigateBack();
+              Taro.setStorageSync(IsLogion, false);
             }
           })
         }else{
