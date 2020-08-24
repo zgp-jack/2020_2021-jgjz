@@ -469,6 +469,7 @@ export default function Index() {
   const getData = (e?: string, type?: number|string,isModal?:boolean) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
+    console.log(IsJump,'IsJumpIsJumpIsJump')
     //  isLoginType 手机号注册过来
     // jump 其他小程序过来
     // isModal 4000
