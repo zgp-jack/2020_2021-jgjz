@@ -973,6 +973,7 @@ export function getWorkerHasBusinessByDateAction(data): Promise<Inter.bkGetWorke
 // 初始化记工界面数据 
 export function getBookkeepingDataAction(data): Promise<Inter.getBookkeepingData > {
   let userInfo = Taro.getStorageSync(UserInfo);
+  console.log(userInfo,'获取userInfo')
   return doRequestAction({
     url: api.getBookkeepingDataUrl,
     // method: 'POST',
