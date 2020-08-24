@@ -708,6 +708,8 @@ export default function Index() {
   }
   // 切换角色
   const handelChange = (e, type?: boolean) => {
+    console.log(e,'eeeee');
+    console.log(type,'1111');
     let midData = Taro.getStorageSync(MidData);
     if (!midData) {
       setleftTime(false);
