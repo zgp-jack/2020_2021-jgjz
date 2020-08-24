@@ -1157,19 +1157,21 @@ export default function Index() {
               // onScroll={getNextPageData}
               onScrollToLower={() => getNextPageData()}
             >
-              {list.map((v, i) => (
-                <View key={i + i} className='content-list' onClick={getNextPageData}>
-                  {/* {v.arr.map(val=>( */}
-                  <View>
-                    <View className='content-list-flex'>
-                      <View>{v.workername}{(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}</View>
+              <View className='isscroll'>
+                {list.map((v, i) => (
+                  <View key={i + i} className='content-list' onClick={getNextPageData}>
+                    {/* {v.arr.map(val=>( */}
+                    <View>
+                      <View className='content-list-flex'>
+                        <View>{v.workername}{(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}</View>
+                      </View>
+                      <View className='details'>我在{v.group_info}项目组对{v.workername}记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
                     </View>
-                    <View className='details'>我在{v.group_info}项目组对{v.workername}记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
+                    <View className={v.business_type==3?'orgion borrow-blue':'orgion'}><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
+                    {/* // ))} */}
                   </View>
-                  <View className={v.business_type==3?'orgion borrow-blue':'orgion'}><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
-                  {/* // ))} */}
-                </View>
-              ))}
+                ))}
+              </View>
             </ScrollView>
             {list.length >= 3 && <View onClick={getNextPageData} className='last'>
               <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}downIcon.png`} />
@@ -1187,6 +1189,7 @@ export default function Index() {
               // scrollWithAnimation={true}
               onScrollToLower={getNextPageData}
             >
+            <View className='isscroll'>
               {list.map((v, i) => (
                 <View key={i + i} className='content-list-type' onClick={getNextPageData}>
                   <View className='content-list-flex'>
@@ -1198,11 +1201,12 @@ export default function Index() {
                   </View>
                 </View>
               ))}
-            </ScrollView>
+            </View>
+          </ScrollView>
             {list.length >= 4 && <View onClick={getNextPageData} className='last'>
               <Image className='downIcon-Icon-iamge' src={`${IMGCDNURL}downIcon.png`} />
             </View>}
-          </View>
+        </View>
         }
         {((item && list.length === 0) || !item) && !busy &&
           <View className='content-noList'>
@@ -1212,8 +1216,8 @@ export default function Index() {
         }
       </View>
       
-      <MovableArea className='jumpBox-movable movable_top'>
-        <MovableView direction="vertical" y="1000">
+      <MovableArea className='jumpBox-movable movable_b'>
+        <MovableView direction="vertical">
           <View className='jumpBox'>
             <View className='jumpItem'>
               <View className='ptBox'>
@@ -1225,8 +1229,8 @@ export default function Index() {
         </MovableView>
       </MovableArea>
 
-      <MovableArea className='jumpBox-movable movable_b'>
-        <MovableView direction="vertical">
+      <MovableArea className='jumpBox-movable movable_top'>
+        <MovableView direction="vertical" y="1000">
           <View className='jumpBox'>
             <View className='jumpItem' onClick={() => userRouteJump('/pages/feedback/index')}>
               <View className='ptBox'>

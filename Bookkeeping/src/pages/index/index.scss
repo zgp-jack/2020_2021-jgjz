@@ -237,15 +237,27 @@ scroll-view{
 .content-list-box{
   padding: 0 60rpx;
   height:310rpx;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
-.scrollViewBox ::-webkit-scrollbar{
+.scrollViewBox ::-webkit-scrollbar,.content-list-box::-webkit-scrollbar{
   width: 0;
   height: 0;
   color: transparent;
 }
+
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+//保证出现滚动条,ios没有滚动条拉动全局
+.isscroll{
+  padding-bottom:30rpx; 
+}
 .scrollWorker{
-  height:315rpx;
+  // height:325rpx;
 }
 .content-list{
   display: flex;
