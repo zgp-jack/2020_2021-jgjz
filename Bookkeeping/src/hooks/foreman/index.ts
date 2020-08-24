@@ -3635,6 +3635,8 @@ export default function userForeman() {
     for (let i = 0; i < arr.length; i++) {
       if (v.id === arr[i].id) {
         arr[i].click = true;
+        console.log(arr[i],'xxxx');
+        setLeader_id(arr[i].group_leader);
       } else {
         arr[i].click = false;
       }
