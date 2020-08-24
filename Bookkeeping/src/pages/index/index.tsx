@@ -257,14 +257,14 @@ export default function Index() {
                 identityType = res.data.lasted_business_identity;
                 // isJump = true;
                 // getData();
-                bkMemberAuthAction(params).then(res => {
-                  if (res.code !== 200) {
-                    Msg(res.msg);
+                bkMemberAuthAction(params).then(resItem => {
+                  if (resItem.code !== 200) {
+                    Msg(resItem.msg);
                   } else {
                     let midData = Taro.getStorageSync(UserInfo);
-                    midData.worker_id = res.data.worker_id;
-                    midData.yupao_id = res.data.yupao_id;
-                    midData.worker_name = res.data.worker_name;
+                    midData.worker_id = resItem.data.worker_id;
+                    midData.yupao_id = resItem.data.yupao_id;
+                    midData.worker_name = resItem.data.worker_name;
                     Taro.setStorageSync(MidData, midData);
                     // setIsModal(true);
                     jumType = true
@@ -294,14 +294,14 @@ export default function Index() {
               let params = {
                 mid: e.referrerInfo.extraData.userId,
               }
-              bkMemberAuthAction(params).then(res => {
-                if (res.code !== 200) {
-                  Msg(res.msg);
+              bkMemberAuthAction(params).then(resItem => {
+                if (resItem.code !== 200) {
+                  Msg(resItem.msg);
                 } else {
                   let midData = Taro.getStorageSync(UserInfo);
-                  midData.worker_id = res.data.worker_id;
-                  midData.yupao_id = res.data.yupao_id;
-                  midData.worker_name = res.data.worker_name;
+                  midData.worker_id = resItem.data.worker_id;
+                  midData.yupao_id = resItem.data.yupao_id;
+                  midData.worker_name = resItem.data.worker_name;
                   Taro.setStorageSync(MidData, midData);
                   // setIsModal(true);
                   getData('','',true);
