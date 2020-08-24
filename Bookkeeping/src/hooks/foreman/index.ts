@@ -3327,7 +3327,7 @@ export default function userForeman() {
       }
     // 获取ID
     let workers: number[] = [];
-    if (identity === 1) {
+    if (identity == 1) {
       for (let i = 0; i < workerItem.length; i++) {
         if (workerItem[i].click) {
           workers.push(workerItem[i].id)
@@ -3342,7 +3342,7 @@ export default function userForeman() {
     }
     
     // 工人ID传自己
-    if (identity === 2) {
+    if (identity == 2) {
       // workers = 
       const midData = Taro.getStorageSync(MidData);
       workers = midData.worker_id;
@@ -3491,7 +3491,7 @@ export default function userForeman() {
     if (projectArr.length === 0){
       params.group_info = '';
     }
-    if (identity === 2) {
+    if (identity == 2) {
         // 没有项目&&记工和包工点工的时候需要传
       console.log(projectArr.length,'projectArr.length');
       console.log(tabData.id,'tabData.id')
@@ -3612,7 +3612,7 @@ export default function userForeman() {
     setGroupInfo(groupInfos)
     setProjectId(v.group_id + ',' + v.id)
     //工人
-    if (identity === 2) {
+    if (identity == 2) {
       if (v.leader_name) {
         setForemanTitle(v.leader_name)
       } else {
