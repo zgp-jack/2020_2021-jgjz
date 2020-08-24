@@ -476,6 +476,7 @@ export default function Index() {
     // identityType  小程序过来200返回以前是否有过选择身份
     if(jump){
       console.log('走跳转过来的情况')
+      Taro.setStorageSync(IsJump, false);
       // 40000
       if(isModal){
         setImgClose(false)
