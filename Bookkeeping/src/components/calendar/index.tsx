@@ -30,6 +30,8 @@ interface PROPS {
   onScrollToUpper: () => void,
   onScrollToLower: () => void,
   noCalendarDay:boolean,
+  leftTime: boolean,
+  rightTime: boolean
 }
 // interface TimeType{
 //   year:string,
@@ -38,7 +40,7 @@ interface PROPS {
 
 export default function CalendarModal({ 
   // setRecorderType, calendarDays, setCalendarDays, clickData, setClickData,
-  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay}: PROPS) {
+  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay,leftTime,rightTime}: PROPS) {
   // 储存点击天数
   // 获取存入的公用内容
   const useSelectorItem = useSelector<any, any>(state => state)
@@ -135,13 +137,13 @@ export default function CalendarModal({
           <View className='content-tips-time'> 
               {time.year}年 
               <View className='month'>
-              <View className='iconLeft' onClick={() => handleChangeTime(0)} >
+              <View className='iconLeft' onClick={() => handleChangeTime(0)} style={{ visibility: leftTime ? 'visible' : 'hidden' }}>
               <Image src={`${IMGCDNURL}timeLefts.png`} className='leftIcon'/>
               </View>
               {/* <View className='leftIcon' onClick={() => handleChangeTime(0)} /> */}
                 {addZero(time.monent)}月
               {/* <View className='righticon' onClick={() => handleChangeTime(1)}/> */}
-              <View className='iconRight' onClick={() => handleChangeTime(1)} >
+              <View className='iconRight' onClick={() => handleChangeTime(1)} style={{ visibility: rightTime ? 'visible' : 'hidden' }}>
                 <Image src={`${IMGCDNURL}timeRights.png`} className='righticon'/>
               </View>
               </View>

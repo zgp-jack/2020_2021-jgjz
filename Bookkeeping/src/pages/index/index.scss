@@ -150,9 +150,7 @@ page{
   margin-left: 164rpx;
   margin-right: 167rpx;
   margin-top: 34rpx;
-}
-.eventList-left{
-  margin-right: 161rpx;
+  justify-content: space-between;
 }
 .eventList-icon{
   height: 62rpx;
@@ -240,6 +238,11 @@ scroll-view{
   padding: 0 60rpx;
   height:310rpx;
   overflow-y: auto;
+}
+.scrollViewBox ::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
 }
 .scrollWorker{
   height:280rpx;
@@ -598,7 +601,7 @@ scroll-view{
   width: 10rpx;
   background-size: contain;
 }
-.noImgBox{
+.ImgBox {
   position: fixed;
   height: 100vh;
   width: 100%;
@@ -606,7 +609,9 @@ scroll-view{
   background: rgba(0, 0, 0, 0.6);
   z-index: 999;
 }
-
+.noImgBox{
+  display: none
+}
 .fontSize{
   font-size: 36rpx;
 }

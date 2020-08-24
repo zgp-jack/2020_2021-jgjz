@@ -48,7 +48,8 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay,
+    leftTime,rightTime
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -181,6 +182,9 @@ export default function Foreman() {
     const addWorkArrs = JSON.parse(JSON.stringify(addWorkArr));
     const clickDayItem = JSON.parse(JSON.stringify(clickDay));
     const clickTimeItem = JSON.parse(JSON.stringify(clickTime));
+    console.log(addWorkArrs,'addWorkArrs');
+    console.log(clickTimeItem,'clickTimeItem');
+    console.log(timeArrs,'timeArrs')
     console.log(clickDayItem,'clickDayItemclickDayItem')
     // 上班时长
     if (clickDayItem){
@@ -373,6 +377,12 @@ export default function Foreman() {
     setCreateProjectDisplay(true), setShow(false);
     setIscreatproject(true);
   }
+  const addZero = (num) => {
+    if (parseFloat(num) < 10) {
+      num = '0' + parseFloat(num);
+    }
+    return num;
+  }
   const handleCurrent = ()=>{
     // 打开日历如果上次点击默认打开最后一个日期的那个月份
     const data = JSON.parse(JSON.stringify(timeData));
@@ -385,9 +395,9 @@ export default function Foreman() {
       console.log(end,'end')
       let time;
       if (end.constructor === Array){
-        time = end[0].year + '-' + end[0].month + '-' + end[0].date;
+        time = end[0].year + '-' + addZero(end[0].month) + '-' + addZero(end[0].date);
       }else{
-        time = end.year + '-' + end.month + '-' + end.date;
+        time = end.year + '-' + addZero(end.month) + '-' + addZero(end.date);
       }
       getMonthDaysCurrent(new Date(time))
     }else{
@@ -803,6 +813,7 @@ export default function Foreman() {
       {/* 日历 */}
         <CalendarModal display={calendarModalDisplay} handleCalendar={handleCalendar} model={model} setModel={setModel} setTimeData={setTimeData} recorderType={recorderType} handleClickCalendar={handleClickCalendar} time={time}
           getMonthDaysCurrent={getMonthDaysCurrent} arr={arr} clickData={clickData} handleCalendarClose={handleCalendarClose} handleChangeTime={handleChangeTime} handleCalendarSub={handleCalendarSub} onScrollToLower={onScrollToLower} onScrollToUpper={onScrollToUpper} calendarDays={calendarDays} noCalendarDay={noCalendarDay}
+          leftTime={leftTime} rightTime={rightTime}
         />
       {/* 设置工资标准 */}
         <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardClose} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput}/>

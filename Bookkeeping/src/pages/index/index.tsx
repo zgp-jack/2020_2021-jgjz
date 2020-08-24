@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res,IsShare } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
@@ -21,7 +21,7 @@ import { setClickTIme } from '../../actions/clickTIme'
 import './index.scss'
 
 let loginType = false;
-let isJump = false;
+// let isJump = false;
 let authType = true;
 let jumType = false;
 let ContentItem: bkIndexTypeData = {
@@ -174,11 +174,15 @@ export default function Index() {
   const [this_year_business_month, setBusiness_month] = useState<string>()
   // 今天
   const [toDay, setToDay] = useState<string>('')
-  const [hidden, setHidden] = useState<boolean>(false)
+  const [hidden, setHidden] = useState<boolean>(true)
   // 不请求
   const [noRequest, setNoRequest] = useState<boolean>(false)
   // 防止记工button多次点击
   const [ishandleJump,setishandleJump] = useState<boolean>(true)
+  // 图片关闭
+  const [ImgClose, setImgClose] = useState<Boolean>(false)
+  // 新手指引
+  const [isModal,setIsModal] = useState<Boolean>(false)
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = () => {
@@ -211,9 +215,9 @@ export default function Index() {
   const getAppShowData = ()=>{
     const data = Taro.getStorageSync(Res);
     if (data) {
-      if (isJump)return;
+      const jump = Taro.getStorageSync(IsJump);
+      if (jump)return;
       const e = data;
-      console.log(e,'传过来的值')
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
           // 验证有没有手机号
@@ -224,6 +228,7 @@ export default function Index() {
           }
           appletJumpAction(params).then(res => {
             console.log(res,'跳转获取的值')
+            Taro.setStorageSync(IsJump, true);
             // 直接返回记工记账用户信息
             if (res.code == 200) {
               if (res.data) {
@@ -244,13 +249,13 @@ export default function Index() {
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
                 identityType = res.data.lasted_business_identity;
-                isJump = true;
+                // isJump = true;
                 jumType = true
                 getData();
               }
               // 没有鱼泡账号
             } else if (res.code == 40001) {
-              //  有鱼泡账号
+              //  有鱼泡账号1
             } else if (res.code == 40000) {
               let obj: any = {
                 sign: {}
@@ -276,11 +281,12 @@ export default function Index() {
                   midData.worker_id = res.data.worker_id;
                   midData.yupao_id = res.data.yupao_id;
                   Taro.setStorageSync(MidData, midData);
-                  getData();
+                  // setIsModal(true);
+                  getData('','',true);
+                  // setCloseImage(true);
                 }
               })
             } else if (res.code == 40003) {
-
               let obj: any = {};
               obj.userId = e.referrerInfo.extraData.userId;
               obj.token = e.referrerInfo.extraData.token;
@@ -324,7 +330,7 @@ export default function Index() {
       }
       setPrompt(true)
     }
-    let data = Taro.getStorageSync(IsLoginType);
+    // let data = Taro.getStorageSync(IsLoginType);
     // return
     // setCloseImage(false);
     getDates();
@@ -436,20 +442,55 @@ export default function Index() {
     })
   }
   // 获取首页数据
-  const getData = (e?: string, type?: number) => {
+  const getData = (e?: string, type?: number|string,isModal?:boolean) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
+    const jump = Taro.getStorageSync(IsJump);
+    console.log(jump,'======')
+    console.log(isLoginType, '======222')
+    console.log(Taro.getStorageSync(Type), '1111======')
+    console.log(isModal,'isModalisModalisModalisModal')
+    //  isLoginType 手机号注册过来
+    // jump 其他小程序过来
+    // isModal 4000
+    // identityType  小程序过来200返回以前是否有过选择身份
+    if(jump){
+      console.log('走跳转过来的情况')
+      // 40000
+      if(isModal){
+        setImgClose(false)
+        setHidden(true)
+        setCloseImage(true)
+        return;
+      }
+      // 2000 但是没有选择身份
+      if (identityType){
+        if (identityType == '0'){
+          setHidden(true)
+          setCloseImage(true)
+          return;
+        }
+        Taro.setStorageSync(Type, identityType);
+      }else{
+        setHidden(true)
+        setCloseImage(true)
+        return;
+      }
+      
+    }
+    console.log(jump,'====jump=====');
+    // 登陆过来的
     if (isLoginType == 1) {
-      setHidden(true)
+      setHidden(false)
       setCloseImage(false)
     }
     console.log(isLoginType,'isLoginTypeisLoginType')
     console.log(identityType,'identityType')
-    if (identityType) {
-      if (identityType == '0' ){
-        setCloseImage(true)
-      }
-      Taro.setStorageSync(Type, identityType);
-    }
+    // if (identityType) {
+    //   if (identityType == '0' ){
+    //     setCloseImage(true)
+    //   }
+    //   Taro.setStorageSync(Type, identityType);
+    // }
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
     console.log(midData,'midDatamidDatamidData')
@@ -463,13 +504,20 @@ export default function Index() {
     } else {
       identity = Taro.getStorageSync(Type);
     }
-    if (midData) {
-      let type = Taro.getStorageSync(Type);
-      if (!type || type === 0) {
-        setIdentity(true)
-        return
-      } else {
-        setType(type);
+    // 判断是点开小程序的时候,没有身份让他选择身份
+    if (!jump){
+      if (midData) {
+        console.log('走小程序自己的时候')
+        let type = Taro.getStorageSync(Type);
+        if (!type || type === 0) {
+          setIdentity(true)
+          return
+        } else {
+          setType(type);
+        }
+      }else{
+        setHidden(false)
+        setCloseImage(false)
       }
     }
     // 判断选没有选择时间
@@ -490,8 +538,14 @@ export default function Index() {
     }
     let params = {
       time: changeTime,
-      identity
+      identity,
     }
+    // if (isModal){
+    //   setHidden(true)
+    //   setCloseImage(true)
+    // }
+    // 判断没有type 就要出现身份选择弹框
+    if (!identity) return;
     console.log(midData,'内容midData')
     if (midData) {
       bkIndexAction(params).then(res => {
@@ -499,11 +553,6 @@ export default function Index() {
         if (res.code === 200) {
           setNoRequest(true)
           setBusy(false)
-          // if (isJump){
-          //   dispatch(setContent(res.data))
-          // }
-          // ContentItem = res.data;
-          console.log(res.data, 'res.datata')
           setItem(res.data);
           setNum(res.data.count_is_new);
           if (parseInt(res.data.count_is_new) == 0) {
@@ -764,12 +813,15 @@ export default function Index() {
         }
       }
     } else {
-      Taro.setStorageSync(IsLoginType, 2);
+      // Taro.setStorageSync(IsLoginType, 2);
       // 关闭
-      setCloseImage(true);
       setHidden(false)
+      setCloseImage(false);
+      setIdentity(true)
+      setImgClose(true)
+      // setHidden(false)
       // 并开启选择身份
-      getData();
+      // getData();
     }
     setImage(url)
   }
@@ -782,7 +834,7 @@ export default function Index() {
     // return;
     // 打开新手指引
     setHidden(true)
-    setCloseImage(false);
+    setCloseImage(true);
     setDisplay(false)
   }
   //身份
@@ -790,6 +842,7 @@ export default function Index() {
     setType(e);
     setIdentity(false)
     Taro.setStorageSync(Type, e);
+    Taro.setStorageSync(IsLoginType, e)
     getData();
   }
   // 关闭创建项目
@@ -938,12 +991,12 @@ export default function Index() {
     <View className='index-content'>
       {/* <UseNavInfo/> */}
       {/* <AtNavBar/> */}
-      {<View style={{ visibility: hidden ? 'visible' : 'hidden' }} >
+      {<View>
         {Images.map((v) => (
           <Image src={v.url} key={v.id} className='noImages' />
         ))}
-        <View className='noImgBox'>
-          <Image src={image} className={closeImage ? 'noImages' : 'images'} onClick={() => { hanleImage(image) }} />
+        <View className={ImgClose ?'noImages':''}>
+          <Image src={image} className={closeImage ? 'images' : 'noImages'} onClick={() => { hanleImage(image) }} />
         </View>
       </View>
       }
@@ -1097,6 +1150,7 @@ export default function Index() {
               scrollTop={isScrollTop}
               // refresherEnabled
               lowerThreshold={200}
+              scrollWithAnimation={true}
               // onScroll={getNextPageData}
               onScrollToLower={() => getNextPageData()}
             >
@@ -1127,6 +1181,7 @@ export default function Index() {
               scrollY
               scrollTop={isScrollTop}
               lowerThreshold={200}
+              scrollWithAnimation={true}
               onScrollToLower={getNextPageData}
             >
               {list.map((v, i) => (
