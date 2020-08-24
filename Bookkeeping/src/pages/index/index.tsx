@@ -982,8 +982,11 @@ export default function Index() {
         //   setIdentity(true)
         // if()
           // setIdentity(true);
+        if (isNaN(type) || type == 0 ){
           setIdentity(true)
-          // setTips(true)
+        }else{
+          setTips(true)
+        }
         // }
         return;
       } else {
