@@ -485,7 +485,9 @@ export default function Index() {
     // isModal 4000
     // identityType  小程序过来200返回以前是否有过选择身份
     const sign = Taro.getStorageSync(Sign);
+    console.log(sign,'sign')
     if(sign){
+      console.log(11111);
       setHidden(true)
       setCloseImage(true)
       return;
