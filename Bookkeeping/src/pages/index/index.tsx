@@ -1,5 +1,5 @@
 import Taro, { useEffect, useState, useDidShow, onAppShow } from '@tarojs/taro'
-import { View, Text, Picker, ScrollView, Image } from '@tarojs/components'
+import { View, Text, Picker, ScrollView, Image , MovableArea , MovableView } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction, appletJumpAction } from '../../utils/request/index';
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
@@ -984,6 +984,12 @@ export default function Index() {
     setCreateProjectDisplay(false);
     setProject(true)
   }
+
+
+  //图标拖拽效果
+  const dragging = (e:any) =>{
+    debugger
+  }
   return (
     <View className='index-content'>
       {/* <UseNavInfo/> */}
@@ -1205,21 +1211,32 @@ export default function Index() {
           </View>
         }
       </View>
-      <View className='jumpBox'>
-        <View className='jumpItem' onClick={() => userRouteJump('/pages/feedback/index')}>
-          {/* <View className='jumpItem' onClick={() => userRouteJump('/pages/login/index')}> */}
-          <View className='ptBox'>
-            <View className='jumpItem-icon'><Image className='jumpItem-icon-image' src={`${IMGCDNURL}work.png`} /></View>
-            <View className='jumpItem-title'>意见</View>
+      
+      <MovableArea className='jumpBox-movable movable_top'>
+        <MovableView direction="vertical" y="1000">
+          <View className='jumpBox'>
+            <View className='jumpItem'>
+              <View className='ptBox'>
+                <View className='jumpItem-icon-goback'><Image className='jumpItem-icon-goback-image' src={`${IMGCDNURL}goBack.png`} /></View>
+                <View className='jumpItem-title' onClick={handleGoback}>鱼泡网</View>
+              </View>
+            </View>
           </View>
-        </View>
-        <View className='jumpItem'>
-          <View className='ptBox'>
-            <View className='jumpItem-icon-goback'><Image className='jumpItem-icon-goback-image' src={`${IMGCDNURL}goBack.png`} /></View>
-            <View className='jumpItem-title' onClick={handleGoback}>鱼泡网</View>
+        </MovableView>
+      </MovableArea>
+
+      <MovableArea className='jumpBox-movable movable_b'>
+        <MovableView direction="vertical">
+          <View className='jumpBox'>
+            <View className='jumpItem' onClick={() => userRouteJump('/pages/feedback/index')}>
+              <View className='ptBox'>
+                <View className='jumpItem-icon'><Image className='jumpItem-icon-image' src={`${IMGCDNURL}work.png`} /></View>
+                <View className='jumpItem-title'>意见</View>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
+        </MovableView>
+      </MovableArea>
       {/* 弹框 */}
       <AtModal isOpened={tips} closeOnClickOverlay={false}>
         <View className='AtModal'>

@@ -264,12 +264,27 @@ scroll-view{
   font-weight:400;
   color:rgba(175, 175, 175, 1);
 }
-.jumpBox{
+.movable_top{
+  bottom: calc(120rpx + 42rpx + 82rpx + 66rpx);
+}
+.movable_b{
+  bottom: calc(120rpx + 42rpx - 82rpx);
+}
+.jumpBox-movable{
   position: fixed;
-  bottom: 96rpx;
+  height:140rpx;
+  width: 82rpx;
   right: 30rpx;
+  // background: red;
+}
+.jumpBox{
+  // position: fixed;
+  // bottom: 96rpx;
+  // right: 30rpx;
+  width: 82rpx;
   font-size: 18rpx;
 }
+
 .jumpItem {
   box-shadow:0rpx 10rpx 15rpx 0rpx rgba(1, 116, 192, 0.45);
   border-radius:50%;
@@ -278,7 +293,7 @@ scroll-view{
   color: #fff;
   text-align: center;
   background: rgba(0, 153, 255, 1);
-  margin-bottom: 26rpx;
+  // margin-bottom: 26rpx;
 }
 .jumpItem-icon {
   height: 32rpx;
@@ -348,8 +363,9 @@ scroll-view{
   max-width: 54vw;
 }
 .no-title .icon{
-  vertical-align: 92%;
-  margin:0;
+  margin-top: 16rpx;
+  margin-bottom: 21rpx;
+  vertical-align: top;
 }
 
 .content-list-flex-title{
