@@ -945,7 +945,8 @@ export default function Index() {
       setDisplay(true)
       return;
     }
-    if(midData && (!type || type == 0)){
+    if(midData && type){
+      console.log('aaa')
       setIdentity(true);
       console.log('走这了嗷嗷')
       // return;
