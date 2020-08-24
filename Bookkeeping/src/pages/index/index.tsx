@@ -1163,7 +1163,7 @@ export default function Index() {
                     </View>
                     <View className='details'>我在{v.group_info}项目组对{v.workername}记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
                   </View>
-                  <View className='orgion'><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
+                  <View className={v.business_type==3?'orgion borrow-blue':'orgion'}><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
                   {/* // ))} */}
                 </View>
               ))}
@@ -1191,7 +1191,7 @@ export default function Index() {
                       <Text className='details'>我在{v.group_info}项目组对Ta记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</Text>
                       {(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}
                     </View>
-                    <View className='orgion-type'><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
+                    <View className={v.business_type==3?'orgion-type borrow-blue':'orgion-type'}><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
                   </View>
                 </View>
               ))}
