@@ -343,7 +343,9 @@ export default function Index() {
     }
   }
   useDidShow(() => {
+    console.log('初始化')
     const sign = Taro.getStorageSync(Sign);
+    console.log(sign,'sjsadnbksabdkjsa')
     if (sign) {
       setHidden(true)
       setCloseImage(true)
@@ -429,6 +431,7 @@ export default function Index() {
   }
   // 获取首页数据
   const getData = (e?: string, type?: number|string,isModal?:boolean) => {
+    console.log('aaaa')
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
     console.log(jump,'IsJumpIsJumpIsJump')
