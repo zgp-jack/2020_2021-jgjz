@@ -343,13 +343,13 @@ export default function Index() {
     }
   }
   useDidShow(() => {
-    // const sign = Taro.getStorageSync(Sign);
-    // if (sign) {
-    //   console.log(11111);
-    //   setHidden(true)
-    //   setCloseImage(true)
-    //   return;
-    // }
+    const sign = Taro.getStorageSync(Sign);
+    if (sign) {
+      console.log(11111);
+      setHidden(true)
+      setCloseImage(true)
+      return;
+    }
     console.log('aaaaaaaaaaaaa');
     // setIdentity(false);
     setImgClose(false);

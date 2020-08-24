@@ -104,6 +104,7 @@ export default function Login() {
       Msg('请先输入手机验证码')
       return;
     }
+    console.log(type,'11111')
     if(type){
       let params = {
         tel: model.phone,
@@ -131,8 +132,6 @@ export default function Login() {
                 midData.worker_name = resData.data.worker_name;
                 Taro.setStorageSync(MidData, midData);
                 Taro.setStorageSync(IsLoginType,1);
-                console.log(321321);
-                return;
                 Taro.navigateBack({delta:1});
                 Taro.setStorageSync(Sign,true);
                 Taro.setStorageSync(IsLogion,false);
@@ -196,6 +195,8 @@ export default function Login() {
               Taro.setStorageSync(MidData, midData)
               Taro.setStorageSync(IsLoginType, 1);
               Taro.navigateBack();
+              Taro.setStorageSync(Sign, true);
+              Taro.setStorageSync(IsLogion, false);
               Taro.setStorageSync(IsLogion, false);
             }
           })
