@@ -2326,6 +2326,10 @@ export default function userForeman() {
             dispatch(setPhoneList(ArrList));
             dispatch(setWorker(ArrList))
             bkGetWorkerWage(groupInfos, ArrList);
+            if(dataItem){
+              model.name = dataItem;
+              setModel(model)
+            }
             // const clickDataArr = [{
             //   year: years,
             //   month: months,
@@ -3649,7 +3653,7 @@ export default function userForeman() {
     setCheckAll(false);
     setClickModalNum(0)
     // 选择项目的时候先获取设置工资标准员工
-    bkGetWorker(v.group_id + ',' + v.id, true)
+    bkGetWorker(v.group_id + ',' + v.id, true, name)
     // bkGetWorkerWage(groupInfo,true);
     // 获取工人列表
     // return;
