@@ -221,7 +221,8 @@ export default function Index() {
     const data = Taro.getStorageSync(Res);
     if (data) {
       const first = Taro.getStorageSync(First);
-      console.log(first,'firsttttttt')
+      console.log(first,'firsttttttt');
+      console.log(data,'啊啊啊啊啊试试');
       if (first)return;
       const e = data;
       if (e.scene === 1037) {
