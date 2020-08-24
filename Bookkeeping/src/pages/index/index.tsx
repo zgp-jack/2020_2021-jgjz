@@ -470,6 +470,7 @@ export default function Index() {
           return;
         }
         setType(Number(identityType));
+        Taro.setStorageSync(IsJump, false);
         Taro.setStorageSync(Type, identityType);
       }else{
         setHidden(true)

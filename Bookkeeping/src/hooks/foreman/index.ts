@@ -3435,10 +3435,10 @@ export default function userForeman() {
       }
     } else if (tabData.id === 3) {
       // 借支没钱不能保存
-      if (!item.borrowing) {
-        Msg('您还没有填写借支')
-        return;
-      }
+      // if (!item.borrowing) {
+      //   Msg('您还没有填写借支')
+      //   return;
+      // }
       console.log(item.borrowing,'item.borrowingitem.borrowing')
       params = {
         // 记工类型
