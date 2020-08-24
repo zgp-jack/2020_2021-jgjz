@@ -218,6 +218,7 @@ export default function Index() {
     const data = Taro.getStorageSync(Res);
     if (data) {
       const first = Taro.getStorageSync(First);
+      console.log(first,'firsttttttt')
       if (first)return;
       const e = data;
       if (e.scene === 1037) {
@@ -476,7 +477,6 @@ export default function Index() {
     // isModal 4000
     // identityType  小程序过来200返回以前是否有过选择身份
     if(jump){
-      console.log('走跳转过来的情况')
       Taro.setStorageSync(IsJump, false);
       // 40000
       if(isModal){
