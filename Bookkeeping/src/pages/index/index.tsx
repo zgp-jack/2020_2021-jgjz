@@ -343,6 +343,13 @@ export default function Index() {
     }
   }
   useDidShow(() => {
+    const sign = Taro.getStorageSync(Sign);
+    if (sign) {
+      console.log(11111);
+      setHidden(true)
+      setCloseImage(true)
+      return;
+    }
     console.log('aaaaaaaaaaaaa');
     // setIdentity(false);
     setImgClose(false);
@@ -484,14 +491,6 @@ export default function Index() {
     // jump 其他小程序过来
     // isModal 4000
     // identityType  小程序过来200返回以前是否有过选择身份
-    const sign = Taro.getStorageSync(Sign);
-    console.log(sign,'sign')
-    if(sign){
-      console.log(11111);
-      setHidden(true)
-      setCloseImage(true)
-      return;
-    }
     const isLogion = Taro.getStorageSync(IsLogion);
     if (isLogion){
       setIsLogionType(true);
@@ -960,35 +959,18 @@ export default function Index() {
     // 判断没有type 
     let type = Taro.getStorageSync(Type);
     console.log(type,'tyep')
-    // if (!type && midData ){
-    //   setIdentity(true)
-    //   return;
-    // }
     if (!midData) {
       // 游客点中间没反应
       if (state == 2) { return }
       setDisplay(true)
       return;
     }
-    // if(midData && (type ==0 || !type)){
-    //   console.log('aaa')
-    //   console.log(identity,'状态');
-    //   setIdentity(true);
-    //   console.log('走这了嗷嗷')
-    //   // return;
-    // }
     // 点击记工
     if (state && state != 2) {
       if (busy) {
         Msg('网络错误，请求失败')
         return;
       }
-      // console.log(type,'tyep')
-      // if(!type || type == 0){
-      //   console.log(312321312);
-      //   setIdentity(true);
-      //   // return;
-      // }
       // 判断不是0 然后与当前身份不同就是提示
       // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
       console.log(lasted_business_identity,'lasted_business_identity');
@@ -996,18 +978,8 @@ export default function Index() {
       console.log(neverPrompt,'neverPrompt')
       console.log(parseInt(lasted_business_identity),'lasted_business_identity12231');
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
-        // if(type && type != 0){
-        // console.log(lasted_business_identity, 'lasted_business_identity1');
-        // console.log(type, 'type1');
-        // console.log(neverPrompt, 'neverPrompt1')
-        //   console.log('来了');
-        //   setIdentity(true)
-        // if()
-          // setIdentity(true);
         console.log(noLogion,'')
         if (noLogion){
-          // handelChange(type, true);
-          // noLogion = false;
           console.log(111112132123);
           Taro.setStorageSync(IsLogion, true);
           setDisplay(true);
