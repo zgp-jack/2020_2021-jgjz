@@ -460,7 +460,7 @@ export default function userForeman() {
     // getMonthDaysCurrent(new Date());
     // 首先定义自己
     const objs = JSON.parse(JSON.stringify(obj))
-    objs.name = midData.nickname || '未命名';
+    objs.name = midData.worker_name || '未命名';
     objs.id = midData.worker_id;
     setObj(objs);
     let title:string='',id, time,sum:string='0';
@@ -1797,7 +1797,7 @@ export default function userForeman() {
                 // bkGetWorker('',true)
                 let midData = Taro.getStorageSync(MidData)
                 const objs = JSON.parse(JSON.stringify(obj))
-                objs.name = midData.nickname || '未命名';
+                objs.name = midData.worker_name || '未命名';
                 objs.id = midData.worker_id;
                 setWorkerItem([objs])
                 const data = JSON.parse(JSON.stringify(timeArr));
@@ -1853,7 +1853,7 @@ export default function userForeman() {
                 // 删除项目后设置工人
                 let midData = Taro.getStorageSync(MidData)
                 const objs = JSON.parse(JSON.stringify(obj))
-                objs.name = midData.nickname || '未命名';
+                objs.name = midData.worker_name || '未命名';
                 objs.id = midData.worker_id;
                 setWorkerItem([objs])
                 setGroupInfo('')
@@ -2213,7 +2213,7 @@ export default function userForeman() {
             // const objs = JSON.parse(JSON.stringify(obj));
             let midData = Taro.getStorageSync(MidData)
             let objs: any = {};
-            objs.name = midData.nickname || '未命名';
+            objs.name = midData.worker_name || '未命名';
             objs.id = midData.worker_id;
             setObj(objs);
             // 选择另一个项目的情况
