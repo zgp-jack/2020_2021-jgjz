@@ -363,6 +363,8 @@ export default function userForeman() {
   // 设置年月日小于0前面加0
   useEffect(()=>{
     let type = Taro.getStorageSync(Type);
+    let mid = Taro.getStorageSync(MidData);
+    console.log(mid,'MidDataMidDataMidData');
     console.log(type ,'tyndsandjasndlk')
     // 设置身份
     setIdentity(type);

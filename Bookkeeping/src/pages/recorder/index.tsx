@@ -10,9 +10,9 @@ export default function Recorder() {
   // let { type } = router.params;
   // const [useType,setUseType] =useState<number>(0)
   useEffect(()=>{
-    console.log(type,'typeeeeeeee')
     // let userInfo = Taro.getStorageSync(UserInfo)
     const type = Taro.getStorageSync(Type)
+    console.log(type,'typeeeeeeee')
     // console.log(userInfo,'userInfouserInfo')
     // console.log(typeof userInfo.type,'xxxx')
     
