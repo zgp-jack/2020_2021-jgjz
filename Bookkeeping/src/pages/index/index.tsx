@@ -248,6 +248,7 @@ export default function Index() {
                   time: e.referrerInfo.extraData.tokenTime
                 }
                 Taro.setStorageSync(MidData, obj);
+                Taro.setStorageSync(UserInfo, obj);
                 console.log(MidData,'设置MidData')
                 // ==== 默认先写死
                 Taro.setStorageSync(Type, res.data.lasted_business_identity);
@@ -273,6 +274,7 @@ export default function Index() {
               }
               // 要存UserInfo
               Taro.setStorageSync(UserInfo, obj);
+              Taro.setStorageSync(MidData, obj);
               let params = {
                 mid: e.referrerInfo.extraData.userId,
               }
@@ -300,6 +302,7 @@ export default function Index() {
               }
               obj.tokenTime = e.referrerInfo.extraData.tokenTime;
               Taro.setStorageSync(UserInfo, obj);
+              Taro.setStorageSync(MidData, obj);
               // 设置点击直接跳转到注册手机号页面
               // setLoginStatus(true);
               // loginType = true;
