@@ -431,7 +431,7 @@ export default function Foreman() {
           ))}
         </View>
         {/* 选择为包工的时候 */}
-        {recorderType === 2 &&
+        {recorderType == 2 &&
           <View className='contractor'>
             <View>包工类型</View>
             <View className='radioList'>
@@ -465,7 +465,7 @@ export default function Foreman() {
           </View>
         </View>
         {/* ===== */}
-        {identity === 2 && 
+        {identity == 2 && 
         <View className='publish-recruit-card'>
             <View className='publish-list-item' onClick={() => { bkGetWorker(), userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}&type=2`)}}>
             <Text className='pulish-list-title'>班组长</Text>
@@ -482,7 +482,7 @@ export default function Foreman() {
           </View>
         </View>
         }
-        {identity === 1 && 
+        {identity == 1 && 
             <View className='workerBox'>
               <View className='workerBox-list'>
                 <View className='workerBox-list-title'>
@@ -615,7 +615,7 @@ export default function Foreman() {
       </View>
       }
       {/* 班组长记工 */}
-        {identity === 2 && (recorderType === 1 || (recorderType === 1 || (recorderType === 2 && contractor === 0)) )&&
+        {identity == 2 && (recorderType === 1 || (recorderType === 1 || (recorderType === 2 && contractor === 0)) )&&
       <View>
           <View className='publish-recruit-card-money' onClick={() => {setIsdisable(true);setWageStandardDisplay(true) }}>
           <View className='publish-list-item-money'>
@@ -848,7 +848,7 @@ export default function Foreman() {
                   // ))
                 }</View>
                 <View className='atDrawer-list-flex'>
-                  <View>{identity === 1 && <View>{v.leader_name ? `${v.leader_name}的项目`:'-'}</View>}</View>
+                  <View>{identity == 1 && <View>{v.leader_name ? `${v.leader_name}的项目`:'-'}</View>}</View>
                   <View>
                     {!edit && <View>{v.click &&
                     <View>

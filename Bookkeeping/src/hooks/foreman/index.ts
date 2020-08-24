@@ -1926,6 +1926,8 @@ export default function userForeman() {
           //获取工人的时候传过来的工人数据
           if (Item) {
             console.log(111111)
+            console.log(Item,'itme');
+            console.log(res.data,'res.data');
             if(res.data.length>0){
               // setNoset(false)
               for (let i = 0; i < Item.length; i++) {
@@ -1949,13 +1951,17 @@ export default function userForeman() {
                   }
                 }
               }
+              console.log(Item,'ITEM')
+              let noSet:boolean= true;
               for(let i =0;i<Item.length;i++){
                 if (!Item[i].set) {
-                  setNoset(false)
-                } else {
-                  setNoset(true)
-                }
+                  noSet = false
+                } 
+                // else {
+                //   setNoset(true)
+                // }
               }
+              setNoset(noSet);
             }else{
               setNoset(false)
             }

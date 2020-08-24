@@ -319,6 +319,9 @@ export default function Index() {
     }
   }
   useDidShow(() => {
+    setIdentity(false);
+    setImgClose(false);
+    setCloseImage(false);
     Taro.setStorageSync(IsShare,false)
     // setHidden(true)
     // setCloseImage(false)
