@@ -217,8 +217,8 @@ export default function Index() {
   const getAppShowData = ()=>{
     const data = Taro.getStorageSync(Res);
     if (data) {
-      const jump = Taro.getStorageSync(IsJump);
-      if (jump)return;
+      const first = Taro.getStorageSync(First);
+      if (first)return;
       const e = data;
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
@@ -536,6 +536,7 @@ export default function Index() {
       if (midData) {
         console.log('走小程序自己的时候')
         let type = Taro.getStorageSync(Type);
+        console.log(type,'type')
         if (!type || type === 0) {
           setIdentity(true)
           return
@@ -931,6 +932,12 @@ export default function Index() {
     }
     let midData = Taro.getStorageSync(MidData);
     console.log(midData,'midData点击')
+    // 判断没有type 
+    // let type = Taro.getStorageSync(Type);
+    // if (!type && midData ){
+    //   setIdentity(true)
+    //   return;
+    // }
     if (!midData) {
       // 游客点中间没反应
       if (state == 2) { return }
