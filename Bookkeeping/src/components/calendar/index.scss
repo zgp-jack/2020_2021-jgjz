@@ -142,6 +142,15 @@
   box-sizing:border-box;
   // justify-content: space-around;
 }
+.content-days-ios {
+  display: flex;
+  // justify-content: space-around;
+  // display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin-left: 2rpx;
+  // justify-content: space-around;
+}
 .content-days-day{
   min-height: 115rpx;
   width: 98rpx;

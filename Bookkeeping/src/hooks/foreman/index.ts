@@ -366,6 +366,7 @@ export default function userForeman() {
     let mid = Taro.getStorageSync(MidData);
     console.log(mid,'MidDataMidDataMidData');
     console.log(type ,'tyndsandjasndlk')
+    console.log(useSelectorItem.workerList,'第三大街上你的')
     // 设置身份
     setIdentity(type);
     if (useSelectorItem.workerList.length > 0){
@@ -373,6 +374,7 @@ export default function userForeman() {
         setForeman(useSelectorItem.workerList);
         if (useSelectorItem.workerList[0].leader_name) {
           setForemanTitle(useSelectorItem.workerList[0].leader_name);
+          setLeader_id(useSelectorItem.workerList[0].group_leader);
         }
         return;
       }
@@ -1694,6 +1696,9 @@ export default function userForeman() {
           // 班组长
           // 新增项目的额时候
           if (groupName) {
+            console.log('新增')
+            console.log(res.data,'获取新增聂荣');
+            console.log(groupName,'groupName')
             let id,time;
             for (let i = 0; i < res.data.length; i++) {
               if (groupName === res.data[i].group_name + '-' + res.data[i].name) {
@@ -2520,6 +2525,7 @@ export default function userForeman() {
           bkGetWorkerWage(res.data)
         }
         setIds(res.data);
+        setLeader_id('');
         const name = model.groupName + '-' + model.teamName;
         bkGetProjectTeam(name);
         setGroupInfo(res.data)
@@ -3509,16 +3515,19 @@ export default function userForeman() {
           params.group_info = '';
         }
         // 班组长id
-        const item = useSelectorItem.workerList;
+        // const item = useSelectorItem.workerList;
         // 判断选择班组长有数据给后台传班组长
-        if (item.length > 0) {
-          const group_leader = item[0].group_leader;
-          params.group_leader = group_leader;
-        }else{
+        console.log(foreman,'item')
+      // if (foreman.length > 0) {
+      //     const group_leader = foreman[0].group_leader;
+      //     params.group_leader = group_leader;
+      //   }else{
           if(leader_id){
             params.group_leader = leader_id;
+          }else{
+            params.group_leader =''
           }
-        }
+        // }
       console.log(params,'params')
         addNewBusinessAction(params).then(resData => {
           if (resData.code === 200) {
@@ -3607,6 +3616,7 @@ export default function userForeman() {
   const handleProject = (v) => {
     let data = JSON.parse(JSON.stringify(model));
     const arr = JSON.parse(JSON.stringify(projectArr))
+    // setLeader_id('');
     data.name = v.group_name + '-' + v.name;
     const name = v.group_name + '-' + v.name;
     let groupInfos = v.group_id + ',' + v.id;

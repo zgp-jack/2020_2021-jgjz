@@ -176,7 +176,7 @@ export default function CalendarModal({
                 <View key={v.id} className={ios ? 'content-weekes-week-ios' :'content-weekes-week'}>{v.name}</View>
               ))}
             </View>
-            <View className='content-days'>
+            <View className={ios ?'content-days-ios ':'content-days'}>
             {calendarDays.map((v,i)=>(
               <View key={i + i} 
                 onClick={() => { handleClickCalendar(v)}}
