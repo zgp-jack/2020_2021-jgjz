@@ -950,10 +950,11 @@ export default function Index() {
         Msg('网络错误，请求失败')
         return;
       }
+      console.log(type,'tyep')
       if(!type){
         console.log(312321312);
         setIdentity(true);
-        return;
+        // return;
       }
       // 判断不是0 然后与当前身份不同就是提示
       // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
