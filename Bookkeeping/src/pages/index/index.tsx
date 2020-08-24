@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump,First } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
@@ -217,8 +217,8 @@ export default function Index() {
   const getAppShowData = ()=>{
     const data = Taro.getStorageSync(Res);
     if (data) {
-      const jump = Taro.getStorageSync(IsJump);
-      if (jump)return;
+      const first = Taro.getStorageSync(First);
+      if (First)return;
       const e = data;
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
@@ -232,6 +232,7 @@ export default function Index() {
             console.log(res,'跳转获取的值')
             console.log(e.referrerInfo.extraData,'e.referrerInfo.extraData.userId ')
             Taro.setStorageSync(IsJump, true);
+            Taro.setStorageSync(First,true)
             // 直接返回记工记账用户信息
             if (res.code == 200) {
               if (res.data) {

@@ -30,3 +30,4 @@ export const IsShare:string = 'IsShare';
 
 // 是否是小程序跳转过来的
 export const IsJump:string = 'IsJump';
+export const First:string ='first'
