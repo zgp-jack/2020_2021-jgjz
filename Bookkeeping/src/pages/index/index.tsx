@@ -982,8 +982,8 @@ export default function Index() {
         //   setIdentity(true)
         // if()
           // setIdentity(true);
-          setTips(true)
-
+          setIdentity(true)
+          // setTips(true)
         // }
         return;
       } else {
@@ -1312,7 +1312,8 @@ export default function Index() {
         </View>
       </AtModal>
       {/* 选择身份弹窗 */}
-      <AtModal isOpened={identity} closeOnClickOverlay={false} >
+      <View className={identity ? '' :'noImages'}>
+      <AtModal isOpened={true} closeOnClickOverlay={false} >
         <View className='useAtModal'>
           <View className='useAtModal-title'>请根据需要选择您的身份</View>
           <View className='useAtModal-tips'>温馨提示：选对身份，才能使用想要的功能哦</View>
@@ -1332,6 +1333,7 @@ export default function Index() {
           </View>
         </View>
       </AtModal>
+      </View>
       {/* 授权 */}
       <Auth display={display} handleClose={handleClose} callback={handleCallback} />
       {/* 创建项目 */}
