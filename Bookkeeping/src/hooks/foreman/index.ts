@@ -424,12 +424,14 @@ export default function userForeman() {
       setWorkerItem(item)
       noData = false;
     }else{
+      console.log(231321321312);
       if(noData) return;
       getList();
     }
   }, [useSelectorItem.workerList])
   // 设置默认数据
   const getList = (businessType?:number)=>{
+    console.log('默认请求')
     // 缓存数据
     let midData = Taro.getStorageSync(MidData)
     // 获取通讯里信息
