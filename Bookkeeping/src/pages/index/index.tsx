@@ -548,6 +548,7 @@ export default function Index() {
     if (!identity) return;
     console.log(midData,'内容midData')
     if (midData) {
+      console.log(params,'请求')
       bkIndexAction(params).then(res => {
         console.log('请求')
         if (res.code === 200) {
