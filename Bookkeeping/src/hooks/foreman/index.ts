@@ -3482,6 +3482,9 @@ export default function userForeman() {
     const foremanTitles = JSON.parse(JSON.stringify(foremanTitle))
     // 记工(包工按量)
     // 工人记工的时候，没有选择项目名称，为他默认一个
+    if (projectArr.length === 0){
+      params.group_info = '';
+    }
     if (identity === 2) {
         // 没有项目&&记工和包工点工的时候需要传
       console.log(projectArr.length,'projectArr.length');

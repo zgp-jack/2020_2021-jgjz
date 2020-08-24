@@ -129,7 +129,7 @@ export default function CalendarModal({
     return num;
   }
   return(
-    <View>
+    <View className='calendarModal-content-box'>
     {display &&
     <View className='calendarModal-complaintModal'>
       <View className='calendarModal-complaintModal-content'>
