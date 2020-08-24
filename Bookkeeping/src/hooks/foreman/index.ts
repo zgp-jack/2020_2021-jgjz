@@ -451,6 +451,7 @@ export default function userForeman() {
       identity,
       business_type: paramsId,
     }
+    console.log(params,'params')
     // getMonthDaysCurrent(new Date());
     // 首先定义自己
     const objs = JSON.parse(JSON.stringify(obj))
@@ -459,6 +460,7 @@ export default function userForeman() {
     setObj(objs);
     let title:string='',id, time,sum:string='0';
     getBookkeepingDataAction(params).then(res=>{
+      console.log(res.time,'res.time')
       const today = res.time;
       // 设置日历
       let dayObj = {
