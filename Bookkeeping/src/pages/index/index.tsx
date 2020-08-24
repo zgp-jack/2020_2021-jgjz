@@ -985,6 +985,7 @@ export default function Index() {
         //   setIdentity(true)
         // if()
           // setIdentity(true);
+        console.log(noLogion,'noLogion');
         if (noLogion){
           handelChange(type, true);
           noLogion = false;
