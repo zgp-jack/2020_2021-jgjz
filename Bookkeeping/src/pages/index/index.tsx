@@ -526,8 +526,8 @@ export default function Index() {
     console.log(jump,'====jump=====');
     // 登陆过来的
     if (isLoginType == 1) {
-      setHidden(true)
-      setCloseImage(true);
+      setHidden(false)
+      setCloseImage(false);
       return;
     }
     console.log(isLoginType,'isLoginTypeisLoginType')
