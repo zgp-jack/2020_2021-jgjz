@@ -934,6 +934,7 @@ export default function Index() {
     console.log(midData,'midData点击')
     // 判断没有type 
     let type = Taro.getStorageSync(Type);
+    console.log(type,'tyep')
     // if (!type && midData ){
     //   setIdentity(true)
     //   return;
