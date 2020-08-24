@@ -26,7 +26,6 @@ let authType = true;
 let jumType = false;
 // 跳转type
 let jumpType:string|number = 0;
-let identityModal :boolean = false
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -339,7 +338,6 @@ export default function Index() {
   useDidShow(() => {
     console.log('aaaaaaaaaaaaa');
     // setIdentity(false);
-    identityModal = false;
     setImgClose(false);
     setCloseImage(false);
     Taro.setStorageSync(IsShare,false)
@@ -541,8 +539,7 @@ export default function Index() {
         let type = Taro.getStorageSync(Type);
         console.log(type,'type')
         if (!type || type === 0) {
-          // setIdentity(true)
-          identityModal = true;
+          setIdentity(true)
           return
         } else {
           setType(type);
@@ -853,8 +850,7 @@ export default function Index() {
       // 关闭
       setHidden(false)
       setCloseImage(false);
-      // setIdentity(true)
-      identityModal = true;
+      setIdentity(true)
       setImgClose(true)
       // setHidden(false)
       // 并开启选择身份
@@ -877,8 +873,7 @@ export default function Index() {
   //身份
   const handleChangeRole = (e: any) => {
     setType(e);
-    // setIdentity(false)
-    identityModal = false;
+    setIdentity(false)
     Taro.setStorageSync(Type, e);
     Taro.setStorageSync(IsLoginType, e)
     Taro.setStorageSync(IsJump, false);
@@ -954,10 +949,9 @@ export default function Index() {
     if(midData && (type ==0 || !type)){
       console.log('aaa')
       console.log(identity,'状态');
-      // setIdentity(true);
-      identityModal = true
+      setIdentity(true);
       console.log('走这了嗷嗷')
-      return;
+      // return;
     }
     // 点击记工
     if (state && state != 2) {
@@ -1299,7 +1293,7 @@ export default function Index() {
         </View>
       </AtModal>
       {/* 选择身份弹窗 */}
-      <AtModal isOpened={identityModal} closeOnClickOverlay={false} >
+      <AtModal isOpened={identity} closeOnClickOverlay={false} >
         <View className='useAtModal'>
           <View className='useAtModal-title'>请根据需要选择您的身份</View>
           <View className='useAtModal-tips'>温馨提示：选对身份，才能使用想要的功能哦</View>
