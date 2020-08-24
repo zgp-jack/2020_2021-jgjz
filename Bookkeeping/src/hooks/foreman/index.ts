@@ -2512,8 +2512,6 @@ export default function userForeman() {
           setClickData(toDay)
           setTimeData(toDay);
         }
-        setLeader_id('');
-        dispatch(setWorker([]));
         // 设置加班时长默认值
         const timeTitle = '上班1个工，无加班';
         // 修改工资标准
@@ -3321,12 +3319,12 @@ export default function userForeman() {
           }
         }
       })
-      // if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
-      //   if (data.work == 0) {
-      //     Msg('您还没有设置工资标准')
-      //     return;
-      //   }
-      // }
+      if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
+        if (data.work == 0) {
+          Msg('您还没有设置工资标准')
+          return;
+        }
+      }
     // 获取ID
     let workers: number[] = [];
     if (identity == 1) {
@@ -3608,15 +3606,11 @@ export default function userForeman() {
   const handleProject = (v) => {
     let data = JSON.parse(JSON.stringify(model));
     const arr = JSON.parse(JSON.stringify(projectArr))
-    useSelectorItem.workerList = [];
-    setLeader_id('');
-    dispatch(setWorker([]));
     data.name = v.group_name + '-' + v.name;
     const name = v.group_name + '-' + v.name;
     let groupInfos = v.group_id + ',' + v.id;
     setGroupInfo(groupInfos)
     setProjectId(v.group_id + ',' + v.id)
-
     //工人
     if (identity == 2) {
       if (v.leader_name) {
@@ -4068,8 +4062,6 @@ export default function userForeman() {
             if (res.code === 200) {
               Msg('删除成功');
               setTimeout(() => {
-                setLeader_id('');
-                dispatch(setWorker([]));
                 // bkGetProjectTeam('',false,true);
                 getList();
                 setForemanTitle('');
