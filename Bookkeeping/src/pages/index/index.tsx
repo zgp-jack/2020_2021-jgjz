@@ -576,6 +576,7 @@ export default function Index() {
       bkIndexAction(params).then(res => {
         console.log('请求')
         if (res.code === 200) {
+          Taro.setStorageSync(IsJump, false);
           setNoRequest(true)
           setBusy(false)
           setItem(res.data);
