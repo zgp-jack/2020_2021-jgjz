@@ -49,7 +49,7 @@ export default function Foreman() {
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
     onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay,
-    leftTime,rightTime
+    leftTime,rightTime,setleftTime,setrightTime,toDayString
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -386,21 +386,33 @@ export default function Foreman() {
   const handleCurrent = ()=>{
     // 打开日历如果上次点击默认打开最后一个日期的那个月份
     const data = JSON.parse(JSON.stringify(timeData));
-    console.log(data,'data');
+    const nowYear = Number(toDayString.split('-')[0]);
+    const nowMon = Number(toDayString.split('-')[1]);
     setIsdisable(true);
     setCalendarModalDisplay(true);
     console.log(data,'datataa')
     if(data&&data.length>0){
       const end = data.pop();
-      console.log(end,'end')
       let time;
       if (end.constructor === Array){
         time = end[0].year + '-' + addZero(end[0].month) + '-' + addZero(end[0].date);
       }else{
         time = end.year + '-' + addZero(end.month) + '-' + addZero(end.date);
       }
+      if(Number(time.split('-')[0])==(nowYear-1)&&Number(time.split('-')[1])==1){
+        setleftTime(false);
+      }else{
+        setleftTime(true);
+      }
+      if(Number(time.split('-')[0])==nowYear&&Number(time.split('-')[1])==nowMon){
+        setrightTime(false)
+      }else{
+        setrightTime(true)
+      }
       getMonthDaysCurrent(new Date(time))
     }else{
+      setleftTime(true);
+      setrightTime(false);
       getMonthDaysCurrent(new Date())
     }
   }

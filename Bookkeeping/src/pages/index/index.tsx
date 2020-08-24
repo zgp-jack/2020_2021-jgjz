@@ -454,10 +454,6 @@ export default function Index() {
   const getData = (e?: string, type?: number|string,isModal?:boolean) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
-    console.log(jump,'======')
-    console.log(isLoginType, '======222')
-    console.log(Taro.getStorageSync(Type), '1111======')
-    console.log(isModal,'isModalisModalisModalisModal')
     //  isLoginType 手机号注册过来
     // jump 其他小程序过来
     // isModal 4000
@@ -716,10 +712,11 @@ export default function Index() {
     setVal(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
     Taro.setStorageSync(Type, e);
     if (!type) {
-      Msg(msg)
+      setList([])
+      getData();
       setTimeout(() => {
-        getData();
-      }, 1000)
+        Msg(msg)
+      },350)
     }
     // return;
     // }
@@ -1167,7 +1164,7 @@ export default function Index() {
               scrollTop={isScrollTop}
               // refresherEnabled
               lowerThreshold={200}
-              scrollWithAnimation={true}
+              // scrollWithAnimation={true}
               // onScroll={getNextPageData}
               onScrollToLower={() => getNextPageData()}
             >
@@ -1180,7 +1177,7 @@ export default function Index() {
                     </View>
                     <View className='details'>我在{v.group_info}项目组对{v.workername}记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</View>
                   </View>
-                  <View className='orgion'><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
+                  <View className={v.business_type==3?'orgion borrow-blue':'orgion'}><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
                   {/* // ))} */}
                 </View>
               ))}
@@ -1198,7 +1195,7 @@ export default function Index() {
               scrollY
               scrollTop={isScrollTop}
               lowerThreshold={200}
-              scrollWithAnimation={true}
+              // scrollWithAnimation={true}
               onScrollToLower={getNextPageData}
             >
               {list.map((v, i) => (
@@ -1208,7 +1205,7 @@ export default function Index() {
                       <Text className='details'>我在{v.group_info}项目组对Ta记了-笔{v.business_type == '1' ? '记工' : (v.business_type == '2' ? '包工' : '借支')}</Text>
                       {(v.note || v.view_images.length>0)&& <Text className='icon'>备</Text>}
                     </View>
-                    <View className='orgion-type'><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
+                    <View className={v.business_type==3?'orgion-type borrow-blue':'orgion-type'}><Text className='orgion-type-chars'>¥</Text>{v.money && (parseFloat(v.money) > 9999999.99) ? String(v.money).slice(0, 7) + '...' : v.money || '0.00'}</View>
                   </View>
                 </View>
               ))}
