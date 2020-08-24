@@ -3,6 +3,7 @@ import { View, Image, Text, Input, Checkbox, Picker,ScrollView } from '@tarojs/c
 import classnames from 'classnames'
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setClickTIme } from '../../actions/clickTIme'
+import { isIos } from '../../utils/v'
 import {IMGCDNURL} from '../../config'
 import './index.scss'
 import Msg from '../../utils/msg';
@@ -57,9 +58,15 @@ export default function CalendarModal({
     { id: 6, name: '五' },
     { id: 7, name: '六' },
   ]
+  // 判断是否是ios
+  const [ios, setIos] = useState<boolean>(false)
   const [start,setStart] = useState<number>(0)
   const [end,setEnd] = useState<number>(0)
   const [slideFlag, setSlideFlag] = useState<boolean>(false)
+  useEffect(()=>{
+    // 判断是安卓还是苹果
+    setIos(isIos())
+  })
   // const handleTouch = (e)=>{
   //   console.log(e);
   //   setStart(e.changedTouches[0].pageX)

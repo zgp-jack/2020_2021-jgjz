@@ -594,6 +594,7 @@ export default function userForeman() {
                 setCacheWage(wageStandardData)
               }
             }else{
+              console.log(11111)
               for (let i = 0; i < workArr.length; i++) {
                 workArr[i].set = false;
               }
@@ -611,15 +612,39 @@ export default function userForeman() {
                 if (res.data.latest_group_worker_has_business.worker.length > 0) {
                   // 设置缓存
                   setCache(res.data.latest_group_worker_has_business.worker)
-                  for (let i = 0, len = workArr.length; i < len; i++) {
-                    for (let j = 0, setLen = res.data.latest_group_worker_has_business.worker.length; j < setLen; j++) {
-                      // workArr[i].discipline = true;
-                      if (res.data.latest_group_worker_has_business.worker[j] == workArr[i].id) {
-                        console.log(res.data.latest_group_worker_has_business.worker[j],'res.data.latest_group_worker_has_business.worker[j]')
-                        workArr[i].discipline = true;
+                  // for (let i = 0, len = workArr.length; i < len; i++) {
+                  //   for (let j = 0, setLen = res.data.latest_group_worker_has_business.worker.length; j < setLen; j++) {
+                  //         workArr[i].discipline = false;
+                  //     if (res.data.latest_group_worker_has_business.worker[j] == workArr[i].id) {
+                  //       console.log(res.data.latest_group_worker_has_business.worker[j],'res.data.latest_group_worker_has_business.worker[j]')
+                  //       workArr[i].discipline = true;
+                  //     }
+                  //   }
+                  // }
+                  // const arr = workArr.map(v=>{
+                  //   res.data.latest_group_worker_has_business.worker.map(val=>{
+                  //     if(v.id == val ){
+                  //       v.discipline = true;
+                  //     }else{
+                  //       v.discipline = false; 
+                  //     }
+                  //     return val;
+                  //   })
+                  //   return v;
+                  // })
+                  workArr.forEach((v,i)=>{
+                    res.data.latest_group_worker_has_business.worker.forEach((val,index)=>{
+                      console.log(v,'vq')
+                      console.log(v.id,'vvvv');
+                      console.log(val,'index1')
+                      if(val == v.id){
+                        console.log(val[index],'index')
+                        v.discipline = true;
                       }
-                    }
-                  }
+                    })
+                  })
+                  console.log(arr,'arr')
+                  console.log(workArr,'workArr')
                 }
                 // 日历
                 let dateItem:any[] =[];
@@ -4101,10 +4126,17 @@ export default function userForeman() {
             if (data[i].id == worker_ids[j]) {
               data[i].set = true;
               data[i].del = false;
-              setNoset(true)
+              // setNoset(true)
             } else {
-              setNoset(false)
+              // setNoset(false)
             }
+          }
+        }
+        for (let j = 0; j < data.length; j++) {
+          if (!data[j].set) {
+            setNoset(false)
+          } else {
+            setNoset(true)
           }
         }
         setTimeout(() => {

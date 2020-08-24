@@ -996,7 +996,9 @@ export default function Index() {
           <Image src={v.url} key={v.id} className='noImages' />
         ))}
         <View className={ImgClose ?'noImages':''}>
+          <View className={closeImage ?'ImgBox':''}>
           <Image src={image} className={closeImage ? 'images' : 'noImages'} onClick={() => { hanleImage(image) }} />
+          </View>
         </View>
       </View>
       }
