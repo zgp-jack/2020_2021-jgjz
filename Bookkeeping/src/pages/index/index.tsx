@@ -983,6 +983,9 @@ export default function Index() {
         // }
         return;
       } else {
+        console.log(lasted_business_identity, 'lasted_business_identity2');
+        console.log(type, 'type2');
+        console.log(neverPrompt, 'neverPrompt2')
         if (type === 1) {
           if(ishandleJump){
             setishandleJump(false)
@@ -990,6 +993,9 @@ export default function Index() {
           }
           return;
         } else {
+          console.log(lasted_business_identity, 'lasted_business_identity3');
+          console.log(type, 'type3');
+          console.log(neverPrompt, 'neverPrompt3')
           handelChange(type, true)
         }
       }
