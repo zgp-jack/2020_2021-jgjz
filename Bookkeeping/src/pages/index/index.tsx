@@ -947,7 +947,8 @@ export default function Index() {
     }
     if(midData && (!type || type == 0)){
       setIdentity(true);
-      return;
+      console.log('走这了嗷嗷')
+      // return;
     }
     // 点击记工
     if (state && state != 2) {
