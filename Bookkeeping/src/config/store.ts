@@ -32,3 +32,4 @@ export const IsShare:string = 'IsShare';
 export const IsJump:string = 'IsJump';
 export const First:string ='first'
 export const IsLogion:string = 'isLogion'
+export const Sign: string = 'sign'

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump, First, IsLogion } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump, First, IsLogion, Sign } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
@@ -484,6 +484,12 @@ export default function Index() {
     // jump 其他小程序过来
     // isModal 4000
     // identityType  小程序过来200返回以前是否有过选择身份
+    const sign = Taro.getStorageSync(Sign);
+    if(sign){
+      setHidden(true)
+      setCloseImage(true)
+      return;
+    }
     const isLogion = Taro.getStorageSync(IsLogion);
     if (isLogion){
       setIsLogionType(true);
