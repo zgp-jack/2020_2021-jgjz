@@ -972,14 +972,15 @@ export default function Index() {
       console.log(lasted_business_identity,'lasted_business_identity');
       console.log(type,'type');
       console.log(neverPrompt,'neverPrompt')
+      console.log(parseInt(lasted_business_identity),'lasted_business_identity12231');
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
         // if(type && type != 0){
-        console.log(lasted_business_identity, 'lasted_business_identity1');
-        console.log(type, 'type1');
-        console.log(neverPrompt, 'neverPrompt1')
-          console.log('来了');
-          setIdentity(true)
-          setTips(false)
+        // console.log(lasted_business_identity, 'lasted_business_identity1');
+        // console.log(type, 'type1');
+        // console.log(neverPrompt, 'neverPrompt1')
+        //   console.log('来了');
+        //   setIdentity(true)
+          setTips(true)
         // }
         return;
       } else {
