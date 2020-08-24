@@ -846,7 +846,7 @@ export default function Index() {
     Taro.setStorageSync(Type, e);
     Taro.setStorageSync(IsLoginType, e)
     Taro.setStorageSync(IsJump, false);
-    setDisplay(false)
+    // setDisplay(false)
     getData();
   }
   // 关闭创建项目
