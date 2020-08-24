@@ -129,7 +129,7 @@ export default function CalendarModal({
     return num;
   }
   return(
-    <View className='calendarModal-content-box'>
+    <View className='calendarModal-content'>
     {display &&
     <View className='calendarModal-complaintModal'>
       <View className='calendarModal-complaintModal-content'>
@@ -173,7 +173,7 @@ export default function CalendarModal({
             <View className='scrollView-content'>
             <View className='content-weekes'>
               {weeks.map((v) => (
-                <View key={v.id} className='content-weekes-week'>{v.name}</View>
+                <View key={v.id} className={ios ? 'content-weekes-week-ios' :'content-weekes-week'}>{v.name}</View>
               ))}
             </View>
             <View className='content-days'>
