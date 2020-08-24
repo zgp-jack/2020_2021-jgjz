@@ -946,13 +946,13 @@ export default function Index() {
       setDisplay(true)
       return;
     }
-    if(midData && (type ==0 || !type)){
-      console.log('aaa')
-      console.log(identity,'状态');
-      setIdentity(true);
-      console.log('走这了嗷嗷')
-      // return;
-    }
+    // if(midData && (type ==0 || !type)){
+    //   console.log('aaa')
+    //   console.log(identity,'状态');
+    //   setIdentity(true);
+    //   console.log('走这了嗷嗷')
+    //   // return;
+    // }
     // 点击记工
     if (state && state != 2) {
       if (busy) {
