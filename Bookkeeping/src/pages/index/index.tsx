@@ -469,6 +469,7 @@ export default function Index() {
           setCloseImage(true)
           return;
         }
+        setType(Number(identityType));
         Taro.setStorageSync(Type, identityType);
       }else{
         setHidden(true)
