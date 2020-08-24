@@ -935,6 +935,7 @@ export default function Index() {
     // 判断没有type 
     let type = Taro.getStorageSync(Type);
     if (!type && midData ){
+      setIdentity(true)
       return;
     }
     if (!midData) {
