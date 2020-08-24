@@ -981,8 +981,8 @@ export default function Index() {
         //   console.log('来了');
         //   setIdentity(true)
         // if()
-          setIdentity(true);
-          // setTips(true)
+          // setIdentity(true);
+          setTips(true)
 
         // }
         return;
