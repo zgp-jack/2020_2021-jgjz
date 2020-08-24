@@ -24,6 +24,8 @@ let loginType = false;
 // let isJump = false;
 let authType = true;
 let jumType = false;
+// 跳转type
+let jumpType:string|number = 0;
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -503,8 +505,10 @@ export default function Index() {
     let identity;
     if (type) {
       identity = type;
+      jumpType = type;
     } else {
       identity = Taro.getStorageSync(Type);
+      jumpType = identity;
     }
     // 判断是点开小程序的时候,没有身份让他选择身份
     if (!jump){
@@ -1126,7 +1130,7 @@ export default function Index() {
             </View>
           </View>
           <View className='btnBox'>
-            <View className='btn' onClick={() => handleJump(`/pages/recorder/index?type=${type}&stateType=1`,true)}>
+            <View className='btn' onClick={() => handleJump(`/pages/recorder/index?type=${jumpType}&stateType=1`,true)}>
               {!item || (item && item.business_list.data.length === 0) ? <Text className='fontSize'> 记工<Text className='btn-title'>(点工 包工 借支)</Text></Text> : <Text  className='fontSize'> 再记一笔<Text className='btn-title' onClick={() => handleJump(`/pages/recorder/index?type=${type}`)}>(点工 包工 借支)</Text></Text>}
             </View>
             <View className='notepad'>
