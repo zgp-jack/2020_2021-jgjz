@@ -195,7 +195,8 @@ export default function Login() {
               midData.worker_id = res.data.worker_name;
               Taro.setStorageSync(MidData, midData)
               Taro.setStorageSync(IsLoginType, 1);
-              Taro.navigateBack({ delta: 1 });
+              // Taro.navigateBack({ delta: 1 });
+              Taro.redirectTo({ url: `/pages/index/index` });
               Taro.setStorageSync(Sign, true);
               Taro.setStorageSync(IsLogion, false);
               Taro.setStorageSync(IsLogion, false);
