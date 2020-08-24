@@ -462,8 +462,13 @@ export default function userForeman() {
     setObj(objs);
     let title:string='',id, time,sum:string='0';
     getBookkeepingDataAction(params).then(res=>{
-      console.log(res.time,'res.time')
-      const today = res.time;
+      console.log(res.time,'res.time');
+      let today;
+      if(res.time){
+        today = res.time;
+      }else{
+        today = new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDay();
+      }
       // 设置日历
       let dayObj = {
         date: today.split('-')[2],
