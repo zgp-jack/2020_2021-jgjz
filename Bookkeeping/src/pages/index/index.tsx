@@ -985,10 +985,11 @@ export default function Index() {
         //   setIdentity(true)
         // if()
           // setIdentity(true);
-        console.log(noLogion,'noLogion');
+        console.log(noLogion,'')
         if (noLogion){
-          handelChange(type, true);
-          noLogion = false;
+          // handelChange(type, true);
+          // noLogion = false;
+          setDisplay(true);
           return;
         }
         if (isNaN(type) || type == 0 ){
