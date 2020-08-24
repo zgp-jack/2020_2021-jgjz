@@ -445,10 +445,6 @@ export default function Index() {
   const getData = (e?: string, type?: number|string,isModal?:boolean) => {
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
-    console.log(jump,'======')
-    console.log(isLoginType, '======222')
-    console.log(Taro.getStorageSync(Type), '1111======')
-    console.log(isModal,'isModalisModalisModalisModal')
     //  isLoginType 手机号注册过来
     // jump 其他小程序过来
     // isModal 4000
@@ -702,10 +698,11 @@ export default function Index() {
     setVal(date.getFullYear() + "-" + addZero(date.getMonth() + 1));
     Taro.setStorageSync(Type, e);
     if (!type) {
-      Msg(msg)
+      setList([])
+      getData();
       setTimeout(() => {
-        getData();
-      }, 1000)
+        Msg(msg)
+      },350)
     }
     // return;
     // }
@@ -1150,7 +1147,7 @@ export default function Index() {
               scrollTop={isScrollTop}
               // refresherEnabled
               lowerThreshold={200}
-              scrollWithAnimation={true}
+              // scrollWithAnimation={true}
               // onScroll={getNextPageData}
               onScrollToLower={() => getNextPageData()}
             >
@@ -1181,7 +1178,7 @@ export default function Index() {
               scrollY
               scrollTop={isScrollTop}
               lowerThreshold={200}
-              scrollWithAnimation={true}
+              // scrollWithAnimation={true}
               onScrollToLower={getNextPageData}
             >
               {list.map((v, i) => (
