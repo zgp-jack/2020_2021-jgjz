@@ -4520,19 +4520,27 @@ export default function userForeman() {
     const nowYear = Number(toDayString.split('-')[0]);
     const nowMon = Number(toDayString.split('-')[1])
     if (type === 0) {
-      if(Number(time.year)==(nowYear-1)&&Number(time.monent)==2){
+      if(Number(time.year)==(nowYear-1)&&Number(time.monent)==1){
+        setleftTime(false);
+        return;
+      }
+      if(Number(time.year)==(nowYear-1)&&Number(time.monent)<=2){
         setleftTime(false);
       }
       setrightTime(true);
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
       getMonthDaysCurrent(date);
     } else {
+      if(Number(time.year)==nowYear&&Number(time.monent)==nowMon){
+        setrightTime(false);
+        return
+      }
       if(nowMon == 1){
         if((Number(time.year)+1)==nowYear&&Number(time.monent)==12){
           setrightTime(false);
         }
       }else{
-        if(Number(time.year)==nowYear&&(Number(time.monent)+1)==nowMon){
+        if(Number(time.year)==nowYear&&(Number(time.monent)+1)>=nowMon){
           setrightTime(false);
         }
       }
