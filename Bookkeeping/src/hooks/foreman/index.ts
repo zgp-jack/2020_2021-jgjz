@@ -3623,6 +3623,9 @@ export default function userForeman() {
     setLeader_id('');
     setGroupInfo(groupInfos)
     setProjectId(v.group_id + ',' + v.id)
+    const time = toDayString + `（今天）`;
+    data.time = time;
+    console.log(data,'data111111');
     //工人
     if (identity == 2) {
       if (v.leader_name) {

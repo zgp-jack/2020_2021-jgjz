@@ -26,6 +26,7 @@ let authType = true;
 let jumType = false;
 // 跳转type
 let jumpType:string|number = 0;
+let noLogion = false;
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -320,6 +321,7 @@ export default function Index() {
               obj.tokenTime = e.referrerInfo.extraData.tokenTime;
               Taro.setStorageSync(UserInfo, obj);
               Taro.setStorageSync(MidData, obj);
+              noLogion = true;
               // 设置点击直接跳转到注册手机号页面
               // setLoginStatus(true);
               // loginType = true;
@@ -983,6 +985,11 @@ export default function Index() {
         //   setIdentity(true)
         // if()
           // setIdentity(true);
+        if (noLogion){
+          handelChange(type, true);
+          noLogion = false;
+          return;
+        }
         if (isNaN(type) || type == 0 ){
           setIdentity(true)
         }else{
