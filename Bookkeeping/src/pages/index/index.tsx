@@ -989,6 +989,7 @@ export default function Index() {
         if (noLogion){
           // handelChange(type, true);
           // noLogion = false;
+          console.log(111112132123);
           setDisplay(true);
           return;
         }
