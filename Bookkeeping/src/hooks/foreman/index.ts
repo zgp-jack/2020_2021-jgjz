@@ -633,28 +633,9 @@ export default function userForeman() {
                 if (res.data.latest_group_worker_has_business.worker.length > 0) {
                   // 设置缓存
                   setCache(res.data.latest_group_worker_has_business.worker)
-                  // for (let i = 0, len = workArr.length; i < len; i++) {
-                  //   for (let j = 0, setLen = res.data.latest_group_worker_has_business.worker.length; j < setLen; j++) {
-                  //         workArr[i].discipline = false;
-                  //     if (res.data.latest_group_worker_has_business.worker[j] == workArr[i].id) {
-                  //       console.log(res.data.latest_group_worker_has_business.worker[j],'res.data.latest_group_worker_has_business.worker[j]')
-                  //       workArr[i].discipline = true;
-                  //     }
-                  //   }
-                  // }
-                  // const arr = workArr.map(v=>{
-                  //   res.data.latest_group_worker_has_business.worker.map(val=>{
-                  //     if(v.id == val ){
-                  //       v.discipline = true;
-                  //     }else{
-                  //       v.discipline = false; 
-                  //     }
-                  //     return val;
-                  //   })
-                  //   return v;
-                  // })
                   workArr.forEach((v,i)=>{
                     res.data.latest_group_worker_has_business.worker.forEach((val,index)=>{
+                      v.discipline = false;
                       if(val == v.id){
                         v.discipline = true;
                       }
