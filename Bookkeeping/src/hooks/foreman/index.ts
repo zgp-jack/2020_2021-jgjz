@@ -903,6 +903,7 @@ export default function userForeman() {
                 
               }
               // 设置工资标准
+              // let 
               if (res.data.default_group_workers_has_wage.length>0){
                 for (let i = 0; i < workList.length; i++) {
                   for (let j = 0; j < res.data.default_group_workers_has_wage.length; j++) {
@@ -979,8 +980,8 @@ export default function userForeman() {
   }
   // 日历点击
   const handleClickCalendar = (v: any) => {
-    const date = v.year + '-' + v.month + '-' + v.date;
-    const dates = (new Date(date)).valueOf();
+    const date = v.year + '/' + v.month + '/' + v.date;
+    const dates = new Date(date).getTime();
     const newDate = (new Date(toDayString)).valueOf();
     let isChange = false;
     if (newDate < dates) {
@@ -1435,7 +1436,7 @@ export default function userForeman() {
             const years = new Date().getFullYear();
             const months = new Date().getMonth() + 1;
             const dates = new Date().getDate();
-            const time = years + '-' + months + '-' + dates;
+            const time = years + '-' + addZero(months) + '-' + addZero(dates);
             const clickDataArr = [{
               year: years,
               month: months,
@@ -1519,7 +1520,7 @@ export default function userForeman() {
                   const years = new Date().getFullYear();
                   const months = new Date().getMonth() + 1;
                   const dates = new Date().getDate();
-                  const time = years + '-' + months + '-' + dates;
+                  const time = years + '-' + addZero(months) + '-' + addZero(dates);
                   const clickDataArr = [{
                     year: years,
                     month: months,
@@ -1587,7 +1588,7 @@ export default function userForeman() {
                 const years = new Date().getFullYear();
                 const months = new Date().getMonth() + 1;
                 const dates = new Date().getDate();
-                const time = years + '-' + months + '-' + dates;
+                const time = years + '-' + addZero(months) + '-' + addZero(dates);
                 const clickDataArr = [{
                   year: years,
                   month: months,
@@ -1708,7 +1709,7 @@ export default function userForeman() {
                   setOpenClickTime(toDay)
                   setClickData(toDay)
                   setTimeData(toDay);
-                  time = toDay[0].year + '-' + toDay[0].month + '-' + toDay[0].date+ `(今天)`;
+                  time = toDay[0].year + '-' + addZero(toDay[0].month) + '-' + addZero(toDay[0].date)+ ` (今天) `;
                 }
                 // 设置加班时长默认值
                 const timeTitle = '上班1个工，无加班';
@@ -1955,7 +1956,7 @@ export default function userForeman() {
                 }
               }
               console.log(Item,'ITEM')
-              let noSet:boolean= true;
+            let noSet:boolean= true;
               for(let i =0;i<Item.length;i++){
                 if (!Item[i].set) {
                   noSet = false
@@ -1991,7 +1992,7 @@ export default function userForeman() {
             date: dates,
             click: true
           }];
-          const showTime = years + '-' + months + '-' + dates + `(今天)`;
+          const showTime = years + '-' + addZero(months) + '-' + addZero(dates) + ` (今天) `;
           setOpenClickTime(clickDataArr)
           setClickData(clickDataArr);
           setTimeData([clickDataArr]);
@@ -2025,7 +2026,7 @@ export default function userForeman() {
             borrowing.item[i].click = false
           }
           setBorrowing(borrowing);
-          const time = years + '-' + months + '-' + dates;
+          const time = years + '-' + addZero(months) + '-' + dates;
           setToDayString(time)
           let timeParams = {
             group_info: groupInfo,
@@ -2251,7 +2252,7 @@ export default function userForeman() {
             const years = new Date().getFullYear();
             const months = new Date().getMonth() + 1;
             const dates = new Date().getDate();
-            const time = years + '-' + months + '-' + dates;
+            const time = years + '-' + addZero(months) + '-' + addZero(dates);
             // 设置蓝色底色
             let ArrList = [objs, ...arr];
             let cacheDaysArr:any[] = [];
@@ -2332,8 +2333,62 @@ export default function userForeman() {
             dispatch(setPhoneList(ArrList));
             dispatch(setWorker(ArrList))
             bkGetWorkerWage(groupInfos, ArrList);
+            console.log('aaaa')
             if(dataItem){
               model.name = dataItem;
+              // 设置工资标准和日期
+              // 设置加班时长默认值
+              const timeTitle = '上班1个工，无加班';
+              // 一个工
+              for (let i = 0; i < timeArr.length; i++) {
+                timeArr[i].click = false;
+                timeArr[0].click = true;
+                timeArr[3] = { id: 4, name: '0.0小时', click: false, num: 0 };
+                setClickDay(timeArr[0])
+              }
+              // 无加班
+              for (let i = 0; i < addWorkArr.length; i++) {
+                addWorkArr[i].click = false;
+                addWorkArr[0].click = true;
+                addWorkArr[1] = { id: 2, name: '0.0小时', click: false, num: 0 };
+                setClickTime(addWorkArr[0])
+              }
+              setTimeArr(timeArr);
+              setAddWorkArr(addWorkArr);
+              // 设置单位
+              for (let i = 0; i < company.length; i++) {
+                company[i].click = false
+                company[0].click = true
+              }
+              setCompany(company);
+              // 默认平方米
+              setUnit('平方米')
+              // 借支状态
+              for (let i = 0; i < borrowing.item.length; i++) {
+                borrowing.item[i].click = false
+              }
+              setBorrowing(borrowing);
+              model.duration= timeTitle; 
+              model.modalDuration= timeTitle;
+              let today;
+              if (toDayString) {
+                today = toDayString;
+              } else {
+                today = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDay();
+              }
+              // 设置日历
+              let dayObj = {
+                date: today.split('-')[2],
+                month: today.split('-')[1],
+                year: today.split('-')[0],
+                click: true
+              }
+              model.time = today + `（今天）`;
+              setOpenClickTime([dayObj])
+              setClickData([dayObj])
+              setTimeData([dayObj]);
+              setToday([dayObj])
+              setToDayString(today)
               setModel(model)
             }
             // const clickDataArr = [{
@@ -3123,6 +3178,13 @@ export default function userForeman() {
                   moneyListArr.splice(i,1)
                 }
               }
+              let noSet: boolean = true;
+              for(let i = 0;i<data.length;i++){
+                if (!data[i].set) {
+                  noSet = false
+                } 
+              }
+              setNoset(noSet);
               setMoneyList(moneyListArr)
               setWorkerItem(data);
               dispatch(setPhoneList(data));
@@ -3655,14 +3717,17 @@ export default function userForeman() {
     // 工人的话
     const type = Taro.getStorageSync(Type);
     if (type == 2) {
-      getMonthDaysCurrent(new Date());
+      if(toDayString){
+        getMonthDaysCurrent(new Date(toDayString));
+      }else{
+        getMonthDaysCurrent(new Date());
+      }
       // 把数据存到reducer
       dispatch(setWorker([v]));
       // 修改工资标准
       bkGetWorkerWage(v.group_id + ',' + v.id, '', data, name);
       // getList();
       return;
-    }else{
     }
     setAllClick(false);
     setClickNum(0);
@@ -4499,7 +4564,7 @@ export default function userForeman() {
       const months = new Date().getMonth() + 1;
       const dates = new Date().getDate();
       if (data[0].year == years && data[0].month == months && data[0].date == dates) {
-        time = years + '-' + addZero(months) + '-' + addZero(dates)+'（今天）'
+        time = years + '-' + addZero(months) + '-' + addZero(dates)+`（今天）`
       } else {
         time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date)
       }
@@ -4589,7 +4654,7 @@ export default function userForeman() {
       const months = new Date().getMonth() + 1;
       const dates = new Date().getDate();
       if (data[0].year == years && data[0].month == months && data[0].date == dates) {
-        time = years + '-' + addZero(months) + '-' + addZero(dates) + '（今天）'
+        time = years + '-' + addZero(months) + '-' + addZero(dates) + `（今天) `
       } else {
         time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date)
       }
