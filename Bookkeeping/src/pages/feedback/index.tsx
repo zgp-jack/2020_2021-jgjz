@@ -44,6 +44,13 @@ export default function Feedback() {
       }
     })
   }
+  // 多选框
+  const handleContent = (e)=>{
+    setNote(e.detail.value)
+  }
+  const blurhandleContent = (e) => {
+    setNote(e.detail.value)
+  }
   // 用户删除图片
   const userDelImg = (i: number) => {
     if (!image.item) return
@@ -117,7 +124,7 @@ export default function Feedback() {
         </View>
       {/* 建议 */}
       <View className='opinion'>
-        <Textarea className='opinionTextarea' maxlength={400} onInput={(e) => setNote(e.detail.value)} placeholder='请留下您的意见或建议' placeholder-style='color:rgba(167, 167, 167, 1)'/>
+        <Textarea className='opinionTextarea' maxlength={400} onInput={(e) => handleContent(e)} onBlur={(e) => blurhandleContent(e)} placeholder='请留下您的意见或建议' placeholder-style='color:rgba(167, 167, 167, 1)'/>
       </View>
       <View className='white'>
         <View className='image'><ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg} /></View>

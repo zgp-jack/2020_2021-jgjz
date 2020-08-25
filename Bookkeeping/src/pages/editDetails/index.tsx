@@ -1222,6 +1222,13 @@ export default function EditDetails() {
     data[type] = e.detail.value;
     setVal({...data});
   }
+  // 多选框
+  const blurhandleContent = (type: string,e) => {
+    let data = JSON.parse(JSON.stringify(val));
+    data.note = e.detail.value;
+    data[type] = e.detail.value
+    setVal({...data});
+  }
   // 输入框验证
   const dealInputVal = (value, num?: number, type?: string,isMday?:boolean) => {
     value = value.replace(/^0*(0\.|[1-9])/, "$1");
@@ -1619,6 +1626,7 @@ export default function EditDetails() {
           value={val && val.note}
           placeholder='请填写备注...'
           onInput={(e) => handleInput('note', e)}
+          onBlur={(e) => blurhandleContent('details',e)}
           maxlength={400}
           />
         </View>

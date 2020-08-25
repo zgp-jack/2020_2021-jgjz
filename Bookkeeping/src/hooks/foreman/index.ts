@@ -2556,6 +2556,14 @@ export default function userForeman() {
     //   return
     // }
   }
+  // 多选框
+  const blurhandleContent = (type: string,e) => {
+    let data = JSON.parse(JSON.stringify(model));
+    data.note = e.detail.value;
+    setNum(e.detail.value.length);
+    data[type] = e.detail.value
+    setModel({...data});
+  }
   // 创建项目
   const handleAddProject = () => {
     if (!model.teamName) {
@@ -3253,7 +3261,8 @@ export default function userForeman() {
   // 打开工资标准
   const handleOpenWagesModal = (v?: any) => {
     if (delType) return;
-    if(recorderType == 3){return}
+    // 借支和按量长按没用
+    if (recorderType === 3 || (recorderType == 2 && contractor == 1)) return;
     const item = JSON.parse(JSON.stringify(model));
     if (!item.name) {
       Msg('请先选择项目')
@@ -3275,10 +3284,6 @@ export default function userForeman() {
         setStandard(res.data);
       }
     })
-    // 借支和按量长按没用
-    if (recorderType === 3 || (recorderType == 2 && contractor == 1)) {
-      return;
-    }
     setIsdisable(true);
     setWagesModalDisplay(true);
     //把工资标准的内容设置为新的s
@@ -4870,6 +4875,7 @@ export default function userForeman() {
     project,
     setModel,
     setProject,
+    blurhandleContent,
     handleInput,
     handleAddProject,
     workOvertimeDisplay,

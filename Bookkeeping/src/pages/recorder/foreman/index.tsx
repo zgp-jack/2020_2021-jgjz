@@ -38,7 +38,7 @@ export default function Foreman() {
   const dispatch = useDispatch()
   // 获取存入的公用内容
   const useSelectorItem = useSelector<any, any>(state => state)
-  const { model, setModel, handleInput, handleAddProject, project, setProject, handleworkOvertime, setWorkOvertimeDisplay, workOvertimeDisplay,
+  const { model, setModel, handleInput,blurhandleContent, handleAddProject, project, setProject, handleworkOvertime, setWorkOvertimeDisplay, workOvertimeDisplay,
     workingHoursDisplay, setWorkingHoursDisplay, timeType, handleWorkingHours, timeArr, addWorkArr, handleWorkOvertimeOk, company, handleQuantities,
     quantitiesDisplay, setQuantitiesDisplay, unit, borrowing, setBorrowing, handleRadioBorrowing, workerItem, setWorkerItem, handleEstablish,
     addMemberDisplay, setAddMemberDisplay, handleDel, handleDelList, delType, setDeldelType, handleAddStandard, wagesModalDisplay, setWagesModalDisplay, wageStandardDisplay, setWageStandardDisplay, wageStandard, handleWageStandard, handlePreservation, recorderTypeArr,
@@ -791,6 +791,7 @@ export default function Foreman() {
               placeholder='请填写备注...'
               value={model && model.details}
               onInput={(e) => handleInput('details',e)}
+              onBlur={(e) => blurhandleContent('details',e)}
               maxlength={400}
             />
             </View>

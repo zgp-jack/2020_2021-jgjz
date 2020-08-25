@@ -24,11 +24,11 @@ export default function AddNotepad() {
   const { id } = router.params;
   const InitParams: InitRecruitView = { id}
   const { model, setModel, handleSubmit, image, setImage } = userCode(InitParams);
-  useDidShow(()=>{
+  useEffect(()=>{
     if(id){
         getnoteData(id);
     }
-  })
+  },[])
   const getnoteData = (id) => {
     // setModel({
     //   note: '',
@@ -77,9 +77,13 @@ export default function AddNotepad() {
   // 多选框
   const handleContent = (e)=>{
     let modelInfo: ModalType = JSON.parse(JSON.stringify(model))
-    console.log(modelInfo,'modelInfo')
     modelInfo.note = e.detail.value;
     setModel(modelInfo)
+  }
+  const blurhandleContent = (e) => {
+    let modelInfo: ModalType = JSON.parse(JSON.stringify(model))
+    modelInfo.note = e.detail.value;
+    setModel({...modelInfo})
   }
   // 图片
   const userUploadImg = (i: number = -1) => {
@@ -131,6 +135,7 @@ export default function AddNotepad() {
             cursor={model.note.length||0}
             maxlength={400}
             onInput={(e) => handleContent(e)}
+            onBlur={(e) => blurhandleContent(e)}
             className={id ? 'editTextarea' : 'textarea'} 
             value={model && model.note } 
             placeholder='在这里记事' 
