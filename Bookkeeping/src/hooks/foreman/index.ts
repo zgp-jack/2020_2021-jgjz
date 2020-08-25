@@ -903,6 +903,7 @@ export default function userForeman() {
                 
               }
               // 设置工资标准
+              // let 
               if (res.data.default_group_workers_has_wage.length>0){
                 for (let i = 0; i < workList.length; i++) {
                   for (let j = 0; j < res.data.default_group_workers_has_wage.length; j++) {
@@ -1955,7 +1956,7 @@ export default function userForeman() {
                 }
               }
               console.log(Item,'ITEM')
-              let noSet:boolean= true;
+            let noSet:boolean= true;
               for(let i =0;i<Item.length;i++){
                 if (!Item[i].set) {
                   noSet = false
@@ -2025,7 +2026,7 @@ export default function userForeman() {
             borrowing.item[i].click = false
           }
           setBorrowing(borrowing);
-          const time = years + '-' + months + '-' + dates;
+          const time = years + '-' + addZero(months) + '-' + dates;
           setToDayString(time)
           let timeParams = {
             group_info: groupInfo,
