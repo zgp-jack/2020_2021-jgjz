@@ -909,6 +909,7 @@ export default function userForeman() {
               }
               // 设置工资标准
               // let 
+              setMoneyList(res.data.default_group_workers_has_wage);
               if (res.data.default_group_workers_has_wage.length>0){
                 for (let i = 0; i < workList.length; i++) {
                   for (let j = 0; j < res.data.default_group_workers_has_wage.length; j++) {
@@ -4163,6 +4164,7 @@ export default function userForeman() {
                 // bkGetProjectTeam('',false,true);
                 getList();
                 setForemanTitle('');
+                setDeldelType(false)
                 setModel({ ...model, name: '',groupName:'' });
               }, 800)
             } else {
