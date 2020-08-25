@@ -372,7 +372,7 @@ export default function Notepad() {
       {/* 多选按钮 */}
       {!busy && del && <View className='checkboxButton'>
         <View className='checkboxButton-box'>
-            <View><Checkbox value='' checked={selectAll} onClick={handleAllCheckbox} className='checkboxButton-checkbox' color='#0099FF'/>全选</View>
+            <View className='checkboxButton-inner' onClick={handleAllCheckbox}><Checkbox value='' checked={selectAll} className='checkboxButton-checkbox' color='#0099FF'/>全选</View>
           <View className='checkboxButton-right'>
               <View className='checkboxButton-del' onClick={bkDeleteNotePad}>批量删除</View>
             <View className='checkboxButton-close' onClick={handleClose}>取消</View>
