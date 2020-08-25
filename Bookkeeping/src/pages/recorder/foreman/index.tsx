@@ -872,7 +872,7 @@ export default function Foreman() {
           </View>
           <View className='atDrawer-heard-content'>
             {projectArr.length>0&&projectArr.map(v=>(
-              <View className='atDrawer-list' onClick={()=>handleProject(v)}>
+              <View className='atDrawer-list' onClick={!edit?()=>handleProject(v):()=>{}}>
                 <View className='atDrawer-list-title'>{
                   // v.child.map(val=>(
                   <Text className={v.click?'blued':''}>{v.group_name}-{v.name}</Text>
