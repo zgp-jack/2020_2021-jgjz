@@ -3177,6 +3177,13 @@ export default function userForeman() {
                   moneyListArr.splice(i,1)
                 }
               }
+              let noSet: boolean = true;
+              for(let i = 0;i<data.length;i++){
+                if (!data[i].set) {
+                  noSet = false
+                } 
+              }
+              setNoset(noSet);
               setMoneyList(moneyListArr)
               setWorkerItem(data);
               dispatch(setPhoneList(data));
