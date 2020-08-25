@@ -36,6 +36,7 @@
 }
 
 .content-top-close{
+  padding: 0 30rpx;
   font-size: 28rpx;
   color: #3C3B3B;
 }
@@ -47,6 +48,7 @@
 }
 
 .content-top-change{
+  padding: 0 30rpx;
   color: #0099FF;
   font-size: 28rpx;
 }
@@ -58,6 +60,7 @@
   padding-left: 43rpx;
   padding-right: 39rpx;
   margin-top: 31rpx;
+  line-height: 60rpx;
 }
 
 .content-tips-time{
@@ -70,13 +73,14 @@
   height: 28.5rpx;
   width: 28.5rpx;
   margin-right: 13rpx;
-  margin-top: 10rpx;
+  margin-top: 20rpx;
 }
 
 .leftIcon {
   // margin-right: 10rpx;
   height: 22rpx;
   width: 22rpx;
+  padding: 20rpx 0 20rpx 56rpx;
   // display: inline-block;
   // background: url(../../assets/images/leftModal.png) no-repeat no-repeat;
   background-size: contain;
@@ -86,6 +90,7 @@
   // margin-left: 10rpx;
   height: 22rpx;
   width: 22rpx;
+  padding: 20rpx 56rpx 20rpx 0;
   // display: inline-block;
   // background: url(../../assets/images/rightModal.png) no-repeat no-repeat;
   background-size: contain;
@@ -254,7 +259,7 @@
   display: flex;
 }
 .iconLeft{
-  padding-left: 20rpx;
+  padding-left: 15rpx;
   padding-right: 10rpx;
 }
 .iconRight{

@@ -56,28 +56,28 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
               <View className='wageStandard-content-listBox-list'>
                 <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>上班标准:</Text> {toFixedFnNum(wageStandard.work)}小时算一个工</View>
                 <View className='atInputNumber'>
-                  <View className='icon' onClick={() => handleDel('work', wageStandard.work)}>-</View><View>
+                  <View className='icon icon_left' onClick={() => handleDel('work', wageStandard.work)}>-</View><View>
                     <Input 
                       type='digit'
                       className='inputBox' 
                       // maxLength={7}
                       value={toFixedFnNum(wageStandard.work).toString()} 
                       onInput={(e) =>handleWageStandard('work', e)}/>
-                  </View><View className='icon' onClick={() => handleAdd('work', wageStandard.work)}>+</View>
+                  </View><View className='icon icon_right' onClick={() => handleAdd('work', wageStandard.work)}>+</View>
                 </View> 
               </View>
               <View className='wageStandard-content-listBox-list'>
                 <View className='wageStandard-content-listBox-list-left'><Text className='wageStandard-content-listBox-list-title'>每个工多少钱:</Text> <Text>{toFixedFn(wageStandard.money)}</Text>元/个工</View>
                 <View>
                   <View className='atInputNumber'>
-                    <View className='icon' onClick={() => handleDel('money', wageStandard.money)}>-</View><View>
+                    <View className='icon icon_left' onClick={() => handleDel('money', wageStandard.money)}>-</View><View>
                       <Input
                         type='digit'
                         className='inputBox'
                         // maxLength={7}
                         value={wageStandard.money}
                         onInput={(e) => handleWageStandard('money', e)} />
-                    </View><View className='icon' onClick={() => handleAdd('money', wageStandard.money)}>+</View>
+                    </View><View className='icon icon_right' onClick={() => handleAdd('money', wageStandard.money)}>+</View>
                   </View> 
                   {/* <AtInputNumber
                     type='digit'
@@ -106,14 +106,14 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
               <View className='workList-title'>加班<Text>{toFixedFn(wageStandard.addWork)}</Text>元/小时</View>
                 <View className='workList-add'>
                 <View className='atInputNumber'>
-                  <View className='icon' onClick={() => handleDel('addWork', wageStandard.addWork)}>-</View><View>
+                  <View className='icon icon_left' onClick={() => handleDel('addWork', wageStandard.addWork)}>-</View><View>
                     <Input
                       type='digit'
                       className='inputBox-day'
                       // maxLength={7}
                       value={wageStandard.addWork}
                       onInput={(e) => handleWageStandard('addWork', e)} />
-                  </View><View className='icon' onClick={() => handleAdd('addWork', wageStandard.addWork)}>+</View>
+                  </View><View className='icon icon_right' onClick={() => handleAdd('addWork', wageStandard.addWork)}>+</View>
                 </View> 
                     {/* <AtInputNumber
                       type='digit'
@@ -133,14 +133,14 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
                   <View className='workList-title'>加班{parseFloat(wageStandard.day)}小时算1个工</View>
                   {/* <View className='workList-add'> */}
                   <View className='atInputNumber-mr'>
-                  <View className='icon' onClick={() => handleDel('day', wageStandard.day)}>-</View><View>
+                  <View className='icon icon_left' onClick={() => handleDel('day', wageStandard.day)}>-</View><View>
                       <Input
                         type='digit'
                         className='inputBox-day'
                         // maxLength={7}
                         value={toFixedFnNum(wageStandard.day).toString()}
                         onInput={(e) => handleWageStandard('day', e)} />
-                  </View><View className='icon' onClick={() => handleAdd('day', wageStandard.day)}>+</View>
+                  </View><View className='icon icon_right' onClick={() => handleAdd('day', wageStandard.day)}>+</View>
                   </View> 
                   {/* </View> */}
                 </View>
