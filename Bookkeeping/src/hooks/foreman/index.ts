@@ -3626,7 +3626,7 @@ export default function userForeman() {
     setProjectId(v.group_id + ',' + v.id)
     const time = toDayString + `（今天）`;
     data.time = time;
-    console.log(data,'data111111');
+    // 切换项目需要更换日历和上班时长
     //工人
     if (identity == 2) {
       if (v.leader_name) {
