@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump,First } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump, First, IsLogion, Sign } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
@@ -26,6 +26,7 @@ let authType = true;
 let jumType = false;
 // 跳转type
 let jumpType:string|number = 0;
+let noLogion = false;
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -185,6 +186,8 @@ export default function Index() {
   const [ImgClose, setImgClose] = useState<Boolean>(false)
   // 新手指引
   const [isModal,setIsModal] = useState<Boolean>(false)
+  //是否登陆
+  const [isLogionType, setIsLogionType] = useState<Boolean>(false);
   // 点击记工跳转到注册手机号
   // const [login,setLoginStatus] = useState<boolean>(false)
   const getDates = () => {
@@ -218,8 +221,10 @@ export default function Index() {
     const data = Taro.getStorageSync(Res);
     if (data) {
       const first = Taro.getStorageSync(First);
-      console.log(first,'firsttttttt')
+      console.log(first,'firsttttttt');
+      console.log(data,'啊啊啊啊啊试试');
       if (first)return;
+
       const e = data;
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
@@ -229,6 +234,7 @@ export default function Index() {
             token: e.referrerInfo.extraData.token,
             tokenTime: e.referrerInfo.extraData.tokenTime
           }
+          console.log('走这里')
           appletJumpAction(params).then(res => {
             console.log(res,'跳转获取的值')
             console.log(e.referrerInfo.extraData,'e.referrerInfo.extraData.userId ')
@@ -320,6 +326,7 @@ export default function Index() {
               obj.tokenTime = e.referrerInfo.extraData.tokenTime;
               Taro.setStorageSync(UserInfo, obj);
               Taro.setStorageSync(MidData, obj);
+              noLogion = true;
               // 设置点击直接跳转到注册手机号页面
               // setLoginStatus(true);
               // loginType = true;
@@ -336,7 +343,14 @@ export default function Index() {
     }
   }
   useDidShow(() => {
-    console.log('aaaaaaaaaaaaa');
+    console.log('初始化')
+    const sign = Taro.getStorageSync(Sign);
+    console.log(sign,'sjsadnbksabdkjsa')
+    if (sign) {
+      setHidden(true)
+      setCloseImage(true)
+      return;
+    }
     // setIdentity(false);
     setImgClose(false);
     setCloseImage(false);
@@ -374,30 +388,6 @@ export default function Index() {
       setDisplay(false)
       loginType = false;
     }
-    // 设置首页时间选择器时间
-    // if (creationTime){
-    //   // 开始时间
-    //   let myDate = new Date(creationTime*1000);
-    //   const nowY = myDate.getFullYear()-1;
-    //   const nowM = myDate.getMonth();
-    //   const time = nowY + '-' + nowM;
-    //   setStart(time)
-    //   console.log(nowY,'nowT')
-    //   // 结束时间
-    //   const date = new Date();
-    //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
-    //   setTime(newMonth);
-    // }else{
-    //   const date = new Date();
-    //   const newMonth = date.getFullYear() + '-' + addZero(date.getMonth() + 1);
-    //   const nowY = date.getFullYear() - 1;
-    //   const nowM = date.getMonth();
-    //   const time = nowY + '-' + nowM;
-    //   setStart(time)
-    //   setTime(newMonth);
-    // }
-    // 结束时间
-    // const time = 
     // 清楚日历缓存
     dispatch(setClickTIme([]))
     //清楚
@@ -411,14 +401,6 @@ export default function Index() {
     if (type) {
       setType(type)
     }
-    let userInfo = Taro.getStorageSync(UserInfo);
-    // =======
-    // if (!userInfo) {
-    //   setDisplay(false);
-    //   return
-    // } else {
-    //   setDisplay(false)
-    // }
     dispatch(setTypes(type))
     // getData();
     getData();
@@ -430,27 +412,6 @@ export default function Index() {
     } else if(Number(this_year_business_month)<montime){
       setleftTime(true);
     }
-    // let midParams = {
-    //   mid: userInfo.userId,
-    // }
-    // 登陆了就获取信息
-    // let midData = Taro.getStorageSync(MidData);
-    // if (midData) {
-    //   bkMemberAuthAction(midParams).then(res => {
-    //     if (res.code !== 200) {
-    //       Msg(res.msg)
-    //     } else {
-    //       console.log(res, 'ressssssssssss')
-    //       let userInfo = Taro.getStorageSync(UserInfo)
-    //       res.data.sign = {}
-    //       res.data.sign.token = userInfo.token;
-    //       res.data.sign.time = res.data.created_time;
-    //       res.data.uuid = userInfo.uuid;
-    //       // res.data.worker_id = res.data.worker_id;
-    //       Taro.setStorageSync(MidData, res.data)
-    //     }
-    //   })
-    // }
   })
   // 获取项目名称
   const bkGetProjectTeam = (dignity, state?: number) => {
@@ -470,6 +431,7 @@ export default function Index() {
   }
   // 获取首页数据
   const getData = (e?: string, type?: number|string,isModal?:boolean) => {
+    console.log('aaaa')
     let isLoginType = Taro.getStorageSync(IsLoginType);
     const jump = Taro.getStorageSync(IsJump);
     console.log(jump,'IsJumpIsJumpIsJump')
@@ -477,6 +439,12 @@ export default function Index() {
     // jump 其他小程序过来
     // isModal 4000
     // identityType  小程序过来200返回以前是否有过选择身份
+    const isLogion = Taro.getStorageSync(IsLogion);
+    if (isLogion){
+      setIsLogionType(true);
+      setDisplay(true);
+      return;
+    }
     if(jump){
       Taro.setStorageSync(IsJump, false);
       // 40000
@@ -501,22 +469,16 @@ export default function Index() {
         setCloseImage(true)
         return;
       }
-      
     }
     console.log(jump,'====jump=====');
     // 登陆过来的
-    if (isLoginType == 1) {
-      setHidden(false)
-      setCloseImage(false)
-    }
-    console.log(isLoginType,'isLoginTypeisLoginType')
-    console.log(identityType,'identityType')
-    // if (identityType) {
-    //   if (identityType == '0' ){
-    //     setCloseImage(true)
-    //   }
-    //   Taro.setStorageSync(Type, identityType);
+    // if (isLoginType == 1) {
+    //   setHidden(false)
+    //   setCloseImage(false);
+    //   return;
     // }
+    // console.log(isLoginType,'isLoginTypeisLoginType')
+    // console.log(identityType,'identityType')
     // 没有用户信息就默认设置为工人
     let midData = Taro.getStorageSync(MidData);
     console.log(midData,'midDatamidDatamidData')
@@ -534,6 +496,7 @@ export default function Index() {
     }
     // 判断是点开小程序的时候,没有身份让他选择身份
     if (!jump){
+      // setDisplay(false);
       if (midData) {
         console.log('走小程序自己的时候')
         let type = Taro.getStorageSync(Type);
@@ -712,6 +675,7 @@ export default function Index() {
     console.log(e,'eeeee');
     console.log(type,'1111');
     let midData = Taro.getStorageSync(MidData);
+    console.log(midData,'miDaadasda')
     if (!midData) {
       setleftTime(false);
       setrightTime(false);
@@ -756,6 +720,8 @@ export default function Index() {
   }
   // 跳转
   const userRouteJump = (url: string) => {
+    noLogion=false;
+    Taro.setStorageSync(Sign, false);
     Taro.navigateTo({
       url: url
     })
@@ -880,6 +846,8 @@ export default function Index() {
     Taro.setStorageSync(Type, e);
     Taro.setStorageSync(IsLoginType, e)
     Taro.setStorageSync(IsJump, false);
+    Taro.setStorageSync(IsLogion, false);
+    // setDisplay(false)
     getData();
   }
   // 关闭创建项目
@@ -939,35 +907,18 @@ export default function Index() {
     // 判断没有type 
     let type = Taro.getStorageSync(Type);
     console.log(type,'tyep')
-    // if (!type && midData ){
-    //   setIdentity(true)
-    //   return;
-    // }
     if (!midData) {
       // 游客点中间没反应
       if (state == 2) { return }
       setDisplay(true)
       return;
     }
-    // if(midData && (type ==0 || !type)){
-    //   console.log('aaa')
-    //   console.log(identity,'状态');
-    //   setIdentity(true);
-    //   console.log('走这了嗷嗷')
-    //   // return;
-    // }
     // 点击记工
     if (state && state != 2) {
       if (busy) {
         Msg('网络错误，请求失败')
         return;
       }
-      // console.log(type,'tyep')
-      // if(!type || type == 0){
-      //   console.log(312321312);
-      //   setIdentity(true);
-      //   // return;
-      // }
       // 判断不是0 然后与当前身份不同就是提示
       // 判断后台传过来的状态，然后和这一次的不一样就是有新项目需要出现弹框
       console.log(lasted_business_identity,'lasted_business_identity');
@@ -975,14 +926,13 @@ export default function Index() {
       console.log(neverPrompt,'neverPrompt')
       console.log(parseInt(lasted_business_identity),'lasted_business_identity12231');
       if (parseInt(lasted_business_identity) !== 0 && type != parseInt(lasted_business_identity) && !neverPrompt) {
-        // if(type && type != 0){
-        // console.log(lasted_business_identity, 'lasted_business_identity1');
-        // console.log(type, 'type1');
-        // console.log(neverPrompt, 'neverPrompt1')
-        //   console.log('来了');
-        //   setIdentity(true)
-        // if()
-          // setIdentity(true);
+        console.log(noLogion,'')
+        if (noLogion){
+          console.log(111112132123);
+          Taro.setStorageSync(IsLogion, true);
+          setDisplay(true);
+          return;
+        }
         if (isNaN(type) || type == 0 ){
           setIdentity(true)
         }else{
@@ -1360,7 +1310,7 @@ export default function Index() {
       </AtModal>
       </View>
       {/* 授权 */}
-      <Auth display={display} handleClose={handleClose} callback={handleCallback} />
+      <Auth display={display} handleClose={handleClose} callback={handleCallback} isLogionType={isLogionType}/>
       {/* 创建项目 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={handleOk} handleInput={handleInput} />
       {/* 填写班组 */}
