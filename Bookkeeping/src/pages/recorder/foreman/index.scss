@@ -248,7 +248,7 @@
   display: flex;
   justify-content: space-between;
   background: #ffffff;
-  padding: 24rpx 27rpx;
+  padding: 0 27rpx;
   font-size: 29rpx;
   color: rgba(47, 53, 65, 1);
 }
@@ -275,8 +275,11 @@
   color: rgba(47, 53, 65, 1);
   padding-bottom: 20rpx;
 }
-
+.check_title{
+  padding: 24rpx 27rpx;
+}
 .borrowing-Radio-list{
+  padding: 24rpx 10rpx;
   transform: scale(0.8, 0.8);
 }
 .radioList-box{

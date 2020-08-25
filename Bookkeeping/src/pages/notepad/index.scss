@@ -160,8 +160,11 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  padding-left: 30rpx;
   padding-right: 30rpx;
+}
+.checkboxButton-inner{
+  padding-left: 30rpx;
+  padding-right: 50rpx;
 }
 .checkboxButton-right{
   display: flex;

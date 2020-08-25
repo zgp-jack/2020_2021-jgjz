@@ -257,9 +257,12 @@
 }
 .footer-box-left{
   margin:  auto 0;
-  padding: 20rpx 22rpx;
+  padding-left: 22rpx;
+  padding-right: 50rpx;
   color: rgba(147, 147, 147, 1);
   font-size: 28rpx;
+  height: 100%;
+  line-height: 118rpx;
 }
 .noData-box{
   height: 100vh;

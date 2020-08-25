@@ -445,12 +445,12 @@ export default function Foreman() {
         {/* 选择为包工的时候 */}
         {recorderType == 2 &&
           <View className='contractor'>
-            <View>包工类型</View>
+            <View className='check_title'>包工类型</View>
             <View className='radioList'>
               <RadioGroup className='radioList-box'>
                 {contractorArr.item.map(v => (
-                  <View>
-                  <Radio color='#0099FF' className='borrowing-Radio-list' checked={v.click} key={v.id} onClick={() => handleRadio(v)}>{v.name}</Radio>
+                  <View onClick={() => handleRadio(v)}>
+                  <Radio color='#0099FF' className='borrowing-Radio-list' checked={v.click} key={v.id}>{v.name}</Radio>
                   </View>
                 ))}
               </RadioGroup>
@@ -898,11 +898,17 @@ export default function Foreman() {
               {projectArr.length === 0 && <View className='noText'>暂无数据</View>}
           </View>
         </View>
+        {
+          !edit?
           <View className='atDrawer-footer'>
             <View className='atDrawer-footer-btn' onClick={handleAddProjectList}>
               <Image src={`${IMGCDNURL}whiteLeftAdd.png`} className='addIcon'/> 
                 创建项目</View>
           </View> 
+          :
+          ''
+        }
+          
         </AtDrawer>
     </View>
     </context.Provider >
