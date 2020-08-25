@@ -559,12 +559,13 @@ export default function userForeman() {
                     }
                   }
                 }
+                let noset: boolean = true;
                 for (let i = 0; i < workArr.length;i++){
-                  setNoset(true) 
                   if(!workArr[i].set){
-                    setNoset(false) 
+                    noset = false
                   }
                 }
+                setNoset(noset) 
               }else{
                 const data = res.data.latest_group_workers_has_wage[0];
                 const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
@@ -910,13 +911,21 @@ export default function userForeman() {
                   for (let j = 0; j < res.data.default_group_workers_has_wage.length; j++) {
                     if (workList[i].id == res.data.default_group_workers_has_wage[j].worker_id) {
                       workList[i].set = true;
-                      setNoset(true)
-                    }else{
-                      setNoset(false)
+                      // setNoset(true)
                     }
+                    // else{
+                    //   // setNoset(false)
+                    // }
                   }
                 }
               }
+              let noset: boolean = true;
+              for (let j = 0; j < workList.length; j++) {
+                if (!workList[j].set) {
+                  noset = false
+                }
+              }
+              setNoset(noset)
               // 已记工
               if (res.data.default_group_worker_has_business) {
                 // 工人
@@ -2030,10 +2039,11 @@ export default function userForeman() {
           const time = years + '-' + addZero(months) + '-' + dates;
           setToDayString(time)
           let timeParams = {
-            group_info: groupInfo,
-            business_type: dataType,
+            group_info: prams.group_info,
+            business_type: prams.business_type,
             date: time,
           }
+          console.log(groupInfo,'groupInfo')
           console.log('冲冲次')
           // setModel({ ...model, duration: timeTitle, modalDuration: timeTitle, time: showTime, details: '', amount: '', price: '', wages: '', borrowing: '', univalent: '' })
           let cacheDaysArr: any[] = [];
@@ -2264,6 +2274,7 @@ export default function userForeman() {
                 business_type: dataType,
                 date: time,
               }
+              console.log('走这里了')
               getWorkerHasBusinessByDateAction(dateParams).then(dateRes => {
                 if (dateRes.code == 200) {
                   setCache(dateRes.data.worker||[])
@@ -4498,14 +4509,17 @@ export default function userForeman() {
         data[i].click = false;
       }
     }
+    let noset: boolean = true;
     for (let i = 0; i < workerItem.length;i++){
-      setNoset(true)
+      // setNoset(true)
       workerItem[i].del = false;
       workerItem[i].click = false;
       if (!workerItem[i].set){
-        setNoset(false)
+        // setNoset(false)
+        noset = false
       }
     }
+    setNoset(noset)
     setWorkerItem(workerItem)
     setContractorArr({ item: data });
   }
