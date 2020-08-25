@@ -79,6 +79,10 @@ export default function userForeman() {
   const [test,setText] = useState<string>('')
   // 是工人还是班组
   const [identity, setIdentity] = useState<number>(1)
+
+  //判断是否是删除状态
+  const [isDel, setDel] = useState<boolean>(false)
+
   // 上班时长
   const [timeArr, setTimeArr] = useState<DataType[]>([
     { id: 1, name: '1个工', click: false, num: 1, whole: true },
@@ -3037,6 +3041,7 @@ export default function userForeman() {
   const handleDel = (type: number) => {
     const data = JSON.parse(JSON.stringify(workerItem));
     if (type === 0) {
+      setDel(true);
       const arr = data.map(v => {
         if (v.id != 1) {
           v.del = true;
@@ -3046,6 +3051,7 @@ export default function userForeman() {
       setWorkerItem(arr);
       setDeldelType(true)
     } else {
+      setDel(false);
       const arr = data.map(v => {
         if (v.id != 1) {
           v.del = false;
@@ -4924,6 +4930,7 @@ export default function userForeman() {
     setleftTime,
     rightTime,
     setrightTime,
-    toDayString
+    toDayString,
+    isDel
   }
 }
