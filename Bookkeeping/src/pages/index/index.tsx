@@ -212,8 +212,8 @@ export default function Index() {
     return newMonth;
   }
   const addZero = (num) => {
-    if (parseInt(num) < 10) {
-      num = '0' + num;
+    if (parseFloat(num) < 10) {
+      num = '0' + parseFloat(num);
     }
     return num;
   }
