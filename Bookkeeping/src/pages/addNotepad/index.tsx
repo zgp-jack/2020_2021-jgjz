@@ -60,7 +60,7 @@ export default function AddNotepad() {
 
   const datachange = (dataArr) => {
     if(dataArr){
-      model.time = formatDate(new Date(dataArr.created_time) * 1,'yyyy/MM/dd hh:mm');
+      model.time = formatDate(dataArr.created_time * 1000,'yyyy/MM/dd hh:mm');
       model.note = dataArr.note;
       model.id = id;
       setModel({
@@ -69,7 +69,7 @@ export default function AddNotepad() {
       dataArr.view_images && dataArr.view_images.length && setImage({ ...image, item: [...dataArr.view_images] })
 
       Taro.setNavigationBarTitle({
-        title: formatDate(new Date(dataArr.created_time) * 1,'yyyy年MM月dd日 星期w'),
+        title: formatDate(dataArr.created_time * 1000,'yyyy年MM月dd日 星期w'),
       })
     }
   }
