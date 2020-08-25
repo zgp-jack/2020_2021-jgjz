@@ -1051,13 +1051,13 @@ export default function AttendanceSheet() {
                       )}
                         >
                         {val.name}</View>
-                        {val.default && !val.isSum &&
+                        {/* {val.default && !val.isSum &&
                           <View open-type="share">
                             <Button className='blued' open-type="share">
                               微信对工>
                         </Button>
                           </View>
-                        }
+                        } */}
                       </View>}
                       {val.type && <View>
                         <View className='box-list-type'>

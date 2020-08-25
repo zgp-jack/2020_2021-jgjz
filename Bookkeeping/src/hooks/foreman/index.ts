@@ -388,6 +388,8 @@ export default function userForeman() {
         }
       }
       const item = [objs, ...arrList];
+      console.log(item,'11111');
+      console.log(data,'111111')
       if (data.length > 0) {
         // setNoset(false)
         for (let j = 0; j < data.length; j++) {
@@ -831,6 +833,7 @@ export default function userForeman() {
               // 工人设置工钱
               const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
               if(type == 2){
+                setMoneyList(res.data.default_group_workers_has_wage)
                 if(res.data.default_group_workers_has_wage.length>0){
                   
                   const data = res.data.default_group_workers_has_wage[0];
