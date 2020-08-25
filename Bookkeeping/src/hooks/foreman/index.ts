@@ -402,13 +402,6 @@ export default function userForeman() {
             // }
           }
         }
-        for (let j = 0; j < item.length;j++){
-          if(!item[j].set){
-            setNoset(false)
-          }else{
-            setNoset(true)
-          }
-        }
       } else {
         for (let i = 0; i < item.length; i++) {
           item[i].click = false;
@@ -423,6 +416,14 @@ export default function userForeman() {
           }
         }
       }
+      let noset: boolean = true;
+      for (let j = 0; j < item.length; j++) {
+        if (!item[j].set) {
+          noset = false
+        }
+      }
+      setNoset(noset)
+      console.log(item,'item')
       setClickNum(0);
       setAllClick(false)
       setWorkerItem(item)
