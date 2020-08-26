@@ -2608,6 +2608,12 @@ export default function userForeman() {
         const timeTitle = '上班1个工，无加班';
         // 修改工资标准
         if (type === 2) {
+          setIds(res.data);
+          setLeader_id('');
+          const name = model.groupName + '-' + model.teamName;
+          bkGetProjectTeam(name);
+          setGroupInfo(res.data)
+          setProjectId(res.data)
           bkGetWorkerWage(res.data);
           setTimeout(() => {
             isHandleAdd = true;
