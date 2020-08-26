@@ -110,7 +110,7 @@
   padding: 30rpx;
 }
 .content-list-subclass:not(:last-child){
-  border-bottom: 1rpx solid rgba(231, 231, 231, 1);
+  border-bottom: 2rpx solid rgba(231, 231, 231, 1);
 }
 .content-list-subclass-left{
   &>.worker{
@@ -245,7 +245,7 @@
   height:73rpx;
   line-height: 73rpx;
   background:rgba(237, 237, 237, 1);
-  border:1rpx solid rgba(228, 228, 228, 1);
+  border:2rpx solid rgba(228, 228, 228, 1);
   border-radius:10rpx;
   color: #797979;
   margin-left: 33rpx;
@@ -343,7 +343,7 @@
   line-height: 54rpx;
   color: rgba(132, 132, 132, 1);
   font-size: 28rpx;
-  border: 1rpx solid rgba(219, 219, 219, 1);
+  border: 2rpx solid rgba(219, 219, 219, 1);
   border-radius: 5rpx;
   margin: 0 auto;
   margin-top: 33rpx;

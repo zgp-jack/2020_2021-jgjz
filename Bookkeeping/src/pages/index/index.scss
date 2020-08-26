@@ -262,13 +262,13 @@ scroll-view{
 .content-list{
   display: flex;
   height: 104rpx;
-  border-bottom: 1rpx solid rgba(238, 238, 238, 1);
+  border-bottom: 2rpx solid rgba(238, 238, 238, 1);
 }
 .content-list>View{
   width: 73%;
 }
 .content-list-type{
-  border-bottom: 1rpx solid rgba(238, 238, 238, 1);
+  border-bottom: 2rpx solid rgba(238, 238, 238, 1);
 }
 .content-noList{
   margin-top: 10%;
@@ -520,7 +520,7 @@ scroll-view{
   width: 194rpx;
   margin: 0 auto;
   color: rgba(132, 132, 132, 1);
-  border: 1rpx solid rgba(228, 228, 228, 1);
+  border: 2rpx solid rgba(228, 228, 228, 1);
   margin-top: 33rpx;
 }
 
