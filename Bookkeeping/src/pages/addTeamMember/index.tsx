@@ -81,7 +81,7 @@ export default function AddTeamMember() {
                 arr.map(value => {
                   if (val.id == value.id) {
                     val.click = true,
-                      val.disabled = true
+                    val.disabled = true
                   }
                   return value;
                 })
@@ -231,14 +231,30 @@ export default function AddTeamMember() {
   }
   const handleStart = () => {
     const dataArr = JSON.parse(JSON.stringify(data));
+    console.log(dataArr,'dataArr');
     let clickArr: any[] = [];
-    for (let i = 0; i < dataArr.length; i++) {
+    for(let i =0;i<dataArr.length;i++){
       for (let j = 0; j < dataArr[i].list.length; j++) {
-        if (dataArr[i].list[j].click) {
+        if (dataArr[i].list[j].disabled) {
           clickArr.push(dataArr[i].list[j])
         }
       }
     }
+    // for (let i = 0; i < dataArr.length; i++) {
+    //   for (let j = 0; j < dataArr[i].list.length; j++) {
+    //     if (dataArr[i].list[j].click) {
+    //       clickArr.push(dataArr[i].list[j])
+    //     }
+    //   }
+    // }
+    for (let i = 0; i < dataArr.length; i++) {
+      for (let j = 0; j < dataArr[i].list.length; j++) {
+        if (dataArr[i].list[j].click && !dataArr[i].list[j].disabled ) {
+          clickArr.push(dataArr[i].list[j])
+        }
+      }
+    }
+    console.log(clickArr,'clickArr')
     let ids: string[] = clickArr.map(item => item.id);
     if (ids.length < 1) {
       Msg('请选择工人')

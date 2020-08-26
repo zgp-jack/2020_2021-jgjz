@@ -32,7 +32,8 @@ interface PROPS {
   onScrollToLower: () => void,
   noCalendarDay:boolean,
   leftTime: boolean,
-  rightTime: boolean
+  rightTime: boolean,
+  changeId:number,
 }
 // interface TimeType{
 //   year:string,
@@ -41,7 +42,7 @@ interface PROPS {
 
 export default function CalendarModal({ 
   // setRecorderType, calendarDays, setCalendarDays, clickData, setClickData,
-  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay,leftTime,rightTime}: PROPS) {
+  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, handleCalendarClose, changeId, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay,leftTime,rightTime}: PROPS) {
   // 储存点击天数
   // 获取存入的公用内容
   const useSelectorItem = useSelector<any, any>(state => state)
@@ -155,7 +156,10 @@ export default function CalendarModal({
               </View>
               </View>
           </View>
-          <View className='title'><View className='content-tips-box'></View><View>表示当天已有记工</View></View>
+          <View className='title'>
+              {changeId !== 3 && <View className='title'><View className='content-tips-box'></View>
+              <View>表示当天已有记工</View></View>}
+          </View>
         </View>
           <View className='content-times' 
             // onTouchStart={(e) => handleTouch(e)} 

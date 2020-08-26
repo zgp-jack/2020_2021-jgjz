@@ -48,14 +48,13 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay,
-    leftTime,rightTime,setleftTime,setrightTime,toDayString,isDel
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
   
   // 创建项目引导
-  const [createProjectDisplay, setCreateProjectDisplay] = useState<boolean>(false)
+  const [createProjectDisplay, setCreateProjectDisplay] = useState<Boolean>(false)
   // 项目列表取消，删除/修改
   const [edit,setEdit] = useState<boolean>(false)
   // 项目名称
@@ -844,8 +843,7 @@ export default function Foreman() {
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={handleNext} handleInput={handleInput}/>
       {/* 日历 */}
         <CalendarModal display={calendarModalDisplay} handleCalendar={handleCalendar} model={model} setModel={setModel} setTimeData={setTimeData} recorderType={recorderType} handleClickCalendar={handleClickCalendar} time={time}
-          getMonthDaysCurrent={getMonthDaysCurrent} arr={arr} clickData={clickData} handleCalendarClose={handleCalendarClose} handleChangeTime={handleChangeTime} handleCalendarSub={handleCalendarSub} onScrollToLower={onScrollToLower} onScrollToUpper={onScrollToUpper} calendarDays={calendarDays} noCalendarDay={noCalendarDay}
-          leftTime={leftTime} rightTime={rightTime}
+          getMonthDaysCurrent={getMonthDaysCurrent} arr={arr} clickData={clickData} handleCalendarClose={handleCalendarClose} handleChangeTime={handleChangeTime} handleCalendarSub={handleCalendarSub} onScrollToLower={onScrollToLower} onScrollToUpper={onScrollToUpper} calendarDays={calendarDays} noCalendarDay={noCalendarDay} leftTime={leftTime} rightTime={rightTime} changeId={changeId}
         />
       {/* 设置工资标准 */}
         <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardClose} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput}/>

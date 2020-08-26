@@ -231,6 +231,7 @@ export default function AddTeamMember() {
   }
   const handleStart = ()=>{
       const dataArr = JSON.parse(JSON.stringify(data));
+      console.log(dataArr,'dataarrr')
       let clickArr:any[]= [];
       for(let i=0;i<dataArr.length;i++){
         for(let j=0;j<dataArr[i].list.length;j++){
@@ -239,6 +240,8 @@ export default function AddTeamMember() {
           }
         }
       }
+    console.log(clickArr,'clickArr')
+      return
       let ids: string[] = clickArr.map(item => item.id);
       if (ids.length<1){
         Msg('请选择工人')

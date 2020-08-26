@@ -4,7 +4,7 @@ import { IMGCDNURL } from '../../config'
 import './index.scss'
 
 interface PROPS {
-  display: boolean //是否跳转到页面授权
+  display: Boolean //是否跳转到页面授权
   handleSubmit: () => void,
   handleClose:() =>void,
   val:string,

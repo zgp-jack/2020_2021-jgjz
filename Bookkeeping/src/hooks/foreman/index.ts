@@ -68,6 +68,8 @@ interface TimeType {
 let changeId = 1;
 // 日历
 let isChange = false;
+// 防止多点
+let isHandleAdd = true;
 export default function userForeman() {
   let noData = false;
   // const router: Taro.RouterInfo = useRouter();
@@ -316,6 +318,8 @@ export default function userForeman() {
   const [isdisable,setIsdisable] = useState<boolean>(false)
   // 跳转考勤表
   const [jumpMonth, setJumpMonth] = useState<string>('')
+  // 防止创建项目多点
+  // const [isHandleAdd, setIsHandleAdd] = useState<Boolean>(false)
   //切换的类型
   // const [changeId,setChangeID] = useState<number>(1)
   // const [noData, setNoData] = useState<boolean>(false)
@@ -392,8 +396,6 @@ export default function userForeman() {
         }
       }
       const item = [objs, ...arrList];
-      console.log(item,'11111');
-      console.log(data,'111111')
       if (data.length > 0) {
         // setNoset(false)
         for (let j = 0; j < data.length; j++) {
@@ -2569,6 +2571,8 @@ export default function userForeman() {
   }
   // 创建项目
   const handleAddProject = () => {
+    console.log(isHandleAdd)
+    if(!isHandleAdd) return
     if (!model.teamName) {
       Msg('您还没有填写班组名称');
       return;
@@ -2579,6 +2583,7 @@ export default function userForeman() {
       group_name: model.groupName,
       team_name: model.teamName,
     }
+    isHandleAdd = false
     bkAddProjectTeamAction(params).then(res => {
       if (res.code === 200) {
         if(toDay){
@@ -2594,12 +2599,19 @@ export default function userForeman() {
         }
         setIds(res.data);
         setLeader_id('');
-        const name = model.groupName + '-' + model.teamName;
+        const name = model.groupName.replace(/^\s*|\s*$/g, "") + '-' + model.teamName.replace(/^\s*|\s*$/g, "");
         bkGetProjectTeam(name);
         setGroupInfo(res.data)
         setProjectId(res.data)
+        setTimeout(()=>{
+          isHandleAdd = true;
+        },500)
       } else {
+        // isHandleAdd = true;
         Msg(res.msg);
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
         return;
       }
       setTimeout(() => {
@@ -3064,6 +3076,8 @@ export default function userForeman() {
   }
   // 添加成员
   const handleEstablish = (id) => {
+    if (!isHandleAdd) return;
+    isHandleAdd = false
     const data = JSON.parse(JSON.stringify(model))
     if (!model.userName) {
       let type = Taro.getStorageSync(Type);
@@ -3106,8 +3120,14 @@ export default function userForeman() {
         // 重新获取数据
         // bkGetWorkerAction
         setAddMemberDisplay(false)
+        setTimeout(()=>{
+        isHandleAdd = true;
+        },500)
       } else {
         Msg(res.msg)
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
       }
     })
   }
@@ -3337,6 +3357,7 @@ export default function userForeman() {
   }
   // 保存
   const handlePreservation = (type: number) => {
+    if (!isHandleAdd) return;
     // 获取工资标准
     const item = JSON.parse(JSON.stringify(model));
     const workerItemArr = JSON.parse(JSON.stringify(workerItem));
@@ -3572,6 +3593,7 @@ export default function userForeman() {
     if (projectArr.length === 0){
       params.group_info = '';
     }
+    isHandleAdd = false
     if (identity == 2) {
         // 没有项目&&记工和包工点工的时候需要传
       console.log(projectArr.length,'projectArr.length');
@@ -3628,6 +3650,9 @@ export default function userForeman() {
                 getList()
                 // handleRecordTime(timeItem, workers, groupInfo,tabData.id);
               }, 800)
+              setTimeout(() => {
+                isHandleAdd = true;
+              }, 500)
               //直接保存
             } else {
               JumpFn(timeItem);
@@ -3635,9 +3660,15 @@ export default function userForeman() {
               // handleRecordTime(timeItem, workers, groupInfo, tabData.id);
               setIsdisable(true);
               setDisplay(true)
+              setTimeout(() => {
+                isHandleAdd = true;
+              }, 500)
             }
           } else {
             Msg(resData.msg)
+            setTimeout(() => {
+              isHandleAdd = true;
+            }, 500)
           }
         })
       // }
@@ -3661,13 +3692,22 @@ export default function userForeman() {
               // 重新请求
               getList()
             }, 800)
+            setTimeout(() => {
+              isHandleAdd = true;
+            }, 500)
           } else {
             JumpFn(timeItem);
             setIsdisable(true);
             setDisplay(true)
+            setTimeout(() => {
+              isHandleAdd = true;
+            }, 500)
           }
         } else {
-          Msg(res.msg)
+          Msg(res.msg);
+          setTimeout(() => {
+            isHandleAdd = true;
+          }, 500)
         }
       })
     }
@@ -4138,6 +4178,8 @@ export default function userForeman() {
   }
   // 删除项目
   const handleDelProject = (v) => {
+    if (!isHandleAdd) return;
+    isHandleAdd = false
     const ids = v.id;
     let params = {
       ids,
@@ -4162,8 +4204,14 @@ export default function userForeman() {
                 setDeldelType(false)
                 setModel({ ...model, name: '',groupName:'' });
               }, 800)
+              setTimeout(() => {
+                isHandleAdd = true;
+              }, 500)
             } else {
               Msg(res.msg)
+              setTimeout(() => {
+                isHandleAdd = true;
+              }, 500)
             }
           })
         }
@@ -4172,19 +4220,33 @@ export default function userForeman() {
   }
   // 确认修改项目
   const handleEditProject = () => {
+    if (!isHandleAdd) return
+    isHandleAdd = false
     const data = JSON.parse(JSON.stringify(editProjectData));
+    const group = data.group_name.replace(/^\s*|\s*$/g, "");
+    const team = data.team_name.replace(/^\s*|\s*$/g, "");
     let params = {
       group_info: data.group_info,
-      team_name: data.team_name,
-      group_name: data.group_name,
+      team_name: team,
+      group_name: group,
     }
     bkUpdateProjectTeamAction(params).then(res => {
       if (res.code === 200) {
         setEditProjectDisplay(false);
         bkGetProjectTeam();
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
       } else if (res.code === 400) {
         Msg(res.msg)
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
         return;
+      }else{
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
       }
     })
   }
@@ -5034,6 +5096,7 @@ export default function userForeman() {
     rightTime,
     setrightTime,
     toDayString,
-    isDel
+    isDel,
+    changeId,
   }
 }

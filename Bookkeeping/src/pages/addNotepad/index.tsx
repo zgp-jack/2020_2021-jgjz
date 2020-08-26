@@ -67,9 +67,12 @@ export default function AddNotepad() {
         ...model
       })
       dataArr.view_images && dataArr.view_images.length && setImage({ ...image, item: [...dataArr.view_images] })
-
+      let title;
+      if (dataArr.created_time){
+        title = formatDate(dataArr.created_time * 1000, 'yyyy年MM月dd日 星期w');
+      }
       Taro.setNavigationBarTitle({
-        title: formatDate(dataArr.created_time * 1000,'yyyy年MM月dd日 星期w'),
+        title: title
       })
     }
   }

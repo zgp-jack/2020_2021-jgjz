@@ -45,6 +45,8 @@ interface DataType {
   click: boolean,
   num?: number
 }
+// 防止多点
+let isHandleAdd = false;
 export default function EditDetails() {
   const dispatch = useDispatch()
   const useSelectorItem = useSelector<any, any>(state => state)
@@ -1053,6 +1055,7 @@ export default function EditDetails() {
   }
   // 保存
   const handlesub = ()=>{
+    if (!isHandleAdd) return;
     const data = JSON.parse(JSON.stringify(val));
     const items = JSON.parse(JSON.stringify(wageStandard));
     const businessTypes = JSON.parse(JSON.stringify(businessType));
@@ -1060,7 +1063,6 @@ export default function EditDetails() {
     let img_url: string[] = image.item.map(item => item.url);
     // 借支的时候radio
     let typeState=0;
-
     if (businessTypes == 3){
       for (let i = 0; i < borrowingArr.length;i++){
         console.log(borrowingArr[i],'111')
@@ -1172,6 +1174,7 @@ export default function EditDetails() {
     }
     console.log(params,'params');
     // return;
+    isHandleAdd = false
     updateBusinessAction(params).then(res=>{
       if(res.code === 200){
         delete params['group_info'];
@@ -1205,7 +1208,13 @@ export default function EditDetails() {
         // dispatch(setFlowingWater([]))
         Msg(res.msg);
         Taro.navigateBack();
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
       }else{
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
         Msg(res.msg)
       }
     })

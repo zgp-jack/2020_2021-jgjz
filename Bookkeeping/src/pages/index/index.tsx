@@ -27,6 +27,8 @@ let jumType = false;
 // 跳转type
 let jumpType:string|number = 0;
 let noLogion = false;
+// 创建项目防止多点
+let isHandleAdd = true;
 let ContentItem: bkIndexTypeData = {
   amount: {
     type: 0,
@@ -864,24 +866,34 @@ export default function Index() {
   }
   // 确认弹框
   const handleAddProject = () => {
+    if (!isHandleAdd) return
     if (!model.teamName){
       Msg('您还没有填写班组名称');
       return
     }
+    const group = model.groupName.replace(/^\s*|\s*$/g, "");
+    const team = model.teamName.replace(/^\s*|\s*$/g, "");
     let params = {
-      group_name: model.groupName,
-      team_name: model.teamName,
+      group_name: group,
+      team_name: team,
     }
+    isHandleAdd = false
     bkAddProjectTeamAction(params).then(res => {
       if (res.code === 200) {
         setProject(false);
         setishandleJump(true);
         setModel({ groupName: '', teamName: '' })
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
         // 班组长是1
         userRouteJump(`/pages/recorder/index?type=${1}`)
         // bkGetProjectTeam()
       } else {
         Msg(res.msg);
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
         return;
       }
     })
