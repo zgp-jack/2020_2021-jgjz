@@ -616,6 +616,10 @@
 }
 
 .atDrawer-heard{
+  position: fixed;
+  top:0;
+  right: 0;
+  width: 460rpx;
   height: 100rpx;
   line-height: 100rpx;
   display: flex;
@@ -623,6 +627,8 @@
   font-size: 29rpx;
   color: rgba(29, 30, 30, 1);
   border-bottom: 2rpx solid rgba(218, 219, 220, 1);
+  background-color: #fff;
+  z-index: 10;
 }
 .atDrawer-heard-edit{
   height: 39rpx;
@@ -745,13 +751,13 @@
   display:  flex;
 }
 .atDrawer-heard-content{
-  height: 100%;
+  height: calc(100vh - 370rpx);
   position: relative;
-  padding-bottom: 100rpx;
+  padding: 100rpx 0;
+  overflow: scroll;
 }
 .atDrawer-box{
-  height: 90%;
-  overflow: scroll;
+  // height: 90%;
   position: relative;
 }
 .listPosition {
