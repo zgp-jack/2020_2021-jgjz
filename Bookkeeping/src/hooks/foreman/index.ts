@@ -4281,6 +4281,15 @@ export default function userForeman() {
   // 修改项目组输入框
   const handleEditProjectData = (type, e) => {
     let data = JSON.parse(JSON.stringify(editProjectData));
+    if (type == 'team_name' || type == 'group_name') {
+      const regExp = /^[\u4e00-\u9fa5_a-zA-Z0-9\s\·\~\！\@\#\￥\%\……\&\*\（\）\——\-\+\=\【\】\{\}\、\|\；\‘\’\：\“\”\《\》\？\，\。\、\`\~\!\#\$\%\^\&\*\(\)\_\[\]{\}\\\|\;\'\'\:\"\"\,\.\/\<\>\?]+$/;
+      if (regExp.test(e.detail.value)) {
+        data[type] = e.detail.value;
+        setEditProjectData(data);
+      } else {
+        return ''
+      }
+    }
     data[type] = e.detail.value;
     setEditProjectData(data);
   }
