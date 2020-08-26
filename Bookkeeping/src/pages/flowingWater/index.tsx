@@ -9,6 +9,7 @@ import { Type } from '../../config/store'
 import { setFlowingWater } from '../../actions/flowingWater';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
+import Auth from '../../components/auth';
 import { bkBusinessTypeDataItem } from '../../utils/request/index.d'
 import './index.scss'
 export interface Injected {
@@ -67,6 +68,7 @@ export default function FlowingWater() {
   const [ishandleJump,setishandleJump] = useState<boolean>(true)
   // 数据异常
   const [busy, setBusy] = useState<boolean>(false)
+  const [display, setDisplay] = useState<boolean>(false)
   // 获取数据
   useDidShow(()=>{
     const date = JSON.stringify(new Date()).slice(1, 11)
@@ -148,6 +150,8 @@ export default function FlowingWater() {
           setIsCheckOut(false)
           setData({ item: [] })
         }
+      }else if(res.code == 403){
+        setDisplay(true)
       }else{
         Msg(res.msg)
       }
@@ -680,6 +684,7 @@ export default function FlowingWater() {
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
       {/* 填写班组 */}
       <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setProject(false), setModel({ groupName: '', teamName: '' }) }} />
+      {/* <Auth display={display} handleClose={()=>{setDisplay(false)}} callback={()=>{}} isLogionType={false} /> */}
     </context.Provider>
   )
 }
