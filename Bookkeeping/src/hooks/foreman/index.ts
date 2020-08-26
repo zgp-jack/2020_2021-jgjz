@@ -2579,9 +2579,11 @@ export default function userForeman() {
     }
     setDeldelType(false)
     let type = Taro.getStorageSync(Type);
+    const group = model.groupName.replace(/^\s*|\s*$/g, "");
+    const team = model.teamName.replace(/^\s*|\s*$/g, "");
     let params = {
-      group_name: model.groupName,
-      team_name: model.teamName,
+      group_name: group,
+      team_name: team,
     }
     isHandleAdd = false
     bkAddProjectTeamAction(params).then(res => {
