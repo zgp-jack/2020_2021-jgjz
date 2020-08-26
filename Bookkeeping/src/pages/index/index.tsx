@@ -861,6 +861,16 @@ export default function Index() {
   // 弹框输入
   const handleInput = (type: string, e) => {
     let data = JSON.parse(JSON.stringify(model));
+    if (type == 'groupName' || type == 'teamName' || type == 'userName') {
+      const regExp = /^[\u4e00-\u9fa5_a-zA-Z0-9\s\·\~\！\@\#\￥\%\……\&\*\（\）\——\-\+\=\【\】\{\}\、\|\；\‘\’\：\“\”\《\》\？\，\。\、\`\~\!\#\$\%\^\&\*\(\)\_\[\]{\}\\\|\;\'\'\:\"\"\,\.\/\<\>\?]+$/;
+      if (regExp.test(e.detail.value)) {
+        data[type] = e.detail.value
+        setModel({ ...data });
+        return
+      } else {
+        return ''
+      }
+    }
     data[type] = e.detail.value;
     setModel(data);
   }

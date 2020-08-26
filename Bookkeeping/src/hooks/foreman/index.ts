@@ -2553,6 +2553,17 @@ export default function userForeman() {
     if (type == 'wages' || type == 'borrowing'){
       return dealInputVal(e.detail.value, 14,type);
     }
+    console.log(e,'eeeeee')
+    if (type == 'groupName' || type == 'teamName' || type == 'userName'){
+      const regExp = /^[\u4e00-\u9fa5_a-zA-Z0-9\s\·\~\！\@\#\￥\%\……\&\*\（\）\——\-\+\=\【\】\{\}\、\|\；\‘\’\：\“\”\《\》\？\，\。\、\`\~\!\#\$\%\^\&\*\(\)\_\[\]{\}\\\|\;\'\'\:\"\"\,\.\/\<\>\?]+$/;
+      if (regExp.test(e.detail.value)){
+        data[type] = e.detail.value
+        setModel({ ...data });
+        return
+      }else{
+        return ''
+      }
+    }
     data[type] = e.detail.value
     setModel({...data});
     // }
