@@ -371,6 +371,15 @@ export default function userForeman() {
   // 设置年月日小于0前面加0
   useEffect(()=>{
     let type = Taro.getStorageSync(Type);
+    if (type == 1) {
+      Taro.setNavigationBarTitle({
+        title: '我是班组长，开始记工'
+      })
+    } else {
+      Taro.setNavigationBarTitle({
+        title: '我是工人，开始记工'
+      })
+    }
     let mid = Taro.getStorageSync(MidData);
     console.log(mid,'MidDataMidDataMidData');
     console.log(type ,'tyndsandjasndlk')
