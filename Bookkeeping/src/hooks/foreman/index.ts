@@ -1735,7 +1735,7 @@ export default function userForeman() {
                 }
                 setTimeArr(timeArr);
                 setAddWorkArr(addWorkArr)
-                setModel({ ...modalObj, name: groupName, duration: timeTitle, modalDuration: timeTitle, time });
+                setModel({ ...modalObj, name: res.data[i].group_name + '-' + res.data[i].name, duration: timeTitle, modalDuration: timeTitle, time });
                 // 然后获取工人列表
                 id = res.data[i].group_id + ',' + res.data[i].id;
                 bkGetWorker(res.data[i].group_id + ',' + res.data[i].id, true);
