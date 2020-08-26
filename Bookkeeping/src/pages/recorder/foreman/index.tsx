@@ -49,7 +49,7 @@ export default function Foreman() {
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
     onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay,
-    leftTime,rightTime,setleftTime,setrightTime,toDayString
+    leftTime,rightTime,setleftTime,setrightTime,toDayString,isDel
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -445,12 +445,12 @@ export default function Foreman() {
         {/* 选择为包工的时候 */}
         {recorderType == 2 &&
           <View className='contractor'>
-            <View>包工类型</View>
+            <View className='check_title'>包工类型</View>
             <View className='radioList'>
               <RadioGroup className='radioList-box'>
                 {contractorArr.item.map(v => (
-                  <View>
-                  <Radio color='#0099FF' className='borrowing-Radio-list' checked={v.click} key={v.id} onClick={() => handleRadio(v)}>{v.name}</Radio>
+                  <View onClick={() => handleRadio(v)}>
+                  <Radio color='#0099FF' className='borrowing-Radio-list' checked={v.click} key={v.id}>{v.name}</Radio>
                   </View>
                 ))}
               </RadioGroup>
@@ -496,12 +496,12 @@ export default function Foreman() {
         }
         {identity == 1 && 
             <View className='workerBox'>
-              <View className='workerBox-list'>
+              <View className='workerBox-list' style={{paddingBottom:isDel?'20rpx':0}}>
                 <View className='workerBox-list-title'>
                   <View>选择工人</View>
                   {/* <View className='workerBox-list-title-origin'>长按名字可修改/查看工资标准</View> */}
                   <View className='workerBox-list-title-origin-box'>
-                  {(recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ?
+                  {(recorderType !== 3 && !(recorderType == 2 && contractor == 1) && !isDel) ?
                     <View className='workerBox-list-title-origin'>{!noSet ? '长按名字可修改/查看工资标准' : '工资如有变动，请长按头像修改'}</View> : <View> 
                       
                       {/* <View className='workerBox-list-title-origin-tips-list' style={{ marginTop: (recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ? '' : '6rpx' }}><Text className='workerBox-list-title-origin-color'></Text>
@@ -511,9 +511,16 @@ export default function Foreman() {
                   }
                   </View>
                 </View>
-              <View><View className='whole' onClick={(e) => { e.stopPropagation(), e.preventDefault(), handleAllChange() }}>{!allClick ?'全选':'取消全选'}</View></View>
+              {
+                !isDel?
+                <View><View className='whole' onClick={(e) => { e.stopPropagation(), e.preventDefault(), handleAllChange() }}>{!allClick ?'全选':'取消全选'}</View></View>
+                :
+                ''
+              }
               </View>
-              <View className='workerBox-change'>
+              {
+                !isDel?
+                <View className='workerBox-change'>
                 <View>
                 {/* {(recorderType !== 3 && !(recorderType == 2 && contractor == 1)) ? */}
                   <View className='workerBox-list-title-origin-tips' 
@@ -525,6 +532,9 @@ export default function Foreman() {
                 </View>
                 <View>(已选{clickNum}人)</View>
               </View>
+              :
+              ''
+              }
               <View className='workerItem'>
                 {workerItem.map(v => (
                   <View 
@@ -534,7 +544,8 @@ export default function Foreman() {
                     // onTouchStart={onTouchStart}
                     className={v.discipline ? 'discipline' : 'listPosition'}
                     onLongPress={()=>handleOpenWagesModal(v)}
-                    onClick={()=>handleWorkerItem(v)}
+                    // onClick={()=>handleWorkerItem(v)}
+                    onClick={v.del?()=>handleDelList(v):()=>handleWorkerItem(v)}
                     // onTouchStart={() => handleWorkerItem(v)} onLongPress={handleLongClick}
                   >
                     {v.id === 1 &&
@@ -548,7 +559,7 @@ export default function Foreman() {
                       </View>
                     }
                     {/* {v.id !== 1 && */}
-                      <View className='userClick-box'>
+                      <View className='userClick-box' >
                         <View 
                         className={classnames({
                           // 'workerItem-list-click': v.click,
@@ -556,18 +567,26 @@ export default function Foreman() {
                           'workerItem-list-red': v.id % 2 == 0 && v.id>100,
                           'workerItem-list-origion': v.id % 2 == 1 && v.id < 100,
                           'workerItem-list-violet':  v.id % 2 == 0 && v.id < 100,
-                        })}>
+                        })}
+                        >
                         {v.name && v.name.toString().substring(v.name.length - 2)}
                         </View>
                         <View className={v.click?'userClick':''}></View>
                         {/* 判断不是按量和借支的时候才能设置工资 */}
-                      {(recorderType !== 3 && !(recorderType == 2 && contractor ==1) )&&!v.del && !v.set && <View className='workerItem-list-icon' onClick={(e) => { e.stopPropagation(), handleOpenWagesModal(v) }}><Image className='workerItem-list-icon-img' src={`${IMGCDNURL}mark.png`}/></View>}
-                        {v.del && <View className='workerItem-list-icon-del' onClick={(e) => { e.stopPropagation(), handleDelList(v) }}>
-                        <Image src={`${IMGCDNURL}reduce.png`} className='workerItem-list-icon-del-img'/>
-                        </View>}
+                      {(recorderType !== 3 && !(recorderType == 2 && contractor ==1) )&&!v.del && !v.set && 
+                        <View 
+                          className='workerItem-list-icon' onClick={(e) => { e.stopPropagation(), handleOpenWagesModal(v) }}
+                        >
+                          <Image className='workerItem-list-icon-img' src={`${IMGCDNURL}mark.png`}/>
+                        </View>
+                      }
+                        {v.del && 
+                          <View className='workerItem-list-icon-del' onClick={(e) => { e.stopPropagation(), handleDelList(v) }}>
+                            <Image src={`${IMGCDNURL}reduce.png`} className='workerItem-list-icon-del-img'/>
+                          </View>
+                        }
                         <View className='workerItem-list-title'>{v.name}</View>
                       </View>
-                    {/* // } */}
                   </View>
                 ))}
                 {delType && <View>
@@ -854,7 +873,7 @@ export default function Foreman() {
           </View>
           <View className='atDrawer-heard-content'>
             {projectArr.length>0&&projectArr.map(v=>(
-              <View className='atDrawer-list' onClick={()=>handleProject(v)}>
+              <View className='atDrawer-list' onClick={!edit?()=>handleProject(v):()=>{}}>
                 <View className='atDrawer-list-title'>{
                   // v.child.map(val=>(
                   <Text className={v.click?'blued':''}>{v.group_name}-{v.name}</Text>
@@ -880,11 +899,17 @@ export default function Foreman() {
               {projectArr.length === 0 && <View className='noText'>暂无数据</View>}
           </View>
         </View>
+        {
+          !edit?
           <View className='atDrawer-footer'>
             <View className='atDrawer-footer-btn' onClick={handleAddProjectList}>
               <Image src={`${IMGCDNURL}whiteLeftAdd.png`} className='addIcon'/> 
                 创建项目</View>
           </View> 
+          :
+          ''
+        }
+          
         </AtDrawer>
     </View>
     </context.Provider >

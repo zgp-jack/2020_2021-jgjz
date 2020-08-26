@@ -668,7 +668,7 @@ export default function FlowingWater() {
       }
       {!busy &&isCheckOut && 
       <View className='footer-box'>
-          <View className='footer-box-left'><Checkbox className='checkbox' checked={allcheck} value='' color='#0099FF' onClick={handleAllCheck}/>全选</View>
+          <View className='footer-box-left' onClick={handleAllCheck}><Checkbox className='checkbox' checked={allcheck} value='' color='#0099FF'/>全选</View>
         <View className='footer-box-flex'>
           <View className='allDel' onClick={handleAllDel}>批量删除</View>
           <View className='close' onClick={()=>handleCheckboxBtn(1)}>取消</View>
