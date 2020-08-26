@@ -10,6 +10,7 @@ import classnames from 'classnames'
 // }
 interface PROPS {
   display: boolean,
+  maskHandleClose: () => void,//一般情况下等于handleClose
   handleClose: () => void,
   data:any,
   handleAddStandard:()=> void,
@@ -25,12 +26,12 @@ interface PROPS {
   handleAllClick:()=>void,
   checkAll:boolean,
 }
-export default function WagesModal({ display, handleClose, data, handleAddStandard, standard, moneyList, handleEditWages, tab, handleAtSwitch, handleSetWagesModal, handleWagesList, handleCheckboxStandard, clickModalNum, handleAllClick ,checkAll}: PROPS) {
+export default function WagesModal({ display, maskHandleClose=()=>{}, handleClose, data, handleAddStandard, standard, moneyList, handleEditWages, tab, handleAtSwitch, handleSetWagesModal, handleWagesList, handleCheckboxStandard, clickModalNum, handleAllClick ,checkAll}: PROPS) {
   return(
     <View>
       {display && 
-        <View className='wagesModal'>
-          <View className='wagesModal-content'>
+        <View className='wagesModal' onClick={maskHandleClose}>
+          <View className='wagesModal-content' onClick={(e)=> {e.stopPropagation()}}>
             <View className='wagesModal-content-heard'>
               <View>
                   {tab=== 0 && 

@@ -4,7 +4,8 @@ import { AtInputNumber } from 'taro-ui'
 import './index.scss'
 
 interface PROPS {
-  display: boolean 
+  display: boolean,
+  maskHandleClose: () => void,//一般情况下等于handleClose
   handleClose: () => void,
   wageStandard:any,
   handleWageStandard:(type:string,val:any)=>void,
@@ -17,7 +18,7 @@ const styles =
 {
   content: { fontSize: '13px' }
 }
-export default function WageStandard({ display, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel }: PROPS) {
+export default function WageStandard({ display, maskHandleClose=()=>{}, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel }: PROPS) {
   const toFixedFnNum = (num: any) => {
     let s = num + '';
     s = s.substring(0, s.indexOf(".") + 3);
@@ -43,8 +44,8 @@ export default function WageStandard({ display, handleClose, wageStandard, handl
   }
   return(
     <View>
-      {display && <View className='wageStandard'>
-        <View className='wageStandard-content'>
+      {display && <View className='wageStandard' onClick={maskHandleClose}>
+        <View className='wageStandard-content' onClick={(e)=> e.stopPropagation()}>
           <View className='wageStandard-content-heard'>
             <View className='wageStandard-content-heard-close' onClick={handleClose}>取消</View>
             <View>设置工资标准</View>
