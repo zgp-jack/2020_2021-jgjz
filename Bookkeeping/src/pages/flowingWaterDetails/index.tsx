@@ -119,7 +119,7 @@ export default function FlowingWaterDetails() {
   const handleImage = (e)=>{
     Taro.previewImage({
       current: e.httpurl,
-      urls: [e.httpurl]
+      urls: obj.view_images.map(item=>item.httpurl)
     })
   }
   const moneyfilter = (num,overnum,decimal)=>{

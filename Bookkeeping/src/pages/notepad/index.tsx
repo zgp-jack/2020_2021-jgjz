@@ -304,6 +304,15 @@ export default function Notepad() {
     }
   }
   console.log(busy,'value')
+
+
+  //图片预览
+  const handleImage = (url,url_all)=>{
+    Taro.previewImage({
+      current: url,
+      urls: url_all.map(item=> item.httpurl)
+    })
+  }
   return(
     <context.Provider value={value}>
     <View className='notepad'>
@@ -351,7 +360,7 @@ export default function Notepad() {
                 <View>
                   {values.view_images&&values.view_images.length>0 && <View className='flex'>
                     {values.view_images.map(item=>(
-                      <Image className='image' src={item.httpurl}/>
+                      <Image className='image' src={item.httpurl} onClick={(e) => {e.stopPropagation();handleImage(item.httpurl,values.view_images)}}/>
                     ))}
                   </View>}
                 </View>
