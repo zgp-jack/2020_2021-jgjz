@@ -46,7 +46,7 @@ interface DataType {
   num?: number
 }
 // 防止多点
-let isHandleAdd = false;
+let isHandleAdd = true;
 export default function EditDetails() {
   const dispatch = useDispatch()
   const useSelectorItem = useSelector<any, any>(state => state)
@@ -1056,6 +1056,7 @@ export default function EditDetails() {
   // 保存
   const handlesub = ()=>{
     if (!isHandleAdd) return;
+    isHandleAdd = false
     const data = JSON.parse(JSON.stringify(val));
     const items = JSON.parse(JSON.stringify(wageStandard));
     const businessTypes = JSON.parse(JSON.stringify(businessType));
@@ -1174,7 +1175,6 @@ export default function EditDetails() {
     }
     console.log(params,'params');
     // return;
-    isHandleAdd = false
     updateBusinessAction(params).then(res=>{
       if(res.code === 200){
         delete params['group_info'];
