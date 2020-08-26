@@ -25,6 +25,7 @@ interface PROPS {
   // setClickData:()=>void,
   handleClickCalendar:(v:any)=>void,
   getMonthDaysCurrent:(e:any)=>void,
+  maskHandleClose:()=>void,
   handleCalendarClose:()=>void,
   handleChangeTime:(e:number)=>void,
   handleCalendarSub:()=>void,
@@ -42,7 +43,7 @@ interface PROPS {
 
 export default function CalendarModal({ 
   // setRecorderType, calendarDays, setCalendarDays, clickData, setClickData,
-  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, handleCalendarClose, changeId, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay,leftTime,rightTime}: PROPS) {
+  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, maskHandleClose = () => { }, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay, leftTime, rightTime, changeId}: PROPS) {
   // 储存点击天数
   // 获取存入的公用内容
   const useSelectorItem = useSelector<any, any>(state => state)
@@ -132,8 +133,8 @@ export default function CalendarModal({
   return(
     <View className='calendarModal-content'>
     {display &&
-    <View className='calendarModal-complaintModal'>
-      <View className='calendarModal-complaintModal-content'>
+    <View className='calendarModal-complaintModal' onClick={maskHandleClose}>
+      <View className='calendarModal-complaintModal-content' onClick={e=> e.stopPropagation()}>
           {/* <View className='icon-left'><Image src={`${IMGCDNURL}rili.png`} className='icon-left-image'/></View>
           <View className='icon-right'><Image src={`${IMGCDNURL}rili.png`} className='icon-right-image'/></View> */}
         <View className='calendarModal-complaintModal-content-top'>

@@ -124,7 +124,7 @@ export default function NotepadDetails() {
   const handleImage = (e)=>{
     Taro.previewImage({
       current: e.httpurl,
-      urls: [e.httpurl]
+      urls: data.view_images.map(item=>item.httpurl)
     })
   }
   return (

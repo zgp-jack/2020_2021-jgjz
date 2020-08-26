@@ -1,10 +1,19 @@
 .content{
   padding-bottom: 200rpx;
+  padding-top: 84rpx;
+  transform: none;
   .at-search-bar__action {
     background: #fff;
     color: #0099FF;
     font-size: 28rpx;
   }
+}
+.searchName {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2;
 }
 .seach{
   background: #fff;
@@ -77,7 +86,7 @@
   display: flex;
   background: #fff;
   padding: 20rpx 28rpx;
-  border-bottom: 1rpx solid #ccc;
+  border-bottom: 2rpx solid #ccc;
 }
 .list-flex:last-child {
   border-bottom: none

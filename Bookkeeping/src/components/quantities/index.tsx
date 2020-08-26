@@ -10,6 +10,7 @@ interface DataType {
 }
 interface PROPS {
   display: boolean //是否跳转到页面授权
+  maskHandleClose:()=>void,
   handleClose:(boolean)=>void;
   data: DataType[],
   handleQuantities:(v:any)=>void
@@ -17,12 +18,12 @@ interface PROPS {
   // handleTextarea:(e:any)=>void,
   // setComplaintModal:(e:boolean)=>void,
 }
-export default function Quantities({ display, handleClose, data, handleQuantities }: PROPS) {
+export default function Quantities({ display, maskHandleClose, handleClose, data, handleQuantities }: PROPS) {
   return (
     <View>
       {display &&
-        <View className='quantities-complaintModal'>
-          <View className='quantities-complaintModal-content'>
+        <View className='quantities-complaintModal' onClick={maskHandleClose}>
+          <View className='quantities-complaintModal-content' onClick={e=> e.stopPropagation()}>
             <View className='quantities-complaintModal-content-title'>选择单位
             {/* <Text onClick={handleClose} className='quantities-complaintModal-content-close'> */}
             <View className='closeBox' onClick={handleClose}>
