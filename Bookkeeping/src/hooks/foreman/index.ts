@@ -638,9 +638,12 @@ export default function userForeman() {
                   // 设置缓存
                   setCache(res.data.latest_group_worker_has_business.worker)
                   workArr.forEach((v,i)=>{
+                    v.discipline = false;
                     res.data.latest_group_worker_has_business.worker.forEach((val,index)=>{
-                      v.discipline = false;
+                      console.log(v,'vvvv');
+                      console.log(val,'val')
                       if(val == v.id){
+                        console.log(v,'111111')
                         v.discipline = true;
                       }
                     })
