@@ -2566,6 +2566,8 @@ export default function userForeman() {
         setModel({ ...data });
         return
       }else{
+        data[type] = '';
+        setModel({ ...data });
         return ''
       }
     }
@@ -4287,6 +4289,8 @@ export default function userForeman() {
         data[type] = e.detail.value;
         setEditProjectData(data);
       } else {
+        data[type] = '';
+        setEditProjectData(data);
         return ''
       }
     }
