@@ -1667,10 +1667,11 @@ export default function userForeman() {
               setWageStandard(wageStandardData)
               setCacheWage(wageStandardData)
               for (let i = 0; i < res.data.length; i++) {
+                console.log(res.data);
                 console.log(groupName,'groupName')
                 console.log(res.data[i].group_name,'23123')
                 console.log(res.data[i].group_name, '2222')
-                if (groupName == res.data[i].group_name + '-' + res.data[i].name) {
+                if (groupName == res.data[i].group_info) {
                   res.data[i].click = true;
                   // 清空
                   setModel({ ...modalObj, name: res.data[i].group_name + '-' + res.data[i].name, workersWages: '0.00', duration: timeTitle, modalDuration: timeTitle })
@@ -1711,7 +1712,7 @@ export default function userForeman() {
             console.log(groupName,'groupName')
             let id,time;
             for (let i = 0; i < res.data.length; i++) {
-              if (groupName === res.data[i].group_name + '-' + res.data[i].name) {
+              if (groupName === res.data[i].group_info) {
                 res.data[i].click = true;
                 if (toDay) {
                   setOpenClickTime(toDay)
@@ -2603,6 +2604,7 @@ export default function userForeman() {
     isHandleAdd = false
     bkAddProjectTeamAction(params).then(res => {
       if (res.code === 200) {
+        console.log(res.data,'reasadasdasd')
         if(toDay){
           setOpenClickTime(toDay)
           setClickData(toDay)
@@ -2617,7 +2619,7 @@ export default function userForeman() {
         setIds(res.data);
         setLeader_id('');
         const name = (model.groupName).replace(/^\s*|\s*$/g, "") + '-' + (model.teamName).replace(/^\s*|\s*$/g, "");
-        bkGetProjectTeam(name);
+        bkGetProjectTeam(res.data);
         setGroupInfo(res.data)
         setProjectId(res.data)
         setTimeout(()=>{
