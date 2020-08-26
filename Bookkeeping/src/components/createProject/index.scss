@@ -53,7 +53,7 @@
 }
 
 .createProject-complaintModal-content-textareaBox {
-  border: 1rpx solid rgba(238, 238, 238, 1);
+  border: 2rpx solid #eee;//部分手机1px/1rpx看不见
   padding: 20rpx;
   margin: 20rpx;
   border-radius: 4rpx;
@@ -96,5 +96,5 @@
 }
 
 .createProject-complaintModal-footer-cancel:first-child {
-  border-right: 1rpx solid #f2f2f2;
+  border-right: 2rpx solid #f2f2f2;
 }
