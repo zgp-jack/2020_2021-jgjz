@@ -1,4 +1,4 @@
-import Taro, { Config, useEffect, useState, useRouter } from '@tarojs/taro'
+import Taro, { Config, useEffect, useState, useRouter,useDidShow } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView } from '@tarojs/components'
 import { UserInfo,Type } from '../../config/store'
 import Foreman from './foreman';
@@ -9,7 +9,7 @@ export default function Recorder() {
   // const router: Taro.RouterInfo = useRouter()
   // let { type } = router.params;
   // const [useType,setUseType] =useState<number>(0)
-  useEffect(()=>{
+  useDidShow(()=>{
     // let userInfo = Taro.getStorageSync(UserInfo)
     const type = Taro.getStorageSync(Type)
     console.log(type,'typeeeeeeee')
@@ -27,7 +27,7 @@ export default function Recorder() {
       })
     }
     // setUseType(userInfo.type)
-  },[])
+  })
   return(
     <View>
       <Foreman/>
