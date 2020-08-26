@@ -1416,8 +1416,9 @@ export default function userForeman() {
     }
   }
   // 获取项目名称
-  const bkGetProjectTeam = (groupName?: string, isAgain?: boolean,del?:boolean) => {
+  const bkGetProjectTeam = (groupName?: string, isAgain?: boolean,del?:boolean,edit?:string,id?:string) => {
     bkGetProjectTeamAction({}).then(res => {
+      console.log(res,'readsdnasjndsajndjkasn')
       if (res.code === 200) {
         // 如果是工人的话默认选中第一条有数据
         // 多条选中最近一条
@@ -1485,15 +1486,16 @@ export default function userForeman() {
             bkgetLastGroupInfoAction({ identity: type, business_type: dataType }).then(resData => {
               let name;
               // 判断有上一个项目
-              if (resData.code === 200 && resData.data) {
+              if (resData.code === 200 && resData.data.length>0) {
                 let item:any[]=[];
                 for (let i = 0; i < res.data.length; i++) {
                   // 判断遍历出项目
                   // 判断与上一个项目相同，否则取第一个
                   res.data[i].click = false;
-                  if (res.data[i].group_id + ',' + res.data[i].id === resData.data.id){
+                  if (res.data[i].group_id + ',' + res.data[i].id == resData.data.id){
                     item = [res.data[i]];
                   }
+                  console.log(item,'itme')
                   if (item.length > 0) {
                     // for(let j=0;j<item.length;j++){
                     //   item[j].click = false;
@@ -1568,6 +1570,22 @@ export default function userForeman() {
                   getMonthDaysCurrent(new Date(), clickDataArr, id)
                 }
                 return;
+              } else if (resData.code === 200 && resData.data.length  == 0){
+                console.log(321321312);
+                console.log(edit)
+                if (edit){
+                  model.name= edit;
+                  for(let i =0;i<res.data.length;i++){
+                    res.data[i].click = false;
+                    if (res.data[i].group_info == id){
+                      res.data[i].click = true
+                    }
+                  }
+                  setProjectArr(res.data);
+                  setModel(model);
+                  return;
+                }
+                // const m
               } else {
                 // 设置默认点击
                 res.data[0].click = true;
@@ -1705,6 +1723,19 @@ export default function userForeman() {
           }
         } else {
           // 班组长
+          // 判断是修改
+          if (edit) {
+            model.name = edit;
+            for (let i = 0; i < res.data.length; i++) {
+              res.data[i].click = false;
+              if (res.data[i].group_info == id) {
+                res.data[i].click = true
+              }
+            }
+            setProjectArr(res.data);
+            setModel(model);
+            return;
+          }
           // 新增项目的额时候
           if (groupName) {
             console.log('新增')
@@ -4253,11 +4284,13 @@ export default function userForeman() {
     }
     bkUpdateProjectTeamAction(params).then(res => {
       if (res.code === 200) {
-        setEditProjectDisplay(false);
-        bkGetProjectTeam();
         setTimeout(() => {
           isHandleAdd = true;
         }, 500)
+        setEditProjectDisplay(false);
+        // console.log(res.data,'reramdskaldmlkasdmnlka')
+        // setProjectArr()
+        bkGetProjectTeam('', false, false, group + '-' + team, data.group_info);
       } else if (res.code === 400) {
         Msg(res.msg)
         setTimeout(() => {
