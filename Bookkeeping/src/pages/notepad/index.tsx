@@ -34,10 +34,11 @@ export default function Notepad() {
   useDidShow(() => {
     // setIds([])
     // setSelectAll(false)
+    setVal('');
     if(useSelectorItem.notepad.data.length){
       setData(JSON.parse(JSON.stringify(useSelectorItem.notepad.data)))
     }else {
-      getList(val);
+      getList();
     }
   })
   // 点击全选
