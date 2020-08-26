@@ -2559,7 +2559,7 @@ export default function userForeman() {
       return dealInputVal(e.detail.value, 14,type);
     }
     console.log(e,'eeeeee')
-    if (type == 'groupName' || type == 'teamName' || type == 'userName'){
+    if (type == 'groupName' || type == 'teamName' || type == 'userName' || type == 'team_name' || type == 'group_name'){
       const regExp = /^[\u4e00-\u9fa5_a-zA-Z0-9\s\·\~\！\@\#\￥\%\……\&\*\（\）\——\-\+\=\【\】\{\}\、\|\；\‘\’\：\“\”\《\》\？\，\。\、\`\~\!\#\$\%\^\&\*\(\)\_\[\]{\}\\\|\;\'\'\:\"\"\,\.\/\<\>\?]+$/;
       if (regExp.test(e.detail.value)){
         data[type] = e.detail.value
