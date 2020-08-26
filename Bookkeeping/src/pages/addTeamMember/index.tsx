@@ -258,7 +258,7 @@ export default function AddTeamMember() {
   }
   return (
     <View className='content'>
-      <View>
+      <View className='searchName'>
         <AtSearchBar
           placeholder='请输入名字或手机号码查询'
           showActionButton

@@ -1,5 +1,7 @@
 .notepad{
   height: 100vh;
+  padding-top: 80rpx;
+  transform: none;
   overflow-y: scroll;
   // .at-search-bar__placeholder-wrap{
   //   flex-grow:0
@@ -24,7 +26,12 @@
   // }
 }
 .searchBar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 80rpx;
+  z-index: 10;
 }
 .content1{
   height: calc(100% - 100rpx);

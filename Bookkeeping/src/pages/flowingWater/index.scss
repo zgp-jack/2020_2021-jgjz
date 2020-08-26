@@ -4,7 +4,7 @@
   // margin-bottom: 200rpx;
   width: 100%;
   overflow-y: scroll;
-  padding-top: 75rpx;
+  padding-top: 135rpx;
   padding-bottom: 118rpx;
 }
 .time{
@@ -31,7 +31,7 @@
   margin-right: 22rpx;
 }
 .content{
-  margin-top: 60rpx;
+  // margin-top: 60rpx;
   height: 100%;
   // background: #fff;
 }
@@ -265,7 +265,7 @@
   line-height: 118rpx;
 }
 .noData-box{
-  height: 100vh;
+  height: calc(100vh - 253rpx);
   // margin-top: -95rpx;
 }
 .noData{
@@ -275,7 +275,7 @@
   padding-top: 50%;
   width: 100%;
   background: #fff;
-  height:calc(100% - 40%)
+  height:calc(100% - 27%)
 }
 .goRecordWorkBox{
   width: 100%;

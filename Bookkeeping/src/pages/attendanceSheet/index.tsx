@@ -1019,7 +1019,7 @@ export default function AttendanceSheet() {
             </View>
           </Picker>
         </View>
-        <View>以下是你的记工，点击可查看详情</View>
+        <View className='top-note'>以下是你的记工，点击可查看详情</View>
       </View>
       {/* {tebArr.length>2&& */}
       <View>
