@@ -1650,7 +1650,8 @@ export default function userForeman() {
               addWorkArr[1] = { id: 2, name: '0.0小时', click: false, num: 0 };
             }
             setTimeArr(timeArr);
-            setAddWorkArr(addWorkArr)
+            setAddWorkArr(addWorkArr);
+            console.log(res.data,'获取数据长度')
             if (res.data && res.data.length > 0) {
               const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
               wageStandardData.work = 0;
@@ -1666,6 +1667,9 @@ export default function userForeman() {
               setWageStandard(wageStandardData)
               setCacheWage(wageStandardData)
               for (let i = 0; i < res.data.length; i++) {
+                console.log(groupName,'groupName')
+                console.log(res.data[i].group_name,'23123')
+                console.log(res.data[i].group_name, '2222')
                 if (groupName == res.data[i].group_name + '-' + res.data[i].name) {
                   res.data[i].click = true;
                   // 清空
@@ -2612,7 +2616,7 @@ export default function userForeman() {
         }
         setIds(res.data);
         setLeader_id('');
-        const name = model.groupName+ '-' + model.teamName;
+        const name = (model.groupName).replace(/^\s*|\s*$/g, "") + '-' + (model.teamName).replace(/^\s*|\s*$/g, "");
         bkGetProjectTeam(name);
         setGroupInfo(res.data)
         setProjectId(res.data)
