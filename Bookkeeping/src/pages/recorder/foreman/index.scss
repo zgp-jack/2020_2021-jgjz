@@ -668,9 +668,10 @@
   margin-left: 8rpx;
 }
 .atDrawer-footer{
-  // position: absolute;
-  // bottom: 10rpx;
-  // left: 0;
+  position: fixed;
+  bottom: 0rpx;
+  left: 0;
+  z-index: 10;
   height: 135rpx;
   border-top: 1px solid rgba(218, 219, 220, 1);
   line-height: 135rpx;
@@ -747,12 +748,22 @@
 .atDrawer-heard-content{
   height: 100%;
   position: relative;
+  padding-top: 102rpx;
   padding-bottom: 100rpx;
 }
 .atDrawer-box{
-  height: 90%;
+  & .atDrawer-heard{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: #fff;
+  }
+  height: 100%;
   overflow: scroll;
   position: relative;
+  transform: none;
 }
 .listPosition {
   position: relative;
