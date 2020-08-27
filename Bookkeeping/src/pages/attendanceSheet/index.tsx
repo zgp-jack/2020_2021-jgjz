@@ -950,6 +950,24 @@ export default function AttendanceSheet() {
       path,
     }
   })
+  // onShareTimeline((options) => {
+  //   console.log()
+  //   let type = Taro.getStorageSync(Type);
+  //   let path;
+  //   if (options.from == 'button') {
+  //     path = `/pages/share/index?time=${vals}&identity=${type}&session=${session}`
+  //   } else {
+  //     path = '/pages/index/index'
+  //   }
+  //   return {
+  //     title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+  //     imageUrl: `${IMGCDNURL}shareIconImg.png`,
+  //     path,
+  //   }
+  // })
+  // onShareTimeline() {
+  //   console.log('onShareTimeline')
+  // }
   // 跳转
   const handleJump = () => {
     if(ishandleJump){

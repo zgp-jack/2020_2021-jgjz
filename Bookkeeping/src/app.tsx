@@ -1,4 +1,4 @@
-import Taro, { Component, Config,onAppShow,offAppShow, } from '@tarojs/taro'
+import Taro, { Component, Config, onAppShow, offAppShow } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 import Index from './pages/index'
 import { Res } from './config/store';
@@ -15,6 +15,9 @@ import './app.scss'
 
 const store = configStore()
 class App extends Component {
+  onShareTimeline(){
+    console.log('onShareTimeline')
+  }
   static options = {
     addGlobalClass: true
   }
@@ -58,6 +61,7 @@ class App extends Component {
       // dispatch(setAppShowData(res))
       Taro.setStorageSync(Res,res);
     })
+    
   }
 
   componentDidHide () {}
