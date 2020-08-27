@@ -240,10 +240,7 @@ export default function AddTeamMember() {
     console.log(dataArr,'dataArr');
     let clickArr: any[] = [];
     dataArr.forEach((v,i)=>{
-      // if (useSelectorItem.colorSet && useSelectorItem.colorSet.length > 0) {
-      // }
       v.list.forEach((val,index)=>{
-        console.log(val,index);
         if (useSelectorItem.colorSet && useSelectorItem.colorSet.length > 0) {
           for (let i = 0; i < useSelectorItem.colorSet.length;i++){
             if (useSelectorItem.colorSet[i] == val.id) {
@@ -252,15 +249,17 @@ export default function AddTeamMember() {
           }
         }
         if (val.disabled) {
+          console.log(val,'1111')
           clickArr.push(val)
         }
-        if (v.click && !v.disabled ){
+        if (val.click && !val.disabled ){
           clickArr.push(val)
         }
       })
     })
     let arrList = unique(clickArr);
-    // console.log(arr1,'arr')
+    // console.log(clickArr,'arr')
+    // return;
     // const mapList = new Map();
     // clickArr.filter((arr) => !mapList.has(arr.id) && mapList.set(arr.id, 1));
     // console.log(clickArr,'dataArrr')
@@ -297,7 +296,6 @@ export default function AddTeamMember() {
     //     }
     //   }
     // }
-    console.log(clickArr,'clickArr')
     let ids: string[] = arrList.map(item => item.id);
     if (ids.length < 1) {
       Msg('请选择工人')
