@@ -1,4 +1,4 @@
-import Taro, { Config, useEffect, useState, createContext,useDidShow } from '@tarojs/taro'
+import Taro, { Config, useEffect, useState, createContext, useDidShow, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Checkbox, Image } from '@tarojs/components'
 import { AtSearchBar } from 'taro-ui'
 import { UserInfo } from '../../config/store';
@@ -63,6 +63,13 @@ export default function Notepad() {
     setSelectAll(false)
     setData(arr)
   }
+  useShareAppMessage(() => {
+    return {
+      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      imageUrl: `${IMGCDNURL}shareIconImg.png`,
+      path: `/pages/index/index`
+    }
+  })
   const getList = (key = '')=>{
     let userInfo = Taro.getStorageSync(UserInfo);
     const params = {

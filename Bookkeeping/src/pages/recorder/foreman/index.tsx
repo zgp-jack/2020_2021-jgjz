@@ -1,4 +1,4 @@
-import Taro, { Config, useEffect, useState, createContext,useDidShow } from '@tarojs/taro'
+import Taro, { Config, useEffect, useState, createContext, useDidShow, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Image, RadioGroup, Radio, Input, Textarea, Checkbox,CoverView } from '@tarojs/components'
 import ProjectModal from '../../../components/projectModal'
 import WordsTotal from '../../../components/wordstotal'
@@ -77,6 +77,13 @@ export default function Foreman() {
   //   // 获取项目列表
   //   // bkGetProjectTeam();
   // },[])
+  useShareAppMessage(() => {
+    return {
+      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      imageUrl: `${IMGCDNURL}shareIconImg.png`,
+      path: `/pages/index/index`
+    }
+  })
   // 获取项目列表
   const bkGetProjectTeam = ()=>{
     let params={}

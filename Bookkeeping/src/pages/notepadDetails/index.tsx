@@ -1,9 +1,10 @@
-import Taro, { Config, useContext, useDidShow, useState, useRouter } from '@tarojs/taro'
+import Taro, { Config, useContext, useDidShow, useState, useRouter, useShareAppMessage } from '@tarojs/taro'
 import { bkGetNotePadAction, bkDeleteNotePadAction } from '../../utils/request/index';
 import Msg,{formatDate} from '../../utils/msg'
 import { View, Image } from '@tarojs/components'
 import { useSelector } from '@tarojs/redux'
 import { context  } from '../notepad';
+import { IMGCDNURL } from '../../config';
 import { UserInfo } from '../../config/store';
 import './index.scss'
 
@@ -70,6 +71,13 @@ export default function NotepadDetails() {
       }
     }
   }
+  useShareAppMessage(() => {
+    return {
+      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      imageUrl: `${IMGCDNURL}shareIconImg.png`,
+      path: `/pages/index/index`
+    }
+  })
   const addZero = (num) => {
     if (parseInt(num) < 10) {
       num = '0' + num;

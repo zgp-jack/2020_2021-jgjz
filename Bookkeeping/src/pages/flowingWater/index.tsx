@@ -1,4 +1,4 @@
-import Taro, { Config, useEffect, useState, useRouter, createContext,useDidShow } from '@tarojs/taro'
+import Taro, { Config, useEffect, useState, useRouter, createContext, useDidShow, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Picker, Checkbox,Image } from '@tarojs/components'
 import { bkBusinessAction, bkDeleteBusinessAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
 import Msg from '../../utils/msg'
@@ -207,6 +207,13 @@ export default function FlowingWater() {
       })
     }
   }
+  useShareAppMessage(() => {
+    return {
+      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      imageUrl: `${IMGCDNURL}shareIconImg.png`,
+      path: `/pages/index/index`
+    }
+  })
   // 点击选择框
   const handleCheckbox = (val)=>{
     console.log(val,'val');

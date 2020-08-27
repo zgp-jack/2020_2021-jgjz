@@ -1,10 +1,11 @@
-import Taro, { Config, useState, useRouter, useContext, useDidShow } from '@tarojs/taro'
+import Taro, { Config, useState, useRouter, useContext, useDidShow, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Picker, Checkbox, Image } from '@tarojs/components'
 import { AtList, AtListItem } from "taro-ui"
 import { context } from '../flowingWater';
 import { useSelector } from '@tarojs/redux'
 import { bkDeleteBusinessAction, bkBusinessOneAction } from '../../utils/request/index'
 import Msg from '../../utils/msg';
+import { IMGCDNURL } from '../../config';
 import './index.scss'
 
 
@@ -63,6 +64,13 @@ export default function FlowingWaterDetails() {
         Msg(res.msg);
       }
     })
+  })
+  useShareAppMessage(() => {
+    return {
+      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      imageUrl: `${IMGCDNURL}shareIconImg.png`,
+      path: `/pages/index/index`,
+    }
   })
   const toFixedFn = (num:any)=>{
     let nums = num + '';

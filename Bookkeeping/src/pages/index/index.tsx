@@ -1,4 +1,4 @@
-import Taro, { useEffect, useState, useDidShow, onAppShow } from '@tarojs/taro'
+import Taro, { useEffect, useState, useDidShow, onAppShow, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView, Image , MovableArea , MovableView } from '@tarojs/components'
 import { bkIndexAction, bkMemberAuthAction, bkUpdateBusinessNewAction, bkGetProjectTeamAction, bkAddProjectTeamAction, appletJumpAction } from '../../utils/request/index';
 import { useDispatch, useSelector } from '@tarojs/redux'
@@ -213,6 +213,13 @@ export default function Index() {
     setWeek(week);
     return newMonth;
   }
+  useShareAppMessage(() => {
+    return {
+      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      imageUrl: `${IMGCDNURL}shareIconImg.png`,
+      path: `/pages/index/index`
+    }
+  })
   const addZero = (num) => {
     if (parseFloat(num) < 10) {
       num = '0' + parseFloat(num);
