@@ -3357,6 +3357,7 @@ export default function userForeman() {
   // 打开工资标准
   const handleOpenWagesModal = (v?: any) => {
     if (delType) return;
+    setCheckAll(false)
     // 借支和按量长按没用
     if (recorderType === 3 || (recorderType == 2 && contractor == 1)) return;
     const item = JSON.parse(JSON.stringify(model));
