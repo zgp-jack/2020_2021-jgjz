@@ -10,7 +10,7 @@ interface DataType {
 }
 interface PROPS {
   display: boolean //是否跳转到页面授权
-  maskHandleClose:()=>void,
+  maskHandleClose?:()=>void,
   handleClose:(boolean)=>void;
   data: DataType[],
   handleQuantities:(v:any)=>void
