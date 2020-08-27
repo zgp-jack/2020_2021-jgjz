@@ -371,6 +371,7 @@ export default function userForeman() {
   // 日历
   // 设置年月日小于0前面加0
   useEffect(()=>{
+    setDel(false)
     let type = Taro.getStorageSync(Type);
     if (type == 1) {
       Taro.setNavigationBarTitle({
