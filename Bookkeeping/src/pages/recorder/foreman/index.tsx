@@ -797,6 +797,7 @@ export default function Foreman() {
             <View className='textareanote'>备注</View>
               {/* <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}> */}
             {/* {isdisable && !iscreatproject && <View className='textarea'>{model && model.details}</View>} */}
+            <View className='istextarea'>
             <View className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay || show ? 'foreman-foot' : 'foreman-footer'}>
             <Textarea
               // focus={autoFocus}
@@ -812,6 +813,7 @@ export default function Foreman() {
               onBlur={(e) => blurhandleContent('details',e)}
               maxlength={400}
             />
+            </View>
             </View>
             {/* </CoverView> */}
           </View>
