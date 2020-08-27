@@ -1631,6 +1631,7 @@ export default function EditDetails() {
           <Text className='pulish-list-textTarea-title'>备注</Text>
         </View>
         <View className='istextarea'>
+          <View className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'foreman-foot' : 'foreman-footer'}>
         <Textarea
           hidden={isdisable}
           className='textarea'
@@ -1641,6 +1642,7 @@ export default function EditDetails() {
           onBlur={(e) => blurhandleContent('details',e)}
           maxlength={400}
           />
+          </View>
         </View>
       <View className='white'>
       <View className='imageBox'>
@@ -1649,7 +1651,9 @@ export default function EditDetails() {
       </View>
       </View>
       </View>
+      <View className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'foreman-foot' : 'foreman-footer'}>
       {!isdisable && <CoverView className='footer'><CoverView className='footerBtn' onClick={handlesub}>保存</CoverView></CoverView>}
+      </View>
       <WageStandard display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput}/>
       <WorkOvertime display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
