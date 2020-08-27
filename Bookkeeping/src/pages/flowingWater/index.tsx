@@ -626,7 +626,7 @@ export default function FlowingWater() {
                             {isCheckOut && <View className='checkboxitem'><Checkbox checked={val.checkClick} className='checkbox' color='#0099FF' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
                         {identity == 1?
                         <View className=''>
-                          <View>{val.workername || '-'} {(val.note || val.view_images.length>0)&&<Text className='icon leader-icon'>备</Text>}</View>
+                          <View>{val.workername || '-'} {(val.note || (val.img_url && val.img_url.length>0))&&<Text className='icon leader-icon'>备</Text>}</View>
                           <View className='content-list-subclass-left-title'>我在{val.group_info}对Ta记了一笔
                           {val.business_type == '1' ? '点工' : (val.business_type == '2'?'包工':'借支') }
                           </View>
@@ -636,7 +636,7 @@ export default function FlowingWater() {
                           {val.business_type == '1' ? '点工' : (val.business_type == '2' ? '包工' : '借支')}
                           </View>
                           <View className='workericon'>
-                            {(val.note || val.view_images.length>0)&&<Text className='icon'>备</Text>}
+                            {(val.note || (val.img_url && val.img_url.length>0))&&<Text className='icon'>备</Text>}
                           </View>
                         </View>}
                       </View>
