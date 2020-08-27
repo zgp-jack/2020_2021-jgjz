@@ -797,7 +797,7 @@ export default function Foreman() {
             <View className='textareanote'>备注</View>
               {/* <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}> */}
             {/* {isdisable && !iscreatproject && <View className='textarea'>{model && model.details}</View>} */}
-            <View className='istextarea'>
+            <View className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay || show ? 'foreman-foot' : 'foreman-footer'}>
             <Textarea
               // focus={autoFocus}
               // autoFocus={autoFocus}
@@ -823,12 +823,14 @@ export default function Foreman() {
         </View>
         </View>
       </View>
-      {!isdisable && !iscreatproject && <CoverView className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay ? '' : 'foreman-footer'}>
-        <CoverView className='foreman-footer-btn'>
-          <CoverView className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</CoverView>
-          <CoverView className='footer-right' onClick={()=>handlePreservation(0)}>保存</CoverView>
-        </CoverView>
+      <CoverView className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay || show ? 'foreman-foot' : 'foreman-footer foreman-footer-box'}>
+      {!isdisable && !iscreatproject && <CoverView>
+          <CoverView className='foreman-footer-btn'>
+            <CoverView className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</CoverView>
+            <CoverView className='footer-right' onClick={()=>handlePreservation(0)}>保存</CoverView>
+          </CoverView>
       </CoverView>}
+      </CoverView>
       {/* 填写班组 */}
         <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={handleProjectClose}/>
       {/* 成功弹窗 */}

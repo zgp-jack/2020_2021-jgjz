@@ -192,10 +192,10 @@
   padding: 30rpx;
   font-size: 30rpx;
 }
-.istextarea {
-  height: 210rpx !important;
-  width: 100%;
-}
+// .istextarea {
+//   height: 210rpx !important;
+//   width: 100%;
+// }
 .textarea {
   height: 210rpx !important;
   width: 100%;
@@ -203,8 +203,13 @@
   line-height: 30rpx !important;
   // overflow-y: scroll;
 }
-
-.foreman-footer {
+.foreman-foot{
+  display: none!important;
+}
+.foreman-footer{
+  display: block !important;
+}
+.foreman-footer-box {
   width: 100%;
   height: 140rpx;
   position: fixed;
