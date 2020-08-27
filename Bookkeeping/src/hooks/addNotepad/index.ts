@@ -19,7 +19,7 @@ export interface ImageItem {
   httpurl: string
 }
 // 防止多点
-// let isHandleAdd = true
+let isHandleAdd = true
 export default function userCode(InitParams) {
   const router: Taro.RouterInfo = useRouter();
   const { id } = router.params;
@@ -116,7 +116,7 @@ export default function userCode(InitParams) {
   }
   // 提交
   const handleSubmit = ()=>{
-    // if (!isHandleAdd) return;
+    if (!isHandleAdd) return;
     const item = JSON.parse(JSON.stringify(model));
     console.log(item)
     let images: string[] = image.item.map(item => item.url)
@@ -135,39 +135,45 @@ export default function userCode(InitParams) {
         Msg('请填写内容或添加图片');
         return;
       }
-      // isHandleAdd = false
+      isHandleAdd = false
       bkUpdateNotePadAction(params).then(res=>{
         if(res.code === 200){
           Msg('修改成功')
           dispatch(setNotepad({code:200,data:[],msg:'ok'}))
           Taro.navigateBack({delta: 2})
-          // setTimeout(() => {
-          //   isHandleAdd = true;
-          // }, 500)
+          setTimeout(() => {
+            isHandleAdd = true;
+          }, 500)
         }else{
-          // setTimeout(() => {
-          //   isHandleAdd = true;
-          // }, 500)
+          setTimeout(() => {
+            isHandleAdd = true;
+          }, 500)
           Msg(res.msg);
         }
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
       })
     }else{
-      // isHandleAdd = false
+      isHandleAdd = false
       bkAddNotepadAction(params).then(res=>{
         if(res.code === 200 ){
-          // setTimeout(() => {
-          //   isHandleAdd = true;
-          // }, 500)
+          setTimeout(() => {
+            isHandleAdd = true;
+          }, 500)
           // Msg(res.msg);
           Msg('保存成功')
           dispatch(setNotepad({code:200,data:[],msg:'ok'}))
           Taro.navigateBack()
         }else{
           Msg(res.msg);
-          // setTimeout(() => {
-          //   isHandleAdd = true;
-          // }, 500)
+          setTimeout(() => {
+            isHandleAdd = true;
+          }, 500)
         }
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
       })
     }
   }

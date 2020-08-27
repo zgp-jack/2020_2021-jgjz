@@ -15,7 +15,7 @@ export interface ImageItem {
   httpurl: string
 }
 // 防止多点
-// let isHandleAdd = true;
+let isHandleAdd = true;
 export default function Feedback() {
   // 评价
   const evaluate = [
@@ -63,7 +63,7 @@ export default function Feedback() {
   //提交
   const handlebkAddFeedbackAction = ()=>{
     // console.log(isHandleAdd,'isHandleAdd')
-    // if (!isHandleAdd) return;
+    if (!isHandleAdd) return;
     if (radio ==0 ){
       Msg('请选择评价')
       return
@@ -72,7 +72,7 @@ export default function Feedback() {
       Msg('您还没有写下意见')
       return
     }
-    // isHandleAdd = false
+    isHandleAdd = false
     let images: string[] = image.item.map(item => item.url);
     const params ={
       type: radio,
@@ -88,15 +88,18 @@ export default function Feedback() {
             delta: 1
           })
         },1000)
-        // setTimeout(() => {
-        //   isHandleAdd = true;
-        // }, 1000)
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 1000)
       }else{
-        // setTimeout(() => {
-        //   isHandleAdd = true;
-        // }, 500)
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
         Msg('保存失败')
       }
+      setTimeout(() => {
+        isHandleAdd = true;
+      }, 500)
     })
   }
   // 复制

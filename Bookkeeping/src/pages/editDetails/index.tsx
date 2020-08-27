@@ -46,7 +46,7 @@ interface DataType {
   num?: number
 }
 // 防止多点
-// let isHandleAdd = true;
+let isHandleAdd = true;
 export default function EditDetails() {
   const dispatch = useDispatch()
   const useSelectorItem = useSelector<any, any>(state => state)
@@ -1056,8 +1056,8 @@ export default function EditDetails() {
   }
   // 保存
   const handlesub = ()=>{
-    // if (!isHandleAdd) return;
-    // isHandleAdd = false
+    if (!isHandleAdd) return;
+    isHandleAdd = false
     const data = JSON.parse(JSON.stringify(val));
     const items = JSON.parse(JSON.stringify(wageStandard));
     const businessTypes = JSON.parse(JSON.stringify(businessType));
@@ -1211,15 +1211,18 @@ export default function EditDetails() {
         // dispatch(setFlowingWater([]))
         Msg(res.msg);
         Taro.navigateBack();
-        // setTimeout(() => {
-        //   isHandleAdd = true;
-        // }, 500)
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
       }else{
-        // setTimeout(() => {
-        //   isHandleAdd = true;
-        // }, 500)
+        setTimeout(() => {
+          isHandleAdd = true;
+        }, 500)
         Msg(res.msg)
       }
+      setTimeout(() => {
+        isHandleAdd = true;
+      }, 500)
     })
   }
   // 输入框
