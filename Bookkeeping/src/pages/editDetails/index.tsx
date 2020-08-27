@@ -1088,6 +1088,8 @@ export default function EditDetails() {
             work_time_type = 'hour'
           }
         }
+      }else{
+        work_time_type = 'working_hour'
       }
     })
     // 加班时间

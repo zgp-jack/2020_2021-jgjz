@@ -3480,6 +3480,8 @@ export default function userForeman() {
               work_time_type = 'hour'
             }
           }
+        }else{
+          work_time_type = 'working_hour';
         }
       })
       if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
@@ -4533,20 +4535,24 @@ export default function userForeman() {
       setClickNum(Itme.length);
       return;
     } else {
+      console.log('全选')
       // 必须全部都为set才你的那个变为取消全选
+      console.log(dataItemArr,'dataItemArr')
       if (!allClick) {
+        let AllClick = true
         dataItemArr.map((v) => {
           if (v.set) {
             v.click = true;
             Itme.push(v);
           }
-          setAllClick(true)
           if (!v.set) {
             Msg('还有人未设置工资标准')
-            setAllClick(false)
+            AllClick = false;
           }
           return v;
         })
+        console.log(AllClick,'AllClick')
+        setAllClick(AllClick)
         // 判断没有一个值没有set设置为取消全选
         // if (Itme.length>0){
         //   setAllClick(true)
@@ -4655,6 +4661,8 @@ export default function userForeman() {
         noset = false
       }
     }
+    setClickNum(0);
+    setAllClick(false)
     setNoset(noset)
     setWorkerItem(workerItem)
     setContractorArr({ item: data });
