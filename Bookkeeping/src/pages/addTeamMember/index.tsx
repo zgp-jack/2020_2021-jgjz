@@ -188,6 +188,10 @@ export default function AddTeamMember() {
       url: url
     })
   }
+  const unique = (arr)=> {
+    const res = new Map();
+    return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1));
+  }
   // 班组长
   const handleForeman = (name, e) => {
     if (type !== '2') {
@@ -235,13 +239,50 @@ export default function AddTeamMember() {
     const dataArr = JSON.parse(JSON.stringify(data));
     console.log(dataArr,'dataArr');
     let clickArr: any[] = [];
-    for(let i =0;i<dataArr.length;i++){
-      for (let j = 0; j < dataArr[i].list.length; j++) {
-        if (dataArr[i].list[j].disabled) {
-          clickArr.push(dataArr[i].list[j])
+    dataArr.forEach((v,i)=>{
+      // if (useSelectorItem.colorSet && useSelectorItem.colorSet.length > 0) {
+      // }
+      v.list.forEach((val,index)=>{
+        console.log(val,index);
+        if (useSelectorItem.colorSet && useSelectorItem.colorSet.length > 0) {
+          for (let i = 0; i < useSelectorItem.colorSet.length;i++){
+            if (useSelectorItem.colorSet[i] == val.id) {
+              clickArr.push(val)
+            }
+          }
         }
-      }
-    }
+        if (val.disabled) {
+          clickArr.push(val)
+        }
+        if (v.click && !v.disabled ){
+          clickArr.push(val)
+        }
+      })
+    })
+    let arrList = unique(clickArr);
+    // console.log(arr1,'arr')
+    // const mapList = new Map();
+    // clickArr.filter((arr) => !mapList.has(arr.id) && mapList.set(arr.id, 1));
+    // console.log(clickArr,'dataArrr')
+    // return;
+    // if (useSelectorItem.colorSet && useSelectorItem.colorSet.length>0){
+    //   for (let i = 0; i < dataArr.length; i++) {
+    //     for (let j = 0; j < dataArr[i].list.length; j++) {
+    //       for (let z = 0; z < useSelectorItem.colorSet.length;z++){
+    //         if (useSelectorItem.colorSet[i] == dataArr[i].list[j].id ){
+    //           clickArr.push(dataArr[i].list[j]);
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+    // for(let i =0;i<dataArr.length;i++){
+    //   for (let j = 0; j < dataArr[i].list.length; j++) {
+    //     if (dataArr[i].list[j].disabled) {
+    //       clickArr.push(dataArr[i].list[j])
+    //     }
+    //   }
+    // }
     // for (let i = 0; i < dataArr.length; i++) {
     //   for (let j = 0; j < dataArr[i].list.length; j++) {
     //     if (dataArr[i].list[j].click) {
@@ -249,15 +290,15 @@ export default function AddTeamMember() {
     //     }
     //   }
     // }
-    for (let i = 0; i < dataArr.length; i++) {
-      for (let j = 0; j < dataArr[i].list.length; j++) {
-        if (dataArr[i].list[j].click && !dataArr[i].list[j].disabled ) {
-          clickArr.push(dataArr[i].list[j])
-        }
-      }
-    }
+    // for (let i = 0; i < dataArr.length; i++) {
+    //   for (let j = 0; j < dataArr[i].list.length; j++) {
+    //     if (dataArr[i].list[j].click && !dataArr[i].list[j].disabled ) {
+    //       clickArr.push(dataArr[i].list[j])
+    //     }
+    //   }
+    // }
     console.log(clickArr,'clickArr')
-    let ids: string[] = clickArr.map(item => item.id);
+    let ids: string[] = arrList.map(item => item.id);
     if (ids.length < 1) {
       Msg('请选择工人')
       return;
@@ -268,8 +309,8 @@ export default function AddTeamMember() {
     }
     bkAddWorkerInGroupAction(params).then(res => {
       if (res.code === 200) {
-        dispatch(setPhoneList(clickArr));
-        dispatch(setWorker(clickArr))
+        dispatch(setPhoneList(arrList));
+        dispatch(setWorker(arrList))
         Taro.navigateBack({ delta: 1 })
       }
     })

@@ -8,6 +8,7 @@ import { setmailList } from '../../actions/mailList'
 import { setUserList } from '../../actions/userList';
 import { setClickTIme } from '../../actions/clickTIme'
 import { setPhoneList } from '../../actions/phoneList';
+import { setColor } from '../../actions/colorSet';
 import Msg from '../../utils/msg';
 import { isPhone } from '../../utils/v'
 export interface BorrowingType {
@@ -648,6 +649,7 @@ export default function userForeman() {
                 if (res.data.latest_group_worker_has_business.worker.length > 0) {
                   // 设置缓存
                   setCache(res.data.latest_group_worker_has_business.worker)
+                  dispatch(setColor(res.data.latest_group_worker_has_business.worker||[]));
                   workArr.forEach((v,i)=>{
                     v.discipline = false;
                     res.data.latest_group_worker_has_business.worker.forEach((val,index)=>{
@@ -935,6 +937,7 @@ export default function userForeman() {
                 if (res.data.default_group_worker_has_business.worker.length > 0) {
                   // 设置缓存
                   setCache(res.data.default_group_worker_has_business.worker)
+                  dispatch(setColor(res.data.latest_group_worker_has_business.worker||[]));
                   for (let i = 0, len = workList.length; i < len; i++) {
                     for (let j = 0, setLen = res.data.default_group_worker_has_business.worker.length; j < setLen; j++) {
                       if (res.data.default_group_worker_has_business.worker[j] == workList[i].id) {
@@ -2319,6 +2322,7 @@ export default function userForeman() {
               getWorkerHasBusinessByDateAction(dateParams).then(dateRes => {
                 if (dateRes.code == 200) {
                   setCache(dateRes.data.worker||[])
+                  dispatch(setColor(dateRes.data.worker || []));
                   if (dateRes.data) {
                     // 判断记录过
                     // 时间
@@ -2638,6 +2642,7 @@ export default function userForeman() {
       Msg('您还没有填写班组名称');
       return;
     }
+    setDel(false)
     setDeldelType(false)
     let type = Taro.getStorageSync(Type);
     const group = model.groupName.replace(/^\s*|\s*$/g, "");
@@ -3801,6 +3806,7 @@ export default function userForeman() {
     const name = v.group_name + '-' + v.name;
     let groupInfos = v.group_id + ',' + v.id;
     setLeader_id('');
+    setDel(false)
     setGroupInfo(groupInfos)
     setProjectId(v.group_id + ',' + v.id)
     const time = toDayString + `（今天）`;
@@ -4246,6 +4252,7 @@ export default function userForeman() {
   const handleDelProject = (v) => {
     if (!isHandleAdd) return;
     isHandleAdd = false
+    setDel(false)
     const ids = v.id;
     let params = {
       ids,
@@ -4645,6 +4652,7 @@ export default function userForeman() {
   // 切换包工类型
   const handleRadio = (v) => {
     setDeldelType(false)
+    setDel(false)
     const data = JSON.parse(JSON.stringify(contractorArr.item));
     for (let i = 0; i < data.length; i++) {
       if (data[i].id === v.id) {
@@ -4867,6 +4875,7 @@ export default function userForeman() {
     setDeldelType(false)
     // 全选
     setClickNum(0);
+    setDel(false);
     setNum(0);
     setAllClick(false)
     setCheckAll(false);
@@ -4881,6 +4890,7 @@ export default function userForeman() {
         setRecorderType(val.id);
         // 清空头像
         setCache([])
+        dispatch(setColor([]));
         getList(val.id);
         console.log(val.id,'idddd')
         // setChangeID(val.id)

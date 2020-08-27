@@ -12,6 +12,7 @@ import userList from './userList'
 import phoneList from './phoneList'
 import content from './content'
 import appShowData from './appShowData'
+import colorSet from './colorSet'
 
 export default combineReducers({
   counter,
@@ -27,4 +28,5 @@ export default combineReducers({
   phoneList,
   content,
   appShowData,
+  colorSet,
 })
