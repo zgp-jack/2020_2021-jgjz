@@ -18,7 +18,7 @@ const styles =
 {
   content: { fontSize: '13px' }
 }
-export default function WageStandard({ display, maskHandleClose=()=>{}, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel }: PROPS) {
+export default function WageStandard({ display, maskHandleClose, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel }: PROPS) {
   const toFixedFnNum = (num: any) => {
     let s = num + '';
     s = s.substring(0, s.indexOf(".") + 3);

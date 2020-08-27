@@ -77,7 +77,8 @@ export function doRequestAction(reqData: Request): Promise<any> {
   let req: RequestBase = { ...defaultRequestData, ...reqData }
   if (req.loading) {
     Taro.showLoading({
-      title: req.title
+      title: req.title,
+      mask:true
     })
   }
   let data = { ...req.data, wechat_token: 'jigong' }

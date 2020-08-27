@@ -46,7 +46,7 @@ interface DataType {
   num?: number
 }
 // 防止多点
-let isHandleAdd = true;
+// let isHandleAdd = true;
 export default function EditDetails() {
   const dispatch = useDispatch()
   const useSelectorItem = useSelector<any, any>(state => state)
@@ -689,6 +689,7 @@ export default function EditDetails() {
     }
     setWageStandard(data);
     setCloseWageStandard(data);
+    setQuantitiesDisplay(false)
     // return;
     // let paramsData = {
     //   id: data.worker_id,
@@ -1055,8 +1056,8 @@ export default function EditDetails() {
   }
   // 保存
   const handlesub = ()=>{
-    if (!isHandleAdd) return;
-    isHandleAdd = false
+    // if (!isHandleAdd) return;
+    // isHandleAdd = false
     const data = JSON.parse(JSON.stringify(val));
     const items = JSON.parse(JSON.stringify(wageStandard));
     const businessTypes = JSON.parse(JSON.stringify(businessType));
@@ -1210,13 +1211,13 @@ export default function EditDetails() {
         // dispatch(setFlowingWater([]))
         Msg(res.msg);
         Taro.navigateBack();
-        setTimeout(() => {
-          isHandleAdd = true;
-        }, 500)
+        // setTimeout(() => {
+        //   isHandleAdd = true;
+        // }, 500)
       }else{
-        setTimeout(() => {
-          isHandleAdd = true;
-        }, 500)
+        // setTimeout(() => {
+        //   isHandleAdd = true;
+        // }, 500)
         Msg(res.msg)
       }
     })
@@ -1653,7 +1654,7 @@ export default function EditDetails() {
       <WorkOvertime display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}
-      <Quantities display={quantitiesDisplay} handleClose={() => {setTimeout(() => {setIsdisable(false)});setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />
+      {businessType === 2 && type == 2 && <Quantities display={quantitiesDisplay} handleClose={() => {setTimeout(() => {setIsdisable(false)});setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />}
     </View>
   )
 }
