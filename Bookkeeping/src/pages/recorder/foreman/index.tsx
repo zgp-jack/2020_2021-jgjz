@@ -569,8 +569,8 @@ export default function Foreman() {
                         })}
                         >
                         {v.name && v.name.toString().substring(v.name.length - 2)}
+                          <View className={v.click?'userClick':''}></View>
                         </View>
-                        <View className={v.click?'userClick':''}></View>
                         {/* 判断不是按量和借支的时候才能设置工资 */}
                       {(recorderType !== 3 && !(recorderType == 2 && contractor ==1) )&&!v.del && !v.set && 
                         <View 
