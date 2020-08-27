@@ -237,8 +237,6 @@ export default function AddTeamMember() {
   }
   const handleStart = () => {
     const dataArr = JSON.parse(JSON.stringify(data));
-    console.log(dataArr,'dataArr');
-    console.log(useSelectorItem.colorSet,'useSelectorItem.colorSet')
     let clickArr: any[] = [];
     dataArr.forEach((v,i)=>{
       v.list.forEach((val,index)=>{
@@ -261,7 +259,6 @@ export default function AddTeamMember() {
     dataArr.forEach((v, i) => {
       v.list.forEach((val, index) => {
         if (val.disabled) {
-          console.log(val,'1111')
           clickArr.push(val)
         }
       })
