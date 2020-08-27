@@ -936,12 +936,13 @@ export default function AttendanceSheet() {
     })
   }
   useShareAppMessage((options) => {
+    console.log()
     let type = Taro.getStorageSync(Type);
     let path;
     if (options.from == 'button') {
-      path = '/pages/index/index'
-    }else{
       path =  `/pages/share/index?time=${vals}&identity=${type}&session=${session}`
+    }else{
+      path = '/pages/index/index'
     }
     return {
       title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
