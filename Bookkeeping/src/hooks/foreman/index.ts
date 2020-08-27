@@ -437,6 +437,7 @@ export default function userForeman() {
       }
       let noset: boolean = true;
       for (let j = 0; j < item.length; j++) {
+        item[j].del = false;
         if (!item[j].set) {
           noset = false
         }
