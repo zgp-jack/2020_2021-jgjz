@@ -4768,7 +4768,7 @@ export default function userForeman() {
     setCalendarModalDisplay(false);
     setTimeout(() => {
       setIsdisable(false)
-    });
+    },100);
   }
   // 日历切换时间
   const handleChangeTime = (type: number) => {
@@ -4841,7 +4841,7 @@ export default function userForeman() {
     setCalendarModalDisplay(false);
     setTimeout(() => {
       setIsdisable(false)
-    });
+    },100);
     // }
   }
   // 左
