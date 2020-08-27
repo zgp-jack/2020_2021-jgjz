@@ -70,8 +70,8 @@ let changeId = 1;
 let isChange = false;
 // 防止多点
 let isHandleAdd = true;
+let noData = false;
 export default function userForeman() {
-  let noData = false;
   // const router: Taro.RouterInfo = useRouter();
   // const { stateType } = router.params;
   // 获取存入的公用内容
@@ -630,7 +630,7 @@ export default function userForeman() {
                 setCacheWage(wageStandardData)
               }
             }else{
-              console.log(11111)
+              // console.log(11111)
               for (let i = 0; i < workArr.length; i++) {
                 workArr[i].set = false;
               }
@@ -643,7 +643,7 @@ export default function userForeman() {
               }
             } else {
               if (res.data.latest_group_worker_has_business) {
-                console.log(1111)
+                // console.log(1111)
                 // 工人
                 if (res.data.latest_group_worker_has_business.worker.length > 0) {
                   // 设置缓存
@@ -651,10 +651,10 @@ export default function userForeman() {
                   workArr.forEach((v,i)=>{
                     v.discipline = false;
                     res.data.latest_group_worker_has_business.worker.forEach((val,index)=>{
-                      console.log(v,'vvvv');
-                      console.log(val,'val')
+                      // console.log(v,'vvvv');
+                      // console.log(val,'val')
                       if(val == v.id){
-                        console.log(v,'111111')
+                        // console.log(v,'111111')
                         v.discipline = true;
                       }
                     })
@@ -1436,6 +1436,7 @@ export default function userForeman() {
         const identity = Taro.getStorageSync(Type)
         // 工人
         if (identity === 2) {
+          console.log('工人创建后')
           // 没有数据的时候
           if (res.data.length === 0) {
             // 设置一个工无加班
@@ -1663,6 +1664,7 @@ export default function userForeman() {
             })
             // 创建项目的时候
           } else {
+            console.log(res,'有项目的时候并且回去项目')
             // 设置加班时长默认值
             const timeTitle = '上班1个工，无加班';
             for (let i = 0; i < timeArr.length; i++) {
@@ -1752,7 +1754,7 @@ export default function userForeman() {
             console.log(groupName,'groupName')
             let id,time;
             for (let i = 0; i < res.data.length; i++) {
-              if (groupName === res.data[i].group_info) {
+              if (groupName == res.data[i].group_info) {
                 res.data[i].click = true;
                 if (toDay) {
                   setOpenClickTime(toDay)
@@ -2455,6 +2457,7 @@ export default function userForeman() {
             return;
           }
         }
+        console.log(res.data,'全部工人')
         dispatch(setUserList(res.data))
         setWorkerList(res.data);
         // 判断有就不存了存通讯录redux

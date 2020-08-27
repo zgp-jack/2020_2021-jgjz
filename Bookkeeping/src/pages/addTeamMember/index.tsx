@@ -69,6 +69,8 @@ export default function AddTeamMember() {
     Taro.setNavigationBarTitle({
       title: titel,
     })
+    console.log(useSelectorItem.mailList,'useSelectorItem.mailList');
+    console.log(useSelectorItem.phoneList,'useSelectorItem.phoneList')
     if (useSelectorItem.mailList && useSelectorItem.phoneList) {
       const item = JSON.parse(JSON.stringify(useSelectorItem.mailList))
       const arr = JSON.parse(JSON.stringify(useSelectorItem.phoneList))
