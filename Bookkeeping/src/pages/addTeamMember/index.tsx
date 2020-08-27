@@ -238,31 +238,7 @@ export default function AddTeamMember() {
   const handleStart = () => {
     const dataArr = JSON.parse(JSON.stringify(data));
     let clickArr: any[] = [];
-    dataArr.forEach((v,i)=>{
-      v.list.forEach((val,index)=>{
-        if (useSelectorItem.colorSet && useSelectorItem.colorSet.length > 0) {
-          for (let i = 0; i < useSelectorItem.colorSet.length;i++){
-            if (useSelectorItem.colorSet[i] == val.id) {
-              clickArr.push(val)
-            }
-          }
-        }
-        // if (val.disabled) {
-        //   console.log(val,'1111')
-        //   clickArr.push(val)
-        // }
-        // if (val.click && !val.disabled ){
-        //   clickArr.push(val)
-        // }
-      })
-    })
-    dataArr.forEach((v, i) => {
-      v.list.forEach((val, index) => {
-        if (val.disabled) {
-          clickArr.push(val)
-        }
-      })
-    })
+    clickArr.push(...useSelectorItem.phoneList);
     dataArr.forEach((v, i) => {
       v.list.forEach((val, index) => {
         if (val.click && !val.disabled) {
@@ -270,47 +246,7 @@ export default function AddTeamMember() {
         }
       })
     })
-    console.log(clickArr,'clickArr')
     let arrList = unique(clickArr);
-    console.log(arrList,'arrList')
-    // console.log(clickArr,'arr')
-    // return;
-    // const mapList = new Map();
-    // clickArr.filter((arr) => !mapList.has(arr.id) && mapList.set(arr.id, 1));
-    // console.log(clickArr,'dataArrr')
-    // return;
-    // if (useSelectorItem.colorSet && useSelectorItem.colorSet.length>0){
-    //   for (let i = 0; i < dataArr.length; i++) {
-    //     for (let j = 0; j < dataArr[i].list.length; j++) {
-    //       for (let z = 0; z < useSelectorItem.colorSet.length;z++){
-    //         if (useSelectorItem.colorSet[i] == dataArr[i].list[j].id ){
-    //           clickArr.push(dataArr[i].list[j]);
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-    // for(let i =0;i<dataArr.length;i++){
-    //   for (let j = 0; j < dataArr[i].list.length; j++) {
-    //     if (dataArr[i].list[j].disabled) {
-    //       clickArr.push(dataArr[i].list[j])
-    //     }
-    //   }
-    // }
-    // for (let i = 0; i < dataArr.length; i++) {
-    //   for (let j = 0; j < dataArr[i].list.length; j++) {
-    //     if (dataArr[i].list[j].click) {
-    //       clickArr.push(dataArr[i].list[j])
-    //     }
-    //   }
-    // }
-    // for (let i = 0; i < dataArr.length; i++) {
-    //   for (let j = 0; j < dataArr[i].list.length; j++) {
-    //     if (dataArr[i].list[j].click && !dataArr[i].list[j].disabled ) {
-    //       clickArr.push(dataArr[i].list[j])
-    //     }
-    //   }
-    // }
     let ids: string[] = arrList.map(item => item.id);
     if (ids.length < 1) {
       Msg('请选择工人')
