@@ -5,7 +5,7 @@ import './index.scss'
 
 interface PROPS {
   display: boolean,
-  maskHandleClose: () => void,//一般情况下等于handleClose
+  maskHandleClose?: () => void,//一般情况下等于handleClose
   handleClose: () => void,
   wageStandard:any,
   handleWageStandard:(type:string,val:any)=>void,

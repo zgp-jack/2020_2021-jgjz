@@ -10,7 +10,7 @@ import classnames from 'classnames'
 // }
 interface PROPS {
   display: boolean,
-  maskHandleClose: () => void,//一般情况下等于handleClose
+  maskHandleClose?: () => void,//一般情况下等于handleClose
   handleClose: () => void,
   data:any,
   handleAddStandard:()=> void,

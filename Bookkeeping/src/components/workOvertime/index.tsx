@@ -11,7 +11,7 @@ interface dataType{
 }
 interface PROPS {
   display: boolean //是否跳转到页面授权
-  maskHandleClose: () => void,//一般情况下等于handleWorkOvertimeClose
+  maskHandleClose?: () => void,//一般情况下等于handleWorkOvertimeClose
   handleWorkOvertimeClose: (boolean) => void;
   handleworkOvertime:(type:number,v:any)=>void;
   data:dataType[],

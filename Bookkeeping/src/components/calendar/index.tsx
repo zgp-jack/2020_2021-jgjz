@@ -25,7 +25,7 @@ interface PROPS {
   // setClickData:()=>void,
   handleClickCalendar:(v:any)=>void,
   getMonthDaysCurrent:(e:any)=>void,
-  maskHandleClose:()=>void,
+  maskHandleClose?:()=>void,
   handleCalendarClose:()=>void,
   handleChangeTime:(e:number)=>void,
   handleCalendarSub:()=>void,
