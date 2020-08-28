@@ -1,6 +1,6 @@
 import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide, useRouter } from '@tarojs/taro'
 import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, addNewBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction, getWorkerHasBusinessByDateAction,getBookkeepingDataAction } from '../../utils/request/index'
-import { MidData, Type, Calendar, RecordTime, User, Tomorrow } from '../../config/store'
+import { MidData, Type, Calendar, RecordTime, User, Tomorrow, NoRequest } from '../../config/store'
 import { bkGetProjectTeamData } from '../../utils/request/index.d'
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setWorker } from '../../actions/workerList'
@@ -448,16 +448,18 @@ export default function userForeman() {
       setClickNum(0);
       setAllClick(false)
       setWorkerItem(item)
-      noData = false;
+      Taro.setStorageSync(NoRequest, false);
     }else{
       console.log(231321321312);
       console.log(noData,'noData')
-      if(noData) return;
+      const Request = Taro.getStorageSync(NoRequest);
+      if (Request) return;
       getList();
     }
   }, [useSelectorItem.workerList])
   // 设置默认数据
   const getList = (businessType?:number)=>{
+    isHandleAdd = false;
     console.log('默认请求')
     // 缓存数据
     let midData = Taro.getStorageSync(MidData)
@@ -491,7 +493,7 @@ export default function userForeman() {
     setObj(objs);
     let title:string='',id, time,sum:string='0';
     getBookkeepingDataAction(params).then(res=>{
-      noData = false;
+      Taro.setStorageSync(NoRequest, false);
       console.log(res,'ressssssssss')
       console.log(res.time,'res.time');
       let today;
@@ -4727,7 +4729,8 @@ export default function userForeman() {
       Msg('请先选择项目')
       return
     }
-    noData = true;
+    Taro.setStorageSync(NoRequest, true);
+    // noData = true;
     bkGetWorker();
     userRouteJump(`/pages/addTeamMember/index?groupInfo=${groupInfo}`);
     // return;

@@ -1,6 +1,6 @@
 import Taro, { Config, useEffect, useState, useRouter, useDidShow, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView } from '@tarojs/components'
-import { UserInfo,Type } from '../../config/store'
+import { UserInfo, Type, NoRequest } from '../../config/store'
 import Foreman from './foreman';
 import { IMGCDNURL } from '../../config'
 // import Worker from './worker'
@@ -13,7 +13,7 @@ export default function Recorder() {
   useDidShow(()=>{
     // let userInfo = Taro.getStorageSync(UserInfo)
     const type = Taro.getStorageSync(Type)
-    console.log(type,'typeeeeeeee')
+    Taro.setStorageSync(NoRequest, false);
     // console.log(userInfo,'userInfouserInfo')
     // console.log(typeof userInfo.type,'xxxx')
     
