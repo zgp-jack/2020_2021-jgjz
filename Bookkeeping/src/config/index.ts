@@ -20,7 +20,7 @@ export const SERVERPHONE: string = '400-838-1888'
 // 意见反馈复制电话
 export const PHONE: string ='18586508374'
 // * 小程序当前版本号
-export const VERSION: string = '3.0.0'
+export const VERSION: string = '1.0.0'
 // * 高德地区key
 export const MAPKEY: string = '20f12aae660c04de86f993d3eff590a0'
 
