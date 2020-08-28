@@ -1443,6 +1443,18 @@ export default function userForeman() {
         // 工人
         if (identity === 2) {
           console.log('工人创建后')
+          if (edit) {
+            model.name = edit;
+            for (let i = 0; i < res.data.length; i++) {
+              res.data[i].click = false;
+              if (res.data[i].group_info == id) {
+                res.data[i].click = true
+              }
+            }
+            setProjectArr(res.data);
+            setModel(model);
+            return;
+          }
           // 没有数据的时候
           if (res.data.length === 0) {
             // 设置一个工无加班
@@ -2118,6 +2130,7 @@ export default function userForeman() {
             }
           })
           console.log(1111)
+          console.log(name,'title')
           getMonthDaysCurrent(new Date(), clickDataArr, groupInfo, id, cacheDaysArr);
           const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
           if (res.data.length > 0) {
