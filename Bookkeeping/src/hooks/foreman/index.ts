@@ -4991,6 +4991,9 @@ export default function userForeman() {
             price = data.money / Number(num)
           }
           data.dayAddWork = (toFixedFn(price));
+          data[type] = toFixedFn(num);
+          setWageStandard(data);
+          return;
         }
         data[type] = num;
         setWageStandard(data);
