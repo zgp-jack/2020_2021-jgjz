@@ -3,7 +3,8 @@
 
 // * 全局请求接口域名
 // * 测试站
-export const DEVREQUESTURL: string = 'https://miniapi.zhaogong.vrtbbs.com/'
+// export const DEVREQUESTURL: string = 'https://miniapi.zhaogong.vrtbbs.com/'
+export const DEVREQUESTURL: string = 'http://miniapi.kkbbi.com/'
 // * 正式站
 export const PROREQUESTURL: string = 'https://newyupaomini.54xiaoshuo.com/'
 // * 当前测试
