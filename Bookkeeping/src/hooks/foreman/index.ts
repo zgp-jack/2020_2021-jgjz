@@ -3178,11 +3178,13 @@ export default function userForeman() {
       } else {
         Msg('您还没有填写班组长名称')
       }
+      isHandleAdd = true
       return
     }
     if (model.phone) {
       if (!isPhone(model.phone)) {
         Msg('请输入正确的手机号')
+        isHandleAdd = true
         return
       }
     }
