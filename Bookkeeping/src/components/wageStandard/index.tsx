@@ -63,6 +63,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                       className='inputBox' 
                       // maxLength={7}
                       value={toFixedFnNum(wageStandard.work).toString()} 
+                      onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
                       onInput={(e) =>handleWageStandard('work', e)}/>
                   </View><View className='icon icon_right' onClick={() => handleAdd('work', wageStandard.work)}>+</View>
                 </View> 
@@ -77,6 +78,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                         className='inputBox'
                         // maxLength={7}
                         value={wageStandard.money}
+                        onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
                         onInput={(e) => handleWageStandard('money', e)} />
                     </View><View className='icon icon_right' onClick={() => handleAdd('money', wageStandard.money)}>+</View>
                   </View> 
@@ -113,6 +115,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                       className='inputBox-day'
                       // maxLength={7}
                       value={wageStandard.addWork}
+                      // onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
                       onInput={(e) => handleWageStandard('addWork', e)} />
                   </View><View className='icon icon_right' onClick={() => handleAdd('addWork', wageStandard.addWork)}>+</View>
                 </View> 
@@ -140,6 +143,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                         className='inputBox-day'
                         // maxLength={7}
                         value={toFixedFnNum(wageStandard.day).toString()}
+                        onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
                         onInput={(e) => handleWageStandard('day', e)} />
                   </View><View className='icon icon_right' onClick={() => handleAdd('day', wageStandard.day)}>+</View>
                   </View> 
