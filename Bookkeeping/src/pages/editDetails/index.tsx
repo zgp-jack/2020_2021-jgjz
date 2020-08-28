@@ -1361,7 +1361,7 @@ export default function EditDetails() {
     if (type === 'work' || type === 'day') {
       if (Number(data[type]) > 0) {
         let num = Number(data[type]) - 0.5;
-        if (num == 0) {
+        if (num == 0 || num < 0) {
           num = 0;
         }
         if (type === 'day') {
@@ -1378,7 +1378,7 @@ export default function EditDetails() {
     } else if (type === 'money' || type === 'addWork') {
       if (data[type] > 0) {
         let num = Number(data[type]) - 1;
-        if (num == 0) {
+        if (num == 0 || num < 0) {
           num = 0;
         }
         console.log(data.money, data.day,'1111')
