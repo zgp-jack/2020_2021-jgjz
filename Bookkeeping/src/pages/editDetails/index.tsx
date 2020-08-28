@@ -1371,6 +1371,9 @@ export default function EditDetails() {
             console.log(price,'price')
           }
           data.dayAddWork = toFixedFn(price);
+          data[type] = toFixedFn(num);
+          setWageStandard(data);
+          return
         }
         data[type] = num;
         setWageStandard(data);

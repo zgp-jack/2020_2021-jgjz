@@ -5022,6 +5022,8 @@ export default function userForeman() {
   // 减少
   const handleDelInput = (type: string, e: string) => {
     const data = JSON.parse(JSON.stringify(wageStandard));
+    console.log(data[type],'data[type]')
+    console.log(type,'111')
     if (type === 'work' || type === 'day') {
       if (Number(data[type]) > 0) {
         let num = Number(data[type]) - 0.5;
@@ -5034,6 +5036,9 @@ export default function userForeman() {
             price = data.money / Number(num);
           }
           data.dayAddWork = toFixedFn(price);
+          data[type] = toFixedFn(num);
+          setWageStandard(data);
+          return
         }
         data[type] = num;
         setWageStandard(data);
