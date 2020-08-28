@@ -459,7 +459,7 @@ export default function userForeman() {
   }, [useSelectorItem.workerList])
   // 设置默认数据
   const getList = (businessType?:number)=>{
-    isHandleAdd = false;
+    isHandleAdd = true;
     console.log('默认请求')
     // 缓存数据
     let midData = Taro.getStorageSync(MidData)
