@@ -451,6 +451,7 @@ export default function userForeman() {
       noData = false;
     }else{
       console.log(231321321312);
+      console.log(noData,'noData')
       if(noData) return;
       getList();
     }
@@ -490,6 +491,7 @@ export default function userForeman() {
     setObj(objs);
     let title:string='',id, time,sum:string='0';
     getBookkeepingDataAction(params).then(res=>{
+      noData = false;
       console.log(res,'ressssssssss')
       console.log(res.time,'res.time');
       let today;
