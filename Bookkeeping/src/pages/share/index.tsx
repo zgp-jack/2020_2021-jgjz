@@ -1,9 +1,10 @@
-import Taro, { Config, useEffect, useState, useRouter } from '@tarojs/taro'
+import Taro, { Config, useEffect, useState, useRouter, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Picker } from '@tarojs/components'
 import CalendarModal from '../../components/attendanceModal';
 import { IsShare  } from '../../config/store';
 import { bkGetShareExcelDataAction, shareExcelDataAction } from '../../utils/request/index';
 import Msg from '../../utils/msg';
+import { IMGCDNURL } from '../../config'
 import classnames from 'classnames'
 import './index.scss'
 
@@ -34,7 +35,7 @@ interface DateTyep {
 
 export default function Share() {
   const router: Taro.RouterInfo = useRouter();
-  const { time='2020-08', identity, session } = router.params;
+  const { time, identity, session } = router.params;
   // 月份
   const [date, setDate] = useState('');
   // 年
@@ -77,6 +78,13 @@ export default function Share() {
     Taro.setStorageSync(IsShare,true);
     getList(time);
   }, [])
+  useShareAppMessage(() => {
+    return {
+      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      imageUrl: `${IMGCDNURL}shareIconImg.png`,
+      path: `/pages/share/index?time=${time}&identity=${identity}&session=${session}`
+    }
+  })
   // 获取数据
   const getList = (newTime: string) => {
     let params = {
