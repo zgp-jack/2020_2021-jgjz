@@ -8,7 +8,7 @@ export const DEVREQUESTURL: string = 'http://miniapi.kkbbi.com/'
 // * 正式站
 export const PROREQUESTURL: string = 'https://newyupaomini.54xiaoshuo.com/'
 // * 当前测试
-export const REQUESTURL: string = DEVREQUESTURL;
+export const REQUESTURL: string = PROREQUESTURL;
 // * 默认上传图片
 export const UPLOADIMGURL: string = PROREQUESTURL + 'index/upload/'
 // * 阿里云CDN域名
