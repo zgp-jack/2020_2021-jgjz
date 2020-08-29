@@ -653,7 +653,7 @@ export default function AttendanceSheet() {
                 // console.log(toFixedNum(newArr[result].total.work_time),'toFixedNumtoFixedNum')
                 // console.log(toFixedNum(el.total.work_time),'el.total.work_time')
                 // console.log(newArr[result].total.work_time,' newArr[result].total.over_time')
-                return;
+                // return;
               } else {
                 newArr.push(el)
               }

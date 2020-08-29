@@ -85,6 +85,10 @@ export default function Share() {
       path: `/pages/share/index?time=${time}&identity=${identity}&session=${session}`
     }
   })
+  const formatFloatItme = (f, digit) => {
+    var m = Math.pow(10, digit);
+    return Math.round(f * m, 10) / m;
+  }
   // 获取数据
   const getList = (newTime: string) => {
     let params = {
@@ -579,8 +583,8 @@ export default function Share() {
             workData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
-                newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
+                newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))), 2)
+                newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)), 2)
               } else {
                 newArr.push(el)
               }
