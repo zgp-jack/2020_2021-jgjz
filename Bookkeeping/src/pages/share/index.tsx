@@ -704,8 +704,8 @@ export default function Share() {
           let workWorkNum = 0, workOverNum = 0;
           if (workDataSum && workDataSum.length > 0) {
             for (let o = 0; o < workDataSum.length; o++) {
-              workWorkNum += Number(toFixedFnNum(workDataSum[o].total.work_time));
-              workOverNum += Number(toFixedFnNum(workDataSum[o].total.over_time));
+              workWorkNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.work_time))), 2)
+              workOverNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
             }
           }
           // 借支
@@ -811,6 +811,25 @@ export default function Share() {
     }
     s = s.substring(0, s.indexOf(".") + 3);
     return s;
+  }
+  const toFixedNum = (num: any) => {
+    // let f = parseFloat(num);
+    // if (isNaN(f)) {
+    //   return false;
+    // }
+    //  f = Math.round(num * 1000) / 1000
+    let s = num + '';
+    let rs = s.indexOf('.');
+    if (rs < 0) {
+      rs = s.length;
+      s += '.';
+    }
+    while (s.length <= rs + 2) {
+      s += '0';
+    }
+    s = s.substring(0, s.indexOf(".") + 3);
+    // console.log((s),'sssssss')
+    return Number(s);
   }
   // 设置时间
   const handleTime = (e) => {
