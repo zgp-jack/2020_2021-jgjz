@@ -803,7 +803,7 @@ export default function Index() {
     //**重点**要打开的小程序版本，有效值 develop（开发版），trial（体验版），release（正式版
     // ========发布正式要修改
     Taro.navigateToMiniProgram({
-      appId: 'wx456feacb0e86162f',
+      appId: 'wx31a1c86a67bc6c54',
       path: '/pages/index/index',
       extraData: {
         foo: 'bar'

@@ -252,9 +252,11 @@ export default function AttendanceSheet() {
               // 包工(天)
               if (res.data[i].work.length > 0) {
                 typeObj.type.work = true
+                console.log(res.data[i].work,'我饿大家扩散的空间啊是')
                 workSumWork = toFixedFnNum(res.data[i].work.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.total.work_time)), 0))
                 workSumTime = toFixedFnNum(res.data[i].work.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.total.over_time)), 0))
               }
+              console.log(workSumTime,'workSumTime')
               for (let j = 0; j < dayItem.length; j++) {
                 if (res.data[i].hour.length > 0) {
                   for (let z = 0; z < res.data[i].hour.length; z++) {
@@ -485,6 +487,8 @@ export default function AttendanceSheet() {
                   }
                 }
               }
+              console.log(hourSumTime,'numWork');
+              console.log(workSumTime,'numHour')
               let lastObj = [
                 { id: 1, name: '总计', default:true},
                 {
@@ -606,8 +610,10 @@ export default function AttendanceSheet() {
             hourData.forEach((el:any) => {
               const result = newArr.findIndex((ol:any) => { return el.date_num === ol.date_num })
             if (result !== -1) {
-              newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
-              newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
+              // newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
+              // newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
+              newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))), 2)
+              newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)), 2)
             } else {
               newArr.push(el)
               }
@@ -631,7 +637,8 @@ export default function AttendanceSheet() {
             borrowData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.money = Number(toFixedFn(newArr[result].total.money)) + Number(toFixedFn(el.total.money))
+                newArr[result].total.money = formatFloatItme(((toFixedNum(newArr[result].total.money)) + (toFixedNum(el.total.money))), 2)
+                // newArr[result].total.money = Number(toFixedFn(newArr[result].total.money)) + Number(toFixedFn(el.total.money))
               } else {
                 newArr.push(el)
               }
@@ -639,12 +646,18 @@ export default function AttendanceSheet() {
             borrowDataSum = newArr;
           }
           if (workData && workData.length > 0) {
+            console.log(workData,'workDataworkDataworkData')
             let newArr: any[] = []
             workData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
-                newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
+                console.log('1111111')
+                newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))),2)
+                newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)),2)
+                // console.log(toFixedNum(newArr[result].total.work_time),'toFixedNumtoFixedNum')
+                // console.log(toFixedNum(el.total.work_time),'el.total.work_time')
+                // console.log(newArr[result].total.work_time,' newArr[result].total.over_time')
+                // return;
               } else {
                 newArr.push(el)
               }
@@ -673,9 +686,11 @@ export default function AttendanceSheet() {
                 }
               }
             }
+            // console.log(workDataSum,'workDataSum')
             if (workDataSum&&workDataSum.length > 0) {
               sumWork = true;
               for (let j = 0; j < workDataSum.length; j++) {
+                // return;
                 if (workDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
                     work: {
@@ -756,23 +771,30 @@ export default function AttendanceSheet() {
           let hourWorkNum=0, hourOverNum=0;
           if (hourDataSum && hourDataSum.length > 0) {
             for (let o = 0; o < hourDataSum.length; o++) {
-              hourWorkNum += Number(toFixedFnNum(hourDataSum[o].total.work_time));
-              hourOverNum += Number(toFixedFnNum(hourDataSum[o].total.over_time));
+              // hourWorkNum += Number(toFixedFnNum(hourDataSum[o].total.work_time));
+              // hourOverNum += Number(toFixedFnNum(hourDataSum[o].total.over_time));
+              hourWorkNum = formatFloatItme((hourWorkNum + (toFixedNum(hourDataSum[o].total.work_time))), 2)
+              hourOverNum = formatFloatItme((hourOverNum + (toFixedNum(hourDataSum[o].total.over_time))), 2)
             }
           }
           // 记工
           let workWorkNum = 0, workOverNum = 0;
           if (workDataSum && workDataSum.length > 0) {
+            console.log(workDataSum,'workDataSum');
             for (let o = 0; o < workDataSum.length; o++) {
-              workWorkNum += Number(toFixedFnNum(workDataSum[o].total.work_time));
-              workOverNum += Number(toFixedFnNum(workDataSum[o].total.over_time));
+              workWorkNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.work_time))), 2)
+              workOverNum = formatFloatItme((workOverNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
+              // workWorkNum += Number(toFixedNum(workDataSum[o].total.work_time));
+              // workOverNum += Number(toFixedNum(workDataSum[o].total.over_time));
             }
           }
           // 借支
+          console.log(borrowDataSum,'borrowDataSum')
           let borrowNum = 0;
           if (borrowDataSum && borrowDataSum.length > 0) {
             for (let o = 0; o < borrowDataSum.length; o++) {
-              borrowNum += Number(toFixedFn(borrowDataSum[o].total.money));
+              borrowNum = formatFloatItme((borrowNum + (toFixedNum(borrowDataSum[o].total.money))), 2)
+              // borrowNum += Number(toFixedFn(borrowDataSum[o].total.money));
             }
           }
           // 等于0就相当于没有记
@@ -799,11 +821,13 @@ export default function AttendanceSheet() {
             hour = { work_time: toFixedFnNum(hourWorkNum), over_time: toFixedFnNum(hourOverNum) }
           }
           let work;
+          console.log(workWorkNum,'workWorkNumworkWorkNum111')
           if (workWorkNum == 0 && workOverNum == 0 ){
             work = {}
           }else{
-            work = { work_time: toFixedFnNum(workWorkNum), over_time: toFixedFnNum(workOverNum) }
+            work = { work_time: toFixedFnNum(workWorkNum), over_time: workOverNum }
           }
+          console.log(work,'work')
           let sumLeft = [
             { id: 1, name: '总计', default:true, isSum:true },
             {
@@ -830,10 +854,12 @@ export default function AttendanceSheet() {
               work: sumWork,
             },
           }
+          console.log(work,'sumAmount');
+          console.log(hour,'sumWork')
           // 本月统计
           // 获取身份
           let type = Taro.getStorageSync(Type);
-          console.log(arr,'listArr')
+          console.log(sum,'listArr')
           if (type === 1) {
             setFixedTab([...leftArr, ...arr, obj]);
             setTabArr([...rightArr, ...listArr, sum]);
@@ -871,14 +897,36 @@ export default function AttendanceSheet() {
       s += '0';
     }
     s = s.substring(0, s.indexOf(".") + 3);
-    console.log(s,'sssssss')
     return s;
   }
   const toFixedFnNum = (num: any)=>{
     let s = num + '';
     s = s.substring(0, s.indexOf(".") + 3);
-    console.log(s,' Number(s)')
+    // console.log(Number(s),'ssssss')
     return Number(s);
+  }
+  const toFixedNum = (num: any) => {
+    // let f = parseFloat(num);
+    // if (isNaN(f)) {
+    //   return false;
+    // }
+    //  f = Math.round(num * 1000) / 1000
+    let s = num + '';
+    let rs = s.indexOf('.');
+    if (rs < 0) {
+      rs = s.length;
+      s += '.';
+    }
+    while (s.length <= rs + 2) {
+      s += '0';
+    }
+    s = s.substring(0, s.indexOf(".") + 3);
+    // console.log((s),'sssssss')
+    return Number(s);
+  }
+  const formatFloatItme = (f, digit)=>{
+    var m = Math.pow(10, digit);
+    return Math.round(f * m, 10) / m;
   }
   // 设置时间
   const handleTime = (e) => {
