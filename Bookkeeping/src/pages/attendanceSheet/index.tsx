@@ -648,6 +648,7 @@ export default function AttendanceSheet() {
             workData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
+                console.log('1111111')
                 newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))),2)
                 newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)),2)
                 // console.log(toFixedNum(newArr[result].total.work_time),'toFixedNumtoFixedNum')
@@ -686,7 +687,6 @@ export default function AttendanceSheet() {
             if (workDataSum&&workDataSum.length > 0) {
               sumWork = true;
               for (let j = 0; j < workDataSum.length; j++) {
-                console.log(workDataSum,'workDataSum');
                 // return;
                 if (workDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
@@ -775,9 +775,12 @@ export default function AttendanceSheet() {
           // 记工
           let workWorkNum = 0, workOverNum = 0;
           if (workDataSum && workDataSum.length > 0) {
+            console.log(workDataSum,'workDataSum');
             for (let o = 0; o < workDataSum.length; o++) {
-              workWorkNum += Number(toFixedFnNum(workDataSum[o].total.work_time));
-              workOverNum += Number(toFixedFnNum(workDataSum[o].total.over_time));
+              workWorkNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.work_time))), 2)
+              workOverNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
+              // workWorkNum += Number(toFixedNum(workDataSum[o].total.work_time));
+              // workOverNum += Number(toFixedNum(workDataSum[o].total.over_time));
             }
           }
           // 借支
@@ -811,7 +814,7 @@ export default function AttendanceSheet() {
             hour = { work_time: toFixedFnNum(hourWorkNum), over_time: toFixedFnNum(hourOverNum) }
           }
           let work;
-          console.log(workOverNum,'workWorkNumworkWorkNum')
+          console.log(workWorkNum,'workWorkNumworkWorkNum111')
           if (workWorkNum == 0 && workOverNum == 0 ){
             work = {}
           }else{
@@ -892,7 +895,7 @@ export default function AttendanceSheet() {
   const toFixedFnNum = (num: any)=>{
     let s = num + '';
     s = s.substring(0, s.indexOf(".") + 3);
-    console.log(Number(s),'ssssss')
+    // console.log(Number(s),'ssssss')
     return Number(s);
   }
   const toFixedNum = (num: any) => {
@@ -911,7 +914,7 @@ export default function AttendanceSheet() {
       s += '0';
     }
     s = s.substring(0, s.indexOf(".") + 3);
-    console.log((s),'sssssss')
+    // console.log((s),'sssssss')
     return Number(s);
   }
   const formatFloatItme = (f, digit)=>{
