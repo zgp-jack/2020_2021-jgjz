@@ -1,7 +1,7 @@
 import Taro, { Config, useEffect, useState, useRouter, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Picker } from '@tarojs/components'
 import CalendarModal from '../../components/attendanceModal';
-import { IsShare  } from '../../config/store';
+import { IsShare } from '../../config/store';
 import { bkGetShareExcelDataAction, shareExcelDataAction } from '../../utils/request/index';
 import Msg from '../../utils/msg';
 import { IMGCDNURL } from '../../config'
@@ -63,19 +63,19 @@ export default function Share() {
     return num;
   }
   useEffect(() => {
-    if (time){
+    if (time) {
       let date = {
         month: time.split('-')[1],
         year: time.split('-')[0],
       }
       const month = parseInt(date.month);
-      const title = date.year + '年' + month +'月对工清单';
-      console.log(data,'data');
+      const title = date.year + '年' + month + '月对工清单';
+      console.log(data, 'data');
       Taro.setNavigationBarTitle({
         title,
       })
     }
-    Taro.setStorageSync(IsShare,true);
+    Taro.setStorageSync(IsShare, true);
     getList(time);
   }, [])
   useShareAppMessage(() => {
@@ -97,7 +97,7 @@ export default function Share() {
       session
     };
     bkGetShareExcelDataAction(params).then(res => {
-      if(res.code === 200 ){
+      if (res.code === 200) {
         setBusy(false)
         if (res.data.length > 0) {
           const date: any = newTime.split("-");
@@ -189,33 +189,14 @@ export default function Share() {
               //借支
               if (res.data[i].borrow.length > 0) {
                 typeObj.type.borrow = true;
-                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => {
-                  // let a = new Number(toFixedFn(currentValue.total.money));
-                  // let b = parseFloat(toFixedFn(currentValue.total.money));
-                  // console.log(a,'aaaa')
-                  // console.log(b,'bbbbbb')
-                  // const num: any = (toFixedFn(currentValue.total.money)).split('.');
-                  // const left = num[0]*100;
-                  // const right = num[1];
-                  // console.log(left,'left');
-                  // console.log(right,'right')
-                  // const sum = (left + right) /100;
-                  // console.log(sum,'numda dbskb ak')
-                  const a: any = parseFloat(toFixedFn(currentValue.total.money) * 100 / 100);
-                  console.log(a, 'asdsadsadas');
-                  const sums = accumulator + a;
-                  return sums
-                }, 0)));
-                console.log(borrowSum, 'borrowSum')
+                borrowSum = (toFixedFn(res.data[i].borrow.reduce((accumulator, currentValue) => accumulator + Number(toFixedFn(currentValue.total.money)), 0)))
               }
               // 包工(天)
               if (res.data[i].work.length > 0) {
                 typeObj.type.work = true
-                console.log(res.data[i].work, '我饿大家扩散的空间啊是')
                 workSumWork = toFixedFnNum(res.data[i].work.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.total.work_time)), 0))
                 workSumTime = toFixedFnNum(res.data[i].work.reduce((accumulator, currentValue) => accumulator + Number(toFixedFnNum(currentValue.total.over_time)), 0))
               }
-              console.log(workSumTime, 'workSumTime')
               for (let j = 0; j < dayItem.length; j++) {
                 if (res.data[i].hour.length > 0) {
                   for (let z = 0; z < res.data[i].hour.length; z++) {
@@ -280,7 +261,6 @@ export default function Share() {
                         }
                       } else {
                         type.borrow.borrow = toFixedFn((res.data[i].borrow[z].total.money));
-                        console.log(type.borrow.borrow, 'type.borrow.borrow')
                         dayItem[j].type = type;
                       }
                     }
@@ -446,8 +426,6 @@ export default function Share() {
                   }
                 }
               }
-              console.log(hourSumTime, 'numWork');
-              console.log(workSumTime, 'numHour')
               let lastObj = [
                 { id: 1, name: '总计', default: true },
                 {
@@ -491,7 +469,6 @@ export default function Share() {
                   num: amountSum
                 }
               }
-              console.log(obj, typeObj, sumObj, 'obj, typeObj, sumObj')
               list.push(obj, typeObj, sumObj);
               arrObj.list = list;
               arrObj.type = {
@@ -569,10 +546,10 @@ export default function Share() {
             hourData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                // newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
-                // newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
                 newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))), 2)
                 newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)), 2)
+                // newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
+                // newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
               } else {
                 newArr.push(el)
               }
@@ -605,18 +582,14 @@ export default function Share() {
             borrowDataSum = newArr;
           }
           if (workData && workData.length > 0) {
-            console.log(workData, 'workDataworkDataworkData')
             let newArr: any[] = []
             workData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                console.log('1111111')
                 newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))), 2)
                 newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)), 2)
-                // console.log(toFixedNum(newArr[result].total.work_time),'toFixedNumtoFixedNum')
-                // console.log(toFixedNum(el.total.work_time),'el.total.work_time')
-                // console.log(newArr[result].total.work_time,' newArr[result].total.over_time')
-                // return;
+                // newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))), 2)
+                // newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)), 2)
               } else {
                 newArr.push(el)
               }
@@ -645,11 +618,9 @@ export default function Share() {
                 }
               }
             }
-            // console.log(workDataSum,'workDataSum')
             if (workDataSum && workDataSum.length > 0) {
               sumWork = true;
               for (let j = 0; j < workDataSum.length; j++) {
-                // return;
                 if (workDataSum[j].date_num == dayArrList[i].name) {
                   let type = {
                     work: {
@@ -730,25 +701,23 @@ export default function Share() {
           let hourWorkNum = 0, hourOverNum = 0;
           if (hourDataSum && hourDataSum.length > 0) {
             for (let o = 0; o < hourDataSum.length; o++) {
-              // hourWorkNum += Number(toFixedFnNum(hourDataSum[o].total.work_time));
-              // hourOverNum += Number(toFixedFnNum(hourDataSum[o].total.over_time));
               hourWorkNum = formatFloatItme((hourWorkNum + (toFixedNum(hourDataSum[o].total.work_time))), 2)
               hourOverNum = formatFloatItme((hourOverNum + (toFixedNum(hourDataSum[o].total.over_time))), 2)
+              // hourWorkNum += Number(toFixedFnNum(hourDataSum[o].total.work_time));
+              // hourOverNum += Number(toFixedFnNum(hourDataSum[o].total.over_time));
             }
           }
           // 记工
           let workWorkNum = 0, workOverNum = 0;
           if (workDataSum && workDataSum.length > 0) {
-            console.log(workDataSum, 'workDataSum');
             for (let o = 0; o < workDataSum.length; o++) {
               workWorkNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.work_time))), 2)
               workOverNum = formatFloatItme((workOverNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
-              // workWorkNum += Number(toFixedNum(workDataSum[o].total.work_time));
-              // workOverNum += Number(toFixedNum(workDataSum[o].total.over_time));
+              // workWorkNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.work_time))), 2)
+              // workOverNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
             }
           }
           // 借支
-          console.log(borrowDataSum, 'borrowDataSum')
           let borrowNum = 0;
           if (borrowDataSum && borrowDataSum.length > 0) {
             for (let o = 0; o < borrowDataSum.length; o++) {
@@ -780,13 +749,11 @@ export default function Share() {
             hour = { work_time: toFixedFnNum(hourWorkNum), over_time: toFixedFnNum(hourOverNum) }
           }
           let work;
-          console.log(workWorkNum, 'workWorkNumworkWorkNum111')
           if (workWorkNum == 0 && workOverNum == 0) {
             work = {}
           } else {
-            work = { work_time: toFixedFnNum(workWorkNum), over_time: workOverNum }
+            work = { work_time: toFixedFnNum(workWorkNum), over_time: toFixedFnNum(workOverNum) }
           }
-          console.log(work, 'work')
           let sumLeft = [
             { id: 1, name: '总计', default: true, isSum: true },
             {
@@ -813,12 +780,8 @@ export default function Share() {
               work: sumWork,
             },
           }
-          console.log(work, 'sumAmount');
-          console.log(hour, 'sumWork')
           // 本月统计
           // 获取身份
-          // let type = Taro.getStorageSync(Type);
-          console.log(sum, 'listArr')
           if (identity == '1') {
             setFixedTab([...leftArr, ...arr, obj]);
             setTabArr([...rightArr, ...listArr, sum]);
@@ -832,9 +795,9 @@ export default function Share() {
         Msg(res.msg);
       }
     })
-    .catch((e) => {
-      setBusy(true)
-    })
+      .catch((e) => {
+        setBusy(true)
+      })
   }
   const toFixedFnNum = (num: any) => {
     let s = num + '';
@@ -886,125 +849,153 @@ export default function Share() {
     getList(time);
   }
   return (
-    <View className='AttendanceSheetContent'>
-      <View>
-        {busy &&
-          <View className='busyBox'>
-            <View>系统繁忙，刷新试试</View>
-            <View className='refresh' onClick={() => getList(year + '-' + month)}>刷新</View>
-          </View>
+    <View className= 'AttendanceSheetContent' >
+    <View>
+    { busy &&
+    <View className='busyBox' >
+      <View>系统繁忙，刷新试试 < /View>
+        < View className = 'refresh' onClick = {() => getList(year + '-' + month)
+}> 刷新 < /View>
+  < /View>
         }
-        {!busy &&
-          <View className='box'>
-            {/* 左边固定 */}
-          <View className='borderBottom'>
-            {fixedTab.map((v, o) => (
-              <View className='box-left' key={'v' + o}>
-                {v.list.map((val, c) => (
-                  <View className='middle' key={'c' + c}>
-                    {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={val.default && ((!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (v.type.hour || v.type.work || v.type.borrow || v.type.amount)) ? 'box-none' : 'box-list-default'}>
-                      <View
-                        className={classnames({
-                          'mt10': (v.type && val.isSum && ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount))),
-                          'mt100': v.type && v.type.hour && v.type.work && v.type.borrow && v.type.amount,
-                          'mt50': v.type && ((v.type.hour && v.type.work && v.type.borrow) || (v.type.hour && v.type.borrow && v.type.amount) || (v.type.hour && v.type.amount && v.type.work) || (v.type.work && v.type.borrow && v.type.amount)),
-                          'mt20': v.type && ((v.type.hour && v.type.work) || (v.type.hour && v.type.borrow) || (v.type.hour && v.type.amount) || (v.type.work && v.type.borrow) || (v.type.work && v.type.amount) || (v.type.borrow && v.type.amount)),
-                          'mt0': v.type && ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount))
+{
+!busy &&
+  <View className='box' >
+    {/* 左边固定 */ }
+    < View className = 'borderBottom' >
+      {
+        fixedTab.map((v, o) => (
+          <View className= 'box-left' key = { 'v' + o } >
+          {
+            v.list.map((val, c) => (
+              <View className= 'middle' key = { 'c' + c } >
+              {!val.type && (!val.hour || !val.work || !val.borrow || !val.amount) && <View className={ val.default && ((!v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (v.type.hour || v.type.work || v.type.borrow || v.type.amount)) ? 'box-none' : 'box-list-default' } >
+              <View
+                        className={
+                classnames({
+                  'mt10': (v.type && val.isSum && ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount))),
+              'mt100': v.type && v.type.hour && v.type.work && v.type.borrow && v.type.amount,
+              'mt50': v.type && ((v.type.hour && v.type.work && v.type.borrow) || (v.type.hour && v.type.borrow && v.type.amount) || (v.type.hour && v.type.amount && v.type.work) || (v.type.work && v.type.borrow && v.type.amount)),
+              'mt20': v.type && ((v.type.hour && v.type.work) || (v.type.hour && v.type.borrow) || (v.type.hour && v.type.amount) || (v.type.work && v.type.borrow) || (v.type.work && v.type.amount) || (v.type.borrow && v.type.amount)),
+              'mt0': v.type && ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount))
                         }
-                        )}
-                      >{val.name}</View>
-                      {/* {val.default &&
+        )
+      }
+      > { val.name } < /View>
+  {/* {val.default &&
                         <View open-type="share">
                           <Button className='blued' open-type="share">
                             微信对工>
                         </Button>
                         </View>
                       } */}
-                    </View>}
-                    {val.type && <View>
-                      <View className='box-list-type'>
-                        {val.type.hour && <View className='box-height'>点工</View>}
-                        {val.type.work && <View className='box-list-bao'>包工<View>（按天记）</View></View>}
-                        {val.type.amount && <View className='box-list-bao'>包工<View>（按量记）</View></View>}
-                        {val.type.borrow && <View className='box-height'>借支</View>}
-                      </View>
-                    </View>}
-                    {!val.type && (val.hour || val.work || val.borrow || val.amount) && <View>
-                      {JSON.stringify(val.hour) !== '{}' && <View className='box-list'>
-                        <View>{val.hour.work_time}{val.hour.work_time || '0' ? '个工' : ''}</View>
-                        <View>{val.hour.over_time}{val.hour.over_time || '0' ? '小时' : ''}</View>
-                      </View>}
-                      {JSON.stringify(val.work) !== '{}' && <View className='box-list-bao'>
-                        <View>{val.work.work_time}{val.work.work_time || '0' ? '个工' : ''}</View>
-                        <View>{val.work.over_time}{val.work.over_time || '0' ? '小时' : ''}</View>
-                      </View>}
-                      {JSON.stringify(val.amount) !== '{}' && <View className='box-height'>
-                        <View>{val.amount.num}{val.amount.num ? '笔' : ''}</View>
-                      </View>}
-                      {JSON.stringify(val.borrow) !== '{}' && <View className='box-height'>
-                        <View className='buled'>{val.borrow.borrow}</View>
-                      </View>}
-                    </View>}
-                  </View>
-                ))}
-              </View>
-            ))}
-          </View>
-            {/* 右边 */}
-            <View className='box-scroll'>
-              {tebArr.map(v => (
-                <View className='box-right'>
-                  {v.list.map(val => (
-                    <View className='border'>
-                      {val.default && <View className='box-list-default'>{val.name}</View>}
-                      {/* {!val.default && !val.type && <View className='box-height'></View>} */}
-                      {val.type && <View>
-                        {val.type.hour && v.type.hour ?
-                          <View className='box-list-bao'>
-                            <View>{val.type.hour.work_time}{val.type.hour.work_time || '0' ? '个工' : ''}</View>
-                            <View>{val.type.hour.over_time}{val.type.hour.over_time || '0' ? '小时' : ''}</View>
-                          </View> :
-                          <View>{v.type.hour && <View className='box-list-bao'></View>}</View>
-                        }
-                        {val.type.work && v.type.work ?
-                          <View className='box-list-bao'>
-                            <View>{val.type.work.work_time}{val.type.work.work_time || '0' ? '个工' : ''}</View>
-                            <View>{val.type.work.over_time}{val.type.work.over_time || '0' ? '小时' : ''}</View>
-                          </View> :
-                          <View>{v.type.work && <View className='box-list-bao'></View>}</View>
-                        }
-                        {val.type.amount && v.type.amount ?
-                          <View className='box-height'>
-                            <View>{val.type.amount.num}{val.type.amount.num ? '笔' : ''}</View>
-                          </View> :
-                          <View>{v.type.amount && <View className='box-list-bao'></View>}</View>
-                        }
-                        {val.type.borrow && v.type.borrow ?
-                          <View className='box-height'>
-                            <View className='buled'>{val.type.borrow.borrow}</View>
-                          </View> :
-                          <View>{v.type.borrow && <View className='box-list-bao'></View>}</View>
-                        }
-                      </View>}
-                      {!val.type && v.type.hour && <View className='box-list-bao'></View>}
-                      {!val.type && v.type.work && <View className='box-list-bao'></View>}
-                      {!val.type && v.type.amount && <View className='box-list-bao'></View>}
-                      {!val.type && v.type.borrow && <View className='box-list-bao'></View>}
-                    </View>
-                  ))}
-                </View>
-              ))}
+  </View>}
+  {
+  val.type && <View>
+    <View className='box-list-type' >
+      { val.type.hour && <View className='box-height'> 点工 < /View>}
+                        { val.type.work && <View className='box-list-bao' > 包工 < View >（按天记）</View></View >}
+    { val.type.amount && <View className='box-list-bao' > 包工 < View >（按量记）</View></View >}
+    {
+      val.type.borrow && <View className='box-height' > 借支 < /View>}
+        < /View>
+        < /View>}
+      {
+      !val.type && (val.hour || val.work || val.borrow || val.amount) && <View>
+        {
+          JSON.stringify(val.hour) !== '{}' && <View className='box-list'>
+            <View>{ val.hour.work_time }{ val.hour.work_time || '0' ? '个工' : '' } </View>
+              < View > { val.hour.over_time }{ val.hour.over_time || '0' ? '小时' : '' } </View>
+                < /View>}
+        {
+          JSON.stringify(val.work) !== '{}' && <View className='box-list-bao' >
+            <View>{ val.work.work_time }{ val.work.work_time || '0' ? '个工' : '' } </View>
+              < View > { val.work.over_time }{ val.work.over_time || '0' ? '小时' : '' } </View>
+                < /View>}
+          {
+            JSON.stringify(val.amount) !== '{}' && <View className='box-height' >
+              <View>{ val.amount.num }{ val.amount.num ? '笔' : '' } </View>
+                < /View>}
+            {
+              JSON.stringify(val.borrow) !== '{}' && <View className='box-height' >
+                <View className='buled' > { val.borrow.borrow } < /View>
+                  < /View>}
+                  < /View>}
+                  < /View>
+                ))
+            }
             </View>
+            ))
+          }
           </View>
+          {/* 右边 */ }
+          <View className='box-scroll' >
+            {
+              tebArr.map(v => (
+                <View className= 'box-right' >
+                {
+                  v.list.map(val => (
+                    <View className= 'border' >
+                    { val.default && <View className='box-list-default'> { val.name } < /View>}
+                      {/* {!val.default && !val.type && <View className='box-height'></View>} */ }
+                      {
+                      val.type && <View>
+                        {
+                          val.type.hour && v.type.hour ?
+                            <View className='box-list-bao'>
+                              <View>{ val.type.hour.work_time }{ val.type.hour.work_time || '0' ? '个工' : '' } < /View>
+                              < View > { val.type.hour.over_time }{ val.type.hour.over_time || '0' ? '小时' : '' } < /View>
+                              < /View> :
+                              < View > {
+                                v.type.hour && <View className='box-list-bao'> </View>}</View >
+                        }
+                        {
+                      val.type.work && v.type.work ?
+                        <View className='box-list-bao'>
+                          <View>{ val.type.work.work_time }{ val.type.work.work_time || '0' ? '个工' : '' } < /View>
+                          < View > { val.type.work.over_time }{ val.type.work.over_time || '0' ? '小时' : '' } < /View>
+                          < /View> :
+                          < View > {
+                            v.type.work && <View className='box-list-bao'> </View>}</View >
+                        }
+                        {
+                      val.type.amount && v.type.amount ?
+                        <View className='box-height'>
+                          <View>{ val.type.amount.num }{ val.type.amount.num ? '笔' : '' } < /View>
+                          < /View> :
+                          < View > {
+                            v.type.amount && <View className='box-list-bao'> </View>}</View >
+                        }
+                        {
+                      val.type.borrow && v.type.borrow ?
+                        <View className='box-height'>
+                          <View className='buled'> { val.type.borrow.borrow } < /View>
+                            < /View> :
+                            < View > {
+                              v.type.borrow && <View className='box-list-bao'> </View>}</View >
+                        }
+                            < /View>}
+                      {!val.type && v.type.hour && <View className='box-list-bao' > </View>}
+                      {!val.type && v.type.work && <View className='box-list-bao' > </View>}
+                      {!val.type && v.type.amount && <View className='box-list-bao' > </View>}
+                      {!val.type && v.type.borrow && <View className='box-list-bao' > </View>}
+                    < /View>
+                  ))
+            }
+            < /View>
+              ))
         }
+        </View>
+          < /View>
+      }
       </View>
       {
-        !busy && tebArr.length <= 1 && <View className='noData'>暂无数据哦～</View>
+        !busy && tebArr.length <= 1 && <View className='noData' > 暂无数据哦～</View>
       }
-    </View>
+      </View>
   )
-}
+    }
 
-Share.config = {
-  navigationBarTitleText: '考勤表',
-} as Config
+    Share.config = {
+      navigationBarTitleText: '考勤表',
+    } as Config
