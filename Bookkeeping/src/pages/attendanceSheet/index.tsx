@@ -778,7 +778,7 @@ export default function AttendanceSheet() {
             console.log(workDataSum,'workDataSum');
             for (let o = 0; o < workDataSum.length; o++) {
               workWorkNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.work_time))), 2)
-              workOverNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
+              workOverNum = formatFloatItme((workOverNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
               // workWorkNum += Number(toFixedNum(workDataSum[o].total.work_time));
               // workOverNum += Number(toFixedNum(workDataSum[o].total.over_time));
             }
