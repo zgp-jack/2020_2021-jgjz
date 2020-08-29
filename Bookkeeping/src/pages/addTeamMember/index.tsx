@@ -278,7 +278,7 @@ export default function AddTeamMember() {
       <View id='box'>
         {data && data.length > 0 && data.map((val, i) => (
           <View key={i + i}>
-            <View className='list-title'>{val.name_py}</View>
+            <View className='list-title'>{(val.name_py&&val.name_py.toUpperCase())||''}</View>
             {val.list.map((v => (
               <View className='list-flex-test' onClick={() => handleForeman(val.name_py, v)}>
                 {type !== '2' &&

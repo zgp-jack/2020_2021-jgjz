@@ -27,6 +27,8 @@ export const Tips: string = 'tips'
 export const Res:string = 'res';
 // 进入分享考勤表
 export const IsShare:string = 'IsShare';
+// 不请求
+export const NoRequest:string = 'NOREQUSET';
 
 // 是否是小程序跳转过来的
 export const IsJump:string = 'IsJump';
