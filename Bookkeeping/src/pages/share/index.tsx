@@ -546,8 +546,10 @@ export default function Share() {
             hourData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
-                newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
+                newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))), 2)
+                newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)), 2)
+                // newArr[result].total.over_time = Number(toFixedFnNum(newArr[result].total.over_time)) + Number(toFixedFnNum(el.total.over_time))
+                // newArr[result].total.work_time = Number(toFixedFnNum(newArr[result].total.work_time)) + Number(toFixedFnNum(el.total.work_time))
               } else {
                 newArr.push(el)
               }
@@ -571,7 +573,8 @@ export default function Share() {
             borrowData.forEach((el: any) => {
               const result = newArr.findIndex((ol: any) => { return el.date_num === ol.date_num })
               if (result !== -1) {
-                newArr[result].total.money = Number(toFixedFn(newArr[result].total.money)) + Number(toFixedFn(el.total.money))
+                newArr[result].total.money = formatFloatItme(((toFixedNum(newArr[result].total.money)) + (toFixedNum(el.total.money))), 2)
+                // newArr[result].total.money = Number(toFixedFn(newArr[result].total.money)) + Number(toFixedFn(el.total.money))
               } else {
                 newArr.push(el)
               }
@@ -585,6 +588,8 @@ export default function Share() {
               if (result !== -1) {
                 newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))), 2)
                 newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)), 2)
+                // newArr[result].total.over_time = formatFloatItme(((toFixedNum(newArr[result].total.over_time)) + (toFixedNum(el.total.over_time))), 2)
+                // newArr[result].total.work_time = formatFloatItme((toFixedNum(newArr[result].total.work_time)) + (toFixedNum(el.total.work_time)), 2)
               } else {
                 newArr.push(el)
               }
@@ -696,8 +701,10 @@ export default function Share() {
           let hourWorkNum = 0, hourOverNum = 0;
           if (hourDataSum && hourDataSum.length > 0) {
             for (let o = 0; o < hourDataSum.length; o++) {
-              hourWorkNum += Number(toFixedFnNum(hourDataSum[o].total.work_time));
-              hourOverNum += Number(toFixedFnNum(hourDataSum[o].total.over_time));
+              hourWorkNum = formatFloatItme((hourWorkNum + (toFixedNum(hourDataSum[o].total.work_time))), 2)
+              hourOverNum = formatFloatItme((hourOverNum + (toFixedNum(hourDataSum[o].total.over_time))), 2)
+              // hourWorkNum += Number(toFixedFnNum(hourDataSum[o].total.work_time));
+              // hourOverNum += Number(toFixedFnNum(hourDataSum[o].total.over_time));
             }
           }
           // 记工
@@ -705,14 +712,17 @@ export default function Share() {
           if (workDataSum && workDataSum.length > 0) {
             for (let o = 0; o < workDataSum.length; o++) {
               workWorkNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.work_time))), 2)
-              workOverNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
+              workOverNum = formatFloatItme((workOverNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
+              // workWorkNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.work_time))), 2)
+              // workOverNum = formatFloatItme((workWorkNum + (toFixedNum(workDataSum[o].total.over_time))), 2)
             }
           }
           // 借支
           let borrowNum = 0;
           if (borrowDataSum && borrowDataSum.length > 0) {
             for (let o = 0; o < borrowDataSum.length; o++) {
-              borrowNum += Number(toFixedFn(borrowDataSum[o].total.money));
+              borrowNum = formatFloatItme((borrowNum + (toFixedNum(borrowDataSum[o].total.money))), 2)
+              // borrowNum += Number(toFixedFn(borrowDataSum[o].total.money));
             }
           }
           // 等于0就相当于没有记
