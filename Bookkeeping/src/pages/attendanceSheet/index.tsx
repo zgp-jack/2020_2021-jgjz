@@ -1072,6 +1072,16 @@ export default function AttendanceSheet() {
     setProject(false)
     setCreateProjectDisplay(true)
   }
+  // 创建项目
+  const handleOk = () => {
+    if (!model.groupName) {
+      Msg('您还没有填写项目名称');
+      return;
+    }
+    setCreateProjectDisplay(false);
+    setProject(true)
+  }
+
   // 分享
   return (
     <View className='AttendanceSheetContent'>
@@ -1244,7 +1254,7 @@ export default function AttendanceSheet() {
       }
       <CalendarModal display={display} handleClose={handleClose} />
       {/* 创建项目 */}
-      <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={() => { setCreateProjectDisplay(false), setProject(true) }} handleInput={handleInput} />
+      <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={handleOk} handleInput={handleInput} />
       {/* 填写班组 */}
       <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setProject(false), setModel({ groupName: '', teamName: '' }) }} />
     </View>
