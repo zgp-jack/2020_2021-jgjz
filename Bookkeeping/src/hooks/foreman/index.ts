@@ -65,6 +65,12 @@ interface TimeType {
   year: string,
   monent: string,
 }
+interface CalendarType{
+  first: any[],
+  second: any[],
+  third: any[],
+  fourth: any[]
+}
 // 切换类型
 let changeId = 1;
 // 日历
@@ -369,7 +375,16 @@ export default function userForeman() {
   const [cache, setCache] = useState<any>()
   // 班组长id
   const [leader_id, setLeader_id] = useState<string>('')
-  // 日历
+  // 日历数据
+  const [calendar, setCalendar] = useState <CalendarType>({
+    first: [],
+    second: [],
+    third: [],
+    fourth: []
+  })
+  const [swiperMap, setSwiperMap] = useState<string[]>(['first', 'second', 'third', 'fourth']);
+  // 日历索引
+  const [swiperIndex, setSwiperIndex] = useState<number>(1);
   // 设置年月日小于0前面加0
   useEffect(()=>{
     setDel(false)
@@ -457,6 +472,81 @@ export default function userForeman() {
       getList();
     }
   }, [useSelectorItem.workerList])
+  // 获取三个月日历
+  const generateThreeMonths = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean)=>{
+    const calendarData = JSON.parse(JSON.stringify(calendar));
+    const thisKey = swiperMap[swiperIndex];
+    const lastKey = swiperMap[swiperIndex - 1 === -1 ? 3 : swiperIndex - 1];
+    const nextKey = swiperMap[swiperIndex + 1 === 4 ? 0 : swiperIndex + 1];
+    console.log(e,'Z')
+    const time = countMonth(e.getFullYear() + '-' + (e.getMonth () + 1) + '-' + e.getDate());
+    // let year = e.getFullYear() //年
+    // let month = e.getMonth() + 1 //月
+    // let date = e.getDate() // 日
+    console.log(time,'打印')
+    console.log(JSON.parse(time.lastMonth.year))
+    console.log(Number(time.lastMonth.month))
+    let lastMonth = new Date(JSON.parse(time.lastMonth.year)+'-'+ (time.lastMonth.month)+'-'+ 1);
+    let nextMonth = new Date(JSON.parse(time.nextMonth.year)+'-'+(time.nextMonth.month)+'-'+ 1);
+    console.log(lastMonth,'lastMonth');
+    console.log(nextMonth,'nextMonth')
+    delete calendarData[lastKey]
+    calendarData[lastKey] = getMonthDaysCurrent(lastMonth, val, ids, typeId, cacheDaysArrList, change)
+    delete calendarData[thisKey]
+    calendarData[thisKey] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change);
+    delete calendarData[nextKey]
+    calendarData[nextKey] = getMonthDaysCurrent(nextMonth, val, ids, typeId, cacheDaysArrList, change);
+    console.log(calendarData,'calendar');
+    setCalendar(calendarData)
+  }
+  // 设置日历时间
+  const countMonth = (today)=>{
+    console.log(today,'today')
+    const time = {
+      date: today.split('-')[2],
+      month: today.split('-')[1],
+      year: today.split('-')[0],
+    }
+    let lastMonth = {
+      month: formatMonth(parseInt(time.month) - 1),
+      year:'',
+      num:31
+    };
+    let thisMonth = {
+      year:time.year,
+      month: time.month,
+      num: new Date(time.year, time.month, 0).getDate()
+    }
+    let nextMonth = {
+      month: formatMonth(parseInt(time.month) + 1),
+      year: '',
+      num: 31
+    } 
+    lastMonth.year = parseInt(time.month) === 1 && parseInt(lastMonth.month) === 12
+      ? `${parseInt(time.year) - 1}`
+      : time.year + '';
+    lastMonth.num = new Date(Number(lastMonth.year), Number(lastMonth.month), 0).getDate();
+    nextMonth.year = parseInt(time.month) === 12 && parseInt(nextMonth.month) === 1
+      ? `${parseInt(time.year) + 1}`
+      : time.year + ''
+    nextMonth.num = new Date(Number(nextMonth.year), Number(nextMonth.month), 0).getDate();
+    return {
+      lastMonth,
+      thisMonth,
+      nextMonth
+    }
+  }
+  // 月份处理
+  const formatMonth = (month)=>{
+    let monthStr = ''
+    if (month > 12 || month < 1) {
+      monthStr = Math.abs(month - 12) + ''
+    } else {
+      monthStr = month + ''
+    }
+    monthStr = `${monthStr.length > 1 ? '' : '0'}${monthStr}`
+    return monthStr
+  }
   // 设置默认数据
   const getList = (businessType?:number)=>{
     isHandleAdd = true;
@@ -534,7 +624,8 @@ export default function userForeman() {
       setTimeArr(timeArr);
       setAddWorkArr(addWorkArr)
       // 日历默认今天
-      getMonthDaysCurrent(new Date(), [dayObj]);
+      generateThreeMonths(new Date(today), [dayObj])
+      // getMonthDaysCurrent(new Date(), [dayObj]);
       // 设置单位
       for(let i =0;i<company.length;i++){
         company[i].click = false
@@ -684,10 +775,11 @@ export default function userForeman() {
                   }
                 }
                 setcacheDays(dateItem);
-                getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+                // getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+                generateThreeMonths(new Date(), [dayObj], '', '', dateItem);
               }else{
                 setcacheDays([]);
-                getMonthDaysCurrent(new Date(), [dayObj], '', '', []);
+                generateThreeMonths(new Date(), [dayObj], '', '', []);
               }
             }
             console.log(workArr,'workArrworkArr')
@@ -773,7 +865,7 @@ export default function userForeman() {
                 }
               }
               setcacheDays(dateItem);
-              getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+              generateThreeMonths(new Date(), [dayObj], '', '', dateItem);
             }
             setProjectId(res.data.latest_group_info.id)
             setGroupInfo(res.data.latest_group_info.id)
@@ -794,7 +886,7 @@ export default function userForeman() {
           setForemanTitle('')
           setLeader_id('')
           setcacheDays([]);
-          getMonthDaysCurrent(new Date(),'','','',[],true);
+          generateThreeMonths(new Date(),'','','',[],true);
           let type = Taro.getStorageSync(Type);
           // latest_group_workers  上次记工班组中的工人
           // latest_group_workers_has_wage  上次记工班组  中有工资的工人
@@ -968,7 +1060,7 @@ export default function userForeman() {
                 console.log('这么')
                 console.log(dateItem,'dateItemdateItem')
                 setcacheDays(dateItem);
-                getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem,true);
+                generateThreeMonths(new Date(), [dayObj], '', '', dateItem,true);
               }
               console.log('啊啊啊啊啊')
               dispatch(setPhoneList(workList));
@@ -1119,25 +1211,6 @@ export default function userForeman() {
   }
   // 对应月份日期
   const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[],change?:boolean) => {
-    // const groupInfos = JSON.parse(JSON.stringify(groupInfo));
-    // let id;
-    // if (ids) {
-    //   id = ids;
-    // } else {
-    //   id = groupInfos;
-    // }
-    console.log(e,'eeeee')
-    console.log(change,'啊日期难道就看手机看到你撒健康的白金卡')
-    let dataType;
-    if (typeId) {
-      dataType = typeId;
-    } else {
-      recorderTypeArr.item.map((v) => {
-        if (v.click) {
-          dataType = v.id;
-        }
-      })
-    }
     // 获取点击了的数据
     let clickDataArr;
     if (val) {
@@ -1259,7 +1332,6 @@ export default function userForeman() {
         }
       }
     }
-    console.log(List,'lsit');
     if (List.length > 0) {
       List.map(v => {
         calendarDaysArr.map(val => {
@@ -1271,27 +1343,10 @@ export default function userForeman() {
         return v;
       })
     }
-    // 获取项目类型
-    // if (cacheDaysArr.length>0){
-    //   for (let i = 0, len = cacheDaysArr.length;i<len;i++){
-    //     // 判断日历ID与项目ID相同
-    //     if (cacheDaysArr[i] == id && cacheDaysArr[i].dataType == dataType) { 
-    //       if (cacheDaysArr[i].data.length>0){
-    //         cacheDaysArr[i].data.map(v=>{
-    //           calendarDaysArr.map(val => {
-    //             if (v.date == val.date && v.month == val.month && v.year == val.year) {
-    //               val.record = true;
-    //             }
-    //             return val;
-    //           })
-    //           return v;
-    //         })
-    //       }
-    //     }
-    //   }
-    // }
+    console.log(calendarDaysArr,'calendarDaysArrcalendarDaysArr')
     setCalendarDays(calendarDaysArr);
     isChange = false;
+    return calendarDaysArr;
   }
   // 公历转农历函数
   const sloarToLunar = (sy, sm, sd) => {
@@ -1485,7 +1540,7 @@ export default function userForeman() {
             setProjectArr(res.data);
             setProjectId('');
             setGroupInfo('')
-            getMonthDaysCurrent(new Date(), clickDataArr, '')
+            generateThreeMonths(new Date(), clickDataArr, '')
             // bkGetWorkerWage()
             const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
             wageStandardData.work = 0;
@@ -1599,7 +1654,7 @@ export default function userForeman() {
                   bkGetWorkerWage(res.data[0].group_id + ',' + res.data[0].id, '', modales)
                   // getMonthDaysCurrent(new Date());
                   const id = res.data[0].group_id + ',' + res.data[0].id;
-                  getMonthDaysCurrent(new Date(), clickDataArr, id)
+                  generateThreeMonths(new Date(), clickDataArr, id)
                 }
                 return;
               } else if (resData.code === 200 && resData.data.length  == 0){
@@ -1653,7 +1708,7 @@ export default function userForeman() {
                 setClickData(clickDataArr);
                 setModel({ ...modalObj, name, duration, time, details: '' })
                 setProjectArr(res.data);
-                getMonthDaysCurrent(new Date(), clickDataArr, groupInfos)
+                generateThreeMonths(new Date(), clickDataArr, groupInfos)
                 let modales;
                 // const modales = { ...modalObj, name, duration, time };
                 if (isAgain) {
@@ -1729,7 +1784,7 @@ export default function userForeman() {
                   setForemanTitle('');
                   setProjectArr(res.data);
                   const groupInfos = res.data[i].group_id + ',' + res.data[i].id;
-                  getMonthDaysCurrent(new Date(), '', groupInfos);
+                  generateThreeMonths(new Date(), '', groupInfos);
                   return;
                 }
               }
@@ -1749,7 +1804,7 @@ export default function userForeman() {
               setCacheWage(wageStandardData)
               //  清空名字班组长
               setModel({ ...modalObj, name: '', groupName: '', teamName: '', workersWages: '0.00', duration: timeTitle, modalDuration: timeTitle })
-              getMonthDaysCurrent(new Date());
+              generateThreeMonths(new Date());
               setForemanTitle('')
             }
             setProjectArr(res.data);
@@ -1899,7 +1954,7 @@ export default function userForeman() {
                 setClickData(clickDataArr);
                 setModel({ ...modalObj, duration, time, name, details: '' })
                 setProjectArr(res.data);
-                getMonthDaysCurrent(new Date(), clickDataArr, id)
+                generateThreeMonths(new Date(), clickDataArr, id)
                 return;
               } else {
                 const data = JSON.parse(JSON.stringify(timeArr));
@@ -1935,7 +1990,7 @@ export default function userForeman() {
                 setGroupInfo('')
                 setOpenClickTime(clickDataArr)
                 setClickData(clickDataArr);
-                getMonthDaysCurrent(new Date(), clickDataArr)
+                generateThreeMonths(new Date(), clickDataArr)
                 setModel({ ...modalObj, duration, time, name, details: '' })
                 // const data = JSON.parse(JSON.stringify(model));
                 // setModel({ ...data, name });
@@ -2135,7 +2190,7 @@ export default function userForeman() {
           })
           console.log(1111)
           console.log(name,'title')
-          getMonthDaysCurrent(new Date(), clickDataArr, groupInfo, id, cacheDaysArr);
+          generateThreeMonths(new Date(), clickDataArr, groupInfo, id, cacheDaysArr);
           const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
           if (res.data.length > 0) {
             const data = res.data[0];
@@ -2368,7 +2423,7 @@ export default function userForeman() {
                       }];
                       setOpenClickTime(clickDataArr)
                       setClickData(clickDataArr);
-                      getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr );
+                      generateThreeMonths(new Date(), clickDataArr, groupInfos, id, cacheDaysArr );
                     }else{
                       // console.log('没有数据啊啊啊啊 ')
                       setcacheDays([]);
@@ -2384,7 +2439,7 @@ export default function userForeman() {
                       }];
                       setOpenClickTime(clickDataArr)
                       setClickData(clickDataArr);
-                      getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, [], true);
+                      generateThreeMonths(new Date(), clickDataArr, groupInfos, id, [], true);
                     }
                     // 工人
                     if (dateRes.data.worker && dateRes.data.worker.length > 0) {
@@ -3876,9 +3931,9 @@ export default function userForeman() {
     const type = Taro.getStorageSync(Type);
     if (type == 2) {
       if(toDayString){
-        getMonthDaysCurrent(new Date(toDayString));
+        generateThreeMonths(new Date(toDayString));
       }else{
-        getMonthDaysCurrent(new Date());
+        generateThreeMonths(new Date());
       }
       // 把数据存到reducer
       dispatch(setWorker([v]));
@@ -4826,7 +4881,7 @@ export default function userForeman() {
       }
       setrightTime(true);
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
-      getMonthDaysCurrent(date);
+      generateThreeMonths(date);
     } else {
       if(Number(time.year)==nowYear&&Number(time.monent)==nowMon){
         setrightTime(false);
@@ -4843,7 +4898,7 @@ export default function userForeman() {
       }
       setleftTime(true)
       let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
-      getMonthDaysCurrent(date);
+      generateThreeMonths(date);
       return;
     }
   }
@@ -4889,12 +4944,12 @@ export default function userForeman() {
   // 左
   const onScrollToUpper = () => {
     let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
-    getMonthDaysCurrent(date);
+    generateThreeMonths(date);
   }
   // 右
   const onScrollToLower = () => {
     let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
-    getMonthDaysCurrent(date);
+    generateThreeMonths(date);
   }
   // 触摸结束
   const onTouchEnd = (e) => {
@@ -5244,5 +5299,6 @@ export default function userForeman() {
     toDayString,
     isDel,
     changeId,
+    calendar,
   }
 }
