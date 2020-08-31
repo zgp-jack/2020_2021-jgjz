@@ -491,11 +491,11 @@ export default function userForeman() {
     console.log(lastMonth,'lastMonth');
     console.log(nextMonth,'nextMonth')
     delete calendarData[lastKey]
-    calendarData[lastKey] = getMonthDaysCurrent(lastMonth, val, ids, typeId, cacheDaysArrList, change)
+    calendarData[lastKey] = getMonthDaysCurrent(lastMonth, val)
     delete calendarData[thisKey]
-    calendarData[thisKey] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change);
+    calendarData[thisKey] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change, thisKey);
     delete calendarData[nextKey]
-    calendarData[nextKey] = getMonthDaysCurrent(nextMonth, val, ids, typeId, cacheDaysArrList, change);
+    calendarData[nextKey] = getMonthDaysCurrent(nextMonth, val);
     console.log(calendarData,'calendar');
     setCalendar(calendarData)
   }
@@ -504,8 +504,8 @@ export default function userForeman() {
     console.log(today,'today')
     const time = {
       date: today.split('-')[2],
-      month: today.split('-')[1],
-      year: today.split('-')[0],
+      month: addZero(today.split('-')[1]),
+      year: addZero(today.split('-')[0]),
     }
     let lastMonth = {
       month: formatMonth(parseInt(time.month) - 1),
@@ -1210,7 +1210,7 @@ export default function userForeman() {
     return s+'';
   }
   // 对应月份日期
-  const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[],change?:boolean) => {
+  const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean, thisKey?:string) => {
     // 获取点击了的数据
     let clickDataArr;
     if (val) {
@@ -1233,8 +1233,12 @@ export default function userForeman() {
     let firstDay = firstDayDate.getDay() //当月1号对应的星期
     let lastDate = new Date(year, month - 1, days) //当月最后一天日期
     let lastDay = lastDate.getDay() //当月最后一天对应的星期
+    console.log(year,'year');
+    console.log(month,'month')
     // 设置时间
-    setTime({ year, monent: month })
+    if(thisKey){
+      setTime({ year, monent: month })
+    }
     // 上个月显示的天数及日期
     const calendarDaysArr: any = [];
     for (let i = firstDay - 1; i >= 0; i--) {
@@ -5142,6 +5146,19 @@ export default function userForeman() {
       }
     }
   }
+  // 日历滑动
+  const handleSuiper = (e)=>{
+    console.log(e,'eeee');
+    const lastIndex = swiperIndex;
+    const currentIndex = e.detail.current;
+    let flag = false;
+    let change = swiperMap[(lastIndex + 2) % 4];
+    let date = JSON.parse(time.year)+'-'+ addZero(JSON.parse(time.monent))+'-'+ '01';
+    // return;
+    let times = countMonth(date);
+    let key = 'lastMonth';
+    console.log(times,'timestimestimestimes');
+  }
   return {
     model,
     project,
@@ -5300,5 +5317,6 @@ export default function userForeman() {
     isDel,
     changeId,
     calendar,
+    handleSuiper,
   }
 }

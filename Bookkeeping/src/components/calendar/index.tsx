@@ -36,6 +36,7 @@ interface PROPS {
   rightTime: boolean,
   changeId:number,
   calendar:any,
+  handleSuiper:(e)=>void,
 }
 // interface TimeType{
 //   year:string,
@@ -44,7 +45,7 @@ interface PROPS {
 
 export default function CalendarModal({ 
   // setRecorderType, calendarDays, setCalendarDays, clickData, setClickData,
-  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, maskHandleClose = () => { }, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay, leftTime, rightTime, changeId, calendar}: PROPS) {
+  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, maskHandleClose = () => { }, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay, leftTime, rightTime, changeId, calendar, handleSuiper}: PROPS) {
   console.log(calendar,'calendar')
   // 星期
   const weeks =[
@@ -68,9 +69,9 @@ export default function CalendarModal({
     }
     return num;
   }
-  const handleSuiper = (e)=>{
-    console.log(e)
-  }
+  // const handleSuiper = (e)=>{
+  //   console.log(e)
+  // }
   return(
     <View className='calendarModal-content'>
     {display &&
