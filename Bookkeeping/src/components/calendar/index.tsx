@@ -37,6 +37,8 @@ interface PROPS {
   changeId:number,
   calendar:any,
   handleSuiper:(e)=>void,
+  swiperIndex:number,
+  calendarState:boolean,
 }
 // interface TimeType{
 //   year:string,
@@ -45,7 +47,7 @@ interface PROPS {
 
 export default function CalendarModal({ 
   // setRecorderType, calendarDays, setCalendarDays, clickData, setClickData,
-  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, maskHandleClose = () => { }, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay, leftTime, rightTime, changeId, calendar, handleSuiper}: PROPS) {
+  display, handleClickCalendar, calendarDays, getMonthDaysCurrent, time, handleCalendar, setModel, model, setTimeData, recorderType, arr, clickData, maskHandleClose = () => { }, handleCalendarClose, handleChangeTime, handleCalendarSub, onScrollToUpper, onScrollToLower, noCalendarDay, leftTime, rightTime, changeId, calendar, handleSuiper, swiperIndex, calendarState}: PROPS) {
   console.log(calendar,'calendar')
   // 星期
   const weeks =[
@@ -145,8 +147,8 @@ export default function CalendarModal({
             </Swiper> */}
               <Swiper
                 className='SwiperBox'
-                circular
-                current={1}
+                circular={calendarState}
+                current={swiperIndex}
                 onChange={handleSuiper}
                 >
                 <SwiperItem>
@@ -230,6 +232,33 @@ export default function CalendarModal({
                     </View>
                   </View>
                 </SwiperItem>
+                <SwiperItem>
+                      <View className='demo-text-3'>
+                        <View className={ios ? 'content-days-ios ' : 'content-days'}>
+                          {calendar.fourth.map((v, i) => (
+                            <View key={i + i}
+                              onClick={() => { handleClickCalendar(v) }}
+                              style={v.record ? { background: 'rgba(240,189,48,0.3)' } : ''}
+                              // className={v.current ? 'content-days-day' :'content-days-day-no'}
+                              className={classnames({
+                                'content-days-day': v.current,
+                                'content-days-day-no': !v.current,
+                                'content-days-day-choice': v.choice,
+                                'content-days-day-click': v.click && !v.up && !v.next,
+                                'content-days-day-click-all': v.click && !v.up && !v.next && v.choice,
+                              })}
+                            >
+                              <View style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#3C3B3B' }) : ''}>{v.date}</View>
+                              <View className='lunarCalendarItem' style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#BABABAFF' }) : ''}>{v.lunarCalendarItem}</View>
+                              <View>
+                                {!v.next && !v.up && !v.stop && !v.click ? <View className='checkBox'></View> : ''}
+                                {!v.next && !v.up && !v.stop && v.click ? <View className='clickCheckBox'></View> : ''}
+                              </View>
+                            </View>
+                          ))}
+                        </View>
+                      </View>
+                    </SwiperItem>
               </Swiper>
           </View>
         </View>
