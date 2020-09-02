@@ -299,9 +299,16 @@ export default function Notepad() {
     // getList();
     // setData([]);
     setIsSheach(true)
+    getList()
     // setIds([]);
     // getList(val)
     // setIsSheach(false)
+  }
+  const handleChange = (e) => {
+    setVal(e)
+    if(e==''){
+      getList();
+    }
   }
   const handleJump = (v:any)=>{
     if (del){
@@ -332,8 +339,9 @@ export default function Notepad() {
           maxLength={10}
           placeholder='快速搜索关键词'
           onClear={handleOnClear}
-          onChange={(e)=>setVal(e)}
+          onChange={handleChange}
           onActionClick={handleSeach}
+          onConfirm={handleSeach}
         />
       </View>
       {/* 内容 */}
