@@ -82,15 +82,18 @@ export default function Feedback() {
     bkAddFeedbackAction(params).then(res=>{
       console.log(res);
       if(res.code === 200){
-        Msg('提交成功，记工记账将因您的意见而变得更好！');
-        setTimeout(()=>{
-          Taro.navigateBack({
-            delta: 1
-          })
-        },1000)
-        setTimeout(() => {
-          isHandleAdd = true;
-        }, 1000)
+        Taro.showModal({
+          content: '提交成功，记工记账将因您的意见而变得更好！',
+          showCancel: false,
+          success: (res) => {
+            if (res.confirm == true) {
+              Taro.navigateBack({
+                delta: 1
+              })
+              isHandleAdd = true;
+            }
+          }
+        })
       }else{
         setTimeout(() => {
           isHandleAdd = true;

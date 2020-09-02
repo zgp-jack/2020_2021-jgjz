@@ -156,3 +156,19 @@
 .at-search-bar::after{
   border-bottom-width:0PX;
 }
+.checkbox-no {
+  height: 23rpx;
+  width: 23rpx;
+  border: 1rpx solid #cccc;
+  margin-top: 45%;
+  margin-right: 20rpx;
+}
+
+.checkbox-click {
+  height: 24rpx;
+  width: 24rpx;
+  margin-top: 45%;
+  margin-right: 20rpx;
+  background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
+  background-size: contain;
+}

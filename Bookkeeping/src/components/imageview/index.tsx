@@ -22,13 +22,13 @@ export default function ImageView({ images, userUploadImg, max, userDelImg, note
         <View className='uploads-img-item' key={index + 'a'} onClick={() => userUploadImg && userUploadImg(index)}>
           <View className='uploads-img-imgbox'>
             <Image className='uploads-item-img' src={item.httpurl} />
+          </View>
             {bool &&
               <View
                 className='uploads-img-del'
                 onClick={(e) => { e.stopPropagation(); userDelImg && userDelImg(index) }}>
                 {/* <Text className='at-icon-trash'></Text> */}
               </View>}
-          </View>
         </View>
       ))}
       {/* 图片新增按钮展示 */}

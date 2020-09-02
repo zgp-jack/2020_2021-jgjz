@@ -263,6 +263,7 @@
   font-size: 28rpx;
   height: 100%;
   line-height: 118rpx;
+  display: flex;
 }
 .noData-box{
   height: calc(100vh - 253rpx);
@@ -347,4 +348,20 @@
   border-radius: 5rpx;
   margin: 0 auto;
   margin-top: 33rpx;
+}
+.checkbox-no {
+  height: 23rpx;
+  width: 23rpx;
+  border: 1rpx solid #cccc;
+  margin-top: 45%;
+  margin-right: 20rpx;
+}
+
+.checkbox-click {
+  height: 24rpx;
+  width: 24rpx;
+  margin-top: 45%;
+  margin-right: 20rpx;
+  background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
+  background-size: contain;
 }

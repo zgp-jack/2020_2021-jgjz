@@ -171,6 +171,7 @@
 .checkboxButton-inner{
   padding-left: 30rpx;
   padding-right: 50rpx;
+  display: flex;
 }
 .checkboxButton-right{
   display: flex;
@@ -285,4 +286,18 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   word-break: break-all;
+}
+.checkbox-no{
+  height: 23rpx;
+  width: 23rpx;
+  border: 1rpx solid #cccc;
+  margin-top: 25%;
+}
+
+.checkbox-click {
+  height: 24rpx;
+  width: 24rpx;
+  margin-top: 25%;
+  background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
+  background-size: contain;
 }

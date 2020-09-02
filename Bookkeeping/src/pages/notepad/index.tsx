@@ -196,9 +196,19 @@ export default function Notepad() {
       })
       return v;
     })
+    let state = true;
+    dataItem.map((v) => {
+      v.list.map(val => {
+        if(!val.click){
+          state = false
+        }
+        return val;
+      })
+      return v;
+    })
+    setSelectAll(state)
     dispatch(setNotepad({code:200,data:dataItem,msg:'ok'}))
     setData(dataItem)
-    console.log(item,'item')
     setIds(item);
   }
   // 删除
@@ -374,7 +384,15 @@ export default function Notepad() {
                 </View>
                 <View className='title'>
                   <View className='footerTime'>{values.newTime}</View>
-                  <View>{del && <Checkbox checked={values.click} value={values.click} onClick={(e) => { e.stopPropagation(); handleCheckbox(values) }} className='checkboxButton-checkbox' color='#0099FF' />}</View>
+                  <View>
+                  {del && 
+                  // <Checkbox checked={values.click} value={values.click} onClick={(e) => { e.stopPropagation(); handleCheckbox(values) }} className='checkboxButton-checkbox' color='#0099FF' />
+                  <View>
+                    {!values.click &&<View className='checkbox-no'></View>}
+                    {values.click && <View className='checkbox-click'></View>}
+                  </View>
+                }
+                  </View>
                 </View>
               </View>
             ))}
@@ -389,7 +407,10 @@ export default function Notepad() {
       {/* 多选按钮 */}
       {!busy && del && <View className='checkboxButton'>
         <View className='checkboxButton-box'>
-            <View className='checkboxButton-inner' onClick={handleAllCheckbox}><Checkbox value='' checked={selectAll} className='checkboxButton-checkbox' color='#0099FF'/>全选</View>
+            <View className='checkboxButton-inner' onClick={handleAllCheckbox}>
+              {/* <Checkbox value='' checked={selectAll} className='checkboxButton-checkbox' color='#0099FF'/> */}
+              {selectAll ? <View className='checkbox-click'></View> : <View className='checkbox-no'></View> }<View>全选</View>
+            </View>
           <View className='checkboxButton-right'>
               <View className='checkboxButton-del' onClick={bkDeleteNotePad}>批量删除</View>
             <View className='checkboxButton-close' onClick={handleClose}>取消</View>

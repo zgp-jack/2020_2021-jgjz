@@ -225,6 +225,18 @@ export default function FlowingWater() {
         }
       }
     }
+    let state = true;
+    item.map((v) => {
+      v.arr.map(val => {
+        if (!val.checkClick) {
+          state = false
+        }
+        return val;
+      })
+      return v;
+    })
+    console.log(state,'state')
+    setAllcheck(state);
     dispatch(setFlowingWater(item))
     setData({item})
   }
@@ -630,7 +642,10 @@ export default function FlowingWater() {
                     >
                     <View key={val.id} className='content-list-subclass' onClick={(e)=>handleJump(e,v,val)}>
                       <View className='content-list-subclass-left'>
-                            {isCheckOut && <View className='checkboxitem'><Checkbox checked={val.checkClick} className='checkbox' color='#0099FF' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /></View>}
+                            {isCheckOut && <View className='checkboxitem'>
+                              {/* <Checkbox checked={val.checkClick} className='checkbox' color='#0099FF' onClick={(e) => { e.stopPropagation(); handleCheckbox(val) }} value={v.checkClick} /> */}
+                              <View className={val.checkClick ? 'checkbox-click' : 'checkbox-no '} onClick={(e) => { e.stopPropagation(); handleCheckbox(val)}}></View>
+                              </View>}
                         {identity == 1?
                         <View className=''>
                           <View>{val.workername || '-'} {(val.note || (val.img_url && val.img_url.length>0))&&<Text className='icon leader-icon'>备</Text>}</View>
@@ -679,7 +694,11 @@ export default function FlowingWater() {
       }
       {!busy &&isCheckOut && 
       <View className='footer-box'>
-          <View className='footer-box-left' onClick={handleAllCheck}><Checkbox className='checkbox' checked={allcheck} value='' color='#0099FF'/>全选</View>
+          <View className='footer-box-left' onClick={handleAllCheck}>
+            {/* <Checkbox className='checkbox' checked={allcheck} value='' color='#0099FF'/> */}
+            <View className={allcheck ? 'checkbox-click' : 'checkbox-no '}></View>
+            全选
+          </View>
         <View className='footer-box-flex'>
           <View className='allDel' onClick={handleAllDel}>批量删除</View>
           <View className='close' onClick={()=>handleCheckboxBtn(1)}>取消</View>
