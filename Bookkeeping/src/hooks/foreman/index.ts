@@ -82,6 +82,10 @@ let noData = false;
 let testItem = false;
 // 今天
 let toDate = '';
+// 日历是否滑动
+let calendarState = true;
+// 点击不滑动
+let noSlide = false;
 export default function userForeman() {
   // const router: Taro.RouterInfo = useRouter();
   // const { stateType } = router.params;
@@ -310,7 +314,7 @@ export default function userForeman() {
   const [endTime, setEndTime] = useState<number>();
   const [startTime, setStartTime] = useState<number>()
   // 日历状态
-  const [ calendarState ,setCalendarState] = useState<boolean>(true)
+  // const [ calendarState ,setCalendarState] = useState<boolean>(true)
   // 日历
   const [calendarModalDisplay, setCalendarModalDisplay] = useState<boolean>(false)
   // 获取当月天数
@@ -513,7 +517,11 @@ export default function userForeman() {
     // 上一个
     delete calendarData['third']
     calendarData['third'] = getMonthDaysCurrent(lastMonth, val);
-    setCalendarState(false)
+    // setCalendarState(false)
+    let data = swiperMap.indexOf('fourth');
+    console.log(swiperMap['third'],'thirdthirdthirdthird')
+    setSwiperIndex(data);
+    calendarState = false;
     setCalendar(calendarData)
   }
   // 设置日历时间
@@ -1270,6 +1278,8 @@ export default function userForeman() {
   }
   // 对应月份日期
   const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean, thisKey?:string) => {
+    console.log(e,'对应月份')
+    console.log(e.getMonth(),' e.getMonth()')
     // 获取点击了的数据
     let clickDataArr;
     if (val) {
@@ -1282,7 +1292,6 @@ export default function userForeman() {
     if (useSelectorItem.clickTIme.length > 0) {
       data = useSelectorItem.clickTIme;
     }
-    console.log(e,'eeeeee');
     // const data = JSON.parse(JSON.stringify(reduxTime));
     let year = e.getFullYear() //年
     let month = e.getMonth() + 1 //月
@@ -1293,10 +1302,10 @@ export default function userForeman() {
     let firstDay = firstDayDate.getDay() //当月1号对应的星期
     let lastDate = new Date(year, month - 1, days) //当月最后一天日期
     let lastDay = lastDate.getDay() //当月最后一天对应的星期
-    console.log(year,'year');
-    console.log(month,'month')
+    console.log(month,'month111111111')
     // 设置时间
     if(thisKey){
+      console.log(month,'month看见巴萨就快点把手机卡百度空间啊吧')
       setTimeDate({ year, monent: month })
       setTime({ year, monent: month })
     }
@@ -1422,7 +1431,6 @@ export default function userForeman() {
   const sloarToLunar = (sy, sm, sd) => {
     // 输入的月份减1处理
     sm -= 1;
-
     // 计算与公历基准的相差天数
     // Date.UTC()返回的是距离公历1970年1月1日的毫秒数,传入的月份需要减1
     let daySpan = (Date.UTC(sy, sm, sd) - Date.UTC(1949, 0, 29)) / (24 * 60 * 60 * 1000) + 1;
@@ -4948,13 +4956,43 @@ export default function userForeman() {
       setIsdisable(false)
     },100);
   }
+  // 日历获取上下时间
+  const getThreeMonths = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean)=>{
+    const calendarData = JSON.parse(JSON.stringify(calendar));
+    // const thisKey = swiperMap[swiperIndex];
+    // const lastKey = swiperMap[swiperIndex - 1 === -1 ? 3 : swiperIndex - 1];
+    // const nextKey = swiperMap[swiperIndex + 1 === 4 ? 0 : swiperIndex + 1];
+    const time = countMonth(e.getFullYear() + '-' + (e.getMonth() + 1) + '-' + e.getDate());
+    let lastMonth = new Date(JSON.parse(time.lastMonth.year) + '-' + (time.lastMonth.month) + '-' + 1);
+    let nextMonth = new Date(JSON.parse(time.nextMonth.year) + '-' + (time.nextMonth.month) + '-' + 1);
+    delete calendarData['first']
+    calendarData['first'] = [];
+    delete calendarData['second']
+    calendarData['second'] = getMonthDaysCurrent(lastMonth)
+    delete calendarData['third']
+    calendarData['third'] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change, '1');
+    // 不设置下一页
+    delete calendarData['fourth']
+    calendarData['fourth'] = getMonthDaysCurrent(nextMonth);
+    console.log(calendarData,'三大把大鸡吧快')
+    let data = swiperMap.indexOf('third');
+    console.log(swiperMap['third'],'thirdthirdthirdthird')
+    setSwiperIndex(data);
+    calendarState = true;
+    setCalendar(calendarData);
+    // setTimeout(()=>{noSlide = false},0)
+  }
   // 日历切换时间
   const handleChangeTime = (type: number) => {
     const nowYear = Number(toDayString.split('-')[0]);
     const nowMon = Number(toDayString.split('-')[1])
-    setCalendarState(true)
+    const toTears = new Date(toDate).getFullYear();
+    const toMonths = new Date(toDate).getMonth() + 1;
+    // setCalendarState(true)
+    calendarState = true;
     console.log(time,'timessssssssssss')
     if (type === 0) {
+        noSlide = true;
       if(Number(time.year)==(nowYear-1)&&Number(time.monent)==1){
         setleftTime(false);
         return;
@@ -4963,8 +5001,15 @@ export default function userForeman() {
         setleftTime(false);
       }
       setrightTime(true);
-      let date = new Date(Number(time.year), Number(time.monent) - 2, 1)
-      generateThreeMonths(date);
+      // console.log(Number(time.monent) - 2,'Number(time.monent) - 2')
+      if ((Number(time.year) == toTears && (Number(time.monent) - 1) !== toMonths) || (Number(time.year) !== toTears && (Number(time.monent) - 1) !== toMonths) ){
+        let date = new Date(Number(time.year), Number(time.monent) - 2, 1)
+        console.log(Number(time.monent) - 2,'Number(time.monent) - 2')
+        getThreeMonths(date);
+      }else{
+        let date = new Date(Number(time.year), Number(time.monent) - 2, 1)
+        generateThreeMonths(date);
+      }
     } else {
       if(Number(time.year)==nowYear&&Number(time.monent)==nowMon){
         setrightTime(false);
@@ -4980,8 +5025,16 @@ export default function userForeman() {
         }
       }
       setleftTime(true)
-      let date = new Date(Number(time.year), Number(time.monent), 1)
-      generateThreeMonths(date);
+      if ((Number(time.year) == toTears && (Number(time.monent) + 1) !== toMonths) || (Number(time.year) !== toTears && (Number(time.monent) + 1) !== toMonths)) {
+        let date = new Date(Number(time.year), Number(time.monent), 1)
+        getThreeMonths(date);
+      } else {
+        console.log(3123123123)
+        let date = new Date(Number(time.year), Number(time.monent), 1)
+        generateThreeMonths(date);
+      }
+      // let date = new Date(Number(time.year), Number(time.monent), 1)
+      // generateThreeMonths(date);
       return;
     }
   }
@@ -5227,6 +5280,8 @@ export default function userForeman() {
   }
   // 日历滑动
   const handleSuiper = (e)=>{
+    if(noSlide)return;
+    console.log('滑动')
     // setCalendarState(true)
     // if(testItem)return;
     const calendarData = JSON.parse(JSON.stringify(calendar));
@@ -5242,11 +5297,11 @@ export default function userForeman() {
     //     suiperState = false;
     //   }
     // }
-    // for (let i = 0; i < first.length;i++){
-    //   if (first[i].isMonth && !first[i].next && !first[i].up && e.detail.current == 3 ) {
-    //     suiperState = false;
-    //   }
-    // }
+    for (let i = 0; i < first.length;i++){
+      if (first[i].isMonth && !first[i].next && !first[i].up && e.detail.current == 0 ) {
+        suiperState = false;
+      }
+    }
     for (let i = 0; i < second.length;i++){
       if (second[i].isMonth && !second[i].next && !second[i].up && e.detail.current == 1 ) {
         suiperState = false;
@@ -5262,7 +5317,8 @@ export default function userForeman() {
         suiperState = false;
       }
     }
-    setCalendarState(suiperState)
+    // setCalendarState(suiperState)
+    calendarState = suiperState;
     if (!suiperState){
       generateThreeMonths(new Date(toDate))
       // return;
@@ -5305,82 +5361,21 @@ export default function userForeman() {
       year,
       monent: month,
     })
-    // let suiperState = true, list = [];
-    // for (let i = 0; i < first.length; i++) {
-    //   if (first[i].year == time.year && first[i].month == time.monent && !first[i].next && !first[i].up) {
-    //     suiperState = false
-    //   }
-    // }
-    // // for (let i = 0; i < second.length;i++){
-    // //   if (second[i].year == time.year && second[i].month == time.monent && !second[i].next && !second[i].up) {
-    // //     suiperState = false;
-    // //     list = second;
-    // //   }
-    // // }
-    // for (let i = 0; i < third.length; i++) {
-    //   if (third[i].year == time.year && third[i].month == time.monent && !third[i].next && !third[i].up) {
-    //     suiperState = false;
-    //     list = second;
-    //   }
-    // }
-    // // for (let i = 0; i < fourth.length;i++){
-    // //   if (fourth[i].year == time.year && fourth[i].month == time.monent && !fourth[i].next && !fourth[i].up) {
-    // //     suiperState = false;
-    // //     list = second;
-    // //   }
-    // // }
-    // console.log(suiperState, 'suiperState')
-    // setCalendarState(suiperState)
-    // console.log(calendarData)
-    // if (!suiperState) {
-    //   // const nowYear = Number(toDayString.split('-')[0]);
-    //   // const nowMon = Number(toDayString.split('-')[1])
-    //   // const time = countMonth(nowYear + '-' + addZero(nowMon) +'-' + '01');
-    //   // console.log(time,'timetimetimetime')
-    //   // const time = {
-    //   //   date: toDayString.split('-')[2],
-    //   //   month: addZero(toDayString.split('-')[1]),
-    //   //   year: addZero(toDayString.split('-')[0]),
-    //   // }
-    //   const time = countMonth(toDayString);
-    //   console.log(time,'timeenjkandjksn')
-    //   calendarData.first = getMonthDaysCurrent(new Date(toDayString));
-    //   calendarData.second = getMonthDaysCurrent(new Date(toDayString));
-    //   calendarData.third = getMonthDaysCurrent(new Date(JSON.parse(time.lastMonth.year)+'-'+ (time.lastMonth.month)+'-'+ 1));
-    //   calendarData.fourth = getMonthDaysCurrent(new Date(toDayString));
-    //   setSwiperIndex(3);
-    //   setCalendar(calendarData)
-    //   // generateThreeMonths(new Date(toDayString))
-    //   // calendarData.fourth = list;
-    //   testItem = true;
-    //   return;
-    // }
     if (toDayString.indexOf(date) !== -1) {
       day = toDayString.slice(-2)
     }
     const timeItem = countMonth((year + '-' + month+'-'+'01'));
     calendarData[change] = null
     calendarData[change] = getMonthDaysCurrent(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month)+'-'+'01'));
-    // 获取今天
-    // let calendarState ;
-    // const data = calendar.second;
-    // for(let i =0;i<data.length;i++){
-    //   if (time.year == data[i].year && time.monent == data[i].month && !data[i].next && !data[i].up ){
-    //     calendarState = true;
-    //   }
-    //   calendar.first=[];
-    //   calendar.fourth = [];
-    //   calendar.third=[];
-    //   return;
-    // }
-    // setCalendarState(calendarState)
     setCalendar(calendarData)
+    console.log(currentIndex,'currentIndex')
     setSwiperIndex(currentIndex)
-    if (!suiperState) {
-      generateThreeMonths(new Date(toDate))
-      // return;
-    }
+    // if (!suiperState) {
+    //   generateThreeMonths(new Date(toDate))
+    // }
   }
+  console.log(calendarState,'setCalendarStatesetCalendarState')
+  console.log(swiperIndex,'swiperIndex')
   return {
     model,
     project,
