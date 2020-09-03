@@ -84,10 +84,15 @@
   margin-top: 18rpx;
   margin-bottom: 18rpx;
 }
-
+.publish-recruit-card-red {
+  position: relative;
+  background-color: white;
+  border: 1rpx solid red;
+}
 .publish-recruit-card {
   position: relative;
   background-color: white;
+  // border: 1rpx solid red;
 }
 .publish-recruit-card-money{
   position: relative;
@@ -111,6 +116,21 @@
   line-height: 125rpx;
   font-size: 30rpx;
 
+  &::after {
+    content: '.';
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    height: 0;
+  }
+}
+.pulish-list-title-red {
+  width: 180rpx;
+  display: block;
+  text-align: justify;
+  line-height: 125rpx;
+  font-size: 30rpx;
+  color: red;
   &::after {
     content: '.';
     width: 100%;
