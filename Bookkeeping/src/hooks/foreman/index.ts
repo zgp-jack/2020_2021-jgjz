@@ -486,6 +486,7 @@ export default function userForeman() {
   }, [useSelectorItem.workerList])
   // 获取三个月日历
   const generateThreeMonths = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean)=>{
+    console.log(e,'获取日历')
     // 只需要设置这个月之前的，因为不能选择今天之后的
     // 这个月就是最后一个
     const calendarData = JSON.parse(JSON.stringify(calendar));
@@ -493,14 +494,15 @@ export default function userForeman() {
     const lastKey = swiperMap[swiperIndex - 1 === -1 ? 3 : swiperIndex - 1];
     const nextKey = swiperMap[swiperIndex + 1 === 4 ? 0 : swiperIndex + 1];
     const time = countMonth(e.getFullYear() + '-' + (e.getMonth () + 1) + '-' + e.getDate());
+    console.log(time,'timeaaaa')
     // let year = e.getFullYear() //年
     // let month = e.getMonth() + 1 //月
     // let date = e.getDate() // 日
     console.log(time,'打印')
     console.log(JSON.parse(time.lastMonth.year))
     console.log(Number(time.lastMonth.month))
-    let lastMonth = new Date(JSON.parse(time.lastMonth.year)+'-'+ (time.lastMonth.month)+'-'+ 1);
-    let nextMonth = new Date(JSON.parse(time.nextMonth.year)+'-'+(time.nextMonth.month)+'-'+ 1);
+    let lastMonth = new Date(JSON.parse(time.lastMonth.year)+'-'+ (time.lastMonth.month)+'-'+ '01');
+    let nextMonth = new Date(JSON.parse(time.nextMonth.year)+'-'+(time.nextMonth.month)+'-'+ '01');
     // console.log(lastMonth,'lastMonth');
     // console.log(nextMonth,'nextMonth')
     // delete calendarData[lastKey]
@@ -521,6 +523,7 @@ export default function userForeman() {
     let data = swiperMap.indexOf('fourth');
     setSwiperIndex(data);
     calendarState = false;
+    console.log(calendarData['third'], 'calendarDatathird')
     setCalendar(calendarData)
   }
   // 设置日历时间
