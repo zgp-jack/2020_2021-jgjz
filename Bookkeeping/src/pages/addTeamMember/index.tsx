@@ -166,8 +166,17 @@ export default function AddTeamMember() {
     }
     setData(arr);
   }
-  const handleChange = () => {
-
+  const handleOnClear = ()=>{
+    setValData('');
+    const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+    setData(defaultDataArr);
+  }
+  const handleChange = (e) => {
+    if(e==''){
+      const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+      setData(defaultDataArr);
+    }
+    setValData(e);
   }
   const handleLetter = (v) => {
     const query = Taro.createSelectorQuery()                // 创建节点查询器 query
@@ -271,8 +280,10 @@ export default function AddTeamMember() {
           placeholder='请输入名字或手机号码查询'
           showActionButton
           value={valData}
-          onChange={(e) => setValData(e)}
+          onClear={handleOnClear}
+          onChange={handleChange}
           onActionClick={() => onActionClick()}
+          onConfirm={onActionClick}
         />
       </View>
       <View id='box'>
