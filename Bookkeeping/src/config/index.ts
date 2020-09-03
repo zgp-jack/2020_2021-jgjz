@@ -3,12 +3,13 @@
 
 // * 全局请求接口域名
 // * 测试站
-// export const DEVREQUESTURL: string = 'https://miniapi.zhaogong.vrtbbs.com/'
-export const DEVREQUESTURL: string = 'http://miniapi.kkbbi.com/'
+export const DEVREQUESTURL: string = 'https://miniapi.zhaogong.vrtbbs.com/'
+// 预发布
+// export const DEVREQUESTURL: string = 'http://miniapi.kkbbi.com/'
 // * 正式站
 export const PROREQUESTURL: string = 'https://newyupaomini.54xiaoshuo.com/'
 // * 当前测试
-export const REQUESTURL: string = PROREQUESTURL;
+export const REQUESTURL: string = DEVREQUESTURL;
 // * 默认上传图片
 export const UPLOADIMGURL: string = PROREQUESTURL + 'index/upload/'
 // * 阿里云CDN域名

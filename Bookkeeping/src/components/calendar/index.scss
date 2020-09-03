@@ -21,7 +21,7 @@
   border-radius: 10rpx 10rpx 5rpx 5rpx;
   box-shadow: #e7e6e4 0 0 10rpx;
   box-sizing:border-box;
-  height: 1040rpx;
+  // height: 1040rpx;
   border-radius:22rpx 22rpx 0rpx 0rpx;
 }
 
@@ -294,4 +294,7 @@
   background: url(../../assets/images/checkBox.png) no-repeat no-repeat;
   background-size: contain;
   margin-top: 10rpx;
+}
+.SwiperBox{
+  min-height: 720rpx;
 }

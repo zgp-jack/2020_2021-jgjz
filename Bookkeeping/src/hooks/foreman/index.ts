@@ -65,6 +65,12 @@ interface TimeType {
   year: string,
   monent: string,
 }
+interface CalendarType{
+  first: any[],
+  second: any[],
+  third: any[],
+  fourth: any[]
+}
 // 切换类型
 let changeId = 1;
 // 日历
@@ -73,6 +79,13 @@ let isChange = false;
 let isHandleAdd = true;
 let useAdd = true;
 let noData = false;
+let testItem = false;
+// 今天
+let toDate = '';
+// 日历是否滑动
+let calendarState = true;
+// 点击不滑动
+let noSlide = false;
 export default function userForeman() {
   // const router: Taro.RouterInfo = useRouter();
   // const { stateType } = router.params;
@@ -300,7 +313,8 @@ export default function userForeman() {
   // 触摸时间设置
   const [endTime, setEndTime] = useState<number>();
   const [startTime, setStartTime] = useState<number>()
-  // 日历
+  // 日历状态
+  // const [ calendarState ,setCalendarState] = useState<boolean>(true)
   // 日历
   const [calendarModalDisplay, setCalendarModalDisplay] = useState<boolean>(false)
   // 获取当月天数
@@ -355,6 +369,10 @@ export default function userForeman() {
     year: '',
     monent: '',
   })
+  const [timeDate, setTimeDate] = useState<TimeType>({
+    year: '',
+    monent: '',
+  })
   // 设置存redux的日期
   const [reduxTime, setReduxTime] = useState<any[]>([])
   // 工资标准全选
@@ -369,7 +387,16 @@ export default function userForeman() {
   const [cache, setCache] = useState<any>()
   // 班组长id
   const [leader_id, setLeader_id] = useState<string>('')
-  // 日历
+  // 日历数据
+  const [calendar, setCalendar] = useState <CalendarType>({
+    first: [],
+    second: [],
+    third: [],
+    fourth: []
+  })
+  const [swiperMap, setSwiperMap] = useState<string[]>(['first', 'second', 'third', 'fourth']);
+  // 日历索引
+  const [swiperIndex, setSwiperIndex] = useState<number>(3);
   // 设置年月日小于0前面加0
   useEffect(()=>{
     setDel(false)
@@ -457,6 +484,93 @@ export default function userForeman() {
       getList();
     }
   }, [useSelectorItem.workerList])
+  // 获取三个月日历
+  const generateThreeMonths = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean)=>{
+    // 只需要设置这个月之前的，因为不能选择今天之后的
+    // 这个月就是最后一个
+    const calendarData = JSON.parse(JSON.stringify(calendar));
+    const thisKey = swiperMap[swiperIndex];
+    const lastKey = swiperMap[swiperIndex - 1 === -1 ? 3 : swiperIndex - 1];
+    const nextKey = swiperMap[swiperIndex + 1 === 4 ? 0 : swiperIndex + 1];
+    const time = countMonth(e.getFullYear() + '-' + (e.getMonth () + 1) + '-' + e.getDate());
+    // let year = e.getFullYear() //年
+    // let month = e.getMonth() + 1 //月
+    // let date = e.getDate() // 日
+    console.log(time,'打印')
+    console.log(JSON.parse(time.lastMonth.year))
+    console.log(Number(time.lastMonth.month))
+    let lastMonth = new Date(JSON.parse(time.lastMonth.year)+'-'+ (time.lastMonth.month)+'-'+ 1);
+    let nextMonth = new Date(JSON.parse(time.nextMonth.year)+'-'+(time.nextMonth.month)+'-'+ 1);
+    // console.log(lastMonth,'lastMonth');
+    // console.log(nextMonth,'nextMonth')
+    // delete calendarData[lastKey]
+    // calendarData[lastKey] = getMonthDaysCurrent(lastMonth, val)
+    // delete calendarData[thisKey]
+    // calendarData[thisKey] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change, thisKey);
+    // // 不设置下一页
+    // delete calendarData[nextKey]
+    // calendarData[nextKey] = getMonthDaysCurrent(nextMonth, val);
+    // console.log(calendarData,'calendar');
+    // 最后一个
+    delete calendarData['fourth']
+    calendarData['fourth'] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change, thisKey);
+    // 上一个
+    delete calendarData['third']
+    calendarData['third'] = getMonthDaysCurrent(lastMonth, val);
+    // setCalendarState(false)
+    let data = swiperMap.indexOf('fourth');
+    setSwiperIndex(data);
+    calendarState = false;
+    setCalendar(calendarData)
+  }
+  // 设置日历时间
+  const countMonth = (today)=>{
+    console.log(today,'today')
+    const time = {
+      date: today.split('-')[2],
+      month: addZero(today.split('-')[1]),
+      year: addZero(today.split('-')[0]),
+    }
+    let lastMonth = {
+      month: formatMonth(parseInt(time.month) - 1),
+      year:'',
+      num:31
+    };
+    let thisMonth = {
+      year:time.year,
+      month: time.month,
+      num: new Date(time.year, time.month, 0).getDate()
+    }
+    let nextMonth = {
+      month: formatMonth(parseInt(time.month) + 1),
+      year: '',
+      num: 31
+    } 
+    lastMonth.year = parseInt(time.month) === 1 && parseInt(lastMonth.month) === 12
+      ? `${parseInt(time.year) - 1}`
+      : time.year + '';
+    lastMonth.num = new Date(Number(lastMonth.year), Number(lastMonth.month), 0).getDate();
+    nextMonth.year = parseInt(time.month) === 12 && parseInt(nextMonth.month) === 1
+      ? `${parseInt(time.year) + 1}`
+      : time.year + ''
+    nextMonth.num = new Date(Number(nextMonth.year), Number(nextMonth.month), 0).getDate();
+    return {
+      lastMonth,
+      thisMonth,
+      nextMonth
+    }
+  }
+  // 月份处理
+  const formatMonth = (month)=>{
+    let monthStr = ''
+    if (month > 12 || month < 1) {
+      monthStr = Math.abs(month - 12) + ''
+    } else {
+      monthStr = month + ''
+    }
+    monthStr = `${monthStr.length > 1 ? '' : '0'}${monthStr}`
+    return monthStr
+  }
   // 设置默认数据
   const getList = (businessType?:number)=>{
     isHandleAdd = true;
@@ -502,6 +616,7 @@ export default function userForeman() {
       }else{
         today = new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDay();
       }
+      toDate = today;
       // 设置日历
       let dayObj = {
         date: today.split('-')[2],
@@ -534,7 +649,8 @@ export default function userForeman() {
       setTimeArr(timeArr);
       setAddWorkArr(addWorkArr)
       // 日历默认今天
-      getMonthDaysCurrent(new Date(), [dayObj]);
+      generateThreeMonths(new Date(today), [dayObj])
+      // getMonthDaysCurrent(new Date(), [dayObj]);
       // 设置单位
       for(let i =0;i<company.length;i++){
         company[i].click = false
@@ -684,10 +800,11 @@ export default function userForeman() {
                   }
                 }
                 setcacheDays(dateItem);
-                getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+                // getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+                generateThreeMonths(new Date(), [dayObj], '', '', dateItem);
               }else{
                 setcacheDays([]);
-                getMonthDaysCurrent(new Date(), [dayObj], '', '', []);
+                generateThreeMonths(new Date(), [dayObj], '', '', []);
               }
             }
             console.log(workArr,'workArrworkArr')
@@ -773,7 +890,7 @@ export default function userForeman() {
                 }
               }
               setcacheDays(dateItem);
-              getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem);
+              generateThreeMonths(new Date(), [dayObj], '', '', dateItem);
             }
             setProjectId(res.data.latest_group_info.id)
             setGroupInfo(res.data.latest_group_info.id)
@@ -794,7 +911,7 @@ export default function userForeman() {
           setForemanTitle('')
           setLeader_id('')
           setcacheDays([]);
-          getMonthDaysCurrent(new Date(),'','','',[],true);
+          generateThreeMonths(new Date(),'','','',[],true);
           let type = Taro.getStorageSync(Type);
           // latest_group_workers  上次记工班组中的工人
           // latest_group_workers_has_wage  上次记工班组  中有工资的工人
@@ -968,7 +1085,7 @@ export default function userForeman() {
                 console.log('这么')
                 console.log(dateItem,'dateItemdateItem')
                 setcacheDays(dateItem);
-                getMonthDaysCurrent(new Date(), [dayObj], '', '', dateItem,true);
+                generateThreeMonths(new Date(), [dayObj], '', '', dateItem,true);
               }
               console.log('啊啊啊啊啊')
               dispatch(setPhoneList(workList));
@@ -1003,6 +1120,8 @@ export default function userForeman() {
   }
   // 日历点击
   const handleClickCalendar = (v: any) => {
+    const calendarData = JSON.parse(JSON.stringify(calendar));
+    console.log(v,'v');
     const date = v.year + '/' + v.month + '/' + v.date;
     const dates = new Date(date).getTime();
     const newDate = (new Date(toDayString)).valueOf();
@@ -1013,32 +1132,62 @@ export default function userForeman() {
       // isChange = true;
       return;
     }
+    console.log(calendarData,'calendarData')
+    let dataItem,key;
+    for (let i = 0; i < calendarData.first.length;i++){
+      if (calendarData.first[i].year == v.year && calendarData.first[i].month == v.month && !calendarData.first[i].up && !calendarData.first[i].next){
+        dataItem = calendarData.first;
+        key = 'first';
+      }
+    }
+    for (let i = 0; i < calendarData.fourth.length;i++){
+      if (calendarData.fourth[i].year == v.year && calendarData.fourth[i].month == v.month && !calendarData.fourth[i].up && !calendarData.fourth[i].next){
+        dataItem = calendarData.fourth;
+        key = 'fourth';
+      }
+    }
+    for (let i = 0; i < calendarData.second.length;i++){
+      if (calendarData.second[i].year == v.year && calendarData.second[i].month == v.month && !calendarData.second[i].up && !calendarData.second[i].next){
+        dataItem = calendarData.second;
+        key = 'second';
+      }
+    }
+    for (let i = 0; i < calendarData.third.length; i++) {
+      if (calendarData.third[i].year == v.year && calendarData.third[i].month == v.month && !calendarData.third[i].up && !calendarData.third[i].next) {
+        dataItem = calendarData.third;
+        key = 'third';
+      }
+    }
     // setnoCalendarDay(true)
     const clickDataItem = JSON.parse(JSON.stringify(clickData));
     const calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
+    console.log(calendarDaysArr,'calendarDaysArr');
+    console.log(clickDataItem,'clickDataItem')
+    // const dataItem = calendarData.second;
+    console.log(dataItem,'dataItem')
     // 遍历本月的值
-    for (let i = 0; i < calendarDaysArr.length; i++) {
+    for (let i = 0; i < dataItem.length; i++) {
       // 判断是同一天就设置点击
-      if (v.date == calendarDaysArr[i].date && v.month == calendarDaysArr[i].month && v.year == calendarDaysArr[i].year && !v.up && !v.next) {
+      if (v.date == dataItem[i].date && v.month == dataItem[i].month && v.year == dataItem[i].year && !v.up && !v.next) {
         // if (isChange){
         //   console.log(111)
-        //   calendarDaysArr[i].click = false;
+        //   dataItem[i].click = false;
         //   console.log(clickDataItem,'clickDataItem')
         //   setClickData(clickDataItem);
         // }else{
           if (clickDataItem.length > 30) {
-            if (calendarDaysArr[i].click) {
-              calendarDaysArr[i].click = !calendarDaysArr[i].click;
+            if (dataItem[i].click) {
+              dataItem[i].click = !dataItem[i].click;
               // 点击的时候用的
               let data: any[] = [];
               // 判断是true时候删除
-              if (calendarDaysArr[i].click) {
-                data = [...clickDataItem, calendarDaysArr[i]];
+              if (dataItem[i].click) {
+                data = [...clickDataItem, dataItem[i]];
                 // 增加
               } else {
-                // calendarDaysArr.sp
+                // dataItem.sp
                 for (let j = 0; j < clickDataItem.length; j++) {
-                  if (clickDataItem[j].date == calendarDaysArr[i].date && clickDataItem[j].month == calendarDaysArr[i].month && clickDataItem[j].year == calendarDaysArr[i].year) {
+                  if (clickDataItem[j].date == dataItem[i].date && clickDataItem[j].month == dataItem[i].month && clickDataItem[j].year == dataItem[i].year) {
                     clickDataItem.splice(j, 1)
                   }
                 }
@@ -1047,33 +1196,42 @@ export default function userForeman() {
               setClickData(data)
             } else {
               Msg('最多选择31天')
-              calendarDaysArr[i].click = false;
-              console.log(calendarDaysArr,'calendarDaysArr')
+              dataItem[i].click = false;
+              console.log(dataItem,'calendarDaysArr')
+              // calendarData.second = calendarDaysArr;
+              calendarData[key] = dataItem;
+              setCalendar(calendarData)
               setCalendarDays(calendarDaysArr);
               setClickData(clickDataItem)
               return;
             }
           } else {
-            calendarDaysArr[i].click = !calendarDaysArr[i].click;
+            console.log(231321321)
+            dataItem[i].click = !dataItem[i].click;
             // 点击的时候用的
             let data: any[] = [];
             // 判断是true时候删除
-            if (calendarDaysArr[i].click) {
-              data = [...clickDataItem, calendarDaysArr[i]];
+            if (dataItem[i].click) {
+              data = [...clickDataItem, dataItem[i]];
               // 增加
             } else {
-              // calendarDaysArr.sp
+              // dataItem.sp
               for (let j = 0; j < clickDataItem.length; j++) {
-                if (clickDataItem[j].date == calendarDaysArr[i].date && clickDataItem[j].month == calendarDaysArr[i].month && clickDataItem[j].year == calendarDaysArr[i].year) {
+                if (clickDataItem[j].date == dataItem[i].date && clickDataItem[j].month == dataItem[i].month && clickDataItem[j].year == dataItem[i].year) {
                   clickDataItem.splice(j, 1)
                 }
               }
               data = [...clickDataItem];
             }
+            
             setClickData(data)
           // }
         }
-        setCalendarDays(calendarDaysArr);
+        console.log(11111)
+        // calendarData.second = dataItem;
+        calendarData[key] = dataItem;
+        setCalendar(calendarData)
+        setCalendarDays(dataItem);
         return;
         // }
         //就刷新更改
@@ -1118,26 +1276,9 @@ export default function userForeman() {
     return s+'';
   }
   // 对应月份日期
-  const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[],change?:boolean) => {
-    // const groupInfos = JSON.parse(JSON.stringify(groupInfo));
-    // let id;
-    // if (ids) {
-    //   id = ids;
-    // } else {
-    //   id = groupInfos;
-    // }
-    console.log(e,'eeeee')
-    console.log(change,'啊日期难道就看手机看到你撒健康的白金卡')
-    let dataType;
-    if (typeId) {
-      dataType = typeId;
-    } else {
-      recorderTypeArr.item.map((v) => {
-        if (v.click) {
-          dataType = v.id;
-        }
-      })
-    }
+  const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean, thisKey?:string) => {
+    console.log(e,'对应月份')
+    console.log(e.getMonth(),' e.getMonth()')
     // 获取点击了的数据
     let clickDataArr;
     if (val) {
@@ -1160,8 +1301,13 @@ export default function userForeman() {
     let firstDay = firstDayDate.getDay() //当月1号对应的星期
     let lastDate = new Date(year, month - 1, days) //当月最后一天日期
     let lastDay = lastDate.getDay() //当月最后一天对应的星期
+    console.log(month,'month111111111')
     // 设置时间
-    setTime({ year, monent: month })
+    if(thisKey){
+      console.log(month,'month看见巴萨就快点把手机卡百度空间啊吧')
+      setTimeDate({ year, monent: month })
+      setTime({ year, monent: month })
+    }
     // 上个月显示的天数及日期
     const calendarDaysArr: any = [];
     for (let i = firstDay - 1; i >= 0; i--) {
@@ -1186,6 +1332,10 @@ export default function userForeman() {
       const years = new Date().getFullYear();
       const months = new Date().getMonth() + 1;
       const dates = new Date().getDate();
+      // 当月
+      const toTears = new Date(toDate).getFullYear();
+      const toMonths = new Date(toDate).getMonth() + 1;
+      const toDates = new Date(toDate).getDate();
       calendarDaysArr.push({
         'year': year,
         'month': addZero(month),
@@ -1195,6 +1345,7 @@ export default function userForeman() {
         'lunarCalendarItem': lunarCalendarItem.lunarDay,
         'selected': i == date, // 判断当前日期
         'stop': years <= year && ((months == month && dates < i) || months < month),
+        'isMonth': year == toTears && toMonths == Number(month)
       })
     }
     // 下个月显示的天数及日期
@@ -1259,7 +1410,6 @@ export default function userForeman() {
         }
       }
     }
-    console.log(List,'lsit');
     if (List.length > 0) {
       List.map(v => {
         calendarDaysArr.map(val => {
@@ -1271,33 +1421,15 @@ export default function userForeman() {
         return v;
       })
     }
-    // 获取项目类型
-    // if (cacheDaysArr.length>0){
-    //   for (let i = 0, len = cacheDaysArr.length;i<len;i++){
-    //     // 判断日历ID与项目ID相同
-    //     if (cacheDaysArr[i] == id && cacheDaysArr[i].dataType == dataType) { 
-    //       if (cacheDaysArr[i].data.length>0){
-    //         cacheDaysArr[i].data.map(v=>{
-    //           calendarDaysArr.map(val => {
-    //             if (v.date == val.date && v.month == val.month && v.year == val.year) {
-    //               val.record = true;
-    //             }
-    //             return val;
-    //           })
-    //           return v;
-    //         })
-    //       }
-    //     }
-    //   }
-    // }
+    console.log(calendarDaysArr,'calendarDaysArrcalendarDaysArr')
     setCalendarDays(calendarDaysArr);
     isChange = false;
+    return calendarDaysArr;
   }
   // 公历转农历函数
   const sloarToLunar = (sy, sm, sd) => {
     // 输入的月份减1处理
     sm -= 1;
-
     // 计算与公历基准的相差天数
     // Date.UTC()返回的是距离公历1970年1月1日的毫秒数,传入的月份需要减1
     let daySpan = (Date.UTC(sy, sm, sd) - Date.UTC(1949, 0, 29)) / (24 * 60 * 60 * 1000) + 1;
@@ -1485,7 +1617,7 @@ export default function userForeman() {
             setProjectArr(res.data);
             setProjectId('');
             setGroupInfo('')
-            getMonthDaysCurrent(new Date(), clickDataArr, '')
+            generateThreeMonths(new Date(), clickDataArr, '')
             // bkGetWorkerWage()
             const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
             wageStandardData.work = 0;
@@ -1599,7 +1731,7 @@ export default function userForeman() {
                   bkGetWorkerWage(res.data[0].group_id + ',' + res.data[0].id, '', modales)
                   // getMonthDaysCurrent(new Date());
                   const id = res.data[0].group_id + ',' + res.data[0].id;
-                  getMonthDaysCurrent(new Date(), clickDataArr, id)
+                  generateThreeMonths(new Date(), clickDataArr, id)
                 }
                 return;
               } else if (resData.code === 200 && resData.data.length  == 0){
@@ -1653,7 +1785,7 @@ export default function userForeman() {
                 setClickData(clickDataArr);
                 setModel({ ...modalObj, name, duration, time, details: '' })
                 setProjectArr(res.data);
-                getMonthDaysCurrent(new Date(), clickDataArr, groupInfos)
+                generateThreeMonths(new Date(), clickDataArr, groupInfos)
                 let modales;
                 // const modales = { ...modalObj, name, duration, time };
                 if (isAgain) {
@@ -1729,7 +1861,7 @@ export default function userForeman() {
                   setForemanTitle('');
                   setProjectArr(res.data);
                   const groupInfos = res.data[i].group_id + ',' + res.data[i].id;
-                  getMonthDaysCurrent(new Date(), '', groupInfos);
+                  generateThreeMonths(new Date(), '', groupInfos);
                   return;
                 }
               }
@@ -1749,7 +1881,7 @@ export default function userForeman() {
               setCacheWage(wageStandardData)
               //  清空名字班组长
               setModel({ ...modalObj, name: '', groupName: '', teamName: '', workersWages: '0.00', duration: timeTitle, modalDuration: timeTitle })
-              getMonthDaysCurrent(new Date());
+              generateThreeMonths(new Date());
               setForemanTitle('')
             }
             setProjectArr(res.data);
@@ -1899,7 +2031,7 @@ export default function userForeman() {
                 setClickData(clickDataArr);
                 setModel({ ...modalObj, duration, time, name, details: '' })
                 setProjectArr(res.data);
-                getMonthDaysCurrent(new Date(), clickDataArr, id)
+                generateThreeMonths(new Date(), clickDataArr, id)
                 return;
               } else {
                 const data = JSON.parse(JSON.stringify(timeArr));
@@ -1935,7 +2067,7 @@ export default function userForeman() {
                 setGroupInfo('')
                 setOpenClickTime(clickDataArr)
                 setClickData(clickDataArr);
-                getMonthDaysCurrent(new Date(), clickDataArr)
+                generateThreeMonths(new Date(), clickDataArr)
                 setModel({ ...modalObj, duration, time, name, details: '' })
                 // const data = JSON.parse(JSON.stringify(model));
                 // setModel({ ...data, name });
@@ -2135,7 +2267,7 @@ export default function userForeman() {
           })
           console.log(1111)
           console.log(name,'title')
-          getMonthDaysCurrent(new Date(), clickDataArr, groupInfo, id, cacheDaysArr);
+          generateThreeMonths(new Date(), clickDataArr, groupInfo, id, cacheDaysArr);
           const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
           if (res.data.length > 0) {
             const data = res.data[0];
@@ -2368,7 +2500,7 @@ export default function userForeman() {
                       }];
                       setOpenClickTime(clickDataArr)
                       setClickData(clickDataArr);
-                      getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, cacheDaysArr );
+                      generateThreeMonths(new Date(), clickDataArr, groupInfos, id, cacheDaysArr );
                     }else{
                       // console.log('没有数据啊啊啊啊 ')
                       setcacheDays([]);
@@ -2384,7 +2516,7 @@ export default function userForeman() {
                       }];
                       setOpenClickTime(clickDataArr)
                       setClickData(clickDataArr);
-                      getMonthDaysCurrent(new Date(), clickDataArr, groupInfos, id, [], true);
+                      generateThreeMonths(new Date(), clickDataArr, groupInfos, id, [], true);
                     }
                     // 工人
                     if (dateRes.data.worker && dateRes.data.worker.length > 0) {
@@ -3876,9 +4008,9 @@ export default function userForeman() {
     const type = Taro.getStorageSync(Type);
     if (type == 2) {
       if(toDayString){
-        getMonthDaysCurrent(new Date(toDayString));
+        generateThreeMonths(new Date(toDayString));
       }else{
-        getMonthDaysCurrent(new Date());
+        generateThreeMonths(new Date());
       }
       // 把数据存到reducer
       dispatch(setWorker([v]));
@@ -4748,6 +4880,8 @@ export default function userForeman() {
     // 确认日历的值
     const data = JSON.parse(JSON.stringify(openClickTime));
     const calendarDaysArr = JSON.parse(JSON.stringify(calendarDays));
+    const calendarData = JSON.parse(JSON.stringify(calendar));
+    // const dataItem = calendarData.second;
     // 遍历本月日历，然后遍历上次点击的日历，判断相同就设置为true
     // for(let j=0;j<data.length;j++){
     //   for (let i = 0; i < calendarDaysArr.length;i++){
@@ -4757,17 +4891,49 @@ export default function userForeman() {
     //       }
     //     }
     //   }
-    for (let i = 0, len = calendarDaysArr.length; i < len; i++) {
-      calendarDaysArr[i].click = false;
+    for (let i = 0, len = calendarData.first.length; i < len; i++) {
+      calendarData.first[i].click = false;
       if (data.length > 0) {
         for (let j = 0, length = data.length; j < length; j++) {
-          if (data[j].date == calendarDaysArr[i].date && data[j].month == calendarDaysArr[i].month && data[j].year == calendarDaysArr[i].year) {
-            calendarDaysArr[i].click = true;
+          if (data[j].date == calendarData.first[i].date && data[j].month == calendarData.first[i].month && data[j].year == calendarData.first[i].year) {
+            calendarData.first[i].click = true;
           }
         }
       }
     }
-    setClickData(data)
+    for (let i = 0, len = calendarData.fourth.length; i < len; i++) {
+      calendarData.fourth[i].click = false;
+      if (data.length > 0) {
+        for (let j = 0, length = data.length; j < length; j++) {
+          if (data[j].date == calendarData.fourth[i].date && data[j].month == calendarData.fourth[i].month && data[j].year == calendarData.fourth[i].year) {
+            calendarData.fourth[i].click = true;
+          }
+        }
+      }
+    }
+    for (let i = 0, len = calendarData.second.length; i < len; i++) {
+      calendarData.second[i].click = false;
+      if (data.length > 0) {
+        for (let j = 0, length = data.length; j < length; j++) {
+          if (data[j].date == calendarData.second[i].date && data[j].month == calendarData.second[i].month && data[j].year == calendarData.second[i].year) {
+            calendarData.second[i].click = true;
+          }
+        }
+      }
+    }
+    for (let i = 0, len = calendarData.third.length; i < len; i++) {
+      calendarData.third[i].click = false;
+      if (data.length > 0) {
+        for (let j = 0, length = data.length; j < length; j++) {
+          if (data[j].date == calendarData.third[i].date && data[j].month == calendarData.third[i].month && data[j].year == calendarData.third[i].year) {
+            calendarData.third[i].click = true;
+          }
+        }
+      }
+    }
+    setClickData(data);
+    // calendarData.second = dataItem;
+    setCalendar(calendarData)
     setCalendarDays(calendarDaysArr)
     let time;
     if (data.length == 1) {
@@ -4784,39 +4950,48 @@ export default function userForeman() {
       time = '共选择' + data.length + '天';
     }
     setModel({ ...model, time: time });
-    // clickDataItem.map((v,i)=>{
-    //   if (data.length==0){
-    //     v.click = false;
-    //   }else{
-    //     data.map(val=>{
-    //       if (v.date ==val.date && v.month ==val.month && v.year ==val.year) {
-    //         // 判断相同就不清楚
-    //         v.click = true;
-    //       }
-    //       return val;
-    //     })
-    //   }
-    //   return v;
-    // })
-    // setClickData(clickDataItem)
-    // 并清空
-    // setTimeData([]);
-    // const calendar = JSON.parse(JSON.stringify(calendarDays));
-    // for(let i=0;i<calendar.length;i++){
-    //   calendar[i].click = false
-    // }
-    // setCalendarDays(calendar);
-    // setClickData([]);
     setCalendarModalDisplay(false);
     setTimeout(() => {
       setIsdisable(false)
     },100);
   }
+  // 日历获取上下时间
+  const getThreeMonths = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean)=>{
+    const calendarData = JSON.parse(JSON.stringify(calendar));
+    // const thisKey = swiperMap[swiperIndex];
+    // const lastKey = swiperMap[swiperIndex - 1 === -1 ? 3 : swiperIndex - 1];
+    // const nextKey = swiperMap[swiperIndex + 1 === 4 ? 0 : swiperIndex + 1];
+    const time = countMonth(e.getFullYear() + '-' + (e.getMonth() + 1) + '-' + e.getDate());
+    let lastMonth = new Date(JSON.parse(time.lastMonth.year) + '-' + (time.lastMonth.month) + '-' + 1);
+    let nextMonth = new Date(JSON.parse(time.nextMonth.year) + '-' + (time.nextMonth.month) + '-' + 1);
+    delete calendarData['first']
+    calendarData['first'] = [];
+    delete calendarData['second']
+    calendarData['second'] = getMonthDaysCurrent(lastMonth)
+    delete calendarData['third']
+    calendarData['third'] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change, '1');
+    // 不设置下一页
+    delete calendarData['fourth']
+    calendarData['fourth'] = getMonthDaysCurrent(nextMonth);
+    console.log(calendarData,'三大把大鸡吧快')
+    let data = swiperMap.indexOf('third');
+    console.log(swiperMap['third'],'thirdthirdthirdthird')
+    setSwiperIndex(data);
+    calendarState = true;
+    setCalendar(calendarData);
+    // setTimeout(()=>{noSlide = false},0)
+  }
   // 日历切换时间
   const handleChangeTime = (type: number) => {
     const nowYear = Number(toDayString.split('-')[0]);
     const nowMon = Number(toDayString.split('-')[1])
+    const toTears = new Date(toDate).getFullYear();
+    const toMonths = new Date(toDate).getMonth() + 1;
+    // setCalendarState(true)
+    calendarState = true;
+    console.log(time,'timessssssssssss')
     if (type === 0) {
+        noSlide = true;
       if(Number(time.year)==(nowYear-1)&&Number(time.monent)==1){
         setleftTime(false);
         return;
@@ -4825,9 +5000,18 @@ export default function userForeman() {
         setleftTime(false);
       }
       setrightTime(true);
-      let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
-      getMonthDaysCurrent(date);
+      // console.log(Number(time.monent) - 2,'Number(time.monent) - 2')
+      if ((Number(time.year) == toTears && (Number(time.monent) - 1) !== toMonths) || (Number(time.year) !== toTears && (Number(time.monent) - 1) !== toMonths) ){
+        let date = new Date(Number(time.year), Number(time.monent) - 2, 1)
+        console.log(Number(time.monent) - 2,'Number(time.monent) - 2')
+        getThreeMonths(date);
+      }else{
+        let date = new Date(Number(time.year), Number(time.monent) - 2, 1)
+        generateThreeMonths(date);
+      }
+      setTimeout(() => { noSlide =false},1000)
     } else {
+      noSlide = true;
       if(Number(time.year)==nowYear&&Number(time.monent)==nowMon){
         setrightTime(false);
         return
@@ -4842,8 +5026,19 @@ export default function userForeman() {
         }
       }
       setleftTime(true)
-      let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
-      getMonthDaysCurrent(date);
+      if ((Number(time.year) == toTears && (Number(time.monent) + 1) !== toMonths) || (Number(time.year) !== toTears && (Number(time.monent) + 1) !== toMonths)) {
+        let date = new Date(Number(time.year), Number(time.monent), 1)
+        getThreeMonths(date);
+      } else {
+        console.log(Number(time.monent),'Number(time.monent')
+        let date = new Date(Number(time.year), Number(time.monent), 1)
+        generateThreeMonths(date);
+      }
+      setTimeout(() => {
+        noSlide = false 
+        }, 1000)
+      // let date = new Date(Number(time.year), Number(time.monent), 1)
+      // generateThreeMonths(date);
       return;
     }
   }
@@ -4889,12 +5084,12 @@ export default function userForeman() {
   // 左
   const onScrollToUpper = () => {
     let date = new Date(JSON.parse(time.year), JSON.parse(time.monent), 1)
-    getMonthDaysCurrent(date);
+    generateThreeMonths(date);
   }
   // 右
   const onScrollToLower = () => {
     let date = new Date(JSON.parse(time.year), JSON.parse(time.monent) - 2, 1)
-    getMonthDaysCurrent(date);
+    generateThreeMonths(date);
   }
   // 触摸结束
   const onTouchEnd = (e) => {
@@ -5087,6 +5282,104 @@ export default function userForeman() {
       }
     }
   }
+  // 日历滑动
+  const handleSuiper = (e)=>{
+    if(noSlide)return;
+    console.log('滑动')
+    // setCalendarState(true)
+    // if(testItem)return;
+    const calendarData = JSON.parse(JSON.stringify(calendar));
+    const first = calendarData.first;
+    const second = calendarData.second;
+    const third = calendarData.third;
+    const fourth = calendarData.fourth;
+    let suiperState = true;
+    console.log(calendarData,'thirdthirdthird')
+    console.log(e,'eeee')
+    // for (let i = 0; i < fourth.length;i++){
+    //   if (fourth[i].year == timeDate.year && fourth[i].month == timeDate.monent && !fourth[i].next && !fourth[i].up && e.detail.current == 3 && fourth[i].isMonth) {
+    //     suiperState = false;
+    //   }
+    // }
+    for (let i = 0; i < first.length;i++){
+      if (first[i].isMonth && !first[i].next && !first[i].up && e.detail.current == 0 ) {
+        suiperState = false;
+      }
+    }
+    for (let i = 0; i < second.length;i++){
+      if (second[i].isMonth && !second[i].next && !second[i].up && e.detail.current == 1 ) {
+        suiperState = false;
+      }
+    }
+    for (let i = 0; i < third.length;i++){
+      if (third[i].isMonth && !third[i].next && !third[i].up && e.detail.current == 2 ) {
+        suiperState = false;
+      }
+    }
+    for (let i = 0; i < fourth.length; i++) {
+      if (fourth[i].isMonth && !fourth[i].next && !fourth[i].up && e.detail.current == 3) {
+        suiperState = false;
+      }
+    }
+    // setCalendarState(suiperState)
+    calendarState = suiperState;
+    if (!suiperState){
+      generateThreeMonths(new Date(toDate))
+      return;
+    }
+    console.log(suiperState,'suiperState')
+    // if(!suiperState){
+    //   delete calendarData['fourth']
+    //   calendarData['fourth'] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change, thisKey);
+    //   // 上一个
+    //   delete calendarData['third']
+    //   calendarData['third'] = getMonthDaysCurrent(lastMonth, val);
+    // }
+    // 判断现在时间是这个月设置数据为最后一个，日历circular设置为false
+    const lastIndex = JSON.parse(JSON.stringify(swiperIndex));
+    const currentIndex = e.detail.current;
+    let flag = false;
+    let change = swiperMap[(lastIndex + 2) % 4];
+    let day = JSON.parse(time.year)+'-'+ addZero(time.monent)+'-'+ '01';
+    // return;
+    let times = countMonth(day);
+    let key = 'lastMonth';
+    if (lastIndex > currentIndex) {
+      lastIndex === 3 && currentIndex === 0
+        ? flag = true
+        : null
+    } else {
+      lastIndex === 0 && currentIndex === 3
+        ? null
+        : flag = true
+    }
+    if (flag) {
+      key = 'nextMonth'
+    }
+    const year = times[key].year
+    const month = addZero(times[key].month)
+    const date = `${year}-${month}`
+    day = '';
+    console.log(month,'month11111走了这里啊')
+    setTime({
+      year,
+      monent: month,
+    })
+    if (toDayString.indexOf(date) !== -1) {
+      day = toDayString.slice(-2)
+    }
+    const timeItem = countMonth((year + '-' + month+'-'+'01'));
+    calendarData[change] = null
+    calendarData[change] = getMonthDaysCurrent(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month)+'-'+'01'));
+    setCalendar(calendarData)
+    console.log(currentIndex,'currentIndex')
+    setSwiperIndex(currentIndex)
+    // if (!suiperState) {
+    //   generateThreeMonths(new Date(toDate))
+    // }
+  }
+  console.log(calendarState,'setCalendarStatesetCalendarState')
+  console.log(swiperIndex,'swiperIndex')
   return {
     model,
     project,
@@ -5244,5 +5537,9 @@ export default function userForeman() {
     toDayString,
     isDel,
     changeId,
+    calendar,
+    handleSuiper,
+    swiperIndex,
+    calendarState,
   }
 }

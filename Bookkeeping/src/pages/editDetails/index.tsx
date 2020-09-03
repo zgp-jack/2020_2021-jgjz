@@ -7,6 +7,7 @@ import WageStandard  from '../../components/wageStandard'
 import Quantities from '../../components/quantities';
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setFlowingWater } from '../../actions/flowingWater';
+import WordsTotal from '../../components/wordstotal'
 import Msg from '../../utils/msg'
 import { IMGCDNURL } from '../../config'
 import WorkingHours from '../../components/workingHours';
@@ -188,6 +189,8 @@ export default function EditDetails() {
   const [clickTime, setClickTime] = useState<any>()
   // 设置光标
   const [autoFocus, setAutoFocus] = useState<boolean>(false)
+  // 备注长度
+  const [num, setNum] = useState<number>(0)
   useEffect(()=>{
     if(id){
       bkBusinessOneAction({ id }).then(res => {
@@ -201,6 +204,7 @@ export default function EditDetails() {
           setImage({ item: res.data.view_images })
           obj.name = (res.data.group_info_name).replace(',','-');
           obj.note = res.data.note;
+          setNum(res.data.note.length||0)
           obj.workername = res.data.workername;
           obj.leaderName = res.data.leader_name;
           // 判断弹框显示
@@ -1234,6 +1238,9 @@ export default function EditDetails() {
     if (type == 'wages' || type == 'borrowing' || type =='money') {
       return dealInputVal(e.detail.value, 14, type,true);
     }
+    if (type == 'note') {
+      setNum(e.detail.value.length);
+    }
     data[type] = e.detail.value;
     setVal({...data});
   }
@@ -1350,7 +1357,6 @@ export default function EditDetails() {
     })
     setCompany(arr)
   }
-  console.log(val,'data')
   // 点击多行
   const handleTextare = () => {
     setAutoFocus(true)
@@ -1657,14 +1663,15 @@ export default function EditDetails() {
       <View className='imageBox'>
         <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
         <View className='clear'></View>
+        <WordsTotal num={num} />
       </View>
       </View>
       </View>
       <View className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'foreman-foot' : 'foreman-footer'}>
       {!isdisable && <CoverView className='footer'><CoverView className='footerBtn' onClick={handlesub}>保存</CoverView></CoverView>}
       </View>
-      <WageStandard maskHandleClose={()=>{}} display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput}/>
-      <WorkOvertime maskHandleClose={()=>{}} display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
+      <WageStandard maskHandleClose={handleWageStandardDisplay} display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput}/>
+      <WorkOvertime maskHandleClose={handleClose} display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}
       {businessType === 2 && type == 2 && <Quantities maskHandleClose={()=>{}} display={quantitiesDisplay} handleClose={() => {setTimeout(() => {setIsdisable(false)});setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />}
