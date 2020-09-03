@@ -519,7 +519,6 @@ export default function userForeman() {
     calendarData['third'] = getMonthDaysCurrent(lastMonth, val);
     // setCalendarState(false)
     let data = swiperMap.indexOf('fourth');
-    console.log(swiperMap['third'],'thirdthirdthirdthird')
     setSwiperIndex(data);
     calendarState = false;
     setCalendar(calendarData)
@@ -5010,7 +5009,9 @@ export default function userForeman() {
         let date = new Date(Number(time.year), Number(time.monent) - 2, 1)
         generateThreeMonths(date);
       }
+      setTimeout(() => { noSlide =false},1000)
     } else {
+      noSlide = true;
       if(Number(time.year)==nowYear&&Number(time.monent)==nowMon){
         setrightTime(false);
         return
@@ -5029,10 +5030,13 @@ export default function userForeman() {
         let date = new Date(Number(time.year), Number(time.monent), 1)
         getThreeMonths(date);
       } else {
-        console.log(3123123123)
+        console.log(Number(time.monent),'Number(time.monent')
         let date = new Date(Number(time.year), Number(time.monent), 1)
         generateThreeMonths(date);
       }
+      setTimeout(() => {
+        noSlide = false 
+        }, 1000)
       // let date = new Date(Number(time.year), Number(time.monent), 1)
       // generateThreeMonths(date);
       return;
@@ -5321,7 +5325,7 @@ export default function userForeman() {
     calendarState = suiperState;
     if (!suiperState){
       generateThreeMonths(new Date(toDate))
-      // return;
+      return;
     }
     console.log(suiperState,'suiperState')
     // if(!suiperState){
@@ -5356,7 +5360,7 @@ export default function userForeman() {
     const month = addZero(times[key].month)
     const date = `${year}-${month}`
     day = '';
-    console.log(month,'month')
+    console.log(month,'month11111走了这里啊')
     setTime({
       year,
       monent: month,
