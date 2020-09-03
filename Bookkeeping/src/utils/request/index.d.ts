@@ -170,7 +170,11 @@ export interface bkGetProjectTeamDataChild{
 
 // 新增项目
 export interface bkAddProjectTeam extends Result {
-  data:string
+  data:{
+    group_info:string,
+    group_name:string,
+    team_name:string,
+  }
 }
 
 // 考勤表

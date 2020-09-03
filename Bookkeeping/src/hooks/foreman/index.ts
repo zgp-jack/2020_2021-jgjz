@@ -1399,6 +1399,7 @@ export default function userForeman() {
     // 获取记录过的日历
     // const calendarItem = Taro.getStorageSync(Calendar);
     const cacheDaysArr = JSON.parse(JSON.stringify(cacheDays));
+    console.log(cacheDays,'cacheDays')
     let List:any[]= [];
     if (changeId != 3){
       if(change){
@@ -2825,18 +2826,80 @@ export default function userForeman() {
           setClickData(toDay)
           setTimeData(toDay);
         }
-        // 设置加班时长默认值
-        const timeTitle = '上班1个工，无加班';
-        // 修改工资标准
-        if (type === 2) {
-          bkGetWorkerWage(res.data)
+        let dayObj = {
+          date: toDayString.split('-')[2],
+          month: toDayString.split('-')[1],
+          year: toDayString.split('-')[0],
+          click: true
         }
-        setIds(res.data);
-        setLeader_id('');
-        const name = (model.groupName).replace(/^\s*|\s*$/g, "") + '-' + (model.teamName).replace(/^\s*|\s*$/g, "");
-        bkGetProjectTeam(res.data);
-        setGroupInfo(res.data)
-        setProjectId(res.data)
+        let time = toDayString + `（今天）`;
+        setOpenClickTime([dayObj])
+        setClickData([dayObj])
+        setTimeData([dayObj]);
+        setToday([dayObj])
+        setToDayString(toDayString)
+        let midData = Taro.getStorageSync(MidData)
+        const objs = JSON.parse(JSON.stringify(obj))
+        objs.name = midData.worker_name || '未命名';
+        objs.id = midData.worker_id;
+        objs.set = false;
+        objs.discipline = false;
+        setNoset(false)
+        let sum: string = '0';
+        let workArr = [objs];
+        if (type == 2) {
+          const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+          wageStandardData.work = 0;
+          wageStandardData.addWork = 0.00;
+          wageStandardData.money = 0.00;
+          wageStandardData.day = 0;
+          wageStandardData.type = 1;
+          wageStandardData.dayAddWork = 0.00;
+          wageStandardData.data = [
+            { id: 1, name: '按小时算', click: true },
+            { id: 2, name: '按工天算', click: false },
+          ],
+          setWageStandard(wageStandardData)
+          setCacheWage(wageStandardData)
+        }
+        dispatch(setPhoneList(workArr));
+        setWorkerItem(workArr);
+        setMoneyList(workArr);
+        setProjectId(res.data.group_info);
+        setGroupInfo(res.data.group_info);
+        let title = res.data.group_name + '-' + res.data.team_name;
+        const timeTitle = '上班1个工，无加班';
+        setModel({ ...model, name: title, duration: timeTitle, modalDuration: timeTitle, time, details: '', workersWages: sum, amount: '', price: '', wages: '', borrowing: '', univalent: '' })
+        // 一个工
+        for (let i = 0; i < timeArr.length; i++) {
+          timeArr[i].click = false;
+          timeArr[0].click = true;
+          timeArr[3] = { id: 4, name: '0.0小时', click: false, num: 0 };
+          setClickDay(timeArr[0])
+        }
+        // 无加班
+        for (let i = 0; i < addWorkArr.length; i++) {
+          addWorkArr[i].click = false;
+          addWorkArr[0].click = true;
+          addWorkArr[1] = { id: 2, name: '0.0小时', click: false, num: 0 };
+          setClickTime(addWorkArr[0])
+        }
+        setTimeArr(timeArr);
+        setAddWorkArr(addWorkArr)
+        setProjectArr(arr)
+        setDel(false)
+        setShow(false)
+        setDeldelType(false)
+        setAllClick(false);
+        setClickNum(0);
+        setCheckAll(false);
+        setClickModalNum(0)
+        setcacheDays([]);
+        setProjectId(res.data.group_info);
+        if (type == 2) {
+          setForemanTitle('')
+        }
+        generateThreeMonths(new Date(), [dayObj], '', '', []);
         setTimeout(()=>{
           isHandleAdd = true;
         },500)
@@ -4076,7 +4139,7 @@ export default function userForeman() {
           setNoset(false)
           console.log('阿胶不完全看不看球基本框架完全崩溃')
           if(type == 2){
-             const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
+              const wageStandardData = JSON.parse(JSON.stringify(wageStandard));
               wageStandardData.work = 0;
               wageStandardData.addWork = 0.00;
               wageStandardData.money = 0.00;
@@ -4174,7 +4237,6 @@ export default function userForeman() {
     setCheckAll(false);
     setClickModalNum(0)
     setProjectId(v.group_info);
-    console.log(type,'type')
      if (type == 2) {
       if (v.leader_name) {
         setForemanTitle(v.leader_name)
