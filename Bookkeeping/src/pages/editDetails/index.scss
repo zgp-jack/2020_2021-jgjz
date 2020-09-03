@@ -5,6 +5,13 @@
   padding-bottom: 200rpx;
   // background: #FFFFFF;
 }
+.foreman-content {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
 .publish-recruit-card {
   position: relative;
   background-color: white;

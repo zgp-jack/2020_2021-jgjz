@@ -1022,3 +1022,20 @@ export function shareExcelDataAction(data): Promise<Inter.bkGetWorker> {
     data: data,
   })
 }
+
+// 选择项目班组
+export function getChooseGroupInfoAction(data): Promise<Inter.GetChooseGroupInfo> {
+  let userInfo = Taro.getStorageSync(UserInfo);
+  return doRequestAction({
+    url: api.getChooseGroupInfoUrl,
+    // method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+    },
+    data: data,
+  })
+}

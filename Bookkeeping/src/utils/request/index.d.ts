@@ -265,3 +265,14 @@ export interface getBookkeepingData extends Result{
   data: any,
   time:string,
 }
+// 选择班组
+export interface GetChooseGroupInfo extends Result{
+  data:{
+    group_worker_has_business:{
+      days:any[],
+      worker:any[]
+    },
+    group_workers:any[],
+    group_workers_has_wage:any[],
+  }
+}

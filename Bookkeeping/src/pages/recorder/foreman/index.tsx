@@ -48,7 +48,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState, proList, setProList
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -97,6 +97,9 @@ export default function Foreman() {
               res.data[i].click = false;
             }
           }
+          setProList(false)
+        }else{
+          setProList(true)
         }
         setProjectArr(res.data);
       }
@@ -424,7 +427,7 @@ export default function Foreman() {
   }
   return (
     <context.Provider value={value}>
-    <View className='foreman'>
+      <View className={project || display || quantitiesDisplay || workOvertimeDisplay || workingHoursDisplay || createProjectDisplay || calendarModalDisplay || wageStandardDisplay || addMemberDisplay || wagesModalDisplay || editProjectDisplay || show ? 'foreman-content' :'foreman'}>
       {/* tabber */}
       <View>
         <View className='tabber'>
@@ -878,8 +881,9 @@ export default function Foreman() {
           <Image src={`${IMGCDNURL}leftIcons.png`} className='addIcon'/>
           </View>
             <View>项目列表</View>
-            {!edit &&<View className='atDrawer-heard-edit' onClick={()=>handleEdit(0)}>修改/删除</View>}
-            {edit && <View className='atDrawer-heard-edit' onClick={()=>handleEdit(1)}>取消</View>}
+              {proList ? <View></View> : <View className='atDrawer-heard-edit'>{!edit ? <View className='atDrawer-heard-edit' onClick={() => handleEdit(0)}>修改/删除</View> : <View className='atDrawer-heard-edit' onClick={() => handleEdit(1)}>取消</View>}</View>}
+            {/* {!edit &&}
+            {edit && } */}
           </View>
           <View className='atDrawer-heard-content'>
             {projectArr.length>0&&projectArr.map(v=>(
@@ -910,7 +914,7 @@ export default function Foreman() {
           </View>
         </View>
         {
-          !edit?
+          !edit || proList?
           <View className='atDrawer-footer'>
             <View className='atDrawer-footer-btn' onClick={handleAddProjectList}>
               <Image src={`${IMGCDNURL}whiteLeftAdd.png`} className='addIcon'/> 

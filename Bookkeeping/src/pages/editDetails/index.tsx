@@ -1457,7 +1457,7 @@ export default function EditDetails() {
     }
   }
   return (
-    <View className='content'>
+    <View className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'foreman-content' :'content'}>
       {businessType == 2 && 
         <View className='publish-recruit-card'>
           <View className='publish-list-item' onClick={() => { }}>

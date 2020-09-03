@@ -1,3 +1,10 @@
+/*
+ * @Author: zyb
+ * @Date: 2020-08-24 14:03:35
+ * @LastEditors: zyb
+ * @LastEditTime: 2020-09-03 15:40:37
+ * @Description: 
+ */
 // 区分正式还是测试
 import { REQUESTURL } from '../../config'
 
@@ -95,3 +102,5 @@ export const getBookkeepingDataUrl = REQUESTURL + '/bk-bookkeeping/get-bookkeepi
 export const addNewBusinessUrl = REQUESTURL + 'bk-bookkeeping/add-new-business/'
 // 获取分享接口
 export const shareExcelDataUrl = REQUESTURL + 'bk-bookkeeping/get-share-excel-url/';
+// 选择项目班组
+export const getChooseGroupInfoUrl = REQUESTURL+'/bk-project-team/choose-group-info/';

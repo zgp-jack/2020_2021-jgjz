@@ -6,6 +6,13 @@
     color: red !important;
   }
 }
+.foreman-content{
+  position:fixed;
+  top:0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
 .tabber {
   display: flex;
   justify-content: space-around;
