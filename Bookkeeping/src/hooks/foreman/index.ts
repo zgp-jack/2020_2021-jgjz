@@ -4571,7 +4571,21 @@ export default function userForeman() {
             }
           }
         }
-        console.log(data,'dataaaa')
+        let numData: any[] = [];
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].click) {
+            numData.push(data[i])
+          }
+        }
+        // 判断全部都点击了全选就变成
+        let allClick = true;
+        for (let i = 0; i < data.length; i++) {
+          if (!data[i].click) {
+            allClick = false;
+          }
+        }
+        setAllClick(allClick)
+        setClickNum(numData.length);
         let noset:boolean = true;
         for (let j = 0; j < data.length; j++) {
           if (!data[j].set) {
