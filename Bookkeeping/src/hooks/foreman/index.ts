@@ -5294,7 +5294,8 @@ export default function userForeman() {
     const third = calendarData.third;
     const fourth = calendarData.fourth;
     let suiperState = true;
-    console.log(calendarData,'thirdthirdthird')
+    console.log(calendarData,'thirdthirdthird');
+    // return;
     console.log(e,'eeee')
     // for (let i = 0; i < fourth.length;i++){
     //   if (fourth[i].year == timeDate.year && fourth[i].month == timeDate.monent && !fourth[i].next && !fourth[i].up && e.detail.current == 3 && fourth[i].isMonth) {
@@ -5369,6 +5370,9 @@ export default function userForeman() {
       day = toDayString.slice(-2)
     }
     const timeItem = countMonth((year + '-' + month+'-'+'01'));
+    console.log(timeItem[key].year + '-' + addZero(timeItem[key].month) + '-' + '01','时间');
+    console.log(change,'change')
+    console.log(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month)+'-'+'01'),'111111')
     calendarData[change] = null
     calendarData[change] = getMonthDaysCurrent(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month)+'-'+'01'));
     setCalendar(calendarData)

@@ -167,7 +167,8 @@ export default function CalendarModal({
                             'content-days-day-click-all': v.click && !v.up && !v.next && v.choice,
                           })}
                         >
-                          <View style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#3C3B3B' }) : ''}>{v.date}</View>
+                          <View style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#3C3B3B' }) : ''}>
+                            <Text className='fontWeight'>{v.date}</Text></View>
                           <View className='lunarCalendarItem' style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#BABABAFF' }) : ''}>{v.lunarCalendarItem}</View>
                           <View>
                             {!v.next && !v.up && !v.stop && !v.click ? <View className='checkBox'></View> : ''}
@@ -194,7 +195,9 @@ export default function CalendarModal({
                             'content-days-day-click-all': v.click && !v.up && !v.next && v.choice,
                           })}
                         >
-                          <View style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#3C3B3B' }) : ''}>{v.date}</View>
+                          <View style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#3C3B3B' }) : ''}>
+                            <Text className='fontWeight'>{v.date}</Text>
+                          </View>
                           <View className='lunarCalendarItem' style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#BABABAFF' }) : ''}>{v.lunarCalendarItem}</View>
                           <View>
                             {!v.next && !v.up && !v.stop && !v.click ? <View className='checkBox'></View> : ''}
@@ -221,7 +224,9 @@ export default function CalendarModal({
                             'content-days-day-click-all': v.click && !v.up && !v.next && v.choice,
                           })}
                         >
-                          <View style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#3C3B3B' }) : ''}>{v.date}</View>
+                          <View style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#3C3B3B' }) : ''}>
+                            <Text className='fontWeight'>{v.date}</Text>
+                          </View>
                           <View className='lunarCalendarItem' style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#BABABAFF' }) : ''}>{v.lunarCalendarItem}</View>
                           <View>
                             {!v.next && !v.up && !v.stop && !v.click ? <View className='checkBox'></View> : ''}
@@ -248,7 +253,9 @@ export default function CalendarModal({
                                 'content-days-day-click-all': v.click && !v.up && !v.next && v.choice,
                               })}
                             >
-                              <View style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#3C3B3B' }) : ''}>{v.date}</View>
+                              <View style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#3C3B3B' }) : ''}>
+                                <Text className='fontWeight'>{v.date}</Text>
+                              </View>
                               <View className='lunarCalendarItem' style={v.record ? (v.click ? { color: 'rgba(253, 120, 13, 1)' } : { color: '#BABABAFF' }) : ''}>{v.lunarCalendarItem}</View>
                               <View>
                                 {!v.next && !v.up && !v.stop && !v.click ? <View className='checkBox'></View> : ''}

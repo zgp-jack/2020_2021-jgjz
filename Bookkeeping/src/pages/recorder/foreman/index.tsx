@@ -397,30 +397,30 @@ export default function Foreman() {
     setIsdisable(true);
     setCalendarModalDisplay(true);
     console.log(data,'datataa')
-    if(data&&data.length>0){
-      const end = data.pop();
-      let time;
-      if (end.constructor === Array){
-        time = end[0].year + '-' + addZero(end[0].month) + '-' + addZero(end[0].date);
-      }else{
-        time = end.year + '-' + addZero(end.month) + '-' + addZero(end.date);
-      }
-      if(Number(time.split('-')[0])==(nowYear-1)&&Number(time.split('-')[1])==1){
-        setleftTime(false);
-      }else{
-        setleftTime(true);
-      }
-      if(Number(time.split('-')[0])==nowYear&&Number(time.split('-')[1])==nowMon){
-        setrightTime(false)
-      }else{
-        setrightTime(true)
-      }
-      getMonthDaysCurrent(new Date(time))
-    }else{
-      setleftTime(true);
-      setrightTime(false);
-      getMonthDaysCurrent(new Date())
-    }
+    // if(data&&data.length>0){
+    //   const end = data.pop();
+    //   let time;
+    //   if (end.constructor === Array){
+    //     time = end[0].year + '-' + addZero(end[0].month) + '-' + addZero(end[0].date);
+    //   }else{
+    //     time = end.year + '-' + addZero(end.month) + '-' + addZero(end.date);
+    //   }
+    //   if(Number(time.split('-')[0])==(nowYear-1)&&Number(time.split('-')[1])==1){
+    //     setleftTime(false);
+    //   }else{
+    //     setleftTime(true);
+    //   }
+    //   if(Number(time.split('-')[0])==nowYear&&Number(time.split('-')[1])==nowMon){
+    //     setrightTime(false)
+    //   }else{
+    //     setrightTime(true)
+    //   }
+    //   getMonthDaysCurrent(new Date(time))
+    // }else{
+    //   setleftTime(true);
+    //   setrightTime(false);
+    //   getMonthDaysCurrent(new Date())
+    // }
   }
   return (
     <context.Provider value={value}>
