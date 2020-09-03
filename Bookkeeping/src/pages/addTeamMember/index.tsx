@@ -28,6 +28,8 @@ export default function AddTeamMember() {
   const [clickData, setClickData] = useState<any[]>([]);
   // 输入框
   const [valData, setValData] = useState<string>('');
+  // 搜索遮罩层
+  const [masklayer, setmasklayer] = useState<boolean>(false)
   // 关闭添加成员
   const handleAddMemberClose = () => {
     setAddMemberDisplay(false);
@@ -275,15 +277,18 @@ export default function AddTeamMember() {
   }
   return (
     <View className='content'>
+      {masklayer&& <View className='masklayer'></View>}
       <View className='searchName'>
         <AtSearchBar
           placeholder='请输入名字或手机号码查询'
           showActionButton
           value={valData}
+          onFocus={() => setmasklayer(true)}
           onClear={handleOnClear}
           onChange={handleChange}
           onActionClick={() => onActionClick()}
           onConfirm={onActionClick}
+          onBlur={() => setmasklayer(false)}
         />
       </View>
       <View id='box'>

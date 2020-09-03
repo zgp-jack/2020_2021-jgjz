@@ -136,6 +136,11 @@ export default function userCode(InitParams) {
         return;
       }
       isHandleAdd = false
+      if(!params.img.length && !params.note.trim()){
+        isHandleAdd = true
+        Taro.navigateBack({delta: 2})
+        return
+      }
       bkUpdateNotePadAction(params).then(res=>{
         if(res.code === 200){
           Msg('修改成功')
@@ -156,6 +161,11 @@ export default function userCode(InitParams) {
       })
     }else{
       isHandleAdd = false
+      if(!params.note.trim() && !params.img.length){
+        isHandleAdd = true
+        Taro.navigateBack()
+        return
+      }
       bkAddNotepadAction(params).then(res=>{
         if(res.code === 200 ){
           setTimeout(() => {
