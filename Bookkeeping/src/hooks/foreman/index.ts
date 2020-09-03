@@ -4564,6 +4564,7 @@ export default function userForeman() {
             if (data[i].id == worker_ids[j]) {
               data[i].set = true;
               data[i].del = false;
+              data[i].click = true;
               // setNoset(true)
             } else {
               // setNoset(false)

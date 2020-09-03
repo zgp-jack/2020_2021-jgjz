@@ -225,9 +225,11 @@
   border-right: 1rpx solid rgba(229, 226, 226, 1);
 }
 .checkbox{
-  transform: scale(0.6, 0.6);
-  margin-top: 10rpx;
-  margin-left: 8rpx;
+  // transform: scale(0.6, 0.6);
+  // margin-top: 10rpx;
+  // margin-left: 8rpx;
+  width: 68rpx;
+  height: 68rpx;
 }
 .wagesModal-standard-box-list-edit {
   width:79rpx;
@@ -460,5 +462,21 @@
   width: 60rpx;
   z-index: 1;
   background: url(../../assets/images/userClick.png) no-repeat no-repeat;
+  background-size: contain;
+}
+.checkbox-no {
+  height: 20rpx;
+  width: 20rpx;
+  border: 2rpx solid #cccc;
+  margin-top: 22rpx;
+  margin-left: 22rpx;
+}
+
+.checkbox-click {
+  height: 24rpx;
+  width: 24rpx;
+  margin-top: 22rpx;
+  margin-left: 22rpx;
+  background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
   background-size: contain;
 }

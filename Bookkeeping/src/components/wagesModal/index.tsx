@@ -25,8 +25,9 @@ interface PROPS {
   clickModalNum:number,
   handleAllClick:()=>void,
   checkAll:boolean,
+  recorderType:number;
 }
-export default function WagesModal({ display, maskHandleClose=()=>{}, handleClose, data, handleAddStandard, standard, moneyList, handleEditWages, tab, handleAtSwitch, handleSetWagesModal, handleWagesList, handleCheckboxStandard, clickModalNum, handleAllClick ,checkAll}: PROPS) {
+export default function WagesModal({ display, maskHandleClose=()=>{}, handleClose, data, handleAddStandard, standard, moneyList, handleEditWages, tab, handleAtSwitch, handleSetWagesModal, handleWagesList, handleCheckboxStandard, clickModalNum, handleAllClick ,checkAll,recorderType}: PROPS) {
   return(
     <View>
       {display && 
@@ -38,7 +39,7 @@ export default function WagesModal({ display, maskHandleClose=()=>{}, handleClos
                 <View className='tab'>
                   <View className='Wages_box_right'>
                     <View className='lookWages' onClick={()=>{handleAtSwitch(0)}}>查看工资标准
-                        <View className='setWages' onClick={(e) => { e.stopPropagation(); handleAtSwitch(1)}}>设置工资标准
+                  <View className='setWages' onClick={(e) => { e.stopPropagation(); handleAtSwitch(1)}}>设置{recorderType==1?'点工':'包工'}标准
                       </View>
                     </View>
                   </View>
@@ -51,7 +52,7 @@ export default function WagesModal({ display, maskHandleClose=()=>{}, handleClos
                     </View>
                   </View> */}
                 <View className='Wages_box_left'>
-                  <View className='lookWagesClick' onClick={(e) => { e.stopPropagation(); handleAtSwitch(1) }}> 设置工资标准
+                  <View className='lookWagesClick' onClick={(e) => { e.stopPropagation(); handleAtSwitch(1) }}> 设置{recorderType==1?'点工':'包工'}标准
                       <View className='setWagesClick' onClick={() => { handleAtSwitch(0) }}>查看工资标准
                       </View>
                     </View>
@@ -115,18 +116,22 @@ export default function WagesModal({ display, maskHandleClose=()=>{}, handleClos
             </View>
             <View className='wagesModal-standard'>
               <View className='wagesModal-standard-flex'>
-                <View>工资标准</View>
-                  <View className='wagesModal-standard-flex-add' onClick={handleAddStandard}>
+                <View>{recorderType==1?'点工':'包工'}标准</View>
+                  {/* <View className='wagesModal-standard-flex-add' onClick={handleAddStandard}>
                     <Image src={`${IMGCDNURL}balckAdd.png`} className='balckAdd' />
-                    添加其他标准</View>
+                    添加其他标准</View> */}
               </View>
               <View className='wagesModal-standard-box'>
                 {standard.map((v,i)=>(
                   <View className='wagesModal-standard-box-list'>
                     <View className='wagesModal-standard-box-list-border'>
-                    <View className='wagesModal-standard-box-list-title'>{i == 0 ? '工资标准1' :'工资标准2'}</View>
+                    <View className='wagesModal-standard-box-list-title'>{i == 0 ? '工资标准模板1' :'工资标准模板2'}</View>
                       <View className='wagesModal-standard-box-list-flex' onClick={() => handleCheckboxStandard(v)}>
-                      <View><Checkbox className='checkbox' checked={v.click} value={v.click}/></View>
+                      <View className='checkbox'>
+                        {/* <Checkbox className='checkbox' checked={v.click} value={v.click}/> */}
+                        {v.click && <View className='checkbox-click'></View> }
+                        {!v.click && <View className='checkbox-no'></View>}
+                      </View>
                       <View className='wagesModal-standard-box-list-flex-middle'>
                         <View>上班标准：{parseFloat(v.worktime_define)}小时算1个工<Text className='red'>{v.money}</Text>元/个工</View>
                           <View>加班标准：{v.overtime_type === '1' ? '按小时算' : '按工天算'} {v.overtime_type == '1' ? <Text><Text className='red'>{v.overtime_money}</Text>元/小时</Text> : <Text>加班 {parseFloat(v.overtime)}小时算1个工</Text>} </View>
