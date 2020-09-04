@@ -1867,7 +1867,7 @@ export default function userForeman() {
                 console.log(res.data[i].group_name,'23123')
                 console.log(res.data[i].group_name, '2222')
                 if (groupName.group_info == res.data[i].group_info) {
-                   setProjectId(res.data[i].group_info)
+                  setProjectId(res.data[i].group_info)
                   res.data[i].click = true;
                   // 清空
                   setModel({ ...modalObj, name: res.data[i].group_name + '-' + res.data[i].name, workersWages: '0.00', duration: timeTitle, modalDuration: timeTitle })
@@ -2803,6 +2803,7 @@ export default function userForeman() {
   // 创建项目
   const handleAddProject = () => {
     // console.log(isHandleAdd)
+    const arr = JSON.parse(JSON.stringify(projectArr))
     if(!isHandleAdd) return
     if (!model.teamName) {
       Msg('您还没有填写班组名称');
@@ -2887,6 +2888,7 @@ export default function userForeman() {
         setTimeArr(timeArr);
         setAddWorkArr(addWorkArr)
         setProjectArr(arr)
+        console.log(arr,'arrrrrr');
         setDel(false)
         setShow(false)
         setDeldelType(false)
@@ -2895,11 +2897,12 @@ export default function userForeman() {
         setCheckAll(false);
         setClickModalNum(0)
         setcacheDays([]);
+        setGroupInfo(res.data.group_info)
         setProjectId(res.data.group_info);
         if (type == 2) {
           setForemanTitle('')
         }
-        generateThreeMonths(new Date(), [dayObj], '', '', []);
+        generateThreeMonths(new Date(), [dayObj], '', '', [],true);
         setTimeout(()=>{
           isHandleAdd = true;
         },500)
@@ -2918,6 +2921,7 @@ export default function userForeman() {
         setIsdisable(false)
       });
       setProject(false);
+      return;
       // let data = JSON.parse(JSON.stringify(model));
       // data.name = model.groupName;
       // setGroupInfo(res.data)
@@ -3663,6 +3667,7 @@ export default function userForeman() {
   }
   // 保存
   const handlePreservation = (type: number) => {
+    console.log(groupInfo,'111');
     if (!isHandleAdd) return;
     // 获取工资标准
     const item = JSON.parse(JSON.stringify(model));
@@ -3901,6 +3906,7 @@ export default function userForeman() {
     if (projectArr.length === 0){
       params.group_info = '';
     }
+    console.log(projectArr,'projectArrprojectArrprojectArr')
     isHandleAdd = false
     if (identity == 2) {
         // 没有项目&&记工和包工点工的时候需要传
@@ -4170,7 +4176,7 @@ export default function userForeman() {
             generateThreeMonths(new Date(), [dayObj], '', '', dateItem);
           }else{
             setcacheDays([]);
-            generateThreeMonths(new Date(), [dayObj], '', '', []);
+            generateThreeMonths(new Date(), [dayObj], '', '', [],true);
           }
           if (res.data.group_worker_has_business.worker.length>0){
             setCache(res.data.group_worker_has_business.worker)
