@@ -300,7 +300,7 @@ export default function AddTeamMember() {
                 {type !== '2' &&
                   <View>
                     {/* <Checkbox checked={v.click} value={v.click} disabled={v.click && v.disabled} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /> */}
-                    {v.click && v.disabled && <View className='checkbox-click'></View> }
+                    {v.click && v.disabled && <View className='checkbox-disabled'></View> }
                     {v.click && !v.disabled && <View className='checkbox-click'></View> }
                     {!v.click && <View className='checkbox-no'></View>}
                   </View>

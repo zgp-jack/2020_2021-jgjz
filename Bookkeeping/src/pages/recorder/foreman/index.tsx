@@ -48,7 +48,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState, proList, setProList
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState, proList, setProList, generateThreeMonths, getThreeMonths
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -400,30 +400,30 @@ export default function Foreman() {
     setIsdisable(true);
     setCalendarModalDisplay(true);
     console.log(data,'datataa')
-    // if(data&&data.length>0){
-    //   const end = data.pop();
-    //   let time;
-    //   if (end.constructor === Array){
-    //     time = end[0].year + '-' + addZero(end[0].month) + '-' + addZero(end[0].date);
-    //   }else{
-    //     time = end.year + '-' + addZero(end.month) + '-' + addZero(end.date);
-    //   }
-    //   if(Number(time.split('-')[0])==(nowYear-1)&&Number(time.split('-')[1])==1){
-    //     setleftTime(false);
-    //   }else{
-    //     setleftTime(true);
-    //   }
-    //   if(Number(time.split('-')[0])==nowYear&&Number(time.split('-')[1])==nowMon){
-    //     setrightTime(false)
-    //   }else{
-    //     setrightTime(true)
-    //   }
-    //   getMonthDaysCurrent(new Date(time))
-    // }else{
-    //   setleftTime(true);
-    //   setrightTime(false);
-    //   getMonthDaysCurrent(new Date())
-    // }
+    if(data&&data.length>0){
+      const end = data.pop();
+      let time;
+      if (end.constructor === Array){
+        time = end[0].year + '-' + addZero(end[0].month) + '-' + addZero(end[0].date);
+      }else{
+        time = end.year + '-' + addZero(end.month) + '-' + addZero(end.date);
+      }
+      if(Number(time.split('-')[0])==(nowYear-1)&&Number(time.split('-')[1])==1){
+        setleftTime(false);
+      }else{
+        setleftTime(true);
+      }
+      if(Number(time.split('-')[0])==nowYear&&Number(time.split('-')[1])==nowMon){
+        setrightTime(false)
+      }else{
+        setrightTime(true)
+      }
+      getThreeMonths(new Date(time))
+    }else{
+      setleftTime(true);
+      setrightTime(false);
+      getThreeMonths(new Date())
+    }
   }
   return (
     <context.Provider value={value}>

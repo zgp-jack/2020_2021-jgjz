@@ -5846,6 +5846,8 @@ export default function userForeman() {
     swiperIndex,
     calendarState,
     proList, 
-    setProList
+    setProList,
+    generateThreeMonths,
+    getThreeMonths
   }
 }
