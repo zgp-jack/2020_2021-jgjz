@@ -276,7 +276,7 @@ export default function AddTeamMember() {
     })
   }
   return (
-    <View className='content'>
+    <View className={addMemberDisplay?'foreman-content':'content'}>
       {masklayer&& <View className='masklayer'></View>}
       <View className='searchName'>
         <AtSearchBar

@@ -1,6 +1,6 @@
 import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide, useRouter } from '@tarojs/taro'
 import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, addNewBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction, getWorkerHasBusinessByDateAction,getBookkeepingDataAction,getChooseGroupInfoAction } from '../../utils/request/index'
-import { MidData, Type, Calendar, RecordTime, User, Tomorrow, NoRequest } from '../../config/store'
+import { MidData, Type, Calendar, RecordTime, User, Tomorrow, NoRequest, TotalData } from '../../config/store'
 import { bkGetProjectTeamData } from '../../utils/request/index.d'
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setWorker } from '../../actions/workerList'
@@ -2803,7 +2803,6 @@ export default function userForeman() {
   // 创建项目
   const handleAddProject = () => {
     // console.log(isHandleAdd)
-    const arr = JSON.parse(JSON.stringify(projectArr))
     if(!isHandleAdd) return
     if (!model.teamName) {
       Msg('您还没有填写班组名称');
@@ -2822,6 +2821,12 @@ export default function userForeman() {
     bkAddProjectTeamAction(params).then(res => {
       if (res.code === 200) {
         console.log(res.data,'reasadasdasd')
+        // 项目数据
+        if(res.data.all_group&&res.data.all_group.data.length>0){
+          setProjectArr(res.data.all_group.data)
+        }else{
+          setProjectArr([])
+        }
         if(toDay){
           setOpenClickTime(toDay)
           setClickData(toDay)
@@ -2887,7 +2892,6 @@ export default function userForeman() {
         }
         setTimeArr(timeArr);
         setAddWorkArr(addWorkArr)
-        setProjectArr(arr)
         console.log(arr,'arrrrrr');
         setDel(false)
         setShow(false)
@@ -3446,9 +3450,9 @@ export default function userForeman() {
     if (type === 0) {
       setDel(true);
       const arr = data.map(v => {
-        if (v.id != 1) {
+        // if (v.id != 1) {
           v.del = true;
-        }
+        // }
         return v;
       })
       setWorkerItem(arr);
@@ -3456,9 +3460,9 @@ export default function userForeman() {
     } else {
       setDel(false);
       const arr = data.map(v => {
-        if (v.id != 1) {
+        // if (v.id != 1) {
           v.del = false;
-        }
+        // }
         return v;
       })
       setWorkerItem(arr);
@@ -3899,6 +3903,175 @@ export default function userForeman() {
       }
     }
     console.log(params,'params')
+    // 报错率
+    // 没有选择项目
+    let TotalItem = Taro.getStorageSync(TotalData);
+    if (projectArr.length > 0 && !groupInfo){
+      if (TotalItem&&TotalItem.length>0){
+        for(let i =0;i<TotalItem.length;i++){
+          if (TotalItem[i].name === 'entryName'){
+            TotalItem[i].num = TotalItem[i].num+1
+          }else{
+            let obj = {
+              name: 'entryName',
+              num: 1
+            }
+            TotalItem.push(obj)
+          }
+        }
+      } else {
+        TotalItem = [
+          {
+            name: 'entryName',
+            num: 1
+          }
+        ]
+      }
+    }
+    // 工人
+    if(!workers){
+      if (TotalItem && TotalItem.length > 0) {
+        for (let i = 0; i < TotalItem.length; i++) {
+          if (TotalItem[i].name === 'workers') {
+            TotalItem[i].num = TotalItem[i].num + 1
+          }else{
+            let obj =  {
+              name: 'workers',
+              num: 1
+            }
+            TotalItem.push(obj)
+          }
+        }
+      } else {
+        TotalItem = [
+          {
+            name: 'workers',
+            num: 1
+          }
+        ]
+      }
+    }
+    // 工资标准
+    if (types == 2){
+      if (tabData.id == 1 && item.workersWages == 0){
+        if(TotalItem.length>0){
+          for (let i = 0; i < TotalItem.length; i++) {
+            if (TotalItem[i].name === 'wages') {
+              TotalItem[i].num = TotalItem[i].num + 1
+            } else {
+              let obj = {
+                name: 'wages',
+                num: 1
+              }
+              TotalItem.push(obj)
+            }
+          }
+        } else {
+          TotalItem = [
+            {
+              name: 'wages',
+              num: 1
+            }
+          ]
+        }
+      }
+    }
+    // 上班时长
+    if (overtime == 0 && work_time_hour == 0 && times == 0 && (tabData.id ==1||(tabData.id == 2 && itemType!==1))){
+      if (TotalItem.length > 0) {
+        for (let i = 0; i < TotalItem.length; i++) {
+          if (TotalItem[i].name === 'workinghurs') {
+            TotalItem[i].num = TotalItem[i].num + 1
+          } else {
+            let obj = {
+              name: 'workinghurs',
+              num: 1
+            }
+            TotalItem.push(obj)
+          }
+        }
+      } else {
+        TotalItem = [
+          {
+            name: 'workinghurs',
+            num: 1
+          }
+        ]
+      }
+    }
+    // 工程。单价。工钱
+    if (itemType == 1 && tabData.id == 2){
+      if(!item.wages || !item.price || !item.amount){
+        if (TotalItem.length > 0) {
+          for (let i = 0; i < TotalItem.length; i++) {
+            if (TotalItem[i].name === 'sum') {
+              TotalItem[i].num = TotalItem[i].num + 1
+            } else {
+              let obj = {
+                name: 'sum',
+                num: 1
+              }
+              TotalItem.push(obj)
+            }
+          }
+        } else {
+          TotalItem = [
+            {
+              name: 'sum',
+              num: 1
+            }
+          ]
+        }
+      }
+    }
+    // 借支
+    if(tabData.id == 3 &&(!item.borrowing || item.borrowing == 0) ){
+      if (TotalItem.length > 0) {
+        for (let i = 0; i < TotalItem.length; i++) {
+          if (TotalItem[i].name === 'borrowing') {
+            TotalItem[i].num = TotalItem[i].num + 1
+          } else {
+            let obj = {
+              name: 'borrowing',
+              num: 1
+            }
+            TotalItem.push(obj)
+          }
+        }
+      } else {
+        TotalItem = [
+          {
+            name: 'borrowing',
+            num: 1
+          }
+        ]
+      }
+    }
+    // 时间
+    if(!time){
+      if (TotalItem.length > 0) {
+        for (let i = 0; i < TotalItem.length; i++) {
+          if (TotalItem[i].name === 'time') {
+            TotalItem[i].num = TotalItem[i].num + 1
+          } else {
+            let obj = {
+              name: 'time',
+              num: 1
+            }
+            TotalItem.push(obj)
+          }
+        }
+      } else {
+        TotalItem = [
+          {
+            name: 'time',
+            num: 1
+          }
+        ]
+      }
+    }
+    console.log(TotalItem);
+    Taro.setStorageSync(TotalData, TotalItem)
     // 工人的时候要先设置工资标准
     const foremanTitles = JSON.parse(JSON.stringify(foremanTitle))
     // 记工(包工按量)
@@ -5848,6 +6021,7 @@ export default function userForeman() {
     proList, 
     setProList,
     generateThreeMonths,
-    getThreeMonths
+    getThreeMonths,
+    setDel
   }
 }

@@ -1,3 +1,10 @@
+/*
+ * @Author: zyb
+ * @Date: 2020-08-26 19:48:23
+ * @LastEditors: zyb
+ * @LastEditTime: 2020-09-04 15:18:36
+ * @Description: 
+ */
 // * 本文件为小程序内部缓存声明文件
 // 用户信息
 export const UserInfo: string = 'userInfo'
@@ -29,7 +36,8 @@ export const Res:string = 'res';
 export const IsShare:string = 'IsShare';
 // 不请求
 export const NoRequest:string = 'NOREQUSET';
-
+// 报错率
+export const TotalData:string = 'TOTALDATA'
 // 是否是小程序跳转过来的
 export const IsJump:string = 'IsJump';
 export const First:string ='first'

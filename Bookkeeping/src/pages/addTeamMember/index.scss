@@ -8,6 +8,13 @@
     font-size: 28rpx;
   }
 }
+.foreman-content {
+  position: fixed;
+  top: 100rpx;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
 .masklayer{
   position: absolute;
   top: 80rpx;

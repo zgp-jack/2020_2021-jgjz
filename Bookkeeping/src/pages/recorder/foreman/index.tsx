@@ -48,7 +48,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState, proList, setProList, generateThreeMonths, getThreeMonths
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState, proList, setProList, generateThreeMonths, getThreeMonths, setDel
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -126,6 +126,8 @@ export default function Foreman() {
   // }
   // 上传图片
   const userUploadImg = (i: number = -1) => {
+    setDeldelType(false);
+    handleDel(1);
     setRefresh(true);
     UploadImgAction().then(res => {
       let imageItem = {
@@ -393,6 +395,9 @@ export default function Foreman() {
     return num;
   }
   const handleCurrent = ()=>{
+    setDeldelType(false)
+    handleDel(1)
+    // setDel(false)
     // 打开日历如果上次点击默认打开最后一个日期的那个月份
     const data = JSON.parse(JSON.stringify(timeData));
     const nowYear = Number(toDayString.split('-')[0]);
@@ -418,12 +423,42 @@ export default function Foreman() {
       }else{
         setrightTime(true)
       }
-      getThreeMonths(new Date(time))
+      console.log(time,'time')
+      let dayObj = {
+        date: time.split('-')[2],
+        month: time.split('-')[1],
+        year: time.split('-')[0],
+      }
+      const toDayObj = {
+        date: time.split('-')[2],
+        month: time.split('-')[1],
+        year: time.split('-')[0],
+      }
+      // 判断打开的是本月还是其他月份做不同
+      if (toDayObj.year == dayObj.year && toDayObj.month == dayObj.month ){
+        generateThreeMonths(new Date(time))
+      }else{
+        getThreeMonths(new Date(time))
+      }
     }else{
       setleftTime(true);
       setrightTime(false);
-      getThreeMonths(new Date())
+      generateThreeMonths(new Date())
     }
+  }
+// }
+  const handleOpenProject = () => {
+    setDeldelType(false);
+    handleDel(1);
+    setIsdisable(true);
+    bkGetProjectTeam();
+    setShow(true);
+  }
+  const handleOpenUnit = ()=>{
+    setDeldelType(false);
+    handleDel(1);
+    setIsdisable(true);
+    setQuantitiesDisplay(true)
   }
   return (
     <context.Provider value={value}>
@@ -469,7 +504,7 @@ export default function Foreman() {
       </View>
       <View className='projectName'>
         <View className='publish-recruit-card'>
-            <View className='publish-list-item border-item' onClick={() => {setIsdisable(true);bkGetProjectTeam(),setShow(true)}}>
+            <View className='publish-list-item border-item' onClick={handleOpenProject}>
             <Text className='pulish-list-title'>项目名称</Text>
             <Input
               className='publish-list-input'
@@ -638,7 +673,9 @@ export default function Foreman() {
       {/* ===== */}
       {(recorderType === 1 || (recorderType === 2 && contractor === 0 ))&&
       <View className='publish-recruit-card'>
-        <View className='publish-list-item' onClick={() => {setIsdisable(true);setWorkOvertimeDisplay(true)}}>
+          <View className='publish-list-item' onClick={() => {
+            setIsdisable(true); setWorkOvertimeDisplay(true), setDeldelType(false)
+            handleDel(1)}}>
           <Text className='pulish-list-title'>上班时长</Text>
           <Input
             className='publish-list-input'
@@ -693,7 +730,7 @@ export default function Foreman() {
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
               />
-            <View className='amountType' onClick={() => {setIsdisable(true);setQuantitiesDisplay(true)}}>{unit}
+              <View className='amountType' onClick={handleOpenUnit}>{unit}
             </View>
                 <Image src={`${IMGCDNURL}downIcons-new.png`} className='downIcons' />
               {/* <View className='rightIconsBox'>

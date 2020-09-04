@@ -174,6 +174,9 @@ export interface bkAddProjectTeam extends Result {
     group_info:string,
     group_name:string,
     team_name:string,
+    all_group:{
+      data:any[];
+    }
   }
 }
 
