@@ -28,6 +28,8 @@ export default function Notepad() {
   const [selectAll, setSelectAll] = useState<boolean>(false)
   // 是否是搜索
   const [isSheach, setIsSheach] = useState<boolean>(false)
+  // 搜索遮罩层
+  const [masklayer, setmasklayer] = useState<boolean>(false)
   // 选择ID
   const [ids, setIds] = useState<string[]>([]);
   // 获取数据
@@ -341,6 +343,7 @@ export default function Notepad() {
   return(
     <context.Provider value={value}>
     <View className='notepad'>
+      {masklayer&& <View className='masklayer'></View>}
       {/* 搜索 */}
       <View className='searchBar'>
         <AtSearchBar
@@ -348,10 +351,12 @@ export default function Notepad() {
           value={val}
           maxLength={10}
           placeholder='快速搜索关键词'
+          onFocus={() => setmasklayer(true)}
           onClear={handleOnClear}
           onChange={handleChange}
           onActionClick={handleSeach}
           onConfirm={handleSeach}
+          onBlur={() => setmasklayer(false)}
         />
       </View>
       {/* 内容 */}

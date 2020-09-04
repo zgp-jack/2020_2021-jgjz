@@ -8,6 +8,15 @@
     font-size: 28rpx;
   }
 }
+.masklayer{
+  position: absolute;
+  top: 80rpx;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,.3);
+  z-index: 9;
+}
 .searchName {
   position: fixed;
   left: 0;
