@@ -2,7 +2,7 @@
  * @Author: zyb
  * @Date: 2020-08-24 14:03:35
  * @LastEditors: zyb
- * @LastEditTime: 2020-09-03 15:40:37
+ * @LastEditTime: 2020-09-05 15:25:47
  * @Description: 
  */
 // 区分正式还是测试
@@ -104,3 +104,5 @@ export const addNewBusinessUrl = REQUESTURL + 'bk-bookkeeping/add-new-business/'
 export const shareExcelDataUrl = REQUESTURL + 'bk-bookkeeping/get-share-excel-url/';
 // 选择项目班组
 export const getChooseGroupInfoUrl = REQUESTURL+'/bk-project-team/choose-group-info/';
+// 记工报错统计接口
+export const postErrorCountUrl = REQUESTURL+'/bk-bookkeeping/business-error-count/'

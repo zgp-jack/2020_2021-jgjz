@@ -2,6 +2,7 @@ import Taro, { Config, useContext, useEffect, useState, useRouter, useDidShow } 
 import { View, Text, Picker, ScrollView, Checkbox, Image } from '@tarojs/components'
 import { AtIndexes, AtSearchBar } from 'taro-ui'
 import userForeman from '../../hooks/foreman';
+import { IMGCDNURL } from '../../config';
 import AddMember from '../../components/addMember';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { setWorker } from '../../actions/workerList';
@@ -300,8 +301,14 @@ export default function AddTeamMember() {
                 {type !== '2' &&
                   <View>
                     {/* <Checkbox checked={v.click} value={v.click} disabled={v.click && v.disabled} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /> */}
-                    {v.click && v.disabled && <View className='checkbox-disabled'></View> }
-                    {v.click && !v.disabled && <View className='checkbox-click'></View> }
+                    {v.click && v.disabled && 
+                    // <View className='checkbox-disabled'></View>
+                    <Image src={`${IMGCDNURL}disabledCheckbox.png`} className='checkbox-disabled'/>
+                    }
+                    {v.click && !v.disabled && 
+                    // <View className='checkbox-click'></View>
+                    <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click' />
+                    }
                     {!v.click && <View className='checkbox-no'></View>}
                   </View>
                 }

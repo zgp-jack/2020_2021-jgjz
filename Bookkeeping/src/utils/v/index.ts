@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro'
 import { TotalData } from '../../config/store';
+import { postErrorCountAction } from '../../utils/request/index'
 
 // 是否是电话号码
 export function isPhone(tel: string): boolean {
@@ -97,4 +98,50 @@ export function statistics(name:string){
     ]
   }
   Taro.setStorageSync(TotalData, TotalItem) 
+}
+
+export function queyElementYPosition(selector: string, component?: any): Promise<any> {
+  let query:any;
+  if (process.env.TARO_ENV == 'h5') {
+    query = Taro.createSelectorQuery().in(component)
+  } else {
+    query = Taro.createSelectorQuery().in(component.$scope)
+  }
+  return new Promise((resolve, reject) => {
+    const tmp = query.select(selector)
+      .fields({ size: true, rect: true, scrollOffset: true, dataset: true }, (rect: any) => {
+        !!rect ? resolve(rect) : reject(rect);
+      });
+    tmp && tmp.exec();
+  })
+}
+
+// 报错统计公用方法
+export function postErrorCountFn(){
+  let Total = Taro.getStorageSync(TotalData);
+  let num = 0;
+  if (Total.length > 0) {
+    num = Total.reduce((accumulator, currentValue) => accumulator + currentValue.num, 0);
+  }
+  console.log(num,'111111')
+  if (num >= 5){
+    let stringArr: string[] = [];
+    for (let i = 0; i < Total.length; i++) {
+      if (Total[i].num) {
+        for (let k = 0; k < Total[i].num; k++) {
+          stringArr.push(Total[i].name)
+        }
+      }
+    }
+    console.log(stringArr.toString(), 'stringArrstringArrstringArr')
+    let numParams = {
+      type: stringArr.toString(),
+    }
+    postErrorCountAction(numParams).then(res => {
+      console.log(res,'q1111')
+      if (res.code === 200) {
+        Taro.setStorageSync(TotalData, []);
+      }
+    })
+  }
 }

@@ -1039,3 +1039,20 @@ export function getChooseGroupInfoAction(data): Promise<Inter.GetChooseGroupInfo
     data: data,
   })
 }
+
+// 报错统计接口
+export function postErrorCountAction(data): Promise<Inter.GetChooseGroupInfo> {
+  let userInfo = Taro.getStorageSync(UserInfo);
+  return doRequestAction({
+    url: api.postErrorCountUrl,
+    method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+    },
+    data: data,
+  })
+}

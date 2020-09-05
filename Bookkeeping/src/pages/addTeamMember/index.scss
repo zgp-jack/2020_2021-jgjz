@@ -175,7 +175,7 @@
 .checkbox-no {
   height: 29rpx;
   width: 29rpx;
-  border: 1PX solid rgba(191, 191, 191, 1);
+  border: 1rpx solid rgba(191, 191, 191, 1);
   margin-top: 45%;
   margin-right: 20rpx;
 }
@@ -185,7 +185,7 @@
   width: 30rpx;
   margin-top: 45%;
   margin-right: 20rpx;
-  background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
+  // background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
   background-size: contain;
 }
 .checkbox-disabled{
@@ -193,6 +193,6 @@
   width: 30rpx;
   margin-top: 45%;
   margin-right: 20rpx;
-  background: url(../../assets/images/disabledCheckbox.png) no-repeat no-repeat;
-  background-size: contain;
+  // background: url(../../assets/images/disabledCheckbox.png) no-repeat no-repeat;
+  // background-size: contain;
 }

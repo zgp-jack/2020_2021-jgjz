@@ -1,5 +1,5 @@
 import Taro, { Config, useEffect, useState, createContext, useDidShow, useShareAppMessage } from '@tarojs/taro'
-import { View, Text, Image, RadioGroup, Radio, Input, Textarea, Checkbox, CoverView, CoverImage } from '@tarojs/components'
+import { View, Text, Image, RadioGroup, Radio, Input, Textarea, Checkbox, CoverView, CoverImage,ScrollView } from '@tarojs/components'
 import ProjectModal from '../../../components/projectModal'
 import WordsTotal from '../../../components/wordstotal'
 import { bkGetProjectTeamAction } from '../../../utils/request/index'
@@ -23,7 +23,7 @@ import { setClickTIme } from '../../../actions/clickTIme'
 import { IMGCDNURL } from '../../../config'
 import classnames from 'classnames'
 import { Type } from '../../../config/store'
-import { statistics } from '../../../utils/v'
+import { statistics, queyElementYPosition, postErrorCountFn } from '../../../utils/v'
 // import RecorderPopup from '../../../components/recorderPopup';
 import Msg from '../../../utils/msg';
 import './index.scss'
@@ -73,11 +73,29 @@ export default function Foreman() {
     group_name:'',
   })
   const [autoFocus, setAutoFocus] = useState<boolean>(false)
+  // 距离顶部
+  const [top,setTop] = useState<number>(0);
   // 获取数据
   // useEffect(()=>{
   //   // 获取项目列表
   //   // bkGetProjectTeam();
   // },[])
+  // useEffect(()=>{
+  //   // var query = Taro.createSelectorQuery()
+  //   // query.select('#box').boundingClientRect(function (res) {
+  //   //   console.log(res[0],'boxxxxx');
+  //   // }).exec();
+  //   const query = Taro.createSelectorQuery()                // 创建节点查询器 query
+  //   query.select(`#box`).boundingClientRect()
+  //   query.selectViewport().scrollOffset()
+  //   query.exec(function (res) {
+  //     //res就是 所有标签为mjltest的元素的信息 的数组
+  //     console.log(res,'撒打算的阿克苏基督教卡');
+  //     //取高度
+  //     console.log(res[1].scrollTop,'312313');
+  //     setTop(top);
+  //   })
+  // }, [top])
   useShareAppMessage(() => {
     return {
       title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
@@ -359,6 +377,7 @@ export default function Foreman() {
       setIscreatproject(false);
     }else{
       statistics('createProject') 
+      postErrorCountFn();
       Msg('您还没有填写项目名称')
     }
   }
@@ -960,7 +979,7 @@ export default function Foreman() {
                   // ))
                 }</View>
                 <View className='atDrawer-list-flex'>
-                  <View>{identity == 1 && <View>{v.leader_name ? `${v.leader_name}的项目`:'-'}</View>}</View>
+                  <View className='atDrawer-list-flex-title'>{identity == 1 && <View>{v.leader_name ? `${v.leader_name}的项目`:'-'}</View>}</View>
                   <View>
                     {!edit && <View>{v.click &&
                     <View>

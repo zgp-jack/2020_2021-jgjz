@@ -35,6 +35,18 @@
   color: rgba(47, 53, 65, 1);
   font-size: 28rpx;
   border:1px solid rgba(243, 243, 243, 1);
+  box-shadow: 0rpx 10rpx 10rpx rgba(160,166,171,0.2);
+}
+.tabber-show {
+  display: flex;
+  justify-content: space-around;
+  background: #ffffff;
+  // padding-top: 15rpx;
+  padding-bottom: 13rpx;
+  color: rgba(47, 53, 65, 1);
+  font-size: 28rpx;
+  border: 1px solid rgba(243, 243, 243, 1);
+  box-shadow: 10px 10px 5px #888888;
 }
 
 .tabber-list {
@@ -682,15 +694,15 @@
   z-index: 10;
 }
 .atDrawer-heard-edit{
-  height: 39rpx;
-  line-height: 39rpx;
-  width: 138rpx;
+  height:45rpx;
+  line-height: 45rpx;
+  width: 150rpx;
   background: rgba(0, 153, 255, 1);
   color: #ffffff;
   font-size: 26rpx;
   text-align: center;
   margin: auto 0 ;
-  border-radius:5rpx;
+  border-radius:10rpx;
 }
 .atDrawer-list{
   position: relative;
@@ -713,16 +725,19 @@
   color: rgba(128, 130, 132, 1);
   font-size: 26rpx;
 }
-
+.atDrawer-list-flex-title{
+  margin-top: 10rpx;
+}
 .atDrawer-list-flex-btn{
-  height: 34rpx;
+  height: 50rpx;
   width: 78rpx;
-  line-height: 34rpx;
+  line-height: 50rpx;
   color: rgba(39, 39, 40, 1);
   font-size: 26rpx;
   text-align: center;
   border:2rpx solid rgba(177, 177, 177, 1);
   margin-left: 8rpx;
+  border-radius: 10rpx;
 }
 .atDrawer-footer{
   // position: absolute;

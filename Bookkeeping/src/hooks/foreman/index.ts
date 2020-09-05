@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect, useDidShow, getStorageInfoSync, useDidHide, useRouter } from '@tarojs/taro'
-import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, addNewBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction, getWorkerHasBusinessByDateAction,getBookkeepingDataAction,getChooseGroupInfoAction } from '../../utils/request/index'
+import { bkAddProjectTeamAction, bkAddWorkerActiion, bkDeleteRroupWorkerAction, addNewBusinessAction, bkGetProjectTeamAction, bkGetWorkerAction, bkWageStandGetWageAction, bkAddWageAction, bkGetWorkerWageAction, bkUpdateWorkerAction, bkDeleteprojectTeamAction, bkUpdateProjectTeamAction, bkSetWorkerMoneyByWageAction, bkupdateWageAction, bkSetGroupLeaderAction, bkSetWorkerIdentityWageAction, bkgetLastGroupInfoAction, getWorkerHasBusinessByDateAction,getBookkeepingDataAction,getChooseGroupInfoAction,postErrorCountAction } from '../../utils/request/index'
 import { MidData, Type, Calendar, RecordTime, User, Tomorrow, NoRequest, TotalData } from '../../config/store'
 import { bkGetProjectTeamData } from '../../utils/request/index.d'
 import { useDispatch, useSelector } from '@tarojs/redux'
@@ -10,7 +10,7 @@ import { setClickTIme } from '../../actions/clickTIme'
 import { setPhoneList } from '../../actions/phoneList';
 import { setColor } from '../../actions/colorSet';
 import Msg from '../../utils/msg';
-import { isPhone,statistics } from '../../utils/v'
+import { isPhone, statistics, postErrorCountFn } from '../../utils/v'
 export interface BorrowingType {
   item: DataType[]
 }
@@ -2806,7 +2806,8 @@ export default function userForeman() {
     if(!isHandleAdd) return
     if (!model.teamName) {
       Msg('您还没有填写班组名称');
-      statistics('createProject') 
+      statistics('createProject');
+      postErrorCountFn();
       return;
     }
     setDel(false)
@@ -2912,7 +2913,8 @@ export default function userForeman() {
           isHandleAdd = true;
         },500)
       } else {
-        statistics('createProject') 
+        statistics('createProject');
+        postErrorCountFn();
         isHandleAdd = true;
         Msg(res.msg);
         setTimeout(() => {
@@ -3478,6 +3480,7 @@ export default function userForeman() {
     if (midData.worker_id === v.id) {
       Msg('不能删除自己');
       statistics('del');
+      postErrorCountFn();
       return
     }
     Taro.showModal({
@@ -3939,13 +3942,7 @@ export default function userForeman() {
     if (!time || time.length == 0){
       statistics('time')
     }
-    let Total = Taro.getStorageSync(TotalData);
-    let num = Total.reduce((accumulator, currentValue) => accumulator + currentValue.num,0);
-    console.log(num,'num213123131');
-    if(num == 5){
-      
-    }
-    console.log(Total,'TotalTotalTotal')
+    postErrorCountFn();
     // 工人的时候要先设置工资标准
     const foremanTitles = JSON.parse(JSON.stringify(foremanTitle))
     // 记工(包工按量)
@@ -4888,7 +4885,8 @@ export default function userForeman() {
       business_type: dataType,
     };
     if(!worker_ids.toString()){
-      statistics('groupWorkers') 
+      statistics('groupWorkers');
+      postErrorCountFn();
     }
     bkSetWorkerMoneyByWageAction(params).then(res => {
       if (res.code === 200) {
@@ -5085,7 +5083,8 @@ export default function userForeman() {
           return v;
         })
         if (!AllClick) {
-          statistics('selectAll')
+          statistics('selectAll');
+          postErrorCountFn();
         }
         console.log(AllClick,'AllClick')
         setAllClick(AllClick)
