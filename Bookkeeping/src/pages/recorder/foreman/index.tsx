@@ -405,46 +405,46 @@ export default function Foreman() {
     setIsdisable(true);
     setCalendarModalDisplay(true);
     console.log(data,'datataa')
-    if(data&&data.length>0){
-      const end = data.pop();
-      let time;
-      if (end.constructor === Array){
-        time = end[0].year + '-' + addZero(end[0].month) + '-' + addZero(end[0].date);
-      }else{
-        time = end.year + '-' + addZero(end.month) + '-' + addZero(end.date);
-      }
-      if(Number(time.split('-')[0])==(nowYear-1)&&Number(time.split('-')[1])==1){
-        setleftTime(false);
-      }else{
-        setleftTime(true);
-      }
-      if(Number(time.split('-')[0])==nowYear&&Number(time.split('-')[1])==nowMon){
-        setrightTime(false)
-      }else{
-        setrightTime(true)
-      }
-      console.log(time,'time')
-      let dayObj = {
-        date: time.split('-')[2],
-        month: time.split('-')[1],
-        year: time.split('-')[0],
-      }
-      const toDayObj = {
-        date: time.split('-')[2],
-        month: time.split('-')[1],
-        year: time.split('-')[0],
-      }
-      // 判断打开的是本月还是其他月份做不同
-      if (toDayObj.year == dayObj.year && toDayObj.month == dayObj.month ){
-        generateThreeMonths(new Date(time))
-      }else{
-        getThreeMonths(new Date(time))
-      }
-    }else{
+    // if(data&&data.length>0){
+    //   const end = data.pop();
+    //   let time;
+    //   if (end.constructor === Array){
+    //     time = end[0].year + '-' + addZero(end[0].month) + '-' + addZero(end[0].date);
+    //   }else{
+    //     time = end.year + '-' + addZero(end.month) + '-' + addZero(end.date);
+    //   }
+    //   if(Number(time.split('-')[0])==(nowYear-1)&&Number(time.split('-')[1])==1){
+    //     setleftTime(false);
+    //   }else{
+    //     setleftTime(true);
+    //   }
+    //   if(Number(time.split('-')[0])==nowYear&&Number(time.split('-')[1])==nowMon){
+    //     setrightTime(false)
+    //   }else{
+    //     setrightTime(true)
+    //   }
+    //   console.log(time,'time')
+    //   let dayObj = {
+    //     date: time.split('-')[2],
+    //     month: time.split('-')[1],
+    //     year: time.split('-')[0],
+    //   }
+    //   const toDayObj = {
+    //     date: time.split('-')[2],
+    //     month: time.split('-')[1],
+    //     year: time.split('-')[0],
+    //   }
+    //   // 判断打开的是本月还是其他月份做不同
+    //   if (toDayObj.year == dayObj.year && toDayObj.month == dayObj.month ){
+    //     generateThreeMonths(new Date(time))
+    //   }else{
+    //     getThreeMonths(new Date(time))
+    //   }
+    // }else{
       setleftTime(true);
       setrightTime(false);
       generateThreeMonths(new Date())
-    }
+    // }
   }
 // }
   const handleOpenProject = () => {

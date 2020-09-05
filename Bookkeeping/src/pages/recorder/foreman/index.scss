@@ -281,7 +281,7 @@
   display: flex;
   justify-content: space-between;
   background: #ffffff;
-  padding: 0 27rpx;
+  // padding: 0 27rpx;
   font-size: 29rpx;
   color: rgba(47, 53, 65, 1);
 }
@@ -310,6 +310,12 @@
 }
 .check_title{
   padding: 24rpx 27rpx;
+  font-size: 30rpx;
+  color: #303642;
+  font-weight: 500;
+  text-align: justify;
+  width: 180rpx;
+  display: block;
 }
 .borrowing-Radio-list{
   padding: 24rpx 10rpx;
@@ -319,7 +325,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-right: 10rpx;
+  margin-right: 21rpx;
 }
 .borrowing-publish-list-item {
   display: flex;
