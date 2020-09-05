@@ -1,5 +1,5 @@
 import Taro, { Config, useEffect, useState, createContext, useDidShow, useShareAppMessage } from '@tarojs/taro'
-import { View, Text, Image, RadioGroup, Radio, Input, Textarea, Checkbox,CoverView } from '@tarojs/components'
+import { View, Text, Image, RadioGroup, Radio, Input, Textarea, Checkbox, CoverView, CoverImage } from '@tarojs/components'
 import ProjectModal from '../../../components/projectModal'
 import WordsTotal from '../../../components/wordstotal'
 import { bkGetProjectTeamAction } from '../../../utils/request/index'
@@ -467,27 +467,54 @@ export default function Foreman() {
       <View className={project || display || quantitiesDisplay || workOvertimeDisplay || workingHoursDisplay || createProjectDisplay || calendarModalDisplay || wageStandardDisplay || addMemberDisplay || wagesModalDisplay || editProjectDisplay || show ? 'foreman-content' :'foreman'}>
       {/* tabber */}
       <View>
-        <View className='tabber'>
-          {recorderTypeArr.item.map(v => (
-            <View className={v.click ? 'tabber-list-click' :'tabber-list'} key={v.id} onClick={() => handleClckTabber(v)}>
-              <View className='tabber-list-box'>
-                {v.click && 
-                <Image src={`${IMGCDNURL}groupIcon.png`} className='groupIcon' />
-                }
-                <View className={classnames({
-                  'tabber-list-image-dian': v.id === 1,
-                  'tabber-list-image-bao': v.id === 2,
-                  'tabber-list-image-jie': v.id === 3,
-                })}>
-                {v.id === 1 && <Image src={`${IMGCDNURL}dian.png`} className='tabber-list-image-dian-img' />}
-                {v.id === 2 && <Image src={`${IMGCDNURL}bao.png`} className='tabber-list-image-bao-img' />}
-                {v.id === 3 && <Image src={`${IMGCDNURL}jie.png`} className='tabber-list-image-jie-img' />}
+        {/* <View className='tabfixed'> */}
+        {/* {project || display || quantitiesDisplay || workOvertimeDisplay || workingHoursDisplay || createProjectDisplay || calendarModalDisplay || wageStandardDisplay || addMemberDisplay || wagesModalDisplay || editProjectDisplay || show ?  */}
+          <View className='tabfixed'>
+            <View className='tabber'>
+              {recorderTypeArr.item.map(v => (
+                <View className={v.click ? 'tabber-list-click' :'tabber-list'} key={v.id} onClick={() => handleClckTabber(v)}>
+                  <View className='tabber-list-box'>
+                    {v.click && 
+                      <Image src={`${IMGCDNURL}groupIcon.png`} className='groupIcon' />
+                    }
+                    <View className={classnames({
+                      'tabber-list-image-dian': v.id === 1,
+                      'tabber-list-image-bao': v.id === 2,
+                      'tabber-list-image-jie': v.id === 3,
+                    })}>
+                    {v.id === 1 && <Image src={`${IMGCDNURL}dian.png`} className='tabber-list-image-dian-img' />}
+                    {v.id === 2 && <Image src={`${IMGCDNURL}bao.png`} className='tabber-list-image-bao-img' />}
+                    {v.id === 3 && <Image src={`${IMGCDNURL}jie.png`} className='tabber-list-image-jie-img' />}
+                    </View>
+                    <View>{v.name}</View>
+                  </View>
                 </View>
-                <View>{v.name}</View>
-              </View>
+              ))}
             </View>
-          ))}
-        </View>
+          </View>
+          {/* :<CoverView className='tabfixed'>
+          <CoverView className='tabber'>
+              {recorderTypeArr.item.map(v => (
+                <CoverView className={v.click ? 'tabber-list-click' :'tabber-list'} key={v.id} onClick={() => handleClckTabber(v)}>
+                  <CoverView className='tabber-list-box'>
+                    <CoverView className={classnames({
+                      'tabber-list-image-dian': v.id === 1,
+                      'tabber-list-image-bao': v.id === 2,
+                      'tabber-list-image-jie': v.id === 3,
+                    })}>
+                    {v.id === 1 && <CoverImage src={`${IMGCDNURL}dian.png`} className='tabber-list-image-dian-img' />}
+                    {v.id === 2 && <CoverImage src={`${IMGCDNURL}bao.png`} className='tabber-list-image-bao-img' />}
+                    {v.id === 3 && <CoverImage src={`${IMGCDNURL}jie.png`} className='tabber-list-image-jie-img' />}
+                    </CoverView>
+                    <CoverView>{v.name}</CoverView>
+                  </CoverView>
+                  {v.click && 
+                    <CoverImage src={`${IMGCDNURL}groupIcon.png`} className='covergroupIcon' />
+                  }
+                </CoverView>
+              ))}
+          </CoverView></CoverView>} */}
+        {/* </View> */}
         {/* 选择为包工的时候 */}
         {recorderType == 2 &&
           <View className='contractor'>

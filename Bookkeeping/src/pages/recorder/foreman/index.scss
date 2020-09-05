@@ -2,6 +2,7 @@
   height: 100%;
   transform: none;
   padding-bottom: 200rpx;
+  padding-top: 158rpx;
   .at-input-number__input, .at-input-number input{
     color: red !important;
   }
@@ -12,6 +13,18 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  padding-top: 158rpx;
+}
+.tabfixed{
+  &,& cover-view,cover-image{
+    line-height: inherit;
+  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  // background: #ffffff;
+  z-index: 5;
 }
 .tabber {
   display: flex;
@@ -909,6 +922,14 @@
 }
 .blued{
   color: rgba(0, 153, 255, 1);
+}
+.covergroupIcon{
+  position: absolute;
+  // bottom: -21rpx;
+  // left: -5rpx;
+  width: 100rpx;
+  height: 20rpx;
+  margin-left: 78rpx;
 }
 .groupIcon{
   position: absolute;
