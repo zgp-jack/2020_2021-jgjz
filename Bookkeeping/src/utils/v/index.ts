@@ -1,4 +1,5 @@
 import Taro from '@tarojs/taro'
+import { TotalData } from '../../config/store';
 
 // 是否是电话号码
 export function isPhone(tel: string): boolean {
@@ -69,4 +70,31 @@ export function isType(data: any, type: string): boolean {
 export function isIos(): boolean {
   let system = Taro.getSystemInfoSync()
   return system.platform === 'ios'
+}
+
+
+// 报错率统计
+export function statistics(name:string){
+  let Total = Taro.getStorageSync(TotalData);
+  let TotalItem = JSON.parse(JSON.stringify(Total))
+  if (TotalItem && TotalItem.length > 0) {
+    const list = TotalItem.find(item => item.name == name);
+    if (list) {
+      list.num += 1;
+    } else {
+      let obj = {
+        name,
+        num: 1
+      }
+      TotalItem.push(obj);
+    }
+  } else {
+    TotalItem = [
+      {
+        name,
+        num: 1
+      }
+    ]
+  }
+  Taro.setStorageSync(TotalData, TotalItem) 
 }

@@ -364,15 +364,17 @@
   margin-top: 10rpx;
 }
 .wagesModal-standard-box-look{
-  min-height:500rpx;
-  max-height: 800rpx;
+  // min-height:500rpx;
+  // max-height: 800rpx;
+  height: 100%;
   overflow-y: scroll;
   padding-top: 20rpx;
   padding-bottom: 20rpx;
   background: rgba(243, 242, 242, 1);
 }
 .noData{
-  min-height: 500rpx;
+  // min-height: 500rpx;
+  height: 100%;
   text-align: center;
   background: #fff;
 }
@@ -415,7 +417,7 @@
   background-size: contain;
 }
 .content{
-  // height: 500rpx;
+  height: 780rpx;
   overflow: scroll;
 }
 .closeIcons{

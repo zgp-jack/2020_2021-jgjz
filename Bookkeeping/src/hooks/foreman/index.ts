@@ -10,7 +10,7 @@ import { setClickTIme } from '../../actions/clickTIme'
 import { setPhoneList } from '../../actions/phoneList';
 import { setColor } from '../../actions/colorSet';
 import Msg from '../../utils/msg';
-import { isPhone } from '../../utils/v'
+import { isPhone,statistics } from '../../utils/v'
 export interface BorrowingType {
   item: DataType[]
 }
@@ -2806,6 +2806,7 @@ export default function userForeman() {
     if(!isHandleAdd) return
     if (!model.teamName) {
       Msg('您还没有填写班组名称');
+      statistics('createProject') 
       return;
     }
     setDel(false)
@@ -2911,6 +2912,7 @@ export default function userForeman() {
           isHandleAdd = true;
         },500)
       } else {
+        statistics('createProject') 
         isHandleAdd = true;
         Msg(res.msg);
         setTimeout(() => {
@@ -3474,7 +3476,8 @@ export default function userForeman() {
     // 判断不能删除自己
     let midData = Taro.getStorageSync(MidData)
     if (midData.worker_id === v.id) {
-      Msg('不能删除自己')
+      Msg('不能删除自己');
+      statistics('del');
       return
     }
     Taro.showModal({
@@ -3668,107 +3671,6 @@ export default function userForeman() {
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = toFixedFn(e);
     setWageStandard(data);
-  }
-  // 报错率
-  const statistics = (name:string)=>{
-    let Total= Taro.getStorageSync(TotalData);
-    let TotalItem = JSON.parse(JSON.stringify(Total))
-      if (TotalItem&&TotalItem.length>0){
-        // TotalItem.every((v)=>{
-        //   console.log(v,'1111')
-        //   if (v.name == name){
-        //     v.num = v.num + 1
-        //   }
-        //   // else{
-        //   // if (v.name != name){
-        //   //   let obj = {
-        //   //     name,
-        //   //     num: 1
-        //   //   }
-        //   //   TotalItem.push(obj)
-        //   //   return false;
-        //   // }
-        // })
-        // TotalItem.find((v)=>{
-        //   if(v.name === name ){
-        //     v.num += 1
-        //   }else{
-        //     let obj = {
-        //       name,
-        //       num: 1
-        //     }
-        //     TotalItem.push(obj)
-        //   }
-        // })
-        // let obj = {
-        //     name,
-        //     num: 1
-        //   }
-        let obj ={
-          name:name,
-          num: 1
-        };
-        // for (let i = 0; i < TotalItem.length;i++){
-        //   if(TotalItem[i].name !== name){
-        //     TotalItem.push(obj)
-        //     break;
-        //   }else{
-        //     TotalItem[i].num+=1;
-        //   }
-        // }
-        console.log(TotalItem[`${name}`],'TotalItem[name]')
-        console.log(name,'name')
-        if (!TotalItem[`${name}`]){
-          console.log('1111')
-          let obj = {
-              name:name,
-              num: 1
-            }
-          TotalItem.push(obj)
-        }else{
-          console.log(111111);
-          console.log(TotalItem[name].num+=1)
-        }
-        // TotalItem[name]
-        console.log(TotalItem,'你到家撒百度空间啊')
-        // try{
-        //   TotalItem.forEach((v)=>{
-        //     if(v.name == name){
-        //       v.num += 1;
-        //     }
-        //   })
-        // } cath(e){
-          
-        // }
-        // var BreakException = {};
-          // try {
-          //   TotalItem.forEach(function(v) {
-          // if (v.name === name){
-          //   v.num+=1
-          // }
-          // });
-          // } catch (e) {
-          //   let obj = {
-          //     name,
-          //     num: 1
-          //   }
-          //   console.log(e);
-          //   if (e !== name){
-          //     TotalItem.push(obj)
-          //   } 
-          //   throw e ;
-          // }
-        // console.log(TotalItem,'TotalItem');
-      }else{
-        TotalItem = [
-          {
-            name,
-            num: 1
-          }
-        ]
-      }
-    console.log(TotalItem);
-    Taro.setStorageSync(TotalData, TotalItem) 
   }
   // 保存
   const handlePreservation = (type: number) => {
@@ -4038,6 +3940,11 @@ export default function userForeman() {
       statistics('time')
     }
     let Total = Taro.getStorageSync(TotalData);
+    let num = Total.reduce((accumulator, currentValue) => accumulator + currentValue.num,0);
+    console.log(num,'num213123131');
+    if(num == 5){
+      
+    }
     console.log(Total,'TotalTotalTotal')
     // 工人的时候要先设置工资标准
     const foremanTitles = JSON.parse(JSON.stringify(foremanTitle))
@@ -4980,6 +4887,9 @@ export default function userForeman() {
       group_info: id,
       business_type: dataType,
     };
+    if(!worker_ids.toString()){
+      statistics('groupWorkers') 
+    }
     bkSetWorkerMoneyByWageAction(params).then(res => {
       if (res.code === 200) {
         // // 给设置模板的设置为已经设置模板
@@ -5174,6 +5084,9 @@ export default function userForeman() {
           }
           return v;
         })
+        if (!AllClick) {
+          statistics('selectAll')
+        }
         console.log(AllClick,'AllClick')
         setAllClick(AllClick)
         // 判断没有一个值没有set设置为取消全选

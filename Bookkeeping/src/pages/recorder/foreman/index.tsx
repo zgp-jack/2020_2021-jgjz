@@ -23,6 +23,7 @@ import { setClickTIme } from '../../../actions/clickTIme'
 import { IMGCDNURL } from '../../../config'
 import classnames from 'classnames'
 import { Type } from '../../../config/store'
+import { statistics } from '../../../utils/v'
 // import RecorderPopup from '../../../components/recorderPopup';
 import Msg from '../../../utils/msg';
 import './index.scss'
@@ -357,6 +358,7 @@ export default function Foreman() {
       setIsdisable(true)
       setIscreatproject(false);
     }else{
+      statistics('createProject') 
       Msg('您还没有填写项目名称')
     }
   }
