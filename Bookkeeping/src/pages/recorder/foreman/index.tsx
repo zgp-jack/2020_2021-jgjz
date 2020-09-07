@@ -903,6 +903,7 @@ export default function Foreman() {
               // onFocus={() => setAutoFocus(false)}
               className='textarea'
               placeholder='请填写备注...'
+              cursorSpacing={100}
               value={model && model.details}
               onInput={(e) => handleInput('details',e)}
               onBlur={(e) => blurhandleContent('details',e)}

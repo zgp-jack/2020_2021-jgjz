@@ -61,6 +61,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                     <Input 
                       type='digit'
                       className='inputBox' 
+                      cursorSpacing={200}
                       // maxLength={7}
                       value={toFixedFnNum(wageStandard.work).toString()} 
                       onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
@@ -77,6 +78,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                         type='digit'
                         className='inputBox'
                         // maxLength={7}
+                        cursorSpacing={200}
                         value={wageStandard.money}
                         onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
                         onInput={(e) => handleWageStandard('money', e)} />
@@ -114,6 +116,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                       type='digit'
                       className='inputBox-day'
                       // maxLength={7}
+                      cursorSpacing={200}
                       value={wageStandard.addWork}
                       // onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
                       onInput={(e) => handleWageStandard('addWork', e)} />
@@ -141,6 +144,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                       <Input
                         type='digit'
                         className='inputBox-day'
+                        cursorSpacing={200}
                         // maxLength={7}
                         value={toFixedFnNum(wageStandard.day).toString()}
                         onBlur={(e) => {e.stopPropagation();e.preventDefault()}}

@@ -1,5 +1,6 @@
-import Taro from '@tarojs/taro'
+import Taro, { useState, useEffect} from '@tarojs/taro'
 import { View, Image, Text, Input } from '@tarojs/components'
+import { isIos } from '../../utils/v'
 import './index.scss'
 
 interface PROPS {
@@ -10,10 +11,28 @@ interface PROPS {
   handleEditProjectData: (type: string, e: any) => void,
 }
 export default function EditProject({ display, handleClose, data, handleEditProjectData, handleSubmit }: PROPS) {
+  const [focus,setFocus]= useState<Boolean>(false)
+  const [nameFocus, setNameFocus] = useState<Boolean>(false);
+  const [ios, setIos] = useState<boolean>(false)
+  useEffect(() => {
+    // 判断是安卓还是苹果
+    setIos(isIos())
+  })
+  const handleOnFocus = ()=>{
+    if (!ios){
+      setNameFocus(true)
+    }
+  }
+  const handleOnBlur = ()=>{
+    if (!ios) {
+      setNameFocus(false)
+    }
+  }
+  console.log(focus,'focus')
   return (
     <View>
       {display &&
-        <View className='createProject-complaintModal'>
+        <View className={!nameFocus||!focus?'createProject-complaintModal':'createProject-complaintModal-isFocus'}>
           <View className='createProject-complaintModal-content'>
             <View className='createProject-complaintModal-content-title'>
               <View>修改项目/班组名称</View>
@@ -26,6 +45,12 @@ export default function EditProject({ display, handleClose, data, handleEditProj
                 placeholder='请输入项目名称'
                 value={data.group_name}
                 maxLength={10}
+                cursorSpacing={nameFocus?0:200}
+                onFocus={handleOnFocus}
+                onBlur={handleOnBlur}
+                // onFocus={() => {setFocus(true)}}
+                // onBlur={() => { setFocus(false)}}
+                // cursorSpacing={200}
                 onInput={(e) => handleEditProjectData('group_name', e)}
               />
             </View>
@@ -36,6 +61,9 @@ export default function EditProject({ display, handleClose, data, handleEditProj
                 placeholder='请输入班组名称'
                 value={data.team_name}
                 maxLength={20}
+                onFocus={() => { setFocus(true) }}
+                onBlur={() => { setFocus(false) }}
+                cursorSpacing={100}
                 onInput={(e) => handleEditProjectData('team_name', e)}
               />
             </View>

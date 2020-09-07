@@ -3915,7 +3915,7 @@ export default function userForeman() {
       statistics('entryName') 
     }
     // 工人
-    if(!workers){
+    if(!workers||workers.length==0){
       statistics('workers') 
     }
     // 工资标准

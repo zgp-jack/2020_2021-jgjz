@@ -97,6 +97,7 @@
   background: #fff;
   padding: 20rpx 28rpx;
   margin-top: 20rpx;
+  position: relative;
 }
 .list-flex{
   display: flex;
@@ -133,8 +134,8 @@
 }
 .add{
   position: fixed;
-  right: 0rpx;
-  bottom: 200rpx;
+  right: 15rpx;
+  bottom: 280rpx;
   width:82rpx;
   height:82rpx;
   line-height: 82rpx;
@@ -177,6 +178,10 @@
   width: 29rpx;
   border: 1rpx solid rgba(191, 191, 191, 1);
   margin-top: 45%;
+  // margin-top: 10rpx;
+  // margin-left: 29rpx;
+  // margin: auto 0 ;
+  // margin-left: 29rpx;
   margin-right: 20rpx;
 }
 
@@ -184,7 +189,10 @@
   height: 30rpx;
   width: 30rpx;
   margin-top: 45%;
+  // margin: auto 0;
+  // margin-left: 29rpx;
   margin-right: 20rpx;
+  // margin-top: 10rpx;
   // background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
   background-size: contain;
 }
@@ -195,4 +203,108 @@
   margin-right: 20rpx;
   // background: url(../../assets/images/disabledCheckbox.png) no-repeat no-repeat;
   // background-size: contain;
+}
+.user{
+  height: 97rpx;
+  width: 100%;
+  background: rgba(236, 236, 236, 1);
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 27rpx;
+}
+.user-type {
+  height: 97rpx;
+  width: 100%;
+  background: rgba(236, 236, 236, 1);
+  position: fixed;
+  bottom: 135rpx;
+  left: 0rpx;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 27rpx;
+}
+.checkoutBox-name {
+  width: 212rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  background: #FFFFFF;
+  border-radius: 3rpx;
+  text-align: center;
+  margin: auto 0;
+  margin-right: 27rpx;
+  font-size: 28rpx;
+}
+.checkoutBox-close{
+  width: 163rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  background: rgba(0, 153, 255, 1);
+  border-radius: 3rpx;
+  text-align: center;
+  margin: auto 0;
+  margin-right: 27rpx;
+  font-size: 28rpx;
+  color: #FFFFFF;
+}
+.checkoutBox{
+  display: flex;
+  margin: auto 0;
+  font-size: 28rpx;
+}
+.user-btn{
+  width: 163rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  background: #FFFFFF;
+  border-radius: 3rpx;
+  text-align: center;
+  margin-right: 25rpx;
+  font-size: 28rpx;
+}
+.user-btn-box{
+  display: flex;
+  margin: auto;
+}
+
+.triangleIcon{
+  height: 14rpx;
+  width: 14rpx;
+  background-size: contain;
+}
+.edit{
+  position: absolute;
+  right: 0rpx;
+  top: 0rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  border-left: 1rpx solid rgba(191, 192, 192, 1);
+  font-size: 28rpx;
+  padding:0rpx 30rpx;
+  margin: 22rpx 0;
+}
+.checkbox-no-all {
+  height: 29rpx;
+  width: 29rpx;
+  border: 1rpx solid rgba(191, 191, 191, 1);
+  // margin-top: 45%;
+  // margin-top: 10rpx;
+  // margin-left: 29rpx;
+  margin: auto 0;
+  margin-left: 29rpx;
+  margin-right: 20rpx;
+}
+
+.checkbox-click-all {
+  height: 30rpx;
+  width: 30rpx;
+  // margin-top: 45%;
+  margin: auto 0;
+  margin-left: 29rpx;
+  margin-right: 20rpx;
+  // margin-top: 10rpx;
+  // background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
+  background-size: contain;
 }
