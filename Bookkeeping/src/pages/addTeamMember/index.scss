@@ -1,5 +1,5 @@
 .content{
-  padding-bottom: 200rpx;
+  padding-bottom: 300rpx;
   padding-top: 84rpx;
   transform: none;
   .at-search-bar__action {
@@ -10,7 +10,8 @@
 }
 .foreman-content {
   position: fixed;
-  top: 100rpx;
+  padding-top: 100rpx;
+  top: 0rpx;
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -307,4 +308,16 @@
   // margin-top: 10rpx;
   // background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
   background-size: contain;
+}
+.checkbox-disabled-all {
+  height: 30rpx;
+  width: 30rpx;
+  margin: auto 0;
+  margin-left: 29rpx;
+  margin-right: 20rpx;
+  // background: url(../../assets/images/disabledCheckbox.png) no-repeat no-repeat;
+  // background-size: contain;
+}
+.auto{
+  margin-top: 5rpx;
 }

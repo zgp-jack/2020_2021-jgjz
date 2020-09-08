@@ -5450,6 +5450,42 @@ export default function userForeman() {
     setTimeout(() => {
       setIsdisable(false)
     },100);
+    let dataType;
+    recorderTypeArr.item.map((v) => {
+      if (v.click) {
+        dataType = v.id;
+      }
+    })
+    let times: string[] = data.map(item => (item.year + '-' + item.month + '-' + item.date));
+    let params = {
+      group_info: groupInfo,
+      business_type: dataType,
+      date: times.toString(),
+    }
+    getWorkerHasBusinessByDateAction(params).then(res=>{
+      console.log(res)
+      if(res.code === 200){
+        const Item = JSON.parse(JSON.stringify(workerItem));
+        if(res.data.worker.length>0){
+          setCache(res.data.worker)
+          dispatch(setColor(res.data.worker || []));
+          Item.forEach((v, i) => {
+            v.discipline = false;
+            res.data.worker.forEach((val, index) => {
+              if (val == v.id) {
+                v.discipline = true;
+              }
+            })
+          })
+        }else{
+          Item.forEach((v, i) => {
+            v.discipline = false;
+          })
+        }
+        dispatch(setPhoneList(Item));
+        setWorkerItem(Item);
+      }
+    })
     // }
   }
   // 左

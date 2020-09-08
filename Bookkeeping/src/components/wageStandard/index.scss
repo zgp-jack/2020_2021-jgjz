@@ -70,9 +70,10 @@
   background: #fff;
 }
 .formula{
-  margin-top: 12rpx;
+  // margin-top: 12rpx;
   background: #fff;
-  padding-bottom: 20rpx;
+  // padding-bottom: 20rpx;
+  padding-bottom: 500rpx;
 }
 .formula-heard{
   width: 696rpx;
@@ -179,4 +180,13 @@
 }
 .icon_right{
   padding: 0 40rpx 0 20rpx;
+}
+.mt{
+  margin-top: 20rpx !important;
+}
+
+.backgroundImg{
+  background: rgba(0, 0, 0, 0.3);
+  height: 20rpx;
+  width: 100%;
 }

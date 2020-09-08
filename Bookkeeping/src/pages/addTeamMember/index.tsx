@@ -8,7 +8,7 @@ import EditMember from '../../components/editMember';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { setWorker } from '../../actions/workerList';
 import { setmailList } from '../../actions/mailList'
-import { bkSetGroupLeaderAction, bkAddWorkerInGroupAction, postDeleteWorkerAction, bkUpdateWorkerAction } from '../../utils/request/index'
+import { bkSetGroupLeaderAction, bkAddWorkerInGroupAction, postDeleteWorkerAction, bkUpdateWorkerAction, bkAddWorkerActiion, bkGetWorkerAction } from '../../utils/request/index'
 import { Type, MidData } from '../../config/store';
 import { setPhoneList } from '../../actions/phoneList';
 import classnames from 'classnames'
@@ -23,7 +23,7 @@ export default function AddTeamMember() {
   const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
   const { groupInfo, type } = router.params;
-  const { handleInput, handleEstablish, addMemberDisplay, setAddMemberDisplay, model, setModel, workerList, setWorkerList, storagelist, setStoragelist } = userForeman()
+  const { handleInput, addMemberDisplay, setAddMemberDisplay, handleEstablish, model, setModel, workerList, setWorkerList, storagelist, setStoragelist } = userForeman()
   // 列表数据
   const [data, setData] = useState<any[]>([]);
   // 默认值
@@ -38,6 +38,8 @@ export default function AddTeamMember() {
   const [selectAll, setSelectAll] = useState<Boolean>(false);
   // 是否全选
   const [isClick,setIsClick]= useState<Boolean>(false); 
+  // 全选禁止
+  const [stopCheckout, setStopCheckout] = useState<Boolean>(false)
   const [administration, setAdministration] = useState<Boolean>(false)
   // 修改
   const [editMemberDisplay, setEditMemberDisplay] = useState<Boolean>(false)
@@ -47,6 +49,8 @@ export default function AddTeamMember() {
     phone:'',
     id:'',
   })
+  // 人员管理存值
+  const [storeValue, setStoreValue] = useState<any[]>();
   // 关闭添加成员
   const handleAddMemberClose = () => {
     setAddMemberDisplay(false);
@@ -96,6 +100,7 @@ export default function AddTeamMember() {
       const item = JSON.parse(JSON.stringify(useSelectorItem.mailList))
       const arr = JSON.parse(JSON.stringify(useSelectorItem.phoneList))
       let itemData;
+      let clickState = true;
       if (item.length > 0) {
         itemData = item.map(v => {
           if (v.list) {
@@ -118,6 +123,17 @@ export default function AddTeamMember() {
           }
         })
       }
+      if (item.length>0){
+        item.forEach((v,i)=>{
+          v.list.forEach((val,index)=>{
+            if (!val.disabled){
+              clickState = false;
+            }
+          })
+        })
+      }
+      console.log(clickState,'clickStateclickState')
+      setStopCheckout(clickState);
       // return;
       console.log(item,'timenejnjfbkja')
       setDefaultData(item);
@@ -346,16 +362,20 @@ export default function AddTeamMember() {
           }
         }
       }
+      setClickData([]);
       setIsClick(false)
     }else{
       console.log('aaaaa')
+      let arr:any[] =[];
       for(let i=0;i<dataItem.length;i++){
         for (let j = 0; j < dataItem[i].list.length; j++) {
           console.log(dataItem[i].list[j],'1111')
-          dataItem[i].list[j].click = true
+          dataItem[i].list[j].click = true;
+          arr.push(dataItem[i].list[j]);
         }
       }
       setIsClick(true)
+      setClickData(arr);
     }
     console.log(dataItem,'111')
     setData(dataItem)
@@ -451,6 +471,11 @@ export default function AddTeamMember() {
   // 删除工人
   const handelUserDel = ()=>{
     const datas = JSON.parse(JSON.stringify(clickData));
+    const dataItem = JSON.parse(JSON.stringify(data));
+    console.log(dataItem, 'dataItem')
+    console.log(datas,'datas');
+    const mid = Taro.getStorageSync(MidData);
+    console.log(mid);
     let ids:string[]=[];
     for(let i =0;i<datas.length;i++){
       ids.push(datas[i].id);
@@ -459,11 +484,12 @@ export default function AddTeamMember() {
       Msg('请至少选择一条信息')
       return
     }
+    console.log(ids,'ids');
     Taro.showModal({
       content:'确定要删除吗？',
       showCancel: true,
-      confirmColor: 'rgba(0, 153, 255, 1)',
-      cancelColor: 'rgba(170, 170, 170, 1)',
+      confirmColor: '#0099FFFF',
+      cancelColor: '#AAAAAAFF',
       confirmText:'确定删除',
       success:(res)=>{
         if (res.confirm == true) {
@@ -473,33 +499,29 @@ export default function AddTeamMember() {
           postDeleteWorkerAction(params).then(res=>{
             if(res.code === 200){
               Msg('删除成功');
-              const dataItem = JSON.parse(JSON.stringify(data));
-              // for(let i=0;i<dataItem.length;i++){
-              //   for(let j=0;j<dataItem[i].list;j++){
-              //     for(let z=0;z<ids.length;z++){
-              //       console.log(dataItem[i].list[j].id);
-              //       console.log(ids[z])
-              //       if(dataItem[i].list[j].id == ids[z]){
-              //         console.log(j,'jjjj')
-              //         dataItem[i].list.splice(j,1)
-              //       }
-              //     }
-              //   }
-              // }
-              dataItem.forEach((itemData, index) => {
-                itemData.list.forEach((val, i) => {
-                  ids.forEach((value,e)=>{
-                    if (val.id == value){
-                      console.log(1111)
-                      console.log(index,'1111')
-                      dataItem.splice(index,1);
+              ids.forEach((v,i)=>{
+                dataItem.forEach((val,index)=>{
+                  val.list.forEach((value,valueIndex)=>{
+                    if(v == value.id){
+                      val.list.splice(valueIndex,1)
                     }
                   })
                 })
               })
-              // return;
-              console.log(dataItem,'111')
-              setData(dataItem);
+              for(let i=0;i<dataItem.length;i++){
+                console.log(dataItem[i].list,'lsit');
+                if(dataItem[i].list.length == 0){
+                  dataItem.splice(i, 1);
+                }
+              }
+              let data:any[] = [];
+              for(let i=0;i<dataItem.length;i++){
+                if(dataItem[i].list.length>0){
+                  data.push(dataItem[i]);
+                }
+              }
+              console.log(data,'dataItem');
+              setData(data);
               setClickData([])
             }else{
               Msg(res.msg);
@@ -509,8 +531,86 @@ export default function AddTeamMember() {
       }
     })
   }
+  // 点击人员管理
+  const handleSupervise = ()=>{
+    const dataItem = JSON.parse(JSON.stringify(data));
+    setStoreValue(dataItem);
+    setAdministration(true);
+    data.map((v)=>{
+      v.list.map((val)=>{
+        val.click = false;
+      })
+    })
+    setData(data);
+  }
+  // 取消
+  const handleClose = ()=>{
+    setAdministration(false);
+    // const dataItem = JSON.parse(JSON.stringify(data));
+    const itme = JSON.parse(JSON.stringify(storeValue));
+    // console.log(storeValue,'storeValuestoreValuestoreValue')
+    setData(itme)
+  }
+  // 添加
+  // const handleEstablish = ()=>{
+  //   const data = JSON.parse(JSON.stringify(model))
+  //   if (!model.userName) {
+  //     let type = Taro.getStorageSync(Type);
+  //     if (type == 1) {
+  //       Msg('您还没有填写工人名称')
+  //     } else {
+  //       Msg('您还没有填写班组长名称')
+  //     }
+  //     return
+  //   }
+  //   if (model.phone) {
+  //     if (!isPhone(model.phone)) {
+  //       Msg('请输入正确的手机号')
+  //       // isHandleAdd = true
+  //       return
+  //     }
+  //   }
+  //   let params: any = {
+  //     name: data.userName,
+  //     tel: data.phone,
+  //   }
+  //   bkAddWorkerActiion(params).then(res => {
+  //     if (res.code === 200) {
+  //       // 叫后台返回id 姓名 电话
+  //       // const data = res.data
+  //       // 添加成功后重新获取设置数据
+  //       // bkGetWorker('', 1, data);
+  //       // 设置成功清空手机和电话
+  //       console.log(res.data,'resdata');
+  //       const modales = JSON.parse(JSON.stringify(model));
+  //       setModel({ ...modales, userName: '', phone: '' })
+  //       setAddMemberDisplay(false);
+  //       const dataList =JSON.parse(JSON.stringify(data));
+  //       const item = JSON.parse(JSON.stringify(storeValue))
+  //       bkGetWorkerAction({}).then(resItem=>{
+  //         console.log(resItem.data)
+  //         for (let i = 0; i < resItem.data.length; i++) {
+  //           if (dataList.name_py === resItem.data[i].name_py) {
+  //             resItem.data[i].list.push(data);
+  //           }
+  //         }
+  //         for (let i = 0; i < resItem.data.length; i++) {
+  //           if (item.name_py === resItem.data[i].name_py) {
+  //             resItem.data[i].list.push(data);
+  //           }
+  //         }
+  //         console.log(resItem.data,'1111')
+  //         for(let i = 0;i<res.data[i].length;)
+  //         dispatch(setmailList(resItem.data))
+  //       })
+  //       // setData(dataList)
+  //     } else {
+  //       Msg(res.msg)
+  //     }
+  //   })
+  // }
   return (
-    <View className={addMemberDisplay?'foreman-content':'content'}>
+    <View className={addMemberDisplay || editMemberDisplay?'foreman-content':'content'}>
       {masklayer&& <View className='masklayer'></View>}
       <View className='searchName'>
         <AtSearchBar
@@ -566,14 +666,26 @@ export default function AddTeamMember() {
       {/* <View className='add' onClick={() => setAddMemberDisplay(true)}>添加</View> */}
       <View className={type !== '2' && !administration ? 'user-type' :'user' }>
         <View className='checkoutBox' onClick={handleClickCheckout}>
-          {selectAll || (type == '2' && !administration) ? <View className='checkbox-click-all'></View> : (isClick ? <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click-all' /> : <View className={'checkbox-no-all'}></View>)}{(type == '2' && !administration) ?'':<View>全选</View>}
+          {selectAll || (type == '2' && !administration) ? <View className='checkbox-click-all'></View> : 
+          // (isClick ? <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click-all' /> : <View className={'checkbox-no-all'}></View>)
+          <View className='auto'>
+              {stopCheckout &&
+              // <View className='checkbox-disabled'></View>
+              <Image src={`${IMGCDNURL}disabledCheckbox.png`} className='checkbox-disabled-all' />
+            }
+            {!stopCheckout&& isClick&&
+              <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click-all' />
+            }
+            {!stopCheckout&& !isClick && <View className='checkbox-no-all'></View>}
+          </View>
+        }{(type == '2' && !administration) ?'':<View>全选</View>}
         </View>
         {administration ? <View className='user-btn-box'><View className='user-btn' onClick={handelUserDel}>删除</View><View onClick={() => setAddMemberDisplay(true)} className='user-btn'>添加</View></View>:''}
-        {!administration ? <View className='checkoutBox-name' onClick={() => { setAdministration(true)}}>
+        {!administration ? <View className='checkoutBox-name' onClick={handleSupervise}>
           人员管理
           <Image src={`${IMGCDNURL}triangleIcon.png`} className='triangleIcon' />
         </View> : 
-          <View className='checkoutBox-close' onClick={() => { setAdministration(false) }}>
+          <View className='checkoutBox-close' onClick={handleClose}>
             取消
         </View>}
       </View>

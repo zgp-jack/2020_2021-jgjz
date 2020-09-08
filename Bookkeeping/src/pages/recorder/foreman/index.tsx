@@ -1,5 +1,5 @@
 import Taro, { Config, useEffect, useState, createContext, useDidShow, useShareAppMessage } from '@tarojs/taro'
-import { View, Text, Image, RadioGroup, Radio, Input, Textarea, Checkbox, CoverView, CoverImage,ScrollView } from '@tarojs/components'
+import { View, Text, Image, RadioGroup, Radio, Input, Textarea, Checkbox, CoverView, CoverImage, ScrollView } from '@tarojs/components'
 import ProjectModal from '../../../components/projectModal'
 import WordsTotal from '../../../components/wordstotal'
 import { bkGetProjectTeamAction } from '../../../utils/request/index'
@@ -15,7 +15,7 @@ import WageStandard from '../../../components/wageStandard';
 import AddMember from '../../../components/addMember';
 import WagesModal from '../../../components/wagesModal';
 import userForeman from '../../../hooks/foreman';
-import { AtDrawer } from 'taro-ui'
+import { AtDrawer, AtFloatLayout } from 'taro-ui'
 import { useDispatch, useSelector } from '@tarojs/redux'
 import EditProject from '../../../components/editProject';
 import { setDataList } from '../../../actions/list'
