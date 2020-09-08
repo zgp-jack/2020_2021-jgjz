@@ -107,6 +107,7 @@
   display: flex;
   justify-content: space-between;
   background-color: #efefef;
+  justify-items: center;
   padding: 30rpx;
 }
 .content-list-subclass:not(:last-child){
@@ -121,6 +122,7 @@
     width: 60rpx;
     height: 100%;
     margin-left: -10rpx;
+    margin-top: 5%;
     position: relative;
   }
   display: flex;
@@ -353,15 +355,17 @@
   height: 29rpx;
   width: 29rpx;
   border: 1rpx solid rgba(191, 191, 191, 1);
-  margin-top: 40%;
+  // margin-top: 40%;
+  margin:  auto;
   margin-right: 20rpx;
 }
 
 .checkbox-click {
   height: 30rpx;
   width: 30rpx;
-  margin-top: 40%;
-  margin-right: 20rpx;
+  // margin-top: 40%;
   background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
   background-size: contain;
+  margin: auto 0;
+  margin-right: 20rpx;
 }

@@ -2913,7 +2913,7 @@ export default function userForeman() {
           isHandleAdd = true;
         },500)
       } else {
-        statistics('createProject');
+        statistics('failProject');
         postErrorCountFn();
         isHandleAdd = true;
         Msg(res.msg);
@@ -3537,10 +3537,25 @@ export default function userForeman() {
                   noSet = false
                 } 
               }
+              let allClick = true;
+              for (let i = 0; i < data.length; i++) {
+                if (!data[i].click) {
+                  allClick = false;
+                }
+              }
+              let numData: any[] = [];
+              for (let i = 0; i < data.length; i++) {
+                if (data[i].click) {
+                  numData.push(data[i])
+                }
+              }
+              setAllClick(allClick)
+              setClickNum(numData.length);
               setNoset(noSet);
               setMoneyList(moneyListArr)
               setWorkerItem(data);
               dispatch(setPhoneList(data));
+              
               // 获取工人列表
               // 设置是否点击了
               // const workerListArr = JSON.parse(JSON.stringify(workerList));
@@ -4416,22 +4431,26 @@ export default function userForeman() {
     // 上班标准提示
     if (workNum == 0) {
       Msg('上班标准必须大于0')
+      statistics('workNum') 
       return;
     }
     // 每个工多少钱提示
     if (moneyNum == 0 || moneyNum ==0.00) {
+      statistics('moneyNum') 
       Msg('每个工工钱必须大于0')
       return;
     }
     //按天数 一个工
     if (data.type == 2) {
       if (data.day == 0) {
+        statistics('day') 
         Msg('1个工必须大于0小时')
         return;
       }
     }
     if (data.type == 1) {
       if (data.addWork == 0 || data.addWork == 0.00 ) {
+        statistics('addWork') 
         Msg('每小时加班金额必须大于0')
         return;
       }

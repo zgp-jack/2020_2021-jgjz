@@ -376,7 +376,7 @@ export default function Foreman() {
       setIsdisable(true)
       setIscreatproject(false);
     }else{
-      statistics('createProject') 
+      statistics('projectName') 
       postErrorCountFn();
       Msg('您还没有填写项目名称')
     }
@@ -938,7 +938,7 @@ export default function Foreman() {
       {/* 选择加班时长 */}
         <WorkOvertime display={workOvertimeDisplay} maskHandleClose={handleWorkOvertimeClose} handleWorkOvertimeClose={handleWorkOvertimeClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={model}/>
       {/* 选择上班时间 */}
-      <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
+      <WorkingHours display={workingHoursDisplay} maskHandleClose={handleWorkingHoursClose} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 创建项目引导 */}
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={handleNext} handleInput={handleInput}/>
       {/* 日历 */}
