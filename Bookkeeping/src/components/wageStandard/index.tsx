@@ -46,12 +46,13 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
     // <View className='mt'>
     // <View className='mt'>
       <AtDrawer show={display} mask right width={'100%'}>
-      <View className='backgroundImg'></View>
+      <View className='backgroundImg' onClick={handleClose}></View>
       {/* <View className='wageStandard-content-heard'>
         <View className='wageStandard-content-heard-close' onClick={handleClose}>取消</View>
         <View>设置工资标准</View>
         <View className='wageStandard-content-heard-ok' onClick={handleAddWage}>确定</View>
       </View> */}
+      <View className='title'>上班工资标准</View>
       <View className='wageStandard-box'>
         <View className='wageStandard-content-listBox'>
           <View className='wageStandard-content-listBox-list'>
@@ -61,7 +62,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                 <Input
                   type='digit'
                   className='inputBox'
-                  cursorSpacing={200}
+                  // cursorSpacing={200}
                   // maxLength={7}
                   value={toFixedFnNum(wageStandard.work).toString()}
                   onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
@@ -78,7 +79,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                     type='digit'
                     className='inputBox'
                     // maxLength={7}
-                    cursorSpacing={200}
+                    // cursorSpacing={200}
                     value={wageStandard.money}
                     onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
                     onInput={(e) => handleWageStandard('money', e)} />
@@ -97,6 +98,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
           </View>
         </View>
       </View>
+      <View className='addTitle'>加班工资标准</View>
       <View className='formula'>
         <View className='formula-heard'>
           <View>加班工资计算方式：</View>
@@ -116,7 +118,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                     type='digit'
                     className='inputBox-day'
                     // maxLength={7}
-                    cursorSpacing={200}
+                    // cursorSpacing={200}
                     value={wageStandard.addWork}
                     // onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
                     onInput={(e) => handleWageStandard('addWork', e)} />
@@ -144,7 +146,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                   <Input
                     type='digit'
                     className='inputBox-day'
-                    cursorSpacing={200}
+                    // cursorSpacing={200}
                     // maxLength={7}
                     value={toFixedFnNum(wageStandard.day).toString()}
                     onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
@@ -160,6 +162,10 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
         }
         <View>
         </View>
+      </View>
+      <View className='btnBox'>
+        <View className='btn' onClick={handleAddWage}>使用此工资标准</View>
+        <View className='closeBtn' onClick={handleClose}>取消</View>
       </View>
     </AtDrawer>
     // </View>

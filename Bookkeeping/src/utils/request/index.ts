@@ -426,7 +426,7 @@ export function bkAddProjectTeamAction(data): Promise<Inter.bkAddProjectTeam> {
 }
 
 // 添加工人
-export function bkAddWorkerActiion(data): Promise<Inter.bkBusinessType> {
+export function bkAddWorkerActiion(data): Promise<Inter.bkIndexTypeDataList> {
   let type = Taro.getStorageSync(Type)
   data.identity = type
   let midData = Taro.getStorageSync(MidData);

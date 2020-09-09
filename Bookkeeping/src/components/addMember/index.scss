@@ -81,3 +81,135 @@
   width: 100rpx;
   height: 100rpx;
 }
+.title {
+  color: #303642;
+  font-size: 30rpx;
+  font-weight: 500;
+  margin-left: 27rpx;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #E0E0E0;
+}
+
+.publish-recruit-card {
+  position: relative;
+  background-color: white;
+  // border: 1rpx solid red;
+}
+
+.publish-list-item {
+  display: flex;
+  position: relative;
+  width: 90%;
+  height: 125rpx;
+  line-height: 125rpx;
+  margin-left: 30rpx;
+  // border-bottom: 1rpx solid #F1F1F1;
+}
+
+.border-item {
+  border-bottom: 1px solid #eeeeee;
+}
+
+.pulish-list-title {
+  // width: 180rpx;
+  display: block;
+  // text-align: justify;
+  line-height: 125rpx;
+  font-size: 29rpx;
+  color: #3C3A3A;
+  &::after {
+    content: '.';
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    height: 0;
+  }
+}
+
+.publish-list-input {
+  position: relative;
+  width: 65%;
+  height: 125px;
+  line-height: 125px;
+  display: block;
+  font-size: 30px;
+  margin-left: 30px;
+  text-align: right;
+
+  .publish-input-list {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+
+    &:nth-last-child(1) {
+      margin-right: 0;
+    }
+  }
+}
+.publish-list-input-name {
+  position: relative;
+  width: 75%;
+  height: 125px;
+  line-height: 125px;
+  display: block;
+  font-size: 30px;
+  margin-left: 30px;
+  text-align: right;
+
+  .publish-input-list {
+    position: relative;
+    display: inline-block;
+    margin-right: 20px;
+
+    &:nth-last-child(1) {
+      margin-right: 0;
+    }
+  }
+}
+// .new-input {
+//   width: 106%;
+// }
+
+.btn {
+  width: 694rpx;
+  height: 79rpx;
+  line-height: 79rpx;
+  background: #009AFF;
+  box-shadow: 1rpx 3rpx 5rpx 0rpx rgba(170, 170, 170, 0.24);
+  border-radius: 10rpx;
+  text-align: center;
+  color: #FFFFFF;
+  margin: auto;
+  margin-bottom: 28rpx;
+}
+
+.closeBtn {
+  width: 694rpx;
+  height: 79rpx;
+  line-height: 79rpx;
+  background: #FFFFFF;
+  border: 1rpx solid #CCCCCC;
+  box-shadow: 1rpx 3rpx 5rpx 0rpx rgba(170, 170, 170, 0.24);
+  border-radius: 10rpx;
+  text-align: center;
+  color: #A6A5A5;
+  margin: auto;
+}
+
+.btnBox {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 106rpx;
+}
+
+.back {
+  background: rgba(0, 0, 0, 0.3);
+  height: 42rpx;
+  width: 100%;
+}

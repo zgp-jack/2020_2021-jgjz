@@ -27,7 +27,7 @@ export default function UploadImgAction(url: string = UPLOADIMGURL): Promise<Res
   let uploadUrl = url || UPLOADIMGURL
   return new Promise((resolve) => {
     Taro.chooseImage({
-      count: 1,
+      count:4,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
       success: res => {
@@ -47,7 +47,7 @@ export function CameraAndAlbum(url: string = UPLOADIMGURL): Promise<ResultImage>
       .then(res => {
         let index = res.tapIndex
         Taro.chooseImage({
-          count: 1,
+          count: 4,
           sizeType: ['compressed'],
           sourceType: index === 0 ? ['camera'] : ['album'],
           success: function (res) {

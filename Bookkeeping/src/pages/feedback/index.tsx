@@ -111,7 +111,12 @@ export default function Feedback() {
       data: PHONE,
       success: () => {
         Taro.hideToast()
-        Msg('微信号复制成功')
+        // Msg('微信号复制成功')
+        Taro.showModal({
+          title: '恭喜您',
+          showCancel: false,
+          content: `微信号：${PHONE}已复制到粘贴板，去微信-添加朋友-搜索框粘贴`
+        })
         // ShowActionModal({
         //   // title: '恭喜您',
         //   msg: '微信号复制成功'
@@ -124,7 +129,7 @@ export default function Feedback() {
       <View className='heard'>
         <View>
         <View className='heard-title'>为了提高沟通效率，建议您添加</View>
-          <View>平台微信:<Text className='blued'>{PHONE}</Text></View>
+          <View>平台微信:<Text className='blued' onClick={handleCopy}>{PHONE}</Text></View>
         </View>
         <View className='copy' onClick={handleCopy}>点击复制</View>
       </View>

@@ -1292,6 +1292,7 @@ export default function userForeman() {
     } else {
       clickDataArr = JSON.parse(JSON.stringify(clickData));
     }
+    console.log(clickDataArr,'clickDataArrclickDataArr')
     // const clickDataArr = JSON.parse(JSON.stringify(clickData));
     let data;
     if (useSelectorItem.clickTIme.length > 0) {
@@ -2762,6 +2763,7 @@ export default function userForeman() {
   const handleInput = (type: string, e) => {
     // if (/^[\u4e00-\u9fa5_a-zA-Z0-9\s\·\~\！\@\#\￥\%\……\&\*\（\）\——\-\+\=\【\】\{\}\、\|\；\‘\’\：\“\”\《\》\？\，\。\、\`\~\!\#\$\%\^\&\*\(\)\_\[\]{\}\\\|\;\'\'\:\"\"\,\.\/\<\>\?]+$/.test(e.detail.value)){
     let data = JSON.parse(JSON.stringify(model));
+    const arr = JSON.parse(JSON.stringify(workerItem));
     if (type === 'details') {
       setNum(e.detail.value.length);
     }
@@ -2806,7 +2808,7 @@ export default function userForeman() {
     if(!isHandleAdd) return
     if (!model.teamName) {
       Msg('您还没有填写班组名称');
-      statistics('createProject');
+      statistics('projectName');
       postErrorCountFn();
       return;
     }
@@ -3954,9 +3956,9 @@ export default function userForeman() {
       statistics('borrowing')
     }
     // 时间
-    if (!time || time.length == 0){
-      statistics('time')
-    }
+    // if (!time || time.length == 0){
+    //   statistics('time')
+    // }
     postErrorCountFn();
     // 工人的时候要先设置工资标准
     const foremanTitles = JSON.parse(JSON.stringify(foremanTitle))
@@ -4830,6 +4832,7 @@ export default function userForeman() {
         // console.log(res.data,'reramdskaldmlkasdmnlka')
         // setProjectArr()
         bkGetProjectTeam('', false, false, group + '-' + team, data.group_info);
+        setShow(true)
       } else if (res.code === 400) {
         Msg(res.msg)
         setTimeout(() => {
@@ -4848,6 +4851,7 @@ export default function userForeman() {
   }
   // 修改项目弹框
   const handleEditProjectModal = (v) => {
+    setShow(false)
     setEditProjectDisplay(true);
     const data = JSON.parse(JSON.stringify(editProjectData))
     data.group_info = v.group_id + ',' + v.id;
@@ -5424,23 +5428,38 @@ export default function userForeman() {
     //   setModel({ ...model, time: time });
     //   setCalendarModalDisplay(false);
     // }else{
-    const data = JSON.parse(JSON.stringify(clickData));
+    let data = JSON.parse(JSON.stringify(clickData));
+    console.log(data,'data11')
     let time;
+    const years = new Date().getFullYear();
+    const months = new Date().getMonth() + 1;
+    const dates = new Date().getDate();
     if (data.length == 1) {
       // const time = data[0].year+
-      const years = new Date().getFullYear();
-      const months = new Date().getMonth() + 1;
-      const dates = new Date().getDate();
       if (data[0].year == years && data[0].month == months && data[0].date == dates) {
         time = years + '-' + addZero(months) + '-' + addZero(dates) + `（今天) `
       } else {
         time = data[0].year + '-' + addZero(data[0].month) + '-' + addZero(data[0].date)
       }
     } else {
-      time = '共选择' + data.length + '天';
+      if(data.length === 0 ){
+        time = years + '-' + addZero(months) + '-' + addZero(dates) + `（今天) `;
+        data = [
+          {
+            year: years,
+            month:addZero(months),
+            date: addZero(dates),
+            click: true,
+          }
+        ]
+        setClickData(data)
+      }else{
+        time = '共选择' + data.length + '天';
+      }
     }
     // 显示
     setModel({ ...model, time: time });
+    console.log(data,'daattatttatta')
     // 覆盖点击的值
     setOpenClickTime(data)
     // 点击的值

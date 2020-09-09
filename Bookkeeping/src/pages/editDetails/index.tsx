@@ -1674,7 +1674,7 @@ export default function EditDetails() {
       <WorkOvertime maskHandleClose={handleClose} display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}
-      {businessType === 2 && type == 2 && <Quantities maskHandleClose={()=>{}} display={quantitiesDisplay} handleClose={() => {setTimeout(() => {setIsdisable(false)});setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />}
+      {businessType === 2 && type == 2 && <Quantities maskHandleClose={() => { setTimeout(() => { setIsdisable(false) }); setQuantitiesDisplay(false) }} display={quantitiesDisplay} handleClose={() => {setTimeout(() => {setIsdisable(false)});setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />}
     </View>
   )
 }

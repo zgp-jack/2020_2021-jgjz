@@ -48,7 +48,10 @@
   font-size: 26rpx;
 }
 .wageStandard-content-listBox{
-
+  margin: 30rpx;
+  border: 1rpx solid #CCCBCB;
+  box-shadow: 0rpx 3rpx 5rpx 0rpx rgba(163, 165, 166, 0.24);
+  border-radius: 5rpx;
 }
 .wageStandard-content-listBox-list{
   display: flex;
@@ -57,6 +60,7 @@
   margin: 0 27rpx;
   border-bottom: 2rpx solid rgba(246, 246, 246, 1);
   padding: 30rpx 0rpx;
+  margin-right: 0rpx;
 }
 .wageStandard-content-listBox-list-title{
   color: rgba(151, 150, 149, 1);
@@ -73,10 +77,16 @@
   // margin-top: 12rpx;
   background: #fff;
   // padding-bottom: 20rpx;
-  padding-bottom: 500rpx;
+  // padding-bottom: 500rpx;
+  border: 1rpx solid #CCCCCC;
+  box-shadow: 1rpx 3rpx 5rpx 0rpx rgba(170, 170, 170, 0.24);
+  border-radius: 5rpx;
+  margin: 30rpx;
+  padding: 15rpx;
+  margin-right: 27rpx;
 }
 .formula-heard{
-  width: 696rpx;
+  width: 652rpx;
   margin: 0 auto;
   display: flex;
   justify-content:space-between;
@@ -93,7 +103,7 @@
   justify-content: space-between;
   height: 97rpx;
   line-height: 97rpx;
-  width: 696rpx;
+  width: 652rpx;
   background: rgba(243, 241, 241, 1);
   margin: 0 auto;
   margin-bottom: 10rpx;
@@ -187,6 +197,50 @@
 
 .backgroundImg{
   background: rgba(0, 0, 0, 0.3);
-  height: 20rpx;
+  height: 42rpx;
   width: 100%;
+}
+.title{
+  color: #2F3541;
+  font-size: 30rpx;
+  font-weight: 500;
+  margin-left: 27rpx;
+  margin-top: 58rpx;
+  margin-bottom: 30rpx;
+}
+.addTitle{
+  color: #2F3541;
+  font-size: 30rpx;
+  font-weight: 500;
+  margin-left: 27rpx;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+.btn{
+  width: 694rpx;
+  height: 79rpx;
+  line-height: 79rpx;
+  background: #009AFF;
+  box-shadow: 1rpx 3rpx 5rpx 0rpx rgba(170, 170, 170, 0.24);
+  border-radius: 10rpx;
+  text-align: center;
+  color: #FFFFFF;
+  margin: auto;
+  margin-bottom: 28rpx;
+}
+.closeBtn{
+  width: 694rpx;
+  height: 79rpx;
+  line-height: 79rpx;
+  background: #FFFFFF;
+  border: 1rpx solid #CCCCCC;
+  box-shadow: 1rpx 3rpx 5rpx 0rpx rgba(170, 170, 170, 0.24);
+  border-radius: 10rpx;
+  text-align: center;
+  color: #A6A5A5;
+  margin: auto;
+}
+.btnBox{
+  width: 100%;
+  margin: 0 auto;
 }

@@ -23,7 +23,9 @@ export default function AddTeamMember() {
   const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
   const { groupInfo, type } = router.params;
-  const { handleInput, addMemberDisplay, setAddMemberDisplay, handleEstablish, model, setModel, workerList, setWorkerList, storagelist, setStoragelist } = userForeman()
+  const { handleInput, addMemberDisplay, setAddMemberDisplay, 
+    // handleEstablish, 
+    model, setModel, workerList, setWorkerList, storagelist, setStoragelist } = userForeman()
   // 列表数据
   const [data, setData] = useState<any[]>([]);
   // 默认值
@@ -267,8 +269,19 @@ export default function AddTeamMember() {
           }
         }
       }
+      let clickState = true;
+      for (let i = 0; i < dataArr.length; i++) {
+        for (let j = 0; j < dataArr[i].list.length; j++) {
+          if (!dataArr[i].list[j].disabled) {
+            if (!dataArr[i].list[j].click) {
+              clickState = false
+            }
+          }
+        }
+      }
+      setIsClick(clickState)
       setClickData(arr);
-      setData(dataArr)
+      setData(dataArr);
     } else {
       if(!administration){
         let params = {
@@ -478,7 +491,9 @@ export default function AddTeamMember() {
     console.log(mid);
     let ids:string[]=[];
     for(let i =0;i<datas.length;i++){
-      ids.push(datas[i].id);
+      if(!datas[i].disabled){
+        ids.push(datas[i].id);
+      }
     }
     if (ids.length == 0){
       Msg('请至少选择一条信息')
@@ -522,6 +537,7 @@ export default function AddTeamMember() {
               }
               console.log(data,'dataItem');
               setData(data);
+              setStoreValue(data)
               setClickData([])
             }else{
               Msg(res.msg);
@@ -533,82 +549,135 @@ export default function AddTeamMember() {
   }
   // 点击人员管理
   const handleSupervise = ()=>{
+    // 点击切换的时候全选全部去掉
     const dataItem = JSON.parse(JSON.stringify(data));
     setStoreValue(dataItem);
     setAdministration(true);
     data.map((v)=>{
       v.list.map((val)=>{
-        val.click = false;
+        if(!val.disabled){
+          val.click = false;
+        }
       })
     })
+    Taro.setNavigationBarTitle({
+      title: '人员管理',
+    })
+    setClickData([]);
     setData(data);
+    setIsClick(false)
   }
   // 取消
   const handleClose = ()=>{
+    let type = Taro.getStorageSync(Type);
+    let titel;
+    if (type === 1) {
+      titel = '添加班组成员'
+    } else {
+      titel = '添加班组长'
+    }
+    Taro.setNavigationBarTitle({
+      title: titel,
+    })
     setAdministration(false);
     // const dataItem = JSON.parse(JSON.stringify(data));
     const itme = JSON.parse(JSON.stringify(storeValue));
+    console.log(itme,'itme');
+    for(let i =0;i<itme.length;i++){
+      for(let j=0;j<itme[i].list.length;j++){
+        itme[i].list[j].click = false;
+      }
+    }
+    console.log(itme,'itmeitmeitme')
     // console.log(storeValue,'storeValuestoreValuestoreValue')
+    setIsClick(false);
     setData(itme)
   }
   // 添加
-  // const handleEstablish = ()=>{
-  //   const data = JSON.parse(JSON.stringify(model))
-  //   if (!model.userName) {
-  //     let type = Taro.getStorageSync(Type);
-  //     if (type == 1) {
-  //       Msg('您还没有填写工人名称')
-  //     } else {
-  //       Msg('您还没有填写班组长名称')
-  //     }
-  //     return
-  //   }
-  //   if (model.phone) {
-  //     if (!isPhone(model.phone)) {
-  //       Msg('请输入正确的手机号')
-  //       // isHandleAdd = true
-  //       return
-  //     }
-  //   }
-  //   let params: any = {
-  //     name: data.userName,
-  //     tel: data.phone,
-  //   }
-  //   bkAddWorkerActiion(params).then(res => {
-  //     if (res.code === 200) {
-  //       // 叫后台返回id 姓名 电话
-  //       // const data = res.data
-  //       // 添加成功后重新获取设置数据
-  //       // bkGetWorker('', 1, data);
-  //       // 设置成功清空手机和电话
-  //       console.log(res.data,'resdata');
-  //       const modales = JSON.parse(JSON.stringify(model));
-  //       setModel({ ...modales, userName: '', phone: '' })
-  //       setAddMemberDisplay(false);
-  //       const dataList =JSON.parse(JSON.stringify(data));
-  //       const item = JSON.parse(JSON.stringify(storeValue))
-  //       bkGetWorkerAction({}).then(resItem=>{
-  //         console.log(resItem.data)
-  //         for (let i = 0; i < resItem.data.length; i++) {
-  //           if (dataList.name_py === resItem.data[i].name_py) {
-  //             resItem.data[i].list.push(data);
-  //           }
-  //         }
-  //         for (let i = 0; i < resItem.data.length; i++) {
-  //           if (item.name_py === resItem.data[i].name_py) {
-  //             resItem.data[i].list.push(data);
-  //           }
-  //         }
-  //         console.log(resItem.data,'1111')
-  //         for(let i = 0;i<res.data[i].length;)
-  //         dispatch(setmailList(resItem.data))
-  //       })
-  //       // setData(dataList)
-  //     } else {
-  //       Msg(res.msg)
-  //     }
-  //   })
-  // }
+  const handleEstablish = ()=>{
+    const data = JSON.parse(JSON.stringify(model))
+    if (!model.userName) {
+      let type = Taro.getStorageSync(Type);
+      if (type == 1) {
+        Msg('您还没有填写工人名称')
+      } else {
+        Msg('您还没有填写班组长名称')
+      }
+      return
+    }
+    if (model.phone) {
+      if (!isPhone(model.phone)) {
+        Msg('请输入正确的手机号')
+        // isHandleAdd = true
+        return
+      }
+    }
+    let params: any = {
+      name: data.userName,
+      tel: data.phone,
+    }
+    bkAddWorkerActiion(params).then(res => {
+      if (res.code === 200) {
+        // 叫后台返回id 姓名 电话
+        // const data = res.data
+        // 添加成功后重新获取设置数据
+        // bkGetWorker('', 1, data);
+        // 设置成功清空手机和电话
+        console.log(res.data,'resdata');
+        const modales = JSON.parse(JSON.stringify(model));
+        setModel({ ...modales, userName: '', phone: '' })
+        setAddMemberDisplay(false);
+        const dataList =JSON.parse(JSON.stringify(data));
+        const item = JSON.parse(JSON.stringify(storeValue))
+        bkGetWorkerAction({}).then(resItem=>{
+          console.log(resItem,'resIem')
+          Msg(res.msg);
+          for (let i = 0; i < resItem.data.length; i++) {
+            if (dataList.name_py === resItem.data[i].name_py) {
+              resItem.data[i].list.push(data);
+            }
+          }
+          const arr = JSON.parse(JSON.stringify(resItem.data));
+          console.log(arr,'arr');
+          console.log(item,'item');
+          item.forEach((v,i)=>{
+            v.list.item((val,e)=>{
+              arr.forEach((value,index)=>{
+                value.list((listValue,listIndex)=>{
+                  if(val.id == listValue.id){
+                    listValue = val;
+                  }
+                })
+              })
+            })
+          })
+          console.log(arr,'')
+          console.log(item)
+          // return;
+          // for(let i =0;i<item.length;i++){
+          //   for(let j=0;j<item[i].list.length;j++){
+          //     for(let z=0;z<arr.length;z++){
+          //       for(let x=0;x<arr[z].list.length;x++){
+          //         if (item[i].list[j].id == arr[z].list[x].id){
+          //           console.log(item[i].list[j],'item[i].list[j]');
+          //           console.log(arr[z].list[x],'arr[z].list[x]')
+          //           arr[i].list[j] = item[i].list[j];
+          //         }
+          //       }
+          //     }
+          //   }
+          // }
+          console.log(arr,'1111')
+          console.log(item,'it,eeee')
+          setStoreValue(arr)
+          dispatch(setmailList(resItem.data))
+        })
+        // setData(dataList)
+      } else {
+        Msg(res.msg)
+      }
+    })
+  }
   return (
     <View className={addMemberDisplay || editMemberDisplay?'foreman-content':'content'}>
       {masklayer&& <View className='masklayer'></View>}
@@ -634,7 +703,7 @@ export default function AddTeamMember() {
                 {(type !== '2' || administration) &&
                   <View>
                     {/* <Checkbox checked={v.click} value={v.click} disabled={v.click && v.disabled} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /> */}
-                    {v.click && v.disabled && 
+                    {v.disabled && 
                     // <View className='checkbox-disabled'></View>
                     <Image src={`${IMGCDNURL}disabledCheckbox.png`} className='checkbox-disabled'/>
                     }
@@ -642,7 +711,7 @@ export default function AddTeamMember() {
                     // <View className='checkbox-click'></View>
                     <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click' />
                     }
-                    {!v.click && <View className='checkbox-no'></View>}
+                  {!v.click && !v.disabled && <View className='checkbox-no'></View>}
                   </View>
                 }
                 <View>

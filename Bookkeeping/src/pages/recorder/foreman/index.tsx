@@ -376,7 +376,7 @@ export default function Foreman() {
       setIsdisable(true)
       setIscreatproject(false);
     }else{
-      statistics('projectName') 
+      statistics('createProject') 
       postErrorCountFn();
       Msg('您还没有填写项目名称')
     }
@@ -480,6 +480,16 @@ export default function Foreman() {
     handleDel(1);
     setIsdisable(true);
     setQuantitiesDisplay(true)
+  }
+  const handleOnFocus = ()=>{
+    console.log(1111,'111')
+    setDeldelType(false)
+    setDel(false)
+    const arr = JSON.parse(JSON.stringify(workerItem));
+    for(let i =0;i<arr.length;i++){
+      arr[i].del = false;
+    }
+    setWorkerItem(arr);
   }
   return (
     <context.Provider value={value}>
@@ -775,6 +785,7 @@ export default function Foreman() {
                 type='digit'
                 maxLength={10}
                 placeholder='请填写工程量'
+                onFocus={handleOnFocus}
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
               />
@@ -794,6 +805,7 @@ export default function Foreman() {
                 type='digit'
                 maxLength={10}
                 placeholder='请填写单价'
+                onFocus={handleOnFocus}
                 onInput={(e) => handleInput('price', e)}
                 value={model && model.price}
               />
@@ -808,6 +820,7 @@ export default function Foreman() {
               <Input
                 className='publish-list-input new-input'
                 type='digit'
+                onFocus={handleOnFocus}
                 maxLength={17}
                 onInput={(e) => handleInput('wages', e)}
                 placeholder='工程量和单价未知时，可直接填写工钱'
@@ -831,6 +844,7 @@ export default function Foreman() {
                 type='digit'
                 // disabled
                 maxLength={17}
+                onFocus={handleOnFocus}
                 onInput={(e) => handleInput('borrowing', e)}
                 placeholder='请输入本次借支金额'
                 value={model && model.borrowing}
@@ -854,7 +868,7 @@ export default function Foreman() {
             <View >
               <RadioGroup className='borrowing-Radio'>
                 {borrowing.item.map(v => (
-                  < Radio onClick={()=>handleRadioBorrowing(v)} className='borrowing-Radio-list' color='#0099FF' checked={v.click} key={v.id}>{v.name}</Radio>
+                  < Radio onClick={() => {handleOnFocus();handleRadioBorrowing(v)}} className='borrowing-Radio-list' color='#0099FF' checked={v.click} key={v.id}>{v.name}</Radio>
                 ))}
               </RadioGroup>
             </View>
@@ -900,7 +914,7 @@ export default function Foreman() {
               // auto-focus={autoFocus}
               hidden={isdisable || iscreatproject}
               cursor={model.details.length || 0}
-              // onFocus={() => setAutoFocus(false)}
+              onFocus={handleOnFocus}
               className='textarea'
               placeholder='请填写备注...'
               cursorSpacing={100}
@@ -953,7 +967,7 @@ export default function Foreman() {
       {/* 工资 */}
         <WagesModal maskHandleClose={handleWagesModalClose} display={wagesModalDisplay} handleClose={handleWagesModalClose} data={setWorkList} handleAddStandard={handleAddStandard} standard={standard} moneyList={moneyList} handleEditWages={handleEditWages} handleAtSwitch={handleAtSwitch} tab={tab} handleSetWagesModal={handleSetWagesModal} handleWagesList={handleWagesList} handleCheckboxStandard={handleCheckboxStandard} clickModalNum={clickModalNum} handleAllClick={handleAllClick} checkAll={checkAll} recorderType={recorderType} />
         {/* 修改项目 */}
-        <EditProject display={editProjectDisplay} handleEditProjectData={handleEditProjectData} data={editProjectData} handleClose={() => setEditProjectDisplay(false)} handleSubmit={handleEditProject}/>
+        <EditProject display={editProjectDisplay} handleEditProjectData={handleEditProjectData} data={editProjectData} handleClose={() =>{ setEditProjectDisplay(false),setShow(true)}} handleSubmit={handleEditProject}/>
       <AtDrawer
         show={show}
         right
