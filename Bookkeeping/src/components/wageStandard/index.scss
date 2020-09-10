@@ -155,15 +155,34 @@
 .inputBox{
   height: 32rpx;
   width: 110rpx;
-  // margin-right: 18rpx;
-  // margin-left: 18rpx;
   color: red;
   text-align: center;
-  // background:rgba(36, 40, 42, 0);
-  border:1px solid rgba(118, 119, 119, 0.5);
+  border:2rpx solid rgba(118, 119, 119, 0.5);
   border-radius:2px;
   font-size: 26rpx;
   margin-top: 6rpx;
+  border-radius: 8rpx;
+}
+.inputBox-Focus {
+  height: 32rpx;
+  width: 110rpx;
+  color: #009AFF;
+  text-align: center;
+  border: 2rpx solid #009AFF;
+  border-radius: 2px;
+  font-size: 26rpx;
+  margin-top: 6rpx;
+  border-radius: 8rpx;
+}
+.inputBox-day-Focus {
+  height: 32rpx;
+  width: 110rpx;
+  color: #009AFF;
+  text-align: center;
+  border: 2rpx solid #009AFF;
+  border-radius: 2px;
+  font-size: 26rpx;
+  margin-top: 28rpx;
   border-radius: 8rpx;
 }
 .inputBox-day{
@@ -174,7 +193,7 @@
   color: red;
   text-align: center;
   // background:rgba(36, 40, 42, 0);
-  border:1px solid rgba(118, 119, 119, 0.5);
+  border:2rpx solid rgba(118, 119, 119, 0.5);
   border-radius:2px;
   font-size: 26rpx;
   margin-top: 28rpx;

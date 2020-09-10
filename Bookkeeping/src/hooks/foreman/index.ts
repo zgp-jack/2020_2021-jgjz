@@ -3675,6 +3675,7 @@ export default function userForeman() {
   }
   // 添加工资标准
   const handleWageStandard = (type: string, e: any) => {
+    console.log(e,'111')
     // const cacheItem = JSON.parse(JSON.stringify(cacheWage));
     if (type == 'day' || type === 'work') {
       if (e.detail.value>24){
@@ -3928,8 +3929,9 @@ export default function userForeman() {
     console.log(params,'params')
     // 报错率
     // 没有选择项目
-    if (projectArr.length == 0 && !groupInfo && types == 1){
-      statistics('entryName') 
+    console.log(groupInfo,projectArr.length,111)
+    if (projectArr.length == 0 && types == 1){
+      statistics('entryName')
     }
     // 工人
     if(!workers||workers.length==0){
@@ -4434,11 +4436,13 @@ export default function userForeman() {
     if (workNum == 0) {
       Msg('上班标准必须大于0')
       statistics('workNum') 
+      postErrorCountFn();
       return;
     }
     // 每个工多少钱提示
     if (moneyNum == 0 || moneyNum ==0.00) {
       statistics('moneyNum') 
+      postErrorCountFn()
       Msg('每个工工钱必须大于0')
       return;
     }
@@ -4446,6 +4450,7 @@ export default function userForeman() {
     if (data.type == 2) {
       if (data.day == 0) {
         statistics('day') 
+        postErrorCountFn()
         Msg('1个工必须大于0小时')
         return;
       }
@@ -4453,6 +4458,7 @@ export default function userForeman() {
     if (data.type == 1) {
       if (data.addWork == 0 || data.addWork == 0.00 ) {
         statistics('addWork') 
+        postErrorCountFn()
         Msg('每小时加班金额必须大于0')
         return;
       }

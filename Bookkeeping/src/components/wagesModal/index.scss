@@ -46,6 +46,7 @@
   color: rgba(47, 53, 65, 1);
   padding:30rpx;
   padding-bottom: 0rpx;
+  height: 80rpx;
 }
 .allChange{
   color: rgba(0, 153, 255, 1);
@@ -65,8 +66,8 @@
 .wagesModal-personnel{
   display: flex;
   flex-wrap: wrap;
-  overflow-x:scroll;
-  max-height: 400rpx;
+  // overflow-x:scroll;
+  // max-height: 400rpx;
 }
 .wagesModal-personnel-box-list {
   width:60rpx;
@@ -263,6 +264,11 @@
   border-right: 1rpx solid rgba(229, 226, 226, 1);
 }
 .wagesModal-footer{
+  background: #fff;
+  padding-bottom: 10rpx;
+  position: absolute;
+  bottom: 0rpx;
+  left: 0rpx;
   width: 100%;
 }
 
@@ -371,6 +377,7 @@
   padding-top: 20rpx;
   padding-bottom: 20rpx;
   background: rgba(243, 242, 242, 1);
+  padding-bottom: 80rpx;
 }
 .noData{
   // min-height: 500rpx;
@@ -417,8 +424,21 @@
   background-size: contain;
 }
 .content{
-  height: 1040rpx;
-  // overflow: scroll;
+  height: 600rpx;
+  padding-bottom: 100rpx;
+  background: #f3f2f2;
+  overflow: scroll;
+}
+.contentTab{
+  height: 600rpx;
+  padding-bottom: 210rpx;
+  background: #f3f2f2;
+  overflow: scroll;
+}
+.noContent{
+  height: 810rpx;
+  // padding-bottom: 210rpx;
+  background: #f3f2f2;
 }
 .closeIcons{
   height: 25rpx;
@@ -481,4 +501,12 @@
   margin-left: 22rpx;
   background: url(../../assets/images/clickCheckout.png) no-repeat no-repeat;
   background-size: contain;
+}
+.content-middle{
+  // height: 1000rpx;
+  background: #fff;
+  // overflow-y: scroll;
+}
+.grey{
+  background: #f3f2f2;
 }

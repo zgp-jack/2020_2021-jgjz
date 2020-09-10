@@ -14,10 +14,19 @@ interface PROPS {
   handleAdd: (e: string, val: string) => void,
   handleDel: (e: string, val: string) => void,
 }
+let stateData={
+  work: true,
+  money: false,
+  addWork: false,
+  day: false,
+}
 export default function WageStandard({ display, maskHandleClose, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel }: PROPS) {
-  // static options = {
-  //   addGlobalClass: true
-  // }
+  const [stateData,setStateData]= useState<any>({
+    work:false,
+    money:false,
+    addWork:false,
+    day:false,
+  })
   const toFixedFnNum = (num: any) => {
     let s = num + '';
     s = s.substring(0, s.indexOf(".") + 3);
@@ -41,6 +50,27 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
     s = s.substring(0, s.indexOf(".") + 3);
     return s.toString();
   }
+  const handleState = (type:string)=>{
+    const stateItem = JSON.parse(JSON.stringify(stateData));
+    for (let i in stateItem) {
+      stateItem[i] = false;
+    }
+    // if(stateItem[type]){
+    stateItem[type] = true;
+    // stateData = stateItem;
+    console.log(stateData,'stateData')
+    // }
+    // console.log(stateItem,'staItem')
+    setStateData(stateItem);
+  }
+  const handleOnBlur=()=>{
+    const stateItem = JSON.parse(JSON.stringify(stateData));
+    for (let i in stateItem) {
+      stateItem[i] = false;
+    }
+    // stateData = stateItem;
+    setStateData(stateItem);
+  }
   return (
     // <View className={display?'wageStandard':''}>
     // <View className='mt'>
@@ -61,11 +91,15 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
               <View className='icon icon_left' onClick={() => handleDel('work', wageStandard.work)}>-</View><View>
                 <Input
                   type='digit'
-                  className='inputBox'
-                  // cursorSpacing={200}
+                  className={stateData.work ? 'inputBox-Focus' :'inputBox'}
+                  cursorSpacing={200}
                   // maxLength={7}
+                  onBlur={handleOnBlur}
+                  onFocus={()=>handleState('work')}
+                  focus={display?true:false}
+                  autoFocus={display ? true : false}
                   value={toFixedFnNum(wageStandard.work).toString()}
-                  onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
+                  // onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
                   onInput={(e) => handleWageStandard('work', e)} />
               </View><View className='icon icon_right' onClick={() => handleAdd('work', wageStandard.work)}>+</View>
             </View>
@@ -77,11 +111,14 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                 <View className='icon icon_left' onClick={() => handleDel('money', wageStandard.money)}>-</View><View>
                   <Input
                     type='digit'
-                    className='inputBox'
+                    className={stateData.money ? 'inputBox-Focus' : 'inputBox'}
                     // maxLength={7}
-                    // cursorSpacing={200}
+                    cursorSpacing={200}
+                    // autoFocus=
+                    onBlur={handleOnBlur}
+                    onFocus={() => handleState('money')}
                     value={wageStandard.money}
-                    onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
+                    // onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
                     onInput={(e) => handleWageStandard('money', e)} />
                 </View><View className='icon icon_right' onClick={() => handleAdd('money', wageStandard.money)}>+</View>
               </View>
@@ -116,9 +153,11 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                 <View className='icon icon_left' onClick={() => handleDel('addWork', wageStandard.addWork)}>-</View><View>
                   <Input
                     type='digit'
-                    className='inputBox-day'
+                    className={stateData.addWork ? 'inputBox-day-Focus' : 'inputBox-day'}
                     // maxLength={7}
-                    // cursorSpacing={200}
+                    cursorSpacing={200}
+                    onBlur={handleOnBlur}
+                    onFocus={() => handleState('addWork')}
                     value={wageStandard.addWork}
                     // onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
                     onInput={(e) => handleWageStandard('addWork', e)} />
@@ -145,11 +184,13 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                 <View className='icon icon_left' onClick={() => handleDel('day', wageStandard.day)}>-</View><View>
                   <Input
                     type='digit'
-                    className='inputBox-day'
-                    // cursorSpacing={200}
+                    className={stateData.day ? 'inputBox-day-Focus' : 'inputBox-day'}
+                    cursorSpacing={200}
                     // maxLength={7}
+                    onBlur={handleOnBlur}
+                    onFocus={() => handleState('day')}
                     value={toFixedFnNum(wageStandard.day).toString()}
-                    onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
+                    // onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
                     onInput={(e) => handleWageStandard('day', e)} />
                 </View><View className='icon icon_right' onClick={() => handleAdd('day', wageStandard.day)}>+</View>
               </View>

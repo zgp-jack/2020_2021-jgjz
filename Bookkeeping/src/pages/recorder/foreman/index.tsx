@@ -149,16 +149,38 @@ export default function Foreman() {
     handleDel(1);
     setRefresh(true);
     UploadImgAction().then(res => {
-      let imageItem = {
-        url: res.url,
-        httpurl: res.httpurl
+      // let imageItem = {
+      //   url: res.url,
+      //   httpurl: res.httpurl
+      // }
+      if (Array.isArray(res)){
+        let imageItem:any[]=[];
+        for (let i =0;i<res.length;i++){
+          let obj = {
+            url: res[i].url,
+            httpurl: res[i].httpurl
+          }
+          imageItem.push(obj);
+        }
+        image.item = imageItem;
+        console.log(image, 'dsadasdas')
+        setImage({ ...image, item: [...image.item, ...imageItem] })
+      }else{
+          let imageItem = {
+            url: res.url,
+            httpurl: res.httpurl
+          }
+          setImage({ ...image, item: [...image.item, imageItem] })
       }
-      if (i === -1) {
-        setImage({ ...image, item: [...image.item, imageItem] })
-      } else {
-        image.item[i] = imageItem
-        setImage({ ...image })
-      }
+      console.log(res,'回调')
+      console.log(res.num,'num')
+      // if (i === -1) {
+      //   setImage({ ...image, item: [...image.item, imageItem] })
+      // } else {
+        // image.item[res.num] = imageItem;
+        // console.log(image,'dsadasdas')
+        // setImage({ ...image })
+      // }
     })
   }
   // 用户删除图片

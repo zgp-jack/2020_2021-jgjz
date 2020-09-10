@@ -78,6 +78,7 @@ export function isIos(): boolean {
 export function statistics(name:string){
   let Total = Taro.getStorageSync(TotalData);
   let TotalItem = JSON.parse(JSON.stringify(Total))
+  console.log(TotalItem)
   if (TotalItem && TotalItem.length > 0) {
     const list = TotalItem.find(item => item.name == name);
     if (list) {
