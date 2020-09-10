@@ -409,16 +409,28 @@ export default function EditDetails() {
   }
   // 图片
   const userUploadImg = (i: number = -1) => {
-    UploadImgAction().then(res => {
-      let imageItem = {
-        url: res.url,
-        httpurl: res.httpurl
-      }
-      if (i === -1) {
-        setImage({ ...image, item: [...image.item, imageItem] })
+    let num = 4 - image.item.length;
+    UploadImgAction(num).then(res => {
+      if (Array.isArray(res)) {
+        let imageItem: any[] = [];
+        for (let i = 0; i < res.length; i++) {
+          let obj = {
+            url: res[i].url,
+            httpurl: res[i].httpurl
+          }
+          imageItem.push(obj);
+        }
+        if (image.item.length == 0) {
+          setImage({ item: [...image.item, ...imageItem] })
+        } else {
+          setImage({ item: [...image.item, ...imageItem] })
+        }
       } else {
-        image.item[i] = imageItem
-        setImage({ ...image })
+        let imageItem = {
+          url: res.url,
+          httpurl: res.httpurl
+        }
+        setImage({ item: [...image.item, imageItem] })
       }
     })
   }

@@ -49,7 +49,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState, proList, setProList, generateThreeMonths, getThreeMonths, setDel
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState, proList, setProList, generateThreeMonths, getThreeMonths, setDel, boxValue, setBoxValue
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -75,6 +75,7 @@ export default function Foreman() {
   const [autoFocus, setAutoFocus] = useState<boolean>(false)
   // 距离顶部
   const [top,setTop] = useState<number>(0);
+ 
   // 获取数据
   // useEffect(()=>{
   //   // 获取项目列表
@@ -148,11 +149,8 @@ export default function Foreman() {
     setDeldelType(false);
     handleDel(1);
     setRefresh(true);
-    UploadImgAction().then(res => {
-      // let imageItem = {
-      //   url: res.url,
-      //   httpurl: res.httpurl
-      // }
+    let num = 4 - image.item.length;
+    UploadImgAction(num).then(res => {
       if (Array.isArray(res)){
         let imageItem:any[]=[];
         for (let i =0;i<res.length;i++){
@@ -162,25 +160,18 @@ export default function Foreman() {
           }
           imageItem.push(obj);
         }
-        image.item = imageItem;
-        console.log(image, 'dsadasdas')
-        setImage({ ...image, item: [...image.item, ...imageItem] })
+        if (image.item.length == 0) {
+          setImage({item: [...image.item, ...imageItem] })
+        } else {
+          setImage({ item: [...image.item, ...imageItem] })
+        }
       }else{
           let imageItem = {
             url: res.url,
             httpurl: res.httpurl
           }
-          setImage({ ...image, item: [...image.item, imageItem] })
+          setImage({ item: [...image.item, imageItem] })
       }
-      console.log(res,'回调')
-      console.log(res.num,'num')
-      // if (i === -1) {
-      //   setImage({ ...image, item: [...image.item, imageItem] })
-      // } else {
-        // image.item[res.num] = imageItem;
-        // console.log(image,'dsadasdas')
-        // setImage({ ...image })
-      // }
     })
   }
   // 用户删除图片
@@ -503,7 +494,7 @@ export default function Foreman() {
     setIsdisable(true);
     setQuantitiesDisplay(true)
   }
-  const handleOnFocus = ()=>{
+  const handleOnFocus = (type?:string)=>{
     console.log(1111,'111')
     setDeldelType(false)
     setDel(false)
@@ -512,6 +503,25 @@ export default function Foreman() {
       arr[i].del = false;
     }
     setWorkerItem(arr);
+    const value = JSON.parse(JSON.stringify(model));
+    const item = JSON.parse(JSON.stringify(boxValue));
+    if (type){
+      if (value[type]){
+        item[type] = value[type];
+      }
+      setBoxValue(item);
+      value[type] = '';
+      setModel(value);
+    }
+    // console.log(item,'itemitemitem');
+  }
+  const handleBlur = (type:string)=>{
+    const data = JSON.parse(JSON.stringify(model));
+    const item = JSON.parse(JSON.stringify(boxValue));
+    data[type] = item[type];
+    setModel(model);
+    item[type] = '';
+    setBoxValue(item);
   }
   return (
     <context.Provider value={value}>
@@ -807,7 +817,7 @@ export default function Foreman() {
                 type='digit'
                 maxLength={10}
                 placeholder='请填写工程量'
-                onFocus={handleOnFocus}
+                onFocus={() => handleOnFocus('amount')}
                 onInput={(e) => handleInput('amount', e)}
                 value={model && model.amount}
               />
@@ -827,7 +837,7 @@ export default function Foreman() {
                 type='digit'
                 maxLength={10}
                 placeholder='请填写单价'
-                onFocus={handleOnFocus}
+                onFocus={() => handleOnFocus('price')}
                 onInput={(e) => handleInput('price', e)}
                 value={model && model.price}
               />
@@ -842,7 +852,7 @@ export default function Foreman() {
               <Input
                 className='publish-list-input new-input'
                 type='digit'
-                onFocus={handleOnFocus}
+                onFocus={() => handleOnFocus('wages')}
                 maxLength={17}
                 onInput={(e) => handleInput('wages', e)}
                 placeholder='工程量和单价未知时，可直接填写工钱'
@@ -866,8 +876,9 @@ export default function Foreman() {
                 type='digit'
                 // disabled
                 maxLength={17}
-                onFocus={handleOnFocus}
+                onFocus={()=>handleOnFocus('borrowing')}
                 onInput={(e) => handleInput('borrowing', e)}
+                onBlur={() => handleBlur('borrowing')}
                 placeholder='请输入本次借支金额'
                 value={model && model.borrowing}
               />
@@ -936,7 +947,7 @@ export default function Foreman() {
               // auto-focus={autoFocus}
               hidden={isdisable || iscreatproject}
               cursor={model.details.length || 0}
-              onFocus={handleOnFocus}
+              onFocus={()=>handleOnFocus()}
               className='textarea'
               placeholder='请填写备注...'
               cursorSpacing={100}

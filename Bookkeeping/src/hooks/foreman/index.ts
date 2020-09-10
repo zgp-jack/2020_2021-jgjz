@@ -399,6 +399,9 @@ export default function userForeman() {
   const [swiperIndex, setSwiperIndex] = useState<number>(3);
   // 是否有项目
   const [proList, setProList] = useState<boolean>(false)
+  const [boxValue, setBoxValue] = useState<any>({
+    borrowing:'',
+  })
   // 设置年月日小于0前面加0
   useEffect(()=>{
     setDel(false)
@@ -2771,6 +2774,15 @@ export default function userForeman() {
       return dealInputVal(e.detail.value, 7, type);
     }
     if (type == 'wages' || type == 'borrowing'){
+        // if (data.borrowing != 0 && data.borrowing !==''){
+        //   data.borrowing = ''
+        // }
+      const item = JSON.parse(JSON.stringify(boxValue));
+      if(item){
+
+      }
+      console.log(item,'itme');
+      console.log(model,'111')
       return dealInputVal(e.detail.value, 14,type);
     }
     console.log(e,'eeeeee')
@@ -5981,6 +5993,8 @@ export default function userForeman() {
     setProList,
     generateThreeMonths,
     getThreeMonths,
-    setDel
+    setDel,
+    boxValue, 
+    setBoxValue
   }
 }

@@ -24,11 +24,11 @@ import { UPLOADIMGURL } from '../../config'
 //   sex: string
 // }
 
-export default function UploadImgAction(url: string = UPLOADIMGURL): Promise<any> {
+export default function UploadImgAction(num?:number,url: string = UPLOADIMGURL): Promise<any> {
   let uploadUrl = url || UPLOADIMGURL
   return new Promise((resolve) => {
     Taro.chooseImage({
-      count:4,
+      count: num||4,
       sizeType: ['compressed'],
       sourceType: ['album', 'camera'],
       success: res => {
