@@ -401,7 +401,20 @@ export default function userForeman() {
   const [proList, setProList] = useState<boolean>(false)
   const [boxValue, setBoxValue] = useState<any>({
     borrowing:'',
+    wages:'',
+    amount:'',
+    price:'',
+    work:'',
+    money:'',
+    addWork:'',
+    day:'',
   })
+  // const [standardData,setStandardData] = useState<any>({
+  //   work:'',
+  //   money:'',
+  //   addWork:'',
+  //   day:'',
+  // })
   // 设置年月日小于0前面加0
   useEffect(()=>{
     setDel(false)
@@ -2762,6 +2775,26 @@ export default function userForeman() {
     }
     return value;
   }
+  const fn = (e:any,type:string)=>{
+    const item = JSON.parse(JSON.stringify(boxValue));
+    console.log(type,'type')
+    let val;
+    if (item) {
+      if (item[type]) {
+        val = item[type] + '';
+      }
+    }
+    console.log(val,'valllllllll')
+    let valueData;
+    if (val) {
+      valueData = e.substring(val.length, e.length);
+      item[type] = '';
+      setBoxValue(item);
+    } else {
+      valueData = e;
+    }
+    return valueData;
+  }
   // 输入框
   const handleInput = (type: string, e) => {
     // if (/^[\u4e00-\u9fa5_a-zA-Z0-9\s\·\~\！\@\#\￥\%\……\&\*\（\）\——\-\+\=\【\】\{\}\、\|\；\‘\’\：\“\”\《\》\？\，\。\、\`\~\!\#\$\%\^\&\*\(\)\_\[\]{\}\\\|\;\'\'\:\"\"\,\.\/\<\>\?]+$/.test(e.detail.value)){
@@ -2771,19 +2804,12 @@ export default function userForeman() {
       setNum(e.detail.value.length);
     }
     if(type =='amount'|| type =='price'){
-      return dealInputVal(e.detail.value, 7, type);
+      const valueData = fn(e.detail.value, type);
+      return dealInputVal(valueData, 7, type);
     }
     if (type == 'wages' || type == 'borrowing'){
-        // if (data.borrowing != 0 && data.borrowing !==''){
-        //   data.borrowing = ''
-        // }
-      const item = JSON.parse(JSON.stringify(boxValue));
-      if(item){
-
-      }
-      console.log(item,'itme');
-      console.log(model,'111')
-      return dealInputVal(e.detail.value, 14,type);
+      const valueData = fn(e.detail.value,type);
+      return dealInputVal(valueData, 14,type);
     }
     console.log(e,'eeeeee')
     if (type == 'groupName' || type == 'teamName' || type == 'userName' || type == 'team_name' || type == 'group_name'){
@@ -3690,16 +3716,20 @@ export default function userForeman() {
     console.log(e,'111')
     // const cacheItem = JSON.parse(JSON.stringify(cacheWage));
     if (type == 'day' || type === 'work') {
-      if (e.detail.value>24){
+      const valueData = fn(e.detail.value, type);
+      console.log(valueData,'vale21312')
+      if (valueData>24){
         Msg('超出最大输入范围')
       }
-      return dealInputVal(e.detail.value, 2, type);
+      return dealInputVal(valueData, 2, type);
     }
     if (type === 'money' || type === 'addWork') {
-      if (e.detail.value > 9999.99){
+      const valueData = fn(e.detail.value, type);
+      console.log(valueData,'1111111111111')
+      if (valueData > 9999.99){
         Msg('超出最大输入范围')
       }
-      return dealInputVal(e.detail.value, 4, type);
+      return dealInputVal(valueData, 4, type);
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = toFixedFn(e);

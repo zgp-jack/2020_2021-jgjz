@@ -510,18 +510,18 @@ export default function Foreman() {
         item[type] = value[type];
       }
       setBoxValue(item);
-      value[type] = '';
-      setModel(value);
+      // value[type] = '';
+      // setModel(value);
     }
     // console.log(item,'itemitemitem');
   }
   const handleBlur = (type:string)=>{
-    const data = JSON.parse(JSON.stringify(model));
-    const item = JSON.parse(JSON.stringify(boxValue));
-    data[type] = item[type];
-    setModel(model);
-    item[type] = '';
-    setBoxValue(item);
+    // const data = JSON.parse(JSON.stringify(model));
+    // const item = JSON.parse(JSON.stringify(boxValue));
+    // data[type] = item[type];
+    // setModel(model);
+    // item[type] = '';
+    // setBoxValue(item);
   }
   return (
     <context.Provider value={value}>
@@ -994,7 +994,7 @@ export default function Foreman() {
           leftTime={leftTime} rightTime={rightTime} changeId={changeId} calendar={calendar} handleSuiper={handleSuiper}
         />
       {/* 设置工资标准 */}
-        <WageStandard display={wageStandardDisplay} maskHandleClose={()=>{handleWageStandardClose();handleWagesModalClose()}} handleClose={handleWageStandardClose} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput}/>
+        <WageStandard display={wageStandardDisplay} maskHandleClose={() => { handleWageStandardClose(); handleWagesModalClose() }} handleClose={handleWageStandardClose} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput} model={model} boxValue={boxValue} setBoxValue={setBoxValue} />
       {/* 添加成员 */}
         <AddMember display={addMemberDisplay} handleClose={handleAddMemberClose} handleEstablish={handleEstablish} handleInput={handleInput} groupInfo={groupInfo}/>
       {/* 工资 */}

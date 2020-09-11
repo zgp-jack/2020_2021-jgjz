@@ -13,6 +13,9 @@ interface PROPS {
   handleWageStandardRadio: (e) => void,
   handleAdd: (e: string, val: string) => void,
   handleDel: (e: string, val: string) => void,
+  model:any,
+  boxValue:any,
+  setBoxValue:any,
 }
 let stateData={
   work: true,
@@ -20,7 +23,7 @@ let stateData={
   addWork: false,
   day: false,
 }
-export default function WageStandard({ display, maskHandleClose, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel }: PROPS) {
+export default function WageStandard({ display, maskHandleClose, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel, model, boxValue, setBoxValue }: PROPS) {
   const [stateData,setStateData]= useState<any>({
     work:false,
     money:false,
@@ -62,6 +65,18 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
     // }
     // console.log(stateItem,'staItem')
     setStateData(stateItem);
+    if (type) {
+      const value = JSON.parse(JSON.stringify(wageStandard));
+      const item = JSON.parse(JSON.stringify(boxValue));
+      if (value[type]) {
+        item[type] = value[type];
+      }
+      // console.log(value[type,'1111'])
+      console.log(item,'itemitemitemitem')
+      setBoxValue(item);
+      // value[type] = '';
+      // setModel(value);
+    }
   }
   const handleOnBlur=()=>{
     const stateItem = JSON.parse(JSON.stringify(stateData));

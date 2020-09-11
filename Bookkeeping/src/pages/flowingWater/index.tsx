@@ -696,7 +696,7 @@ export default function FlowingWater() {
       <View className='footer-box'>
           <View className='footer-box-left' onClick={handleAllCheck}>
             {/* <Checkbox className='checkbox' checked={allcheck} value='' color='#0099FF'/> */}
-            <View className={allcheck ? 'checkbox-click' : 'checkbox-no '}></View>
+            <View className={allcheck ? 'checkbox-click-all' : 'checkbox-no-all'}></View>
             全选
           </View>
         <View className='footer-box-flex'>

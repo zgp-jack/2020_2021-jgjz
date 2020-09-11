@@ -191,6 +191,18 @@ export default function EditDetails() {
   const [autoFocus, setAutoFocus] = useState<boolean>(false)
   // 备注长度
   const [num, setNum] = useState<number>(0)
+  const [boxValue, setBoxValue] = useState<any>({
+  borrowing:'',
+  wages:'',
+  amount:'',
+  price:'',
+  work:'',
+  money:'',
+  addWork:'',
+  day:'',
+  unitPrice:'',
+  unitNum:'',
+})
   useEffect(()=>{
     if(id){
       bkBusinessOneAction({ id }).then(res => {
@@ -524,19 +536,43 @@ export default function EditDetails() {
     setTimeArr(timeArrs);
     setAddWorkArr(addWorkArrs)
   }
+  const fn = (e: any, type: string) => {
+    const item = JSON.parse(JSON.stringify(boxValue));
+    console.log(type, 'type')
+    let val;
+    if (item) {
+      if (item[type]) {
+        val = item[type] + '';
+      }
+    }
+    console.log(type,'1111111')
+    console.log(val, 'valllllllll')
+    let valueData;
+    if (val) {
+      valueData = e.substring(val.length, e.length);
+      item[type] = '';
+      setBoxValue(item);
+    } else {
+      valueData = e;
+    }
+    console.log(valueData,'valueData')
+    return valueData;
+  }
   // 输入框
   const handleWageStandard = (type,e)=>{
     if (type == 'day' || type === 'work') {
+      const valueData = fn(e.detail.value, type);
       if (e.detail.value > 24) {
         Msg('超出最大输入范围')
       }
-      return dealInputVal(e.detail.value, 2, type);
+      return dealInputVal(valueData, 2, type);
     }
     if (type === 'money' || type === 'addWork') {
+      const valueData = fn(e.detail.value, type);
       if (e.detail.value > 9999.99) {
         Msg('超出最大输入范围')
       }
-      return dealInputVal(e.detail.value, 4, type);
+      return dealInputVal(valueData, 4, type);
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = e;
@@ -1245,10 +1281,12 @@ export default function EditDetails() {
   const handleInput = (type,e)=>{
     let data = JSON.parse(JSON.stringify(val));
     if (type == 'unitNum' || type == 'price' || type =='unitPrice') {
-      return dealInputVal(e.detail.value, 7, type);
+      const valueData = fn(e.detail.value, type);
+      return dealInputVal(valueData, 7, type);
     }
     if (type == 'wages' || type == 'borrowing' || type =='money') {
-      return dealInputVal(e.detail.value, 14, type,true);
+      const valueData = fn(e.detail.value, type);
+      return dealInputVal(valueData, 14, type,true);
     }
     if (type == 'note') {
       setNum(e.detail.value.length);
@@ -1468,6 +1506,30 @@ export default function EditDetails() {
       }
     }
   }
+  const handleBlur = (type: string)=>{
+    const data = JSON.parse(JSON.stringify(val));
+    const item = JSON.parse(JSON.stringify(boxValue));
+    // data[type] = item[type];
+    // setVal(data);
+    // item[type] = '';
+    // setBoxValue(item);
+    // console.log(data,'data');
+    // console.log(item,'itme')
+  }
+  const handleOnFocus = (type:string)=>{
+    const value = JSON.parse(JSON.stringify(val));
+    console.log(value,'value')
+    const item = JSON.parse(JSON.stringify(boxValue));
+    if (type) {
+      if (value[type]) {
+        item[type] = value[type];
+      }
+      console.log(item,'111111')
+      setBoxValue(item);
+      // value[type] = '';
+      // setModel(value);
+    }
+  }
   return (
     <View className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'foreman-content' :'content'}>
       {businessType == 2 && 
@@ -1547,6 +1609,8 @@ export default function EditDetails() {
               placeholder='请填写工程量'
               maxLength={10}
               onInput={(e) => handleInput('unitNum',e)}
+              onBlur={() => handleBlur('unitNum')}
+              onFocus={() => handleOnFocus('unitNum')}
               value={val && val.unitNum}
             />
             <View className='amountType' onClick={()=>{setIsdisable(true);setQuantitiesDisplay(true)}}>{unit}
@@ -1563,6 +1627,8 @@ export default function EditDetails() {
               placeholder='请填写单价'
               maxLength={10}
               onInput={(e) => handleInput('unitPrice', e)}
+              onBlur={() => handleBlur('unitPrice')}
+              onFocus={() => handleOnFocus('unitPrice')}
               value={val && val.unitPrice}
             />
           </View>
@@ -1575,6 +1641,8 @@ export default function EditDetails() {
               type='digit'
               maxLength={17}
               onInput={(e) => handleInput('money', e)}
+              onBlur={() => handleBlur('money')}
+              onFocus={() => handleOnFocus('money')}
               placeholder='工程量和单价未知时，可直接填写'
               value={val && val.money}
             />
@@ -1593,6 +1661,8 @@ export default function EditDetails() {
                 // disabled
                 maxLength={17}
                 onInput={(e) => handleInput('money', e)}
+                onBlur={() => handleBlur('money')}
+                onFocus={() => handleOnFocus('money')}
                 placeholder='请输入本次借支金额'
                 value={val && val.money}
               />
@@ -1682,7 +1752,7 @@ export default function EditDetails() {
       <View className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'foreman-foot' : 'foreman-footer'}>
       {!isdisable && <CoverView className='footer'><CoverView className='footerBtn' onClick={handlesub}>保存</CoverView></CoverView>}
       </View>
-      <WageStandard maskHandleClose={handleWageStandardDisplay} display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput}/>
+      <WageStandard maskHandleClose={handleWageStandardDisplay} display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput} model={val} boxValue={boxValue} setBoxValue={setBoxValue} />
       <WorkOvertime maskHandleClose={handleClose} display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
       <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}

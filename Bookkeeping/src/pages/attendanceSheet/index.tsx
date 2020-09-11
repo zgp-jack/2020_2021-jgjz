@@ -34,6 +34,8 @@ interface DateTyep {
   hour: boolean,
   work: boolean,
 }
+let clickType =0;
+let clickName ='';
 export default function AttendanceSheet() {
   const router: Taro.RouterInfo = useRouter();
   const { timeMon } = router.params;
@@ -983,17 +985,28 @@ export default function AttendanceSheet() {
       url: url
     })
   }
-  useShareAppMessage((options) => {
-    console.log()
+  useShareAppMessage((options:any) => {
+    console.log(clickType,'clickType');
+    console.log(vals,'vals')
     let type = Taro.getStorageSync(Type);
+    console.log(options,'aaaaaaaaa')
     let path;
     if (options.from == 'button') {
-      path =  `/pages/share/index?time=${vals}&identity=${type}&session=${session}`
+      path = `/pages/share/index?time=${vals}&identity=${type}&session=${session}&id=${options.target.id}`
     }else{
       path = '/pages/index/index'
     }
+    let title;
+    const date = vals.replace('-','年');
+    console.log(date,'date');
+    if (options.from =='button' && options.target.id ){
+      title = `${options.target.dataset.name}，在${date}月的对工清单`
+    }else{
+      title = '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~';
+
+    }
     return {
-      title: '记工记账怕丢失？用鱼泡网记工，方便安全！数据永不丢失~',
+      title,
       imageUrl: `${IMGCDNURL}shareIconImg.png`,
       path,
     }
@@ -1126,13 +1139,13 @@ export default function AttendanceSheet() {
                       )}
                         >
                         {val.name}</View>
-                        {/* {val.default && !val.isSum &&
-                          <View open-type="share">
-                            <Button className='blued' open-type="share">
+                        {val.default && !val.isSum && identity == 1 &&
+                          <View open-type="share" onClick={() => { clickType = 1, clickName = val.name }}>
+                          <Button className='blued' open-type="share" data-name={val.name} id={val.id}>
                               微信对工>
                         </Button>
                           </View>
-                        } */}
+                        }
                       </View>}
                       {val.type && <View>
                         <View className='box-list-type'>
@@ -1169,7 +1182,7 @@ export default function AttendanceSheet() {
                 <View className='box-right' key={index+index+index}>
                   {v.list.map((val,i) => (
                     <View className='border' key={i+i}>
-                      {val.default && <View className='box-list-default'>{val.name}</View>}
+                      {val.default && <View className='box-list-default'>{val.name}日</View>}
                       {/* {!val.default && !val.type && <View className='box-height'></View>} */}
                       {val.type && <View>
                         {val.type.hour && v.type.hour ?

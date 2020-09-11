@@ -44,7 +44,7 @@ export default function AddTeamMember() {
   const [stopCheckout, setStopCheckout] = useState<Boolean>(false)
   const [administration, setAdministration] = useState<Boolean>(false)
   // 修改
-  const [editMemberDisplay, setEditMemberDisplay] = useState<Boolean>(false)
+  const [editMemberDisplay, setEditMemberDisplay] = useState<boolean>(false)
   // 编辑的值
   const [list,setList] = useState({
     name:'',
@@ -52,7 +52,9 @@ export default function AddTeamMember() {
     id:'',
   })
   // 人员管理存值
-  const [storeValue, setStoreValue] = useState<any[]>();
+  const [storeValue, setStoreValue] = useState<any[]>([]);
+  // 点击时候保存的人员
+  const [clickItem,setClickItem]= useState<any[]>([]);
   // 关闭添加成员
   const handleAddMemberClose = () => {
     setAddMemberDisplay(false);
@@ -279,9 +281,11 @@ export default function AddTeamMember() {
           }
         }
       }
+      // console.log(dataArr,'dataArr')
       setIsClick(clickState)
       setClickData(arr);
       setData(dataArr);
+      setClickItem(dataArr);
     } else {
       if(!administration){
         let params = {
@@ -301,9 +305,13 @@ export default function AddTeamMember() {
         if (arr.length === 0) {
           arr.push(e);
         } else {
-          if (arr.indexOf(e.id) === -1) {
+          console.log(e.id,'e.di')
+          console.log(arr,'arrr')
+          console.log(arr.indexOf(e.id),'arr.indexOf(e.id)')
+          if (arr.indexOf(e.id) == -1) {
             arr.push(e)
           } else {
+            console.log(arr.indexOf(e.id),'arr.indexOf(e.id)')
             arr.splice(arr.indexOf(e.id), 1)
           }
         }
@@ -327,9 +335,11 @@ export default function AddTeamMember() {
             }
           }
         }
+        console.log(arr,'arrrrrrrrrr')
         setIsClick(clickState)
         setClickData(arr);
         setData(dataArr);
+        setClickItem(dataArr);
       }
     }
   }
@@ -425,32 +435,8 @@ export default function AddTeamMember() {
         setEditMemberDisplay(false);
         const dataItem = JSON.parse(JSON.stringify(data));
         console.log(dataItem,'dataItem111')
-        // for(let i =0;i<dataItem.length;i++){
-        //   console.log(dataItem[i],'111')
-        //   for(let j =0;j<dataItem[i].list;j++){
-        //     console.log(dataItem[i].list[j],'jjjj')
-        //     if(dataItem[i].list[j].id == item.id){
-        //       console.log(1111)
-        //       dataItem[i].list[j].name = item.name;
-        //       dataItem[i].list[j].tel = item.phone;
-        //     }
-        //   }
-        // }
-        // for(let i =0;i<dataItem.length;i++){
-        //   console.log(dataItem[i].list,'list');
-        //   for(let b=0;b<dataItem[i].list;b++){
-        //     console.log(item.id,'11')
-        //     if(data[i].list[b].id == item.id){
-        //       console.log(1111)
-        //       dataItem[i].list[b].name = item.name;
-        //       dataItem[i].list[b].tel = item.phone;
-        //     }
-        //   }
-        // }
-        const arr =  dataItem.forEach((itemData,index)=>{
+        dataItem.forEach((itemData,index)=>{
           itemData.list.forEach((val,i)=>{
-            console.log(val,'cal')
-            console.log(item.id)
             if(val.id == item.id){
               val.name = item.name;
               val.tel = item.phone;
@@ -459,6 +445,7 @@ export default function AddTeamMember() {
         })
         dispatch(setmailList(dataItem))
         setData(dataItem)
+        setStoreValue(dataItem);
       }else{
         Msg(res.msg)
       }
@@ -524,7 +511,6 @@ export default function AddTeamMember() {
                 })
               })
               for(let i=0;i<dataItem.length;i++){
-                console.log(dataItem[i].list,'lsit');
                 if(dataItem[i].list.length == 0){
                   dataItem.splice(i, 1);
                 }
@@ -535,7 +521,6 @@ export default function AddTeamMember() {
                   data.push(dataItem[i]);
                 }
               }
-              console.log(data,'dataItem');
               setData(data);
               setStoreValue(data)
               setClickData([])
@@ -629,54 +614,43 @@ export default function AddTeamMember() {
         setAddMemberDisplay(false);
         const dataList =JSON.parse(JSON.stringify(data));
         const item = JSON.parse(JSON.stringify(storeValue))
+        const itemList = JSON.parse(JSON.stringify(clickItem));
         bkGetWorkerAction({}).then(resItem=>{
-          console.log(resItem,'resIem')
           Msg(res.msg);
           for (let i = 0; i < resItem.data.length; i++) {
             if (dataList.name_py === resItem.data[i].name_py) {
               resItem.data[i].list.push(data);
             }
           }
-          const arr = JSON.parse(JSON.stringify(resItem.data));
-          console.log(arr,'arr');
-          console.log(item,'item');
-          item.forEach((v,i)=>{
-            v.list.item((val,e)=>{
-              arr.forEach((value,index)=>{
-                value.list((listValue,listIndex)=>{
-                  if(val.id == listValue.id){
-                    listValue = val;
+          for(let i =0;i<resItem.data.length;i++){
+            for(let j=0;j<resItem.data[i].list.length;j++){
+              for (let z = 0; z < itemList.length;z++){
+                for (let b = 0; b < itemList[z].list.length;b++){
+                  if (itemList[z].list[b].id == resItem.data[i].list[j].id){
+                    resItem.data[i].list[j] = itemList[z].list[b]
                   }
-                })
-              })
-            })
-          })
-          console.log(arr,'')
-          console.log(item)
-          // return;
-          // for(let i =0;i<item.length;i++){
-          //   for(let j=0;j<item[i].list.length;j++){
-          //     for(let z=0;z<arr.length;z++){
-          //       for(let x=0;x<arr[z].list.length;x++){
-          //         if (item[i].list[j].id == arr[z].list[x].id){
-          //           console.log(item[i].list[j],'item[i].list[j]');
-          //           console.log(arr[z].list[x],'arr[z].list[x]')
-          //           arr[i].list[j] = item[i].list[j];
-          //         }
-          //       }
-          //     }
-          //   }
-          // }
-          console.log(arr,'1111')
-          console.log(item,'it,eeee')
-          setStoreValue(arr)
+                }
+              }
+            }
+          }
+          setStoreValue(resItem.data);
+          setData(resItem.data)
           dispatch(setmailList(resItem.data))
+          setIsClick(false)
+          // setAdministration(false)
         })
-        // setData(dataList)
       } else {
         Msg(res.msg)
       }
     })
+  }
+  const handleAddUser=()=>{
+    console.log(123321)
+    setAddMemberDisplay(true);
+    const data = JSON.parse(JSON.stringify(model));
+    data.userName='';
+    data.phone='';
+    setModel(data);
   }
   return (
     <View className={addMemberDisplay || editMemberDisplay?'foreman-content':'content'}>
@@ -749,7 +723,7 @@ export default function AddTeamMember() {
           </View>
         }{(type == '2' && !administration) ?'':<View>全选</View>}
         </View>
-        {administration ? <View className='user-btn-box'><View className='user-btn' onClick={handelUserDel}>删除</View><View onClick={() => setAddMemberDisplay(true)} className='user-btn'>添加</View></View>:''}
+        {administration ? <View className='user-btn-box'><View className='user-btn' onClick={handelUserDel}>删除</View><View onClick={handleAddUser} className='user-btn'>添加</View></View>:''}
         {!administration ? <View className='checkoutBox-name' onClick={handleSupervise}>
           人员管理
           <Image src={`${IMGCDNURL}triangleIcon.png`} className='triangleIcon' />
