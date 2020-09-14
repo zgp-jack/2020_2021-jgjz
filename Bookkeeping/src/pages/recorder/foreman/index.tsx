@@ -49,7 +49,7 @@ export default function Foreman() {
     contractorArr, setContractorArr, num, handleWorkerItem, timeData, setTimeData, handleAllChange, clickNum, clickModalNum, refresh,
     setRefresh, handleLongClick, identity, foremanTitle, handleAllClick, setContractor, handleRadio, contractor, handleAdd, recorderType, setRecorderType, calendarDays, setCalendarDays, clickData, setClickData, handleClickCalendar, time, getMonthDaysCurrent, arr, handleCalendarClose,
     handleChangeTime, calendarModalDisplay, handleCalendarSub, setCalendarModalDisplay, onScrollToUpper, onScrollToLower, onTouchEnd, onTouchStart, 
-    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState, proList, setProList, generateThreeMonths, getThreeMonths, setDel, boxValue, setBoxValue
+    onLongPress, setClickModalNum, display, setDisplay, allClick, checkAll, handleClckTabber, noSet, clickDay, setClickDay, clickTime, setClickTime, setAddWorkArr, setTimeArr, projectId, setProjectId, cacheWage, setCacheWage, setWageStandard, isdisable, setIsdisable, setTab, jumpMonth, handleInputAdd, handleDelInput, noCalendarDay, leftTime, rightTime, setleftTime, setrightTime, toDayString, isDel, changeId, calendar, handleSuiper, swiperIndex, calendarState, proList, setProList, generateThreeMonths, getThreeMonths, setDel, boxValue, setBoxValue, isFocus, setIsfocus,stateData, setStateData
   } = userForeman();
   
   // const [contractor, setContractor] = useState<number>(0)
@@ -75,7 +75,12 @@ export default function Foreman() {
   const [autoFocus, setAutoFocus] = useState<boolean>(false)
   // 距离顶部
   const [top,setTop] = useState<number>(0);
- 
+  // const [stateData, setStateData] = useState<any>({
+  //   work: false,
+  //   money: false,
+  //   addWork: false,
+  //   day: false,
+  // })
   // 获取数据
   // useEffect(()=>{
   //   // 获取项目列表
@@ -328,6 +333,7 @@ export default function Foreman() {
         setIsdisable(false)
       });
     }
+    setIsfocus(false);
   }
   // 关闭添加成员
   const handleAddMemberClose = ()=>{
@@ -522,6 +528,19 @@ export default function Foreman() {
     // setModel(model);
     // item[type] = '';
     // setBoxValue(item);
+  }
+  const handleWage = ()=>{
+    setIsdisable(true); 
+    setWageStandardDisplay(true);
+    setTimeout(()=>{
+      setIsfocus(true);
+      const stateItem = JSON.parse(JSON.stringify(stateData));
+      for (let i in stateItem) {
+        stateItem[i] = false;
+      }
+      stateItem.work = true;
+      setStateData(stateItem)
+    },350)
   }
   return (
     <context.Provider value={value}>
@@ -784,7 +803,7 @@ export default function Foreman() {
       {/* 班组长记工 */}
         {identity == 2 && (recorderType === 1 || (recorderType === 1 || (recorderType === 2 && contractor === 0)) )&&
       <View>
-          <View className='publish-recruit-card-money' onClick={() => {setIsdisable(true);setWageStandardDisplay(true) }}>
+          <View className='publish-recruit-card-money' onClick={handleWage}>
           <View className='publish-list-item-money'>
             <View className='pulish-list-title-money'>
               <View>我的工钱(点击设置自己的工资标准)
@@ -968,7 +987,7 @@ export default function Foreman() {
         </View>
         </View>
       </View>
-      <CoverView className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay || show ? 'foreman-foot' : 'foreman-footer foreman-footer-box'}>
+      <CoverView className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay || show ||editProjectDisplay ? 'foreman-foot' : 'foreman-footer foreman-footer-box'}>
       {!isdisable && !iscreatproject && <CoverView>
           <CoverView className='foreman-footer-btn'>
             <CoverView className='footer-left' onClick={() => handlePreservation(1)}>保存并再记一笔</CoverView>
@@ -994,11 +1013,12 @@ export default function Foreman() {
           leftTime={leftTime} rightTime={rightTime} changeId={changeId} calendar={calendar} handleSuiper={handleSuiper}
         />
       {/* 设置工资标准 */}
-        <WageStandard display={wageStandardDisplay} maskHandleClose={() => { handleWageStandardClose(); handleWagesModalClose() }} handleClose={handleWageStandardClose} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput} model={model} boxValue={boxValue} setBoxValue={setBoxValue} />
+        <WageStandard display={wageStandardDisplay} maskHandleClose={() => { handleWageStandardClose(); handleWagesModalClose();setIsfocus(false) }} handleClose={handleWageStandardClose} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput} model={model} boxValue={boxValue} setBoxValue={setBoxValue} isFocus={isFocus} stateData={stateData} setStateData={setStateData}/>
       {/* 添加成员 */}
         <AddMember display={addMemberDisplay} handleClose={handleAddMemberClose} handleEstablish={handleEstablish} handleInput={handleInput} groupInfo={groupInfo}/>
       {/* 工资 */}
-        <WagesModal maskHandleClose={handleWagesModalClose} display={wagesModalDisplay} handleClose={handleWagesModalClose} data={setWorkList} handleAddStandard={handleAddStandard} standard={standard} moneyList={moneyList} handleEditWages={handleEditWages} handleAtSwitch={handleAtSwitch} tab={tab} handleSetWagesModal={handleSetWagesModal} handleWagesList={handleWagesList} handleCheckboxStandard={handleCheckboxStandard} clickModalNum={clickModalNum} handleAllClick={handleAllClick} checkAll={checkAll} recorderType={recorderType} />
+        <WagesModal maskHandleClose={handleWagesModalClose} display={wagesModalDisplay} handleClose={handleWagesModalClose} data={setWorkList} handleAddStandard={handleAddStandard} standard={standard} moneyList={moneyList} handleEditWages={handleEditWages} handleAtSwitch={handleAtSwitch} tab={tab} handleSetWagesModal={handleSetWagesModal} handleWagesList={handleWagesList} handleCheckboxStandard={handleCheckboxStandard} clickModalNum={clickModalNum} handleAllClick={handleAllClick} checkAll={checkAll} recorderType={recorderType} 
+        />
         {/* 修改项目 */}
         <EditProject display={editProjectDisplay} handleEditProjectData={handleEditProjectData} data={editProjectData} handleClose={() =>{ setEditProjectDisplay(false),setShow(true)}} handleSubmit={handleEditProject}/>
       <AtDrawer

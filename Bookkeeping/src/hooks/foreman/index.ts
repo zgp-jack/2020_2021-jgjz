@@ -86,6 +86,7 @@ let toDate = '';
 let calendarState = true;
 // 点击不滑动
 let noSlide = false;
+//截流
 export default function userForeman() {
   // const router: Taro.RouterInfo = useRouter();
   // const { stateType } = router.params;
@@ -334,6 +335,8 @@ export default function userForeman() {
   const [isdisable,setIsdisable] = useState<boolean>(false)
   // 跳转考勤表
   const [jumpMonth, setJumpMonth] = useState<string>('')
+   // 工资标准输入框的焦点
+  const [isFocus, setIsfocus] = useState<boolean>(false);
   // 防止创建项目多点
   // const [isHandleAdd, setIsHandleAdd] = useState<Boolean>(false)
   //切换的类型
@@ -408,6 +411,13 @@ export default function userForeman() {
     money:'',
     addWork:'',
     day:'',
+  })
+  //工资标准默认蓝色
+  const [stateData, setStateData] = useState<any>({
+    work: false,
+    money: false,
+    addWork: false,
+    day: false,
   })
   // const [standardData,setStandardData] = useState<any>({
   //   work:'',
@@ -2729,6 +2739,7 @@ export default function userForeman() {
         : value.substring(0, num);
     let data = JSON.parse(JSON.stringify(model));
     let item = JSON.parse(JSON.stringify(wageStandard));
+    console.log(value,'value')
     if(type){
       if (type === 'day' || type === 'work' || type === 'money' || type === 'addWork' ){
         if (!value) {
@@ -2766,32 +2777,57 @@ export default function userForeman() {
         //   setWageStandard(item);
         //   return;
         // }
+        console.log(value,'value')
         item[type] = value;
         setWageStandard(item);
       }else{
+        console.log(value,'value2')
         data[type] = value;
         setModel(data);
       }
     }
     return value;
   }
-  const fn = (e:any,type:string)=>{
+  const fn = (e:any,type:string,len:number)=>{
+    
     const item = JSON.parse(JSON.stringify(boxValue));
     console.log(type,'type')
+    console.log(len,'===============len')
     let val;
     if (item) {
       if (item[type]) {
-        val = item[type] + '';
+        val = (item[type]) + '';
       }
     }
+    // 判断如果是.00结尾
+    let treelet = (val||'').split('.');
+    console.log(treelet[1],'treelet[1]', typeof treelet[1],'111');
     console.log(val,'valllllllll')
+    console.log(e,'eeee');
+    const details = (e)+'';
+    console.log(details,'333')
     let valueData;
-    if (val) {
-      valueData = e.substring(val.length, e.length);
-      item[type] = '';
-      setBoxValue(item);
-    } else {
-      valueData = e;
+    if(treelet[1] && treelet[1] == '00'){
+      console.log(0)
+      if (val) {
+        valueData = details.substring(len-1, len);
+        item[type] = '';
+        setBoxValue(item);
+        console.log(val.length, 'length');
+        console.log(e.length, 'e.lengthe.length')
+      } else {
+        valueData = e;
+      }
+    }else{
+      if (val) {
+        valueData = details.substring(len - 1, len);
+        item[type] = '';
+        setBoxValue(item);
+        console.log(val.length,'length');
+        console.log(e.length,'e.lengthe.length')
+      } else {
+        valueData = e;
+      }
     }
     return valueData;
   }
@@ -2804,11 +2840,11 @@ export default function userForeman() {
       setNum(e.detail.value.length);
     }
     if(type =='amount'|| type =='price'){
-      const valueData = fn(e.detail.value, type);
+      const valueData = fn(e.detail.value, type, e.detail.cursor);
       return dealInputVal(valueData, 7, type);
     }
     if (type == 'wages' || type == 'borrowing'){
-      const valueData = fn(e.detail.value,type);
+      const valueData = fn(e.detail.value,type, e.detail.cursor);
       return dealInputVal(valueData, 14,type);
     }
     console.log(e,'eeeeee')
@@ -3713,27 +3749,33 @@ export default function userForeman() {
   }
   // 添加工资标准
   const handleWageStandard = (type: string, e: any) => {
-    console.log(e,'111')
+    // console.log(e,'111')
+    // console.log(e.detail.cursor,'111')
+    // // 声明指针
+    // let timeId:any=null;
+    // clearInterval(timeId);
+    // timeId = setTimeout(()=>{
+      if (type == 'day' || type === 'work') {
+        const valueData = fn(e.detail.value, type, e.detail.cursor);
+        console.log(valueData,'vale21312')
+        if (valueData>24){
+          Msg('超出最大输入范围')
+        }
+        return dealInputVal(valueData, 2, type);
+      }
+      if (type === 'money' || type === 'addWork') {
+        const valueData = fn(e.detail.value, type, e.detail.cursor);
+        console.log(valueData,'1111111111111')
+        if (valueData > 9999.99){
+          Msg('超出最大输入范围')
+        }
+        return dealInputVal(valueData, 4, type);
+      }
+      const data = JSON.parse(JSON.stringify(wageStandard));
+      data[type] = toFixedFn(e);
+      setWageStandard(data);
+    // },300)
     // const cacheItem = JSON.parse(JSON.stringify(cacheWage));
-    if (type == 'day' || type === 'work') {
-      const valueData = fn(e.detail.value, type);
-      console.log(valueData,'vale21312')
-      if (valueData>24){
-        Msg('超出最大输入范围')
-      }
-      return dealInputVal(valueData, 2, type);
-    }
-    if (type === 'money' || type === 'addWork') {
-      const valueData = fn(e.detail.value, type);
-      console.log(valueData,'1111111111111')
-      if (valueData > 9999.99){
-        Msg('超出最大输入范围')
-      }
-      return dealInputVal(valueData, 4, type);
-    }
-    const data = JSON.parse(JSON.stringify(wageStandard));
-    data[type] = toFixedFn(e);
-    setWageStandard(data);
   }
   // 保存
   const handlePreservation = (type: number) => {
@@ -4473,7 +4515,8 @@ export default function userForeman() {
     const addWorkNum = data.addWork;
     // 加班时间
     const dayNum = data.day;
-    setIsdisable(true)
+    setIsdisable(true);
+    setIsfocus(false);
     // 上班标准提示
     if (workNum == 0) {
       Msg('上班标准必须大于0')
@@ -4777,7 +4820,16 @@ export default function userForeman() {
     if (v.overtime_type == 2) {
       data.dayAddWork = toFixedFn((parseFloat(v.money) / parseFloat(v.overtime)));
     }
-    setWageStandard(data)
+    setWageStandard(data);
+    setTimeout(() => {
+      setIsfocus(true);
+      const stateItem = JSON.parse(JSON.stringify(stateData));
+      for (let i in stateItem) {
+        stateItem[i] = false;
+      }
+      stateItem.work = true;
+      setStateData(stateItem)
+    }, 350)
   }
   // 修改已定义工资标准
   const handleEditWageStandard = () => {
@@ -6025,6 +6077,10 @@ export default function userForeman() {
     getThreeMonths,
     setDel,
     boxValue, 
-    setBoxValue
+    setBoxValue,
+    isFocus, 
+    setIsfocus,
+    stateData, 
+    setStateData
   }
 }

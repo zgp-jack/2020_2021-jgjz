@@ -16,20 +16,23 @@ interface PROPS {
   model:any,
   boxValue:any,
   setBoxValue:any,
+  isFocus:boolean,
+  stateData:any,
+  setStateData:any,
 }
-let stateData={
-  work: true,
-  money: false,
-  addWork: false,
-  day: false,
-}
-export default function WageStandard({ display, maskHandleClose, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel, model, boxValue, setBoxValue }: PROPS) {
-  const [stateData,setStateData]= useState<any>({
-    work:false,
-    money:false,
-    addWork:false,
-    day:false,
-  })
+// let stateData={
+//   work: true,
+//   money: false,
+//   addWork: false,
+//   day: false,
+// }
+export default function WageStandard({ display, maskHandleClose, handleClose, wageStandard, handleWageStandard, handleAddWage, handleWageStandardRadio, handleAdd, handleDel, model, boxValue, setBoxValue, isFocus, stateData, setStateData }: PROPS) {
+  // const [stateData,setStateData]= useState<any>({
+  //   work:false,
+  //   money:false,
+  //   addWork:false,
+  //   day:false,
+  // })
   const toFixedFnNum = (num: any) => {
     let s = num + '';
     s = s.substring(0, s.indexOf(".") + 3);
@@ -86,6 +89,7 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
     // stateData = stateItem;
     setStateData(stateItem);
   }
+  console.log(isFocus,'isFocusisFocusisFocus')
   return (
     // <View className={display?'wageStandard':''}>
     // <View className='mt'>
@@ -108,11 +112,15 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                   type='digit'
                   className={stateData.work ? 'inputBox-Focus' :'inputBox'}
                   cursorSpacing={200}
+                  cursor={toFixedFnNum(wageStandard.work).toString().length || 0}
+                  selectionEnd={toFixedFnNum(wageStandard.work).toString().length || 0}
+                  selectionStart={toFixedFnNum(wageStandard.work).toString().length || 0}
                   // maxLength={7}
                   onBlur={handleOnBlur}
                   onFocus={()=>handleState('work')}
-                  focus={display?true:false}
-                  autoFocus={display ? true : false}
+                  focus={isFocus?true:false}
+                  autoFocus={isFocus ? true : false}
+                  auto-focus={isFocus ? true : false}
                   value={toFixedFnNum(wageStandard.work).toString()}
                   // onBlur={(e) => { e.stopPropagation(); e.preventDefault() }}
                   onInput={(e) => handleWageStandard('work', e)} />
@@ -130,6 +138,9 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                     // maxLength={7}
                     cursorSpacing={200}
                     // autoFocus=
+                    cursor={wageStandard.money.length||0} 
+                    selectionEnd={wageStandard.money.length || 0}
+                    selectionStart={wageStandard.money.length || 0}
                     onBlur={handleOnBlur}
                     onFocus={() => handleState('money')}
                     value={wageStandard.money}
@@ -170,10 +181,13 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                     type='digit'
                     className={stateData.addWork ? 'inputBox-day-Focus' : 'inputBox-day'}
                     // maxLength={7}
+                    cursor={wageStandard.addWork.length || 0} 
                     cursorSpacing={200}
                     onBlur={handleOnBlur}
                     onFocus={() => handleState('addWork')}
                     value={wageStandard.addWork}
+                    selectionEnd={wageStandard.addWork.length || 0}
+                    selectionStart={wageStandard.addWork.length || 0}
                     // onBlur={(e) => {e.stopPropagation();e.preventDefault()}}
                     onInput={(e) => handleWageStandard('addWork', e)} />
                 </View><View className='icon icon_right' onClick={() => handleAdd('addWork', wageStandard.addWork)}>+</View>
@@ -201,6 +215,9 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
                     type='digit'
                     className={stateData.day ? 'inputBox-day-Focus' : 'inputBox-day'}
                     cursorSpacing={200}
+                    cursor={wageStandard.day.length || 0} 
+                    selectionEnd={wageStandard.day.length || 0}
+                    selectionStart={wageStandard.day.length || 0}
                     // maxLength={7}
                     onBlur={handleOnBlur}
                     onFocus={() => handleState('day')}

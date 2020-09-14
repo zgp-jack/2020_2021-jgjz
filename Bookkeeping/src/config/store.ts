@@ -2,7 +2,7 @@
  * @Author: zyb
  * @Date: 2020-08-26 19:48:23
  * @LastEditors: zyb
- * @LastEditTime: 2020-09-04 15:18:36
+ * @LastEditTime: 2020-09-14 15:55:15
  * @Description: 
  */
 // * 本文件为小程序内部缓存声明文件
@@ -43,3 +43,6 @@ export const IsJump:string = 'IsJump';
 export const First:string ='first'
 export const IsLogion:string = 'isLogion'
 export const Sign: string = 'sign'
+
+// 小程序跳转appid
+export const JumpAppid:string = 'jumpAppid';

@@ -55,6 +55,8 @@ export default function AddTeamMember() {
   const [storeValue, setStoreValue] = useState<any[]>([]);
   // 点击时候保存的人员
   const [clickItem,setClickItem]= useState<any[]>([]);
+  // 搜索
+  const [seach,setSeach]= useState<boolean>(false);
   // 关闭添加成员
   const handleAddMemberClose = () => {
     setAddMemberDisplay(false);
@@ -138,8 +140,23 @@ export default function AddTeamMember() {
       }
       console.log(clickState,'clickStateclickState')
       setStopCheckout(clickState);
+      console.log(mid.worker_id,'=============id');
       // return;
       console.log(item,'timenejnjfbkja')
+      // 工人的时候判断id
+      for(let i =0;i<item.length;i++){
+        console.log(item[i].id,'========xxxxid')
+        // if (item[i].id == mid.worker_id ){
+        //   console.log('=========判断成功')
+        //   item[i].disabled = true;
+        // }
+        for(let j=0;j<item[i].list.length;j++){
+          if (item[i].list[j].id == mid.worker_id) {
+            item[i].list[j].disabled = true;
+            item[i].list[j].user = true;
+          }
+        }
+      }
       setDefaultData(item);
       setData(item)
     }
@@ -179,14 +196,43 @@ export default function AddTeamMember() {
 
   }
   const onActionClick = () => {
+    console.log(111111)
     const value = JSON.parse(JSON.stringify(valData));
     const dataArr = JSON.parse(JSON.stringify(data));
     const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+    const clickArr = JSON.parse(JSON.stringify(clickData));
     let arr: any[] = [
       { list: [] }
     ];
     if (valData == '') {
+      setSeach(false)
+      // for (let i = 0; i < defaultDataArr.length;i++){
+      //   for(let j=0;i<defaultDataArr[i].list;j++){
+      //     for(let b=0;b<clickArr.length;b++){
+      //       if (defaultDataArr[i].list[j].id == clickArr[b].id){
+      //         clickArr[b] = defaultDataArr[i].list[j];
+      //         console.log(111)
+      //       }
+      //     }
+      //   }
+      // }
+      console.log('走这里')
+      console.log(clickArr,'1111')
+      for(let i=0;i<clickArr.length;i++){
+        for (let j = 0; j < defaultDataArr.length;j++){
+          for (let z = 0; z < defaultDataArr[j].list.length;z++){
+            if (defaultDataArr[j].list[z].id == clickArr[i].id){
+              defaultDataArr[j].list[z].click = true;
+            }
+          }
+        }
+      }
+      // console.log(clickArr,'clickArr');
+      // console.log(defaultDataArr,'defaultDataArr');
+      // arr = 
       arr = defaultDataArr;
+      console.log(arr,'arrrrr')
+      // console.log(defaultDataArr,'defaultDataArrdefaultDataArrdefaultDataArr')
     } else {
       for (let i = 0; i < dataArr.length; i++) {
         if (dataArr[i].list.length > 0) {
@@ -209,18 +255,59 @@ export default function AddTeamMember() {
         }
       }
     }
+    let clickState = true;
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr[i].list.length; j++) {
+        if (!arr[i].list[j].disabled) {
+          if (!arr[i].list[j].click) {
+            clickState = false
+          }
+        }
+      }
+    }
+    setIsClick(clickState)
+    setSeach(true);
     setData(arr);
   }
   const handleOnClear = ()=>{
     setValData('');
+    // const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+    // setData(defaultDataArr);
+    // console.log(data,'data');
+    // const arr = JSON.parse(JSON.stringify(clickData));
+    // console.log(clickData,'dataArrdataArrdataArr')
+    // console.log('的撒打算打算打算打算的')
+    setSeach(false)
     const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+    const clickArr = JSON.parse(JSON.stringify(clickData));
+    for (let i = 0; i < clickArr.length; i++) {
+      for (let j = 0; j < defaultDataArr.length; j++) {
+        for (let z = 0; z < defaultDataArr[j].list.length; z++) {
+          if (defaultDataArr[j].list[z].id == clickArr[i].id) {
+            defaultDataArr[j].list[z].click = true;
+          }
+        }
+      }
+    }
+    let clickState = true;
+    for (let i = 0; i < defaultDataArr.length; i++) {
+      for (let j = 0; j < defaultDataArr[i].list.length; j++) {
+        if (!defaultDataArr[i].list[j].disabled) {
+          if (!defaultDataArr[i].list[j].click) {
+            clickState = false
+          }
+        }
+      }
+    }
+    setIsClick(clickState)
+    setSeach(true);
     setData(defaultDataArr);
   }
   const handleChange = (e) => {
-    if(e==''){
-      const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
-      setData(defaultDataArr);
-    }
+    // if(e==''){
+    //   const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+    //   setData(defaultDataArr);
+    // }
     setValData(e);
   }
   const handleLetter = (v) => {
@@ -247,26 +334,62 @@ export default function AddTeamMember() {
     return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1));
   }
   // 班组长
-  const handleForeman = (name, e) => {
+  const handleForeman = (title, e) => {
+    let name='';
+    if (title){
+      name = title;
+    }else{
+      name = e.name_py;
+    }
+    console.log(name,e,'啊啊啊啊')
     if (type !== '2') {
       if (e.click && e.disabled) return;
       const arr = JSON.parse(JSON.stringify(clickData));
+      console.log(arr,'aaaaaa')
       let dataArr = JSON.parse(JSON.stringify(data));
       if (arr.length === 0) {
         arr.push(e);
       } else {
-        if (arr.indexOf(e.id) === -1) {
-          arr.push(e)
-        } else {
-          arr.splice(arr.indexOf(e.id), 1)
+        let state = false;
+        let index = 0;
+        for(let i =0;i<arr.length;i++){
+          if(arr[i].id == e.id){
+            state = true;
+            index = i;
+          }
         }
+        console.log(state,'state');
+        console.log(index,'index')
+        if(!state){
+          arr.push(e)
+        }else{
+          console.log(1111,index,'1111111')
+          arr.splice(index, 1)
+        }
+        console.log(arr,'arrr')
+        // return;
       }
-      for (let i = 0; i < dataArr.length; i++) {
-        dataArr[i].group_leader = dataArr[i].id;
-        if (dataArr[i].name_py === name) {
-          for (let j = 0; j < dataArr[i].list.length; j++) {
-            if (e.id === dataArr[i].list[j].id) {
+      console.log(dataArr,'dataArr')
+      console.log(arr,'arrrrrr')
+      console.log(seach,'=========seach')
+      if (seach){
+        for(let i =0;i<dataArr.length;i++){
+          for(let j=0;j<dataArr[i].list.length;j++){
+            console.log(e.id, '====e.id');
+            console.log(dataArr[i].id, 'dataArr[i].list[j].id')
+            if(dataArr[i].list[j].id == e.id){
               dataArr[i].list[j].click = !dataArr[i].list[j].click
+            }
+          }
+        }
+      }else{
+        for (let i = 0; i < dataArr.length; i++) {
+          dataArr[i].group_leader = dataArr[i].id;
+          if (dataArr[i].name_py == name) {
+            for (let j = 0; j < dataArr[i].list.length; j++) {
+              if (e.id == dataArr[i].list[j].id) {
+                dataArr[i].list[j].click = !dataArr[i].list[j].click
+              }
             }
           }
         }
@@ -281,7 +404,7 @@ export default function AddTeamMember() {
           }
         }
       }
-      // console.log(dataArr,'dataArr')
+      console.log(dataArr,'dataArr')
       setIsClick(clickState)
       setClickData(arr);
       setData(dataArr);
@@ -305,22 +428,48 @@ export default function AddTeamMember() {
         if (arr.length === 0) {
           arr.push(e);
         } else {
-          console.log(e.id,'e.di')
-          console.log(arr,'arrr')
-          console.log(arr.indexOf(e.id),'arr.indexOf(e.id)')
-          if (arr.indexOf(e.id) == -1) {
+          let state = false;
+          let index = 0;
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id == e.id) {
+              state = true;
+              index = i;
+            }
+          }
+          if (!state) {
             arr.push(e)
           } else {
-            console.log(arr.indexOf(e.id),'arr.indexOf(e.id)')
-            arr.splice(arr.indexOf(e.id), 1)
+            arr.splice(index, 1)
           }
         }
-        for (let i = 0; i < dataArr.length; i++) {
-          dataArr[i].group_leader = dataArr[i].id;
-          if (dataArr[i].name_py === name) {
+        // for (let i = 0; i < dataArr.length; i++) {
+        //   dataArr[i].group_leader = dataArr[i].id;
+        //   if (dataArr[i].name_py === name) {
+        //     for (let j = 0; j < dataArr[i].list.length; j++) {
+        //       if (e.id === dataArr[i].list[j].id) {
+        //         dataArr[i].list[j].click = !dataArr[i].list[j].click
+        //       }
+        //     }
+        //   }
+        // }
+        if (seach) {
+          for (let i = 0; i < dataArr.length; i++) {
             for (let j = 0; j < dataArr[i].list.length; j++) {
-              if (e.id === dataArr[i].list[j].id) {
+              console.log(e.id, '====e.id');
+              console.log(dataArr[i].id, 'dataArr[i].list[j].id')
+              if (dataArr[i].list[j].id == e.id) {
                 dataArr[i].list[j].click = !dataArr[i].list[j].click
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < dataArr.length; i++) {
+            dataArr[i].group_leader = dataArr[i].id;
+            if (dataArr[i].name_py == name) {
+              for (let j = 0; j < dataArr[i].list.length; j++) {
+                if (e.id == dataArr[i].list[j].id) {
+                  dataArr[i].list[j].click = !dataArr[i].list[j].click
+                }
               }
             }
           }
@@ -676,7 +825,7 @@ export default function AddTeamMember() {
               <View className='list-flex-test' onClick={(e) => { e.stopPropagation(),handleForeman(val.name_py, v)}}>
                 {(type !== '2' || administration) &&
                   <View>
-                    {/* <Checkbox checked={v.click} value={v.click} disabled={v.click && v.disabled} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /> */}
+                    {/* <Checkbox checked={v.click} value={v.click} disabled={v.click && v.disabled} className='Checkbox' onClick={() => handleForem(val.name_py, v)} /> */}
                     {v.disabled && 
                     // <View className='checkbox-disabled'></View>
                     <Image src={`${IMGCDNURL}disabledCheckbox.png`} className='checkbox-disabled'/>

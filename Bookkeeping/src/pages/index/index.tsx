@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@tarojs/redux'
 import { setContent } from '../../actions/content'
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal'
-import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump, First, IsLogion, Sign } from '../../config/store'
+import { UserInfo, MidData, Type, CreationTime, NeverPrompt, IsLoginType, Tips, Res, IsShare, IsJump, First, IsLogion, Sign, JumpAppid } from '../../config/store'
 import { setTypes } from '../../actions/type'
 import { IMGCDNURL } from '../../config'
 import { setFlowingWater } from '../../actions/flowingWater';
@@ -235,6 +235,11 @@ export default function Index() {
       if (first)return;
 
       const e = data;
+      if (e.referrerInfo.appid){
+        Taro.setStorageSync(JumpAppid, e.referrerInfo.appid);
+      }else{
+        Taro.setStorageSync(JumpAppid,'');
+      }
       if (e.scene === 1037) {
         if (e.referrerInfo.extraData.userId && e.referrerInfo.extraData.token && e.referrerInfo.extraData.tokenTime && e.referrerInfo.extraData.userUuid) {
           // 验证有没有手机号
@@ -800,10 +805,12 @@ export default function Index() {
       Msg('网络错误，请求失败')
       return
     }
+    //根据appid判断跳转小程序
+    const appid = Taro.getStorageSync(JumpAppid);
     //**重点**要打开的小程序版本，有效值 develop（开发版），trial（体验版），release（正式版
     // ========发布正式要修改
     Taro.navigateToMiniProgram({
-      appId: 'wx31a1c86a67bc6c54',
+      appId: appid ? appid:'wx31a1c86a67bc6c54',
       path: '/pages/index/index',
       extraData: {
         foo: 'bar'

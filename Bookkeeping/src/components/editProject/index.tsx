@@ -29,7 +29,6 @@ export default function EditProject({ display, handleClose, data, handleEditProj
       setNameFocus(false)
     }
   }
-  console.log(focus,'focus')
   return (
     <AtDrawer show={display} mask right width={'100%'}>
       <View className='back' onClick={handleClose}></View>
