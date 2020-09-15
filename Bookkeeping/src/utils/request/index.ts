@@ -968,6 +968,7 @@ export function getWorkerHasBusinessByDateAction(data): Promise<Inter.bkGetWorke
       time: userInfo.tokenTime,
     },
     data: data,
+    loading: false
   })
 }
 

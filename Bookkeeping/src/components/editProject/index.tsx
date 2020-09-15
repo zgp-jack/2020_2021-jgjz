@@ -18,7 +18,7 @@ export default function EditProject({ display, handleClose, data, handleEditProj
   useEffect(() => {
     // 判断是安卓还是苹果
     setIos(isIos())
-  })
+  },[])
   const handleOnFocus = ()=>{
     if (!ios){
       setNameFocus(true)

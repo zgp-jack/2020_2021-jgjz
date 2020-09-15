@@ -86,6 +86,8 @@ let toDate = '';
 let calendarState = true;
 // 点击不滑动
 let noSlide = false;
+// 日历滑动值
+let dateItemList:any[] = [];
 //截流
 export default function userForeman() {
   // const router: Taro.RouterInfo = useRouter();
@@ -419,6 +421,8 @@ export default function userForeman() {
     addWork: false,
     day: false,
   })
+  // 日历两个月两个月请求
+  const [twoMon,setTwoMon] = useState<any>();
   // const [standardData,setStandardData] = useState<any>({
   //   work:'',
   //   money:'',
@@ -514,6 +518,7 @@ export default function userForeman() {
   }, [useSelectorItem.workerList])
   // 获取三个月日历
   const generateThreeMonths = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean)=>{
+    console.log(cacheDaysArrList,'cacheDaysArrList')
     console.log(e,'获取日历')
     // 只需要设置这个月之前的，因为不能选择今天之后的
     // 这个月就是最后一个
@@ -602,6 +607,42 @@ export default function userForeman() {
     monthStr = `${monthStr.length > 1 ? '' : '0'}${monthStr}`
     return monthStr
   }
+  // 两个月月份处理
+  const TwoMonthFn = (dayObj:any,num:number,type:string)=>{
+    let TwoData;
+    if(type == 'del'){
+      if (parseInt(dayObj.month) - num <= 0) {
+        const year = parseInt(dayObj.year)-1;
+        let month;
+        if (parseInt(dayObj.month) - num == 0){
+          month = 12;
+        }else{
+          month = 12 - parseInt(dayObj.month);
+        }
+        // const month = addZero(12 - (Math.abs(dayObj.month) % 12))
+        TwoData = year + '-' + month;
+        // parseInt(dayObj.year) - parseInt((+dayObj.month) / 12 == 0 ? 1 : Math.abs(parseInt((+dayObj.month)/12)+1))
+        // parseInt(month2 / 12 == 0 ? 1 : Math.abs(parseInt(month2 / 12)) + 1)
+      } else {
+        const year = dayObj.year;
+        const month = addZero(parseInt(dayObj.month) - num);
+        TwoData = year + '-' + month;
+      }
+    }else{
+      if (parseInt(dayObj.month) + num == 13) {
+        const year = parseInt(dayObj.year)+1
+        const month = addZero(1)
+        TwoData = year + '-' + month;
+        // parseInt(dayObj.year) - parseInt((+dayObj.month) / 12 == 0 ? 1 : Math.abs(parseInt((+dayObj.month)/12)+1))
+        // parseInt(month2 / 12 == 0 ? 1 : Math.abs(parseInt(month2 / 12)) + 1)
+      } else {
+        const year = dayObj.year;
+        const month = addZero(parseInt(dayObj.month) + num);
+        TwoData = year + '-' + month;
+      }
+    }
+    return TwoData;
+  }
   // 设置默认数据
   const getList = (businessType?:number)=>{
     isHandleAdd = true;
@@ -660,7 +701,27 @@ export default function userForeman() {
       setClickData([dayObj])
       setTimeData([dayObj]);
       setToday([dayObj])
-      setToDayString(today)
+      setToDayString(today);
+      // 设置当前月减两个月
+      const TwoData = TwoMonthFn(dayObj,2,'del'); 
+      // let TwoData;
+      // if (parseInt(dayObj.month)-2<=0){
+      //   const year = parseInt(dayObj.year) - paramsId((dayObj.month) / 12 == 0 ? 1 : Math.abs((dayObj.month/12)+1))
+      //   const month = addZero(12 - (Math.abs(dayObj.month) % 12))
+      //   TwoData = year + '-' + month;
+      //     // parseInt(dayObj.year) - parseInt((+dayObj.month) / 12 == 0 ? 1 : Math.abs(parseInt((+dayObj.month)/12)+1))
+      //     // parseInt(month2 / 12 == 0 ? 1 : Math.abs(parseInt(month2 / 12)) + 1)
+      // }else{
+      //   const year = dayObj.year;
+      //   const month = addZero(parseInt(dayObj.month)-2);
+      //   TwoData = year + '-' + month;
+      // }
+      
+      // console.log(TwoData,'timestimestimes=======')
+      // const TwoData = new Date(dayObj.year + '-' + addZero(dayObj.month-1));
+      // console.log(dayObj.year + '-' + addZero(dayObj.month), 'dayObj.year===');
+      // console.log(TwoData,'TwoDataTwoDataTwoData=====')
+      setTwoMon(TwoData);
       // 设置加班时长默认值
       const timeTitle = '上班1个工，无加班';
       // 一个工
@@ -1309,6 +1370,7 @@ export default function userForeman() {
   }
   // 对应月份日期
   const getMonthDaysCurrent = (e, val?: any, ids?: any, typeId?: string, cacheDaysArrList?: string[], change?: boolean, thisKey?:string) => {
+    console.log(cacheDaysArrList,'cacheDaysArrListcacheDaysArrListcacheDaysArrListcacheDaysArrList')
     console.log(e,'对应月份')
     console.log(e.getMonth(),' e.getMonth()')
     // 获取点击了的数据
@@ -1337,7 +1399,6 @@ export default function userForeman() {
     console.log(month,'month111111111')
     // 设置时间
     if(thisKey){
-      console.log(month,'month看见巴萨就快点把手机卡百度空间啊吧')
       setTimeDate({ year, monent: month })
       setTime({ year, monent: month })
     }
@@ -1444,6 +1505,7 @@ export default function userForeman() {
         }
       }
     }
+    console.log(List,'ListListListListList=======')
     if (List.length > 0) {
       List.map(v => {
         calendarDaysArr.map(val => {
@@ -3352,8 +3414,10 @@ export default function userForeman() {
       const dayNum = dataArrList.day;
       // 上班时间
       let time = 0;
+      let timeState = false;
       for (let i = 0; i < timeArrs.length; i++) {
         if (timeArrs[i].click) {
+          timeState = true;
           setClickDay(timeArrs[i])
           // 选择工
           if (timeArrs[i].id != 1 && timeArrs[i].id != 2 && timeArrs[i].id != 3) {
@@ -3376,12 +3440,30 @@ export default function userForeman() {
       }
       // 加班时间
       let addTime = 0;
+      let addState = false;
       for (let i = 0; i < addWorkArrs.length; i++) {
         if (addWorkArrs[i].click) {
+          addState = true;
           setClickTime(addWorkArrs[i])
           addTime = addWorkArrs[i].num
         }
       }
+    // 判断无上班时长为，加班时长为无加班，默认设置为1个工，无加班
+    if (!addState&&!timeState){
+      for (let i = 0; i < timeArrs.length; i++) {
+        timeArrs[0].click = true;
+        setClickDay(timeArrs[0])
+      }
+      for (let i = 0; i < addWorkArrs.length; i++) {
+        addWorkArrs[0].click = true;
+        addTime = addWorkArrs[0].num
+        setClickTime(addWorkArrs[0])
+      }
+      time = 1 / workNum * workNum;
+      title = '上班1个工，无加班';
+      setTimeArr(timeArrs);
+      setAddWorkArr(addWorkArrs)
+    }
     if (identity === 2) {
       let total:any='0.00';
       if (dataArrList.type === 1) {
@@ -3419,7 +3501,7 @@ export default function userForeman() {
       //   }
       // })
       let num = isNaN(total) ? '0.00' : total.toString();
-      setModel({ ...model, workersWages: num, duration: title });
+      setModel({ ...model, workersWages: num, duration: title, modalDuration: title });
       setWorkOvertimeDisplay(false);
       setTimeout(() => {
         setIsdisable(false)
@@ -3427,7 +3509,7 @@ export default function userForeman() {
       return;
     }
     
-    setModel({ ...model, duration: title })
+    setModel({ ...model, duration: title, modalDuration: title })
     setWorkOvertimeDisplay(false);
     setTimeout(() => {
       setIsdisable(false)
@@ -3749,31 +3831,58 @@ export default function userForeman() {
   }
   // 添加工资标准
   const handleWageStandard = (type: string, e: any) => {
+    // let timer:any = 0;
+    // return ()=>{
+      // clearTimeout(timer);
+      // timer=setTimeout(()=>{
+      // setTimeout(()=>{
+        if (type == 'day' || type === 'work') {
+          const valueData = fn(e.detail.value, type, e.detail.cursor);
+          console.log(valueData, 'vale21312')
+          if (valueData > 24) {
+            Msg('超出最大输入范围')
+          }
+          return dealInputVal(valueData, 2, type);
+        }
+        if (type === 'money' || type === 'addWork') {
+          const valueData = fn(e.detail.value, type, e.detail.cursor);
+          console.log(valueData, '1111111111111')
+          if (valueData > 9999.99) {
+            Msg('超出最大输入范围')
+          }
+          return dealInputVal(valueData, 4, type);
+        }
+        const data = JSON.parse(JSON.stringify(wageStandard));
+        data[type] = toFixedFn(e);
+        setWageStandard(data);
+      // },0)
+      // },300)
+    // }
     // console.log(e,'111')
     // console.log(e.detail.cursor,'111')
     // // 声明指针
     // let timeId:any=null;
     // clearInterval(timeId);
     // timeId = setTimeout(()=>{
-      if (type == 'day' || type === 'work') {
-        const valueData = fn(e.detail.value, type, e.detail.cursor);
-        console.log(valueData,'vale21312')
-        if (valueData>24){
-          Msg('超出最大输入范围')
-        }
-        return dealInputVal(valueData, 2, type);
-      }
-      if (type === 'money' || type === 'addWork') {
-        const valueData = fn(e.detail.value, type, e.detail.cursor);
-        console.log(valueData,'1111111111111')
-        if (valueData > 9999.99){
-          Msg('超出最大输入范围')
-        }
-        return dealInputVal(valueData, 4, type);
-      }
-      const data = JSON.parse(JSON.stringify(wageStandard));
-      data[type] = toFixedFn(e);
-      setWageStandard(data);
+      // if (type == 'day' || type === 'work') {
+      //   const valueData = fn(e.detail.value, type, e.detail.cursor);
+      //   console.log(valueData,'vale21312')
+      //   if (valueData>24){
+      //     Msg('超出最大输入范围')
+      //   }
+      //   return dealInputVal(valueData, 2, type);
+      // }
+      // if (type === 'money' || type === 'addWork') {
+      //   const valueData = fn(e.detail.value, type, e.detail.cursor);
+      //   console.log(valueData,'1111111111111')
+      //   if (valueData > 9999.99){
+      //     Msg('超出最大输入范围')
+      //   }
+      //   return dealInputVal(valueData, 4, type);
+      // }
+      // const data = JSON.parse(JSON.stringify(wageStandard));
+      // data[type] = toFixedFn(e);
+      // setWageStandard(data);
     // },300)
     // const cacheItem = JSON.parse(JSON.stringify(cacheWage));
   }
@@ -3848,7 +3957,9 @@ export default function userForeman() {
       })
       if (types === 2 && (tabData.id != 3 && (tabData.id == 2 && itemType == 0))) {
         if (data.work == 0) {
+          statistics('wages') 
           Msg('您还没有设置工资标准')
+          postErrorCountFn();
           return;
         }
       }
@@ -4018,18 +4129,18 @@ export default function userForeman() {
       statistics('entryName')
     }
     // 工人
-    if(!workers||workers.length==0){
+    if(!workers||workers.length==0 && !(projectArr.length == 0 && types == 1)){
       statistics('workers') 
+    }
+    // 上班时长
+    if ((overtime == 0 && work_time_hour == 0 && times == 0 && (tabData.id ==1||(tabData.id == 2 && itemType!==1)))){
+      statistics('workinghurs')
     }
     // 工资标准
     if (types == 2){
-      if (tabData.id == 1 && item.workersWages == 0){
+      if (tabData.id == 1 && item.workersWages == 0 && !((overtime == 0 && work_time_hour == 0 && times == 0 && (tabData.id == 1 || (tabData.id == 2 && itemType !== 1))))){
         statistics('wages') 
       }
-    }
-    // 上班时长
-    if (overtime == 0 && work_time_hour == 0 && times == 0 && (tabData.id ==1||(tabData.id == 2 && itemType!==1))){
-      statistics('workinghurs')
     }
     // 工程。单价。工钱
     if (itemType == 1 && tabData.id == 2){
@@ -4390,7 +4501,7 @@ export default function userForeman() {
     setCheckAll(false);
     setClickModalNum(0)
     setProjectId(v.group_info);
-     if (type == 2) {
+    if (type == 2) {
       if (v.leader_name) {
         setForemanTitle(v.leader_name)
       } else {
@@ -5463,6 +5574,12 @@ export default function userForeman() {
     const toTears = new Date(toDate).getFullYear();
     const toMonths = new Date(toDate).getMonth() + 1;
     // setCalendarState(true)
+    let dataType;
+    recorderTypeArr.item.map((v) => {
+      if (v.click) {
+        dataType = v.id;
+      }
+    })
     calendarState = true;
     console.log(time,'timessssssssssss')
     if (type === 0) {
@@ -5476,15 +5593,68 @@ export default function userForeman() {
       }
       setrightTime(true);
       // console.log(Number(time.monent) - 2,'Number(time.monent) - 2')
+      let date;
       if ((Number(time.year) == toTears && (Number(time.monent) - 1) !== toMonths) || (Number(time.year) !== toTears && (Number(time.monent) - 1) !== toMonths) ){
-        let date = new Date(Number(time.year), Number(time.monent) - 2, 1)
+        date = new Date(Number(time.year), Number(time.monent) - 2, 1)
         console.log(Number(time.monent) - 2,'Number(time.monent) - 2')
         getThreeMonths(date);
       }else{
-        let date = new Date(Number(time.year), Number(time.monent) - 2, 1)
+        date = new Date(Number(time.year), Number(time.monent) - 2, 1);
         generateThreeMonths(date);
       }
-      setTimeout(() => { noSlide =false},1000)
+      setTimeout(() => { noSlide =false},1000);
+      const twoTime = JSON.parse(JSON.stringify(twoMon));
+      const twoObj = {
+        month: twoTime.split('-')[1],
+        year: twoTime.split('-')[0],
+      }
+      console.log(twoObj,'twoObj=======')
+      // if (twoObj.year == new Date(date).getFullYear() && addZero(new Date(date).getMonth() + 1) == twoObj.month){
+        console.log('日历啊啊啊')
+        const toDay =new Date(date).getFullYear() + '-' + addZero(new Date(date).getMonth() + 1);
+        let lastobj ={
+          month: toDay.split('-')[1],
+          year: toDay.split('-')[0],
+        }; 
+        const lastMonth = TwoMonthFn(lastobj,1,'del'); 
+        console.log(lastMonth,'lastMonth')
+        let params = {
+          group_info: groupInfo,
+          business_type: dataType,
+          start_month: new Date(lastMonth).getFullYear() + '-' + addZero(new Date(lastMonth).getMonth() + 1),
+          end_month: new Date(date).getFullYear() + '-' + addZero(new Date(date).getMonth() + 1),
+          // date: new Date(date).getFullYear() + '-' + addZero(new Date(date).getMonth() + 1),
+        }
+        getWorkerHasBusinessByDateAction(params).then(res=>{
+          if(res.code == 200){
+            let dateItem: any[] = [];
+            for (let z = 0; z < res.data.days.length; z++) {
+              let dayObj = {
+                date: res.data.days[z].split('-')[2],
+                month: res.data.days[z].split('-')[1],
+                year: res.data.days[z].split('-')[0],
+              }
+              dateItem.push(dayObj);
+            }
+            setcacheDays(dateItem);
+            const dateTime = new Date(date).getFullYear() + '-' + addZero(new Date(date).getMonth() + 1);
+            // 判断成功后，再减去两个月
+            // let date = {
+            //   date: dateTime.split('-')[2],
+            //   month: dateTime.split('-')[1],
+            //   year: dateTime.split('-')[0],
+            // }
+            // const TwoData = TwoMonthFn(TwoTime);
+            let obj ={
+              month: dateTime.split('-')[1],
+              year: dateTime.split('-')[0],
+            }; 
+            const TwoData = TwoMonthFn(obj,1,'del'); 
+            console.log(TwoData,'TwoDataTwoDataTwoData====')
+            setTwoMon(TwoData)
+          }
+        })
+      // }
     } else {
       noSlide = true;
       if(Number(time.year)==nowYear&&Number(time.monent)==nowMon){
@@ -5501,12 +5671,13 @@ export default function userForeman() {
         }
       }
       setleftTime(true)
+      let date;
       if ((Number(time.year) == toTears && (Number(time.monent) + 1) !== toMonths) || (Number(time.year) !== toTears && (Number(time.monent) + 1) !== toMonths)) {
-        let date = new Date(Number(time.year), Number(time.monent), 1)
+        date = new Date(Number(time.year), Number(time.monent), 1)
         getThreeMonths(date);
       } else {
         console.log(Number(time.monent),'Number(time.monent')
-        let date = new Date(Number(time.year), Number(time.monent), 1)
+        date = new Date(Number(time.year), Number(time.monent), 1)
         generateThreeMonths(date);
       }
       setTimeout(() => {
@@ -5514,9 +5685,46 @@ export default function userForeman() {
         }, 1000)
       // let date = new Date(Number(time.year), Number(time.monent), 1)
       // generateThreeMonths(date);
+      const toDay = new Date(date).getFullYear() + '-' + addZero(new Date(date).getMonth() + 1);
+      let lastobj = {
+        month: toDay.split('-')[1],
+        year: toDay.split('-')[0],
+      }; 
+      const lastMonth = TwoMonthFn(lastobj,2, 'add'); 
+      const month = TwoMonthFn(lastobj, 1, 'add'); 
+      let params={
+        group_info: groupInfo,
+        business_type: dataType,
+        start_month: new Date(month).getFullYear() + '-' + addZero(new Date(month).getMonth() + 1),
+        // start_month: new Date(lastMonth).getFullYear() + '-' + addZero(new Date(lastMonth).getMonth() + 1),
+        end_month: new Date(lastMonth).getFullYear() + '-' + addZero(new Date(lastMonth).getMonth() + 1),
+      }
+      getWorkerHasBusinessByDateAction(params).then(res=>{
+        if(res.code == 200){
+            let dateItem: any[] = [];
+            for (let z = 0; z < res.data.days.length; z++) {
+              let dayObj = {
+                date: res.data.days[z].split('-')[2],
+                month: res.data.days[z].split('-')[1],
+                year: res.data.days[z].split('-')[0],
+              }
+              dateItem.push(dayObj);
+            }
+            setcacheDays(dateItem);
+            // const dateTime = new Date(date).getFullYear() + '-' + addZero(new Date(date).getMonth() + 1);
+            // let obj ={
+            //   month: dateTime.split('-')[1],
+            //   year: dateTime.split('-')[0],
+            // }; 
+            // const TwoData = TwoMonthFn(obj,1,'del'); 
+            // console.log(TwoData,'TwoDataTwoDataTwoData====')
+            // setTwoMon(TwoData)
+          }
+      })
       return;
     }
   }
+  
   // 日历确定
   const handleCalendarSub = () => {
     // if (recorderType === 3){
@@ -5820,6 +6028,163 @@ export default function userForeman() {
     const third = calendarData.third;
     const fourth = calendarData.fourth;
     let suiperState = true;
+    let dataType;
+    recorderTypeArr.item.map((v) => {
+      if (v.click) {
+        dataType = v.id;
+      }
+    })
+    let dateTime = new Date(Number(time.year), Number(time.monent) - 2, 1);
+    const toDay = new Date(dateTime).getFullYear() + '-' + addZero(new Date(dateTime).getMonth() + 1);
+    let lastobj = {
+      month: toDay.split('-')[1],
+      year: toDay.split('-')[0],
+    };
+    const lastMonth = TwoMonthFn(lastobj, 1, 'add');
+    // 获取日历背景
+    // let dateItemList: any = []; 
+    // getWorkerHasBusinessByDateAction(params).then(res => {
+    //   if (res.code == 200) {
+    //     let dateItem: any[] = [];
+    //     for (let z = 0; z < res.data.days.length; z++) {
+    //       let dayObj = {
+    //         date: res.data.days[z].split('-')[2],
+    //         month: res.data.days[z].split('-')[1],
+    //         year: res.data.days[z].split('-')[0],
+    //       }
+    //       dateItem.push(dayObj);
+    //     }
+    //     dateItemList = dateItem;
+    //     console.log(dateItem, 'dateItemdateItemdateItem=====')
+    //     setcacheDays(dateItem);
+        for (let i = 0; i < first.length; i++) {
+          if (first[i].isMonth && !first[i].next && !first[i].up && e.detail.current == 0) {
+            suiperState = false;
+          }
+        }
+        for (let i = 0; i < second.length; i++) {
+          if (second[i].isMonth && !second[i].next && !second[i].up && e.detail.current == 1) {
+            suiperState = false;
+          }
+        }
+        for (let i = 0; i < third.length; i++) {
+          if (third[i].isMonth && !third[i].next && !third[i].up && e.detail.current == 2) {
+            suiperState = false;
+          }
+        }
+        for (let i = 0; i < fourth.length; i++) {
+          if (fourth[i].isMonth && !fourth[i].next && !fourth[i].up && e.detail.current == 3) {
+            suiperState = false;
+          }
+        }
+        // setCalendarState(suiperState)
+        calendarState = suiperState;
+
+        if (!suiperState) {
+          console.log('没饿呢悲剧啊咖啡吧剋还不放假哈不睡觉')
+          setrightTime(false)
+          generateThreeMonths(new Date(toDate), '', '', '', dateItemList)
+          return;
+        }
+        console.log(suiperState, 'suiperState')
+        // if(!suiperState){
+        //   delete calendarData['fourth']
+        //   calendarData['fourth'] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change, thisKey);
+        //   // 上一个
+        //   delete calendarData['third']
+        //   calendarData['third'] = getMonthDaysCurrent(lastMonth, val);
+        // }
+        // 判断现在时间是这个月设置数据为最后一个，日历circular设置为false
+        const lastIndex = JSON.parse(JSON.stringify(swiperIndex));
+        const currentIndex = e.detail.current;
+        let flag = false;
+        let change = swiperMap[(lastIndex + 2) % 4];
+        let day = JSON.parse(time.year) + '-' + addZero(time.monent) + '-' + '01';
+        // return;
+        let times = countMonth(day);
+        let key = 'lastMonth';
+        if (lastIndex > currentIndex) {
+          lastIndex === 3 && currentIndex === 0
+            ? flag = true
+            : null
+        } else {
+          lastIndex === 0 && currentIndex === 3
+            ? null
+            : flag = true
+        }
+        if (flag) {
+          key = 'nextMonth'
+        }
+        const year = times[key].year
+        const month = addZero(times[key].month)
+        const date = `${year}-${month}`
+        day = '';
+        console.log(month, 'month11111走了这里啊')
+        setTime({
+          year,
+          monent: month,
+        })
+        if (toDayString.indexOf(date) !== -1) {
+          day = toDayString.slice(-2)
+        }
+        const timeItem = countMonth((year + '-' + month + '-' + '01'));
+        const timeObj = {
+          month: toDayString.split('-')[1],
+          year: toDayString.split('-')[0],
+        }
+        console.log(timeItem[key].year + '-' + addZero(timeItem[key].month) + '-' + '01', '时间');
+        console.log(change, 'change')
+        console.log(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month) + '-' + '01'), '111111')
+        calendarData[change] = null;
+        let params = {};
+        const startTime = timeItem[key].year + '-' + addZero(timeItem[key].month) + '-' + '01';
+
+        if (Number(new Date(lastMonth).getFullYear()) >= Number(new Date(startTime).getFullYear()) && Number(addZero(new Date(lastMonth).getMonth() + 1)) > Number(addZero(new Date(startTime).getMonth() + 1))){
+          params = {
+            group_info: groupInfo,
+            business_type: dataType,
+            end_month: new Date(lastMonth).getFullYear() + '-' + addZero(new Date(lastMonth).getMonth() + 1),
+            start_month: new Date(startTime).getFullYear() + '-' + addZero(new Date(startTime).getMonth() + 1),
+          }
+        }else{
+          let obj ={
+            month: startTime.split('-')[1],
+            year: startTime.split('-')[0],
+          }
+          const endMonth = TwoMonthFn(obj, 2, 'add');
+          console.log(endMonth,'endMonthendMonthendMonthendMonth')
+          params = {
+            group_info: groupInfo,
+            business_type: dataType,
+            start_month: new Date(lastMonth).getFullYear() + '-' + addZero(new Date(lastMonth).getMonth() + 1),
+            end_month: new Date(endMonth).getFullYear() + '-' + addZero(new Date(endMonth).getMonth() + 1),
+          }
+        }
+      
+        getWorkerHasBusinessByDateAction(params).then(res => {
+          if (res.code == 200) {
+            let dateItem: any[] = [];
+            for (let z = 0; z < res.data.days.length; z++) {
+              let dayObj = {
+                date: res.data.days[z].split('-')[2],
+                month: res.data.days[z].split('-')[1],
+                year: res.data.days[z].split('-')[0],
+              }
+              dateItem.push(dayObj);
+            }
+        dateItemList = dateItem;
+        console.log(dateItemList, 'ccccccccccc')
+        calendarData[change] = getMonthDaysCurrent(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month) + '-' + '01'), '', '', '', dateItemList);
+        setCalendar(calendarData)
+        console.log(currentIndex, 'currentIndex')
+        setSwiperIndex(currentIndex)
+    // if (!suiperState) {
+    //   generateThreeMonths(new Date(toDate))
+    // }
+      }
+    })
+    console.log(dateItemList,'dateItemdateItemdateItemdateItem')
+    setrightTime(true)
     console.log(calendarData,'thirdthirdthird');
     // return;
     console.log(e,'eeee')
@@ -5828,88 +6193,95 @@ export default function userForeman() {
     //     suiperState = false;
     //   }
     // }
-    for (let i = 0; i < first.length;i++){
-      if (first[i].isMonth && !first[i].next && !first[i].up && e.detail.current == 0 ) {
-        suiperState = false;
-      }
-    }
-    for (let i = 0; i < second.length;i++){
-      if (second[i].isMonth && !second[i].next && !second[i].up && e.detail.current == 1 ) {
-        suiperState = false;
-      }
-    }
-    for (let i = 0; i < third.length;i++){
-      if (third[i].isMonth && !third[i].next && !third[i].up && e.detail.current == 2 ) {
-        suiperState = false;
-      }
-    }
-    for (let i = 0; i < fourth.length; i++) {
-      if (fourth[i].isMonth && !fourth[i].next && !fourth[i].up && e.detail.current == 3) {
-        suiperState = false;
-      }
-    }
-    // setCalendarState(suiperState)
-    calendarState = suiperState;
-    if (!suiperState){
-      generateThreeMonths(new Date(toDate))
-      return;
-    }
-    console.log(suiperState,'suiperState')
-    // if(!suiperState){
-    //   delete calendarData['fourth']
-    //   calendarData['fourth'] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change, thisKey);
-    //   // 上一个
-    //   delete calendarData['third']
-    //   calendarData['third'] = getMonthDaysCurrent(lastMonth, val);
+    // for (let i = 0; i < first.length;i++){
+    //   if (first[i].isMonth && !first[i].next && !first[i].up && e.detail.current == 0 ) {
+    //     suiperState = false;
+    //   }
     // }
-    // 判断现在时间是这个月设置数据为最后一个，日历circular设置为false
-    const lastIndex = JSON.parse(JSON.stringify(swiperIndex));
-    const currentIndex = e.detail.current;
-    let flag = false;
-    let change = swiperMap[(lastIndex + 2) % 4];
-    let day = JSON.parse(time.year)+'-'+ addZero(time.monent)+'-'+ '01';
-    // return;
-    let times = countMonth(day);
-    let key = 'lastMonth';
-    if (lastIndex > currentIndex) {
-      lastIndex === 3 && currentIndex === 0
-        ? flag = true
-        : null
-    } else {
-      lastIndex === 0 && currentIndex === 3
-        ? null
-        : flag = true
-    }
-    if (flag) {
-      key = 'nextMonth'
-    }
-    const year = times[key].year
-    const month = addZero(times[key].month)
-    const date = `${year}-${month}`
-    day = '';
-    console.log(month,'month11111走了这里啊')
-    setTime({
-      year,
-      monent: month,
-    })
-    if (toDayString.indexOf(date) !== -1) {
-      day = toDayString.slice(-2)
-    }
-    const timeItem = countMonth((year + '-' + month+'-'+'01'));
-    console.log(timeItem[key].year + '-' + addZero(timeItem[key].month) + '-' + '01','时间');
-    console.log(change,'change')
-    console.log(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month)+'-'+'01'),'111111')
-    calendarData[change] = null
-    calendarData[change] = getMonthDaysCurrent(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month)+'-'+'01'));
-    setCalendar(calendarData)
-    console.log(currentIndex,'currentIndex')
-    setSwiperIndex(currentIndex)
-    // if (!suiperState) {
-    //   generateThreeMonths(new Date(toDate))
+    // for (let i = 0; i < second.length;i++){
+    //   if (second[i].isMonth && !second[i].next && !second[i].up && e.detail.current == 1 ) {
+    //     suiperState = false;
+    //   }
     // }
+    // for (let i = 0; i < third.length;i++){
+    //   if (third[i].isMonth && !third[i].next && !third[i].up && e.detail.current == 2 ) {
+    //     suiperState = false;
+    //   }
+    // }
+    // for (let i = 0; i < fourth.length; i++) {
+    //   if (fourth[i].isMonth && !fourth[i].next && !fourth[i].up && e.detail.current == 3) {
+    //     suiperState = false;
+    //   }
+    // }
+    // // setCalendarState(suiperState)
+    // calendarState = suiperState;
+    
+    // if (!suiperState){
+    //   console.log('没饿呢悲剧啊咖啡吧剋还不放假哈不睡觉')
+    //   setrightTime(false)
+    //   generateThreeMonths(new Date(toDate), '', '', '', dateItemList)
+    //   return;
+    // }
+    // console.log(suiperState,'suiperState')
+    // // if(!suiperState){
+    // //   delete calendarData['fourth']
+    // //   calendarData['fourth'] = getMonthDaysCurrent(new Date(e), val, ids, typeId, cacheDaysArrList, change, thisKey);
+    // //   // 上一个
+    // //   delete calendarData['third']
+    // //   calendarData['third'] = getMonthDaysCurrent(lastMonth, val);
+    // // }
+    // // 判断现在时间是这个月设置数据为最后一个，日历circular设置为false
+    // const lastIndex = JSON.parse(JSON.stringify(swiperIndex));
+    // const currentIndex = e.detail.current;
+    // let flag = false;
+    // let change = swiperMap[(lastIndex + 2) % 4];
+    // let day = JSON.parse(time.year)+'-'+ addZero(time.monent)+'-'+ '01';
+    // // return;
+    // let times = countMonth(day);
+    // let key = 'lastMonth';
+    // if (lastIndex > currentIndex) {
+    //   lastIndex === 3 && currentIndex === 0
+    //     ? flag = true
+    //     : null
+    // } else {
+    //   lastIndex === 0 && currentIndex === 3
+    //     ? null
+    //     : flag = true
+    // }
+    // if (flag) {
+    //   key = 'nextMonth'
+    // }
+    // const year = times[key].year
+    // const month = addZero(times[key].month)
+    // const date = `${year}-${month}`
+    // day = '';
+    // console.log(month,'month11111走了这里啊')
+    // setTime({
+    //   year,
+    //   monent: month,
+    // })
+    // if (toDayString.indexOf(date) !== -1) {
+    //   day = toDayString.slice(-2)
+    // }
+    // const timeItem = countMonth((year + '-' + month+'-'+'01'));
+    // const timeObj = {
+    //   month: toDayString.split('-')[1],
+    //   year: toDayString.split('-')[0],
+    // }
+    // console.log(timeItem[key].year + '-' + addZero(timeItem[key].month) + '-' + '01','时间');
+    // console.log(change,'change')
+    // console.log(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month)+'-'+'01'),'111111')
+    // calendarData[change] = null
+    // console.log(dateItemList,'ccccccccccc')
+    // calendarData[change] = getMonthDaysCurrent(new Date(timeItem[key].year + '-' + addZero(timeItem[key].month) + '-' + '01'), '', '', '', dateItemList);
+    // setCalendar(calendarData)
+    // console.log(currentIndex,'currentIndex')
+    // setSwiperIndex(currentIndex)
+    // // if (!suiperState) {
+    // //   generateThreeMonths(new Date(toDate))
+    // // }
+
   }
-  console.log(calendarState,'setCalendarStatesetCalendarState')
-  console.log(swiperIndex,'swiperIndex')
   return {
     model,
     project,

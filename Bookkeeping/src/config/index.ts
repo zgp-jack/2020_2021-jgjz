@@ -2,7 +2,7 @@
  * @Author: zyb
  * @Date: 2020-09-04 09:04:54
  * @LastEditors: zyb
- * @LastEditTime: 2020-09-07 14:12:32
+ * @LastEditTime: 2020-09-15 20:55:29
  * @Description: 
  */
 // 全局配置
@@ -10,9 +10,9 @@
 
 // * 全局请求接口域名
 // * 测试站
-export const DEVREQUESTURL: string = 'https://miniapi.zhaogong.vrtbbs.com/'
+// export const DEVREQUESTURL: string = 'https://miniapi.zhaogong.vrtbbs.com/'
 // 预发布
-// export const DEVREQUESTURL: string = 'http://miniapi.kkbbi.com/'
+export const DEVREQUESTURL: string = 'http://miniapi.kkbbi.com/'
 // * 正式站
 export const PROREQUESTURL: string = 'https://newyupaomini.54xiaoshuo.com/'
 // * 当前测试

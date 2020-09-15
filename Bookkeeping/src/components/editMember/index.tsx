@@ -76,7 +76,7 @@ export default function EditMember({ display, handleClose, handleEstablish, hand
         </View>
       </View>
       <View className='btnBox'>
-        <View className='btn' onClick={() => handleEstablish(groupInfo)}>确定创建</View>
+        <View className='btn' onClick={() => handleEstablish(groupInfo)}>确定修改</View>
         <View className='closeBtn' onClick={handleClose}>取消</View>
       </View>
     </AtDrawer>

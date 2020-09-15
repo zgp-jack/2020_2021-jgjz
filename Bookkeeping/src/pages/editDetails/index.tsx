@@ -1810,7 +1810,7 @@ export default function EditDetails() {
       </View>
       <WageStandard maskHandleClose={handleWageStandardDisplay} display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput} model={val} boxValue={boxValue} setBoxValue={setBoxValue} isFocus={isFocus} stateData={stateData} setStateData={setStateData}/>
       <WorkOvertime maskHandleClose={handleClose} display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
-      <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
+      <WorkingHours maskHandleClose={handleWorkingHoursClose} display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}
       {businessType === 2 && type == 2 && <Quantities maskHandleClose={() => { setTimeout(() => { setIsdisable(false) }); setQuantitiesDisplay(false) }} display={quantitiesDisplay} handleClose={() => {setTimeout(() => {setIsdisable(false)});setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />}
     </View>

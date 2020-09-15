@@ -150,6 +150,7 @@ export default function CalendarModal({
                 circular={calendarState}
                 current={swiperIndex}
                 onChange={handleSuiper}
+                duration={500}
                 >
                 <SwiperItem>
                   <View className='demo-text-1'>

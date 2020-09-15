@@ -12,7 +12,7 @@ import { bkSetGroupLeaderAction, bkAddWorkerInGroupAction, postDeleteWorkerActio
 import { Type, MidData } from '../../config/store';
 import { setPhoneList } from '../../actions/phoneList';
 import classnames from 'classnames'
-import { isPhone } from '../../utils/v'
+import { isPhone, isIos } from '../../utils/v'
 import './index.scss'
 import Msg from '../../utils/msg';
 
@@ -51,6 +51,7 @@ export default function AddTeamMember() {
     phone:'',
     id:'',
   })
+  const [ios, setIos] = useState<boolean>(false)
   // 人员管理存值
   const [storeValue, setStoreValue] = useState<any[]>([]);
   // 点击时候保存的人员
@@ -87,6 +88,7 @@ export default function AddTeamMember() {
   //   setData(list)
   // }
   useEffect(() => {
+    setIos(isIos())
     const mid = Taro.getStorageSync(MidData);
     console.log(mid,' mind')
     // 动态设置头部
@@ -234,6 +236,7 @@ export default function AddTeamMember() {
       console.log(arr,'arrrrr')
       // console.log(defaultDataArr,'defaultDataArrdefaultDataArrdefaultDataArr')
     } else {
+      setSeach(true);
       for (let i = 0; i < dataArr.length; i++) {
         if (dataArr[i].list.length > 0) {
           for (let j = 0; j < dataArr[i].list.length; j++) {
@@ -266,7 +269,6 @@ export default function AddTeamMember() {
       }
     }
     setIsClick(clickState)
-    setSeach(true);
     setData(arr);
   }
   const handleOnClear = ()=>{
@@ -278,7 +280,7 @@ export default function AddTeamMember() {
     // console.log(clickData,'dataArrdataArrdataArr')
     // console.log('的撒打算打算打算打算的')
     setSeach(false)
-    const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+    const defaultDataArr = JSON.parse(JSON.stringify(storeValue));
     const clickArr = JSON.parse(JSON.stringify(clickData));
     for (let i = 0; i < clickArr.length; i++) {
       for (let j = 0; j < defaultDataArr.length; j++) {
@@ -594,7 +596,16 @@ export default function AddTeamMember() {
         })
         dispatch(setmailList(dataItem))
         setData(dataItem)
-        setStoreValue(dataItem);
+        const defaultArr = JSON.parse(JSON.stringify(defaultData));
+        for(let i =0;i<defaultArr.length;i++){
+          for(let j =0;j<defaultArr[i].list.length;j++){
+            if (defaultArr[i].list[j].id == item.id ){
+              defaultArr[i].list[j].name = item.name;
+              defaultArr[i].list[j].tel = item.phone;
+            }
+          }
+        }
+        setStoreValue(defaultArr);
       }else{
         Msg(res.msg)
       }
@@ -834,7 +845,7 @@ export default function AddTeamMember() {
                     // <View className='checkbox-click'></View>
                     <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click' />
                     }
-                  {!v.click && !v.disabled && <View className='checkbox-no'></View>}
+                  {!v.click && !v.disabled && <View className={ios ? 'checkbox-no-ios' :'checkbox-no'}></View>}
                   </View>
                 }
                 <View>
@@ -873,7 +884,7 @@ export default function AddTeamMember() {
         }{(type == '2' && !administration) ?'':<View>全选</View>}
         </View>
         {administration ? <View className='user-btn-box'><View className='user-btn' onClick={handelUserDel}>删除</View><View onClick={handleAddUser} className='user-btn'>添加</View></View>:''}
-        {!administration ? <View className='checkoutBox-name' onClick={handleSupervise}>
+        {!administration ? <View className={!seach ?'checkoutBox-name':'none'} onClick={handleSupervise}>
           人员管理
           <Image src={`${IMGCDNURL}triangleIcon.png`} className='triangleIcon' />
         </View> : 

@@ -959,7 +959,7 @@ export default function Foreman() {
               {/* <CoverView onClick={() => handleTextare()} className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay? 'coverView' : ''}> */}
             {/* {isdisable && !iscreatproject && <View className='textarea'>{model && model.details}</View>} */}
             <View className='istextarea'>
-            <View className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay || show ? 'foreman-foot' : 'foreman-footer'}>
+                <View className={workOvertimeDisplay || wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay || calendarModalDisplay || wagesModalDisplay || project || createProjectDisplay || show || editProjectDisplay? 'foreman-foot' : 'foreman-footer'}>
             <Textarea
               // focus={autoFocus}
               // autoFocus={autoFocus}

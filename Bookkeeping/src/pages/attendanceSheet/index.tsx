@@ -1134,7 +1134,8 @@ export default function AttendanceSheet() {
                           'mt100': v.type &&v.type.hour && v.type.work && v.type.borrow && v.type.amount ,
                           'mt50': v.type && ((v.type.hour && v.type.work && v.type.borrow) || (v.type.hour && v.type.borrow && v.type.amount) || (v.type.hour && v.type.amount && v.type.work) || (v.type.work && v.type.borrow && v.type.amount )),
                           'mt20': v.type&& ((v.type.hour && v.type.work) || (v.type.hour && v.type.borrow) || (v.type.hour && v.type.amount) || (v.type.work && v.type.borrow) || (v.type.work && v.type.amount) || (v.type.borrow && v.type.amount)),
-                          'mt0': v.type &&  ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount) )
+                          'mt0': identity !==1 && v.type &&  ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount) ),
+                          'mtNull': identity==1 && v.type && ((v.type.hour || !v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.hour || !v.type.borrow || !v.type.amount) || (!v.type.hour || v.type.work || !v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || v.type.borrow || !v.type.amount) || (!v.type.hour || !v.type.work || !v.type.borrow || v.type.amount)),
                       }
                       )}
                         >
