@@ -33,16 +33,29 @@ export default function Feedback() {
   const [radio, setRadio] = useState<number>(0)
   const [note, setNote]= useState<string>('');
   const userUploadImg = (i: number = -1) => {
-    UploadImgAction().then(res => {
-      let imageItem = {
-        url: res.url,
-        httpurl: res.httpurl
-      }
-      if (i === -1) {
-        setImage({ ...image, item: [...image.item, imageItem] })
+    // 最多四张照片
+    let num = 4 - image.item.length;
+    UploadImgAction(num).then(res => {
+      if (Array.isArray(res)) {
+        let imageItem: any[] = [];
+        for (let i = 0; i < res.length; i++) {
+          let obj = {
+            url: res[i].url,
+            httpurl: res[i].httpurl
+          }
+          imageItem.push(obj);
+        }
+        if (image.item.length == 0) {
+          setImage({ item: [...image.item, ...imageItem] })
+        } else {
+          setImage({ item: [...image.item, ...imageItem] })
+        }
       } else {
-        image.item[i] = imageItem
-        setImage({ ...image })
+        let imageItem = {
+          url: res.url,
+          httpurl: res.httpurl
+        }
+        setImage({ item: [...image.item, imageItem] })
       }
     })
   }
@@ -82,15 +95,18 @@ export default function Feedback() {
     bkAddFeedbackAction(params).then(res=>{
       console.log(res);
       if(res.code === 200){
-        Msg('提交成功，记工记账将因您的意见而变得更好！');
-        setTimeout(()=>{
-          Taro.navigateBack({
-            delta: 1
-          })
-        },1000)
-        setTimeout(() => {
-          isHandleAdd = true;
-        }, 1000)
+        Taro.showModal({
+          content: '提交成功，记工记账将因您的意见而变得更好！',
+          showCancel: false,
+          success: (res) => {
+            if (res.confirm == true) {
+              Taro.navigateBack({
+                delta: 1
+              })
+              isHandleAdd = true;
+            }
+          }
+        })
       }else{
         setTimeout(() => {
           isHandleAdd = true;
@@ -108,7 +124,12 @@ export default function Feedback() {
       data: PHONE,
       success: () => {
         Taro.hideToast()
-        Msg('微信号复制成功')
+        // Msg('微信号复制成功')
+        Taro.showModal({
+          title: '恭喜您',
+          showCancel: false,
+          content: `微信号：${PHONE}已复制到粘贴板，去微信-添加朋友-搜索框粘贴`
+        })
         // ShowActionModal({
         //   // title: '恭喜您',
         //   msg: '微信号复制成功'
@@ -121,7 +142,7 @@ export default function Feedback() {
       <View className='heard'>
         <View>
         <View className='heard-title'>为了提高沟通效率，建议您添加</View>
-          <View>平台微信:<Text className='blued'>{PHONE}</Text></View>
+          <View>平台微信:<Text className='blued' onClick={handleCopy}>{PHONE}</Text></View>
         </View>
         <View className='copy' onClick={handleCopy}>点击复制</View>
       </View>

@@ -28,14 +28,17 @@ export default function ProjectModal({ display, teamName, handleSubmit, handleIn
                 className='tabber-complaintModal-content-textarea'
                 placeholder='请输入班组名称'
                 value={teamName}
+                cursorSpacing={200}
                 maxLength={20}
                 onInput={(e) => handleInput('teamName',e)}
               />
             </View>
             <View className='tabber-complaintModal-content-blued'>注：填写您当前项目下需要记工的班组名称</View>
             <View className='tabber-complaintModal-footer'>
-            <View className='tabber-complaintModal-footer-btn-next' onClick={handleBack}>上一步</View>
-            <View className='tabber-complaintModal-footer-btn' onClick={handleSubmit}>确定创建</View>
+            <View className='tabber-complaintModal-footer-box'>
+                <View className='tabber-complaintModal-footer-btn-next' onClick={handleBack}>上一步</View>
+                <View className='tabber-complaintModal-footer-btn' onClick={handleSubmit}>确定创建</View>
+              </View>
             </View>
           </View>
         </View>

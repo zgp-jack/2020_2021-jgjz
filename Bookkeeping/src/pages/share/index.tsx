@@ -35,7 +35,7 @@ interface DateTyep {
 
 export default function Share() {
   const router: Taro.RouterInfo = useRouter();
-  const { time, identity, session } = router.params;
+  const { time, identity, session, id } = router.params;
   // 月份
   const [date, setDate] = useState('');
   // 年
@@ -94,7 +94,8 @@ export default function Share() {
     let params = {
       date: newTime,
       identity,
-      session
+      session,
+      worker_id:id
     };
     bkGetShareExcelDataAction(params).then(res => {
       if(res.code === 200 ){
@@ -819,7 +820,7 @@ export default function Share() {
           // 获取身份
           // let type = Taro.getStorageSync(Type);
           console.log(sum, 'listArr')
-          if (identity == '1') {
+          if (identity == '1'&& !id) {
             setFixedTab([...leftArr, ...arr, obj]);
             setTabArr([...rightArr, ...listArr, sum]);
           } else {
@@ -956,7 +957,7 @@ export default function Share() {
                 <View className='box-right'>
                   {v.list.map(val => (
                     <View className='border'>
-                      {val.default && <View className='box-list-default'>{val.name}</View>}
+                      {val.default && <View className='box-list-default'>{val.name}日</View>}
                       {/* {!val.default && !val.type && <View className='box-height'></View>} */}
                       {val.type && <View>
                         {val.type.hour && v.type.hour ?

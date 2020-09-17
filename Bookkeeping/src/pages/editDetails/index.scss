@@ -5,6 +5,13 @@
   padding-bottom: 200rpx;
   // background: #FFFFFF;
 }
+.foreman-content {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
 .publish-recruit-card {
   position: relative;
   background-color: white;
@@ -326,6 +333,7 @@
 
 .imageBox{
   background: #fff;
+  padding-bottom: 60rpx;
 }
 .justify-quantities{
   min-width: 134rpx;
@@ -346,4 +354,7 @@
 }
 .clear {
   clear: both;
+}
+.mtNum{
+  margin: 20rpx;
 }

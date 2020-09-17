@@ -28,6 +28,8 @@ export default function Notepad() {
   const [selectAll, setSelectAll] = useState<boolean>(false)
   // 是否是搜索
   const [isSheach, setIsSheach] = useState<boolean>(false)
+  // 搜索遮罩层
+  const [masklayer, setmasklayer] = useState<boolean>(false)
   // 选择ID
   const [ids, setIds] = useState<string[]>([]);
   // 获取数据
@@ -196,9 +198,19 @@ export default function Notepad() {
       })
       return v;
     })
+    let state = true;
+    dataItem.map((v) => {
+      v.list.map(val => {
+        if(!val.click){
+          state = false
+        }
+        return val;
+      })
+      return v;
+    })
+    setSelectAll(state)
     dispatch(setNotepad({code:200,data:dataItem,msg:'ok'}))
     setData(dataItem)
-    console.log(item,'item')
     setIds(item);
   }
   // 删除
@@ -299,9 +311,16 @@ export default function Notepad() {
     // getList();
     // setData([]);
     setIsSheach(true)
+    getList()
     // setIds([]);
     // getList(val)
     // setIsSheach(false)
+  }
+  const handleChange = (e) => {
+    setVal(e)
+    if(e==''){
+      getList();
+    }
   }
   const handleJump = (v:any)=>{
     if (del){
@@ -324,6 +343,7 @@ export default function Notepad() {
   return(
     <context.Provider value={value}>
     <View className='notepad'>
+      {masklayer&& <View className='masklayer'></View>}
       {/* 搜索 */}
       <View className='searchBar'>
         <AtSearchBar
@@ -331,9 +351,12 @@ export default function Notepad() {
           value={val}
           maxLength={10}
           placeholder='快速搜索关键词'
+          onFocus={() => setmasklayer(true)}
           onClear={handleOnClear}
-          onChange={(e)=>setVal(e)}
+          onChange={handleChange}
           onActionClick={handleSeach}
+          onConfirm={handleSeach}
+          onBlur={() => setmasklayer(false)}
         />
       </View>
       {/* 内容 */}
@@ -374,7 +397,15 @@ export default function Notepad() {
                 </View>
                 <View className='title'>
                   <View className='footerTime'>{values.newTime}</View>
-                  <View>{del && <Checkbox checked={values.click} value={values.click} onClick={(e) => { e.stopPropagation(); handleCheckbox(values) }} className='checkboxButton-checkbox' color='#0099FF' />}</View>
+                  <View>
+                  {del && 
+                  // <Checkbox checked={values.click} value={values.click} onClick={(e) => { e.stopPropagation(); handleCheckbox(values) }} className='checkboxButton-checkbox' color='#0099FF' />
+                  <View>
+                    {!values.click &&<View className='checkbox-no'></View>}
+                    {values.click && <View className='checkbox-click'></View>}
+                  </View>
+                }
+                  </View>
                 </View>
               </View>
             ))}
@@ -389,7 +420,10 @@ export default function Notepad() {
       {/* 多选按钮 */}
       {!busy && del && <View className='checkboxButton'>
         <View className='checkboxButton-box'>
-            <View className='checkboxButton-inner' onClick={handleAllCheckbox}><Checkbox value='' checked={selectAll} className='checkboxButton-checkbox' color='#0099FF'/>全选</View>
+            <View className='checkboxButton-inner' onClick={handleAllCheckbox}>
+              {/* <Checkbox value='' checked={selectAll} className='checkboxButton-checkbox' color='#0099FF'/> */}
+              {selectAll ? <View className='checkbox-click-all-in'></View> : <View className='checkbox-no-on'></View> }<View>全选</View>
+            </View>
           <View className='checkboxButton-right'>
               <View className='checkboxButton-del' onClick={bkDeleteNotePad}>批量删除</View>
             <View className='checkboxButton-close' onClick={handleClose}>取消</View>

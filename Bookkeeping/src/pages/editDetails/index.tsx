@@ -7,6 +7,7 @@ import WageStandard  from '../../components/wageStandard'
 import Quantities from '../../components/quantities';
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { setFlowingWater } from '../../actions/flowingWater';
+import WordsTotal from '../../components/wordstotal'
 import Msg from '../../utils/msg'
 import { IMGCDNURL } from '../../config'
 import WorkingHours from '../../components/workingHours';
@@ -188,6 +189,28 @@ export default function EditDetails() {
   const [clickTime, setClickTime] = useState<any>()
   // 设置光标
   const [autoFocus, setAutoFocus] = useState<boolean>(false)
+   // 工资标准输入框的焦点
+  const [isFocus, setIsfocus] = useState<boolean>(false);
+  // 备注长度
+  const [num, setNum] = useState<number>(0)
+  const [boxValue, setBoxValue] = useState<any>({
+  borrowing:'',
+  wages:'',
+  amount:'',
+  price:'',
+  work:'',
+  money:'',
+  addWork:'',
+  day:'',
+  unitPrice:'',
+  unitNum:'',
+})
+ const [stateData, setStateData] = useState<any>({
+    work: false,
+    money: false,
+    addWork: false,
+    day: false,
+  })
   useEffect(()=>{
     if(id){
       bkBusinessOneAction({ id }).then(res => {
@@ -201,6 +224,7 @@ export default function EditDetails() {
           setImage({ item: res.data.view_images })
           obj.name = (res.data.group_info_name).replace(',','-');
           obj.note = res.data.note;
+          setNum(res.data.note.length||0)
           obj.workername = res.data.workername;
           obj.leaderName = res.data.leader_name;
           // 判断弹框显示
@@ -405,16 +429,28 @@ export default function EditDetails() {
   }
   // 图片
   const userUploadImg = (i: number = -1) => {
-    UploadImgAction().then(res => {
-      let imageItem = {
-        url: res.url,
-        httpurl: res.httpurl
-      }
-      if (i === -1) {
-        setImage({ ...image, item: [...image.item, imageItem] })
+    let num = 4 - image.item.length;
+    UploadImgAction(num).then(res => {
+      if (Array.isArray(res)) {
+        let imageItem: any[] = [];
+        for (let i = 0; i < res.length; i++) {
+          let obj = {
+            url: res[i].url,
+            httpurl: res[i].httpurl
+          }
+          imageItem.push(obj);
+        }
+        if (image.item.length == 0) {
+          setImage({ item: [...image.item, ...imageItem] })
+        } else {
+          setImage({ item: [...image.item, ...imageItem] })
+        }
       } else {
-        image.item[i] = imageItem
-        setImage({ ...image })
+        let imageItem = {
+          url: res.url,
+          httpurl: res.httpurl
+        }
+        setImage({ item: [...image.item, imageItem] })
       }
     })
   }
@@ -508,19 +544,76 @@ export default function EditDetails() {
     setTimeArr(timeArrs);
     setAddWorkArr(addWorkArrs)
   }
+  const fn = (e: any, type: string, len: number) => {
+    const item = JSON.parse(JSON.stringify(boxValue));
+    console.log(type, 'type')
+    let val;
+    if (item) {
+      if (item[type] || item[type] == 0 ) {
+        val = item[type] + '';
+      }
+    }
+    console.log(type,'1111111')
+    console.log(val, 'valllllllll')
+    // 判断如果是.00结尾
+    // let treelet = (val || '').split('.');
+    // const details = parseFloat(e)+'';
+    // let valueData;
+    // if (val) {
+    //   valueData = details.substring(val.length, e.length);
+    //   item[type] = '';
+    //   setBoxValue(item);
+    // } else {
+    //   valueData = e;
+    // }
+    // console.log(valueData,'valueData')
+    // 判断如果是.00结尾
+    let treelet = (val || '').split('.');
+    console.log(treelet[1], 'treelet[1]', typeof treelet[1], '111');
+    console.log(val, 'valllllllll')
+    console.log(e, 'eeee');
+    const details = (e) + '';
+    console.log(details, '333')
+    let valueData;
+    if (treelet[1] && treelet[1] == '00') {
+      console.log(0)
+      if (val) {
+        valueData = details.substring(len - 1, len);
+        item[type] = '';
+        setBoxValue(item);
+        console.log(val.length, 'length');
+        console.log(e.length, 'e.lengthe.length')
+      } else {
+        valueData = e;
+      }
+    } else {
+      if (val) {
+        valueData = details.substring(len - 1, len);
+        item[type] = '';
+        setBoxValue(item);
+        console.log(val.length, 'length');
+        console.log(e.length, 'e.lengthe.length')
+      } else {
+        valueData = e;
+      }
+    }
+    return valueData;
+  }
   // 输入框
   const handleWageStandard = (type,e)=>{
     if (type == 'day' || type === 'work') {
+      const valueData = fn(e.detail.value, type, e.detail.cursor);
       if (e.detail.value > 24) {
         Msg('超出最大输入范围')
       }
-      return dealInputVal(e.detail.value, 2, type);
+      return dealInputVal(valueData, 2, type);
     }
     if (type === 'money' || type === 'addWork') {
+      const valueData = fn(e.detail.value, type, e.detail.cursor);
       if (e.detail.value > 9999.99) {
         Msg('超出最大输入范围')
       }
-      return dealInputVal(e.detail.value, 4, type);
+      return dealInputVal(valueData, 4, type);
     }
     const data = JSON.parse(JSON.stringify(wageStandard));
     data[type] = e;
@@ -528,6 +621,7 @@ export default function EditDetails() {
   }
   // 确定
   const handleAddWage = ()=>{
+    setIsfocus(false);
     // 获取数据
     const valData = JSON.parse(JSON.stringify(val));
     // 获取工资标准
@@ -941,10 +1035,12 @@ export default function EditDetails() {
     // 加班时间
     const dayNum = item.day;
     let time: number = 0;
+    let timeState = false;
     // let clickDay:any = {};
     // let clickTime:any = {};
     for (let i = 0; i < timeArrs.length; i++) {
       if (timeArrs[i].click) {
+        timeState = true;
         // clickDay = timeArrs[i];
         setClickDay(timeArrs[i])
         // 选择工
@@ -966,8 +1062,10 @@ export default function EditDetails() {
       }
     }
     let addTime: number = 0;
+    let addState = false;
     for (let i = 0; i < addWorkArrs.length; i++) {
       if (addWorkArrs[i].click) {
+        addState = true;
         setClickTime(addWorkArrs[i])
         // clickTime = addWorkArrs[i];
         addTime = addWorkArrs[i].num
@@ -982,8 +1080,23 @@ export default function EditDetails() {
       wages = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
+    if (!addState && !timeState) {
+      for (let i = 0; i < timeArrs.length; i++) {
+        timeArrs[0].click = true;
+        setClickDay(timeArrs[0])
+      }
+      for (let i = 0; i < addWorkArrs.length; i++) {
+        addWorkArrs[0].click = true;
+        addTime = addWorkArrs[0].num
+        setClickTime(addWorkArrs[0])
+      }
+      time = 1 / workNum * workNum;
+      title = '上班1个工，无加班';
+      setTimeArr(timeArrs);
+      setAddWorkArr(addWorkArrs)
+    }
     const num = toFixedFn(wages);
-    setVal({ ...val, duration: title, money: num })
+    setVal({ ...val, duration: title, money: num, modalDuration: title })
     setDisplay(false);
     setTimeout(() => {
       setIsdisable(false)
@@ -1229,10 +1342,15 @@ export default function EditDetails() {
   const handleInput = (type,e)=>{
     let data = JSON.parse(JSON.stringify(val));
     if (type == 'unitNum' || type == 'price' || type =='unitPrice') {
-      return dealInputVal(e.detail.value, 7, type);
+      const valueData = fn(e.detail.value, type, e.detail.cursor);
+      return dealInputVal(valueData, 7, type);
     }
     if (type == 'wages' || type == 'borrowing' || type =='money') {
-      return dealInputVal(e.detail.value, 14, type,true);
+      const valueData = fn(e.detail.value, type, e.detail.cursor);
+      return dealInputVal(valueData, 14, type,true);
+    }
+    if (type == 'note') {
+      setNum(e.detail.value.length);
     }
     data[type] = e.detail.value;
     setVal({...data});
@@ -1329,7 +1447,8 @@ export default function EditDetails() {
     setWageStandardDisplay(false);
     setTimeout(() => {
       setIsdisable(false)
-    });
+      setIsfocus(false);
+    },0);
   }
   // 选择单位
   const handleQuantities = (val) => {
@@ -1350,7 +1469,6 @@ export default function EditDetails() {
     })
     setCompany(arr)
   }
-  console.log(val,'data')
   // 点击多行
   const handleTextare = () => {
     setAutoFocus(true)
@@ -1450,8 +1568,45 @@ export default function EditDetails() {
       }
     }
   }
+  const handleBlur = (type: string)=>{
+    const data = JSON.parse(JSON.stringify(val));
+    const item = JSON.parse(JSON.stringify(boxValue));
+    // data[type] = item[type];
+    // setVal(data);
+    // item[type] = '';
+    // setBoxValue(item);
+    // console.log(data,'data');
+    // console.log(item,'itme')
+  }
+  const handleOnFocus = (type:string)=>{
+    const value = JSON.parse(JSON.stringify(val));
+    console.log(value,'value')
+    const item = JSON.parse(JSON.stringify(boxValue));
+    if (type) {
+      if (value[type]) {
+        item[type] = value[type];
+      }
+      console.log(item,'111111')
+      setBoxValue(item);
+      // value[type] = '';
+      // setModel(value);
+    }
+  }
+  const handleWage = ()=>{
+    setIsdisable(true);
+    setWageStandardDisplay(true)
+     setTimeout(()=>{
+      setIsfocus(true);
+      const stateItem = JSON.parse(JSON.stringify(stateData));
+      for (let i in stateItem) {
+        stateItem[i] = false;
+      }
+      stateItem.work = true;
+      setStateData(stateItem)
+    },350)
+  } 
   return (
-    <View className='content'>
+    <View className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'foreman-content' :'content'}>
       {businessType == 2 && 
         <View className='publish-recruit-card'>
           <View className='publish-list-item' onClick={() => { }}>
@@ -1529,6 +1684,8 @@ export default function EditDetails() {
               placeholder='请填写工程量'
               maxLength={10}
               onInput={(e) => handleInput('unitNum',e)}
+              onBlur={() => handleBlur('unitNum')}
+              onFocus={() => handleOnFocus('unitNum')}
               value={val && val.unitNum}
             />
             <View className='amountType' onClick={()=>{setIsdisable(true);setQuantitiesDisplay(true)}}>{unit}
@@ -1545,6 +1702,8 @@ export default function EditDetails() {
               placeholder='请填写单价'
               maxLength={10}
               onInput={(e) => handleInput('unitPrice', e)}
+              onBlur={() => handleBlur('unitPrice')}
+              onFocus={() => handleOnFocus('unitPrice')}
               value={val && val.unitPrice}
             />
           </View>
@@ -1557,6 +1716,8 @@ export default function EditDetails() {
               type='digit'
               maxLength={17}
               onInput={(e) => handleInput('money', e)}
+              onBlur={() => handleBlur('money')}
+              onFocus={() => handleOnFocus('money')}
               placeholder='工程量和单价未知时，可直接填写'
               value={val && val.money}
             />
@@ -1575,6 +1736,8 @@ export default function EditDetails() {
                 // disabled
                 maxLength={17}
                 onInput={(e) => handleInput('money', e)}
+                onBlur={() => handleBlur('money')}
+                onFocus={() => handleOnFocus('money')}
                 placeholder='请输入本次借支金额'
                 value={val && val.money}
               />
@@ -1612,7 +1775,7 @@ export default function EditDetails() {
             </View>
           </View>
         </View>
-        <View className='publish-recruit-card' onClick={() => {setIsdisable(true);setWageStandardDisplay(true)}}>
+        <View className='publish-recruit-card' onClick={handleWage}>
           <View className='publish-list-item-money'>
             <View className='pulish-list-title-money'>
               <View>{identity == 1 ? '工人工钱' : '我的工钱'}(点击修改{identity == 1 ? '工人' : '自己'}的工资标准)
@@ -1657,17 +1820,18 @@ export default function EditDetails() {
       <View className='imageBox'>
         <ImageView images={image.item} max={4} userUploadImg={userUploadImg} userDelImg={userDelImg}/>
         <View className='clear'></View>
+        <WordsTotal num={num} />
       </View>
       </View>
       </View>
       <View className={wageStandardDisplay || display || workingHoursDisplay || quantitiesDisplay ? 'foreman-foot' : 'foreman-footer'}>
       {!isdisable && <CoverView className='footer'><CoverView className='footerBtn' onClick={handlesub}>保存</CoverView></CoverView>}
       </View>
-      <WageStandard maskHandleClose={()=>{}} display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput}/>
-      <WorkOvertime maskHandleClose={()=>{}} display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
-      <WorkingHours display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
+      <WageStandard maskHandleClose={handleWageStandardDisplay} display={wageStandardDisplay} handleClose={handleWageStandardDisplay} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput} model={val} boxValue={boxValue} setBoxValue={setBoxValue} isFocus={isFocus} stateData={stateData} setStateData={setStateData}/>
+      <WorkOvertime maskHandleClose={handleClose} display={display} handleWorkOvertimeClose={handleClose} handleworkOvertime={handleworkOvertime} data={timeArr} dataArr={addWorkArr} handleWorkOvertimeOk={handleWorkOvertimeOk} model={val}/>
+      <WorkingHours maskHandleClose={handleWorkingHoursClose} display={workingHoursDisplay} handleWorkingHoursClose={handleWorkingHoursClose} type={timeType} handleWorkingHours={handleWorkingHours}/>
       {/* 工程量选择单位 */}
-      {businessType === 2 && type == 2 && <Quantities maskHandleClose={()=>{}} display={quantitiesDisplay} handleClose={() => {setTimeout(() => {setIsdisable(false)});setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />}
+      {businessType === 2 && type == 2 && <Quantities maskHandleClose={() => { setTimeout(() => { setIsdisable(false) }); setQuantitiesDisplay(false) }} display={quantitiesDisplay} handleClose={() => {setTimeout(() => {setIsdisable(false)});setQuantitiesDisplay(false)}} data={company} handleQuantities={handleQuantities} />}
     </View>
   )
 }

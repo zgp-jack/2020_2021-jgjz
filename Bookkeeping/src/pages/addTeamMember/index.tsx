@@ -2,13 +2,17 @@ import Taro, { Config, useContext, useEffect, useState, useRouter, useDidShow } 
 import { View, Text, Picker, ScrollView, Checkbox, Image } from '@tarojs/components'
 import { AtIndexes, AtSearchBar } from 'taro-ui'
 import userForeman from '../../hooks/foreman';
+import { IMGCDNURL, IMAGE } from '../../config';
 import AddMember from '../../components/addMember';
+import EditMember from '../../components/editMember';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { setWorker } from '../../actions/workerList';
-import { bkSetGroupLeaderAction, bkAddWorkerInGroupAction } from '../../utils/request/index'
-import { Type } from '../../config/store';
+import { setmailList } from '../../actions/mailList'
+import { bkSetGroupLeaderAction, bkAddWorkerInGroupAction, postDeleteWorkerAction, bkUpdateWorkerAction, bkAddWorkerActiion, bkGetWorkerAction } from '../../utils/request/index'
+import { Type, MidData } from '../../config/store';
 import { setPhoneList } from '../../actions/phoneList';
 import classnames from 'classnames'
+import { isPhone, isIos } from '../../utils/v'
 import './index.scss'
 import Msg from '../../utils/msg';
 
@@ -19,7 +23,9 @@ export default function AddTeamMember() {
   const useSelectorItem = useSelector<any, any>(state => state)
   const router: Taro.RouterInfo = useRouter();
   const { groupInfo, type } = router.params;
-  const { handleInput, handleEstablish, addMemberDisplay, setAddMemberDisplay, model, setModel, workerList, setWorkerList, storagelist, setStoragelist } = userForeman()
+  const { handleInput, addMemberDisplay, setAddMemberDisplay, 
+    // handleEstablish, 
+    model, setModel, workerList, setWorkerList, storagelist, setStoragelist } = userForeman()
   // 列表数据
   const [data, setData] = useState<any[]>([]);
   // 默认值
@@ -28,6 +34,30 @@ export default function AddTeamMember() {
   const [clickData, setClickData] = useState<any[]>([]);
   // 输入框
   const [valData, setValData] = useState<string>('');
+  // 搜索遮罩层
+  const [masklayer, setmasklayer] = useState<Boolean>(false)
+  // 全选
+  const [selectAll, setSelectAll] = useState<Boolean>(false);
+  // 是否全选
+  const [isClick,setIsClick]= useState<Boolean>(false); 
+  // 全选禁止
+  const [stopCheckout, setStopCheckout] = useState<Boolean>(false)
+  const [administration, setAdministration] = useState<Boolean>(false)
+  // 修改
+  const [editMemberDisplay, setEditMemberDisplay] = useState<boolean>(false)
+  // 编辑的值
+  const [list,setList] = useState({
+    name:'',
+    phone:'',
+    id:'',
+  })
+  const [ios, setIos] = useState<boolean>(false)
+  // 人员管理存值
+  const [storeValue, setStoreValue] = useState<any[]>([]);
+  // 点击时候保存的人员
+  const [clickItem,setClickItem]= useState<any[]>([]);
+  // 搜索
+  const [seach,setSeach]= useState<boolean>(false);
   // 关闭添加成员
   const handleAddMemberClose = () => {
     setAddMemberDisplay(false);
@@ -58,6 +88,9 @@ export default function AddTeamMember() {
   //   setData(list)
   // }
   useEffect(() => {
+    setIos(isIos())
+    const mid = Taro.getStorageSync(MidData);
+    console.log(mid,' mind')
     // 动态设置头部
     let type = Taro.getStorageSync(Type);
     let titel;
@@ -75,6 +108,7 @@ export default function AddTeamMember() {
       const item = JSON.parse(JSON.stringify(useSelectorItem.mailList))
       const arr = JSON.parse(JSON.stringify(useSelectorItem.phoneList))
       let itemData;
+      let clickState = true;
       if (item.length > 0) {
         itemData = item.map(v => {
           if (v.list) {
@@ -82,6 +116,9 @@ export default function AddTeamMember() {
               if (arr.length > 0) {
                 arr.map(value => {
                   if (val.id == value.id) {
+                    if (mid.worker_id == val.id){
+                      val.user = true
+                    }
                     val.click = true,
                     val.disabled = true
                   }
@@ -94,8 +131,36 @@ export default function AddTeamMember() {
           }
         })
       }
+      if (item.length>0){
+        item.forEach((v,i)=>{
+          v.list.forEach((val,index)=>{
+            if (!val.disabled){
+              clickState = false;
+            }
+          })
+        })
+      }
+      console.log(clickState,'clickStateclickState')
+      setStopCheckout(clickState);
+      console.log(mid.worker_id,'=============id');
       // return;
+      console.log(item,'timenejnjfbkja')
+      // 工人的时候判断id
+      for(let i =0;i<item.length;i++){
+        console.log(item[i].id,'========xxxxid')
+        // if (item[i].id == mid.worker_id ){
+        //   console.log('=========判断成功')
+        //   item[i].disabled = true;
+        // }
+        for(let j=0;j<item[i].list.length;j++){
+          if (item[i].list[j].id == mid.worker_id) {
+            item[i].list[j].disabled = true;
+            item[i].list[j].user = true;
+          }
+        }
+      }
       setDefaultData(item);
+      setStoreValue(item);
       setData(item)
     }
   }, [useSelectorItem.mailList, useSelectorItem.phoneList])
@@ -134,15 +199,46 @@ export default function AddTeamMember() {
 
   }
   const onActionClick = () => {
+    console.log(111111)
     const value = JSON.parse(JSON.stringify(valData));
     const dataArr = JSON.parse(JSON.stringify(data));
     const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+    const clickArr = JSON.parse(JSON.stringify(clickData));
+    const StoreValueData = JSON.parse(JSON.stringify(storeValue));
     let arr: any[] = [
       { list: [] }
     ];
     if (valData == '') {
+      setSeach(false)
+      // for (let i = 0; i < defaultDataArr.length;i++){
+      //   for(let j=0;i<defaultDataArr[i].list;j++){
+      //     for(let b=0;b<clickArr.length;b++){
+      //       if (defaultDataArr[i].list[j].id == clickArr[b].id){
+      //         clickArr[b] = defaultDataArr[i].list[j];
+      //         console.log(111)
+      //       }
+      //     }
+      //   }
+      // }
+      console.log('走这里')
+      console.log(clickArr,'1111')
+      for(let i=0;i<clickArr.length;i++){
+        for (let j = 0; j < defaultDataArr.length;j++){
+          for (let z = 0; z < defaultDataArr[j].list.length;z++){
+            if (defaultDataArr[j].list[z].id == clickArr[i].id){
+              defaultDataArr[j].list[z].click = true;
+            }
+          }
+        }
+      }
+      // console.log(clickArr,'clickArr');
+      // console.log(defaultDataArr,'defaultDataArr');
+      // arr = 
       arr = defaultDataArr;
+      console.log(arr,'arrrrr')
+      // console.log(defaultDataArr,'defaultDataArrdefaultDataArrdefaultDataArr')
     } else {
+      setSeach(true);
       for (let i = 0; i < dataArr.length; i++) {
         if (dataArr[i].list.length > 0) {
           for (let j = 0; j < dataArr[i].list.length; j++) {
@@ -164,10 +260,73 @@ export default function AddTeamMember() {
         }
       }
     }
+    // let clickState = true;
+    // for (let i = 0; i < arr.length; i++) {
+    //   for (let j = 0; j < arr[i].list.length; j++) {
+    //     if (!arr[i].list[j].disabled) {
+    //       if (!arr[i].list[j].click) {
+    //         clickState = false
+    //       }
+    //     }
+    //   }
+    // }
+    // 搜索的时候是以外面的为基准判断是否全选
+    console.log()
+    let clickState = true;
+    for (let i = 0; i < StoreValueData.length; i++) {
+      for (let j = 0; j < StoreValueData[i].list.length; j++) {
+        if (!StoreValueData[i].list[j].disabled) {
+          if (!StoreValueData[i].list[j].click) {
+            clickState = false
+          }
+        }
+      }
+    }
+    setIsClick(clickState)
     setData(arr);
   }
-  const handleChange = () => {
-
+  const handleOnClear = ()=>{
+    console.log('111111')
+    setValData('');
+    // const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+    // setData(defaultDataArr);
+    // console.log(data,'data');
+    // const arr = JSON.parse(JSON.stringify(clickData));
+    // console.log(clickData,'dataArrdataArrdataArr')
+    // console.log('的撒打算打算打算打算的')
+    setSeach(false)
+    const defaultDataArr = JSON.parse(JSON.stringify(storeValue));
+    console.log(defaultDataArr,'defaultDataArr')
+    const clickArr = JSON.parse(JSON.stringify(clickData));
+    for (let i = 0; i < clickArr.length; i++) {
+      for (let j = 0; j < defaultDataArr.length; j++) {
+        for (let z = 0; z < defaultDataArr[j].list.length; z++) {
+          if (defaultDataArr[j].list[z].id == clickArr[i].id) {
+            defaultDataArr[j].list[z].click = true;
+          }
+        }
+      }
+    }
+    let clickState = true;
+    for (let i = 0; i < defaultDataArr.length; i++) {
+      for (let j = 0; j < defaultDataArr[i].list.length; j++) {
+        if (!defaultDataArr[i].list[j].disabled) {
+          if (!defaultDataArr[i].list[j].click) {
+            clickState = false
+          }
+        }
+      }
+    }
+    setIsClick(clickState)
+    // setSeach(true);
+    setData(defaultDataArr);
+  }
+  const handleChange = (e) => {
+    // if(e==''){
+    //   const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
+    //   setData(defaultDataArr);
+    // }
+    setValData(e);
   }
   const handleLetter = (v) => {
     const query = Taro.createSelectorQuery()                // 创建节点查询器 query
@@ -193,46 +352,194 @@ export default function AddTeamMember() {
     return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1));
   }
   // 班组长
-  const handleForeman = (name, e) => {
+  const handleForeman = (title, e) => {
+    let name='';
+    if (title){
+      name = title;
+    }else{
+      name = e.name_py;
+    }
+    console.log(name,e,'啊啊啊啊')
     if (type !== '2') {
       if (e.click && e.disabled) return;
       const arr = JSON.parse(JSON.stringify(clickData));
+      console.log(arr,'aaaaaa')
       let dataArr = JSON.parse(JSON.stringify(data));
       if (arr.length === 0) {
         arr.push(e);
       } else {
-        if (arr.indexOf(e.id) === -1) {
-          arr.push(e)
-        } else {
-          arr.splice(arr.indexOf(e.id), 1)
+        let state = false;
+        let index = 0;
+        for(let i =0;i<arr.length;i++){
+          if(arr[i].id == e.id){
+            state = true;
+            index = i;
+          }
         }
+        console.log(state,'state');
+        console.log(index,'index')
+        if(!state){
+          arr.push(e)
+        }else{
+          console.log(1111,index,'1111111')
+          arr.splice(index, 1)
+        }
+        console.log(arr,'arrr')
+        // return;
       }
-      for (let i = 0; i < dataArr.length; i++) {
-        dataArr[i].group_leader = dataArr[i].id;
-        if (dataArr[i].name_py === name) {
-          for (let j = 0; j < dataArr[i].list.length; j++) {
-            if (e.id === dataArr[i].list[j].id) {
+      console.log(dataArr,'dataArr')
+      console.log(arr,'arrrrrr')
+      console.log(seach,'=========seach')
+      if (seach){
+        for(let i =0;i<dataArr.length;i++){
+          for(let j=0;j<dataArr[i].list.length;j++){
+            console.log(e.id, '====e.id');
+            console.log(dataArr[i].id, 'dataArr[i].list[j].id')
+            if(dataArr[i].list[j].id == e.id){
               dataArr[i].list[j].click = !dataArr[i].list[j].click
             }
           }
         }
+      }else{
+        for (let i = 0; i < dataArr.length; i++) {
+          dataArr[i].group_leader = dataArr[i].id;
+          if (dataArr[i].name_py == name) {
+            for (let j = 0; j < dataArr[i].list.length; j++) {
+              if (e.id == dataArr[i].list[j].id) {
+                dataArr[i].list[j].click = !dataArr[i].list[j].click
+              }
+            }
+          }
+        }
       }
+      let clickState = true;
+      // 判断是搜索
+      if(seach){
+        const StoreValueData = JSON.parse(JSON.stringify(storeValue));
+        const clickArr = JSON.parse(JSON.stringify(clickData));
+        for (let i = 0; i < StoreValueData.length; i++) {
+          for (let j = 0; j < StoreValueData[i].list.length; j++) {
+            if (e.id == StoreValueData[i].list[j].id){
+              StoreValueData[i].list[j].click = !StoreValueData[i].list[j].click
+            }
+          }
+        }
+        for (let i = 0; i < clickArr.length; i++) {
+          for (let j = 0; j < StoreValueData.length; j++) {
+            for (let z = 0; z < StoreValueData[j].list.length; z++) {
+              if (StoreValueData[j].list[z].id == clickArr[i].id) {
+                StoreValueData[j].list[z].click = true;
+              }
+            }
+          }
+        }
+        console.log(StoreValueData,' StoreValueData[i].list[j].click StoreValueData[i].list[j].click')
+        for (let i = 0; i < StoreValueData.length; i++) {
+          for (let j = 0; j < StoreValueData[i].list.length; j++) {
+            if (!StoreValueData[i].list[j].disabled) {
+              if (!StoreValueData[i].list[j].click) {
+                clickState = false
+              }
+            }
+          }
+        }
+      }else{
+        for (let i = 0; i < dataArr.length; i++) {
+          for (let j = 0; j < dataArr[i].list.length; j++) {
+            if (!dataArr[i].list[j].disabled) {
+              if (!dataArr[i].list[j].click) {
+                clickState = false
+              }
+            }
+          }
+        }
+      }
+      console.log(dataArr,'dataArr')
+      setIsClick(clickState)
       setClickData(arr);
-      setData(dataArr)
+      setData(dataArr);
+      setClickItem(dataArr);
     } else {
-      let params = {
-        group_info: groupInfo,
-        group_leader: e.id
-      }
-      bkSetGroupLeaderAction(params).then(res => {
-        // if (res.code !== 200) {
-        //   Msg(res.msg)
+      if(!administration){
+        let params = {
+          group_info: groupInfo,
+          group_leader: e.id
+        }
+        bkSetGroupLeaderAction(params).then(res => {
+        });
+        e.group_leader = e.id;
+        e.leader_name = e.name;
+        dispatch(setWorker([e]))
+        Taro.navigateBack({ delta: 1 })
+      }else{
+        if (e.click && e.disabled) return;
+        const arr = JSON.parse(JSON.stringify(clickData));
+        let dataArr = JSON.parse(JSON.stringify(data));
+        if (arr.length === 0) {
+          arr.push(e);
+        } else {
+          let state = false;
+          let index = 0;
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id == e.id) {
+              state = true;
+              index = i;
+            }
+          }
+          if (!state) {
+            arr.push(e)
+          } else {
+            arr.splice(index, 1)
+          }
+        }
+        // for (let i = 0; i < dataArr.length; i++) {
+        //   dataArr[i].group_leader = dataArr[i].id;
+        //   if (dataArr[i].name_py === name) {
+        //     for (let j = 0; j < dataArr[i].list.length; j++) {
+        //       if (e.id === dataArr[i].list[j].id) {
+        //         dataArr[i].list[j].click = !dataArr[i].list[j].click
+        //       }
+        //     }
+        //   }
         // }
-      });
-      e.group_leader = e.id;
-      e.leader_name = e.name;
-      dispatch(setWorker([e]))
-      Taro.navigateBack({ delta: 1 })
+        if (seach) {
+          for (let i = 0; i < dataArr.length; i++) {
+            for (let j = 0; j < dataArr[i].list.length; j++) {
+              console.log(e.id, '====e.id');
+              console.log(dataArr[i].id, 'dataArr[i].list[j].id')
+              if (dataArr[i].list[j].id == e.id) {
+                dataArr[i].list[j].click = !dataArr[i].list[j].click
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < dataArr.length; i++) {
+            dataArr[i].group_leader = dataArr[i].id;
+            if (dataArr[i].name_py == name) {
+              for (let j = 0; j < dataArr[i].list.length; j++) {
+                if (e.id == dataArr[i].list[j].id) {
+                  dataArr[i].list[j].click = !dataArr[i].list[j].click
+                }
+              }
+            }
+          }
+        }
+        let clickState = true;
+        for (let i = 0; i < dataArr.length; i++) {
+          for (let j = 0; j < dataArr[i].list.length; j++) {
+            if (!dataArr[i].list[j].disabled) {
+              if (!dataArr[i].list[j].click){
+                clickState = false
+              }
+            }
+          }
+        }
+        console.log(arr,'arrrrrrrrrr')
+        setIsClick(clickState)
+        setClickData(arr);
+        setData(dataArr);
+        setClickItem(dataArr);
+      }
     }
   }
   const handleStart = () => {
@@ -264,15 +571,310 @@ export default function AddTeamMember() {
       }
     })
   }
+  // 编辑
+  // 全选
+  const handleClickCheckout = ()=>{
+    const dataItem = JSON.parse(JSON.stringify(data));
+    if (isClick){
+      for (let i=0; i < dataItem.length; i++) {
+        for(let j =0;j<dataItem[i].list.length;j++){
+          if (!dataItem[i].list[j].disabled){
+            dataItem[i].list[j].click = false
+          }
+        }
+      }
+      setClickData([]);
+      setIsClick(false)
+    }else{
+      console.log('aaaaa')
+      let arr:any[] =[];
+      for(let i=0;i<dataItem.length;i++){
+        for (let j = 0; j < dataItem[i].list.length; j++) {
+          console.log(dataItem[i].list[j],'1111')
+          dataItem[i].list[j].click = true;
+          arr.push(dataItem[i].list[j]);
+        }
+      }
+      setIsClick(true)
+      setClickData(arr);
+    }
+    console.log(dataItem,'111')
+    setData(dataItem)
+  }
+  const handleEditMemberClose = ()=>{
+    setEditMemberDisplay(false);
+  }
+  const handleEditEstablish = ()=>{
+    const item = JSON.parse(JSON.stringify(list));
+    if (!item.name) {
+      let type = Taro.getStorageSync(Type);
+      if (type == 1) {
+        Msg('您还没有填写工人名称')
+      } else {
+        Msg('您还没有填写班组长名称')
+      }
+      return
+    }
+    if (item.tel) {
+      if (!isPhone(item.tel)) {
+        Msg('请输入正确的手机号')
+        return
+      }
+    }
+    let params: any = {
+      name: item.name,
+      tel: item.tel,
+      id: item.id
+      // group_info: id,
+    }
+    console.log(params,'params')
+    bkUpdateWorkerAction(params).then(res=>{
+      if(res.code == 200){
+        setEditMemberDisplay(false);
+        const dataItem = JSON.parse(JSON.stringify(data));
+        console.log(dataItem,'dataItem111')
+        dataItem.forEach((itemData,index)=>{
+          itemData.list.forEach((val,i)=>{
+            if(val.id == item.id){
+              val.name = item.name;
+              val.tel = item.tel;
+            }
+          })
+        })
+        dispatch(setmailList(dataItem))
+        setData(dataItem)
+        const defaultArr = JSON.parse(JSON.stringify(defaultData));
+        for(let i =0;i<defaultArr.length;i++){
+          for(let j =0;j<defaultArr[i].list.length;j++){
+            if (defaultArr[i].list[j].id == item.id ){
+              defaultArr[i].list[j].name = item.name;
+              defaultArr[i].list[j].tel = item.tel;
+            }
+          }
+        }
+        setStoreValue(defaultArr);
+      }else{
+        Msg(res.msg)
+      }
+    })
+  }
+  const handleEdit=(v)=>{
+    console.log(v,'user')
+    setList(v);
+    setEditMemberDisplay(true);
+    setList({
+      name:v.name,
+      phone:v.tel,
+      id:v.id,
+    })
+  }
+  const handleEditInput = (type,e)=>{
+    console.log(type,'type');
+    console.log(e,'eee')
+    const item = JSON.parse(JSON.stringify(list));
+    item[type] = e.detail.value
+    setList({ ...item });
+  }
+  // 删除工人
+  const handelUserDel = ()=>{
+    const datas = JSON.parse(JSON.stringify(clickData));
+    const dataItem = JSON.parse(JSON.stringify(data));
+    console.log(dataItem, 'dataItem')
+    console.log(datas,'datas');
+    const mid = Taro.getStorageSync(MidData);
+    console.log(mid);
+    let ids:string[]=[];
+    for(let i =0;i<datas.length;i++){
+      if(!datas[i].disabled){
+        ids.push(datas[i].id);
+      }
+    }
+    if (ids.length == 0){
+      Msg('请至少选择一条信息')
+      return
+    }
+    console.log(ids,'ids');
+    Taro.showModal({
+      content:'确定要删除吗？',
+      showCancel: true,
+      confirmColor: '#0099FFFF',
+      cancelColor: '#AAAAAAFF',
+      confirmText:'确定删除',
+      success:(res)=>{
+        if (res.confirm == true) {
+          let params={
+            ids, 
+          }
+          postDeleteWorkerAction(params).then(res=>{
+            if(res.code === 200){
+              Msg('删除成功');
+              ids.forEach((v,i)=>{
+                dataItem.forEach((val,index)=>{
+                  val.list.forEach((value,valueIndex)=>{
+                    if(v == value.id){
+                      val.list.splice(valueIndex,1)
+                    }
+                  })
+                })
+              })
+              for(let i=0;i<dataItem.length;i++){
+                if(dataItem[i].list.length == 0){
+                  dataItem.splice(i, 1);
+                }
+              }
+              let data:any[] = [];
+              for(let i=0;i<dataItem.length;i++){
+                if(dataItem[i].list.length>0){
+                  data.push(dataItem[i]);
+                }
+              }
+              setData(data);
+              setStoreValue(data)
+              setClickData([])
+            }else{
+              Msg(res.msg);
+            }
+          })
+        }
+      }
+    })
+  }
+  // 点击人员管理
+  const handleSupervise = ()=>{
+    // 点击切换的时候全选全部去掉
+    const dataItem = JSON.parse(JSON.stringify(data));
+    setStoreValue(dataItem);
+    setAdministration(true);
+    data.map((v)=>{
+      v.list.map((val)=>{
+        if(!val.disabled){
+          val.click = false;
+        }
+      })
+    })
+    Taro.setNavigationBarTitle({
+      title: '人员管理',
+    })
+    setClickData([]);
+    setData(data);
+    setIsClick(false)
+  }
+  // 取消
+  const handleClose = ()=>{
+    setSeach(false);
+    setValData('');
+    let type = Taro.getStorageSync(Type);
+    let titel;
+    if (type === 1) {
+      titel = '添加班组成员'
+    } else {
+      titel = '添加班组长'
+    }
+    Taro.setNavigationBarTitle({
+      title: titel,
+    })
+    setAdministration(false);
+    // const dataItem = JSON.parse(JSON.stringify(data));
+    const itme = JSON.parse(JSON.stringify(storeValue));
+    console.log(itme,'itme');
+    for(let i =0;i<itme.length;i++){
+      for(let j=0;j<itme[i].list.length;j++){
+        itme[i].list[j].click = false;
+      }
+    }
+    console.log(itme,'itmeitmeitme')
+    // console.log(storeValue,'storeValuestoreValuestoreValue')
+    setIsClick(false);
+    setData(itme)
+  }
+  // 添加
+  const handleEstablish = ()=>{
+    const data = JSON.parse(JSON.stringify(model))
+    if (!model.userName) {
+      let type = Taro.getStorageSync(Type);
+      if (type == 1) {
+        Msg('您还没有填写工人名称')
+      } else {
+        Msg('您还没有填写班组长名称')
+      }
+      return
+    }
+    if (model.phone) {
+      if (!isPhone(model.phone)) {
+        Msg('请输入正确的手机号')
+        // isHandleAdd = true
+        return
+      }
+    }
+    let params: any = {
+      name: data.userName,
+      tel: data.phone,
+    }
+    bkAddWorkerActiion(params).then(res => {
+      if (res.code === 200) {
+        // 叫后台返回id 姓名 电话
+        // const data = res.data
+        // 添加成功后重新获取设置数据
+        // bkGetWorker('', 1, data);
+        // 设置成功清空手机和电话
+        console.log(res.data,'resdata');
+        const modales = JSON.parse(JSON.stringify(model));
+        setModel({ ...modales, userName: '', phone: '' })
+        setAddMemberDisplay(false);
+        const dataList =JSON.parse(JSON.stringify(data));
+        const item = JSON.parse(JSON.stringify(storeValue))
+        const itemList = JSON.parse(JSON.stringify(clickItem));
+        bkGetWorkerAction({}).then(resItem=>{
+          Msg(res.msg);
+          for (let i = 0; i < resItem.data.length; i++) {
+            if (dataList.name_py === resItem.data[i].name_py) {
+              resItem.data[i].list.push(data);
+            }
+          }
+          for(let i =0;i<resItem.data.length;i++){
+            for(let j=0;j<resItem.data[i].list.length;j++){
+              for (let z = 0; z < itemList.length;z++){
+                for (let b = 0; b < itemList[z].list.length;b++){
+                  if (itemList[z].list[b].id == resItem.data[i].list[j].id){
+                    resItem.data[i].list[j] = itemList[z].list[b]
+                  }
+                }
+              }
+            }
+          }
+          setStoreValue(resItem.data);
+          setData(resItem.data)
+          dispatch(setmailList(resItem.data))
+          setIsClick(false)
+          // setAdministration(false)
+        })
+      } else {
+        Msg(res.msg)
+      }
+    })
+  }
+  const handleAddUser=()=>{
+    console.log(123321)
+    setAddMemberDisplay(true);
+    const data = JSON.parse(JSON.stringify(model));
+    data.userName='';
+    data.phone='';
+    setModel({...data});
+  }
   return (
-    <View className='content'>
+    <View className={addMemberDisplay || editMemberDisplay?'foreman-content':'content'}>
+      {masklayer&& <View className='masklayer'></View>}
       <View className='searchName'>
         <AtSearchBar
           placeholder='请输入名字或手机号码查询'
           showActionButton
           value={valData}
-          onChange={(e) => setValData(e)}
+          onFocus={() => setmasklayer(true)}
+          onClear={handleOnClear}
+          onChange={handleChange}
           onActionClick={() => onActionClick()}
+          onConfirm={onActionClick}
+          onBlur={() => setmasklayer(false)}
         />
       </View>
       <View id='box'>
@@ -280,9 +882,20 @@ export default function AddTeamMember() {
           <View key={i + i}>
             <View className='list-title'>{(val.name_py&&val.name_py.toUpperCase())||''}</View>
             {val.list.map((v => (
-              <View className='list-flex-test' onClick={() => handleForeman(val.name_py, v)}>
-                {type !== '2' &&
-                  <View><Checkbox checked={v.click} value={v.click} disabled={v.click && v.disabled} className='Checkbox' onClick={() => handleForeman(val.name_py, v)} /></View>
+              <View className='list-flex-test' onClick={(e) => { e.stopPropagation(),handleForeman(val.name_py, v)}}>
+                {(type !== '2' || administration) &&
+                  <View>
+                    {/* <Checkbox checked={v.click} value={v.click} disabled={v.click && v.disabled} className='Checkbox' onClick={() => handleForem(val.name_py, v)} /> */}
+                    {v.disabled && 
+                    // <View className='checkbox-disabled'></View>
+                    <Image src={`${IMGCDNURL}disabledCheckbox.png`} className='checkbox-disabled'/>
+                    }
+                    {v.click && !v.disabled && 
+                    // <View className='checkbox-click'></View>
+                    <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click' />
+                    }
+                  {!v.click && !v.disabled && <View className={ios ? 'checkbox-no-ios' :'checkbox-no'}></View>}
+                  </View>
                 }
                 <View>
                   <View className={classnames({
@@ -296,21 +909,49 @@ export default function AddTeamMember() {
                   <View className='name'>{v.name}</View>
                   <View className='phone'>{v.tel || ''}</View>
                 </View>
+                {administration && !v.user ? <View className='edit' onClick={(e) => { e.stopPropagation(),handleEdit(v)}}>编辑</View>:''}
               </View>
             )))}
           </View>
         ))}
       </View>
-      <View className='add' onClick={() => setAddMemberDisplay(true)}>添加</View>
+      {/* <View className='add' onClick={() => setAddMemberDisplay(true)}>添加</View> */}
+      <View className={type !== '2' && !administration ? 'user-type' :'user' }>
+        <View className='checkoutBox' onClick={handleClickCheckout}>
+          {selectAll || (type == '2' && !administration) ? <View className='checkbox-click-all'></View> : 
+          // (isClick ? <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click-all' /> : <View className={'checkbox-no-all'}></View>)
+          <View className='auto'>
+              {stopCheckout &&
+              // <View className='checkbox-disabled'></View>
+              <Image src={`${IMGCDNURL}disabledCheckbox.png`} className='checkbox-disabled-all' />
+            }
+            {!stopCheckout&& isClick&&
+              <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click-all' />
+            }
+            {!stopCheckout&& !isClick && <View className='checkbox-no-all'></View>}
+          </View>
+        }{(type == '2' && !administration) ?'':<View>全选</View>}
+        </View>
+        {administration ? <View className='user-btn-box'><View className='user-btn' onClick={handelUserDel}>删除</View><View onClick={handleAddUser} className='user-btn'>添加</View></View>:''}
+        {!administration ? <View className={!seach ?'checkoutBox-name':'none'} onClick={handleSupervise}>
+          人员管理
+          <Image src={`${IMGCDNURL}triangleIcon.png`} className='triangleIcon' />
+        </View> : 
+          <View className='checkoutBox-close' onClick={handleClose}>
+            取消
+        </View>}
+      </View>
       {/* <View className='letter'>
         {letter.map((v=>(
           <View className='letter-list' id={`${v.name}`} onClick={()=>handleLetter(v)} key={v.id}>{v.name}</View>
         )))}
       </View> */}
       {/* footer */}
-      {type !== '2' && <View className='footer'><View className='footer-btn' onClick={handleStart}>开始记工</View></View>}
+      {type !== '2' && !administration && <View className='footer'><View className='footer-btn' onClick={handleStart}>开始记工</View></View>}
       {/* 添加成员 */}
-      <AddMember display={addMemberDisplay} handleClose={handleAddMemberClose} handleEstablish={handleEstablish} handleInput={handleInput} groupInfo={groupInfo} />
+      <AddMember display={addMemberDisplay} handleClose={handleAddMemberClose} handleEstablish={handleEstablish} handleInput={handleInput} groupInfo={groupInfo} model={model}/>
+      {/* 修改成员 */}
+      <EditMember display={editMemberDisplay} handleClose={handleEditMemberClose} handleEstablish={handleEditEstablish} handleInput={handleEditInput} groupInfo={groupInfo} list={list}/>
     </View>
   )
 }

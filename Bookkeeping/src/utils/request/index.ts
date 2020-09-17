@@ -426,7 +426,7 @@ export function bkAddProjectTeamAction(data): Promise<Inter.bkAddProjectTeam> {
 }
 
 // 添加工人
-export function bkAddWorkerActiion(data): Promise<Inter.bkBusinessType> {
+export function bkAddWorkerActiion(data): Promise<Inter.bkIndexTypeDataList> {
   let type = Taro.getStorageSync(Type)
   data.identity = type
   let midData = Taro.getStorageSync(MidData);
@@ -968,6 +968,7 @@ export function getWorkerHasBusinessByDateAction(data): Promise<Inter.bkGetWorke
       time: userInfo.tokenTime,
     },
     data: data,
+    loading: false
   })
 }
 
@@ -1012,6 +1013,57 @@ export function shareExcelDataAction(data): Promise<Inter.bkGetWorker> {
   return doRequestAction({
     url: api.shareExcelDataUrl,
     // method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+    },
+    data: data,
+  })
+}
+
+// 选择项目班组
+export function getChooseGroupInfoAction(data): Promise<Inter.GetChooseGroupInfo> {
+  let userInfo = Taro.getStorageSync(UserInfo);
+  return doRequestAction({
+    url: api.getChooseGroupInfoUrl,
+    // method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+    },
+    data: data,
+  })
+}
+
+// 报错统计接口
+export function postErrorCountAction(data): Promise<Inter.GetChooseGroupInfo> {
+  let userInfo = Taro.getStorageSync(UserInfo);
+  return doRequestAction({
+    url: api.postErrorCountUrl,
+    method: 'POST',
+    header: {
+      // 'content-type': 'application/json',
+      'content-type': 'application/x-www-form-urlencoded',
+      mid: userInfo.userId,
+      token: userInfo.token,
+      time: userInfo.tokenTime,
+    },
+    data: data,
+  })
+}
+
+// 删除通讯录工人
+export function postDeleteWorkerAction(data): Promise<Inter.bkIndexTypeDataList> {
+  let userInfo = Taro.getStorageSync(UserInfo);
+  return doRequestAction({
+    url: api.postDeleteWorker,
+    method: 'POST',
     header: {
       // 'content-type': 'application/json',
       'content-type': 'application/x-www-form-urlencoded',

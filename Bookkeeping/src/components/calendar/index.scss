@@ -21,7 +21,7 @@
   border-radius: 10rpx 10rpx 5rpx 5rpx;
   box-shadow: #e7e6e4 0 0 10rpx;
   box-sizing:border-box;
-  height: 1040rpx;
+  // height: 1040rpx;
   border-radius:22rpx 22rpx 0rpx 0rpx;
 }
 
@@ -113,6 +113,7 @@
   color: #3C3B3B;
   margin-left: 4.5rpx;
   margin-right: 3.5rpx;
+  font-weight: bold;
 }
 .content-weekes-week-ios{
   height: 90rpx;
@@ -123,6 +124,7 @@
   color: #3C3B3B;
   margin-left: 3.5rpx;
   margin-right: 3.5rpx;
+  font-weight: bold;
 }
 .content-times{
   // width: 690rpx;
@@ -294,4 +296,10 @@
   background: url(../../assets/images/checkBox.png) no-repeat no-repeat;
   background-size: contain;
   margin-top: 10rpx;
+}
+.SwiperBox{
+  min-height: 720rpx;
+}
+.fontWeight{
+  font-weight: bold;
 }

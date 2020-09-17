@@ -1,4 +1,6 @@
 import Taro from '@tarojs/taro'
+import { TotalData } from '../../config/store';
+import { postErrorCountAction } from '../../utils/request/index'
 
 // 是否是电话号码
 export function isPhone(tel: string): boolean {
@@ -69,4 +71,78 @@ export function isType(data: any, type: string): boolean {
 export function isIos(): boolean {
   let system = Taro.getSystemInfoSync()
   return system.platform === 'ios'
+}
+
+
+// 报错率统计
+export function statistics(name:string){
+  let Total = Taro.getStorageSync(TotalData);
+  let TotalItem = JSON.parse(JSON.stringify(Total))
+  console.log(TotalItem)
+  if (TotalItem && TotalItem.length > 0) {
+    const list = TotalItem.find(item => item.name == name);
+    if (list) {
+      list.num += 1;
+    } else {
+      let obj = {
+        name,
+        num: 1
+      }
+      TotalItem.push(obj);
+    }
+  } else {
+    TotalItem = [
+      {
+        name,
+        num: 1
+      }
+    ]
+  }
+  Taro.setStorageSync(TotalData, TotalItem) 
+}
+
+export function queyElementYPosition(selector: string, component?: any): Promise<any> {
+  let query:any;
+  if (process.env.TARO_ENV == 'h5') {
+    query = Taro.createSelectorQuery().in(component)
+  } else {
+    query = Taro.createSelectorQuery().in(component.$scope)
+  }
+  return new Promise((resolve, reject) => {
+    const tmp = query.select(selector)
+      .fields({ size: true, rect: true, scrollOffset: true, dataset: true }, (rect: any) => {
+        !!rect ? resolve(rect) : reject(rect);
+      });
+    tmp && tmp.exec();
+  })
+}
+
+// 报错统计公用方法
+export function postErrorCountFn(){
+  let Total = Taro.getStorageSync(TotalData);
+  let num = 0;
+  if (Total.length > 0) {
+    num = Total.reduce((accumulator, currentValue) => accumulator + currentValue.num, 0);
+  }
+  console.log(num,'111111')
+  if (num >= 5){
+    let stringArr: string[] = [];
+    for (let i = 0; i < Total.length; i++) {
+      if (Total[i].num) {
+        for (let k = 0; k < Total[i].num; k++) {
+          stringArr.push(Total[i].name)
+        }
+      }
+    }
+    console.log(stringArr.toString(), 'stringArrstringArrstringArr')
+    let numParams = {
+      type: stringArr.toString(),
+    }
+    postErrorCountAction(numParams).then(res => {
+      console.log(res,'q1111')
+      if (res.code === 200) {
+        Taro.setStorageSync(TotalData, []);
+      }
+    })
+  }
 }

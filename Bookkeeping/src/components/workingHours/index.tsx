@@ -9,11 +9,12 @@ interface PROPS {
   handleWorkingHoursClose: (boolean) => void;
   type: number //类型区分
   handleWorkingHours: (type: number, v: any) => void;
+  maskHandleClose?:()=>void;
   // textarea:string,
   // handleTextarea:(e:any)=>void,
   // setComplaintModal:(e:boolean)=>void,
 }
-export default function WorkingHours({ display, handleWorkingHoursClose, handleWorkingHours, type }: PROPS) {
+export default function WorkingHours({ display, maskHandleClose = () => { }, handleWorkingHoursClose, handleWorkingHours, type }: PROPS) {
   const [data, setData] = useState<any>([
     { id: 1, name: '0.5小时', click: false, num: 0.5 },
     { id: 2, name: '1小时', click: false, num: 1 },
@@ -67,8 +68,8 @@ export default function WorkingHours({ display, handleWorkingHoursClose, handleW
   return (
     <View>
       {display &&
-        <View className='workingHours-complaintModal'>
-          <View className='workingHours-complaintModal-content'>
+        <View className='workingHours-complaintModal' onClick={maskHandleClose}>
+        <View className='workingHours-complaintModal-content' onClick={(e) => e.stopPropagation()}>
             <View className='workingHours-complaintModal-content-title'>选择上班时间<View onClick={handleWorkingHoursClose} className='workingHours-complaintModal-content-close'>
               <Image src={`${IMGCDNURL}closeIcons.png`} className='closeIcons' />
             </View></View>

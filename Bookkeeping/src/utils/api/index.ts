@@ -1,3 +1,10 @@
+/*
+ * @Author: zyb
+ * @Date: 2020-08-24 14:03:35
+ * @LastEditors: zyb
+ * @LastEditTime: 2020-09-07 16:39:01
+ * @Description: 
+ */
 // 区分正式还是测试
 import { REQUESTURL } from '../../config'
 
@@ -95,3 +102,9 @@ export const getBookkeepingDataUrl = REQUESTURL + '/bk-bookkeeping/get-bookkeepi
 export const addNewBusinessUrl = REQUESTURL + 'bk-bookkeeping/add-new-business/'
 // 获取分享接口
 export const shareExcelDataUrl = REQUESTURL + 'bk-bookkeeping/get-share-excel-url/';
+// 选择项目班组
+export const getChooseGroupInfoUrl = REQUESTURL+'/bk-project-team/choose-group-info/';
+// 记工报错统计接口
+export const postErrorCountUrl = REQUESTURL+'/bk-bookkeeping/business-error-count/'
+// 删除通讯录
+export const postDeleteWorker = REQUESTURL+'/bk-worker/delete-worker/';
