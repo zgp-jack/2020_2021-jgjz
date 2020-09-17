@@ -17,7 +17,19 @@
   // padding: 0 30rpsx;
   width: 100%;
   background: #fff;
+  display: flex;
+  justify-content: space-between;
 }
+.time-right{
+  display: flex;
+  margin-right: 29rpx;
+  font-size: 28rpx;
+  color: rgba(138, 138, 138, 1);
+}
+.screen{
+  margin-right: 35rpx;
+}
+
 .time-color{
   display: flex;
   flex-direction: row;

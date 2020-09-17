@@ -1,0 +1,169 @@
+.MailListModal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.MailListModal-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 10rpx 10rpx 5rpx 5rpx;
+  box-shadow: #e7e6e4 0 0 10rpx;
+  height: 90%;
+  background: rgba(243, 243, 243, 1);
+}
+
+.MailListModal-heard {
+  height: 104rpx;
+  line-height: 104rpx;
+  padding-left: 30rpx;
+}
+.list-flex-test {
+  display: flex;
+  background: #fff;
+  padding: 20rpx 28rpx;
+  margin-top: 20rpx;
+  position: relative;
+}
+.list-title {
+  height: 27rpx;
+  line-height: 27rpx;
+  font-size: 26rpx;
+  padding: 10rpx;
+  padding-left: 28rpx;
+}
+.image {
+  height: 68rpx;
+  width: 68rpx;
+  text-align: center;
+  line-height: 68rpx;
+  margin-right: 51rpx;
+  color: #fff;
+  background: rgba(249, 163, 78, 1);
+}
+
+.image-red {
+  height: 68rpx;
+  width: 68rpx;
+  line-height: 68rpx;
+  margin-right: 51rpx;
+  color: #fff;
+  text-align: center;
+  background: rgba(247, 45, 87, 1);
+}
+
+.image-red {
+  height: 68rpx;
+  width: 68rpx;
+  line-height: 68rpx;
+  margin-right: 51rpx;
+  color: #fff;
+  text-align: center;
+  background: rgba(247, 45, 87, 1);
+}
+
+.image-origion {
+  height: 68rpx;
+  width: 68rpx;
+  line-height: 68rpx;
+  color: #fff;
+  text-align: center;
+  margin-right: 51rpx;
+  background: rgba(81, 206, 247, 1);
+}
+
+.image-violet {
+  height: 68rpx;
+  width: 68rpx;
+  line-height: 68rpx;
+  color: #fff;
+  text-align: center;
+  margin-right: 51rpx;
+  background: rgba(97, 223, 226, 1);
+}
+
+.image-violet {
+  height: 68rpx;
+  line-height: 68rpx;
+  width: 68rpx;
+  color: #fff;
+  text-align: center;
+  margin-right: 51rpx;
+  background: rgba(191, 103, 207, 1);
+}
+.name {
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, 1);
+}
+
+.phone {
+  font-size: 26rpx;
+  color: rgba(153, 153, 153, 1);
+}
+.MailListModal-scroll {
+  overflow-y: scroll;
+  height: 900rpx;
+}
+.MailListModal-scroll{
+  height: 800rpx;
+}
+.allCheckout {
+  background: white;
+  height: 100%;
+}
+.allCheckout-btn{
+  background: rgba(0, 153, 255, 1);
+  height: 70rpx;
+  line-height: 70rpx;
+  color: white;
+  width: 70%;
+  text-align: center;
+  border-radius: 10rpx;
+}
+.all{
+  margin-top: 20rpx;
+  margin-right: 30rpx;
+  margin-left: 30rpx;
+  display: flex;
+  font-size: 28rpx;
+  color: rgba(153, 153, 153, 1);
+}
+.allCheckout{
+  display: flex;
+  width: 100%;
+}
+.allCheckout-box{
+  display: flex;
+  width: 100%;
+}
+.checkbox-no {
+  height: 27.5rpx;
+  width: 27rpx;
+  border: 1rpx solid rgba(191, 191, 191, 1);
+  margin-top:20rpx;
+  margin-right: 20rpx;
+}
+.checkbox-click {
+  height: 30rpx;
+  width: 30rpx;
+  margin-top: 20rpx;
+  margin-right: 20rpx;
+  background-size: contain;
+}
+
+.checkbox-click-all{
+  height: 30rpx;
+  width: 30rpx;
+  margin-right: 20rpx;
+  background-size: contain
+}

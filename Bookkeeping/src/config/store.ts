@@ -2,7 +2,7 @@
  * @Author: zyb
  * @Date: 2020-08-26 19:48:23
  * @LastEditors: zyb
- * @LastEditTime: 2020-09-14 15:55:15
+ * @LastEditTime: 2020-09-17 17:48:32
  * @Description: 
  */
 // * 本文件为小程序内部缓存声明文件
@@ -46,3 +46,10 @@ export const Sign: string = 'sign'
 
 // 小程序跳转appid
 export const JumpAppid:string = 'jumpAppid';
+
+
+
+// 流水筛选缓存
+export const Project = 'project';
+// 分类
+export const Classification ='classification';

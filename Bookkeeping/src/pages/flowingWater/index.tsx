@@ -1,19 +1,26 @@
 import Taro, { Config, useEffect, useState, useRouter, createContext, useDidShow, useShareAppMessage } from '@tarojs/taro'
 import { View, Text, Picker, Checkbox,Image } from '@tarojs/components'
-import { bkBusinessAction, bkDeleteBusinessAction, bkGetProjectTeamAction, bkAddProjectTeamAction } from '../../utils/request/index';
+import { bkBusinessAction, bkDeleteBusinessAction, bkGetProjectTeamAction, bkAddProjectTeamAction, bkGetWorkerAction } from '../../utils/request/index';
 import Msg from '../../utils/msg'
 import { AtSwipeAction } from "taro-ui"
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { IMGCDNURL } from '../../config';
-import { Type } from '../../config/store'
+import { Type, Project, Classification } from '../../config/store'
 import { setFlowingWater } from '../../actions/flowingWater';
 import CreateProject from '../../components/createProject';
-import ProjectModal from '../../components/projectModal'
+import ProjectModal from '../../components/projectModal';
+import ScreenModal from '../../components/screenModal';
+import ChangeProjectModal from '../../components/changeProjectModal'
+import MailListModal from '../../components/mailListModal';
 import Auth from '../../components/auth';
 import { bkBusinessTypeDataItem } from '../../utils/request/index.d'
 import './index.scss'
 export interface Injected {
   dataArr: any,
+}
+interface classificationType{
+  name:string,
+  id:number,
 }
 export const context = createContext<Injected>({} as Injected)
 interface DataType {
@@ -69,6 +76,30 @@ export default function FlowingWater() {
   // 数据异常
   const [busy, setBusy] = useState<boolean>(false)
   const [display, setDisplay] = useState<boolean>(false)
+  // 弹窗的记工分类
+  const [classification, setClassification] = useState <classificationType[]>([
+    { id: 1, name: '包工-按量记' },
+    {id: 2 ,name:'点工'},
+    { id: 3, name: '包工-按天记' },
+    { id: 4, name: '借支' },
+])
+  // 获取项目数据
+  const [projectData,setProjectData] = useState<any>([]);
+  // 项目是否打开
+  const [projectDisplay, setProjectDisplay] = useState<boolean>(false)
+  // 工人是否打开
+  const [workerDisplay,setWorkerDisplay] = useState<boolean>(false)
+  // 工人数据
+  const [workerData,setWorkerData] = useState<any>([])
+  // 筛选
+  const [screen, setScreen] = useState<boolean>(false);
+  // 筛选全部内容
+  const [val,setVal] = useState<any>({
+    project:'',
+    worker:'',
+    classification:'',
+    details:false,
+  })
   // 获取数据
   useDidShow(()=>{
     const date = JSON.stringify(new Date()).slice(1, 11)
@@ -572,6 +603,88 @@ export default function FlowingWater() {
     setCreateProjectDisplay(false);
     setProject(true)
   }
+  // 获取项目名称
+  const getProjectTeam = ()=>{
+    setProjectDisplay(true);
+    const clickData = Taro.getStorageSync(Project);
+    console.log(clickData,'1111')
+    bkGetProjectTeamAction({}).then(res=>{
+      if(res.code === 200){
+        if (clickData){
+          for(let i =0;i<res.data.length;i++){
+            res.data[i].click = false;
+            if(res.data[i].id == clickData.id){
+              res.data[i].click = true
+            }
+          }
+        }
+        console.log(res.data);
+        setProjectData(res.data);
+      }else{
+        Msg(res.msg);
+      }
+    })
+  }
+  // 获取工人
+  const getWorker = ()=>{
+    console.log(11111)
+    setWorkerDisplay(true);
+    bkGetWorkerAction({}).then(res=>{
+      console.log(res,'1111')
+      if(res.code === 200){
+        setWorkerData(res.data);
+      }else{
+        Msg(res.msg);
+      }
+    })
+  }
+  //  选择项目
+  const handleClickProject = (v:any)=>{
+    const data =JSON.parse(JSON.stringify(projectData));
+    for(let i=0;i<data.length;i++){
+      data[i].click = false
+      if(data[i].id == v.id){
+        data[i].click = true
+      }
+    }
+    setProjectData(data);
+    setProjectDisplay(false);
+    Taro.setStorageSync(Project,v);
+  }
+  // 筛选
+  const handleScreen = ()=>{
+    // 项目
+    const clickData = Taro.getStorageSync(Project);
+    // 分类
+    const ClassificationId = Taro.getStorageSync(Classification);
+    const data = JSON.parse(JSON.stringify(val));
+    const dataItem = JSON.parse(JSON.stringify(classification));
+    if(clickData){
+      data.project = clickData.group_name + '-' + clickData.name
+    }
+    if (ClassificationId){
+      for(let i =0;i<dataItem.length;i++){
+        if (dataItem[i].id == ClassificationId ){
+          dataItem[i].click = true;
+        }
+      }
+    }
+    setClassification(dataItem);
+    setVal(data);
+    setScreen(true);
+  }
+  // 分类
+  const handleClassification = (v)=>{
+    const data = JSON.parse(JSON.stringify(classification));
+    for(let i =0;i<data.length;i++){
+      data[i].click = false;
+      if(data[i].id == v.id){
+        data[i].click = true;
+        Taro.setStorageSync(Classification,v.id);
+      }
+    }
+    setClassification(data);
+  }
   return(
     <context.Provider value={value}>
     <View className='flowingWater'>
@@ -593,6 +706,10 @@ export default function FlowingWater() {
           {mon}{rightTime && <Image className='righticon' src={`${IMGCDNURL}greyRight.png`} style={{visibility: rightTime?'visible':'hidden'}} />}
         </View>
         </Picker>
+        <View className='time-right'>
+          <View className='screen' onClick={handleScreen}>筛选</View>
+          <View>全选</View>
+        </View>
       </View>
       <View className='content'>
         <View>
@@ -695,12 +812,12 @@ export default function FlowingWater() {
         }
       </View>
       {/* 多选 */}
-      {!busy && !isCheckOut && data.item.length > 0 &&
+      {/* {!busy && !isCheckOut && data.item.length > 0 &&
         <View className='icon-box' onClick={()=>handleCheckboxBtn(0)}>
           <View className='icon-box-icon' ><Image className='icon-box-icon-image' src={`${IMGCDNURL}checkout.png`}/></View>
         <View>多选</View>
       </View>
-      }
+      } */}
       {!busy &&isCheckOut && 
       <View className='footer-box'>
           <View className='footer-box-left' onClick={handleAllCheck}>
@@ -719,6 +836,12 @@ export default function FlowingWater() {
       <CreateProject display={createProjectDisplay} handleClose={handleCreateProjectClose} val={model && model.groupName} handleSubmit={handleOk} handleInput={handleInput} />
       {/* 填写班组 */}
       <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setProject(false), setModel({ groupName: '', teamName: '' }) }} />
+      {/* 筛选 */}
+      <ScreenModal handleClose={() => { }} display={screen} handleEstablish={() => { }} classification={classification} handleProject={getProjectTeam} handleWorker={getWorker} val={val} handleClassification={handleClassification}/>
+      {/* 项目 */}
+      <ChangeProjectModal display={projectDisplay} projectData={projectData} maskHandleClose={() => setProjectDisplay(false)} handleClickProject={handleClickProject}/>
+      {/*工人 */}
+      <MailListModal display={workerDisplay} handleClose={()=>setWorkerDisplay(false)} workerData={workerData} />
       {/* <Auth display={display} handleClose={()=>{setDisplay(false)}} callback={()=>{}} isLogionType={false} /> */}
     </context.Provider>
   )
