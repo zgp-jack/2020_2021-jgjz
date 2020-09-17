@@ -64,7 +64,7 @@ export default function CalendarModal({
   useEffect(()=>{
     // 判断是安卓还是苹果
     setIos(isIos())
-  })
+  },[])
   const addZero = (num) => {
     if (parseFloat(num) < 10) {
       num = '0' + parseFloat(num);
@@ -149,8 +149,10 @@ export default function CalendarModal({
                 className='SwiperBox'
                 circular={calendarState}
                 current={swiperIndex}
-                onChange={handleSuiper}
-                duration={500}
+                onAnimationFinish={(e)=>handleSuiper(e)}
+                // onChange={handleSuiper}
+                skipHiddenItemLayout={true}
+                duration={100}
                 >
                 <SwiperItem>
                   <View className='demo-text-1'>

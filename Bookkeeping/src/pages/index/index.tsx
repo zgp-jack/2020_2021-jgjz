@@ -815,7 +815,7 @@ export default function Index() {
       extraData: {
         foo: 'bar'
       },
-      envVersion: 'trial',
+      envVersion: 'release',
       success(res) {
         // 打开成功
       }

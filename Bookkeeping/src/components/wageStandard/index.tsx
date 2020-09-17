@@ -73,6 +73,8 @@ export default function WageStandard({ display, maskHandleClose, handleClose, wa
       const item = JSON.parse(JSON.stringify(boxValue));
       if (value[type]) {
         item[type] = value[type];
+      }else{
+        item[type] = 0;
       }
       // console.log(value[type,'1111'])
       console.log(item,'itemitemitemitem')

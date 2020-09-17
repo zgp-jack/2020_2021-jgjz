@@ -422,7 +422,7 @@ export default function Notepad() {
         <View className='checkboxButton-box'>
             <View className='checkboxButton-inner' onClick={handleAllCheckbox}>
               {/* <Checkbox value='' checked={selectAll} className='checkboxButton-checkbox' color='#0099FF'/> */}
-              {selectAll ? <View className='checkbox-click'></View> : <View className='checkbox-no'></View> }<View>全选</View>
+              {selectAll ? <View className='checkbox-click-all-in'></View> : <View className='checkbox-no-on'></View> }<View>全选</View>
             </View>
           <View className='checkboxButton-right'>
               <View className='checkboxButton-del' onClick={bkDeleteNotePad}>批量删除</View>

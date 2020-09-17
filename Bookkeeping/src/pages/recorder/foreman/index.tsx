@@ -1015,7 +1015,7 @@ export default function Foreman() {
       {/* 设置工资标准 */}
         <WageStandard display={wageStandardDisplay} maskHandleClose={() => { handleWageStandardClose(); handleWagesModalClose();setIsfocus(false) }} handleClose={handleWageStandardClose} wageStandard={wageStandard} handleWageStandard={handleWageStandard} handleAddWage={handleAddWage} handleWageStandardRadio={handleWageStandardRadio} handleAdd={handleInputAdd} handleDel={handleDelInput} model={model} boxValue={boxValue} setBoxValue={setBoxValue} isFocus={isFocus} stateData={stateData} setStateData={setStateData}/>
       {/* 添加成员 */}
-        <AddMember display={addMemberDisplay} handleClose={handleAddMemberClose} handleEstablish={handleEstablish} handleInput={handleInput} groupInfo={groupInfo}/>
+        <AddMember display={addMemberDisplay} handleClose={handleAddMemberClose} handleEstablish={handleEstablish} handleInput={handleInput} groupInfo={groupInfo} model={model}/>
       {/* 工资 */}
         <WagesModal maskHandleClose={handleWagesModalClose} display={wagesModalDisplay} handleClose={handleWagesModalClose} data={setWorkList} handleAddStandard={handleAddStandard} standard={standard} moneyList={moneyList} handleEditWages={handleEditWages} handleAtSwitch={handleAtSwitch} tab={tab} handleSetWagesModal={handleSetWagesModal} handleWagesList={handleWagesList} handleCheckboxStandard={handleCheckboxStandard} clickModalNum={clickModalNum} handleAllClick={handleAllClick} checkAll={checkAll} recorderType={recorderType} 
         />

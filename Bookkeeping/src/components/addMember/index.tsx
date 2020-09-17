@@ -10,9 +10,10 @@ interface PROPS {
   handleEstablish: (groupInfo:string)=>void,
   handleInput:(type:string,e:any)=>void,
   groupInfo:string,
+  model:any,
 }
 
-export default function AddMember({ display, handleClose, handleEstablish, handleInput, groupInfo }: PROPS) {
+export default function AddMember({ display, handleClose, handleEstablish, handleInput, groupInfo, model }: PROPS) {
   return(
     <AtDrawer show={display} mask right width={'100%'}>
       <View className='back' onClick={handleClose}></View>
@@ -35,6 +36,7 @@ export default function AddMember({ display, handleClose, handleEstablish, handl
                   maxLength={4} 
                   className='publish-list-input-name new-input' 
                   placeholder='请输入对方的姓名' 
+                  value={model.userName}
                   onInput={(e) => handleInput('userName', e)}
                 />
               </View>
@@ -47,6 +49,7 @@ export default function AddMember({ display, handleClose, handleEstablish, handl
                   maxLength={11} 
                   placeholder='请输入对方的电话号码' 
                   type='number' 
+                  value={model.phone}
                   className='publish-list-input new-input' 
                   onInput={(e) => handleInput('phone', e)} 
                 />

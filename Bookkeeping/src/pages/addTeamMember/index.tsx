@@ -160,6 +160,7 @@ export default function AddTeamMember() {
         }
       }
       setDefaultData(item);
+      setStoreValue(item);
       setData(item)
     }
   }, [useSelectorItem.mailList, useSelectorItem.phoneList])
@@ -203,6 +204,7 @@ export default function AddTeamMember() {
     const dataArr = JSON.parse(JSON.stringify(data));
     const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
     const clickArr = JSON.parse(JSON.stringify(clickData));
+    const StoreValueData = JSON.parse(JSON.stringify(storeValue));
     let arr: any[] = [
       { list: [] }
     ];
@@ -258,11 +260,23 @@ export default function AddTeamMember() {
         }
       }
     }
+    // let clickState = true;
+    // for (let i = 0; i < arr.length; i++) {
+    //   for (let j = 0; j < arr[i].list.length; j++) {
+    //     if (!arr[i].list[j].disabled) {
+    //       if (!arr[i].list[j].click) {
+    //         clickState = false
+    //       }
+    //     }
+    //   }
+    // }
+    // 搜索的时候是以外面的为基准判断是否全选
+    console.log()
     let clickState = true;
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < arr[i].list.length; j++) {
-        if (!arr[i].list[j].disabled) {
-          if (!arr[i].list[j].click) {
+    for (let i = 0; i < StoreValueData.length; i++) {
+      for (let j = 0; j < StoreValueData[i].list.length; j++) {
+        if (!StoreValueData[i].list[j].disabled) {
+          if (!StoreValueData[i].list[j].click) {
             clickState = false
           }
         }
@@ -272,6 +286,7 @@ export default function AddTeamMember() {
     setData(arr);
   }
   const handleOnClear = ()=>{
+    console.log('111111')
     setValData('');
     // const defaultDataArr = JSON.parse(JSON.stringify(defaultData));
     // setData(defaultDataArr);
@@ -281,6 +296,7 @@ export default function AddTeamMember() {
     // console.log('的撒打算打算打算打算的')
     setSeach(false)
     const defaultDataArr = JSON.parse(JSON.stringify(storeValue));
+    console.log(defaultDataArr,'defaultDataArr')
     const clickArr = JSON.parse(JSON.stringify(clickData));
     for (let i = 0; i < clickArr.length; i++) {
       for (let j = 0; j < defaultDataArr.length; j++) {
@@ -302,7 +318,7 @@ export default function AddTeamMember() {
       }
     }
     setIsClick(clickState)
-    setSeach(true);
+    // setSeach(true);
     setData(defaultDataArr);
   }
   const handleChange = (e) => {
@@ -397,11 +413,43 @@ export default function AddTeamMember() {
         }
       }
       let clickState = true;
-      for (let i = 0; i < dataArr.length; i++) {
-        for (let j = 0; j < dataArr[i].list.length; j++) {
-          if (!dataArr[i].list[j].disabled) {
-            if (!dataArr[i].list[j].click) {
-              clickState = false
+      // 判断是搜索
+      if(seach){
+        const StoreValueData = JSON.parse(JSON.stringify(storeValue));
+        const clickArr = JSON.parse(JSON.stringify(clickData));
+        for (let i = 0; i < StoreValueData.length; i++) {
+          for (let j = 0; j < StoreValueData[i].list.length; j++) {
+            if (e.id == StoreValueData[i].list[j].id){
+              StoreValueData[i].list[j].click = !StoreValueData[i].list[j].click
+            }
+          }
+        }
+        for (let i = 0; i < clickArr.length; i++) {
+          for (let j = 0; j < StoreValueData.length; j++) {
+            for (let z = 0; z < StoreValueData[j].list.length; z++) {
+              if (StoreValueData[j].list[z].id == clickArr[i].id) {
+                StoreValueData[j].list[z].click = true;
+              }
+            }
+          }
+        }
+        console.log(StoreValueData,' StoreValueData[i].list[j].click StoreValueData[i].list[j].click')
+        for (let i = 0; i < StoreValueData.length; i++) {
+          for (let j = 0; j < StoreValueData[i].list.length; j++) {
+            if (!StoreValueData[i].list[j].disabled) {
+              if (!StoreValueData[i].list[j].click) {
+                clickState = false
+              }
+            }
+          }
+        }
+      }else{
+        for (let i = 0; i < dataArr.length; i++) {
+          for (let j = 0; j < dataArr[i].list.length; j++) {
+            if (!dataArr[i].list[j].disabled) {
+              if (!dataArr[i].list[j].click) {
+                clickState = false
+              }
             }
           }
         }
@@ -526,7 +574,6 @@ export default function AddTeamMember() {
   // 编辑
   // 全选
   const handleClickCheckout = ()=>{
-    console.log(312312)
     const dataItem = JSON.parse(JSON.stringify(data));
     if (isClick){
       for (let i=0; i < dataItem.length; i++) {
@@ -568,15 +615,15 @@ export default function AddTeamMember() {
       }
       return
     }
-    if (item.phone) {
-      if (!isPhone(item.phone)) {
+    if (item.tel) {
+      if (!isPhone(item.tel)) {
         Msg('请输入正确的手机号')
         return
       }
     }
     let params: any = {
       name: item.name,
-      tel: item.phone,
+      tel: item.tel,
       id: item.id
       // group_info: id,
     }
@@ -590,7 +637,7 @@ export default function AddTeamMember() {
           itemData.list.forEach((val,i)=>{
             if(val.id == item.id){
               val.name = item.name;
-              val.tel = item.phone;
+              val.tel = item.tel;
             }
           })
         })
@@ -601,7 +648,7 @@ export default function AddTeamMember() {
           for(let j =0;j<defaultArr[i].list.length;j++){
             if (defaultArr[i].list[j].id == item.id ){
               defaultArr[i].list[j].name = item.name;
-              defaultArr[i].list[j].tel = item.phone;
+              defaultArr[i].list[j].tel = item.tel;
             }
           }
         }
@@ -714,6 +761,8 @@ export default function AddTeamMember() {
   }
   // 取消
   const handleClose = ()=>{
+    setSeach(false);
+    setValData('');
     let type = Taro.getStorageSync(Type);
     let titel;
     if (type === 1) {
@@ -810,7 +859,7 @@ export default function AddTeamMember() {
     const data = JSON.parse(JSON.stringify(model));
     data.userName='';
     data.phone='';
-    setModel(data);
+    setModel({...data});
   }
   return (
     <View className={addMemberDisplay || editMemberDisplay?'foreman-content':'content'}>
@@ -900,7 +949,7 @@ export default function AddTeamMember() {
       {/* footer */}
       {type !== '2' && !administration && <View className='footer'><View className='footer-btn' onClick={handleStart}>开始记工</View></View>}
       {/* 添加成员 */}
-      <AddMember display={addMemberDisplay} handleClose={handleAddMemberClose} handleEstablish={handleEstablish} handleInput={handleInput} groupInfo={groupInfo} />
+      <AddMember display={addMemberDisplay} handleClose={handleAddMemberClose} handleEstablish={handleEstablish} handleInput={handleInput} groupInfo={groupInfo} model={model}/>
       {/* 修改成员 */}
       <EditMember display={editMemberDisplay} handleClose={handleEditMemberClose} handleEstablish={handleEditEstablish} handleInput={handleEditInput} groupInfo={groupInfo} list={list}/>
     </View>

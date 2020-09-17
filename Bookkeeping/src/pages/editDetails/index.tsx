@@ -549,7 +549,7 @@ export default function EditDetails() {
     console.log(type, 'type')
     let val;
     if (item) {
-      if (item[type]) {
+      if (item[type] || item[type] == 0 ) {
         val = item[type] + '';
       }
     }
@@ -1035,10 +1035,12 @@ export default function EditDetails() {
     // 加班时间
     const dayNum = item.day;
     let time: number = 0;
+    let timeState = false;
     // let clickDay:any = {};
     // let clickTime:any = {};
     for (let i = 0; i < timeArrs.length; i++) {
       if (timeArrs[i].click) {
+        timeState = true;
         // clickDay = timeArrs[i];
         setClickDay(timeArrs[i])
         // 选择工
@@ -1060,8 +1062,10 @@ export default function EditDetails() {
       }
     }
     let addTime: number = 0;
+    let addState = false;
     for (let i = 0; i < addWorkArrs.length; i++) {
       if (addWorkArrs[i].click) {
+        addState = true;
         setClickTime(addWorkArrs[i])
         // clickTime = addWorkArrs[i];
         addTime = addWorkArrs[i].num
@@ -1076,8 +1080,23 @@ export default function EditDetails() {
       wages = moneyNum / workNum * (time * workNum) + (moneyNum / dayNum * addTime);    
       // wages = (parseInt(standardObj.money)||0 / parseInt(standardObj.worktime_define)||0 * parseInt(standardObj.work_time))||0 + ((parseInt(standardObj.money)||0 / parseInt(standardObj.worker_overtime))||0 * parseInt(standardObj.overtime))||0
     }
+    if (!addState && !timeState) {
+      for (let i = 0; i < timeArrs.length; i++) {
+        timeArrs[0].click = true;
+        setClickDay(timeArrs[0])
+      }
+      for (let i = 0; i < addWorkArrs.length; i++) {
+        addWorkArrs[0].click = true;
+        addTime = addWorkArrs[0].num
+        setClickTime(addWorkArrs[0])
+      }
+      time = 1 / workNum * workNum;
+      title = '上班1个工，无加班';
+      setTimeArr(timeArrs);
+      setAddWorkArr(addWorkArrs)
+    }
     const num = toFixedFn(wages);
-    setVal({ ...val, duration: title, money: num })
+    setVal({ ...val, duration: title, money: num, modalDuration: title })
     setDisplay(false);
     setTimeout(() => {
       setIsdisable(false)
@@ -1428,7 +1447,7 @@ export default function EditDetails() {
     setWageStandardDisplay(false);
     setTimeout(() => {
       setIsdisable(false)
-       setIsfocus(false);
+      setIsfocus(false);
     },0);
   }
   // 选择单位
