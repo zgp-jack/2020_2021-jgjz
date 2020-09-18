@@ -5,7 +5,7 @@ import Msg from '../../utils/msg'
 import { AtSwipeAction } from "taro-ui"
 import { useDispatch, useSelector } from '@tarojs/redux'
 import { IMGCDNURL } from '../../config';
-import { Type, Project, Classification } from '../../config/store'
+import { Type, Project, Classification, ScreenDetails, ScreenWorker } from '../../config/store'
 import { setFlowingWater } from '../../actions/flowingWater';
 import CreateProject from '../../components/createProject';
 import ProjectModal from '../../components/projectModal';
@@ -21,6 +21,8 @@ export interface Injected {
 interface classificationType{
   name:string,
   id:number,
+  long?:boolean,
+  click?:boolean,
 }
 export const context = createContext<Injected>({} as Injected)
 interface DataType {
@@ -78,9 +80,9 @@ export default function FlowingWater() {
   const [display, setDisplay] = useState<boolean>(false)
   // 弹窗的记工分类
   const [classification, setClassification] = useState <classificationType[]>([
-    { id: 1, name: '包工-按量记' },
-    {id: 2 ,name:'点工'},
-    { id: 3, name: '包工-按天记' },
+    { id: 3, name: '包工-按量记', long:true },
+    {id: 1 ,name:'点工'},
+    { id: 2, name: '包工-按天记',long:true },
     { id: 4, name: '借支' },
 ])
   // 获取项目数据
@@ -94,12 +96,23 @@ export default function FlowingWater() {
   // 筛选
   const [screen, setScreen] = useState<boolean>(false);
   // 筛选全部内容
-  const [val,setVal] = useState<any>({
-    project:'',
-    worker:'',
-    classification:'',
-    details:false,
+  const [valDatas,setValDatas] = useState<any>({
+    screeProject:'',
+    screenWorker:'',
+    screenClassification:'',
+    screenDetails:false,
   })
+  //弹框工人全选
+  const [allCheckout,setAllCheckout] = useState<boolean>(false)
+  // 搜索
+  const [seach,setSeach] = useState<string>('');
+  // 默认工人
+  const [defaultArr, setDefaultArr] = useState<any[]>([]);
+  // 点击了的工人
+  const [clickData, setClickData] = useState<any[]>([])
+  // 是否搜索
+  const [isSeach,setIsSeach]= useState<boolean>(false)
+  // 备注
   // 获取数据
   useDidShow(()=>{
     const date = JSON.stringify(new Date()).slice(1, 11)
@@ -125,18 +138,51 @@ export default function FlowingWater() {
   setIdentity(type)
   const getList = (times?:string, lastM?:string)=>{
     console.log(useSelectorItem.flowingWater, '111');
-    let start_date, end_date;
+    let start_date, end_date,dateTime;
     if (times && lastM){
       start_date = times;
       end_date = lastM;
+      dateTime = times;
     }else{
+      dateTime = time;
       start_date = time;
       end_date = lastTime;
+    }
+    // 1 点工 2 按天记 3 按量4 借支
+    // post_business_type
+    // 备注
+    const is_note = Taro.getStorageSync(ScreenDetails);
+    const ClassificationData = Taro.getStorageSync(Classification);
+    // 类型
+    let arr:string[] =[];
+    for (let i = 0; i < ClassificationData.length;i++){
+      if (ClassificationData[i].click){
+        arr.push(ClassificationData[i].id);
+      }
+    }
+    const clickData = Taro.getStorageSync(Project);
+    // 项目
+    let group_info = '';
+    console.log(clickData,'clickData')
+    if (clickData&&clickData.group_info != 0 && clickData.id !=0){
+      group_info = clickData.group_info;
+      console.log('aaaaaaa')
+    }
+    console.log(group_info,'111111')
+    // 工人
+    const ScreenWorkerData = Taro.getStorageSync(ScreenWorker);
+    let list:string[]=[];
+    for (let i = 0; i < ScreenWorkerData.length;i++){
+      list.push(ScreenWorkerData[i].id);
     }
     let params = {
       identity: type,
       start_date,
       end_date,
+      // group_info,
+      // is_note: is_note?1:0,
+      // workers: list.toString(),
+      // post_business_type: arr.toString(),
     }
     bkBusinessAction(params).then(res=>{
       if(res.code === 200){
@@ -146,10 +192,10 @@ export default function FlowingWater() {
         setdateEnd(yeartime+'-'+montime);
         if(!res.data.first_business_month){
           setDatestart(yeartime+'-'+montime);
-          changeIcon(times,res.data.first_business_month)
+          changeIcon(dateTime,res.data.first_business_month)
         }else{
           setDatestart(res.data.first_business_month);
-          changeIcon(times,res.data.first_business_month)
+          changeIcon(dateTime,res.data.first_business_month)
         }
         if (res.data.data && res.data.data.length>0){
           for(let i =0 ;i<res.data.data.length;i++){
@@ -380,6 +426,7 @@ export default function FlowingWater() {
       setleftTime(false);
       setrightTime(false);
     }else{
+      console.log(e,'你家啊吧肯德基巴萨就看到巴萨空间打不开撒比的')
       if(yeartime == Number(earliest_month.split('-')[0])){
         if(Number(earliest_month.split('-')[1])==montime){
           setleftTime(false);
@@ -397,6 +444,7 @@ export default function FlowingWater() {
           }
         }
       }else{
+        console.log(e,'是阿金晒到十点半那是假的吧')
         if(Number(earliest_month.split('-')[0])==Number(e.split('-')[0])){
           setrightTime(true);
           Number(e.split('-')[1])>Number(earliest_month.split('-')[1])?setleftTime(true):setleftTime(false);
@@ -610,16 +658,23 @@ export default function FlowingWater() {
     console.log(clickData,'1111')
     bkGetProjectTeamAction({}).then(res=>{
       if(res.code === 200){
+        let obj = {
+          id: 0,
+          group_info: 0,
+          group_name: '全部项目',
+          click:true
+        }
+        let arr = [obj, ...res.data]
         if (clickData){
-          for(let i =0;i<res.data.length;i++){
-            res.data[i].click = false;
-            if(res.data[i].id == clickData.id){
-              res.data[i].click = true
+          for(let i =0;i<arr.length;i++){
+            arr[i].click = false;
+            if(arr[i].id == clickData.id){
+              arr[i].click = true
             }
           }
         }
         console.log(res.data);
-        setProjectData(res.data);
+        setProjectData(arr);
       }else{
         Msg(res.msg);
       }
@@ -632,7 +687,27 @@ export default function FlowingWater() {
     bkGetWorkerAction({}).then(res=>{
       console.log(res,'1111')
       if(res.code === 200){
+        const ScreenWorkerData = Taro.getStorageSync(ScreenWorker)
+        for (let b = 0; b < ScreenWorkerData.length; b++) {
+          for (let i = 0; i < res.data.length; i++) {
+            for (let j = 0; j < res.data[i].list.length; j++) {
+              if (ScreenWorkerData[b].id == res.data[i].list[j].id) {
+                res.data[i].list[j].click = ScreenWorkerData[b].click
+              }
+            }
+          }
+        }
+        let clickState = true;
+        for(let i =0;i<res.data.length;i++){
+          for(let j=0;j<res.data[i].list.length;j++){
+            if(!res.data[i].list[j].click){
+              clickState = false
+            }
+          }
+        }
+        setAllCheckout(clickState)
         setWorkerData(res.data);
+        setDefaultArr(res.data);
       }else{
         Msg(res.msg);
       }
@@ -641,12 +716,19 @@ export default function FlowingWater() {
   //  选择项目
   const handleClickProject = (v:any)=>{
     const data =JSON.parse(JSON.stringify(projectData));
+    const value = JSON.parse(JSON.stringify(valDatas));
     for(let i=0;i<data.length;i++){
       data[i].click = false
       if(data[i].id == v.id){
         data[i].click = true
       }
     }
+    if(v.name){
+      value.screeProject = v.group_name+'-'+v.name;
+    }else{
+      value.screeProject = v.group_name;
+    }
+    setValDatas(value);
     setProjectData(data);
     setProjectDisplay(false);
     Taro.setStorageSync(Project,v);
@@ -656,34 +738,296 @@ export default function FlowingWater() {
     // 项目
     const clickData = Taro.getStorageSync(Project);
     // 分类
-    const ClassificationId = Taro.getStorageSync(Classification);
-    const data = JSON.parse(JSON.stringify(val));
-    const dataItem = JSON.parse(JSON.stringify(classification));
+    const ClassificationData = Taro.getStorageSync(Classification);
+    // 有无备注
+    const screenDetailsData = Taro.getStorageSync(ScreenDetails);
+    // 工人
+    const ScreenWorkerData = Taro.getStorageSync(ScreenWorker)
+    // ==== 上面是缓存
+    const data = JSON.parse(JSON.stringify(valDatas))
+    let dataItem = JSON.parse(JSON.stringify(classification));
+    const arr = JSON.parse(JSON.stringify(workerData));
     if(clickData){
-      data.project = clickData.group_name + '-' + clickData.name
+      data.screeProject = clickData.group_name + '-' + clickData.name
+    }else{
+      data.screeProject = ''
     }
-    if (ClassificationId){
-      for(let i =0;i<dataItem.length;i++){
-        if (dataItem[i].id == ClassificationId ){
-          dataItem[i].click = true;
+    if (ClassificationData){
+      dataItem = ClassificationData;
+    }
+    if (screenDetailsData){
+      data.screenDetails = screenDetailsData;
+    }else{
+      data.screenDetails = false;
+    }
+    if (ScreenWorkerData.length>0){
+      data.screenWorker = `共选择${ScreenWorkerData.length}人`;
+      for (let b = 0; b < ScreenWorkerData.length;b++){
+        for (let i = 0; i < workerData.length;i++){
+          for (let j = 0; j < workerData[i].list.length;j++){
+            if (ScreenWorkerData[b].id == workerData[i].list[j].id){
+              workerData[i].list[j].click = ScreenWorkerData[b].click
+            }
+          }
+        }
+      }
+    }else{
+      data.screenWorker = '';
+      for (let i = 0; i < workerData.length; i++) {
+        for (let j = 0; j < workerData[i].list.length; j++) {
+          workerData[i].list[j].click = false;
         }
       }
     }
+    setWorkerData(workerData)
     setClassification(dataItem);
-    setVal(data);
+    setValDatas(data);
     setScreen(true);
   }
   // 分类
   const handleClassification = (v)=>{
     const data = JSON.parse(JSON.stringify(classification));
     for(let i =0;i<data.length;i++){
-      data[i].click = false;
       if(data[i].id == v.id){
-        data[i].click = true;
-        Taro.setStorageSync(Classification,v.id);
+        data[i].click = !data[i].click;
       }
     }
+    console.log(data,'dataaaaaa')
+    Taro.setStorageSync(Classification,data);
     setClassification(data);
+  }
+  // 有无备注
+  const handleDetails = ()=>{
+    const data = JSON.parse(JSON.stringify(valDatas));
+    Taro.setStorageSync(ScreenDetails, !data.screenDetails);
+    data.screenDetails = !data.screenDetails;
+    setValDatas(data);
+  }
+  // 重置
+  const handleReset = ()=>{
+    Taro.setStorageSync(ScreenDetails, false);
+    Taro.setStorageSync(Classification, '');
+    Taro.setStorageSync(Project, '')
+    Taro.setStorageSync(ScreenWorker,[]);
+    const data = JSON.parse(JSON.stringify(valDatas));
+    const dataItem = JSON.parse(JSON.stringify(classification));
+    for(let i =0;i<dataItem.length;i++){
+      dataItem[i].click = false;
+    }
+    data.screeProject='';
+    data.screenWorker = '';
+    data.screenClassification='';
+    data.screenDetails = false;
+    setValDatas(data);
+    setScreen(false);
+    setClassification(dataItem);
+    getList();
+  }
+  // 弹框确定
+  const handleSmbOk = ()=>{
+    setScreen(false);
+    getList();
+  }
+  // 选择工人
+  const handleWorkerList = (v:any)=>{
+    console.log(v);
+    const data = JSON.parse(JSON.stringify(workerData));
+    let clickArr = JSON.parse(JSON.stringify(clickData));
+    // 选择
+    console.log(clickArr,'ccc');
+    if(clickArr.length==0){
+      clickArr.push(v)
+    }else{
+      let state = false;
+      let index = 0;
+      console.log(v)
+      for (let i = 0; i < clickArr.length; i++) {
+        if (clickArr[i].id == v.id) {
+          console.log('aaaaa')
+          state = true;
+          index = i;
+        }
+      }
+      console.log(state,'state')
+      if (!state) {
+        clickArr.push(v)
+      } else {
+        clickArr.splice(index, 1)
+      }
+    }
+    console.log(clickArr,'1111');
+    // 全选
+    let clickState = true;
+    // 判断是否是搜索
+    let arr = JSON.parse(JSON.stringify(defaultArr));
+    console.log(isSeach,'allCheckout')
+    if (isSeach){
+      for (let i = 0; i < clickArr.length;i++){
+        for(let j=0;j<arr.length;j++){
+          for(let b=0;b<arr[j].list.length;b++){
+            if(arr[j].list[b].id ==clickArr[i].id){
+              arr[j].list[b].click = true
+            };
+            
+          }
+        }
+      }
+        for (let j = 0; j < arr.length; j++) {
+          for (let b = 0; b < arr[j].list.length; b++) {
+            if (arr[j].list[b].id == v.id) {
+              console.log(32132132132131)
+              arr[j].list[b].click = !arr[j].list[b].click
+            }
+          }
+        }
+        console.log(arr,'aaaaaa');
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].list.length; j++) {
+          if (!arr[i].list[j].click) {
+            clickState = false;
+          }
+        }
+      }
+      // console.log(arr,'1111111')
+      // for (let i = 0; i < data.length; i++) {
+      //   for (let j = 0; j < data[i].list.length; j++) {
+      //     if (data[i].list[j].id == v.id) {
+      //       data[i].list[j].click = !data[i].list[j].click
+      //     }
+      //   }
+      // }
+      // for (let i = 0; i < data.length; i++) {
+      //   for (let j = 0; j < data[i].list.length; j++) {
+      //     if (!data[i].list[j].click) {
+      //       clickState = false;
+      //     }
+      //   }
+      // }
+      // setWorkerData(arr);
+    }
+    // else{
+      for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].list.length; j++) {
+          if (data[i].list[j].id == v.id) {
+            data[i].list[j].click = !data[i].list[j].click
+          }
+        }
+      }
+    // if (isSeach) {
+      for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].list.length; j++) {
+          if (!data[i].list[j].click) {
+            clickState = false;
+          }
+        }
+      }
+
+    // }
+    // }
+    console.log(arr,'arrrr')
+    setDefaultArr(arr);
+    setWorkerData(data);
+    setClickData(clickArr);
+    setAllCheckout(clickState);
+  }
+  // 工人弹框确定
+  const handleWorkerOk = ()=>{
+    const data = JSON.parse(JSON.stringify(workerData));
+    const dataItem = JSON.parse(JSON.stringify(valDatas));
+    let arr:any[] =[];
+    for(let i =0;i<data.length;i++){
+      for(let j=0;j<data[i].list.length;j++){
+        if(data[i].list[j].click){
+          arr.push(data[i].list[j])
+        }
+      }
+    }
+    if (arr.length>0){
+      dataItem.screenWorker = `共选择${arr.length}人`
+    }else{
+      dataItem.screenWorker = ''
+    }
+    console.log(arr);
+    console.log(dataItem.screenWorker,'ssssss')
+    Taro.setStorageSync(ScreenWorker,arr)
+    setValDatas(dataItem);
+    setWorkerDisplay(false);
+  }
+  const handleAllCheckout = ()=>{
+    console.log(1111)
+    const data = JSON.parse(JSON.stringify(workerData));
+    if (!allCheckout){
+      for(let i=0;i<data.length;i++){
+        for(let j=0;j<data[i].list.length;j++){
+          data[i].list[j].click = true;
+        }
+      }
+      setAllCheckout(true)
+    }else{
+      for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].list.length; j++) {
+          data[i].list[j].click = false;
+        }
+      }
+      setAllCheckout(false)
+    }
+    setWorkerData(data);
+  }
+  //搜索清除
+  const handleOnClear = ()=>{
+    // cons
+    setIsSeach(false)
+    setSeach('');
+    const clickArr = JSON.parse(JSON.stringify(clickData));
+    const data =JSON.parse(JSON.stringify(defaultArr));
+    for(let i =0;i<clickArr.length;i++){
+      for(let j=0;j<data.length;j++){
+        for(let b=0;b<data[j].list.length;b++){
+          if(data[j].list[b].id == clickArr[i].id){
+            data[j].list[b].click = true;
+          }
+        }
+      }
+    }
+    setWorkerData(data);
+  }
+  // 输入
+  const handleChange = (e)=>{
+    setSeach(e);
+  }
+  // 搜索搜索
+  const onActionClick =()=>{
+    console.log(1);
+    const data = JSON.parse(JSON.stringify(workerData));
+    let arr: any[] = [
+      { list: [] }
+    ];
+    if(seach ==''){
+      setIsSeach(false);
+    }else{
+      setIsSeach(true)
+      for(let i =0;i<data.length;i++){
+        for(let j=0;j<data[i].list.length;j++){
+          let list:any[] = [];
+          if (data[i].list[j].name.indexOf(seach) !== -1 || (data[i].list[j].tel && data[i].list[j].tel.indexOf(seach) !== -1)){
+            list.push(data[i].list[j])
+          }
+          arr[0].list.push(...list)
+        }
+      }
+    }
+    let clickState = true;
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < data[i].list.length; j++) {
+        if (!data[i].list[j].disabled) {
+          if (!data[i].list[j].click) {
+            clickState = false
+          }
+        }
+      }
+    }
+    setAllCheckout(clickState);
+    setWorkerData(arr);
   }
   return(
     <context.Provider value={value}>
@@ -707,8 +1051,8 @@ export default function FlowingWater() {
         </View>
         </Picker>
         <View className='time-right'>
-          <View className='screen' onClick={handleScreen}>筛选</View>
-          <View>全选</View>
+            <View className='screen' onClick={handleScreen}><Image className='Icon' src={`${IMGCDNURL}screen.png`}/>筛选</View>
+            <View onClick={() => handleCheckboxBtn(0)}><Image src={`${IMGCDNURL}MultipleChoice.png`} className='Icon'/>多选</View>
         </View>
       </View>
       <View className='content'>
@@ -816,7 +1160,7 @@ export default function FlowingWater() {
         <View className='icon-box' onClick={()=>handleCheckboxBtn(0)}>
           <View className='icon-box-icon' ><Image className='icon-box-icon-image' src={`${IMGCDNURL}checkout.png`}/></View>
         <View>多选</View>
-      </View>
+      </VI>
       } */}
       {!busy &&isCheckOut && 
       <View className='footer-box'>
@@ -837,11 +1181,11 @@ export default function FlowingWater() {
       {/* 填写班组 */}
       <ProjectModal display={project} handleSubmit={handleAddProject} handleInput={handleInput} teamName={model && model.teamName} handleBack={handleBack} handleClose={() => { setProject(false), setModel({ groupName: '', teamName: '' }) }} />
       {/* 筛选 */}
-      <ScreenModal handleClose={() => { }} display={screen} handleEstablish={() => { }} classification={classification} handleProject={getProjectTeam} handleWorker={getWorker} val={val} handleClassification={handleClassification}/>
+      <ScreenModal handleClose={() => { setScreen(false) }} display={screen} handleEstablish={() => { }} classification={classification} handleProject={getProjectTeam} handleWorker={getWorker} val={valDatas} handleClassification={handleClassification} handleDetails={handleDetails} handleReset={handleReset} handleOk={handleSmbOk}/>
       {/* 项目 */}
       <ChangeProjectModal display={projectDisplay} projectData={projectData} maskHandleClose={() => setProjectDisplay(false)} handleClickProject={handleClickProject}/>
       {/*工人 */}
-      <MailListModal display={workerDisplay} handleClose={()=>setWorkerDisplay(false)} workerData={workerData} />
+      <MailListModal display={workerDisplay} handleClose={() => setWorkerDisplay(false)} workerData={workerData} handleWorkerList={handleWorkerList} allCheckout={allCheckout} handleWorkerOk={handleWorkerOk} handleAllCheckout={handleAllCheckout} valData={seach} handleOnClear={handleOnClear} handleChange={handleChange} onActionClick={onActionClick}/>
       {/* <Auth display={display} handleClose={()=>{setDisplay(false)}} callback={()=>{}} isLogionType={false} /> */}
     </context.Provider>
   )

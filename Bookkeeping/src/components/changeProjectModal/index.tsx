@@ -22,7 +22,7 @@ export default function ChangeProjectModal({ display, projectData, maskHandleClo
           <View>{
             projectData.map((v)=>(
               <View onClick={()=>handleClickProject(v)} className={v.click ? 'ChangeProjectModal-list-box-click' :'ChangeProjectModal-list-box'}>
-                <View className='ChangeProjectModal-list' key={v.id}>{v.name}</View>
+                <View className='ChangeProjectModal-list' key={v.id}>{v.group_name}{v.name ? '-' + v.name:''}</View>
               </View>
             ))
           }</View>

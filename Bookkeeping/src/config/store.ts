@@ -2,7 +2,7 @@
  * @Author: zyb
  * @Date: 2020-08-26 19:48:23
  * @LastEditors: zyb
- * @LastEditTime: 2020-09-17 17:48:32
+ * @LastEditTime: 2020-09-18 11:33:47
  * @Description: 
  */
 // * 本文件为小程序内部缓存声明文件
@@ -53,3 +53,7 @@ export const JumpAppid:string = 'jumpAppid';
 export const Project = 'project';
 // 分类
 export const Classification ='classification';
+// 备注
+export const ScreenDetails ='screenDetailsType';
+// 工人
+export const ScreenWorker = 'screenWorkerData'

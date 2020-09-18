@@ -9,10 +9,18 @@ interface PROPS {
   display: boolean
   handleClose: () => void,
   workerData:any,
+  handleWorkerList:(v)=>void,
+  allCheckout:boolean,
+  handleWorkerOk:()=>void,
+  handleAllCheckout:()=>void,
+  onActionClick:()=>void,
+  valData:string,
+  handleOnClear:()=>void,
+  handleChange:(e)=>void,
   // handleEstablish: (groupInfo: string) => void,
   // classification: any,
 }
-export default function MailListModal({ display, handleClose, workerData }: PROPS) {
+export default function MailListModal({ display, handleClose, workerData, handleWorkerList, allCheckout, handleWorkerOk, handleAllCheckout, onActionClick, valData, handleOnClear, handleChange }: PROPS) {
   return (
     <View>
       {display && <View className='MailListModal' onClick={()=>handleClose()}>
@@ -21,13 +29,13 @@ export default function MailListModal({ display, handleClose, workerData }: PROP
           <View className='searchName'>
             <AtSearchBar
               placeholder='请输入名字或手机号码查询'
-              // showActionButton
-              // value={valData}
+              showActionButton
+              value={valData}
               // onFocus={() => setmasklayer(true)}
-              // onClear={handleOnClear}
-              // onChange={handleChange}
-              // onActionClick={() => onActionClick()}
-              // onConfirm={onActionClick}
+              onClear={handleOnClear}
+              onChange={handleChange}
+              onActionClick={() => onActionClick()}
+              onConfirm={onActionClick}
               // onBlur={() => setmasklayer(false)}
             />
           </View>
@@ -37,8 +45,8 @@ export default function MailListModal({ display, handleClose, workerData }: PROP
               <View key={i+i}>
                 <View className='list-title'>{(val.name_py && val.name_py.toUpperCase())||''}</View>
                 {val.list.map((v)=>(
-                  <View className='list-flex-test'>
-                    {!v.click ?
+                  <View className='list-flex-test' onClick={()=>handleWorkerList(v)}>
+                    {v.click ?
                       <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click' />
                       : <View className='checkbox-no'></View>
                     }
@@ -62,13 +70,16 @@ export default function MailListModal({ display, handleClose, workerData }: PROP
           </View>
           <View className='allCheckout'>
             <View className='allCheckout-box'>
-              <View className='all'>
+              <View className='all' onClick={handleAllCheckout}>
                 <View className='flex'>
+                  {allCheckout?
                     <Image src={`${IMGCDNURL}clickCheckout.png`} className='checkbox-click-all' />
-                    {/* : <View className='checkbox-no'></View> */}
+                    :
+                    <View className='checkbox-no-all'></View>
+                    }
                 </View>
                 <View>全选</View></View>
-              <View className='allCheckout-btn'>确定</View>
+              <View className='allCheckout-btn' onClick={handleWorkerOk}>确定</View>
             </View>
           </View>
         </View>
